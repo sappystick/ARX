@@ -8,7 +8,7 @@
 | 5 | Null residuals come from idealised circular-loop receive models, not the real SB1R-Q pattern | leak numbers | model the real pattern from the Gerber geometry; measure |
 | 6 | Thermal: PETG 0.2, potting 0.25-1.8, FR4 0.5, h 6-10 W/m2K | sim_head2 | thermocouples on a heated mock-up |
 | 7 | 24-turn quadrupole depth scaled by the model slope 0.22 | RX_PLATFORM_QUAD | run the target model with the 24-turn geometry |
-| 8 | Hood gain from a coupled-moment model (MnZn mu 2000) | hood tables | measure on the built head; compare with the earlier boundary-element result (+7.5 % at 200 mm, full plate) |
+| 8 | Hood gain from the axisymmetric model (hood_axi.py, MnZn mu 2000, DC, no losses); the coupled-moment model of hood_study2.py does not converge (8 -> 3 mm cells: +5.3 -> +7.3 % at 200 mm, 2.5 mm cells +17 %) and the earlier boundary-element note (+7.5 %, full plate) has no geometry on record | hood tables | measure the axis field of the built head with and without the tiles (search coil or gaussmeter, DC or a slow ramp) |
 | 9 | LED pinout (SK6812-mini class), 74AHCT1G125 pinout, part heights, OKI module height 10.2 mm | LB1, CB1D | datasheets |
 | 10 | Head mass 2.22 kg uses estimates for SB1R, potting, litz insulation | balance | weigh parts |
 | 11 | Saddle/hinge loads (30 N m) and epoxy strength | yoke | FEA + pull test |
@@ -21,3 +21,4 @@
 | 18 | Creepage: 3.0 mm edge gap plus 1.6 mm FR4 is enough for 460 V peak (about 2.5 mm needed, pollution 2) | TXJ1 | check against the applicable standard and hipot test at 1 kV |
 | 19 | Part ratings in system_budget.py (FET 24 A, ES3J IFSM, R2512 200 V, BAV199 surge, TVS, TC4420 6 A, FET Qg 45 nC) are from memory | stress table | read the datasheets (prompt C05) |
 | 20 | Junction hand-soldering and wire dressing fit in the 14 x 6.4 mm bridge channel together with the ribbons | bridge | build a dummy bridge with real cable |
+| 23 | Hood homogenisation: straight tiles smeared over the azimuth with fill N w / 2 pi r, Wiener bounds; the 0.2 mm butt joint as a series gap (lower bound) or no gap (upper); MnZn initial permeability holds at 50-60 mT and the tiles add no eddy/relaxation signal of their own at the receive gates; 27-28 x 26-40 x 2.5 mm tiles can be cut from stock plates with flat butt faces | hood_axi, hood_v20 | build one spoke and measure; ferrite datasheet (mu vs B, loss vs f); ring-down of the receive channel with and without the hood |

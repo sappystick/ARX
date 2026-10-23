@@ -15,3 +15,4 @@
 13. **TXJ1 prototype and wire dressing**: build the junction with real litz and the real bridge cable bundle; hipot 1 kV; confirm the 4 mm lead bend in the window and the fit under the lid.
 14. **Datasheet verification** of every rating in system_budget.py and ASSUMPTIONS 19 (prompt C05).
 15. **Dual-PCB bench checks**: first articles of SB1R-QA/QB, LB1 (0.8 mm), CB1D, TXJ1: continuity against the netlists, then power-up with a current-limited supply.
+18. **Hood v3 first article**: cut 26 tiles (27.0 x 26.2 and 28.3 x 39.7 x 2.5 mm MnZn), print the v3 carrier, bond; measure the axis field with and without the tiles and the receive ring-down with the hood fitted (ASSUMPTIONS 8, 23).

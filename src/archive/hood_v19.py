@@ -1,3 +1,4 @@
+# SUPERSEDED by src/mech/hood_v20.py (hood v3, butted tiles, 2026-10-23). v2 held each spoke's two tiles in separate pockets with a 2.0 mm radial air gap. Kept for provenance.
 import math, json, numpy as np
 import rodin_core_v4 as rc, golden_cone_head as g
 from render_v6 import tri2d

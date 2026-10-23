@@ -12,7 +12,7 @@ def rotz(V,deg): c,s=math.cos(math.radians(deg)),math.sin(math.radians(deg)); re
 HEEL=178.0; to_heel=lambda V: rotz(V,-HEEL)
 TW=to_heel(load("kit_v19/YOKE/HEEL_SADDLE_TOWER.stl").reshape(-1,3)); BR=to_heel(load("kit_v19/YOKE/UMBILICAL_BRIDGE.stl").reshape(-1,3))
 HUB=load("kit_v22/SET/02_CORE_PCB_CYLINDER/CORE_CYLINDER_v5_integrated.stl").reshape(-1,3); SK=load("kit_v19/PARTS/HEAD_SKIRT.stl").reshape(-1,3)
-HOOD=load("kit_v18/PARTS/LOTUS_HOOD_CARRIER_v2_spokes.stl").reshape(-1,3)
+HOOD=load("kit_v18/PARTS/LOTUS_HOOD_CARRIER_v3_butted.stl").reshape(-1,3)
 sr=np.hypot(SK[:,0],SK[:,1]); chk("saddle inner radius vs skirt outer (epoxy gap)",np.hypot(TW[:,0],TW[:,1])[(TW[:,2]<33.5)&(np.hypot(TW[:,0],TW[:,1])<125)&(TW[:,0]>100)].min()-sr.max(),0.3,0.6,"skirt r119.0, saddle r119.4")
 chk("bridge floor vs hood frame tops",BR[:,2].min()-HOOD[:,2].max(),0.2,None,f"floor {BR[:,2].min():.2f}, hood top {HOOD[:,2].max():.2f}")
 chk("bridge floor vs skirt top",BR[:,2].min()-SK[:,2].max(),0.2,None)

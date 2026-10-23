@@ -43,7 +43,7 @@ check: v5 sbq-geom
 	cd $(W) && $(PY) check_v22.py
 
 hood:
-	cd $(W) && $(PY) hood_v19.py
+	cd $(W) && $(PY) hood_v20.py && $(PY) hood_axi.py
 
 yoke:
 	cd $(W) && $(PY) yoke_v20.py
