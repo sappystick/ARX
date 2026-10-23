@@ -32,3 +32,6 @@
 | CB1D fits inside the cylinder with ribs at 28/48/112/130/235/255/305/355 | JPW (4-way terminal block) hit the 130 deg rib and a 0603 hit the 235 deg rib; ribs moved to 24/48/109/135/225/244/300/317 | head_crosscheck.py exact polygon test |
 | Board notch 12 mm (half-width 6.0) clears the spine channel | The spine walls' outer faces reach 7.24 mm at r39: notch widened to half-width 7.6 on CB1D and LB1 | head_crosscheck.py |
 | The *_board_with_components.stl files are valid envelopes | They draw every body as an unrotated, uncentred box: use pickplace + BOM + lib_bodies (head_crosscheck.py) | head_crosscheck.py |
+| The trigger is a Hall sensor on CB1D TRIG_IN | HB1 used a linear SS49E (rest output near VCC/2) on a digital-only GPIO with a 10k pull-up: the trigger state, and so boost, was undefined. HB1 now uses a digital open-drain Hall switch | trigger_check.py |
+| A 10k pull-up is enough for the trigger input | With RH1 + RT1 = 2 kohm in series the low level was 0.88 V (VIL 0.8 V): RP1 is now 47k (0.52 V, 0.47 ms) | trigger_check.py |
+| Every handle control reaches the head | The joystick push switch ends at its pull-up on HB1; no cable conductor | trigger_check.py |

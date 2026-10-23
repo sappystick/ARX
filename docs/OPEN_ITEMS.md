@@ -8,10 +8,12 @@
 6. **Simulation validation:** convergence, Monte Carlo on tolerances (offset, layer gap, etch width, self-capacitance), ground model, finite turn-off, non-spherical targets. Accept: stated uncertainty on every depth number.
 7. **TX stage:** C0G/film clamp part selection, RCL1 rating, hard-clamp alternatives, avalanche margin, EMI.
 8. **Mass reduction** (torque 2.88 -> under 2.2 kg m).
-9. **KiCad schematics** (.kicad_sch) for CB1D, LB1, AB1T, PB1R, PM1, HB1: only netlists and PNG schematics exist.
+9. **KiCad schematics: generated (2026-10-23)** for CB1D, LB1, AB1A, AB1B, PB1R, PM1, HB1 (`make sch`, round-trip checked). Remaining: open them in KiCad and run its ERC (with item 2); TXJ1, HTA and SB1R-QA/QB have no netlist yet.
 10. **Printing trials:** coupons, then cylinder (insert fit, rib supports), then formers.
 11. **Prototype the receive boards** (QA/QB) and measure leak, L, R, self-resonance, then re-tune sbq_tune radii.
 12. GitHub publication (scripts/push_to_github.sh).
 13. **TXJ1 prototype and wire dressing**: build the junction with real litz and the real bridge cable bundle; hipot 1 kV; confirm the 4 mm lead bend in the window and the fit under the lid.
 14. **Datasheet verification** of every rating in system_budget.py and ASSUMPTIONS 19 (prompt C05).
 15. **Dual-PCB bench checks**: first articles of SB1R-QA/QB, LB1 (0.8 mm), CB1D, TXJ1: continuity against the netlists, then power-up with a current-limited supply.
+16. **Joystick push switch** is not wired to the head (7-core cable full). Options: an 8-core cable, or a resistor-coded switch on the dial ladder; decide in the handle redesign (item 4).
+17. **BOM_MASTER.csv is stale** for HB1 HS1 (still SS49E) and CB1D RP1 (still 10k): mfg_v19.py, which builds it, reads legacy/PHIFOLD233_FINAL_FLAT_SET meshes that are not in the repo. Move it to the current BOMs (kit_v6/HB1, kit_v18) and regenerate.
