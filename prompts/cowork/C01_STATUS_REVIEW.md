@@ -1,0 +1,2 @@
+# C01 Weekly status review
+Use the phifold-report skill. Read docs/DESIGN_STATE.md, docs/OPEN_ITEMS.md, docs/CORRECTIONS.md and data/results/*.json. Produce Outputs/STATUS_<date>.docx: one-page summary, a table of every headline number with its source file and its status (modeled / built / measured), the top five risks, and what changed since the last status (compare with the previous STATUS file if present). If you can run it, execute `make verify-quick` and `python3 tests/regress.py` first and include the result.

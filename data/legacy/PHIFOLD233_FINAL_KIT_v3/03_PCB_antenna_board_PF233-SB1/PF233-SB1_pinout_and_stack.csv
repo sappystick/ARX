@@ -1,0 +1,11 @@
+J1 pin,net,pattern,layers,role
+1,Y8-,Y8,L3/L4,TX-Y quadrature / RX-Y
+2,Y8+,Y8,L3/L4,TX-Y quadrature / RX-Y
+3,GY-,GY,L7/L8,RX gradiometer Y (self-nulled)
+4,GY+,GY,L7/L8,RX gradiometer Y (self-nulled)
+5,X8-,X8,L1/L2,TX-X quadrature / RX-X
+6,X8+,X8,L1/L2,TX-X quadrature / RX-X
+7,GX-,GX,L5/L6,RX gradiometer X (self-nulled)
+8,GX+,GX,L5/L6,RX gradiometer X (self-nulled)
+9,SHLD1,shield,-,cable shield drain
+10,SHLD2,shield,-,cable shield drain

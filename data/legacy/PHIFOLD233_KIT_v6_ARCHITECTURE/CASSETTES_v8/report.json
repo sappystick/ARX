@@ -1,0 +1,183 @@
+{
+ "lod": "print",
+ "formulas": {
+  "spiral": "Fermat/sunflower: rho^2 = R0^2 + (R1^2-R0^2) t, theta = alpha + 2 pi 8 t (8 turns out + 8 turns mirror return = 16)",
+  "ripple": "r = rho + 2.4 (rho/R1)^2 cos(12 (theta - alpha))  [R1 file: 3 (rho/138)^2 cos(12..)]",
+  "face": "z = dome(r) + 0.48 (r/116.5)^2 cos(12 (theta - alpha)),  dome = 10 (1-(r/116.5)^2)",
+  "layer_offset_deg": "alpha_k = k x 137.508",
+  "R0": 62.0,
+  "R1": 109.6
+ },
+ "stack": {
+  "layer_thickness": 3.6,
+  "pitch": 4.2,
+  "top_at_opening": 35.8,
+  "rim_top": 27.8
+ },
+ "L1": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "alpha_deg": 0.0,
+  "mod_30": 0.0,
+  "post": "TX post 90 deg"
+ },
+ "L2": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "alpha_deg": 137.51,
+  "mod_30": 17.51,
+  "post": "TX post 210 deg"
+ },
+ "L3": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "alpha_deg": 275.02,
+  "mod_30": 5.02,
+  "post": "TX post 330 deg"
+ },
+ "L4": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "alpha_deg": 52.52,
+  "mod_30": 22.52,
+  "post": "TX post 90 deg"
+ },
+ "L5": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "alpha_deg": 190.03,
+  "mod_30": 10.03,
+  "post": "TX post 210 deg"
+ },
+ "L6": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "alpha_deg": 327.54,
+  "mod_30": 27.54,
+  "post": "TX post 330 deg"
+ },
+ "POST_TX_1_at_90deg": {
+  "tris": 476,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -2.4,
+   51.4,
+   3.2,
+   2.4,
+   56.2,
+   39.1
+  ],
+  "note": "D5 post, 4 open wire channels 1.4 x 1.2, length 35.9"
+ },
+ "POST_TX_2_at_210deg": {
+  "tris": 476,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -49.0,
+   -29.3,
+   3.2,
+   -44.2,
+   -24.5,
+   39.1
+  ],
+  "note": "D5 post, 4 open wire channels 1.4 x 1.2, length 35.9"
+ },
+ "POST_TX_3_at_330deg": {
+  "tris": 476,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   44.2,
+   -29.3,
+   3.2,
+   49.0,
+   -24.5,
+   39.1
+  ],
+  "note": "D5 post, 4 open wire channels 1.4 x 1.2, length 35.9"
+ },
+ "POST_RX_1_at_30deg": {
+  "tris": 476,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   44.2,
+   24.5,
+   3.2,
+   49.0,
+   29.3,
+   39.1
+  ],
+  "note": "D5 post, 4 open wire channels 1.4 x 1.2, length 35.9"
+ },
+ "POST_RX_2_at_150deg": {
+  "tris": 476,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -49.0,
+   24.5,
+   3.2,
+   -44.2,
+   29.3,
+   39.1
+  ],
+  "note": "D5 post, 4 open wire channels 1.4 x 1.2, length 35.9"
+ },
+ "POST_RX_3_at_270deg": {
+  "tris": 476,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -2.4,
+   -56.2,
+   3.2,
+   2.4,
+   -51.4,
+   39.1
+  ],
+  "note": "D5 post, 4 open wire channels 1.4 x 1.2, length 35.9"
+ },
+ "L1_foundation_hub_with_PCB_slots": {
+  "tris": 5376,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -52.0,
+   -52.0,
+   6.0,
+   52.0,
+   52.0,
+   44.5
+  ],
+  "note": "base foundation hub fused to L1: tube r46.5-49.5 (35.3 mm inner height), roof with D20 gland/fill port, 4 PCB slot ledges for D88 discs at z=9/17/25/33 (8 mm pitch)"
+ },
+ "V2_vault_floor_plate": {
+  "tris": 768,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -49.5,
+   -49.5,
+   3.4,
+   49.5,
+   49.5,
+   6.0
+  ],
+  "note": "floor seat for the ferrite / nanocrystalline bottom plate"
+ },
+ "L7_RX_tray_cassette": {
+  "tris": 1536,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -116.5,
+   -116.5,
+   0.0,
+   116.5,
+   116.5,
+   3.2
+  ],
+  "note": "RX tray: 0.8 mm floor, PCB recess D229 x 2.4, 2 mm rim wall, open back"
+ },
+ "feedthrough_drill_table": "13 lead ports (6 TX drains, 1 VBUS common, 6 RX) at z=38 around the hub tube wall, grouped by the three TX and three RX posts; drill/pot after fitting"
+}

@@ -1,0 +1,23 @@
+Qty,Refs,Type,Value,MPN / note,Footprint
+1,CAUX2,C0603,100n,X7R,Capacitor_SMD:C_0603_1608Metric
+1,CS1,C0603,100n,X7R 50V,Capacitor_SMD:C_0603_1608Metric
+1,CSH,C0603,1n 100V,C0G,Capacitor_SMD:C_0603_1608Metric
+2,"CM1,CM2",C1210,10u 50V,X7R,Capacitor_SMD:C_1210_3225Metric
+1,CAUX,C1210,22u 25V,X7R,Capacitor_SMD:C_1210_3225Metric
+2,"CB1,CB2",CAN10,470u 50V,"hybrid polymer/Al 10x10, low ESR",Capacitor_SMD:CP_Elec_10x10
+2,"DPA,DPB",DSMB,SS3P6 60V 3A,Schottky SMB 60 V 3 A,Diode_SMD:D_SMB
+1,DTVS,DSMC,SMCJ33A,"TVS 33 V stand-off, uni-directional",Diode_SMD:D_SMC
+2,"DOA,DOB",DSMC,SS10P6 60V 10A,Schottky SMC 60 V 10 A,Diode_SMD:D_SMC
+1,FB1,FB1812,BLM/742792 class 6A,ferrite bead,Inductor_SMD:L_1812_4532Metric
+2,"FA,FB",FUSE1812,5A slow 32V,Littelfuse 0453005 class (verify DC rating),Fuse:Fuse_1812_4532Metric
+1,JR,HDR1x2,RS-485 to pod,2.54 mm header,Connector:Pin_header_1x2_P2.54mm
+1,JBK,HDR1x3,Aux buck module VIN GND VOUT,COTS 36 V -> 12 V >= 1.5 A buck module (e.g. Pololu D36V28F12 class),Connector:Pin_header_1x3_P2.54mm
+1,JS,HDR2x4,Signals: 12V GND 485A 485B SENSE A_ID B_ID SHLD,2.54 mm header,Connector:Pin_header_2x4_P2.54mm
+1,RS1,R0603,100k,0.1%,Resistor_SMD:R_0603_1608Metric
+1,RS2,R0603,10k,0.1%,Resistor_SMD:R_0603_1608Metric
+1,RSH,R0603,1M,,Resistor_SMD:R_0603_1608Metric
+1,RBL,R1206,100k,bleeder,Resistor_SMD:R_1206_3216Metric
+2,"RPA,RPB",R2512,22R 2W pulse,Vishay CRCW-HP / KOA SR732 class,Resistor_SMD:R_2512_6332Metric
+1,JA,TERM4,"Cartridge A: NEG, PRE, POS, ID",5.08 mm blade-contact block (see shaft design),Connector:Terminal_block_1x4_P5.08mm
+1,JB,TERM4,"Cartridge B: NEG, PRE, POS, ID",5.08 mm blade-contact block (see shaft design),Connector:Terminal_block_1x4_P5.08mm
+1,JP,TERM4,Power out: VBUS VBUS GND GND,5.08 mm terminal block 10 A,Connector:Terminal_block_1x4_P5.08mm

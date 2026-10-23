@@ -1,0 +1,59 @@
+Ref,Val,Package,PosX_mm,PosY_mm,Rot,Side
+U1,Pico 2 W,RaspberryPi_Pico_Common_THT,-22.0,-0.0,0,top
+JDBG,"RUN / GND (reset, SWD pads on Pico underside)",Pin_header_1x2_P2.54mm,-8.5,-25.0,0,top
+CP1,10u 10V,C_0805_2012Metric,-9.5,8.0,0,top
+CP2,100n,C_0603_1608Metric,-9.5,6.0,0,top
+JPW,Power in: VBUS VBUS GND GND (from shaft),Terminal_block_1x4_P5.08mm,30.0,-24.0,0,top
+F1,5A slow 32V,Fuse_1812_4532Metric,22.0,-31.0,0,top
+DTV,SMCJ33A,D_SMC,21.0,-25.0,0,top
+CI1,10u 50V,C_1210_3225Metric,14.0,-31.0,0,top
+CI2,10u 50V,C_1210_3225Metric,13.0,-27.0,0,top
+M5,5 V 1.5 A switching module,Converter_DCDC_Murata_OKI-78SR_Horizontal,12.0,-8.0,0,top
+C5A,22u 16V,C_1210_3225Metric,3.5,-9.0,0,top
+C5B,100n,C_0603_1608Metric,7.5,-14.0,0,top
+FB2,ferrite bead 1 A,L_1812_4532Metric,5.0,-0.0,0,top
+CV1,10u 16V,C_1210_3225Metric,12.0,-0.0,0,top
+CV2,100n,C_0603_1608Metric,4.5,-5.0,0,top
+CV3,1u,C_0805_2012Metric,4.0,-3.0,0,top
+UL,AMS1117-3.3,SOT-223-3_TabPin2,0.5,-14.5,0,top
+CL1,22u 10V,C_1210_3225Metric,-2.0,-19.5,0,top
+CL2,100n,C_0603_1608Metric,-2.0,-23.0,0,top
+UM,74HC4051,SOIC-16_3.9x9.9mm_P1.27mm,-3.0,17.0,0,top
+CM1,100n,C_0603_1608Metric,2.5,11.0,0,top
+RMO,1k,R_0603_1608Metric,-7.0,11.0,0,top
+CMO,1n,C_0603_1608Metric,-6.0,9.0,0,top
+RR1,10k,R_0603_1608Metric,-8.0,25.0,0,top
+RR2,10k,R_0603_1608Metric,-8.0,23.0,0,top
+CR1,1u,C_0603_1608Metric,-12.0,26.5,0,top
+CR2,1u,C_0603_1608Metric,-5.0,23.0,0,top
+RV1,100k,R_0603_1608Metric,22.0,-14.0,0,top
+RV2,10k,R_0603_1608Metric,22.0,-18.0,0,top
+CV4,100n,C_0603_1608Metric,25.0,-16.0,0,top
+JTR,Handle: +3V3 GND TRIG DIAL JOYX JOYY SHLD,Pin_header_1x7_P2.54mm,31.5,24.0,0,top
+RJX,1k,R_0603_1608Metric,21.0,26.0,0,top
+RJY,1k,R_0603_1608Metric,21.0,29.0,0,top
+CJX,10n,C_0603_1608Metric,25.0,26.0,0,top
+CJY,10n,C_0603_1608Metric,25.0,29.0,0,top
+RSH,1M,R_0603_1608Metric,26.0,20.0,0,top
+CSH,1n 100V,C_0603_1608Metric,22.0,20.0,0,top
+RT1,1k,R_0603_1608Metric,24.0,14.0,0,top
+DH1,BAS16,D_SOD-123,20.0,14.0,0,top
+DL1,BAS16,D_SOD-123,20.0,17.0,0,top
+CQ1,10n,C_0603_1608Metric,18.0,20.0,0,top
+RP1,10k,R_0603_1608Metric,22.0,22.0,0,top
+RD1,1k,R_0603_1608Metric,24.0,17.0,0,top
+DH2,BAS16,D_SOD-123,14.0,14.0,0,top
+DL2,BAS16,D_SOD-123,14.0,17.0,0,top
+CQ2,10n,C_0603_1608Metric,15.0,20.0,0,top
+RP2,10k,R_0603_1608Metric,12.0,22.0,0,top
+JA,to AB1A J2,Pin_header_1.27_2x6_P1.27mm,-3.0,31.0,90,top
+JB,to AB1B J2,Pin_header_1.27_2x6_P1.27mm,-3.0,-31.0,90,top
+JPB,to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND,Pin_header_2x4_P2.54mm,12.0,29.0,0,top
+RUS,1M,R_0603_1608Metric,17.5,33.0,0,top
+CUS,1n 100V,C_0603_1608Metric,21.0,33.0,0,top
+JCL,"Coil leads from the neck module: COIL_B (drain side), COIL_A (VBUS side)",Terminal_block_1x2_P5.08mm,31.0,2.0,0,top
+RDM1,110R,R_2512_6332Metric,23.0,9.0,0,top
+RDM2,110R,R_2512_6332Metric,23.0,4.0,0,top
+RDM3,110R,R_2512_6332Metric,23.0,-1.0,0,top
+CMON,100n 630V,C_1210_3225Metric,31.0,11.0,0,top
+RBI,100k,R_0603_1608Metric,27.5,15.0,0,top

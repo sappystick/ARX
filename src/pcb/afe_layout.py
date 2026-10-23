@@ -1,0 +1,341 @@
+#!/usr/bin/env python3
+"""PF233-AB1 layout: placement -> via fanout (GND/+5VA planes) -> grid router -> independent DRC + connectivity check."""
+import math, heapq, json, sys, time
+import numpy as np
+from scipy import ndimage
+import afe_design as D
+
+R_BOARD = 20.0; EDGE_KEEP = 0.35
+TRACK = 0.127; CLEAR = 0.1; VIA_D = 0.45; VIA_DRILL = 0.2
+GRID = 0.1; N = int(2 * R_BOARD / GRID); OFF = R_BOARD
+BOARD = D.BOARD
+if BOARD == "A":
+    ROWY = {1: -10.0, 2: 0.0, 3: 10.0}
+    UPOS = {"U1": (0.5, -5.0), "U2": (0.5, 5.0)}; COPOS = {"CO1": (0.5, -1.6), "CO2": (0.5, 8.4)}
+    REF = dict(UR=(8.5, -5.0), CRI=(13.0, -5.0), CRO=(13.0, -7.0), CRN=(10.5, -2.6), UB=(8.5, 5.0), CBD=(13.6, 3.4), RD1=(13.6, 4.9), RD2=(13.6, 6.4), CDF=(10.5, 7.8), CVM=(12.6, 8.2), CB1=(-13.0, -5.0))
+else:
+    ROWY = {1: -5.5, 2: 5.5}
+    UPOS = {"U1": (0.5, 0.0)}; COPOS = {"CO1": (0.5, 3.4)}
+    REF = dict(UR=(4.0, -13.0), CRI=(9.0, -13.0), CRO=(11.5, -13.0), CRN=(9.0, -11.0), UB=(4.0, 13.0), CBD=(9.0, 13.0), RD1=(11.0, 13.0), RD2=(11.0, 11.4), CDF=(9.0, 11.2), CVM=(13.4, 9.6), CB1=(-13.0, 0.0))
+PLACE = {}
+def put(ref, x, y, rot=0, side="F"): PLACE[ref] = (x, y, rot, side)
+put("J1", -16.4, 0.0, 0); put("J2", 15.6, 0.0, 0)
+for ref, (x, y) in UPOS.items(): put(ref, x, y)
+for ref, (x, y) in COPOS.items(): put(ref, x, y)
+for ref, (x, y) in REF.items(): put(ref, x, y)
+for k, y in ROWY.items():
+    put(f"RS{k}", -13.0, y); put(f"D{k}", -10.2, y); put(f"SW{k}", -6.4, y); put(f"CSW{k}", -7.4, y + 2.4)
+    put(f"RG{k}", 2.2, y); put(f"RF{k}", 4.3, y - 1.2); put(f"CF{k}", 4.3, y + 1.2)
+    put(f"RAAF{k}", 6.6, y); put(f"CAAF{k}", 8.9, y)
+    put(f"UA{k}", 10.6, y, 90, "B"); put(f"CRF{k}", 7.1, y, 0, "B")
+    put(f"CAV{k}", 13.1, y - 1.3, 0, "B"); put(f"CDV{k}", 13.1, y + 1.3, 0, "B")
+PLANE = {"GND": "In1.Cu", "+5VA": "In4.Cu"}
+
+def rotp(x, y, a):
+    c, s = math.cos(math.radians(a)), math.sin(math.radians(a)); return x * c + y * s, -x * s + y * c
+def pads_of(ref):
+    p = D.BYREF[ref]; lib = D.LIB[p["type"]]; x0, y0, rot, side = PLACE[ref]; out = []
+    for num, px, py, w, h, shape in lib["pads"]:
+        if side == "B": px = -px                                  # footprint stored already flipped
+        rx, ry = rotp(px, py, rot)
+        if rot % 180 == 90: w, h = h, w
+        out.append(dict(ref=ref, num=str(num), x=x0 + rx, y=y0 + ry, w=w, h=h, layer=("ALL" if lib.get("tht") else ("F.Cu" if side == "F" else "B.Cu")), shape=shape, tht=bool(lib.get("tht")), drill=lib.get("drill", 0)))
+    return out
+PADS = [pd for p in D.PARTS for pd in pads_of(p["ref"])]
+owner = {}
+for n, pins in D.NETS.items():
+    for pr in pins: owner[pr] = n
+for pd in PADS: pd["net"] = owner.get((pd["ref"], pd["num"]))
+NETNAMES = sorted(D.NETS); NETID = {n: i + 1 for i, n in enumerate(NETNAMES)}
+
+# ------------------------------------------------------------ placement sanity (pad-to-pad clearance, board edge)
+def placement_check():
+    errs = []
+    for i, a in enumerate(PADS):
+        if math.hypot(abs(a["x"]) + a["w"] / 2, abs(a["y"]) + a["h"] / 2) > R_BOARD - EDGE_KEEP: errs.append(f"edge: {a['ref']}.{a['num']}")
+        for b in PADS[i + 1:]:
+            if (a["layer"] != b["layer"] and "ALL" not in (a["layer"], b["layer"])) or (a["ref"] == b["ref"]): continue
+            gx = abs(a["x"] - b["x"]) - (a["w"] + b["w"]) / 2; gy = abs(a["y"] - b["y"]) - (a["h"] + b["h"]) / 2
+            gap = math.hypot(max(gx, 0), max(gy, 0)) if (gx > 0 and gy > 0) else max(gx, gy)
+            if gap < CLEAR and a["net"] != b["net"]: errs.append(f"clearance {gap:.2f}: {a['ref']}.{a['num']} - {b['ref']}.{b['num']}")
+            if gx < 0 and gy < 0: errs.append(f"overlap: {a['ref']}.{a['num']} - {b['ref']}.{b['num']}")
+    return errs
+# ------------------------------------------------------------ grid (4 routing layers: F.Cu, In2.Cu, In3.Cu, B.Cu; planes In1=GND, In4=+5VA)
+LAYERS = ["F.Cu", "In2.Cu", "In3.Cu", "B.Cu"]; NL = 4; LIDX = {"F.Cu": 0, "B.Cu": 3, "ALL": 0}
+def layers_of(pd): return list(range(NL)) if pd["layer"] == "ALL" else [LIDX[pd["layer"]]]
+def cell(x, y): return int(round((x + OFF) / GRID)), int(round((y + OFF) / GRID))
+def xy(ix, iy): return ix * GRID - OFF, iy * GRID - OFF
+core = np.full((NL, N + 1, N + 1), -1, np.int32); blk = np.full((NL, N + 1, N + 1), -1, np.int32)
+yy, xx = np.mgrid[0:N + 1, 0:N + 1]
+rr = np.hypot(xx * GRID - OFF, yy * GRID - OFF)
+edge = (rr > R_BOARD - EDGE_KEEP - TRACK / 2)
+INFL = int(math.ceil((CLEAR + TRACK / 2) / GRID - 1e-9))
+def disk(r):
+    k = np.arange(-r, r + 1); return np.array([(i, j) for i in k for j in k if i * i + j * j <= r * r + 0.5])
+D_INFL = disk(INFL)
+def stamp_rect(L, x, y, w, h, net, margin):
+    x0, x1 = cell(x - w / 2 - margin, 0)[0], cell(x + w / 2 + margin, 0)[0]; y0, y1 = cell(0, y - h / 2 - margin)[1], cell(0, y + h / 2 + margin)[1]
+    x0, y0 = max(x0, 0), max(y0, 0); x1, y1 = min(x1, N), min(y1, N)
+    sub = blk[L, y0:y1 + 1, x0:x1 + 1]; own = sub == -1; sub[own] = net; sub[(~own) & (sub != net)] = -2
+def stamp_pad(pd):
+    net = NETID.get(pd["net"], 0) if pd["net"] else 0
+    for L in layers_of(pd): stamp_rect(L, pd["x"], pd["y"], pd["w"], pd["h"], net, CLEAR + TRACK / 2)
+def mark_core(pd):
+    net = NETID.get(pd["net"], 0) if pd["net"] else 0
+    x0, y0 = cell(pd["x"] - pd["w"] / 2, pd["y"] - pd["h"] / 2); x1, y1 = cell(pd["x"] + pd["w"] / 2, pd["y"] + pd["h"] / 2)
+    for L in layers_of(pd): core[L, y0:y1 + 1, x0:x1 + 1] = net; blk[L, y0:y1 + 1, x0:x1 + 1] = net
+for pd in PADS: stamp_pad(pd)
+for pd in PADS: mark_core(pd)
+def passable(L, net):
+    return (~edge) & ((core[L] == -1) | (core[L] == net)) & ((blk[L] == -1) | (blk[L] == net))
+STUB = {}
+def pad_cells(pd):
+    x0, y0 = cell(pd["x"] - pd["w"] / 2, pd["y"] - pd["h"] / 2); x1, y1 = cell(pd["x"] + pd["w"] / 2, pd["y"] + pd["h"] / 2)
+    return [(L, i, j) for L in layers_of(pd) for j in range(y0, y1 + 1) for i in range(x0, x1 + 1)] + STUB.get((pd["ref"], pd["num"]), [])
+TRACKS = []; VIAS = []
+def stamp_cells(path, net):
+    for (L, i, j) in path:
+        for di, dj in D_INFL:
+            a, b = i + di, j + dj
+            if 0 <= a <= N and 0 <= b <= N:
+                if blk[L, b, a] == -1: blk[L, b, a] = net
+                elif blk[L, b, a] != net: blk[L, b, a] = -2
+        core[L, j, i] = net
+VR = int(math.ceil((VIA_D / 2 + CLEAR) / GRID)); VDISK = disk(VR)
+def stamp_via(i, j, net):
+    for L in range(NL):
+        for di, dj in VDISK:
+            a, b = i + di, j + dj
+            if 0 <= a <= N and 0 <= b <= N:
+                if blk[L, b, a] == -1: blk[L, b, a] = net
+                elif blk[L, b, a] != net: blk[L, b, a] = -2
+        core[L, j, i] = net
+    x, y = xy(i, j); VIAS.append((x, y, net))
+NB = [(1, 0, 1.0), (-1, 0, 1.0), (0, 1, 1.0), (0, -1, 1.0), (1, 1, 1.414), (1, -1, 1.414), (-1, 1, 1.414), (-1, -1, 1.414)]
+def via_ok_map(net):
+    both = np.ones((N + 1, N + 1), bool)
+    for L in range(NL): both &= passable(L, net)
+    return ndimage.binary_erosion(both.astype(np.uint8), structure=np.ones((2 * VR + 1, 2 * VR + 1), bool), border_value=0)
+def astar(net, starts, targets, allow_via=True, window=None, via_cost=20.0, max_exp=600000):
+    P = [passable(L, net) for L in range(NL)]
+    VOK = via_ok_map(net) if allow_via else None
+    tset = set(targets); open_ = []; gcost = {}; came = {}
+    tl = np.array([(i, j) for (_, i, j) in targets]); bx0, bx1, by0, by1 = tl[:, 0].min(), tl[:, 0].max(), tl[:, 1].min(), tl[:, 1].max()
+    def h(i, j): return float(max(bx0 - i, 0, i - bx1, by0 - j, 0, j - by1))
+    for s_ in starts: gcost[s_] = 0.0; heapq.heappush(open_, (h(s_[1], s_[2]), s_))
+    if window: wx0, wy0, wx1, wy1 = window
+    n_exp = 0
+    while open_:
+        f, cur = heapq.heappop(open_)
+        if cur in tset:
+            path = [cur]
+            while cur in came: cur = came[cur]; path.append(cur)
+            return path[::-1]
+        g0 = gcost[cur]; L, i, j = cur; n_exp += 1
+        if n_exp > max_exp: return None
+        for di, dj, c in NB:
+            a, b = i + di, j + dj
+            if not (0 <= a <= N and 0 <= b <= N): continue
+            if window and not (wx0 <= a <= wx1 and wy0 <= b <= wy1): continue
+            if not P[L][b, a]: continue
+            if di and dj and not (P[L][j, a] and P[L][b, i]): continue
+            nxt = (L, a, b); g1 = g0 + c
+            if g1 < gcost.get(nxt, 1e18): gcost[nxt] = g1; came[nxt] = cur; heapq.heappush(open_, (g1 + h(a, b), nxt))
+        if VOK is not None and VOK[j, i]:
+            for L2 in range(NL):
+                if L2 == L: continue
+                nxt = (L2, i, j); g1 = g0 + via_cost
+                if g1 < gcost.get(nxt, 1e18): gcost[nxt] = g1; came[nxt] = cur; heapq.heappush(open_, (g1 + h(i, j), nxt))
+    return None
+def path_to_geometry(path, net, width=TRACK):
+    segs = []; vias = set(); k = 0
+    while k < len(path) - 1:
+        L, i, j = path[k]
+        if path[k + 1][0] != L: vias.add((i, j)); k += 1; continue
+        di, dj = path[k + 1][1] - i, path[k + 1][2] - j; m = k + 1
+        while m + 1 < len(path) and path[m + 1][0] == L and (path[m + 1][1] - path[m][1], path[m + 1][2] - path[m][2]) == (di, dj): m += 1
+        segs.append((L, xy(i, j), xy(path[m][1], path[m][2]), width)); k = m
+    return segs, sorted(vias)
+def commit(path, net, width=TRACK):
+    segs, vias = path_to_geometry(path, net, width)
+    for L, a, b, w in segs: TRACKS.append((LAYERS[L], a, b, w, net))
+    stamp_cells(path, net)
+    for (i, j) in vias: stamp_via(i, j, net)
+    return segs, vias
+# ------------------------------------------------------------ plane fanout vias
+def fanout(pd):
+    net = NETID[pd["net"]]; L = LIDX[pd["layer"]]
+    cells = pad_cells(pd); cx, cy = cell(pd["x"], pd["y"]); VOK = via_ok_map(net)
+    P = passable(L, net)
+    R = 70
+    x0, x1, y0, y1 = max(cx - R, 0), min(cx + R, N), max(cy - R, 0), min(cy + R, N)
+    sub = VOK[y0:y1 + 1, x0:x1 + 1] & P[y0:y1 + 1, x0:x1 + 1] & (core[L, y0:y1 + 1, x0:x1 + 1] == -1)
+    jj, ii = np.nonzero(sub)
+    tg = [(L, int(i) + x0, int(j) + y0) for i, j in zip(ii, jj)]
+    if not tg: return False
+    path = astar(net, cells, tg, allow_via=False, window=(x0, y0, x1, y1), max_exp=250000)
+    if not path: return False
+    a_, b_ = path[-1][1], path[-1][2]
+    segs, _ = path_to_geometry(path, net)
+    for L_, p_, q_, w in segs: TRACKS.append((LAYERS[L_], p_, q_, w, net))
+    stamp_cells(path, net); stamp_via(a_, b_, net); register_plane(net, path, a_, b_); return True
+TREE = {}
+def register_plane(net, path, a=None, b=None):
+    T = TREE.setdefault(net, set())
+    for c in path: T.add(c)
+    if a is not None:
+        for L in range(NL): T.add((L, a, b))
+def plane_connect(pd):
+    net = NETID[pd["net"]]; L = LIDX[pd["layer"]]; cx, cy = cell(pd["x"], pd["y"])
+    tg = [c for c in TREE.get(net, ()) if c[0] == L and abs(c[1] - cx) < 40 and abs(c[2] - cy) < 40]
+    if tg:
+        path = astar(net, pad_cells(pd), tg, allow_via=False, window=(cx - 50, cy - 50, cx + 50, cy + 50), max_exp=60000)
+        if path: commit(path, net); register_plane(net, path); return True
+    if fanout(pd): return True
+    return via_in_pad(pd)
+VIP = []
+def via_in_pad(pd):
+    net = NETID[pd["net"]]; VOK = via_ok_map(net)
+    x0, y0 = cell(pd["x"] - pd["w"] / 2 + VIA_D / 2, pd["y"] - pd["h"] / 2 + VIA_D / 2); x1, y1 = cell(pd["x"] + pd["w"] / 2 - VIA_D / 2, pd["y"] + pd["h"] / 2 - VIA_D / 2)
+    if x1 < x0: x0 = x1 = cell(pd["x"], 0)[0]
+    if y1 < y0: y0 = y1 = cell(0, pd["y"])[1]
+    cx, cy = cell(pd["x"], pd["y"]); best = None
+    for j in range(y0, y1 + 1):
+        for i in range(x0, x1 + 1):
+            if VOK[j, i] and (best is None or abs(i - cx) + abs(j - cy) < best[0]): best = (abs(i - cx) + abs(j - cy), i, j)
+    if not best: return False
+    _, i, j = best; stamp_via(i, j, net); register_plane(net, [], i, j); VIP.append(f"{pd['ref']}.{pd['num']}"); return True
+def ep_vias(pd):
+    net = NETID[pd["net"]]; done = 0
+    for dy in (-0.6, 0.6):
+        i, j = cell(pd["x"], pd["y"] + dy); stamp_via(i, j, net); register_plane(net, [], i, j); done += 1
+    return done
+# ------------------------------------------------------------ escape stubs for fine-pitch IC pins
+STUB_TYPES = ("OPA2211", "OPA2365", "REF5041", "ADS8860", "SW1G66")
+def escape_stubs(length=0.8):
+    n_ok = 0
+    for pd in PADS:
+        p = D.BYREF[pd["ref"]]
+        if pd.get("tht"): continue
+        is_conn = False
+        if not is_conn and (p["type"] not in STUB_TYPES or not pd["net"] or pd["net"] in PLANE): continue
+        if not pd["net"] or pd["num"] in ("MH1", "MH2"): continue
+        px, py = PLACE[pd["ref"]][0], PLACE[pd["ref"]][1]
+        if is_conn: dx, dy = (-1, 0) if px > 0 else (1, 0)
+        elif abs(pd["x"] - px) >= abs(pd["y"] - py): dx, dy = (1 if pd["x"] > px else -1), 0
+        else: dx, dy = 0, (1 if pd["y"] > py else -1)
+        net = NETID[pd["net"]]; L = LIDX[pd["layer"]]
+        if dx: i0, j0 = cell(pd["x"] + dx * pd["w"] / 2, pd["y"])
+        else: i0, j0 = cell(pd["x"], pd["y"] + dy * pd["h"] / 2)
+        steps = int(round(length / GRID)); Pm = passable(L, net); good = []
+        for k in range(0, steps + 1):
+            c = (L, i0 + dx * k, j0 + dy * k)
+            if Pm[c[2], c[1]]: good.append(c)
+            else: break
+        if len(good) >= 2:
+            TRACKS.append((LAYERS[L], xy(good[0][1], good[0][2]), xy(good[-1][1], good[-1][2]), TRACK, net)); stamp_cells(good, net); STUB[(pd["ref"], pd["num"])] = good; n_ok += 1
+    return n_ok
+# ------------------------------------------------------------ main
+def run():
+    t0 = time.time(); rep = {"placement_errors": placement_check()}
+    rep["stubs"] = escape_stubs()
+    # exposed-pad vias first
+    for pd in PADS:
+        if pd["ref"] in ("U1", "U2", "U3") and pd["num"] == "9": ep_vias(pd)
+    fan = [pd for pd in PADS if pd["net"] in PLANE and not pd["tht"]]
+    for pd in PADS:
+        if pd["tht"] and pd["net"] in PLANE: register_plane(NETID[pd["net"]], pad_cells(pd))
+    fan.sort(key=lambda p: (math.hypot(p["x"], p["y"])))
+    nets = {}
+    for pd in PADS:
+        if pd["net"] and pd["net"] not in PLANE: nets.setdefault(pd["net"], []).append(pd)
+    multi = sorted([n for n in nets if len(nets[n]) >= 4], key=lambda n: -len(nets[n]))
+    rest = sorted([n for n in nets if len(nets[n]) in (2, 3)], key=lambda n: (max(p["x"] for p in nets[n]) - min(p["x"] for p in nets[n])) + (max(p["y"] for p in nets[n]) - min(p["y"] for p in nets[n])))
+    failed = []
+    def route(name):
+        net = NETID[name]; pads = nets[name]
+        tree = pad_cells(pads[0]); connected = [pads[0]]; remaining = pads[1:]; ok = True
+        while remaining:
+            remaining.sort(key=lambda p: min(math.hypot(p["x"] - q["x"], p["y"] - q["y"]) for q in connected))
+            tgt = remaining.pop(0); starts = pad_cells(tgt)
+            path = astar(net, starts, tree)
+            if path is None: ok = False; failed.append(f"{name}: {tgt['ref']}.{tgt['num']}"); continue
+            commit(path, net); tree = tree + list(path) + pad_cells(tgt); connected.append(tgt)
+        print("routed", name, ok, flush=True)
+    import os
+    byname = {f"{p['ref']}.{p['num']}": p for p in PADS}
+    bad_fan = []
+    first = sorted([n for n in nets if n.startswith("ADCIN_")]) + sorted([n for n in nets if n.startswith("SDO")])
+    BUS = first + sorted([n for n in nets if n.startswith("SPARE")]) + sorted([n for n in nets if n.startswith("RAW_")]) + ["NR", "SCLK", "CS", "+3V3D", "BLANK", "VREF", "VCM", "VREF_RAW", "VCM_DIV"]
+    prio = json.load(open(f"prio_{BOARD}.json")) if os.path.exists(f"prio_{BOARD}.json") else {"nets": []}
+    done = set()
+    def go(name):
+        if name in nets and len(nets[name]) >= 2 and name not in done: done.add(name); route(name)
+    early = [pd for pd in fan if D.BYREF[pd["ref"]]["type"].startswith("C")]
+    early.sort(key=lambda p: (round(p["y"] / 3.0), p["x"]))
+    for pd in early:
+        if not plane_connect(pd): bad_fan.append(f"{pd['ref']}.{pd['num']}")
+    fan = [pd for pd in fan if pd not in early]
+    for name in first + sorted([n for n in nets if n.startswith("SPARE")]): go(name)
+    fan.sort(key=lambda p: (round(p["y"] / 3.0), p["x"]))
+    for pd in fan:
+        if not plane_connect(pd): bad_fan.append(f"{pd['ref']}.{pd['num']}")
+    for name in BUS: go(name)
+    rep["fanout_failed"] = bad_fan; print("plane connections", len(fan) - len(bad_fan), "/", len(fan), "vias", len(VIAS), "%.0fs" % (time.time() - t0), flush=True)
+    for name in prio["nets"]: go(name)
+    for name in multi: go(name)
+    for name in rest: go(name)
+    newnets = list(dict.fromkeys([f.split(":")[0] for f in failed if f.split(":")[0] not in BUS]))
+    prio["nets"] = list(dict.fromkeys(newnets + prio["nets"]))[:40]
+    json.dump(prio, open(f"prio_{BOARD}.json", "w"))
+    rep["unrouted"] = failed
+    rep["via_in_pad"] = list(VIP); rep["tracks"] = len(TRACKS); rep["vias"] = len(VIAS); rep["time_s"] = round(time.time() - t0, 1)
+    return rep
+def diagnose(rep):
+    from collections import deque
+    byname = {f"{p['ref']}.{p['num']}": p for p in PADS}
+    out = []
+    for f in rep["unrouted"] + [f"?: {x}" for x in rep["fanout_failed"][:12]]:
+        name, key = f.split(": "); pd = byname[key]
+        net = NETID[pd["net"]]; P = [passable(L, net) for L in range(NL)]; VOK = via_ok_map(net)
+        seen = set(pad_cells(pd)); dq = deque(seen); tg = set()
+        for q in PADS:
+            if q["net"] == pd["net"] and q is not pd: tg |= set(pad_cells(q))
+        hit = False; layers = set()
+        while dq:
+            L, i, j = dq.popleft()
+            for di, dj, c in NB:
+                a, b = i + di, j + dj
+                if 0 <= a <= N and 0 <= b <= N and P[L][b, a] and (L, a, b) not in seen:
+                    seen.add((L, a, b)); dq.append((L, a, b))
+            if VOK[j, i]:
+                for L2 in range(NL):
+                    if (L2, i, j) not in seen: seen.add((L2, i, j)); dq.append((L2, i, j))
+        xs = [c[1] for c in seen]; ys = [c[2] for c in seen]
+        out.append(f"{f}: reach={len(seen)} cells, x[{min(xs)*GRID-OFF:.1f},{max(xs)*GRID-OFF:.1f}] y[{min(ys)*GRID-OFF:.1f},{max(ys)*GRID-OFF:.1f}], target reached={bool(seen & tg)}, pad=({pd['x']:.2f},{pd['y']:.2f}) layer {pd['layer']}")
+    return out
+
+def ascii_map(key, half=26):
+    byname = {f"{p['ref']}.{p['num']}": p for p in PADS}; pd = byname[key]; net = NETID[pd["net"]]
+    cx, cy = cell(pd["x"], pd["y"]); L = LIDX["F.Cu"]
+    names = {v: k for k, v in NETID.items()}
+    for L in (0, 1, 2):
+        print("LAYER", LAYERS[L], "(# blocked, letters = other-net core, . free, o = own)")
+        for j in range(cy - half // 2, cy + half // 2 + 1):
+            row = ""
+            for i in range(cx - half * 2, cx + half * 2 + 1):
+                if (i, j) == (cx, cy): row += "X"
+                elif core[L, j, i] == net: row += "o"
+                elif core[L, j, i] >= 0: row += chr(ord('a') + core[L, j, i] % 26)
+                elif blk[L, j, i] != -1 and blk[L, j, i] != net: row += "#"
+                else: row += "."
+            print(row)
+
+if __name__ == "__main__":
+    e = placement_check(); print("placement errors:", len(e)); [print(" ", x) for x in e[:25]]
+    if "--route" in sys.argv:
+        rep = run(); print(json.dumps(rep, indent=1)[:2000])
+        if "--map" in sys.argv: ascii_map(sys.argv[sys.argv.index("--map") + 1])
+        if "--diag" in sys.argv:
+            for line in diagnose(rep): print("DIAG", line)
+        json.dump(dict(PLACE=PLACE, TRACKS=[(a, list(b), list(c), d, n) for a, b, c, d, n in TRACKS], VIAS=VIAS, rep=rep), open(f"out_board/AB1{BOARD}_layout.json", "w"))

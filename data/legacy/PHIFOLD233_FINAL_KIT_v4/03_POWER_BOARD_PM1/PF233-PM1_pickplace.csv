@@ -1,0 +1,29 @@
+Ref,Val,Package,PosX_mm,PosY_mm,Rot,Side
+JA,"Cartridge A: NEG, PRE, POS, ID",Terminal_block_1x4_P5.08mm,-7,51,0,top
+FA,5A slow 32V,Fuse_1812_4532Metric,-7,35,0,top
+DOA,SS10P6 60V 10A,D_SMC,-7,27,0,top
+RPA,22R 2W pulse,R_2512_6332Metric,-7,19,0,top
+DPA,SS3P6 60V 3A,D_SMB,-7,12,0,top
+JB,"Cartridge B: NEG, PRE, POS, ID",Terminal_block_1x4_P5.08mm,7,51,0,top
+FB,5A slow 32V,Fuse_1812_4532Metric,7,35,0,top
+DOB,SS10P6 60V 10A,D_SMC,7,27,0,top
+RPB,22R 2W pulse,R_2512_6332Metric,7,19,0,top
+DPB,SS3P6 60V 3A,D_SMB,7,12,0,top
+DTVS,SMCJ33A,D_SMC,0,4,0,top
+CB1,470u 50V,CP_Elec_10x10,-6.7,-8,0,top
+CB2,470u 50V,CP_Elec_10x10,6.7,-8,0,top
+CM1,10u 50V,C_1210_3225Metric,-7,-20,0,top
+CM2,10u 50V,C_1210_3225Metric,7,-20,0,top
+RBL,100k,R_1206_3216Metric,0,-26,0,top
+RS1,100k,R_0603_1608Metric,-8,-32,0,top
+RS2,10k,R_0603_1608Metric,0,-32,0,top
+CS1,100n,C_0603_1608Metric,8,-32,0,top
+JBK,Aux buck module VIN GND VOUT,Pin_header_1x3_P2.54mm,-9,-40,0,top
+FB1,BLM/742792 class 6A,L_1812_4532Metric,3,-40,0,top
+CAUX,22u 25V,C_1210_3225Metric,5,-46,0,top
+CAUX2,100n,C_0603_1608Metric,11,-46,0,top
+JP,Power out: VBUS VBUS GND GND,Terminal_block_1x4_P5.08mm,-7,-58,0,top
+JS,Signals: 12V GND 485A 485B SENSE A_ID B_ID SHLD,Pin_header_2x4_P2.54mm,8,-61,0,top
+JR,RS-485 to pod,Pin_header_1x2_P2.54mm,7,-52,0,top
+RSH,1M,R_0603_1608Metric,-8,-47,0,top
+CSH,1n 100V,C_0603_1608Metric,-2,-47,0,top

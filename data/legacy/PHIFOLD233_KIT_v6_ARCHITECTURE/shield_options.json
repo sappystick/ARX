@@ -1,0 +1,46 @@
+{
+ "shield": {
+  "sprayed ferrite-silicone, mu 10, 0.3 mm": {
+   "S": 1.0,
+   "dB": 0.3,
+   "metal_in_head_reduction_S2": 1
+  },
+  "flexible ferrite sheet, mu 100, 0.5 mm": {
+   "S": 1.5,
+   "dB": 3.6,
+   "metal_in_head_reduction_S2": 2
+  },
+  "flaked nanocrystalline, mu_eff 1500, 0.12 mm": {
+   "S": 2.9,
+   "dB": 9.2,
+   "metal_in_head_reduction_S2": 8
+  },
+  "nanocrystalline, mu_eff 5000 (pulse), 0.12 mm": {
+   "S": 7.2,
+   "dB": 17.2,
+   "metal_in_head_reduction_S2": 53
+  },
+  "nanocrystalline, mu_eff 5000, 0.25 mm": {
+   "S": 14.0,
+   "dB": 22.9,
+   "metal_in_head_reduction_S2": 197
+  },
+  "nanocrystalline, mu_eff 10000, 0.25 mm": {
+   "S": 27.0,
+   "dB": 28.6,
+   "metal_in_head_reduction_S2": 731
+  },
+  "MnZn tube mu 2000, 3 mm": {
+   "S": 63.5,
+   "dB": 36.1,
+   "metal_in_head_reduction_S2": 4032
+  }
+ },
+ "mass": {
+  "ribbon_0p25mm_g": 52.0,
+  "MnZn_3mm_g": 420.0
+ },
+ "unslit_ribbon_cylinder_eddy_tau_us": 6.26,
+ "sectored_Cu_plane_nuggets": 13.0,
+ "combined": "sectored copper (13x nugget bare) / S^2: S=29 -> 0.015x ; S=15 -> 0.06x; S=1.03 (spray) -> 12x"
+}

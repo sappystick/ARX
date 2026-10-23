@@ -1,0 +1,68 @@
+{
+ "scan (8 A, 800 Hz): damping 0.15 W, LED 0.1 W | ambient 25 C": {
+  "total_W": 0.67,
+  "CB1D_parts_C": 30.1,
+  "damping_chain_C": 30.1,
+  "AB1_boards_C": 29.1,
+  "LB1_LEDs_C": 29.3,
+  "hub_wall_C": 28.3,
+  "cap_top_C": 28.3,
+  "RX_board_C": 28.1,
+  "max_C": 30.1
+ },
+ "scan (8 A, 800 Hz): damping 0.15 W, LED 0.1 W | ambient 40 C": {
+  "total_W": 0.67,
+  "CB1D_parts_C": 45.1,
+  "damping_chain_C": 45.1,
+  "AB1_boards_C": 44.1,
+  "LB1_LEDs_C": 44.3,
+  "hub_wall_C": 43.3,
+  "cap_top_C": 43.3,
+  "RX_board_C": 43.1,
+  "max_C": 45.1
+ },
+ "boost (20 A, 400 Hz): damping 0.46 W, LED 0.25 W | ambient 25 C": {
+  "total_W": 1.13,
+  "CB1D_parts_C": 34.2,
+  "damping_chain_C": 34.2,
+  "AB1_boards_C": 31.6,
+  "LB1_LEDs_C": 32.5,
+  "hub_wall_C": 30.7,
+  "cap_top_C": 30.8,
+  "RX_board_C": 30.0,
+  "max_C": 34.2
+ },
+ "boost (20 A, 400 Hz): damping 0.46 W, LED 0.25 W | ambient 40 C": {
+  "total_W": 1.13,
+  "CB1D_parts_C": 49.2,
+  "damping_chain_C": 49.2,
+  "AB1_boards_C": 46.6,
+  "LB1_LEDs_C": 47.5,
+  "hub_wall_C": 45.7,
+  "cap_top_C": 45.8,
+  "RX_board_C": 45.0,
+  "max_C": 49.2
+ },
+ "worst: boost + LED 0.5 W | ambient 25 C": {
+  "total_W": 1.38,
+  "CB1D_parts_C": 35.6,
+  "damping_chain_C": 35.6,
+  "AB1_boards_C": 32.7,
+  "LB1_LEDs_C": 35.0,
+  "hub_wall_C": 31.8,
+  "cap_top_C": 32.7,
+  "RX_board_C": 30.7,
+  "max_C": 35.6
+ },
+ "worst: boost + LED 0.5 W | ambient 40 C": {
+  "total_W": 1.38,
+  "CB1D_parts_C": 50.6,
+  "damping_chain_C": 50.6,
+  "AB1_boards_C": 47.7,
+  "LB1_LEDs_C": 50.0,
+  "hub_wall_C": 46.8,
+  "cap_top_C": 47.7,
+  "RX_board_C": 45.7,
+  "max_C": 50.6
+ }
+}

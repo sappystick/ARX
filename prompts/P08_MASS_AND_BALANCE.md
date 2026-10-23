@@ -1,0 +1,2 @@
+# P08 Mass and balance
+Goal: static torque about the grip under 2.2 kg m. Levers: shaft angle, former infill and lightening (keep flat faces and groove geometry), hood 278 g, battery boom position, vault potting mass, litz. Use data/results/printed_parts_mass.csv and src/shaft/shaft_calc_v20.py. Deliver a Pareto table of mass saved vs signal lost (use the simulations) and the recommended configuration.

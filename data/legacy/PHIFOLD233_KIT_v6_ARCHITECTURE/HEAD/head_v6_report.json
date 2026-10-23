@@ -1,0 +1,82 @@
+{
+ "H20_head_core_and_outer_band_ONE_PIECE": {
+  "shells": 2,
+  "triangles": 741640,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -116.5,
+   -116.5,
+   0.0,
+   116.5,
+   116.5,
+   42.0
+  ],
+  "note": "outer wound band + gallery ring + drum wall (r 59-62.4, h 42) + vault ledge; 4 wire windows; cable notch at 90 deg; print base down, no supports"
+ },
+ "H21_lid_with_potting_ports_glands_yoke": {
+  "shells": 7,
+  "triangles": 310448,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -63.2,
+   -63.2,
+   42.0,
+   63.2,
+   63.2,
+   70.5
+  ],
+  "note": "3 x D8 fill ports (tapered bosses), 3 x D3 vents, 2 x D10 cable glands at x +-24, yoke pivot hole z=58 (drill 8.1); drill nothing else; print flat"
+ },
+ "H22_vault_liner_tray": {
+  "shells": 2,
+  "triangles": 236,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -38.2,
+   -38.2,
+   6.0,
+   38.2,
+   38.2,
+   37.2
+  ],
+  "note": "square liner 76.4 x 76.4, inner 74 x 74 x 30; tiles (MnZn 3 mm) bond to the OUTSIDE faces; boards stack inside"
+ },
+ "H23_vault_liner_lid": {
+  "shells": 1,
+  "triangles": 236,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -38.2,
+   -38.2,
+   34.2,
+   38.2,
+   38.2,
+   38.4
+  ],
+  "note": "closing plate with 3 mm locating lip; one 6 mm corner notch is left unfilled for silicone filling and the harness exit"
+ },
+ "budget": {
+  "cavity_drum_cm3": 459.3,
+  "vault_outer_cm3": 248.2,
+  "vault_inner_cm3": 164.3,
+  "MnZn_tiles_cm3": 69.5,
+  "MnZn_tiles_g": 341.0,
+  "syntactic_foam_volume_cm3": 211.1,
+  "syntactic_foam_g": 148.0,
+  "silicone_volume_cm3": 75.5,
+  "silicone_g": 94.0,
+  "head_mass_estimate_g": {
+   "printed_body_lid_liner": 720,
+   "wound_Litz_outer_band": 320,
+   "antenna_board_SB1": 260,
+   "bezel_skid": 250,
+   "vault_tiles": 341.0,
+   "boards_and_parts": 190,
+   "foam": 148.0,
+   "silicone": 94.0,
+   "total": 2323.0
+  },
+  "head_height_mm_underside_to_lid_top": 44.5,
+  "head_height_with_skid_mm": 50.5
+ }
+}

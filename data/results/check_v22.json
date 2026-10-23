@@ -1,0 +1,355 @@
+{
+ "checks": [
+  {
+   "check": "hub: open edges",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "roof: open edges",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "tray: open edges",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "septum: open edges",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "comb: open edges",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "hub: faces inside the spine channel volume (0 = clear)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "hub: faces inside the floor slot (r29-36, 0 = open)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "hub: exit window still open",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "hub: top of the cylinder (no roof) z max",
+   "value": 41.3,
+   "min": 41.29,
+   "max": 41.31,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "rib/post angle vs nearest lead port (deg; need >= 5.2 deg = 4 mm at r44)",
+   "value": 8.0,
+   "min": 5.2,
+   "max": null,
+   "result": "PASS",
+   "note": "smallest 8.0 deg"
+  },
+  {
+   "check": "rib/post angle vs exit window centre (deg; window half width 9.5 deg)",
+   "value": 43.0,
+   "min": 12.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "roof: faces inside the 8 screw holes (0 = open over every post)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "roof: face centroids inside the 66 pixel holes (0 = open)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "roof: z range",
+   "value": 41.3,
+   "min": 41.29,
+   "max": 41.31,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "roof: top z",
+   "value": 44.5,
+   "min": 44.49,
+   "max": 44.51,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "tray: points inside the spine walls (|x|>6, r>37.2 near 90 deg)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "tray max radius vs wall r44",
+   "value": 5.2,
+   "min": 4.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "septum: radial reach vs wall r44",
+   "value": 0.4,
+   "min": 0.2,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "septum ring edge vs slot floor r39.3",
+   "value": 0.3,
+   "min": 0.2,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "septum thickness vs slot 1.9",
+   "value": 0.2,
+   "min": 0.1,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "septum: faces in the spine notch (r32-38.5, |x|<7)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "comb width vs 12 mm channel",
+   "value": 0.4,
+   "min": 0.2,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "hub: TX-lead channel open all round (faces in r46-48.4, z39.8-41.1, away from lanes)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "roof: TX-lead channel open (faces in r46-48.2, z41.4-43.4)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "roof channel top skin thickness (mm)",
+   "value": 1.0,
+   "min": 0.8,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "hub wall above the channel: outer skin r48.6-49.5 (mm)",
+   "value": 0.9,
+   "min": 0.8,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "channel cross-section (wall groove 3.0 x 1.7 + roof 3.0 x 2.2 mm2) vs 6 litz (6.8 mm2 / 0.7 fill)",
+   "value": 11.7,
+   "min": 9.714285714285715,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "base plate v3: open edges",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 22.5 deg: base plate window open (faces within 1.4 mm of the axis)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 22.5 deg: boss wall present (faces at r2.0 of the axis)",
+   "value": 80.0,
+   "min": 20,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 22.5 deg: insert bore open (no faces inside r1.5)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 22.5 deg: separation from the 90 deg spine slot (deg)",
+   "value": 67.5,
+   "min": 50.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 157.5 deg: base plate window open (faces within 1.4 mm of the axis)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 157.5 deg: boss wall present (faces at r2.0 of the axis)",
+   "value": 80.0,
+   "min": 20,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 157.5 deg: insert bore open (no faces inside r1.5)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 157.5 deg: separation from the 90 deg spine slot (deg)",
+   "value": 67.5,
+   "min": 50.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 247.5 deg: base plate window open (faces within 1.4 mm of the axis)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 247.5 deg: boss wall present (faces at r2.0 of the axis)",
+   "value": 80.0,
+   "min": 20,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 247.5 deg: insert bore open (no faces inside r1.5)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "boss 247.5 deg: separation from the 90 deg spine slot (deg)",
+   "value": 157.5,
+   "min": 50.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "SB1R-Q board holes coincide with the hub bosses and base plate windows (angle+radius deviation)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0.01,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "SB1R-Q hole copper margin (mm beyond 0.4 mm clearance)",
+   "value": 2.36,
+   "min": 0.5,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "SB1R-Q via clearance margin (mm)",
+   "value": 0.89,
+   "min": 0.3,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  }
+ ],
+ "mass_g": {
+  "hub v5 (upper bound)": 101,
+  "roof": 29,
+  "tray": 5,
+  "septum frame": 5,
+  "comb": 1
+ }
+}

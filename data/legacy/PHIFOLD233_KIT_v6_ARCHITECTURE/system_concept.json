@@ -1,0 +1,293 @@
+{
+ "head_bay_field": {
+  "B_bay_uT_per_A": 195.3,
+  "turn_off_us": {
+   "scan_8A": 1.37,
+   "boost_20A": 3.42
+  },
+  "shield_factor_vs_ferrite_wall": {
+   "2 mm": {
+    "S_closed_can": 92.0,
+    "dB": 39.3
+   },
+   "3 mm": {
+    "S_closed_can": 137.0,
+    "dB": 42.8
+   },
+   "5 mm": {
+    "S_closed_can": 228.0,
+    "dB": 47.2
+   },
+   "8 mm": {
+    "S_closed_can": 365.0,
+    "dB": 51.2
+   }
+  },
+  "induced_EMF_in_board_loops": {
+   "scan_8A": {
+    "B_bay_mT": 1.56,
+    "dBdt_T_per_s": 1140.0,
+    "EMF_V_full_board_loop_1p26cm2": 1.44,
+    "EMF_V_typical_loop_1cm2": 0.114,
+    "EMF_mV_after_40dB_shield": 14.4,
+    "EMF_mV_after_47dB_shield_5mm": 6.3
+   },
+   "boost_20A": {
+    "B_bay_mT": 3.91,
+    "dBdt_T_per_s": 1142.0,
+    "EMF_V_full_board_loop_1p26cm2": 1.44,
+    "EMF_V_typical_loop_1cm2": 0.114,
+    "EMF_mV_after_40dB_shield": 14.4,
+    "EMF_mV_after_47dB_shield_5mm": 6.3
+   }
+  },
+  "design_rules": [
+   "closed ferrite can: tube + top cap + bottom cap, all MnZn mu_r >= 2000, wall >= 5 mm for 47 dB (3 mm gives 42 dB)",
+   "cable and flow penetrations <= 4 mm and through the SIDE wall, never through a cap centre",
+   "board loops: route returns directly under signals; keep each board's enclosed loop area under 1 cm2",
+   "AB1 BLANK asserted from before TX turn-off until 2-3 us after (cuts the residual EMF)"
+  ],
+  "note": "S = 1 + mu_r t / (2 a) is the transverse closed-cylinder estimate; axial shielding of a can with end caps is lower and must be measured."
+ },
+ "potting_materials_typical_datasheet_class": {
+  "syntactic silicone (Pt-cure 2-part + glass bubbles 35-40 vol%)": {
+   "density": 0.75,
+   "k": 0.15,
+   "eps_r": 2.6,
+   "hardness": "Shore A 35-50",
+   "Tmax_C": 200,
+   "exotherm": "very low (addition cure, <10 K in 50 cm3)",
+   "use": "head bay, boards and antenna region"
+  },
+  "syntactic epoxy (low-exotherm, glass bubbles 40 vol%)": {
+   "density": 0.75,
+   "k": 0.12,
+   "eps_r": 2.5,
+   "hardness": "Shore D 65-75",
+   "Tmax_C": 110,
+   "exotherm": "moderate: pour in <=10 mm lifts",
+   "use": "elbow/handle cavities, structural fill"
+  },
+  "alumina-filled epoxy or silicone (50-60 wt% Al2O3)": {
+   "density": 1.9,
+   "k": 1.2,
+   "eps_r": 4.5,
+   "hardness": "Shore A 70 / D 80",
+   "Tmax_C": 150,
+   "exotherm": "moderate",
+   "use": "NPM hot zone only (FETs, clamp resistors)"
+  }
+ },
+ "potting_effect_on_antenna_capacitance": {
+  "syntactic silicone": {
+   "C_gradiometer_pF": 19.5,
+   "SRF_gradiometer_MHz": 3.07,
+   "SRF_X8_MHz": 0.307
+  },
+  "syntactic epoxy": {
+   "C_gradiometer_pF": 19.2,
+   "SRF_gradiometer_MHz": 3.09,
+   "SRF_X8_MHz": 0.309
+  },
+  "alumina-filled epoxy or silicone": {
+   "C_gradiometer_pF": 24.9,
+   "SRF_gradiometer_MHz": 2.72,
+   "SRF_X8_MHz": 0.272
+  }
+ },
+ "glass_bubble_truth": "Hollow glass microspheres LOWER density, dielectric constant and shrinkage, and soften the exotherm, but they are thermal INSULATORS (k about 0.12-0.15 W/mK). They do not improve heat dissipation; heat is handled by low head dissipation, solid printed walls, and alumina-filled potting only where a hot part sits.",
+ "head_potting": {
+  "bay_free_volume_cm3": 36.5,
+  "bay_fill_mass_g": 27.0,
+  "groove_void_cm3": 115.0,
+  "groove_fill_mass_g": 86.0,
+  "procedure": [
+   "1 conformal coat boards (silicone or parylene), fit ferrite can parts",
+   "2 vacuum-pot the bay module (3 boards + septum) in its sleeve through the lid port, vent opposite, 3 lifts max",
+   "3 wipe-fill the winding grooves on face, rim, underside and inner walls BEFORE bonding the sensor board",
+   "4 bond SB1 with epoxy film, bezel with epoxy, skid with VHB",
+   "5 final cure and leak test (pressure decay 20 kPa)"
+  ]
+ },
+ "head_thermal": {
+  "dissipation_W": {
+   "AB1A_AB1B": 0.32,
+   "MCU_240MHz": 0.35,
+   "LDO_losses": 0.14,
+   "misc": 0.15
+  },
+  "total_W": 0.96,
+  "radial_R_solid_PETG_K_per_W": 27.4,
+  "dT_bay_solid_K": 26.3,
+  "dT_bay_if_40pct_infill_K": 59.2,
+  "rule": "print the head body SOLID (100% infill); keep head dissipation <= 1 W; regulation losses live outside the head (pre-regulated 5.5 V / 3.6 V rails)",
+  "NPM_dissipation_W": {
+   "clamp_scan": 2.23,
+   "clamp_boost_300Hz": 5.23,
+   "FET_and_shunt_boost": 1.1,
+   "damping": 0.5
+  },
+  "NPM_dT_boost_K": 18.5
+ },
+ "ribbon": {
+  "type": "12-conductor flat silicone ribbon, 1.0 mm pitch, AWG 28 (12 mm wide x 0.5 mm), two ribbons (POWER and SIGNAL) in separate chambers",
+  "telescoping_stroke_mm": 450.0,
+  "trolley_travel_mm": 225.0,
+  "extra_ribbon_length_mm": 450.0,
+  "loop_radius_mm": 3.5,
+  "chamber_inner_mm": "15.6 wide x 7.0 high",
+  "cassette_envelope_mm": "18 x 18 (fits a 26 mm bore)",
+  "POWER_ribbon_pins": [
+   "VBUS",
+   "VBUS",
+   "VBUS",
+   "GND",
+   "GND",
+   "GND",
+   "+12V",
+   "+5V5",
+   "+3V6",
+   "GND",
+   "EN_MAIN",
+   "spare"
+  ],
+  "SIGNAL_ribbon_pins": [
+   "TRIG",
+   "JOY_X",
+   "JOY_Y",
+   "DIAL",
+   "AUDIO",
+   "GND",
+   "GND",
+   "SHIELD",
+   "spare",
+   "spare",
+   "spare",
+   "spare"
+  ],
+  "VBUS_drop_V_at_2A_1p1m": 0.314,
+  "note": "3 conductors in parallel per rail leg; AWG28 is rated about 0.7 A each"
+ },
+ "handle_power": {
+  "pack": "7S1P 18650 folded 4+3 in a U-pack, 290 x 38 x 20 mm, about 460 g, 90.7 Wh",
+  "holdup": "supercap bridge 1 F / 27 V (10 x 10 F 2.7 V cells in series, balanced) on the PM1 cartridge-B input: about 40 s of scan-mode operation during a swap",
+  "swap_time_s": "< 10 typical; boost mode is not guaranteed through a swap",
+  "runtime_h": {
+   "scan": {
+    "battery_W": 5.5,
+    "hours_one_cartridge": 16.5,
+    "hours_two_cartridges": 33.0
+   },
+   "trigger_boost_300Hz": {
+    "battery_W": 13.93,
+    "hours_one_cartridge": 6.5,
+    "hours_two_cartridges": 13.0
+   }
+  }
+ },
+ "mass_and_balance": {
+  "masses_kg": {
+   "head body + windings + SB1 + bezel/skid + bay + potting": 1.25,
+   "neck power module (PB1 + housing + potting)": 0.55,
+   "shaft tubes + cassettes + ribbons": 0.45,
+   "elbow + grip + PM1 + HB1": 0.4,
+   "U-pack battery": 0.46,
+   "supercap bridge": 0.06
+  },
+  "total_kg": 3.17,
+  "swing_moment_about_hand_kg_m": 2.14,
+  "typical_detector_kg_m": "about 1.3-1.7",
+  "warning": "head-heavy: about 2.0 kg.m about the hand. Shorten the shaft, move the hand forward, or drop the 2nd potting lift in the NPM to reduce it. Measure with a pendulum test."
+ },
+ "cavities": [
+  {
+   "id": "C1 head bay (ferrite can)",
+   "contents": "AB1A, AB1B, septum, CB1",
+   "V_max": "30 V",
+   "I_max": "1 A",
+   "T_max_C": 85,
+   "potting": "syntactic silicone",
+   "IP_target": "IP68 (potted, no openings except side cable port)",
+   "shield": "closed MnZn can 5 mm + copper-foil E-shield",
+   "ports": "1 fill D6 + 1 vent D4 in the lid"
+  },
+  {
+   "id": "C2 winding grooves + antenna layer",
+   "contents": "Litz windings, SB1",
+   "V_max": "600 V transient (flyback)",
+   "I_max": "20 A pulse",
+   "T_max_C": 85,
+   "potting": "syntactic silicone/epoxy wipe-fill",
+   "IP_target": "IP68 (sealed by bezel + skid)",
+   "shield": "none (magnetically open by design)",
+   "ports": "open-face fill"
+  },
+  {
+   "id": "C3 NPM power chamber (PB1)",
+   "contents": "PB1, 2 bulk caps, clamp resistors",
+   "V_max": "600 V (HV zone), 30 V (LV zone)",
+   "I_max": "33 A pulse",
+   "T_max_C": 100,
+   "potting": "alumina-filled hot zone + syntactic remainder",
+   "IP_target": "IP67",
+   "shield": "foil septum, single-point ground",
+   "ports": "2 fill D8 + 2 vent D4"
+  },
+  {
+   "id": "C4 ribbon chamber A (power)",
+   "contents": "12-way power ribbon on trolley",
+   "V_max": "30 V",
+   "I_max": "3 A",
+   "T_max_C": 70,
+   "potting": "none (dry, vented and gasketed)",
+   "IP_target": "IP65",
+   "shield": "copper-foil lining, drain wire",
+   "ports": "breather membrane"
+  },
+  {
+   "id": "C5 ribbon chamber B (signal)",
+   "contents": "12-way signal ribbon on trolley",
+   "V_max": "12 V",
+   "I_max": "0.2 A",
+   "T_max_C": 70,
+   "potting": "none",
+   "IP_target": "IP65",
+   "shield": "copper-foil lining, drain wire",
+   "ports": "breather membrane"
+  },
+  {
+   "id": "C6 elbow electronics (PM1)",
+   "contents": "PM1, buck modules",
+   "V_max": "30 V",
+   "I_max": "5 A",
+   "T_max_C": 80,
+   "potting": "syntactic epoxy",
+   "IP_target": "IP67",
+   "shield": "foil",
+   "ports": "1 fill + 1 vent"
+  },
+  {
+   "id": "C7 grip electronics (HB1)",
+   "contents": "HB1, hall sensor, joystick",
+   "V_max": "12 V",
+   "I_max": "0.3 A",
+   "T_max_C": 70,
+   "potting": "syntactic silicone",
+   "IP_target": "IP65",
+   "shield": "foil",
+   "ports": "1 fill"
+  },
+  {
+   "id": "C8 battery drawer",
+   "contents": "U-pack, supercap bridge",
+   "V_max": "30 V",
+   "I_max": "10 A",
+   "T_max_C": 60,
+   "potting": "none (removable)",
+   "IP_target": "IP65 (O-ring)",
+   "shield": "none",
+   "ports": "pressure-relief membrane"
+  }
+ ],
+ "ratings_note": "IP targets are design goals for a sealed, potted, gasketed build; none is certified. Dielectric strength of potting spacing is design-checked only."
+}

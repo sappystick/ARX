@@ -1,0 +1,8 @@
+piece,cup,size_mm,qty,note
+wall strip,A,258.7 x 5.8,1,"foil / graphite / ribbon, 3 mm overlap"
+wall strip,B,258.7 x 5.8,1,"foil / graphite / ribbon, 3 mm overlap"
+wall strip,CD,258.7 x 14.4,1,"foil / graphite / ribbon, 3 mm overlap"
+floor disc (also the lid of the cell below),A,D81.0 with 2 slots 6 x 8 at +/-36,1,slot positions match the cup floor slots
+floor disc (also the lid of the cell below),B,D81.0 with 2 slots 6 x 8 at +/-36,1,slot positions match the cup floor slots
+floor disc (also the lid of the cell below),CD,D81.0 with 2 slots 6 x 8 at +/-36,1,slot positions match the cup floor slots
+shim between AB1A and AB1B,A,76 x 5.0 x 0.3,1,"copper or graphite, sits between the rib pair"

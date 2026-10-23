@@ -1,0 +1,2 @@
+# C06 Literature check of the physics
+Find primary sources (papers, standards, textbooks) for: pulse-induction target decay constants for spheres; eddy decay of copper planes and meshes; multi-coil/quadrupole receive nulling in metal detection; litz wire proximity loss; ferrite loading of a flat coil. For each claim in docs/DESIGN_STATE.md section 6 and docs/ASSUMPTIONS.md item 4 say whether the literature agrees, disagrees or is silent, with citations. Output Outputs/LITERATURE_CHECK.docx. Quote at most one short sentence per source.

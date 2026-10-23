@@ -1,0 +1,44 @@
+{
+ "depth 100 mm, radius 60 mm": {
+  "bearing_error_deg_rms_mod180": 45.0,
+  "bearing_error_max": 45.1,
+  "amp_ratio_max_min": 1.0,
+  "quadpair_rss_vs_X8_peak": 0.21,
+  "A_over_B_pattern": [
+   0.0,
+   0.496,
+   0.864,
+   1.0,
+   0.864,
+   0.496
+  ]
+ },
+ "depth 100 mm, radius 100 mm": {
+  "bearing_error_deg_rms_mod180": 45.0,
+  "bearing_error_max": 45.3,
+  "amp_ratio_max_min": 1.02,
+  "quadpair_rss_vs_X8_peak": 0.31,
+  "A_over_B_pattern": [
+   0.0,
+   0.485,
+   0.857,
+   1.0,
+   0.857,
+   0.485
+  ]
+ },
+ "depth 200 mm, radius 80 mm": {
+  "bearing_error_deg_rms_mod180": 45.0,
+  "bearing_error_max": 45.0,
+  "amp_ratio_max_min": 1.0,
+  "quadpair_rss_vs_X8_peak": 0.13,
+  "A_over_B_pattern": [
+   0.0,
+   0.5,
+   0.866,
+   1.0,
+   0.866,
+   0.5
+  ]
+ }
+}

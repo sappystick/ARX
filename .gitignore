@@ -1,0 +1,8 @@
+work/
+__pycache__/
+*.pyc
+.venv/
+CLAUDE.local.md
+*.pkl
+!data/seed/**/*.pkl
+stl/formers/

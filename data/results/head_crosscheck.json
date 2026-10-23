@@ -1,0 +1,564 @@
+{
+ "checks": [
+  {
+   "section": "C 3D interference",
+   "check": "voxel interference among 26 solids at 0.5 mm (core overlap > 1 mm3)",
+   "value": "0",
+   "limit": "0",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "SB1R-QA above SB1R-QB (adhesive gap)",
+   "value": "0.3",
+   "limit": ">= 0.2 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "SB1R-QA top at or below base plate recess top z3.2",
+   "value": "3.2",
+   "limit": "<= 3.2",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "formers: L6 bottom on the recess rim z3.2",
+   "value": "3.2",
+   "limit": "= 3.2",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "former gap L1 bottom above L2 top",
+   "value": "0.5",
+   "limit": ">= 0.45 mm (ripple relief included)",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "former gap L2 bottom above L3 top",
+   "value": "0.5",
+   "limit": ">= 0.45 mm (ripple relief included)",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "former gap L3 bottom above L4 top",
+   "value": "0.5",
+   "limit": ">= 0.45 mm (ripple relief included)",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "former gap L4 bottom above L5 top",
+   "value": "0.5",
+   "limit": ">= 0.45 mm (ripple relief included)",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "former gap L5 bottom above L6 top",
+   "value": "0.5",
+   "limit": ">= 0.45 mm (ripple relief included)",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "hood carrier above the top former: HOOD underside above FORMER_L1 top",
+   "value": "0.3",
+   "limit": ">= 0.2 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "AB boards under the septum: SEPTUM underside above AB1A top",
+   "value": "2.3",
+   "limit": ">= 0.5 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "AB1B under the septum: SEPTUM underside above AB1B top",
+   "value": "2.3",
+   "limit": ">= 0.5 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "CB1D parts under LB1: LB1 underside above CB1D top",
+   "value": "0.4",
+   "limit": ">= 0.2 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "LB1 LED tops under roof underside z41.3 (board 0.8 + LED 0.8)",
+   "value": "0.5",
+   "limit": ">= 0.3 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "light pipes span LB1 LED top to HTA top",
+   "value": "40.8-47.0",
+   "limit": "40.8-47.0",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "HTA board inside the cap recess (z45.4-47.1)",
+   "value": "45.4-47.0",
+   "limit": "cap top 47.1",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "A layer stack",
+   "check": "roof on hub top (gap)",
+   "value": "41.29999923706055",
+   "limit": "41.3",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "B radial",
+   "check": "hub tube outer below the formers vs former bore (gap)",
+   "value": "",
+   "limit": "",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "B radial",
+   "check": "former tooth/bore inner radius (teeth key into the hub lanes)",
+   "value": "47.3",
+   "limit": "teeth engage hub notches by design",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "B radial",
+   "check": "skirt inner radius vs former rim r116.5",
+   "value": "0.5",
+   "limit": ">= 0.4 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "B radial",
+   "check": "hood carrier outer vs skirt inner",
+   "value": "0.9",
+   "limit": ">= 0.4 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "B radial",
+   "check": "hood carrier inner r52.6 vs hub collar r52.0",
+   "value": "0.6",
+   "limit": ">= 0.4 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "B radial",
+   "check": "cap outer r52 equals roof outer r52 (flush)",
+   "value": "52.0",
+   "limit": "52.0",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "B radial",
+   "check": "CB1D: every component body clear of the 8 ribs, 8 insert posts and the 2 spine walls (exact polygon test)",
+   "value": "64 bodies, 0 conflicts",
+   "limit": "0",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "B radial",
+   "check": "LB1: every component body clear of the 8 ribs, 8 insert posts and the 2 spine walls (exact polygon test)",
+   "value": "81 bodies, 0 conflicts",
+   "limit": "0",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "B radial",
+   "check": "board notch half-width vs spine-wall outer face at r39 (+0.3 mm)",
+   "value": "notch 7.6 vs 7.54",
+   "limit": ">=",
+   "result": "PASS",
+   "note": "CB1D/LB1/septum notch in the exports must be at least this wide"
+  },
+  {
+   "section": "D electrical",
+   "check": "every inter-board pin and harness conductor matches the netlists",
+   "value": "53 pins / 59 conductors",
+   "limit": "0 errors",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D LED process",
+   "check": "LED data chain: 65 consecutive links LD(k) to LD(k+1), 66 LEDs, first fed by the 74AHCT1G125 buffer",
+   "value": "65 links, 66 LEDs",
+   "limit": "65 / 66",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D LED process",
+   "check": "every LED on +5V and GND",
+   "value": "66 / 66",
+   "limit": "66 / 66",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D LED process",
+   "check": "LB1 LED positions equal the 66-pixel map (index order = chain order)",
+   "value": "0.0",
+   "limit": "< 0.01 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D LED process",
+   "check": "roof: all 66 pixel holes open (no faces inside r0.7)",
+   "value": "0",
+   "limit": "0",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D LED process",
+   "check": "cap: all 66 pipe holes open through the cap floor (z44.5-45.4)",
+   "value": "0",
+   "limit": "0",
+   "result": "PASS",
+   "note": "pipes D1.5 in holes D1.7"
+  },
+  {
+   "section": "D LED process",
+   "check": "HTA board: 66 pipe holes at the pixel positions (NPTH drill)",
+   "value": "67 holes, mismatch 0.000 mm",
+   "limit": ">= 66, < 0.05 mm",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D transmit",
+   "check": "12 TX lead ports open through the wall (A at track+6, B at track+11)",
+   "value": "0",
+   "limit": "0",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D transmit",
+   "check": "TX lead channel, TXJ1 and cradle checks",
+   "value": "14 checks",
+   "limit": "all pass",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D receive",
+   "check": "SB1R lead pads inside the hub floor slot (|x|<6, r28-37)",
+   "value": "[[4.0, 33.0], [-4.0, 33.0]]",
+   "limit": "slot",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D receive",
+   "check": "SB1R-Q modeled leak at 0.5 mm offset below 20 mV",
+   "value": "11.0 mV",
+   "limit": "",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D PCB",
+   "check": "LB1 and CB1D independent DRC: 0 violations, 0 opens",
+   "value": "0/0",
+   "limit": "0/0",
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "section": "D system",
+   "check": "stress table: no failing row except the LED rail without the firmware cap",
+   "value": "1",
+   "limit": "1",
+   "result": "PASS",
+   "note": "firmware LED cap 0.35 A required"
+  },
+  {
+   "section": "E open items",
+   "check": "coil damping resistor 470-680 ohm across each SB1R coil is on no board",
+   "value": "open",
+   "limit": "must be fitted",
+   "result": "WARN",
+   "note": "docs/OPEN_ITEMS.md item 1"
+  },
+  {
+   "section": "E open items",
+   "check": "LB1/CB1D/SB1R/TXJ1 not opened in KiCad or a CAM viewer",
+   "value": "open",
+   "limit": "external DRC",
+   "result": "WARN",
+   "note": ""
+  },
+  {
+   "section": "E open items",
+   "check": "PB1R, PM1, HB1 boards are placed but not routed (legacy)",
+   "value": "open",
+   "limit": "route + DRC",
+   "result": "WARN",
+   "note": ""
+  }
+ ],
+ "contacts": [
+  [
+   "FORMER_L1",
+   "HUB",
+   143.75
+  ],
+  [
+   "FORMER_L2",
+   "HUB",
+   1.5
+  ],
+  [
+   "FORMER_L3",
+   "HUB",
+   3.5
+  ],
+  [
+   "FORMER_L4",
+   "HUB",
+   1.0
+  ],
+  [
+   "FORMER_L5",
+   "HUB",
+   0.75
+  ],
+  [
+   "FORMER_L6",
+   "HUB",
+   1.0
+  ],
+  [
+   "BASEPLATE",
+   "SB1R_QA",
+   5.5
+  ],
+  [
+   "BASEPLATE",
+   "SB1R_QB",
+   5.5
+  ],
+  [
+   "CAP",
+   "HTA",
+   3059.38
+  ],
+  [
+   "LB1",
+   "PIPES",
+   57.5
+  ]
+ ],
+ "pairs": [
+  {
+   "a": "FORMER_L1",
+   "b": "HUB",
+   "overlap_mm3": 143.75,
+   "core_mm3": 0.0
+  },
+  {
+   "a": "FORMER_L2",
+   "b": "HUB",
+   "overlap_mm3": 1.5,
+   "core_mm3": 0.0
+  },
+  {
+   "a": "FORMER_L3",
+   "b": "HUB",
+   "overlap_mm3": 3.5,
+   "core_mm3": 0.0
+  },
+  {
+   "a": "FORMER_L4",
+   "b": "HUB",
+   "overlap_mm3": 1.0,
+   "core_mm3": 0.0
+  },
+  {
+   "a": "FORMER_L5",
+   "b": "HUB",
+   "overlap_mm3": 0.75,
+   "core_mm3": 0.0
+  },
+  {
+   "a": "FORMER_L6",
+   "b": "HUB",
+   "overlap_mm3": 1.0,
+   "core_mm3": 0.0
+  },
+  {
+   "a": "BASEPLATE",
+   "b": "SB1R_QA",
+   "overlap_mm3": 5.5,
+   "core_mm3": 0.0
+  },
+  {
+   "a": "BASEPLATE",
+   "b": "SB1R_QB",
+   "overlap_mm3": 5.5,
+   "core_mm3": 0.0
+  },
+  {
+   "a": "CAP",
+   "b": "HTA",
+   "overlap_mm3": 3059.38,
+   "core_mm3": 0.0
+  },
+  {
+   "a": "LB1",
+   "b": "PIPES",
+   "overlap_mm3": 57.5,
+   "core_mm3": 0.0
+  }
+ ],
+ "interferences": [],
+ "voxel_mm": 0.5,
+ "fails": 0,
+ "warns": 3,
+ "z_ranges": {
+  "FORMER_L1": [
+   25.2,
+   29.1
+  ],
+  "FORMER_L2": [
+   20.8,
+   24.7
+  ],
+  "FORMER_L3": [
+   16.4,
+   20.3
+  ],
+  "FORMER_L4": [
+   12.0,
+   15.9
+  ],
+  "FORMER_L5": [
+   7.6,
+   11.5
+  ],
+  "FORMER_L6": [
+   3.2,
+   7.1
+  ],
+  "BASEPLATE": [
+   0.0,
+   3.2
+  ],
+  "HUB": [
+   3.2,
+   41.3
+  ],
+  "TRAY": [
+   9.8,
+   12.2
+  ],
+  "SEPTUM": [
+   20.1,
+   21.8
+  ],
+  "COMB": [
+   9.8,
+   38.0
+  ],
+  "ROOF": [
+   41.3,
+   44.5
+  ],
+  "CAP": [
+   40.4,
+   47.1
+  ],
+  "HOOD": [
+   29.4,
+   33.4
+  ],
+  "SKIRT": [
+   0.0,
+   33.4
+  ],
+  "CRADLE": [
+   34.4,
+   39.6
+  ],
+  "BRIDGE": [
+   33.7,
+   40.8
+  ],
+  "BRIDGE_LID": [
+   40.8,
+   42.0
+  ],
+  "AB1A": [
+   11.1,
+   17.8
+  ],
+  "AB1B": [
+   11.1,
+   17.8
+  ],
+  "CB1D": [
+   27.0,
+   38.8
+  ],
+  "LB1": [
+   39.2,
+   42.0
+  ],
+  "SB1R_QA": [
+   2.4,
+   3.2
+  ],
+  "SB1R_QB": [
+   1.3,
+   2.1
+  ],
+  "HTA": [
+   45.4,
+   47.0
+  ],
+  "PIPES": [
+   40.8,
+   47.0
+  ]
+ }
+}

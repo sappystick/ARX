@@ -1,0 +1,466 @@
+{
+ "lod": "print",
+ "hub": {
+  "outer_r": 49.5,
+  "inner_r": 44.0,
+  "layer_bore_r": 49.9,
+  "tooth": "3.6 wide x 2.6 high",
+  "track": "4.0 wide x 3.0 deep blind groove"
+ },
+ "lane_map": {
+  "layer_1": {
+   "track_deg": 0.0,
+   "TX_lane_A_deg": 6.0,
+   "TX_lane_B_deg": 11.0,
+   "RX_lane_deg": 16.0,
+   "dimples": 1,
+   "stop_z": null
+  },
+  "layer_2": {
+   "track_deg": 137.51,
+   "TX_lane_A_deg": 143.51,
+   "TX_lane_B_deg": 148.51,
+   "RX_lane_deg": 153.51,
+   "dimples": 2,
+   "stop_z": 33.08
+  },
+  "layer_3": {
+   "track_deg": 275.02,
+   "TX_lane_A_deg": 281.02,
+   "TX_lane_B_deg": 286.02,
+   "RX_lane_deg": 291.02,
+   "dimples": 3,
+   "stop_z": 28.72
+  },
+  "layer_4": {
+   "track_deg": 52.52,
+   "TX_lane_A_deg": 58.52,
+   "TX_lane_B_deg": 63.52,
+   "RX_lane_deg": 68.52,
+   "dimples": 4,
+   "stop_z": 24.32
+  },
+  "layer_5": {
+   "track_deg": 190.03,
+   "TX_lane_A_deg": 196.03,
+   "TX_lane_B_deg": 201.03,
+   "RX_lane_deg": 206.03,
+   "dimples": 5,
+   "stop_z": 19.88
+  },
+  "layer_6": {
+   "track_deg": 327.54,
+   "TX_lane_A_deg": 333.54,
+   "TX_lane_B_deg": 338.54,
+   "RX_lane_deg": 343.54,
+   "dimples": 6,
+   "stop_z": 15.55
+  }
+ },
+ "stack": {
+  "layer_thickness": 3.6,
+  "nested_gap": 0.8,
+  "top_at_bore": 37.0,
+  "rim_top": 28.8
+ },
+ "L1": {
+  "nphi": 386116,
+  "tris": 772232,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 0.0
+ },
+ "L2": {
+  "nphi": 456500,
+  "tris": 913000,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 137.51
+ },
+ "L3": {
+  "nphi": 456832,
+  "tris": 913664,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 275.02
+ },
+ "L4": {
+  "nphi": 456500,
+  "tris": 913000,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 52.52
+ },
+ "L5": {
+  "nphi": 456168,
+  "tris": 912336,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 190.03
+ },
+ "L6": {
+  "nphi": 456500,
+  "tris": 913000,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 327.54
+ },
+ "CORE_PCB_CYLINDER_central_former": {
+  "tris": 39288,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -52.0,
+   -52.0,
+   6.0,
+   52.0,
+   52.0,
+   44.5
+  ],
+  "note": "central PCB cylinder fused to L1: 6 numbered blind tracks (4x3), 18 closed wire lanes (12 TX + 6 RX, 1.8x1.4), 4 PCB ledges for D83 discs at 8 mm pitch, stop plugs and snap bumps, roof with D20 port"
+ },
+ "V2_floor_plate_and_lock_seat": {
+  "tris": 768,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -49.5,
+   -49.5,
+   3.4,
+   49.5,
+   49.5,
+   6.0
+  ],
+  "note": "floor plate seat; clamp the tray to the hub with 3 M3 screws (bosses to be added)"
+ },
+ "L7_RX_tray_cassette": {
+  "tris": 1536,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -116.5,
+   -116.5,
+   0.0,
+   116.5,
+   116.5,
+   3.2
+  ],
+  "note": "RX tray, PCB recess D229 x 2.4, open back"
+ },
+ "PINS_interface_1_x3": {
+  "tris": 972,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -53.0,
+   -53.6,
+   29.0,
+   33.6,
+   43.1,
+   36.5
+  ],
+  "note": "3 stepped pins: lower stem through layer 2, shoulder sets the gap, upper stem into layer 1"
+ },
+ "PINS_interface_2_x3": {
+  "tris": 972,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -25.9,
+   -48.0,
+   24.6,
+   45.7,
+   52.0,
+   32.0
+  ],
+  "note": "3 stepped pins: lower stem through layer 3, shoulder sets the gap, upper stem into layer 2"
+ },
+ "PINS_interface_3_x3": {
+  "tris": 972,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -49.9,
+   -53.4,
+   20.2,
+   50.7,
+   21.8,
+   27.7
+  ],
+  "note": "3 stepped pins: lower stem through layer 4, shoulder sets the gap, upper stem into layer 3"
+ },
+ "PINS_interface_4_x3": {
+  "tris": 972,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -53.8,
+   -38.6,
+   15.7,
+   41.6,
+   35.4,
+   23.3
+  ],
+  "note": "3 stepped pins: lower stem through layer 5, shoulder sets the gap, upper stem into layer 4"
+ },
+ "PINS_interface_5_x3": {
+  "tris": 972,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -35.2,
+   -41.8,
+   11.4,
+   53.3,
+   53.7,
+   18.9
+  ],
+  "note": "3 stepped pins: lower stem through layer 6, shoulder sets the gap, upper stem into layer 5"
+ },
+ "PINS_interface_6_x3_lock_collar": {
+  "tris": 972,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -44.5,
+   -52.5,
+   6.0,
+   27.8,
+   47.0,
+   14.1
+  ],
+  "note": "3 pins on the lock collar into layer 6"
+ },
+ "pin_table": [
+  {
+   "interface": 1,
+   "n": 2,
+   "theta_deg": 275.02,
+   "z_stem_bottom": 29.09,
+   "z_shoulder": [
+    32.41,
+    33.21
+   ],
+   "z_stem_top": 36.46,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 1,
+   "n": 3,
+   "theta_deg": 52.52,
+   "z_stem_bottom": 29.01,
+   "z_shoulder": [
+    32.46,
+    33.26
+   ],
+   "z_stem_top": 36.46,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 1,
+   "n": 4,
+   "theta_deg": 190.03,
+   "z_stem_bottom": 29.01,
+   "z_shoulder": [
+    32.41,
+    33.21
+   ],
+   "z_stem_top": 36.36,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 2,
+   "n": 5,
+   "theta_deg": 327.54,
+   "z_stem_bottom": 24.69,
+   "z_shoulder": [
+    28.09,
+    28.89
+   ],
+   "z_stem_top": 32.04,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 2,
+   "n": 6,
+   "theta_deg": 105.05,
+   "z_stem_bottom": 24.6,
+   "z_shoulder": [
+    27.95,
+    28.75
+   ],
+   "z_stem_top": 32.03,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 2,
+   "n": 7,
+   "theta_deg": 242.55,
+   "z_stem_bottom": 24.63,
+   "z_shoulder": [
+    28.11,
+    28.91
+   ],
+   "z_stem_top": 32.02,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 3,
+   "n": 8,
+   "theta_deg": 20.06,
+   "z_stem_bottom": 20.18,
+   "z_shoulder": [
+    23.67,
+    24.47
+   ],
+   "z_stem_top": 27.57,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 3,
+   "n": 9,
+   "theta_deg": 157.57,
+   "z_stem_bottom": 20.27,
+   "z_shoulder": [
+    23.57,
+    24.37
+   ],
+   "z_stem_top": 27.65,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 3,
+   "n": 15,
+   "theta_deg": 262.62,
+   "z_stem_bottom": 20.2,
+   "z_shoulder": [
+    23.69,
+    24.49
+   ],
+   "z_stem_top": 27.61,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 4,
+   "n": 16,
+   "theta_deg": 40.12,
+   "z_stem_bottom": 15.75,
+   "z_shoulder": [
+    19.24,
+    20.04
+   ],
+   "z_stem_top": 23.16,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 4,
+   "n": 17,
+   "theta_deg": 177.63,
+   "z_stem_bottom": 15.93,
+   "z_shoulder": [
+    19.24,
+    20.04
+   ],
+   "z_stem_top": 23.29,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 4,
+   "n": 18,
+   "theta_deg": 315.14,
+   "z_stem_bottom": 15.75,
+   "z_shoulder": [
+    19.2,
+    20.0
+   ],
+   "z_stem_top": 23.2,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 5,
+   "n": 19,
+   "theta_deg": 92.65,
+   "z_stem_bottom": 11.43,
+   "z_shoulder": [
+    14.88,
+    15.68
+   ],
+   "z_stem_top": 18.88,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 5,
+   "n": 20,
+   "theta_deg": 230.16,
+   "z_stem_bottom": 11.43,
+   "z_shoulder": [
+    14.83,
+    15.63
+   ],
+   "z_stem_top": 18.78,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 5,
+   "n": 21,
+   "theta_deg": 7.66,
+   "z_stem_bottom": 11.43,
+   "z_shoulder": [
+    14.78,
+    15.58
+   ],
+   "z_stem_top": 18.86,
+   "shoulder_height": 0.8
+  },
+  {
+   "interface": 6,
+   "n": 22,
+   "theta_deg": 145.17,
+   "z_stem_bottom": 6.0,
+   "z_shoulder": [
+    10.0,
+    11.23
+   ],
+   "z_stem_top": 14.11,
+   "shoulder_height": 1.23
+  },
+  {
+   "interface": 6,
+   "n": 23,
+   "theta_deg": 282.68,
+   "z_stem_bottom": 6.0,
+   "z_shoulder": [
+    10.0,
+    11.23
+   ],
+   "z_stem_top": 14.11,
+   "shoulder_height": 1.23
+  },
+  {
+   "interface": 6,
+   "n": 24,
+   "theta_deg": 60.19,
+   "z_stem_bottom": 6.0,
+   "z_shoulder": [
+    10.0,
+    11.23
+   ],
+   "z_stem_top": 14.11,
+   "shoulder_height": 1.23
+  }
+ ],
+ "gap_mm": 0.8,
+ "tracks_deg": {
+  "layer_1": 0.0,
+  "layer_2": 137.51,
+  "layer_3": 275.02,
+  "layer_4": 52.52,
+  "layer_5": 190.03,
+  "layer_6": 327.54
+ },
+ "V2_lock_collar_ring": {
+  "tris": 768,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -57.0,
+   -57.0,
+   6.0,
+   57.0,
+   57.0,
+   10.0
+  ],
+  "note": "bottom lock collar r49.7-57 under layer 6; 3 M3 screws through the floor plate into hub bosses (not yet modelled); carries the interface-6 pins"
+ },
+ "feedthrough": "18 lane exits (12 TX, 6 RX) pass through the hub wall at z=38..40 into the vault; drill 2 mm ports at the lane angles after fitting, then pot"
+}

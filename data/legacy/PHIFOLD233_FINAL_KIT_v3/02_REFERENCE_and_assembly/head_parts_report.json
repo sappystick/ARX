@@ -1,0 +1,54 @@
+{
+ "P04b_trough_lid_with_gap": {
+  "triangles": 5756,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -70.5,
+   -70.5,
+   22.34,
+   70.5,
+   70.11,
+   25.77
+  ],
+  "note": "12 deg gap at 90 deg: leads rise from the trough into the P11 strip channel"
+ },
+ "P05b_bay_lid_with_yoke_cable_gap": {
+  "triangles": 11264,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -36.5,
+   -36.5,
+   31.89,
+   36.5,
+   36.3,
+   64.6
+  ],
+  "note": "plug r 24.8; seat r 33-36.5 with a 12 deg gap at 90 deg for the lead/cable bundle; yoke pivot hole z=50 (drill 8.1)"
+ },
+ "P07b_pcb_slot_rings_x3": {
+  "triangles": 4320,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -20.75,
+   -20.75,
+   5.9,
+   20.75,
+   20.75,
+   25.7
+  ],
+  "note": "three 1.8 mm rings glued inside the liner: main board z=6.8, analog A z=15.8, analog B z=24.8 (9 mm pitch)"
+ },
+ "P11_lead_and_cable_cover_strip": {
+  "triangles": 60,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -8.5,
+   37.0,
+   13.0,
+   8.5,
+   119.0,
+   35.86
+  ],
+  "note": "3 touching shells (roof + 2 walls, each watertight); 17 mm wide strip, channel 14 x 2.8 mm; follows the face from r 37 to 116.5 then flat over the bezel to r 119, azimuth 90 deg"
+ }
+}

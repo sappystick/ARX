@@ -1,0 +1,33 @@
+section,item,qty,spec,where,note
+printed,BUSHING_IN_TUBE_A,1,"PETG (PA12 for bushings), solid, 1.2 cm3, about 1 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,BUSHING_ON_TUBE_B,1,"PETG (PA12 for bushings), solid, 1.0 cm3, about 1 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,HEEL_SADDLE_TOWER,1,"PETG (PA12 for bushings), solid, 94.6 cm3, about 120 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,HINGE_ARM,1,"PETG (PA12 for bushings), solid, 47.5 cm3, about 60 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,TELESCOPE_LOCK_COLLAR,1,"PETG (PA12 for bushings), solid, 25.5 cm3, about 32 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,UMBILICAL_BRIDGE,1,"PETG (PA12 for bushings), solid, 2.0 cm3, about 2 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,UMBILICAL_BRIDGE_LID,1,"PETG (PA12 for bushings), solid, 1.4 cm3, about 2 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,BAT_B1_drawer_sleeve,1,"PETG (PA12 for bushings), solid, 148.6 cm3, about 189 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,BAT_B2_end_cap_with_latch,1,"PETG (PA12 for bushings), solid, 9.2 cm3, about 12 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,BAT_B3_contact_plate,1,"PETG (PA12 for bushings), solid, 6.2 cm3, about 8 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,CAS_R1_cassette_segment_150,1,"PETG (PA12 for bushings), solid, 17.1 cm3, about 22 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,CAS_R2_trolley,1,"PETG (PA12 for bushings), solid, 1.5 cm3, about 2 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,CAS_R3_end_anchor,1,"PETG (PA12 for bushings), solid, 2.5 cm3, about 3 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,ELB_E1_elbow_and_grip,1,"PETG (PA12 for bushings), solid, 104.3 cm3, about 132 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,ELB_E2_grip_endcap,1,"PETG (PA12 for bushings), solid, 9.1 cm3, about 12 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,ELB_E3_trigger,1,"PETG (PA12 for bushings), solid, 7.1 cm3, about 9 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,ELB_E4_joystick_boss,1,"PETG (PA12 for bushings), solid, 3.6 cm3, about 5 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,ELB_E5_forearm_cuff,1,"PETG (PA12 for bushings), solid, 138.1 cm3, about 175 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,NPM_N1_body_with_tunnel,1,"PETG (PA12 for bushings), solid, 83.0 cm3, about 105 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,NPM_N2_lid_with_fill_ports,1,"PETG (PA12 for bushings), solid, 22.1 cm3, about 28 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+printed,NPM_N3_hot_zone_dam,1,"PETG (PA12 for bushings), solid, 3.0 cm3, about 4 g (upper bound for multi-shell parts)",shaft / yoke / elbow / battery,
+tube,tube A (hand end),1,"CFRP wound/pultruded, OD 33 / ID 30, 0.45 m, matte; 4 slits 1.5 x 40 cut in the lower end for the lock collar",shaft,about 95 g
+tube,tube B,1,"CFRP, OD 28.5 / ID 26, 0.45 m",shaft,about 84 g
+tube,lower fixed tube,1,"E-glass/epoxy (GFRP), OD 32 / ID 29, 0.40 m (non-conductive near the head)",hinge to neck module,about 109 g
+cable,power ribbon 12-way,1,"AWG28 silicone, 1.0 mm pitch, 1.72 m",elbow to head,"VBUS x3, GND x3, reserved x3, EN_MAIN, spare"
+cable,signal ribbon 12-way,1,"AWG28 silicone, 1.72 m",elbow to head,pin 9 = P3V3 for the handle board
+cable,umbilical ribbon 8-way,1,"AWG28 silicone, 0.80 m, own foil sleeve",neck module to head,
+cable,TX pair,1,"AWG12 silicone 600 V, twisted, foil + drain, 0.80 m",neck module to head TX junction,carries 20 A pulses and 500 V flyback
+hardware,hinge pin,1,nylon M10 x 50 + nylon thumb nut,hinge,no metal at the heel
+hardware,lock collar screw,1,nylon M4 x 30 + nut,telescoping joint,
+battery,18650 cell,7,"7S1P, 4 + 3 U-pack, 90.7 Wh",drawer,"hot-swap, supercap bridge 1 F / 27 V (10 x 10 F)"
+hardware,epoxy for the saddle,1,"structural epoxy, about 3000 mm2 bond area",heel saddle on the skirt,bond strength not tested

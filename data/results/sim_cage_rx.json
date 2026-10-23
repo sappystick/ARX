@@ -1,0 +1,72 @@
+{
+ "first_clean_gate_us_vs_null": {
+  "as built: 2 x 100 nF X7R, with DC-bias derating": {
+   "0.008": 9.99,
+   "0.00025": 8.83,
+   "5e-05": 8.26,
+   "1e-05": 7.7,
+   "2e-06": 7.12
+  },
+  "100 nF C0G/film": {
+   "0.008": 9.11,
+   "0.00025": 7.94,
+   "5e-05": 7.37,
+   "1e-05": 6.8,
+   "2e-06": 6.23
+  }
+ },
+ "adaptive_null": {
+  "leak_range": 0.04,
+  "residual_12bit": 4.9e-06,
+  "residual_14bit": 1.22e-06,
+  "note": "trim range +/-2% of the unnulled coupling; residual = half an LSB"
+ },
+ "depth_multiplier_vs_input_noise": {
+  "4.2 nV/rtHz": 1.0,
+  "1.7 nV/rtHz": 1.22,
+  "1.2 nV/rtHz": 1.32,
+  "0.8 nV/rtHz": 1.44
+ },
+ "plane_eddy": {
+  "1 oz plane D78": {
+   "tau_us": 17.81,
+   "second_mode_us": 8.17,
+   "m0_Am2_per_T": 126.24542926390572,
+   "moment_vs_1g_gold_nugget": 2041
+  },
+  "2 oz plane D78": {
+   "tau_us": 35.63,
+   "second_mode_us": 16.35,
+   "m0_Am2_per_T": 126.24542926390572,
+   "moment_vs_1g_gold_nugget": 2041
+  },
+  "cup foil D81, 50 um": {
+   "tau_us": 26.43,
+   "second_mode_us": 12.13,
+   "m0_Am2_per_T": 141.37965317486575,
+   "moment_vs_1g_gold_nugget": 2286
+  },
+  "1 oz, 12 radial slits (loop radius about 5 mm)": {
+   "tau_us": 2.25,
+   "note": "scaling estimate: slits limit the loop size"
+  },
+  "1 oz, meshed (loop radius about 1 mm)": {
+   "tau_us": 0.45,
+   "note": "scaling estimate: slits limit the loop size"
+  }
+ },
+ "thermal_potting": {
+  "syntactic silicone 0.25 W/mK": {
+   "max_C": 34.2,
+   "K_per_W": 8.12
+  },
+  "alumina-filled silicone 1.0 W/mK": {
+   "max_C": 31.5,
+   "K_per_W": 5.78
+  },
+  "alumina-filled epoxy 1.8 W/mK": {
+   "max_C": 31.1,
+   "K_per_W": 5.38
+  }
+ }
+}

@@ -1,0 +1,159 @@
+{
+ "B_ref_uT_per_A_at_200mm": 8.847,
+ "field_uT_per_A_and_visibility_vs_1g_nugget_field_ratio_squared": {
+  "centre of the old bay (r0,z17)": {
+   "B_uT_per_A": 94.32,
+   "field_ratio_sq": 113.7
+  },
+  "inside the head, r 40 mm z 20": {
+   "B_uT_per_A": 104.41,
+   "field_ratio_sq": 139.3
+  },
+  "lid level above centre (r0,z45)": {
+   "B_uT_per_A": 80.0,
+   "field_ratio_sq": 81.8
+  },
+  "head rim outside the winding (r125,z10)": {
+   "B_uT_per_A": 121.68,
+   "field_ratio_sq": 189.2
+  },
+  "neck 100 mm above head (r0,z100)": {
+   "B_uT_per_A": 40.65,
+   "field_ratio_sq": 21.1
+  },
+  "neck 150 mm (r0,z150)": {
+   "B_uT_per_A": 20.13,
+   "field_ratio_sq": 5.2
+  },
+  "spine electronics 700 mm up (r0,z700)": {
+   "B_uT_per_A": 0.33,
+   "field_ratio_sq": 0.0
+  }
+ },
+ "metal_in_the_head_centre_signal_ratio_vs_1g_nugget_at_200mm_10us_gate": {
+  "PCB ground plane, solid Cu 1 oz, disc 40 mm": {
+   "tau_us": 10.2,
+   "signal_vs_1g_nugget_bare": 49600.0,
+   "with_MnZn_3mm_vault": 3.9,
+   "with_NiZn_3mm_vault": 90.9
+  },
+  "same plane cut into 16 sectors (eddy loop ~ 5 mm; response x16 sectors)": {
+   "tau_us": 1.28,
+   "signal_vs_1g_nugget_bare": 13.0,
+   "with_MnZn_3mm_vault": 0.00102,
+   "with_NiZn_3mm_vault": 0.0238
+  },
+  "plane under all boards: Cu 2 oz, disc 70 mm": {
+   "tau_us": 35.71,
+   "signal_vs_1g_nugget_bare": 153000.0,
+   "with_MnZn_3mm_vault": 12.0,
+   "with_NiZn_3mm_vault": 281.0
+  },
+  "IC lead-frame, 3 mm": {
+   "tau_us": 2.19,
+   "signal_vs_1g_nugget_bare": 2.69,
+   "with_MnZn_3mm_vault": 0.000212,
+   "with_NiZn_3mm_vault": 0.00493
+  },
+  "MLCC / 2512 resistor terminations, 2 mm": {
+   "tau_us": 0.73,
+   "signal_vs_1g_nugget_bare": 0.000254,
+   "with_MnZn_3mm_vault": 2e-08,
+   "with_NiZn_3mm_vault": 4.66e-07
+  },
+  "TO-263 FET tab, 10 mm Cu": {
+   "tau_us": 72.88,
+   "signal_vs_1g_nugget_bare": 252.0,
+   "with_MnZn_3mm_vault": 0.0198,
+   "with_NiZn_3mm_vault": 0.462
+  }
+ },
+ "vault_shielding": {
+  "MnZn mur 2000, 3 mm": {
+   "S": 112.8,
+   "dB": 41.0,
+   "signal_reduction_factor": 12717
+  },
+  "MnZn mur 2000, 2 mm": {
+   "S": 75.5,
+   "dB": 37.6,
+   "signal_reduction_factor": 5702
+  },
+  "NiZn mur 400, 3 mm": {
+   "S": 23.4,
+   "dB": 27.4,
+   "signal_reduction_factor": 545
+  },
+  "NiZn mur 400, 5 mm": {
+   "S": 38.3,
+   "dB": 31.7,
+   "signal_reduction_factor": 1464
+  },
+  "polymer ferrite mur 10, 5 mm": {
+   "S": 1.9,
+   "dB": 5.7,
+   "signal_reduction_factor": 4
+  }
+ },
+ "vault_equivalent_radius_mm": 35.8,
+ "heat_budget": {
+  "scan": {
+   "clamp_W": 2.23,
+   "tx_fet_W": 0.25,
+   "regulators_W": 0.35,
+   "MCU_BT_W": 0.55,
+   "analog_W": 0.64,
+   "shunt_other_W": 0.05,
+   "total_W": 4.07,
+   "head_surface_rise_K": 6.2
+  },
+  "boost_300Hz": {
+   "clamp_W": 5.23,
+   "tx_fet_W": 0.6,
+   "regulators_W": 0.45,
+   "MCU_BT_W": 0.65,
+   "analog_W": 0.64,
+   "shunt_other_W": 0.25,
+   "total_W": 7.82,
+   "head_surface_rise_K": 11.9
+  }
+ },
+ "head_conductance_W_per_K": 0.66,
+ "conduction_resistance_K_per_W": {
+  "vault -> lid through 18 mm syntactic foam (k 0.2), 80 cm2": 11.2,
+  "same through conductive silicone (k 1.5)": 1.5,
+  "clamp resistors bonded to the lid underside with 1 mm conductive silicone (k 1.5), 12 cm2": 0.56
+ },
+ "potting_options": {
+  "syntactic epoxy foam (epoxy + 25-35 vol % glass bubbles)": {
+   "density_g_cc": "0.55-0.75",
+   "k_W_mK": "0.12-0.20",
+   "CTE_ppm_K": "40-60",
+   "cure": "low exotherm, pour in 10-15 mm lifts, <=60 C",
+   "use": "winding voids, cavity filler, buoyancy and stiffness",
+   "warning": "thermal insulator: keep it away from heat sources; rigid, not re-enterable"
+  },
+  "unfilled epoxy, low viscosity": {
+   "density_g_cc": "1.1",
+   "k_W_mK": "0.2",
+   "CTE_ppm_K": "60-70",
+   "use": "wire locking in the grooves (thin film)",
+   "warning": "exotherm in thick sections; use thin lifts"
+  },
+  "two-part silicone gel / soft elastomer (Shore 00-30 to A10)": {
+   "density_g_cc": "0.95-1.1",
+   "k_W_mK": "0.2 unfilled / 1.0-2.0 alumina-filled",
+   "CTE_ppm_K": "200-300",
+   "use": "inside the ferrite vault around electronics: stress-free, re-enterable (gel), waterproof",
+   "warning": "avoid red/black pigmented grades (iron oxide / carbon): they show up as a target"
+  },
+  "polyurethane": {
+   "density_g_cc": "1.0-1.2",
+   "k_W_mK": "0.2-0.4",
+   "CTE_ppm_K": "100-200",
+   "use": "optional outer encapsulation",
+   "warning": "moisture sensitive during cure"
+  },
+  "forbidden fillers": "iron oxide, ferrite, carbon black, graphite, aluminium or copper powder, any metal flake; check each product with a magnet and a bench test coil"
+ }
+}

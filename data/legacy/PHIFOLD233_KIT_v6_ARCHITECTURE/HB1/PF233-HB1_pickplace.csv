@@ -1,0 +1,13 @@
+Ref,Val,Package,PosX_mm,PosY_mm,Rot,Side
+JH,Cable to head: +3V3 GND TRIG DIAL JOYX JOYY SHLD,Pin_header_1x7_P2.54mm,-8.0,17.0,0,top
+HS1,SS49E,TO-92_Inline,-8.0,-10.0,0,top
+CH1,100n,C_0603_1608Metric,-8.0,-15.0,0,top
+RH1,1k,R_0603_1608Metric,-8.0,-19.0,0,top
+JJOY,Joystick: V GND X Y SW,Pin_header_1x5_P2.54mm,8.0,17.0,0,top
+RSW,10k,R_0603_1608Metric,3.0,8.0,0,top
+JDIAL,Dial: COM P1 P2 P3 P4 (4-position rotary switch),Pin_header_1x5_P2.54mm,8.0,-4.0,0,top
+RD0,10k,R_0603_1608Metric,-2.0,-0.0,0,top
+RD2,3k3,R_0603_1608Metric,-2.0,-4.0,0,top
+RD3,10k,R_0603_1608Metric,-2.0,-8.0,0,top
+RD4,33k,R_0603_1608Metric,-2.0,-12.0,0,top
+RSHH,0R,R_0603_1608Metric,-8.0,-24.0,0,top

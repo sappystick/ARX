@@ -1,0 +1,266 @@
+[
+ {
+  "check": "VAULT_CUP_A_ANALOG flange r vs hub bore",
+  "value": 0.2,
+  "min": 0.1,
+  "max": null,
+  "result": "PASS",
+  "note": "bore 44.00, flange 43.80"
+ },
+ {
+  "check": "VAULT_CUP_A_ANALOG wall outer r vs ledge holes above",
+  "value": 0.2,
+  "min": 0.1,
+  "max": null,
+  "result": "PASS",
+  "note": "smallest ledge hole above 41.50, wall 41.30"
+ },
+ {
+  "check": "VAULT_CUP_A_ANALOG wall top vs next ledge underside",
+  "value": 0.2,
+  "min": 0.0,
+  "max": null,
+  "result": "PASS",
+  "note": "top 15.60, ledge underside 15.80"
+ },
+ {
+  "check": "VAULT_CUP_B_ISOLATION flange r vs hub bore",
+  "value": 0.2,
+  "min": 0.1,
+  "max": null,
+  "result": "PASS",
+  "note": "bore 44.00, flange 43.80"
+ },
+ {
+  "check": "VAULT_CUP_B_ISOLATION wall outer r vs ledge holes above",
+  "value": 0.2,
+  "min": 0.1,
+  "max": null,
+  "result": "PASS",
+  "note": "smallest ledge hole above 41.50, wall 41.30"
+ },
+ {
+  "check": "VAULT_CUP_B_ISOLATION wall top vs next ledge underside",
+  "value": 0.2,
+  "min": 0.0,
+  "max": null,
+  "result": "PASS",
+  "note": "top 23.60, ledge underside 23.80"
+ },
+ {
+  "check": "VAULT_CUP_CD_CONTROL_DISPLAY flange r vs hub bore",
+  "value": 0.2,
+  "min": 0.1,
+  "max": null,
+  "result": "PASS",
+  "note": "bore 44.00, flange 43.80"
+ },
+ {
+  "check": "VAULT_CUP_CD_CONTROL_DISPLAY wall outer r vs ledge holes above",
+  "value": 0.2,
+  "min": 0.1,
+  "max": null,
+  "result": "PASS",
+  "note": "smallest ledge hole above 41.50, wall 41.30"
+ },
+ {
+  "check": "VAULT_CUP_CD_CONTROL_DISPLAY wall top vs roof underside",
+  "value": 1.1,
+  "min": 0.5,
+  "max": null,
+  "result": "PASS",
+  "note": "top 40.20"
+ },
+ {
+  "check": "AB boards: far edge vs cup A interior",
+  "value": 0.4,
+  "min": 0.2,
+  "max": null,
+  "result": "PASS",
+  "note": "boards D40 at x=+/-20.3"
+ },
+ {
+  "check": "AB1A/AB1B gap",
+  "value": 0.6,
+  "min": 0.3,
+  "max": null,
+  "result": "PASS",
+  "note": "0.3 mm foil shim"
+ },
+ {
+  "check": "cup A: AB top (standoff 1.3 + board 1.6 + parts 4.0) vs lid underside z17",
+  "value": 0.3,
+  "min": 0.2,
+  "max": null,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "cup A: AB bottom-side parts (1.1) vs floor top",
+  "value": 0.2,
+  "min": 0.1,
+  "max": null,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "cup CD: CB1D tallest part (10.2) top vs LB1 underside",
+  "value": 0.4,
+  "min": 0.3,
+  "max": null,
+  "result": "PASS",
+  "note": "CB1D board top 28.6"
+ },
+ {
+  "check": "cup CD: LB1 LED top vs roof underside",
+  "value": 0.5,
+  "min": 0.4,
+  "max": null,
+  "result": "PASS",
+  "note": "LB1 0.8 thick + LED 0.8"
+ },
+ {
+  "check": "CB1D board edge vs cup interior",
+  "value": 1.7,
+  "min": 1.0,
+  "max": null,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "CB1D tab overlap under board",
+  "value": 1.5,
+  "min": 1.0,
+  "max": null,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "hood bore vs hub collar/roof radius",
+  "value": 0.6,
+  "min": 0.3,
+  "max": null,
+  "result": "PASS",
+  "note": "bore 52.60, hub max r 52.00"
+ },
+ {
+  "check": "hood outer vs 116.5 footprint",
+  "value": 0.4,
+  "min": 0.0,
+  "max": null,
+  "result": "PASS",
+  "note": "hood 116.10"
+ },
+ {
+  "check": "hood floor underside vs L1 top",
+  "value": 0.3,
+  "min": 0.1,
+  "max": null,
+  "result": "PASS",
+  "note": "L1 top 29.10, hood floor 29.40"
+ },
+ {
+  "check": "L1 outer radius",
+  "value": 0.1,
+  "min": 0.0,
+  "max": null,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "skirt inner vs petal tips (r116.5)",
+  "value": 0.5,
+  "min": 0.3,
+  "max": null,
+  "result": "PASS",
+  "note": "skirt inner 117.00"
+ },
+ {
+  "check": "skirt inner vs base plate rim",
+  "value": 0.5,
+  "min": 0.3,
+  "max": null,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "skirt top vs hood top",
+  "value": 0.0,
+  "min": null,
+  "max": 0.01,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "hook lip outer r vs window edge (32.0): catch",
+  "value": 0.445,
+  "min": 0.2,
+  "max": null,
+  "result": "PASS",
+  "note": "lip reaches 32.44"
+ },
+ {
+  "check": "hook tangential half-width vs window half-width 2.0",
+  "value": 0.3,
+  "min": 0.1,
+  "max": null,
+  "result": "PASS",
+  "note": "hook half-width 1.70"
+ },
+ {
+  "check": "min gap between any snap hook and any LED body (plan view)",
+  "value": 1.191,
+  "min": 0.3,
+  "max": null,
+  "result": "PASS",
+  "note": "hook z40.4-41.2 overlaps LED z40.0-40.8"
+ },
+ {
+  "check": "hood v2: smallest gap between neighbouring tiles",
+  "value": 1.79,
+  "min": 1.6,
+  "max": null,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "hood v2: pocket wall of one tile vs the pocket of its neighbour (0 = touching, no intrusion)",
+  "value": 0.23,
+  "min": 0.0,
+  "max": null,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "hood v2: outer frame corner radius vs skirt inner 117.0",
+  "value": 1.12,
+  "min": 0.8,
+  "max": null,
+  "result": "PASS",
+  "note": "corner 115.88"
+ },
+ {
+  "check": "hood v2: inner frame radius vs hood bore 52.6",
+  "value": 4.9,
+  "min": 2.0,
+  "max": null,
+  "result": "PASS",
+  "note": "inner 57.5"
+ },
+ {
+  "check": "hood v2: mesh outer radius vs skirt inner",
+  "value": 0.9,
+  "min": 0.8,
+  "max": null,
+  "result": "PASS",
+  "note": "mesh max r 116.10"
+ },
+ {
+  "check": "hood: 26 tiles of 2 sizes (13 + 13)",
+  "value": 26.0,
+  "min": 26,
+  "max": 26,
+  "result": "PASS",
+  "note": ""
+ }
+]

@@ -1,0 +1,65 @@
+[
+ {
+  "check": "AB1A top vs septum underside z20.1",
+  "gap_mm": 2.3,
+  "required_mm": 0.5,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "AB1B top vs septum underside z20.1",
+  "gap_mm": 2.3,
+  "required_mm": 0.5,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "CB1D top parts vs LB1 underside z39.2",
+  "gap_mm": 0.4,
+  "required_mm": 0.2,
+  "result": "PASS",
+  "note": "tightest vertical gap in the head"
+ },
+ {
+  "check": "LB1 LED tops (0.8 mm board + 0.8 mm LED) vs roof underside z41.3",
+  "gap_mm": 0.5,
+  "required_mm": 0.3,
+  "result": "PASS",
+  "note": "LB1 must be a 0.8 mm board"
+ },
+ {
+  "check": "LB1 tallest part (C1210 10 uF, 2.0 mm, inside the roof D20 centre port) vs cap underside z44.5",
+  "gap_mm": 3.3,
+  "required_mm": 0.3,
+  "result": "PASS",
+  "note": "JLB is flat wire pads now; the 9 mm header hit the cap"
+ },
+ {
+  "check": "LB1 board thickness 0.8 (STL) vs 0.8 required",
+  "gap_mm": -0.0,
+  "required_mm": -0.001,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "CB1D board thickness vs rib slot 1.9 mm",
+  "gap_mm": 0.3,
+  "required_mm": 0.1,
+  "result": "PASS",
+  "note": "slot 27.0-28.9"
+ },
+ {
+  "check": "LB1 edge R39.0 vs post inner r39.5",
+  "gap_mm": 0.5,
+  "required_mm": 0.3,
+  "result": "PASS",
+  "note": ""
+ },
+ {
+  "check": "CB1D/septum edge vs slot floor r39.3",
+  "gap_mm": 0.3,
+  "required_mm": 0.2,
+  "result": "PASS",
+  "note": ""
+ }
+]

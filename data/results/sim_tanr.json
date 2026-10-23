@@ -1,0 +1,149 @@
+{
+ "leak_relative_to_unnulled": {
+  "X8 figure-8": {
+   "shift 0,0 mm": 0.00012063385985010028,
+   "shift 0.5,0 mm": 0.0021599964369594217,
+   "shift 0,0.5 mm": 0.00012053064777213309,
+   "shift 0.1,0.0 mm": 0.000528515645477234
+  },
+  "QUAD A (quadrants)": {
+   "shift 0,0 mm": 1.5185893098231397e-06,
+   "shift 0.5,0 mm": 2.4340015510322607e-06,
+   "shift 0,0.5 mm": 1.8117741072105277e-07,
+   "shift 0.1,0.0 mm": 1.6991264598437068e-06
+  },
+  "QUAD B (rotated 45 deg)": {
+   "shift 0,0 mm": 2.5335126387925605e-06,
+   "shift 0.5,0 mm": 6.896758381154631e-06,
+   "shift 0,0.5 mm": 3.5517766719914175e-06,
+   "shift 0.1,0.0 mm": 2.4327884649545065e-06
+  }
+ },
+ "peak_volts_at_turnoff": {
+  "X8 figure-8": {
+   "shift 0,0 mm": 0.035,
+   "shift 0.5,0 mm": 0.6273,
+   "shift 0,0.5 mm": 0.035,
+   "shift 0.1,0.0 mm": 0.1535
+  },
+  "QUAD A (quadrants)": {
+   "shift 0,0 mm": 0.0004,
+   "shift 0.5,0 mm": 0.0007,
+   "shift 0,0.5 mm": 0.0001,
+   "shift 0.1,0.0 mm": 0.0005
+  },
+  "QUAD B (rotated 45 deg)": {
+   "shift 0,0 mm": 0.0007,
+   "shift 0.5,0 mm": 0.002,
+   "shift 0,0.5 mm": 0.001,
+   "shift 0.1,0.0 mm": 0.0007
+  }
+ },
+ "unnulled_peak_V": 290.4,
+ "trim_bandwidth": {
+  "QUAD 0.5 mm off": {
+   "BW 0.5 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 6.66,
+    "with_digital_template_us": 5.5,
+    "residual_fraction": 0.487
+   },
+   "BW 0.5 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 6.69,
+    "with_digital_template_us": 5.53,
+    "residual_fraction": 0.539
+   },
+   "BW 1 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 6.49,
+    "with_digital_template_us": 5.32,
+    "residual_fraction": 0.335
+   },
+   "BW 1 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 6.55,
+    "with_digital_template_us": 5.37,
+    "residual_fraction": 0.425
+   },
+   "BW 2 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 5.97,
+    "with_digital_template_us": 5.12,
+    "residual_fraction": 0.19
+   },
+   "BW 2 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 6.43,
+    "with_digital_template_us": 5.26,
+    "residual_fraction": 0.31
+   },
+   "BW 5 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 5.81,
+    "with_digital_template_us": 4.63,
+    "residual_fraction": 0.065
+   },
+   "BW 5 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 6.26,
+    "with_digital_template_us": 5.12,
+    "residual_fraction": 0.204
+   },
+   "BW 20 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 5.08,
+    "with_digital_template_us": 3.91,
+    "residual_fraction": 0.006
+   },
+   "BW 20 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 5.89,
+    "with_digital_template_us": 4.71,
+    "residual_fraction": 0.139
+   }
+  },
+  "X8 keyed to 0.1 mm": {
+   "BW 0.5 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 8.04,
+    "with_digital_template_us": 6.87,
+    "residual_fraction": 0.487
+   },
+   "BW 0.5 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 8.05,
+    "with_digital_template_us": 6.88,
+    "residual_fraction": 0.539
+   },
+   "BW 1 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 8.27,
+    "with_digital_template_us": 7.1,
+    "residual_fraction": 0.335
+   },
+   "BW 1 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 8.32,
+    "with_digital_template_us": 7.15,
+    "residual_fraction": 0.425
+   },
+   "BW 2 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 7.76,
+    "with_digital_template_us": 6.89,
+    "residual_fraction": 0.19
+   },
+   "BW 2 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 8.21,
+    "with_digital_template_us": 7.04,
+    "residual_fraction": 0.31
+   },
+   "BW 5 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 7.59,
+    "with_digital_template_us": 6.42,
+    "residual_fraction": 0.065
+   },
+   "BW 5 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 8.03,
+    "with_digital_template_us": 6.89,
+    "residual_fraction": 0.204
+   },
+   "BW 20 MHz, delay 0 ns": {
+    "first_clean_us_analog_only": 6.85,
+    "with_digital_template_us": 5.69,
+    "residual_fraction": 0.006
+   },
+   "BW 20 MHz, delay 50 ns": {
+    "first_clean_us_analog_only": 7.67,
+    "with_digital_template_us": 6.49,
+    "residual_fraction": 0.139
+   }
+  }
+ }
+}

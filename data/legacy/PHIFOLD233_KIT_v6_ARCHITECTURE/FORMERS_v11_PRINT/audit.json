@@ -1,0 +1,302 @@
+{
+ "FORMER_L1": {
+  "depth": [
+   1.243,
+   0.206,
+   1.713
+  ],
+  "width": [
+   1.565,
+   0.501,
+   2.36
+  ],
+  "center": [
+   -0.108,
+   0.339,
+   1.04
+  ],
+  "samples": 126,
+  "bore_r": 49.3,
+  "n_pin_notches": 3,
+  "notch_depth_mm": 4.3,
+  "expected_track_deg": 0.0,
+  "outer_r_max": 116.5,
+  "z_range": [
+   25.18,
+   37.1
+  ]
+ },
+ "FORMER_L2": {
+  "depth": [
+   1.239,
+   0.209,
+   1.787
+  ],
+  "width": [
+   1.571,
+   0.479,
+   2.36
+  ],
+  "center": [
+   -0.11,
+   0.326,
+   0.96
+  ],
+  "samples": 128,
+  "bore_r": 49.9,
+  "tooth_width_mm": 3.57,
+  "tooth_height_mm": 2.6,
+  "tooth_center_deg": 137.51,
+  "n_pin_notches": 6,
+  "notch_depth_mm": 3.7,
+  "expected_track_deg": 137.51,
+  "outer_r_max": 116.5,
+  "z_range": [
+   20.38,
+   32.77
+  ]
+ },
+ "FORMER_L3": {
+  "depth": [
+   1.244,
+   0.21,
+   1.79
+  ],
+  "width": [
+   1.572,
+   0.48,
+   2.36
+  ],
+  "center": [
+   -0.11,
+   0.327,
+   0.96
+  ],
+  "samples": 128,
+  "bore_r": 49.9,
+  "tooth_width_mm": 3.57,
+  "tooth_height_mm": 2.6,
+  "tooth_center_deg": 275.02,
+  "n_pin_notches": 6,
+  "notch_depth_mm": 3.7,
+  "expected_track_deg": 275.02,
+  "outer_r_max": 116.5,
+  "z_range": [
+   16.15,
+   28.42
+  ]
+ },
+ "FORMER_L4": {
+  "depth": [
+   1.245,
+   0.209,
+   1.789
+  ],
+  "width": [
+   1.568,
+   0.478,
+   2.36
+  ],
+  "center": [
+   -0.112,
+   0.327,
+   0.96
+  ],
+  "samples": 128,
+  "bore_r": 49.9,
+  "tooth_width_mm": 3.57,
+  "tooth_height_mm": 2.6,
+  "tooth_center_deg": 52.52,
+  "n_pin_notches": 6,
+  "notch_depth_mm": 3.7,
+  "expected_track_deg": 52.52,
+  "outer_r_max": 116.5,
+  "z_range": [
+   11.8,
+   24.01
+  ]
+ },
+ "FORMER_L5": {
+  "depth": [
+   1.241,
+   0.203,
+   1.787
+  ],
+  "width": [
+   1.568,
+   0.466,
+   2.36
+  ],
+  "center": [
+   -0.112,
+   0.33,
+   0.96
+  ],
+  "samples": 127,
+  "bore_r": 49.9,
+  "tooth_width_mm": 3.57,
+  "tooth_height_mm": 2.6,
+  "tooth_center_deg": 190.03,
+  "n_pin_notches": 6,
+  "notch_depth_mm": 3.7,
+  "expected_track_deg": 190.03,
+  "outer_r_max": 116.5,
+  "z_range": [
+   7.15,
+   19.58
+  ]
+ },
+ "FORMER_L6": {
+  "depth": [
+   1.247,
+   0.202,
+   1.791
+  ],
+  "width": [
+   1.571,
+   0.451,
+   2.36
+  ],
+  "center": [
+   -0.118,
+   0.339,
+   1.0
+  ],
+  "samples": 127,
+  "bore_r": 49.9,
+  "tooth_width_mm": 3.57,
+  "tooth_height_mm": 2.6,
+  "tooth_center_deg": 327.54,
+  "n_pin_notches": 6,
+  "notch_depth_mm": 3.7,
+  "expected_track_deg": 327.54,
+  "outer_r_max": 116.5,
+  "z_range": [
+   3.2,
+   15.23
+  ]
+ },
+ "hub_notches": [
+  {
+   "center_deg": 0.0,
+   "width_mm": 3.89,
+   "depth_mm": 3.0
+  },
+  {
+   "center_deg": 6.0,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 11.0,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 16.0,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 52.54,
+   "width_mm": 3.96,
+   "depth_mm": 3.0
+  },
+  {
+   "center_deg": 58.5,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 63.5,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 68.5,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 137.5,
+   "width_mm": 3.89,
+   "depth_mm": 3.0
+  },
+  {
+   "center_deg": 143.5,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 148.5,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 153.5,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 190.04,
+   "width_mm": 3.96,
+   "depth_mm": 3.0
+  },
+  {
+   "center_deg": 196.0,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 201.0,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 206.0,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 275.0,
+   "width_mm": 3.89,
+   "depth_mm": 3.0
+  },
+  {
+   "center_deg": 281.0,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 286.0,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 291.0,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 327.54,
+   "width_mm": 3.96,
+   "depth_mm": 3.0
+  },
+  {
+   "center_deg": 333.5,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 338.5,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  },
+  {
+   "center_deg": 343.5,
+   "width_mm": 1.73,
+   "depth_mm": 1.4
+  }
+ ],
+ "hub_outer_r": 49.5
+}

@@ -1,0 +1,23 @@
+{
+ "clearance_violations_below_0p09": 2,
+ "min_gap_mm": 0.0851,
+ "shorts": 0,
+ "short_list": [],
+ "viol_list": [
+  [
+   "trk",
+   "trk",
+   0.085,
+   "B.Cu"
+  ],
+  [
+   "trk",
+   "trk",
+   0.085,
+   "B.Cu"
+  ]
+ ],
+ "nets_with_opens": 0,
+ "opens": [],
+ "time_s": 0.0
+}

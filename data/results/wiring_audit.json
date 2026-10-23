@@ -1,0 +1,305 @@
+{
+ "connectors_checked": 37,
+ "links": 8,
+ "link_pins": 53,
+ "harness_conductors": 59,
+ "harness_bad": 0,
+ "errors": [],
+ "harness": [
+  [
+   "W001",
+   "VBUS",
+   "OK"
+  ],
+  [
+   "W002",
+   "VBUS",
+   "OK"
+  ],
+  [
+   "W003",
+   "VBUS",
+   "OK"
+  ],
+  [
+   "W004",
+   "GND",
+   "OK"
+  ],
+  [
+   "W005",
+   "GND",
+   "OK"
+  ],
+  [
+   "W006",
+   "GND",
+   "OK"
+  ],
+  [
+   "W007",
+   "+12V",
+   "OK"
+  ],
+  [
+   "W008",
+   "+5V5",
+   "OK"
+  ],
+  [
+   "W009",
+   "+3V6",
+   "OK"
+  ],
+  [
+   "W010",
+   "GND",
+   "OK"
+  ],
+  [
+   "W011",
+   "EN_MAIN",
+   "OK"
+  ],
+  [
+   "W012",
+   "spare",
+   "OK"
+  ],
+  [
+   "W013",
+   "TRIG",
+   "OK"
+  ],
+  [
+   "W014",
+   "JOY_X",
+   "OK"
+  ],
+  [
+   "W015",
+   "JOY_Y",
+   "OK"
+  ],
+  [
+   "W016",
+   "DIAL",
+   "OK"
+  ],
+  [
+   "W017",
+   "AUDIO",
+   "OK"
+  ],
+  [
+   "W018",
+   "GND",
+   "OK"
+  ],
+  [
+   "W019",
+   "GND",
+   "OK"
+  ],
+  [
+   "W020",
+   "SHIELD",
+   "OK"
+  ],
+  [
+   "W021",
+   "P3V3",
+   "OK"
+  ],
+  [
+   "W022",
+   "spare",
+   "OK"
+  ],
+  [
+   "W023",
+   "spare",
+   "OK"
+  ],
+  [
+   "W024",
+   "spare",
+   "OK"
+  ],
+  [
+   "W025",
+   "UMB_SHLD",
+   "OK"
+  ],
+  [
+   "W026",
+   "GND",
+   "OK"
+  ],
+  [
+   "W027",
+   "TX1_IN",
+   "OK"
+  ],
+  [
+   "W028",
+   "REF_I1",
+   "OK"
+  ],
+  [
+   "W029",
+   "FAULT1_N",
+   "OK"
+  ],
+  [
+   "W030",
+   "ISENSE1",
+   "OK"
+  ],
+  [
+   "W031",
+   "NTC_SENSE",
+   "OK"
+  ],
+  [
+   "W032",
+   "GND",
+   "OK"
+  ],
+  [
+   "W033",
+   "COIL_B (DRAIN1, 460 V flyback)",
+   "OK"
+  ],
+  [
+   "W034",
+   "COIL_A (VBUS side)",
+   "OK"
+  ],
+  [
+   "W035",
+   "LED_IN",
+   "OK"
+  ],
+  [
+   "W036",
+   "+5V",
+   "OK"
+  ],
+  [
+   "W037",
+   "GND",
+   "OK"
+  ],
+  [
+   "W038",
+   "HTA_P (pad A) / GND (pad B)",
+   "OK"
+  ],
+  [
+   "W039",
+   "RAW_GX (QUAD-A +)",
+   "OK"
+  ],
+  [
+   "W040",
+   "VCM (QUAD-A -)",
+   "OK"
+  ],
+  [
+   "W041",
+   "RAW_GY (QUAD-B +)",
+   "OK"
+  ],
+  [
+   "W042",
+   "VCM (QUAD-B -)",
+   "OK"
+  ],
+  [
+   "W043",
+   "RAW_X8 tied to VCM (spare input terminated)",
+   "OK"
+  ],
+  [
+   "W044",
+   "damping 470-680 ohm across QUAD-A",
+   "OK"
+  ],
+  [
+   "W045",
+   "damping 470-680 ohm across QUAD-B",
+   "OK"
+  ],
+  [
+   "W046",
+   "TX layer 1 lead A",
+   "OK"
+  ],
+  [
+   "W047",
+   "TX layer 1 lead B",
+   "OK"
+  ],
+  [
+   "W048",
+   "TX layer 2 lead A",
+   "OK"
+  ],
+  [
+   "W049",
+   "TX layer 2 lead B",
+   "OK"
+  ],
+  [
+   "W050",
+   "TX layer 3 lead A",
+   "OK"
+  ],
+  [
+   "W051",
+   "TX layer 3 lead B",
+   "OK"
+  ],
+  [
+   "W052",
+   "TX layer 4 lead A",
+   "OK"
+  ],
+  [
+   "W053",
+   "TX layer 4 lead B",
+   "OK"
+  ],
+  [
+   "W054",
+   "TX layer 5 lead A",
+   "OK"
+  ],
+  [
+   "W055",
+   "TX layer 5 lead B",
+   "OK"
+  ],
+  [
+   "W056",
+   "TX layer 6 lead A",
+   "OK"
+  ],
+  [
+   "W057",
+   "TX layer 6 lead B",
+   "OK"
+  ],
+  [
+   "W058",
+   "COIL_B / COIL_A (taps)",
+   "OK"
+  ],
+  [
+   "W059",
+   "RAW_Y8 tied to VCM (spare input terminated)",
+   "OK"
+  ]
+ ]
+}

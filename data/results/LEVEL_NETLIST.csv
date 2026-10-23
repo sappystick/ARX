@@ -1,0 +1,56 @@
+level,board,connector.pin,net / function,goes to
+L0,SB1R-Q,pad pair 1 (+),QUAD-A +,L1 AB1T-A J1.1 (RAW_GX)
+L0,SB1R-Q,pad pair 1 (-),QUAD-A -,L1 AB1T-A J1.4 (VCM)
+L0,SB1R-Q,pad pair 2 (+),QUAD-B +,AB1T-A J1.2 (RAW_GY)
+L0,SB1R-Q,pad pair 2 (-),QUAD-B -,AB1T-A J1.5 (VCM)
+L2,AB1T-A,J2.1,+5VA,L5 CB1D JA.1 via the spine
+L2,AB1T-A,J2.2,GND,L5 CB1D JA.2 via the spine
+L2,AB1T-A,J2.3,+3V3D,L5 CB1D JA.3 via the spine
+L2,AB1T-A,J2.4,GND,L5 CB1D JA.4 via the spine
+L2,AB1T-A,J2.5,SCLK,L5 CB1D JA.5 via the spine
+L2,AB1T-A,J2.6,CS,L5 CB1D JA.6 via the spine
+L2,AB1T-A,J2.7,SDO1 (SDOA1 = QUAD-A),L5 CB1D JA.7 via the spine
+L2,AB1T-A,J2.8,SDO2 (SDOA2 = QUAD-B),L5 CB1D JA.8 via the spine
+L2,AB1T-A,J2.9,SDO3 (SDOA3 = spare),L5 CB1D JA.9 via the spine
+L2,AB1T-A,J2.10,BLANK,L5 CB1D JA.10 via the spine
+L2,AB1T-A,J2.11,GND,L5 CB1D JA.11 via the spine
+L2,AB1T-A,J2.12,GND,L5 CB1D JA.12 via the spine
+L2,AB1T-B,J2.1,+5VA,L5 CB1D JB.1 via the spine
+L2,AB1T-B,J2.2,GND,L5 CB1D JB.2 via the spine
+L2,AB1T-B,J2.3,+3V3D,L5 CB1D JB.3 via the spine
+L2,AB1T-B,J2.4,GND,L5 CB1D JB.4 via the spine
+L2,AB1T-B,J2.5,SCLK,L5 CB1D JB.5 via the spine
+L2,AB1T-B,J2.6,CS,L5 CB1D JB.6 via the spine
+L2,AB1T-B,J2.7,SDO1 (SDOB1 = spare),L5 CB1D JB.7 via the spine
+L2,AB1T-B,J2.8,SDO2 (SDOB2 = MONO),L5 CB1D JB.8 via the spine
+L2,AB1T-B,J2.9,BLANK,L5 CB1D JB.9 via the spine
+L2,AB1T-B,J2.10,RAW_MONO,L5 CB1D JB.10 via the spine
+L2,AB1T-B,J2.11,VCM,L5 CB1D JB.11 via the spine
+L2,AB1T-B,J2.12,GND,L5 CB1D JB.12 via the spine
+L5,CB1D,JLB.1,+5V,L6 LB1 JLB.1
+L5,CB1D,JLB.2,LED_IN,L6 LB1 JLB.2 (GP12 via the level shifter)
+L5,CB1D,JLB.3,GND,LB1 JLB.3
+L5,CB1D,JLB.4,GND,LB1 JLB.4
+L5,CB1D,JHTA.1,HTA_P,L8 antenna pad A
+L5,CB1D,JHTA.2,GND,L8 antenna pad B
+L5,CB1D,JCL.1,"COIL_B (drain side, 500 V flyback)",TX junction (6 B leads) + TX pair conductor 1 -> neck module JL1.1
+L5,CB1D,JCL.2,COIL_A (VBUS side),TX junction (6 A leads) + TX pair conductor 2 -> neck module JL1.2
+L5,CB1D,JPB.1,UMB_SHLD,neck module PB1R JC.1 (8-way umbilical)
+L5,CB1D,JPB.2,GND,neck module PB1R JC.2 (8-way umbilical)
+L5,CB1D,JPB.3,TX1_IN,neck module PB1R JC.3 (8-way umbilical)
+L5,CB1D,JPB.4,REF_I1,neck module PB1R JC.4 (8-way umbilical)
+L5,CB1D,JPB.5,FAULT1_N,neck module PB1R JC.5 (8-way umbilical)
+L5,CB1D,JPB.6,ISENSE1,neck module PB1R JC.6 (8-way umbilical)
+L5,CB1D,JPB.7,NTC_SENSE,neck module PB1R JC.7 (8-way umbilical)
+L5,CB1D,JPB.8,GND,neck module PB1R JC.8 (8-way umbilical)
+L5,CB1D,JPW.1,VBUS_IN,power ribbon (shaft) -> pod / PM1
+L5,CB1D,JPW.2,VBUS_IN,power ribbon (shaft) -> pod / PM1
+L5,CB1D,JPW.3,GND,power ribbon (shaft) -> pod / PM1
+L5,CB1D,JPW.4,GND,power ribbon (shaft) -> pod / PM1
+L5,CB1D,JTR.1,P3V3,signal ribbon (shaft) -> handle board
+L5,CB1D,JTR.2,GND,signal ribbon (shaft) -> handle board
+L5,CB1D,JTR.3,TRIG_EXT,signal ribbon (shaft) -> handle board
+L5,CB1D,JTR.4,DIAL_EXT,signal ribbon (shaft) -> handle board
+L5,CB1D,JTR.5,JOY_X,signal ribbon (shaft) -> handle board
+L5,CB1D,JTR.6,JOY_Y,signal ribbon (shaft) -> handle board
+L5,CB1D,JTR.7,SHIELD,signal ribbon (shaft) -> handle board

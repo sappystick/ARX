@@ -1,0 +1,58 @@
+{
+ "ROOF_PLATE_v5": {
+  "shells": 95,
+  "tris": 74328,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -52.0,
+   -52.0,
+   41.3,
+   52.0,
+   52.0,
+   44.5
+  ],
+  "note": "removable roof r52, z41.3-44.5: 66 pixel holes D1.7, 4 vent windows at r28-32, D20 port, 8 screw slots 6.0 x 3.4 with 6.0 x 6.2 counterbores (M3 nylon, 2.4 deep) at r42.5 over the 8 rib insert posts; TX-lead channel r45.6-48.6 under the roof (mates the wall-top groove); seal with silicone on the collar top r49.6-52 and pot after wiring"
+ },
+ "ANALOG_TRAY_v5": {
+  "shells": 10,
+  "tris": 7952,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -38.8,
+   -38.8,
+   9.8,
+   38.8,
+   37.69,
+   12.2
+  ],
+  "note": "D77.6 tray on the floor: seats for AB1A (x=-20.3) and AB1B (x=+20.3), 3 standoffs each (0.5 above the tray, board bottom z11.1), shim rib pair for the 0.3 mm mesh/graphite partition, 16 mm notch at 90 deg over the floor slot (clears the spine walls)"
+ },
+ "SEPTUM_FRAME_v5": {
+  "shells": 10,
+  "tris": 8440,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -43.6,
+   -43.6,
+   20.1,
+   43.6,
+   42.82,
+   21.8
+  ],
+  "note": "septum frame: ring r31-39 whose edge sits in the rib slots (z20.0-21.9, 0.1 mm each side), outer sectors to r43.6 with gaps at the 8 ribs and the spine channel; bond copper cloth over the D62 window and seal the rim with silicone"
+ },
+ "SPINE_COMB_v5": {
+  "shells": 4,
+  "tris": 48,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -5.8,
+   37.4,
+   9.8,
+   5.8,
+   40.0,
+   38.0
+  ],
+  "note": "clip-in comb for the 12 mm spine channel at 90 deg: 11.6 x 2.6 bar segments with 2.0-3.0 mm windows at z12-14, z19.5-22.5, z26.5-29.5, z38-39.2 for the rigid-flex tails; holds the Z-fold radius and gives strain relief"
+ }
+}

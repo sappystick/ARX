@@ -1,0 +1,107 @@
+{
+ "window_azimuth_deg": {
+  "outer_band_inner_wall": [
+   65.0,
+   155.0,
+   245.0,
+   335.0
+  ],
+  "inner_band_outer_wall": [
+   295.88,
+   25.88,
+   115.88,
+   205.88
+  ]
+ },
+ "shells": {
+  "outer_band": {
+   "triangles": 724224,
+   "nonmanifold_edges": 0,
+   "volume_cm3": 388.4
+  },
+  "gallery_ring_with_windows": {
+   "triangles": 68584,
+   "nonmanifold_edges": 0,
+   "volume_cm3": 91.27
+  },
+  "inner_band": {
+   "triangles": 730128,
+   "nonmanifold_edges": 0,
+   "volume_cm3": 252.39
+  }
+ },
+ "body": {
+  "triangles": 1522936,
+  "bbox_mm": [
+   -116.5,
+   -116.5,
+   0.0,
+   116.5,
+   116.5,
+   33.26
+  ]
+ },
+ "electrical": {
+  "outer": {
+   "turns_per_circuit": 9,
+   "turns_per_section": 18,
+   "turns_by_segment": {
+    "bottom": 2.955,
+    "heel": 1.514,
+    "rim": 0.117,
+    "crown": 1.29,
+    "face": 3.124,
+    "brow": 0.0,
+    "inner": 0.0,
+    "foot": 0.0
+   },
+   "wire_per_section_m": 11.84,
+   "L_section_uH": 113.8,
+   "k": 0.87,
+   "R_section_ohm": 0.407,
+   "all4_parallel_L_uH": 102.6,
+   "all4_parallel_R_ohm": 0.102,
+   "min_pitch_mm": 1.853
+  },
+  "inner": {
+   "turns_per_circuit": 9,
+   "turns_per_section": 18,
+   "turns_by_segment": {
+    "bottom": 1.641,
+    "heel": 0.0,
+    "rim": 0.0,
+    "crown": 0.0,
+    "face": 1.77,
+    "brow": 1.384,
+    "inner": 3.0,
+    "foot": 1.206
+   },
+   "wire_per_section_m": 3.68,
+   "L_section_uH": 16.3,
+   "k": 0.89,
+   "R_section_ohm": 0.127,
+   "all4_parallel_L_uH": 14.9,
+   "all4_parallel_R_ohm": 0.032,
+   "min_pitch_mm": 1.86
+  },
+  "field_per_sqrtW_uT": {
+   "depth_mm": [
+    100.0,
+    200.0,
+    300.0
+   ],
+   "outer_only": [
+    113.53,
+    30.56,
+    11.21
+   ],
+   "both_bands_optimal_split": [
+    120.04,
+    31.21,
+    11.4
+   ],
+   "inner_current_ratio_200mm": 0.374
+  }
+ },
+ "time_s": 2.6
+}

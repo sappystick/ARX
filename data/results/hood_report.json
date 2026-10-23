@@ -1,0 +1,63 @@
+{
+ "LOTUS_HOOD_CARRIER_v2_spokes": {
+  "shells": 27,
+  "tris": 6592,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -116.1,
+   -116.1,
+   29.4,
+   116.1,
+   116.1,
+   33.4
+  ],
+  "note": "13 radial spokes (Fibonacci), 2 tiles per spoke: inner 27.0 x 26.2, outer 26.5 x 40.5 x 2.5 mm MnZn; carrier ring r52.6-116.1, z29.4-33.4; min tile gap 1.7 mm"
+ },
+ "FERRITE_TILE_INNER_v2_reference": {
+  "shells": 1,
+  "tris": 12,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -13.5,
+   -13.1,
+   0.0,
+   13.5,
+   13.1,
+   2.5
+  ],
+  "note": "MnZn tile 27.0 x 26.2 x 2.5, 13 pieces"
+ },
+ "FERRITE_TILE_OUTER_v2_reference": {
+  "shells": 1,
+  "tris": 12,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -13.25,
+   -20.25,
+   0.0,
+   13.25,
+   20.25,
+   2.5
+  ],
+  "note": "MnZn tile 26.5 x 40.5 x 2.5, 13 pieces"
+ },
+ "hood_v2_audit": {
+  "tiles": 26,
+  "min_tile_gap": 1.79,
+  "frame_into_neighbour_pocket_gap": 0.23,
+  "outer_frame_corner_r": 115.88,
+  "inner_frame_r": 57.5,
+  "tile_area_mm2": 23148,
+  "mass_g": 278,
+  "dims": {
+   "inner": [
+    27.0,
+    26.2
+   ],
+   "outer": [
+    26.5,
+    40.5
+   ]
+  }
+ }
+}

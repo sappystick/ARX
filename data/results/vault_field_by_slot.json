@@ -1,0 +1,72 @@
+{
+ "z9.8": {
+  "r0": {
+   "B_uT_per_A": 114.6,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 106.1
+  },
+  "r20": {
+   "B_uT_per_A": 119.4,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 110.6
+  },
+  "r40": {
+   "B_uT_per_A": 137.9,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 127.7
+  }
+ },
+ "z17.8": {
+  "r0": {
+   "B_uT_per_A": 115.8,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 107.3
+  },
+  "r20": {
+   "B_uT_per_A": 121.0,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 112.0
+  },
+  "r40": {
+   "B_uT_per_A": 140.7,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 130.3
+  }
+ },
+ "z25.8": {
+  "r0": {
+   "B_uT_per_A": 114.0,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 105.6
+  },
+  "r20": {
+   "B_uT_per_A": 118.8,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 110.0
+  },
+  "r40": {
+   "B_uT_per_A": 136.8,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 126.6
+  }
+ },
+ "z33.8": {
+  "r0": {
+   "B_uT_per_A": 109.4,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 101.3
+  },
+  "r20": {
+   "B_uT_per_A": 113.3,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 104.9
+  },
+  "r40": {
+   "B_uT_per_A": 127.2,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 117.7
+  }
+ },
+ "z37.5": {
+  "r0": {
+   "B_uT_per_A": 106.5,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 98.6
+  },
+  "r20": {
+   "B_uT_per_A": 109.9,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 101.8
+  },
+  "r40": {
+   "B_uT_per_A": 121.5,
+   "EMF_mV_per_cm2_unshielded_500V_flyback": 112.5
+  }
+ }
+}
