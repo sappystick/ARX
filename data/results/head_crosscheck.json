@@ -211,7 +211,7 @@
   {
    "section": "D electrical",
    "check": "every inter-board pin and harness conductor matches the netlists",
-   "value": "53 pins / 59 conductors",
+   "value": "53 pins / 50 conductors",
    "limit": "0 errors",
    "result": "PASS",
    "note": ""
@@ -291,7 +291,7 @@
   {
    "section": "D receive",
    "check": "SB1R-Q modeled leak at 0.5 mm offset below 20 mV",
-   "value": "11.0 mV",
+   "value": "10.3 mV",
    "limit": "",
    "result": "PASS",
    "note": ""
@@ -313,12 +313,12 @@
    "note": "firmware LED cap 0.35 A required"
   },
   {
-   "section": "E open items",
-   "check": "coil damping resistor 470-680 ohm across each SB1R coil is on no board",
-   "value": "open",
-   "limit": "must be fitted",
-   "result": "WARN",
-   "note": "docs/OPEN_ITEMS.md item 1"
+   "section": "D receive",
+   "check": "damping resistor across each SB1R coil (RD1 on QA P1/P2, RD2 on the QA transfer pads of QB)",
+   "value": "rd ['RD1', 'RD2'], margins [8.24, 1.44], transfer 0.84",
+   "limit": "both fitted, margins >= 0",
+   "result": "PASS",
+   "note": ""
   },
   {
    "section": "E open items",
@@ -454,7 +454,7 @@
  "interferences": [],
  "voxel_mm": 0.5,
  "fails": 0,
- "warns": 3,
+ "warns": 2,
  "z_ranges": {
   "FORMER_L1": [
    25.2,

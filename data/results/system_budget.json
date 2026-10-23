@@ -210,15 +210,37 @@
    "note": "5 percent of VBUS allowed"
   },
   {
-   "part": "Power ribbon AWG28 x 3",
-   "stress": "average current in boost (7.7 W / 26 V / 0.85)",
-   "value": 0.348,
-   "rating": 1.5,
+   "part": "Power cord AWG20 pair (upper v1)",
+   "stress": "average current in boost (7.7 W / 25.2 V / 0.85)",
+   "value": 0.359,
+   "rating": 5.0,
    "unit": "A",
-   "margin_pct": 76.8,
+   "margin_pct": 92.8,
    "required_margin_pct": 50,
    "status": "PASS",
-   "note": "3 conductors in parallel, 0.5 A each continuous"
+   "note": "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon"
+  },
+  {
+   "part": "PM2 fuse F1 5 A slow",
+   "stress": "pulse-recharge peak of the PB1R bulk through the cord (power_dock_check.py)",
+   "value": 3.788,
+   "rating": 5.0,
+   "unit": "A",
+   "margin_pct": 24.2,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "slow-blow: carries the rated current continuously; peaks last about a millisecond"
+  },
+  {
+   "part": "Battery pack 7S1P Molicel P30B",
+   "stress": "average current in boost",
+   "value": 0.359,
+   "rating": 30.0,
+   "unit": "A",
+   "margin_pct": 98.8,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "30 A continuous (datasheet value, unverified here)"
   },
   {
    "part": "LED rail (OKI-78SR 1.5 A)",
@@ -292,11 +314,12 @@
  "power": {
   "scan 8 A / 800 Hz": {
    "W": 4.7,
-   "hours": 19.3
+   "hours": 16.1
   },
   "boost 20 A / 400 Hz": {
    "W": 7.7,
-   "hours": 11.8
-  }
+   "hours": 9.8
+  },
+  "pack_Wh": 75.6
  }
 }

@@ -1,0 +1,861 @@
+{
+ "checks": [
+  {
+   "check": "closed shells: U1_TOP_HOUSING (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U2_GRIP (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U3_BOTTOM_HOUSING (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U4_TRIGGER (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U5_ARMREST_CUP (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: ARMREST_TUBE_CFRP_pos1 (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U6_BATTERY_DOCK (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U7_BATTERY_PACK_SHELL (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: TUBE_A_CFRP (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U8_CORD_ANCHOR (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U9_CAM_COLLAR (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: TUBE_B_CFRP_extended (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U8_SEPTUM_extended (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: TUBE_B_CFRP_collapsed (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "closed shells: U8_SEPTUM_collapsed (odd edges after welding)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "grip circumference in the plane normal to the grip axis (mm)",
+   "value": 113.411,
+   "limits": [
+    100,
+    125
+   ],
+   "result": "PASS",
+   "note": "power-grip range for adult hands, 40 x 32 ellipse"
+  },
+  {
+   "check": "hand space between the housings along the grip axis (mm)",
+   "value": 118.0,
+   "limits": [
+    110,
+    130
+   ],
+   "result": "PASS",
+   "note": "95th percentile hand breadth about 97 mm + glove"
+  },
+  {
+   "check": "trigger pad to grip front at rest (mm)",
+   "value": 3.5,
+   "limits": [
+    3.3,
+    6.0
+   ],
+   "result": "PASS",
+   "note": "travel 3.0 mm to the stop"
+  },
+  {
+   "check": "trigger pad top below the top housing (index finger directly under it, mm)",
+   "value": 12.089,
+   "limits": [
+    2.0,
+    20.0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "trigger pad height on the grip (mm from the grip top along the axis)",
+   "value": 26.866,
+   "limits": [
+    15.0,
+    45.0
+   ],
+   "result": "PASS",
+   "note": "index-finger pad zone"
+  },
+  {
+   "check": "trigger magnet clear of the housing wall (mm)",
+   "value": 0.804,
+   "limits": [
+    0.2,
+    2.0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "magnet to Hall sensor at rest (mm, wall 2.5 + 1 mm air + half the 1.6 mm board)",
+   "value": 6.604,
+   "limits": [
+    4.0,
+    8.0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "magnet travel away from the Hall sensor for the full pad stroke (mm)",
+   "value": 2.524,
+   "limits": [
+    2.0,
+    null
+   ],
+   "result": "PASS",
+   "note": "Hall switch operate/release points and magnet grade to be set on the first article (ASSUMPTIONS 22)"
+  },
+  {
+   "check": "HB2 board and parts inside its housing (min clearance over the board length, mm)",
+   "value": 1.0,
+   "limits": [
+    0.2,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "PM2 board and parts inside its housing (min clearance over the board length, mm)",
+   "value": 1.852,
+   "limits": [
+    0.2,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "Hall sensor on HB2 directly above the trigger magnet (x offset, mm)",
+   "value": 0.001,
+   "limits": [
+    0.0,
+    1.0
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "HB2 clear of the tube A socket sleeve (mm)",
+   "value": 2.194,
+   "limits": [
+    0.5,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "trigger tail clear of the top housing at rest (mm)",
+   "value": 0.8,
+   "limits": [
+    0.3,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "rail fit: minimum clearance dock rails to pack channels at x = -80 (mm)",
+   "value": 0.3,
+   "limits": [
+    0.25,
+    0.5
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "rail undercut engagement (head beyond the slot edge, each side, mm)",
+   "value": 2.7,
+   "limits": [
+    2.0,
+    null
+   ],
+   "result": "PASS",
+   "note": "keeps the pack captured vertically"
+  },
+  {
+   "check": "insertion path: pack section swept along the rails clears the dock everywhere (mm)",
+   "value": 0.3,
+   "limits": [
+    0.25,
+    null
+   ],
+   "result": "PASS",
+   "note": "latch depressed while sliding"
+  },
+  {
+   "check": "cells: 7 x 18650 fit the cell bay, radial clearance in the y = 0 section (mm)",
+   "value": 0.404,
+   "limits": [
+    0.2,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "cells: length clearance to the side walls (mm)",
+   "value": 0.404,
+   "limits": [
+    0.2,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "BMS bay accepts the 60 x 41 x 5.4 envelope (mm)",
+   "value": 0.2,
+   "limits": [
+    0.1,
+    null
+   ],
+   "result": "PASS",
+   "note": "part to be chosen to fit"
+  },
+  {
+   "check": "MT60-M in the pedestal: envelope clearance (mm)",
+   "value": 0.2,
+   "limits": [
+    0.15,
+    null
+   ],
+   "result": "PASS",
+   "note": "MT60 size unverified (ASSUMPTIONS 25)"
+  },
+  {
+   "check": "MT60-F in the pack front wall: envelope clearance (mm)",
+   "value": 0.2,
+   "limits": [
+    0.15,
+    null
+   ],
+   "result": "PASS",
+   "note": "MT60 size unverified (ASSUMPTIONS 25)"
+  },
+  {
+   "check": "MT60 pair axis alignment (mm)",
+   "value": 0.0,
+   "limits": [
+    0.0,
+    0.2
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "MT60 mating faces: pedestal face to pack face (mm)",
+   "value": 0.5,
+   "limits": [
+    0.0,
+    1.0
+   ],
+   "result": "PASS",
+   "note": "connector float takes up the rest"
+  },
+  {
+   "check": "latch pocket open through the dock plate (mm of free width)",
+   "value": 20.0,
+   "limits": [
+    17.0,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "latch engagement in the pocket (mm)",
+   "value": 2.5,
+   "limits": [
+    2.0,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "latch travel exceeds engagement (mm)",
+   "value": 1.5,
+   "limits": [
+    0.5,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "latch inside the pocket in x (clearance each side, mm)",
+   "value": 0.5,
+   "limits": [
+    0.3,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "twin cavity between spacers: largest cord circle per half-bore (mm dia)",
+   "value": 12.29,
+   "limits": [
+    11.0,
+    null
+   ],
+   "result": "PASS",
+   "note": "tube B ID 25.98, septum 1.40"
+  },
+  {
+   "check": "twin cavity at a spacer: bore radius minus cord radius (mm)",
+   "value": 0.378,
+   "limits": [
+    0.3,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "tube B in tube A radial clearance (mm)",
+   "value": 0.723,
+   "limits": [
+    0.5,
+    1.5
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "telescoping overlap at full extension (mm)",
+   "value": 80.0,
+   "limits": [
+    80.0,
+    null
+   ],
+   "result": "PASS",
+   "note": "about 2.8 x tube OD"
+  },
+  {
+   "check": "collapsed: tube B clear of the cord anchor (mm)",
+   "value": 1.0,
+   "limits": [
+    0.5,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "telescoping stroke (mm)",
+   "value": 356.0,
+   "limits": [
+    300.0,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "tube A in the top-housing socket: radial clearance (mm)",
+   "value": 0.172,
+   "limits": [
+    0.1,
+    0.4
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "armrest tube in its socket: radial clearance (mm)",
+   "value": 0.178,
+   "limits": [
+    0.1,
+    0.4
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "armrest tube insertion at position 1 inside the socket (mm, tube end short of the socket end)",
+   "value": 5.003,
+   "limits": [
+    0.0,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "armrest positions: shortest insertion >= 2 x tube OD (mm)",
+   "value": 46.0,
+   "limits": [
+    44.0,
+    null
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "cup centre behind the grip centre, positions 1-3 (mm)",
+   "value": "236 / 258 / 280",
+   "limits": [
+    null,
+    null
+   ],
+   "result": "PASS",
+   "note": "covers about 5th-95th percentile forearm lengths with the cup 60-90 mm in front of the elbow (estimate)"
+  },
+  {
+   "check": "voxel interference between parts, extended and collapsed (pairs over 1 mm3, bonded grip joints excluded)",
+   "value": 0,
+   "limits": [
+    0,
+    0
+   ],
+   "result": "PASS",
+   "note": "[]"
+  },
+  {
+   "check": "static torque about the grip at 47 deg, same head reach as v20 (kg m)",
+   "value": 2.875,
+   "limits": [
+    null,
+    2.88
+   ],
+   "result": "PASS",
+   "note": "v20 design 2.88 at reach 0.97 m; typical detectors 1.3-1.7"
+  },
+  {
+   "check": "working length is inside the telescoping range (tube B front between collapsed and extended, mm)",
+   "value": 625.933,
+   "limits": [
+    536.2626342773438,
+    892.2626342773438
+   ],
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "upper assembly mass incl. battery pack (kg)",
+   "value": 1.434,
+   "limits": [
+    null,
+    1.6
+   ],
+   "result": "PASS",
+   "note": "XP S-telescopic stem alone is 370 g (XP manual); this adds the pack, electronics, cords and the twin cavity"
+  }
+ ],
+ "lengths_mm": {
+  "upper_assembly_extended_mm": 1171,
+  "upper_assembly_collapsed_mm": 815,
+  "cup_back_to_hinge_extended_mm": 1655,
+  "cup_back_to_hinge_collapsed_mm": 1299
+ },
+ "balance": {
+  "baseline_v20_kg_m": 2.88,
+  "new_47deg_working": 2.875,
+  "head_horizontal_m": 0.97,
+  "new_40deg": 3.143,
+  "new_55deg": 2.524,
+  "new_47deg_full_extension": 3.495,
+  "new_47deg_collapsed": 2.666,
+  "option_pack_moved_back_under_the_cup": 2.821
+ },
+ "mass": {
+  "upper_total_kg": 1.434,
+  "battery_pack_kg": 0.526,
+  "cg_stem_frame_mm": [
+   37.7,
+   -0.0,
+   -37.5
+  ],
+  "items": [
+   {
+    "item": "U1_TOP_HOUSING",
+    "mass_g": 107.8,
+    "at_mm": [
+     45.5,
+     0.0,
+     80.8
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "U2_GRIP",
+    "mass_g": 68.3,
+    "at_mm": [
+     0.0,
+     -0.0,
+     0.0
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "U3_BOTTOM_HOUSING",
+    "mass_g": 118.1,
+    "at_mm": [
+     -83.6,
+     -0.0,
+     -76.7
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "U4_TRIGGER",
+    "mass_g": 6.1,
+    "at_mm": [
+     41.6,
+     -0.0,
+     39.5
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "U5_ARMREST_CUP",
+    "mass_g": 79.0,
+    "at_mm": [
+     -240.7,
+     0.0,
+     -38.3
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "ARMREST_TUBE_CFRP_pos1",
+    "mass_g": 29.9,
+    "at_mm": [
+     -176.3,
+     0.0,
+     -76.7
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "U6_BATTERY_DOCK",
+    "mass_g": 101.4,
+    "at_mm": [
+     -55.7,
+     0.0,
+     -103.3
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "U7_BATTERY_PACK_SHELL",
+    "mass_g": 129.9,
+    "at_mm": [
+     -83.7,
+     -0.0,
+     -115.2
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "TUBE_A_CFRP",
+    "mass_g": 103.4,
+    "at_mm": [
+     297.3,
+     0.0,
+     80.7
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "U8_CORD_ANCHOR",
+    "mass_g": 7.7,
+    "at_mm": [
+     79.1,
+     0.0,
+     80.7
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "U9_CAM_COLLAR",
+    "mass_g": 17.6,
+    "at_mm": [
+     512.7,
+     -0.0,
+     83.4
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "TUBE_B_CFRP_extended",
+    "mass_g": 74.5,
+    "at_mm": [
+     667.3,
+     0.0,
+     80.7
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "U8_SEPTUM_extended",
+    "mass_g": 39.2,
+    "at_mm": [
+     651.7,
+     -0.0,
+     80.7
+    ],
+    "source": "mesh volume x density"
+   },
+   {
+    "item": "7 x Molicel P30B (47 g max each, datasheet value via retailer copies, unverified)",
+    "mass_g": 329.0,
+    "at_mm": [
+     -85.0,
+     0.0,
+     -119.5
+    ],
+    "source": "estimate"
+   },
+   {
+    "item": "BMS 7S (estimate)",
+    "mass_g": 20.0,
+    "at_mm": [
+     -60.0,
+     0.0,
+     -105.9
+    ],
+    "source": "estimate"
+   },
+   {
+    "item": "MT60 pair + gasket (estimate)",
+    "mass_g": 10.0,
+    "at_mm": [
+     0.0,
+     0.0,
+     -120.2
+    ],
+    "source": "estimate"
+   },
+   {
+    "item": "nickel strip, pack wiring, insulation, heat-shrink (estimate)",
+    "mass_g": 30.0,
+    "at_mm": [
+     -85.0,
+     0.0,
+     -115.2
+    ],
+    "source": "estimate"
+   },
+   {
+    "item": "spring thumb latch, steel (estimate)",
+    "mass_g": 12.0,
+    "at_mm": [
+     -171.0,
+     0.0,
+     -105.2
+    ],
+    "source": "estimate"
+   },
+   {
+    "item": "PM2 board, populated (estimate)",
+    "mass_g": 30.0,
+    "at_mm": [
+     -50.0,
+     0.0,
+     -88.7
+    ],
+    "source": "estimate"
+   },
+   {
+    "item": "HB2 board, dial switch, power button, magnet (estimate)",
+    "mass_g": 20.0,
+    "at_mm": [
+     0.0,
+     0.0,
+     62.7
+    ],
+    "source": "estimate"
+   },
+   {
+    "item": "power coiled cord 2 x AWG20 shielded (estimate)",
+    "mass_g": 45.0,
+    "at_mm": [
+     300.0,
+     0.0,
+     80.7
+    ],
+    "source": "estimate"
+   },
+   {
+    "item": "signal coiled cord 5-core AWG28 shielded (estimate)",
+    "mass_g": 35.0,
+    "at_mm": [
+     300.0,
+     0.0,
+     80.7
+    ],
+    "source": "estimate"
+   },
+   {
+    "item": "forearm strap + cup liner (estimate)",
+    "mass_g": 20.0,
+    "at_mm": [
+     -236.3,
+     0.0,
+     -10.7
+    ],
+    "source": "estimate"
+   }
+  ]
+ },
+ "interference_pairs": [
+  {
+   "config": "extended",
+   "a": "U1_TOP_HOUSING",
+   "b": "U2_GRIP",
+   "overlap_mm3": 902.48,
+   "bonded": true
+  },
+  {
+   "config": "extended",
+   "a": "U2_GRIP",
+   "b": "U3_BOTTOM_HOUSING",
+   "overlap_mm3": 902.16,
+   "bonded": true
+  },
+  {
+   "config": "collapsed",
+   "a": "U1_TOP_HOUSING",
+   "b": "U2_GRIP",
+   "overlap_mm3": 902.48,
+   "bonded": true
+  },
+  {
+   "config": "collapsed",
+   "a": "U2_GRIP",
+   "b": "U3_BOTTOM_HOUSING",
+   "overlap_mm3": 902.16,
+   "bonded": true
+  }
+ ]
+}

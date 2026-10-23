@@ -49,13 +49,16 @@
    "note": "min separation 0.45 V; firmware thresholds must use these levels, not the HB1-only ladder"
   },
   {
-   "check": "joystick push switch reaches the head",
-   "result": "WARN",
-   "value": [
-    "JJOY.5",
-    "RSW.1"
-   ],
-   "note": "JOY_SW ends at the pull-up RSW: the 7-core cable has no spare conductor (open item, handle redesign P04)"
+   "check": "joystick removed: no JOY nets on HB2 and no JOY conductor in harness v3",
+   "result": "PASS",
+   "value": [],
+   "note": "CB1D JTR.5/.6 (JOY_X/JOY_Y) are left without a conductor until the CB1D revision"
+  },
+  {
+   "check": "trigger polarity: rest = TRIG low (magnet near, switch on), pressed = TRIG high (magnet >= 2 mm further away)",
+   "result": "PASS",
+   "value": 2.524,
+   "note": "firmware: enter boost on TRIG high only after TRIG was seen low since power-up (a broken TRIG conductor reads high)"
   },
   {
    "check": "boost-mode stress rows (20 A / 400 Hz) all pass",
@@ -74,8 +77,12 @@
      55.5
     ],
     [
-     "Power ribbon AWG28 x 3",
-     76.8
+     "Power cord AWG20 pair (upper v1)",
+     92.8
+    ],
+    [
+     "Battery pack 7S1P Molicel P30B",
+     98.8
     ]
    ],
    "note": ""

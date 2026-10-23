@@ -96,5 +96,33 @@
    "stray_labels": 0,
    "ok": true
   }
+ },
+ "HB2": {
+  "board": "HB2",
+  "parts": 10,
+  "nets": 11,
+  "pins": 29,
+  "paper": "A1",
+  "check": {
+   "nets": 11,
+   "nodes": 29,
+   "mismatched_nets": [],
+   "stray_labels": 0,
+   "ok": true
+  }
+ },
+ "PM2": {
+  "board": "PM2",
+  "parts": 17,
+  "nets": 9,
+  "pins": 43,
+  "paper": "A1",
+  "check": {
+   "nets": 9,
+   "nodes": 43,
+   "mismatched_nets": [],
+   "stray_labels": 0,
+   "ok": true
+  }
  }
 }
