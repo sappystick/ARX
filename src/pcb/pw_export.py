@@ -5,8 +5,8 @@ import os, sys, json, math, csv
 import numpy as np
 import pw_design as D
 import rodin_core_v4 as rc, golden_cone_head as g
-PW = D.PW; NAME = {"M": "PM1", "T": "PB1", "C": "CB1", "R": "PB1R", "H": "HB1"}[PW]; OUT = f"kit_v6/{NAME}"; os.makedirs(OUT, exist_ok=True)
-SIZE = {"M": (28.0, 136.0), "T": (28.0, 224.0), "C": (70.0, 70.0), "R": (70.0, 70.0), "H": (24.0, 60.0)}[PW]; CX, CY = 100.0, 100.0
+PW = D.PW; NAME = {"M": "PM1", "T": "PB1", "C": "CB1", "R": "PB1R", "H": "HB1", "P": "PM2", "G": "HB2"}[PW]; OUT = f"kit_v6/{NAME}"; os.makedirs(OUT, exist_ok=True)
+SIZE = {"M": (28.0, 136.0), "T": (28.0, 224.0), "C": (70.0, 70.0), "R": (70.0, 70.0), "H": (24.0, 60.0), "P": (28.0, 70.0), "G": (24.0, 38.0)}[PW]; CX, CY = 100.0, 100.0
 HV = ({"DRAIN1", "CLAMP1"} if PW in ("R", "T") else ({"COIL_B", "DM1", "DM2"} if PW == "C" else set())); MV = {"DRAIN2", "CLAMP2"}
 PL = {}
 def put(ref, x, y, rot=0): PL[ref] = (x, y, rot)
@@ -77,6 +77,14 @@ elif PW == "R":
 elif PW == "H":
     fixed = {"JH": (-8.0, -17.0, 0), "JJOY": (8.0, -17.0, 0), "JDIAL": (8.0, 4.0, 0), "HS1": (-8.0, 10.0, 0)}
     anchors = {"CH1": (-8, 15), "RH1": (-8, 19), "RSW": (3, -8), "RD0": (-2, 0), "RD2": (-2, 4), "RD3": (-2, 8), "RD4": (-2, 12), "RSHH": (-8, 24)}
+    PL = autoplace(fixed, anchors)
+elif PW == "P":
+    fixed = {"J1": (-7.0, -27.0, 0), "JP": (7.0, 25.0, 0), "JS": (-8.0, 30.0, 0), "J3": (-9.0, 12.0, 0), "CB1": (6.0, 4.0, 0)}
+    anchors = {"F1": (6, -27), "Q1": (5, -16), "R1": (-4, -14), "DZ1": (-4, -9), "R2": (-4, -4), "R3": (-9, -4), "C1": (-9, 1), "DTVS": (5, -8), "CM1": (-5, 18), "RBL": (5, 14), "RSH": (-4, 24), "CSH": (-9, 24)}
+    PL = autoplace(fixed, anchors)
+elif PW == "G":
+    fixed = {"JH": (-7.0, -6.0, 0), "JDIAL": (6.0, -10.0, 0), "HS1": (0.0, 15.0, 0)}     # HS1 at the board end under the trigger magnet
+    anchors = {"CH1": (-6, 14), "RH1": (6, 14), "RD0": (2, 2), "RD2": (6, 2), "RD3": (-2, 7), "RD4": (6, 7), "RSHH": (-8, 10)}
     PL = autoplace(fixed, anchors)
 # remove refs not in design
 PL = {k: v for k, v in PL.items() if k in D.BYREF}

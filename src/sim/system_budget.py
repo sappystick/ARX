@@ -26,7 +26,9 @@ R("TX coil litz", "rms current at 20 A / 400 Hz (Ipk sqrt(D/3))", 20 * math.sqrt
 R("Vault", "worst-case hot spot (boost + 0.5 W LEDs, 25 C ambient)", max(v["max_C"] for k, v in T.items() if "worst" in k and "25 C" in k), 80, "C", 30, "PETG Tg about 80 C; FR4 85 C")
 R("Vault", "hot spot at 40 C ambient", max(v["max_C"] for k, v in T.items() if "worst" in k and "40 C" in k), 80, "C", 30, "")
 bulk = 6 * 150e-6; dv = (10 * 41.5e-6) / bulk; R("PB1R bulk capacitors 6 x 150 uF", "voltage droop per pulse (charge 415 uC)", dv, 26 * 0.05, "V", 0, "5 percent of VBUS allowed")
-R("Power ribbon AWG28 x 3", "average current in boost (7.7 W / 26 V / 0.85)", 7.7 / 26 / 0.85, 1.5, "A", 50, "3 conductors in parallel, 0.5 A each continuous")
+R("Power cord AWG20 pair (upper v1)", "average current in boost (7.7 W / 25.2 V / 0.85)", 7.7 / 25.2 / 0.85, 5.0, "A", 50, "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon")
+R("PM2 fuse F1 5 A slow", "pulse-recharge peak of the PB1R bulk through the cord (power_dock_check.py)", json.load(open("kit_v23/power_dock_check.json"))["currents_A"]["recharge_peak"], 5.0, "A", 20, "slow-blow: carries the rated current continuously; peaks last about a millisecond")
+R("Battery pack 7S1P Molicel P30B", "average current in boost", 7.7 / 25.2 / 0.85, 30.0, "A", 50, "30 A continuous (datasheet value, unverified here)")
 R("LED rail (OKI-78SR 1.5 A)", "66 LEDs at full white 60 mA each", 66 * 0.06, 1.5, "A", 0, "FAILS unless the firmware caps the LED current: REQUIREMENT firmware limit 0.35 A total (about 1.75 W)")
 R("LED rail with the firmware cap", "capped LED current + Pico + ADC (0.35 + 0.15)", 0.50, 1.5, "A", 30, "requires the firmware cap")
 R("TX lead channel", "litz fill ratio", tx["bundle_area_mm2"] / tx["channel_area_mm2"], 0.7, "ratio", 15, "wall-top groove + roof channel")
@@ -35,7 +37,8 @@ R("TC4420 gate driver (2 FETs)", "gate charge per turn-off (2 x 45 nC, UNVERIFIE
 R("TC4420 gate driver", "average drive power 90 nC x 12 V x 400 Hz", 90e-9 * 12 * 400 * 1e3, 200, "mW", 50, "")
 fails = [r for r in rows if r["status"] == "FAIL"]; watch = [r for r in rows if r["status"] == "WATCH"]
 with open("kit_v22/SYSTEM_STRESS_MARGINS.csv", "w", newline="") as f: w = csv.DictWriter(f, fieldnames=list(rows[0].keys())); w.writeheader(); w.writerows(rows)
-power = {"scan 8 A / 800 Hz": dict(W=4.7, hours=round(90.7 / 4.7, 1)), "boost 20 A / 400 Hz": dict(W=7.7, hours=round(90.7 / 7.7, 1))}
+PACK_WH = 7 * 3.6 * 3.0                                                  # upper assembly v1: one 7S1P Molicel P30B pack (75.6 Wh; v20 assumed 90.7 Wh)
+power = {"scan 8 A / 800 Hz": dict(W=4.7, hours=round(PACK_WH / 4.7, 1)), "boost 20 A / 400 Hz": dict(W=7.7, hours=round(PACK_WH / 7.7, 1)), "pack_Wh": PACK_WH}
 json.dump(dict(rows=rows, fails=len(fails), watch=len(watch), power=power), open("kit_v22/system_budget.json", "w"), indent=1)
 for r in rows: print(f"{r['status']:5} {r['part'][:34]:34} {r['stress'][:52]:52} {r['value']:>8} / {r['rating']} {r['unit']}  margin {r['margin_pct']}%")
 print("FAIL", len(fails), "WATCH", len(watch), "of", len(rows))

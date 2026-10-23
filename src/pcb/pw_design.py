@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 PF233-PM1 (battery power path / protection / hot-swap OR-ing)  and  PF233-PB1 (TX driver power stage) design database.
-Select with env PW=M (PM1) or PW=T (PB1).  API mirrors afe_design (PARTS, NETS, LIB, BYREF, erc(), bom(), kicad_netlist()).
+Select with env PW=M (PM1) or PW=T (PB1); PW=P (PM2, battery dock power path) and PW=G (HB2, grip board without joystick) are the upper-assembly v1 boards.  API mirrors afe_design (PARTS, NETS, LIB, BYREF, erc(), bom(), kicad_netlist()).
 Pin maps / land patterns for ICs and power packages are from memory -> VERIFY list in the build report.
 """
 import os, datetime
@@ -78,6 +78,15 @@ LIB["SS49E"] = dict(desc="SS49E linear Hall sensor (TO-92 style)", fp="Package_T
 # footprint; pin order VCC/GND/OUT and Vsat <= 0.4 V are UNVERIFIED until a part is chosen (docs/ASSUMPTIONS.md 22, prompt C05)
 LIB["HALL_SW"] = dict(LIB["SS49E"], desc="digital Hall switch, open-drain output, 3.3 V (generic, TO-92 style; pinout unverified)", pins=[("1", "VCC", "power_in"), ("2", "GND", "power_in"), ("3", "OUT", "open_collector")])
 if "HDR1x5" not in LIB: LIB["HDR1x5"] = tht(5, 2.54, 1, 1.8, 1.0, "Pin header")
+# upper assembly v1 (PM2 / HB2): wire pads for panel parts and the cords, and an SO-8 P-channel MOSFET. SO-8 pinout 1-3 S, 4 G, 5-8 D is the common P-FET
+# arrangement but VERIFY against the chosen part (docs/ASSUMPTIONS.md 26)
+LIB["WIRE3"] = dict(tht(3, 5.08, 1, 3.0, 1.7, "Wire pads"), body=(4.04, 14.7, 0.1))
+LIB["WIRE4"] = dict(tht(4, 5.08, 1, 3.0, 1.7, "Wire pads"), body=(4.04, 19.8, 0.1))
+LIB["WIRE2S"] = dict(tht(2, 2.54, 1, 1.8, 1.0, "Wire pads"), body=(3.0, 6.6, 0.1))
+LIB["PMOS_SO8"] = dict(desc="P-channel MOSFET SO-8, -40 V, Rds(on) <= 15 mohm at -10 V (1-3 S, 4 G, 5-8 D: VERIFY)", fp="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+                       pins=[("1", "S", "passive"), ("2", "S", "passive"), ("3", "S", "passive"), ("4", "G", "input"), ("5", "D", "passive"), ("6", "D", "passive"), ("7", "D", "passive"), ("8", "D", "passive")],
+                       pads=[(str(i + 1), -2.7, -1.905 + 1.27 * i, 1.55, 0.6, "roundrect") for i in range(4)] + [(str(8 - i), 2.7, -1.905 + 1.27 * i, 1.55, 0.6, "roundrect") for i in range(4)], body=(5.0, 6.0, 1.75))
+
 PARTS = []; NETS = {}
 def add(ref, typ, value, mpn="", **kw): PARTS.append(dict(ref=ref, type=typ, value=value, mpn=mpn, **kw))
 def net(name, *pins):
@@ -232,6 +241,39 @@ if PW == "H":
     add("JDIAL", "HDR1x5", "Dial: COM P1 P2 P3 P4 (4-position rotary switch)", "4-position rotary switch"); add("RD0", "R0603", "10k", ""); add("RD2", "R0603", "3k3", ""); add("RD3", "R0603", "10k", ""); add("RD4", "R0603", "33k", "")
     net("P3V3", ("RD0", 1)); net("DIAL", ("RD0", 2), ("JDIAL", 1)); net("GND", ("JDIAL", 2)); net("DP2", ("JDIAL", 3), ("RD2", 1)); net("DP3", ("JDIAL", 4), ("RD3", 1)); net("DP4", ("JDIAL", 5), ("RD4", 1)); net("GND", ("RD2", 2), ("RD3", 2), ("RD4", 2))
     add("RSHH", "R0603", "0R", "shield to grip foil"); net("SHIELD", ("RSHH", 1)); net("GND", ("RSHH", 2))
+if PW == "P":
+    # ------------------------------------------------------------------ PM2 (upper assembly v1): MT60 dock power path in the bottom housing
+    # pack MT60-F pin 3 is looped to pack GND; the dock MT60-M is panel-mounted in the pedestal and wired to J1. Q1 conducts only when the pack is
+    # seated (ILK = pack GND) AND the power switch on the top housing is closed; C1 sets the soft-start ramp (power_dock_check.py)
+    add("J1", "WIRE3", "MT60-M leads: BAT+ BAT- ILK", "AWG16 x 2 + AWG24, 80 mm, potted at the pedestal")
+    net("BAT_P", ("J1", 1), ("F1", 1)); net("GND", ("J1", 2)); net("ILK", ("J1", 3), ("J3", 2))
+    add("F1", "FUSE1812", "5A slow 32V", "Littelfuse 0453005 class (verify DC rating)"); net("BAT_F", ("F1", 2))
+    add("Q1", "PMOS_SO8", "P-MOSFET -40V", "SO-8 P-channel, -40 V, <= 15 mohm (part to be chosen)")
+    net("BAT_F", ("Q1", 1), ("Q1", 2), ("Q1", 3)); net("Q1_G", ("Q1", 4)); net("VBUS", ("Q1", 5), ("Q1", 6), ("Q1", 7), ("Q1", 8))
+    add("R1", "R0603", "47k", "gate to source"); net("BAT_F", ("R1", 1)); net("Q1_G", ("R1", 2))
+    add("DZ1", "DSOD", "15V zener", "BZT52C15 class, Vgs clamp"); net("BAT_F", ("DZ1", 1)); net("Q1_G", ("DZ1", 2))
+    add("R2", "R0603", "68k", "gate pull-down through the switch and the interlock"); net("Q1_G", ("R2", 1)); net("SW_A", ("R2", 2), ("J3", 1))
+    add("J3", "WIRE2S", "Power switch pair (top housing)", "AWG28 pair")
+    add("R3", "R0603", "1k", "soft-start damping"); add("C1", "C0805", "220n 50V", "X7R, Miller soft-start"); net("Q1_G", ("R3", 1)); net("SS", ("R3", 2), ("C1", 1)); net("VBUS", ("C1", 2))
+    add("DTVS", "DSMC", "SMCJ33A", "TVS 33 V stand-off, uni-directional"); net("VBUS", ("DTVS", 1)); net("GND", ("DTVS", 2))
+    add("CB1", "CAN10", "470u 50V", "hybrid polymer/Al 10x10, low ESR"); net("VBUS", ("CB1", 1)); net("GND", ("CB1", 2))
+    add("CM1", "C1210", "10u 50V", "X7R"); net("VBUS", ("CM1", 1)); net("GND", ("CM1", 2))
+    add("RBL", "R1206", "100k", "bleeder"); net("VBUS", ("RBL", 1)); net("GND", ("RBL", 2))
+    add("JP", "WIRE4", "Power cord: VBUS VBUS GND GND", "coiled cord 2 x AWG20 shielded (one conductor per net, second pad for strain relief)")
+    net("VBUS", ("JP", 1), ("JP", 2)); net("GND", ("JP", 3), ("JP", 4))
+    add("JS", "WIRE2S", "Shields: power-cord braid, septum Cu mesh", "single-point drain at PM2"); net("SHIELD", ("JS", 1), ("JS", 2), ("RSH", 1), ("CSH", 1))
+    add("RSH", "R0603", "1M", ""); add("CSH", "C0603", "1n 100V", "C0G"); net("GND", ("RSH", 2), ("CSH", 2))
+if PW == "G":
+    # ------------------------------------------------------------------ HB2 (upper assembly v1): grip board in the top housing; trigger Hall switch and dial; no joystick
+    # JH keeps the CB1D JTR pinout; pins 5/6 (the old joystick) have no conductor in the 5-core signal cord
+    add("JH", "HDR1x7", "Signal cord to the head: +3V3 GND TRIG DIAL - - SHLD", "coiled cord 5-core AWG28 shielded")
+    for p_, nm in ((1, "P3V3"), (2, "GND"), (3, "TRIG"), (4, "DIAL"), (5, "JH5_NC"), (6, "JH6_NC"), (7, "SHIELD")): net(nm, ("JH", p_))
+    add("HS1", "HALL_SW", "Hall switch OD", "digital Hall switch, open-drain, 3.3 V (part to be chosen); magnet near at rest -> TRIG low, pressed -> TRIG high (active-low lever)")
+    add("CH1", "C0603", "100n", ""); add("RH1", "R0603", "1k", "")
+    net("P3V3", ("HS1", 1), ("CH1", 1)); net("GND", ("HS1", 2), ("CH1", 2)); net("HALL_OUT", ("HS1", 3), ("RH1", 1)); net("TRIG", ("RH1", 2))
+    add("JDIAL", "HDR1x5", "Dial: COM P1 P2 P3 P4 (4-pos rotary, top housing)", "4-position rotary switch"); add("RD0", "R0603", "10k", ""); add("RD2", "R0603", "3k3", ""); add("RD3", "R0603", "10k", ""); add("RD4", "R0603", "33k", "")
+    net("P3V3", ("RD0", 1)); net("DIAL", ("RD0", 2), ("JDIAL", 1)); net("GND", ("JDIAL", 2)); net("DP2", ("JDIAL", 3), ("RD2", 1)); net("DP3", ("JDIAL", 4), ("RD3", 1)); net("DP4", ("JDIAL", 5), ("RD4", 1)); net("GND", ("RD2", 2), ("RD3", 2), ("RD4", 2))
+    add("RSHH", "R0603", "0R", "signal-cord shield to GND at the handle"); net("SHIELD", ("RSHH", 1)); net("GND", ("RSHH", 2))
 if PW == "L":
     import csv as _csv
     px = list(_csv.DictReader(open("kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv")))
