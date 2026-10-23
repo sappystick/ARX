@@ -37,3 +37,6 @@
 | SB1R-QB lead pads at r33 (128/142 deg) can be wired from the gallery | QB is the lower board and QA copper covers those pads (free radius 0.61 mm): no route. QB terminals now end at r23 under two QA transfer PTHs; head_crosscheck only tested the QA pads | sbq_gen2.py transfer-pad margin, check_v22.py |
 | sbq_sim.py closes board B between its own lead pads | It closed B with a chord between board A's pads (90 deg instead of 135 deg); aligned results were nearly unchanged (axisymmetric field), offsets were not exact. Fixed | sbq_sim.py |
 | check_v22.py runs 22 geometry checks (CLAUDE.md, DESIGN_STATE), 38 (README) | 43 before this change, 47 now | check_v22.json |
+| The trigger is a Hall sensor on CB1D TRIG_IN | HB1 used a linear SS49E (rest output near VCC/2) on a digital-only GPIO with a 10k pull-up: the trigger state, and so boost, was undefined. HB1 now uses a digital open-drain Hall switch | trigger_check.py |
+| A 10k pull-up is enough for the trigger input | With RH1 + RT1 = 2 kohm in series the low level was 0.88 V (VIL 0.8 V): RP1 is now 47k (0.52 V, 0.47 ms) | trigger_check.py |
+| Every handle control reaches the head | The joystick push switch ends at its pull-up on HB1; no cable conductor | trigger_check.py |

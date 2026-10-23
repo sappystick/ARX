@@ -1,0 +1,100 @@
+{
+ "CB1D": {
+  "board": "CB1D",
+  "parts": 64,
+  "nets": 48,
+  "pins": 208,
+  "paper": "A1",
+  "check": {
+   "nets": 48,
+   "nodes": 208,
+   "mismatched_nets": [],
+   "stray_labels": 0,
+   "ok": true
+  }
+ },
+ "LB1": {
+  "board": "LB1",
+  "parts": 81,
+  "nets": 71,
+  "pins": 299,
+  "paper": "A1",
+  "check": {
+   "nets": 71,
+   "nodes": 299,
+   "mismatched_nets": [],
+   "stray_labels": 0,
+   "ok": true
+  }
+ },
+ "AB1A": {
+  "board": "AB1A",
+  "parts": 56,
+  "nets": 30,
+  "pins": 184,
+  "paper": "A1",
+  "check": {
+   "nets": 30,
+   "nodes": 184,
+   "mismatched_nets": [],
+   "stray_labels": 0,
+   "ok": true
+  }
+ },
+ "AB1B": {
+  "board": "AB1B",
+  "parts": 41,
+  "nets": 23,
+  "pins": 134,
+  "paper": "A1",
+  "check": {
+   "nets": 23,
+   "nodes": 134,
+   "mismatched_nets": [],
+   "stray_labels": 0,
+   "ok": true
+  }
+ },
+ "PB1R": {
+  "board": "PB1R",
+  "parts": 39,
+  "nets": 19,
+  "pins": 101,
+  "paper": "A1",
+  "check": {
+   "nets": 19,
+   "nodes": 101,
+   "mismatched_nets": [],
+   "stray_labels": 0,
+   "ok": true
+  }
+ },
+ "PM1": {
+  "board": "PM1",
+  "parts": 28,
+  "nets": 18,
+  "pins": 69,
+  "paper": "A1",
+  "check": {
+   "nets": 18,
+   "nodes": 69,
+   "mismatched_nets": [],
+   "stray_labels": 0,
+   "ok": true
+  }
+ },
+ "HB1": {
+  "board": "HB1",
+  "parts": 12,
+  "nets": 12,
+  "pins": 36,
+  "paper": "A1",
+  "check": {
+   "nets": 12,
+   "nodes": 36,
+   "mismatched_nets": [],
+   "stray_labels": 0,
+   "ok": true
+  }
+ }
+}

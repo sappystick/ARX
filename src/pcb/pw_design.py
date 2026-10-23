@@ -74,6 +74,9 @@ LIB["LM393"] = dict(desc="LM393 dual comparator SOIC-8", fp="Package_SO:SOIC-8_3
 LIB.pop("SOIC8", None)
 LIB["HDR1x7"] = tht(7, 2.54, 1, 1.8, 1.0, "Pin header")
 LIB["SS49E"] = dict(desc="SS49E linear Hall sensor (TO-92 style)", fp="Package_TO_SOT_THT:TO-92_Inline", pins=[("1", "VCC", "power_in"), ("2", "GND", "power_in"), ("3", "OUT", "output")], pads=[("1", -1.27, 0, 1.0, 1.0, "circle"), ("2", 0, 0, 1.0, 1.0, "circle"), ("3", 1.27, 0, 1.0, 1.0, "circle")], body=(4.0, 3.0, 4.5), tht=True, drill=0.65)
+# digital Hall switch for the trigger (replaces the linear SS49E: CB1D reads TRIG on a digital-only GPIO with a pull-up). Generic open-drain part, same TO-92
+# footprint; pin order VCC/GND/OUT and Vsat <= 0.4 V are UNVERIFIED until a part is chosen (docs/ASSUMPTIONS.md 22, prompt C05)
+LIB["HALL_SW"] = dict(LIB["SS49E"], desc="digital Hall switch, open-drain output, 3.3 V (generic, TO-92 style; pinout unverified)", pins=[("1", "VCC", "power_in"), ("2", "GND", "power_in"), ("3", "OUT", "open_collector")])
 if "HDR1x5" not in LIB: LIB["HDR1x5"] = tht(5, 2.54, 1, 1.8, 1.0, "Pin header")
 PARTS = []; NETS = {}
 def add(ref, typ, value, mpn="", **kw): PARTS.append(dict(ref=ref, type=typ, value=value, mpn=mpn, **kw))
@@ -176,7 +179,7 @@ if PW == "C":
     add("RJX", "R0603", "1k", ""); add("RJY", "R0603", "1k", ""); add("CJX", "C0603", "10n", ""); add("CJY", "C0603", "10n", ""); net("JOY_XF", ("RJX", 2), ("CJX", 1)); net("JOY_YF", ("RJY", 2), ("CJY", 1)); net("GND", ("CJX", 2), ("CJY", 2))
     add("RSH", "R0603", "1M", ""); add("CSH", "C0603", "1n 100V", "C0G"); net("GND", ("RSH", 2), ("CSH", 2))
     for k, (ext, inn) in enumerate((("TRIG_EXT", "TRIG_IN"), ("DIAL_EXT", "DIAL_IN")), 1):
-        r = "RT1" if k == 1 else "RD1"; add(r, "R0603", "1k", "series protection"); add(f"DH{k}", "DSOD", "BAS16", ""); add(f"DL{k}", "DSOD", "BAS16", ""); add(f"CQ{k}", "C0603", "10n", "X7R"); add(f"RP{k}", "R0603", "10k", "pull-up")
+        r = "RT1" if k == 1 else "RD1"; add(r, "R0603", "1k", "series protection"); add(f"DH{k}", "DSOD", "BAS16", ""); add(f"DL{k}", "DSOD", "BAS16", ""); add(f"CQ{k}", "C0603", "10n", "X7R"); add(f"RP{k}", "R0603", "47k" if k == 1 else "10k", "pull-up (47k on TRIG: low level with the 2 kohm series path stays under VIL)" if k == 1 else "pull-up")
         net(inn, (r, 2), (f"DH{k}", 2), (f"DL{k}", 1), (f"CQ{k}", 1), (f"RP{k}", 1)); net("P3V3", (f"DH{k}", 1), (f"RP{k}", 2)); net("GND", (f"DL{k}", 2), (f"CQ{k}", 2))
     # headers to the receiver boards, PB1R and the power
     add("JA", "HDR2x6S", "to AB1A J2", "1.27 mm 2x6 header"); add("JB", "HDR2x6S", "to AB1B J2", "1.27 mm 2x6 header")
@@ -222,7 +225,7 @@ if PW == "H":
     # ------------------------------------------------------------------ HB1: ergonomic handle board (trigger Hall sensor, joystick, dial ladder) on the shielded 6-core cable to the head
     add("JH", "HDR1x7", "Cable to head: +3V3 GND TRIG DIAL JOYX JOYY SHLD", "shielded 6-core + drain")
     for p, nm in ((1, "P3V3"), (2, "GND"), (3, "TRIG"), (4, "DIAL"), (5, "JOY_X"), (6, "JOY_Y"), (7, "SHIELD")): net(nm, ("JH", p))
-    add("HS1", "SS49E", "SS49E", "Honeywell SS49E linear Hall (trigger magnet travel 0-4 mm)"); add("CH1", "C0603", "100n", ""); add("RH1", "R0603", "1k", "")
+    add("HS1", "HALL_SW", "Hall switch OD", "digital Hall switch, open-drain, 3.3 V (part to be chosen; trigger magnet travel 0-4 mm)"); add("CH1", "C0603", "100n", ""); add("RH1", "R0603", "1k", "")
     net("P3V3", ("HS1", 1), ("CH1", 1)); net("GND", ("HS1", 2), ("CH1", 2)); net("HALL_OUT", ("HS1", 3), ("RH1", 1)); net("TRIG", ("RH1", 2))
     add("JJOY", "HDR1x5", "Joystick: V GND X Y SW", "2-axis thumb joystick module"); net("P3V3", ("JJOY", 1)); net("GND", ("JJOY", 2)); net("JOY_X", ("JJOY", 3)); net("JOY_Y", ("JJOY", 4)); net("JOY_SW", ("JJOY", 5), ("RSW", 1))
     add("RSW", "R0603", "10k", "joystick switch pull-up"); net("P3V3", ("RSW", 2))
