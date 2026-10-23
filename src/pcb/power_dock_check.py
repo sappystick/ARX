@@ -3,7 +3,7 @@
 (Q1 conducts only with the pack seated AND the power switch closed), gate drive over the pack voltage range, soft-start ramp and inrush into the
 real bus capacitance, voltage ratings, cord drop, runtime of a 7S1P Molicel P30B pack. Cell, MOSFET, BMS and connector figures are
 ASSUMPTIONS 24-26 (datasheets not opened in this container)."""
-import json, re, itertools
+import json, re, itertools, os
 from sch_export import parse_net
 R = []
 def chk(n, ok, v="", note=""): R.append(dict(check=n, result="PASS" if ok else "FAIL", value=v, note=note))
@@ -74,6 +74,6 @@ run = dict(pack_Wh=round(E, 1), scan_h_one_pack=round(E / P_SCAN, 1), boost_h_on
 chk("runtime of one P30B pack in boost (h)", run["boost_h_one_pack"] >= 8.0, run["boost_h_one_pack"], f"{E:.1f} Wh vs 90.7 Wh in v20 ({run['v20_boost_h']} h)")
 out = dict(checks=R, interlock_table=table, runtime=run, currents_A=dict(boost_avg=round(i_avg, 3), recharge_peak=round(i_pk, 3)), gate_V=dict(at_max=round(vgs(VMAX), 2), at_min=round(vgs(VMIN), 2)), soft_start=dict(ramp_ms=round(t_ramp * 1e3, 1), inrush_A=round(i_in, 2), C_load_uF=round(C_load * 1e6)),
            assumptions=dict(cell="Molicel INR-18650-P30B: 3.0 Ah, 3.6 V nominal, 4.2 V charge, 30 A continuous, 47 g (retailer copies of the datasheet, unverified)", BMS_uv_per_cell=V_UV, miller_plateau_V=VPL, mosfet="SO-8 P-channel -40 V, 15 mohm (to be chosen)"))
-json.dump(out, open("kit_v23/power_dock_check.json", "w"), indent=1, default=str)
+os.makedirs("kit_v23", exist_ok=True); json.dump(out, open("kit_v23/power_dock_check.json", "w"), indent=1, default=str)
 for x in R: print(x["result"], x["check"], "=", x["value"], "|", x["note"][:90])
 print("FAILS", sum(x["result"] == "FAIL" for x in R), "of", len(R))
