@@ -1,3 +1,4 @@
+# SUPERSEDED by src/sim/sbq_damp2.py (2026-10-23): bare coil || Rd without the AB1T input network, and its "worst modeled leak 12 mV" rows were computed at 187 mV (the lobes-only diagnostic row of sbq_sim.json). Kept for provenance; see docs/CORRECTIONS.md.
 import numpy as np, json, math
 from scipy.integrate import solve_ivp
 src=open('sim_head1.py').read().split("# ======================= S2")[0]; ns={}; exec(src,ns); wf=ns["wf"]

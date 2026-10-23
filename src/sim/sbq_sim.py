@@ -13,7 +13,8 @@ def paths(deg,zl,dx=0.0,dy=0.0,terminals=True):
             if isterm and not terminals: continue
             if isterm and abs(p[-1]-np.array(P1)).max()<1e-6: p=p[::-1]            # terminal 1 is stored coil->pad; current flows pad->coil
             q=rot(p,deg); out.append(np.c_[q[:,0]*1e-3+dx*1e-3,q[:,1]*1e-3+dy*1e-3,np.full(len(q),zl[int(li)]*1e-3)])
-    if terminals: a=np.array(G["pads"][1]); b=np.array(G["pads"][0]); q=rot(np.array([a,b]),deg); out.append(np.c_[q[:,0]*1e-3+dx*1e-3,q[:,1]*1e-3+dy*1e-3,np.full(2,zl[0]*1e-3)])   # closing wire P2->P1
+    if terminals:                                       # closing chord between this board's own pads (board B used board A's pads before)
+        a=np.array(P2); b=np.array(P1); q=rot(np.array([a,b]),deg); out.append(np.c_[q[:,0]*1e-3+dx*1e-3,q[:,1]*1e-3+dy*1e-3,np.full(2,zl[0]*1e-3)])   # closing wire P2->P1
     return out
 def sub(ps,step=1): return [p[::step] for p in ps]
 res={}
