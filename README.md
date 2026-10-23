@@ -18,4 +18,4 @@ python3 tests/regress.py
 - scripts/push_to_github.sh: publish to GitHub yourself (plain git; STLs are ordinary binary files, all under GitHub's 100 MB limit).
 
 ## Honest scope
-Nothing here has been printed, wound, assembled or measured. Performance numbers are modeled from stated assumptions. SB1R-QA/QB, LB1 and CB1D now have KiCad files and Gerbers that pass the repo's own checks and independent DRC; none has been opened in KiCad or a CAM viewer. A coil damping resistor, the rigid-flex spine, the handle redesign, KiCad schematic files and the DSP are open (docs/OPEN_ITEMS.md).
+Nothing here has been printed, wound, assembled or measured. Performance numbers are modeled from stated assumptions. SB1R-QA/QB, LB1 and CB1D now have KiCad files and Gerbers that pass the repo's own checks and independent DRC; none has been opened in KiCad or a CAM viewer. The rigid-flex spine, CAM/KiCad verification and the DSP are open; the upper assembly (S-stem, trigger, battery dock, twin-cavity shaft) is generated and checked on its meshes but not printed (docs/OPEN_ITEMS.md, docs/design/UPPER_ASSEMBLY_v1.md).
