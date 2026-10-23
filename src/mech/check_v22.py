@@ -70,6 +70,24 @@ if os.path.exists("kit_v22/sbq_geometry.json"):
     chk("SB1R-Q board holes coincide with the hub bosses and base plate windows (angle+radius deviation)",dev,0,0.01)
     chk("SB1R-Q hole copper margin (mm beyond 0.4 mm clearance)",G["hole_margin_mm"],0.5,None)
     chk("SB1R-Q via clearance margin (mm)",G["via_margin_mm"],0.3,None)
+    # QB lead access through QA and the damping resistors on the QA top (OPEN_ITEMS 1)
+    chk("SB1R-QB lead pads reachable: QA transfer pads clear of QA copper (mm beyond 0.2 mm)",G["transfer_margin_mm"],0.0,None)
+    chk("SB1R-Q damping resistors RD1/RD2: F.Cu margin (mm beyond 0.2 mm)",min(G["rd_margin_mm"]),0.0,None)
+    pts=[tuple(p) for p in G["pads"]+G["padsB"]]+[tuple(G["rd"][k]["centre"]) for k in ("RD1","RD2")]
+    def section(T,z0):
+        z=T[:,:,2]-z0; m=(z.min(1)<0)&(z.max(1)>0); S=[]
+        for tri,zz in zip(T[m],z[m]):
+            q=[tri[i,:2]+zz[i]/(zz[i]-zz[j])*(tri[j,:2]-tri[i,:2]) for i,j in ((0,1),(1,2),(2,0)) if (zz[i]<0)!=(zz[j]<0)]
+            if len(q)==2: S.append(q)
+        return np.array(S).reshape(-1,2,2)
+    def inside(S,x,y):
+        a,b=S[:,0],S[:,1]; c=(a[:,1]>y)!=(b[:,1]>y); xi=a[c,0]+(y-a[c,1])*(b[c,0]-a[c,0])/(b[c,1]-a[c,1]); return bool(np.sum(xi>x)%2)
+    ring=[(0,0)]+[(2.5*math.cos(math.radians(k)),2.5*math.sin(math.radians(k))) for k in range(0,360,30)]
+    solid=sum(inside(S,x+dx,y+dy) for T in (H,CB,TR) for z0 in (3.5,4.2) for S in [section(T,z0)] if len(S) for x,y in pts for dx,dy in ring)
+    probe=section(H,3.5); probe_hit=inside(probe,30*math.cos(math.radians(157.5)),30*math.sin(math.radians(157.5)))   # 2 mm from the boss axis = in its wall   # the test must see the 157.5 deg boss wall
+    chk("gallery open above the SB1R lead pads and RD1/RD2 (sections z3.5/4.2 of hub, comb, tray; 13 points within 2.5 mm each)",solid if probe_hit else 99,0,0,"self-test on the 157.5 deg boss wall "+("ok" if probe_hit else "FAILED"))
+    gap=min(abs(((math.degrees(math.atan2(y,x))-a)+180)%360-180)*math.pi/180*math.hypot(x,y) for x,y in pts for a,_ in BOSS if abs(math.hypot(x,y)-28.0)<6)
+    chk("SB1R lead pads and RD1/RD2 vs the r28 bosses (arc distance, mm)",gap,4.0,None)
 
 masses={n:round(vol(T)*1.27) for n,T in (("hub v5 (upper bound)",H),("roof",RF),("tray",TR),("septum frame",SP),("comb",CB))}
 json.dump(dict(checks=R,mass_g=masses),open("kit_v22/check_v22.json","w"),indent=1)

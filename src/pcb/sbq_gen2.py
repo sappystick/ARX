@@ -11,6 +11,11 @@ VIN1, VIN2, VOUT = 12.8, 6.5, 42.0
 CENT = [(50., 50.), (-50., 50.), (-50., -50.), (50., -50.)]
 SGN = [1, -1, 1, -1]
 P1, P2 = (4.0, 33.0), (-4.0, 33.0)
+# board B terminals end at r23 (same angles): QA covers r33 at 128-142 deg, so QB leads come up through two transfer holes in QA
+# where QA has no copper (radial terminal legs carry no EMF from the axisymmetric field; the shorter closing chord is re-tuned by sbq_tune B)
+PB_R = 23.0; P1B, P2B = tuple(np.multiply(P1, PB_R / math.hypot(*P1))), tuple(np.multiply(P2, PB_R / math.hypot(*P2)))
+# damping resistor across each coil (OPEN_ITEMS 1): 0805 on the QA top, on the chord between the lead pads; RD2 sits across the QB transfer pads
+RD_PAD, RD_PITCH, RD_TRACE, PTH_PAD = (1.0, 1.3), 1.9, 0.4, 1.6
 HOLE_RAD = 1.7
 
 def pt(c, r, a): a = math.radians(a); return (c[0] + r * math.cos(a), c[1] + r * math.sin(a))
@@ -44,16 +49,16 @@ def rpath(Q0, Q1, r, ccw=True):
     n = max(2, int(abs(sw) / math.radians(5)) + 2); th = a0 + np.linspace(0, sw, n)
     return np.array([Q0] + [(r * math.cos(t), r * math.sin(t)) for t in th] + [Q1])
 
-def link_paths(S, E, rad):
-    return dict(l1=rpath(E[0], S[1], rad["a"]), l2=rpath(E[1], S[2], rad["b"]), l3=rpath(E[2], S[3], rad["c"]), t1=rpath(S[0], P1, rad["t1"]), t2=rpath(E[3], P2, rad["t2"]))
+def link_paths(S, E, rad, pads=(P1, P2)):
+    return dict(l1=rpath(E[0], S[1], rad["a"]), l2=rpath(E[1], S[2], rad["b"]), l3=rpath(E[2], S[3], rad["c"]), t1=rpath(S[0], pads[0], rad["t1"]), t2=rpath(E[3], pads[1], rad["t2"]))
 
-def build(rad=None):
+def build(rad=None, pads=(P1, P2)):
     rad = rad or RAD; layers = {i: [] for i in range(4)}; vias = []; S = []; E = []
     for k in range(4):
         sp, vs, s, e = lobe(k)
         for lay, poly in sp: layers[lay].append(poly)
         vias += vs; S.append(s); E.append(e)
-    lp = link_paths(S, E, rad)
+    lp = link_paths(S, E, rad, pads)
     layers[3].append(lp["l1"]); layers[0].append(lp["l2"]); layers[3].append(lp["l3"]); layers[0].append(lp["t1"]); layers[0].append(lp["t2"])
     return layers, vias
 
@@ -104,17 +109,42 @@ def hole_margin(layers, vias, pads, hl):
         m = min(m, 114 - math.hypot(*h) - HOLE_RAD - 1.0)
     return m
 
+def rd_footprint(pa, pb):
+    """0805 across the chord pa-pb: returns (centre, angle_deg, pad centres, connecting traces pad->PTH)"""
+    pa, pb = np.asarray(pa, float), np.asarray(pb, float); c = (pa + pb) / 2; u = (pb - pa) / np.linalg.norm(pb - pa)
+    q1, q2 = c - u * RD_PITCH / 2, c + u * RD_PITCH / 2
+    return tuple(c), math.degrees(math.atan2(u[1], u[0])), [tuple(q1), tuple(q2)], [np.array([pa, q1]), np.array([q2, pb])]
+
+def pad_margin(layers, pts, r, skip_ends=()):
+    """copper margin (mm) of round pads of radius r at pts against every layer, ignoring copper that terminates at skip_ends"""
+    m = 1e9
+    for polys in layers.values():
+        for p in polys:
+            if any(min(math.dist(e, p[0]), math.dist(e, p[-1])) < 1e-6 for e in skip_ends): continue
+            for q in pts: m = min(m, pdist(np.asarray(q), p) - (W / 2 + r + CLR))
+    return m
+
+def rd_margin(layer0, fp, own_ends):
+    """F.Cu margin of the resistor pads (as circles enclosing the pad) and traces against F.Cu copper not ending at the lead pads"""
+    _, _, qs, tr = fp; rp = math.hypot(*RD_PAD) / 2; m = 1e9
+    for p in layer0:
+        if any(min(math.dist(e, p[0]), math.dist(e, p[-1])) < 1e-6 for e in own_ends): continue
+        for q in qs: m = min(m, pdist(np.asarray(q), p) - (W / 2 + rp + CLR))
+        for t in tr:
+            for s_ in np.linspace(0, 1, 12): m = min(m, pdist(t[0] + s_ * (t[1] - t[0]), p) - (W / 2 + RD_TRACE / 2 + CLR))
+    return m
+
 if __name__ == "__main__":
     layers, vias = build(); pads = [P1, P2]
-    g, where = same_layer_clearance(layers); gB, whB = same_layer_clearance(build(RADB)[0]); g = min(g, gB); print("min same-layer gap (A,B):", None if g > 1e8 else round(g, 2), where)
-    vm, vw = via_check(layers, vias); vm = min(vm, via_check(*build(RADB))[0]); print("via clearance margin (>0 ok):", round(vm, 2), vw)
-    layersB0, viasB0 = build(RADB); LB = {l: [rot(p, 45) for p in ps] for l, ps in layersB0.items()}; vB = [tuple(rot([v], 45)[0]) for v in viasB0]; pB = [tuple(rot([p], 45)[0]) for p in pads]
+    g, where = same_layer_clearance(layers); gB, whB = same_layer_clearance(build(RADB, (P1B, P2B))[0]); g = min(g, gB); print("min same-layer gap (A,B):", None if g > 1e8 else round(g, 2), where)
+    vm, vw = via_check(layers, vias); vm = min(vm, via_check(*build(RADB, (P1B, P2B)))[0]); print("via clearance margin (>0 ok):", round(vm, 2), vw)
+    layersB0, viasB0 = build(RADB, (P1B, P2B)); LB = {l: [rot(p, 45) for p in ps] for l, ps in layersB0.items()}; vB = [tuple(rot([v], 45)[0]) for v in viasB0]; pB = [tuple(rot([p], 45)[0]) for p in (P1B, P2B)]
     best = (-1e9, None)
     for hr in (22.0, 24.0, 26.0, 28.0):
         angs = [a * 2.5 for a in range(144)]; mg = {}
         for a in angs:
             h = [(hr * math.cos(math.radians(a)), hr * math.sin(math.radians(a)))]
-            mg[a] = min(hole_margin(layers, vias, pads, h), hole_margin(LB, vB, pB, h))
+            mg[a] = min(hole_margin(layers, vias, pads + pB, h), hole_margin(LB, vB, pB, h))
         good = [a for a in angs if mg[a] > 0.0 and abs(((a - 90) + 180) % 360 - 180) > 28]
         for t in itertools.combinations(good, 3):
             sep = [min((t[j] - t[i]) % 360, (t[i] - t[j]) % 360) for i, j in ((0, 1), (1, 2), (0, 2))]
@@ -127,7 +157,11 @@ if __name__ == "__main__":
             if m > best[0]: best = (m, (hr, t))
     print("holes: radius, angles", best[1], "margin", None if best[1] is None else round(min(mg_ for mg_ in [best[0]]), 2))
     hr, t = best[1]; hl = [(hr * math.cos(math.radians(a)), hr * math.sin(math.radians(a))) for a in t]
-    hmarg = min(hole_margin(layers, vias, pads, hl), hole_margin(LB, vB, pB, hl)); print("final hole margin (mm beyond 0.4 mm clearance):", round(hmarg, 2))
+    hmarg = min(hole_margin(layers, vias, pads + pB, hl), hole_margin(LB, vB, pB, hl)); print("final hole margin (mm beyond 0.4 mm clearance):", round(hmarg, 2))
+    # QB lead access and damping resistors (QA carries RD1 across P1/P2, two transfer PTHs over the QB pads and RD2 across them)
+    tmA = pad_margin(layers, pB, PTH_PAD / 2); tmB = pad_margin(LB, pB, PTH_PAD / 2, skip_ends=pB)
+    fA = rd_footprint(P1, P2); fB = rd_footprint(*pB); rmA = rd_margin(layers[0], fA, (P1, P2)); rmB = rd_margin(layers[0], fB, ())
+    print("QB transfer pads on QA copper margin:", round(tmA, 2), "| QB pads on QB copper margin:", round(tmB, 2), "| RD1 / RD2 F.Cu margin:", round(rmA, 2), round(rmB, 2))
     # symmetry of the lobes: signed area-turns
     ar = []
     for k in range(4):
@@ -136,5 +170,7 @@ if __name__ == "__main__":
     tot = sum(sum(float(np.sqrt((np.diff(p, axis=0) ** 2).sum(1)).sum()) for p in ps) for ps in layers.values())
     out = dict(hole_radius=hr, hole_angles=list(t), hole_margin_mm=round(hmarg, 2), min_same_layer_gap_mm=None if g > 1e8 else round(g, 2), via_margin_mm=round(vm, 2),
                area_turns_mm2=[round(a) for a in ar], copper_length_m=round(tot / 1000, 3), vias=len(vias),
-               layers={str(l): [p.round(4).tolist() for p in ps] for l, ps in layers.items()}, via_xy=[list(np.round(v, 4)) for v in vias], pads=[P1, P2], layersB={str(l): [p.round(4).tolist() for p in ps] for l, ps in LB.items()}, via_xyB=[list(np.round(v, 4)) for v in vB], padsB=[list(np.round(p, 4)) for p in pB], radA=RAD, radB=RADB)
+               layers={str(l): [p.round(4).tolist() for p in ps] for l, ps in layers.items()}, via_xy=[list(np.round(v, 4)) for v in vias], pads=[P1, P2], layersB={str(l): [p.round(4).tolist() for p in ps] for l, ps in LB.items()}, via_xyB=[list(np.round(v, 4)) for v in vB], padsB=[list(np.round(p, 4)) for p in pB], radA=RAD, radB=RADB,
+               transfer_margin_mm=round(tmA, 2), padB_margin_mm=round(tmB, 2), rd_margin_mm=[round(rmA, 2), round(rmB, 2)],
+               rd=dict(RD1=dict(net="QA_COIL", centre=list(np.round(fA[0], 4)), angle=round(fA[1], 3), pads=[list(np.round(q, 4)) for q in fA[2]]), RD2=dict(net="QB_COIL", centre=list(np.round(fB[0], 4)), angle=round(fB[1], 3), pads=[list(np.round(q, 4)) for q in fB[2]])))
     json.dump(out, open("kit_v22/sbq_geometry.json", "w")); print("length m", out["copper_length_m"], "R(1oz) ohm", round(1.72e-8 * tot / 1000 / (W * 1e-3 * 35e-6), 1))

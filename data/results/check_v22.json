@@ -343,6 +343,38 @@
    "max": null,
    "result": "PASS",
    "note": ""
+  },
+  {
+   "check": "SB1R-QB lead pads reachable: QA transfer pads clear of QA copper (mm beyond 0.2 mm)",
+   "value": 0.84,
+   "min": 0.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "SB1R-Q damping resistors RD1/RD2: F.Cu margin (mm beyond 0.2 mm)",
+   "value": 1.44,
+   "min": 0.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "gallery open above the SB1R lead pads and RD1/RD2 (sections z3.5/4.2 of hub, comb, tray; 13 points within 2.5 mm each)",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": "self-test on the 157.5 deg boss wall ok"
+  },
+  {
+   "check": "SB1R lead pads and RD1/RD2 vs the r28 bosses (arc distance, mm)",
+   "value": 6.258,
+   "min": 4.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
   }
  ],
  "mass_g": {

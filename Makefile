@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: pcb-hb1 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -58,6 +58,13 @@ sims:
 pcb-lb1:
 	cd $(W) && PW=L $(PY) pw_design.py && PW=L $(PY) lb1_export.py
 
+pcb-hb1:
+	cd $(W) && PW=H $(PY) pw_design.py && PW=H $(PY) pw_export.py
+
+# KiCad schematics from the netlists (round-trip checked) and the handle-input / trigger chain check
+sch: pcb-lb1 pcb-cb1d pcb-hb1
+	cd $(W) && $(PY) sch_export.py && $(PY) trigger_check.py
+
 pcb-cb1d:
 	cd $(W) && PW=C DISC=1 $(PY) pw_design.py && PW=C DISC=1 $(PY) cb1d_export.py
 
@@ -76,6 +83,7 @@ verify-quick: check
 verify-full: verify-quick hood yoke
 	$(MAKE) yoke-check
 	$(MAKE) audit-system
+	$(MAKE) sch
 	cd $(W) && $(PY) sim_head2.py && $(PY) sim_cage_rx.py && $(PY) sim_tanr.py && $(PY) sim_quadbearing.py
 	$(MAKE) gerber-lb1
 
@@ -96,7 +104,7 @@ kicad-cb1d:
 
 # receive boards: sbq-fast uses the stored tuned radii (data/seed/kit_v22/sbq_radii.json); sbq re-tunes them (about 3 min)
 sbq-fast:
-	cd $(W) && $(PY) sbq_gen2.py && $(PY) sbq_export.py && $(PY) sbq_sim.py && $(PY) sbq_damp.py
+	cd $(W) && $(PY) sbq_gen2.py && $(PY) sbq_export.py && $(PY) sbq_sim.py && $(PY) sbq_damp2.py
 
 sbq:
 	cd $(W) && rm -f kit_v22/sbq_radii.json && $(PY) sbq_gen2.py && $(PY) sbq_tune.py A && $(PY) sbq_tune.py B && $(MAKE) -C .. sbq-fast

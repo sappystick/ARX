@@ -1,0 +1,877 @@
+{
+ "assumptions": {
+  "L_uH": 176,
+  "Rc_ohm": 10.4,
+  "RS_ohm": 100.0,
+  "Ron_ohm_unverified": 8.0,
+  "Cin_pF_unverified": 15.0,
+  "en_amp_nV": 1.0999999999999999,
+  "threshold_nV": 100.0,
+  "tx_case": "100 nF C0G/film, 20 A"
+ },
+ "first_clean_gate_us": {
+  "A aligned 0.01 mV, Cself 50 pF, blank release 0 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 5.04,
+   "Rd 1000": 5.2,
+   "Rd 680": 5.14,
+   "Rd 470": 5.31,
+   "Rd 330": 5.94
+  },
+  "A aligned 0.01 mV, Cself 50 pF, blank release 4 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 5.75,
+   "Rd 1000": 5.2,
+   "Rd 680": 5.36,
+   "Rd 470": 5.94,
+   "Rd 330": 6.7
+  },
+  "A aligned 0.01 mV, Cself 50 pF, blank release 5 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 6.7,
+   "Rd 1000": 5.89,
+   "Rd 680": 6.2,
+   "Rd 470": 6.77,
+   "Rd 330": 7.44
+  },
+  "A aligned 0.01 mV, Cself 50 pF, blank release 6 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 7.39,
+   "Rd 1000": 6.78,
+   "Rd 680": 7.07,
+   "Rd 470": 7.58,
+   "Rd 330": 8.18
+  },
+  "A aligned 0.01 mV, Cself 50 pF, blank release 7 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 8.34,
+   "Rd 1000": 7.54,
+   "Rd 680": 7.96,
+   "Rd 470": 8.39,
+   "Rd 330": 8.93
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 0 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 5.97,
+   "Rd 1000": 5.28,
+   "Rd 680": 5.21,
+   "Rd 470": 5.27,
+   "Rd 330": 5.87
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 4 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 7.12,
+   "Rd 1000": 5.46,
+   "Rd 680": 5.12,
+   "Rd 470": 5.81,
+   "Rd 330": 6.63
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 5 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 7.69,
+   "Rd 1000": 6.42,
+   "Rd 680": 5.91,
+   "Rd 470": 6.67,
+   "Rd 330": 7.39
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 6 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 8.6,
+   "Rd 1000": 7.05,
+   "Rd 680": 6.86,
+   "Rd 470": 7.5,
+   "Rd 330": 8.14
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 7 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 9.18,
+   "Rd 1000": 8.01,
+   "Rd 680": 7.81,
+   "Rd 470": 8.33,
+   "Rd 330": 8.88
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 0 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 8.29,
+   "Rd 1000": 6.04,
+   "Rd 680": 5.47,
+   "Rd 470": 4.85,
+   "Rd 330": 5.72
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 4 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 9.42,
+   "Rd 1000": 6.51,
+   "Rd 680": 5.5,
+   "Rd 470": 5.49,
+   "Rd 330": 6.49
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 5 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 9.81,
+   "Rd 1000": 7.42,
+   "Rd 680": 6.48,
+   "Rd 470": 6.37,
+   "Rd 330": 7.26
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 6 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 10.19,
+   "Rd 1000": 7.9,
+   "Rd 680": 7.42,
+   "Rd 470": 7.26,
+   "Rd 330": 8.03
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 7 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 10.57,
+   "Rd 1000": 8.81,
+   "Rd 680": 8.33,
+   "Rd 470": 8.16,
+   "Rd 330": 8.8
+  },
+  "1 mV, Cself 50 pF, blank release 0 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 6.77,
+   "Rd 1000": 6.77,
+   "Rd 680": 6.5,
+   "Rd 470": 6.71,
+   "Rd 330": 8.23
+  },
+  "1 mV, Cself 50 pF, blank release 4 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 7.2,
+   "Rd 1000": 6.77,
+   "Rd 680": 6.52,
+   "Rd 470": 7.5,
+   "Rd 330": 8.98
+  },
+  "1 mV, Cself 50 pF, blank release 5 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 8.06,
+   "Rd 1000": 6.79,
+   "Rd 680": 7.07,
+   "Rd 470": 8.3,
+   "Rd 330": 9.72
+  },
+  "1 mV, Cself 50 pF, blank release 6 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 8.79,
+   "Rd 1000": 7.42,
+   "Rd 680": 7.99,
+   "Rd 470": 9.12,
+   "Rd 330": 10.46
+  },
+  "1 mV, Cself 50 pF, blank release 7 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 9.7,
+   "Rd 1000": 8.13,
+   "Rd 680": 8.87,
+   "Rd 470": 9.93,
+   "Rd 330": 11.21
+  },
+  "1 mV, Cself 100 pF, blank release 0 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 8.26,
+   "Rd 1000": 6.98,
+   "Rd 680": 6.55,
+   "Rd 470": 6.62,
+   "Rd 330": 8.08
+  },
+  "1 mV, Cself 100 pF, blank release 4 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 9.45,
+   "Rd 1000": 7.0,
+   "Rd 680": 6.56,
+   "Rd 470": 7.21,
+   "Rd 330": 8.83
+  },
+  "1 mV, Cself 100 pF, blank release 5 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 10.01,
+   "Rd 1000": 7.51,
+   "Rd 680": 6.85,
+   "Rd 470": 8.05,
+   "Rd 330": 9.58
+  },
+  "1 mV, Cself 100 pF, blank release 6 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 10.9,
+   "Rd 1000": 8.17,
+   "Rd 680": 7.67,
+   "Rd 470": 8.89,
+   "Rd 330": 10.33
+  },
+  "1 mV, Cself 100 pF, blank release 7 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 11.5,
+   "Rd 1000": 9.11,
+   "Rd 680": 8.6,
+   "Rd 470": 9.72,
+   "Rd 330": 11.08
+  },
+  "1 mV, Cself 200 pF, blank release 0 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 12.59,
+   "Rd 1000": 8.04,
+   "Rd 680": 6.78,
+   "Rd 470": 6.57,
+   "Rd 330": 7.75
+  },
+  "1 mV, Cself 200 pF, blank release 4 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 13.76,
+   "Rd 1000": 8.53,
+   "Rd 680": 7.13,
+   "Rd 470": 6.48,
+   "Rd 330": 8.49
+  },
+  "1 mV, Cself 200 pF, blank release 5 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 14.15,
+   "Rd 1000": 9.37,
+   "Rd 680": 7.99,
+   "Rd 470": 6.95,
+   "Rd 330": 9.26
+  },
+  "1 mV, Cself 200 pF, blank release 6 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 14.54,
+   "Rd 1000": 9.93,
+   "Rd 680": 8.88,
+   "Rd 470": 7.92,
+   "Rd 330": 10.04
+  },
+  "1 mV, Cself 200 pF, blank release 7 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 14.92,
+   "Rd 1000": 10.82,
+   "Rd 680": 9.34,
+   "Rd 470": 8.86,
+   "Rd 330": 10.81
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 0 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 7.43,
+   "Rd 1000": 7.54,
+   "Rd 680": 7.14,
+   "Rd 470": 7.64,
+   "Rd 330": 9.39
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 4 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 7.81,
+   "Rd 1000": 7.54,
+   "Rd 680": 7.13,
+   "Rd 470": 8.25,
+   "Rd 330": 10.13
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 5 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 8.55,
+   "Rd 1000": 7.54,
+   "Rd 680": 7.66,
+   "Rd 470": 9.08,
+   "Rd 330": 10.88
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 6 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 9.5,
+   "Rd 1000": 7.66,
+   "Rd 680": 8.45,
+   "Rd 470": 9.9,
+   "Rd 330": 11.62
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 7 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 10.19,
+   "Rd 1000": 8.59,
+   "Rd 680": 9.33,
+   "Rd 470": 10.71,
+   "Rd 330": 12.36
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 0 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 9.58,
+   "Rd 1000": 7.64,
+   "Rd 680": 7.48,
+   "Rd 470": 6.82,
+   "Rd 330": 9.2
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 4 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 10.76,
+   "Rd 1000": 7.65,
+   "Rd 680": 7.48,
+   "Rd 470": 7.92,
+   "Rd 330": 9.95
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 5 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 11.34,
+   "Rd 1000": 8.1,
+   "Rd 680": 7.54,
+   "Rd 470": 8.77,
+   "Rd 330": 10.7
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 6 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 11.92,
+   "Rd 1000": 8.72,
+   "Rd 680": 7.94,
+   "Rd 470": 9.6,
+   "Rd 330": 11.45
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 7 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 12.48,
+   "Rd 1000": 9.66,
+   "Rd 680": 8.88,
+   "Rd 470": 10.43,
+   "Rd 330": 12.2
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 0 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 14.57,
+   "Rd 1000": 8.82,
+   "Rd 680": 7.38,
+   "Rd 470": 7.25,
+   "Rd 330": 8.77
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 4 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 16.12,
+   "Rd 1000": 9.3,
+   "Rd 680": 7.88,
+   "Rd 470": 7.26,
+   "Rd 330": 9.5
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 5 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 16.52,
+   "Rd 1000": 10.26,
+   "Rd 680": 8.71,
+   "Rd 470": 7.66,
+   "Rd 330": 10.28
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 6 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 16.91,
+   "Rd 1000": 11.11,
+   "Rd 680": 9.53,
+   "Rd 470": 8.6,
+   "Rd 330": 11.05
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 7 us": {
+   "no Rd": 60.0,
+   "Rd 2200": 17.3,
+   "Rd 1000": 11.62,
+   "Rd 680": 10.12,
+   "Rd 470": 9.41,
+   "Rd 330": 11.82
+  }
+ },
+ "peak_after_release_uV": {
+  "A aligned 0.01 mV, Cself 50 pF, blank release 0 us": {
+   "no Rd": 10.336,
+   "Rd 2200": 9.966,
+   "Rd 1000": 9.875,
+   "Rd 680": 9.773,
+   "Rd 470": 9.598,
+   "Rd 330": 9.306
+  },
+  "A aligned 0.01 mV, Cself 50 pF, blank release 4 us": {
+   "no Rd": 92.352,
+   "Rd 2200": 58.898,
+   "Rd 1000": 41.205,
+   "Rd 680": 32.873,
+   "Rd 470": 25.809,
+   "Rd 330": 20.139
+  },
+  "A aligned 0.01 mV, Cself 50 pF, blank release 5 us": {
+   "no Rd": 44.974,
+   "Rd 2200": 29.705,
+   "Rd 1000": 21.447,
+   "Rd 680": 17.533,
+   "Rd 470": 14.202,
+   "Rd 330": 11.511
+  },
+  "A aligned 0.01 mV, Cself 50 pF, blank release 6 us": {
+   "no Rd": 22.826,
+   "Rd 2200": 15.524,
+   "Rd 1000": 11.569,
+   "Rd 680": 9.694,
+   "Rd 470": 8.1,
+   "Rd 330": 6.813
+  },
+  "A aligned 0.01 mV, Cself 50 pF, blank release 7 us": {
+   "no Rd": 11.623,
+   "Rd 2200": 8.138,
+   "Rd 1000": 6.258,
+   "Rd 680": 5.374,
+   "Rd 470": 4.63,
+   "Rd 330": 4.041
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 0 us": {
+   "no Rd": 10.59,
+   "Rd 2200": 9.983,
+   "Rd 1000": 9.891,
+   "Rd 680": 9.79,
+   "Rd 470": 9.616,
+   "Rd 330": 9.324
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 4 us": {
+   "no Rd": 68.809,
+   "Rd 2200": 48.94,
+   "Rd 1000": 36.423,
+   "Rd 680": 29.951,
+   "Rd 470": 24.132,
+   "Rd 330": 19.224
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 5 us": {
+   "no Rd": 33.82,
+   "Rd 2200": 24.749,
+   "Rd 1000": 18.997,
+   "Rd 680": 16.006,
+   "Rd 470": 13.307,
+   "Rd 330": 11.003
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 6 us": {
+   "no Rd": 17.126,
+   "Rd 2200": 12.908,
+   "Rd 1000": 10.229,
+   "Rd 680": 8.836,
+   "Rd 470": 7.579,
+   "Rd 330": 6.505
+  },
+  "A aligned 0.01 mV, Cself 100 pF, blank release 7 us": {
+   "no Rd": 8.7,
+   "Rd 2200": 6.753,
+   "Rd 1000": 5.523,
+   "Rd 680": 4.891,
+   "Rd 470": 4.327,
+   "Rd 330": 3.855
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 0 us": {
+   "no Rd": 10.848,
+   "Rd 2200": 10.031,
+   "Rd 1000": 9.924,
+   "Rd 680": 9.824,
+   "Rd 470": 9.65,
+   "Rd 330": 9.358
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 4 us": {
+   "no Rd": 50.207,
+   "Rd 2200": 39.082,
+   "Rd 1000": 30.966,
+   "Rd 680": 26.348,
+   "Rd 470": 21.908,
+   "Rd 330": 17.92
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 5 us": {
+   "no Rd": 24.708,
+   "Rd 2200": 19.795,
+   "Rd 1000": 16.184,
+   "Rd 680": 14.113,
+   "Rd 470": 12.105,
+   "Rd 330": 10.28
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 6 us": {
+   "no Rd": 12.456,
+   "Rd 2200": 10.284,
+   "Rd 1000": 8.685,
+   "Rd 680": 7.767,
+   "Rd 470": 6.877,
+   "Rd 330": 6.065
+  },
+  "A aligned 0.01 mV, Cself 200 pF, blank release 7 us": {
+   "no Rd": 6.298,
+   "Rd 2200": 5.358,
+   "Rd 1000": 4.673,
+   "Rd 680": 4.286,
+   "Rd 470": 3.916,
+   "Rd 330": 3.586
+  },
+  "1 mV, Cself 50 pF, blank release 0 us": {
+   "no Rd": 1033.621,
+   "Rd 2200": 996.613,
+   "Rd 1000": 987.456,
+   "Rd 680": 977.283,
+   "Rd 470": 959.826,
+   "Rd 330": 930.611
+  },
+  "1 mV, Cself 50 pF, blank release 4 us": {
+   "no Rd": 9235.156,
+   "Rd 2200": 5889.855,
+   "Rd 1000": 4120.498,
+   "Rd 680": 3287.305,
+   "Rd 470": 2580.893,
+   "Rd 330": 2013.907
+  },
+  "1 mV, Cself 50 pF, blank release 5 us": {
+   "no Rd": 4497.325,
+   "Rd 2200": 2970.497,
+   "Rd 1000": 2144.722,
+   "Rd 680": 1753.347,
+   "Rd 470": 1420.197,
+   "Rd 330": 1151.042
+  },
+  "1 mV, Cself 50 pF, blank release 6 us": {
+   "no Rd": 2282.606,
+   "Rd 2200": 1552.454,
+   "Rd 1000": 1156.913,
+   "Rd 680": 969.45,
+   "Rd 470": 809.97,
+   "Rd 330": 681.321
+  },
+  "1 mV, Cself 50 pF, blank release 7 us": {
+   "no Rd": 1162.25,
+   "Rd 2200": 813.764,
+   "Rd 1000": 625.772,
+   "Rd 680": 537.382,
+   "Rd 470": 463.018,
+   "Rd 330": 404.117
+  },
+  "1 mV, Cself 100 pF, blank release 0 us": {
+   "no Rd": 1058.964,
+   "Rd 2200": 998.295,
+   "Rd 1000": 989.14,
+   "Rd 680": 979.019,
+   "Rd 470": 961.622,
+   "Rd 330": 932.429
+  },
+  "1 mV, Cself 100 pF, blank release 4 us": {
+   "no Rd": 6880.901,
+   "Rd 2200": 4894.01,
+   "Rd 1000": 3642.304,
+   "Rd 680": 2995.069,
+   "Rd 470": 2413.247,
+   "Rd 330": 1922.359
+  },
+  "1 mV, Cself 100 pF, blank release 5 us": {
+   "no Rd": 3381.957,
+   "Rd 2200": 2474.906,
+   "Rd 1000": 1899.672,
+   "Rd 680": 1600.623,
+   "Rd 470": 1330.736,
+   "Rd 330": 1100.277
+  },
+  "1 mV, Cself 100 pF, blank release 6 us": {
+   "no Rd": 1712.604,
+   "Rd 2200": 1290.811,
+   "Rd 1000": 1022.914,
+   "Rd 680": 883.61,
+   "Rd 470": 757.929,
+   "Rd 330": 650.539
+  },
+  "1 mV, Cself 100 pF, blank release 7 us": {
+   "no Rd": 869.998,
+   "Rd 2200": 675.248,
+   "Rd 1000": 552.338,
+   "Rd 680": 489.059,
+   "Rd 470": 432.719,
+   "Rd 330": 385.464
+  },
+  "1 mV, Cself 200 pF, blank release 0 us": {
+   "no Rd": 1084.756,
+   "Rd 2200": 1003.074,
+   "Rd 1000": 992.442,
+   "Rd 680": 982.354,
+   "Rd 470": 965.007,
+   "Rd 330": 935.768
+  },
+  "1 mV, Cself 200 pF, blank release 4 us": {
+   "no Rd": 5020.716,
+   "Rd 2200": 3908.235,
+   "Rd 1000": 3096.581,
+   "Rd 680": 2634.772,
+   "Rd 470": 2190.827,
+   "Rd 330": 1792.043
+  },
+  "1 mV, Cself 200 pF, blank release 5 us": {
+   "no Rd": 2470.834,
+   "Rd 2200": 1979.495,
+   "Rd 1000": 1618.349,
+   "Rd 680": 1411.287,
+   "Rd 470": 1210.552,
+   "Rd 330": 1027.955
+  },
+  "1 mV, Cself 200 pF, blank release 6 us": {
+   "no Rd": 1245.584,
+   "Rd 2200": 1028.351,
+   "Rd 1000": 868.47,
+   "Rd 680": 776.735,
+   "Rd 470": 687.711,
+   "Rd 330": 606.513
+  },
+  "1 mV, Cself 200 pF, blank release 7 us": {
+   "no Rd": 629.791,
+   "Rd 2200": 535.762,
+   "Rd 1000": 467.32,
+   "Rd 680": 428.599,
+   "Rd 470": 391.629,
+   "Rd 330": 358.643
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 0 us": {
+   "no Rd": 10691.992,
+   "Rd 2200": 10309.179,
+   "Rd 1000": 10214.47,
+   "Rd 680": 10109.22,
+   "Rd 470": 9928.643,
+   "Rd 330": 9626.434
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 4 us": {
+   "no Rd": 95530.321,
+   "Rd 2200": 60925.941,
+   "Rd 1000": 42623.312,
+   "Rd 680": 34004.544,
+   "Rd 470": 26697.317,
+   "Rd 330": 20832.251
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 5 us": {
+   "no Rd": 46521.248,
+   "Rd 2200": 30727.459,
+   "Rd 1000": 22185.434,
+   "Rd 680": 18136.942,
+   "Rd 470": 14690.822,
+   "Rd 330": 11906.632
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 6 us": {
+   "no Rd": 23611.698,
+   "Rd 2200": 16058.909,
+   "Rd 1000": 11967.339,
+   "Rd 680": 10028.173,
+   "Rd 470": 8378.503,
+   "Rd 330": 7047.736
+  },
+  "worst modeled 10 mV, Cself 50 pF, blank release 7 us": {
+   "no Rd": 12022.521,
+   "Rd 2200": 8417.74,
+   "Rd 1000": 6473.11,
+   "Rd 680": 5558.781,
+   "Rd 470": 4789.565,
+   "Rd 330": 4180.277
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 0 us": {
+   "no Rd": 10954.143,
+   "Rd 2200": 10326.574,
+   "Rd 1000": 10231.884,
+   "Rd 680": 10127.178,
+   "Rd 470": 9947.22,
+   "Rd 330": 9645.244
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 4 us": {
+   "no Rd": 71177.445,
+   "Rd 2200": 50624.615,
+   "Rd 1000": 37676.761,
+   "Rd 680": 30981.613,
+   "Rd 470": 24963.141,
+   "Rd 330": 19885.297
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 5 us": {
+   "no Rd": 34983.713,
+   "Rd 2200": 25600.923,
+   "Rd 1000": 19650.617,
+   "Rd 680": 16557.176,
+   "Rd 470": 13765.448,
+   "Rd 330": 11381.519
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 6 us": {
+   "no Rd": 17715.559,
+   "Rd 2200": 13352.413,
+   "Rd 1000": 10581.223,
+   "Rd 680": 9140.23,
+   "Rd 470": 7840.2,
+   "Rd 330": 6729.316
+  },
+  "worst modeled 10 mV, Cself 100 pF, blank release 7 us": {
+   "no Rd": 8999.452,
+   "Rd 2200": 6984.906,
+   "Rd 1000": 5713.499,
+   "Rd 680": 5058.924,
+   "Rd 470": 4476.154,
+   "Rd 330": 3987.324
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 0 us": {
+   "no Rd": 11220.95,
+   "Rd 2200": 10376.023,
+   "Rd 1000": 10266.032,
+   "Rd 680": 10161.678,
+   "Rd 470": 9982.223,
+   "Rd 330": 9679.795
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 4 us": {
+   "no Rd": 51935.341,
+   "Rd 2200": 40427.636,
+   "Rd 1000": 32031.691,
+   "Rd 680": 27254.659,
+   "Rd 470": 22662.383,
+   "Rd 330": 18537.253
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 5 us": {
+   "no Rd": 25558.855,
+   "Rd 2200": 20476.349,
+   "Rd 1000": 16740.531,
+   "Rd 680": 14598.7,
+   "Rd 470": 12522.218,
+   "Rd 330": 10633.375
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 6 us": {
+   "no Rd": 12884.573,
+   "Rd 2200": 10637.488,
+   "Rd 1000": 8983.631,
+   "Rd 680": 8034.728,
+   "Rd 470": 7113.823,
+   "Rd 330": 6273.885
+  },
+  "worst modeled 10 mV, Cself 200 pF, blank release 7 us": {
+   "no Rd": 6514.691,
+   "Rd 2200": 5542.042,
+   "Rd 1000": 4834.058,
+   "Rd 680": 4433.528,
+   "Rd 470": 4051.092,
+   "Rd 330": 3709.877
+  }
+ },
+ "gate_noise_nV_rtHz": {
+  "Cself 50 pF, gate at 6 us": {
+   "no Rd": 1.643,
+   "Rd 2200": 1.669,
+   "Rd 1000": 1.701,
+   "Rd 680": 1.721,
+   "Rd 470": 1.741,
+   "Rd 330": 1.758
+  },
+  "Cself 50 pF, gate at 10 us": {
+   "no Rd": 1.682,
+   "Rd 2200": 1.698,
+   "Rd 1000": 1.717,
+   "Rd 680": 1.729,
+   "Rd 470": 1.741,
+   "Rd 330": 1.752
+  },
+  "Cself 50 pF, gate at 20 us": {
+   "no Rd": 1.706,
+   "Rd 2200": 1.719,
+   "Rd 1000": 1.729,
+   "Rd 680": 1.735,
+   "Rd 470": 1.74,
+   "Rd 330": 1.745
+  },
+  "Cself 50 pF, gate at 40 us": {
+   "no Rd": 1.723,
+   "Rd 2200": 1.729,
+   "Rd 1000": 1.733,
+   "Rd 680": 1.736,
+   "Rd 470": 1.739,
+   "Rd 330": 1.741
+  },
+  "Cself 100 pF, gate at 6 us": {
+   "no Rd": 1.656,
+   "Rd 2200": 1.677,
+   "Rd 1000": 1.707,
+   "Rd 680": 1.726,
+   "Rd 470": 1.744,
+   "Rd 330": 1.76
+  },
+  "Cself 100 pF, gate at 10 us": {
+   "no Rd": 1.694,
+   "Rd 2200": 1.703,
+   "Rd 1000": 1.721,
+   "Rd 680": 1.732,
+   "Rd 470": 1.743,
+   "Rd 330": 1.753
+  },
+  "Cself 100 pF, gate at 20 us": {
+   "no Rd": 1.709,
+   "Rd 2200": 1.722,
+   "Rd 1000": 1.731,
+   "Rd 680": 1.736,
+   "Rd 470": 1.741,
+   "Rd 330": 1.746
+  },
+  "Cself 100 pF, gate at 40 us": {
+   "no Rd": 1.726,
+   "Rd 2200": 1.73,
+   "Rd 1000": 1.734,
+   "Rd 680": 1.737,
+   "Rd 470": 1.739,
+   "Rd 330": 1.741
+  },
+  "Cself 200 pF, gate at 6 us": {
+   "no Rd": 1.703,
+   "Rd 2200": 1.693,
+   "Rd 1000": 1.718,
+   "Rd 680": 1.734,
+   "Rd 470": 1.751,
+   "Rd 330": 1.765
+  },
+  "Cself 200 pF, gate at 10 us": {
+   "no Rd": 1.674,
+   "Rd 2200": 1.712,
+   "Rd 1000": 1.727,
+   "Rd 680": 1.737,
+   "Rd 470": 1.747,
+   "Rd 330": 1.756
+  },
+  "Cself 200 pF, gate at 20 us": {
+   "no Rd": 1.713,
+   "Rd 2200": 1.726,
+   "Rd 1000": 1.734,
+   "Rd 680": 1.738,
+   "Rd 470": 1.743,
+   "Rd 330": 1.748
+  },
+  "Cself 200 pF, gate at 40 us": {
+   "no Rd": 1.73,
+   "Rd 2200": 1.732,
+   "Rd 1000": 1.736,
+   "Rd 680": 1.738,
+   "Rd 470": 1.74,
+   "Rd 330": 1.742
+  }
+ },
+ "sensitivity_worst_leak_100pF_release_5us": {
+  "Cin 5 pF, Ron 4 ohm": {
+   "no Rd": 60.0,
+   "Rd 470": 8.85
+  },
+  "Cin 5 pF, Ron 8 ohm": {
+   "no Rd": 60.0,
+   "Rd 470": 8.84
+  },
+  "Cin 5 pF, Ron 20 ohm": {
+   "no Rd": 60.0,
+   "Rd 470": 8.8
+  },
+  "Cin 15 pF, Ron 4 ohm": {
+   "no Rd": 60.0,
+   "Rd 470": 8.78
+  },
+  "Cin 15 pF, Ron 8 ohm": {
+   "no Rd": 60.0,
+   "Rd 470": 8.77
+  },
+  "Cin 15 pF, Ron 20 ohm": {
+   "no Rd": 60.0,
+   "Rd 470": 8.73
+  },
+  "Cin 30 pF, Ron 4 ohm": {
+   "no Rd": 60.0,
+   "Rd 470": 8.67
+  },
+  "Cin 30 pF, Ron 8 ohm": {
+   "no Rd": 60.0,
+   "Rd 470": 8.66
+  },
+  "Cin 30 pF, Ron 20 ohm": {
+   "no Rd": 60.0,
+   "Rd 470": 8.62
+  }
+ },
+ "critical_damping_ohm": {
+  "50 pF": 938,
+  "100 pF": 663,
+  "200 pF": 469
+ }
+}

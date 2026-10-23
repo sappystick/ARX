@@ -11,11 +11,25 @@ def outline():
     t0=math.asin(2.0/RB); a=np.linspace(t0,2*math.pi-t0,360); pts=[(RB*math.cos(x),RB*math.sin(x)) for x in a]
     return pts+[(116.0,-2.0),(116.0,2.0),pts[0]]
 LAY=["F.Cu","In1.Cu","In2.Cu","B.Cu"]
+RDP,RDW=(1.0,1.3),0.4                                       # 0805 pad size and chord trace width (sbq_gen2 RD_PAD, RD_TRACE)
+def extras(deg):
+    """QA only: transfer PTHs T1/T2 over the QB pads (net QB_COIL), RD1 across P1/P2 (QA_COIL), RD2 across T1/T2 (QB_COIL)"""
+    if deg!=0.0: return [],[]
+    rd=G["rd"]; T=[tuple(x) for x in G["padsB"]]; P=[tuple(x) for x in G["pads"]]
+    fps=[(nm,rd[nm],2 if nm=="RD2" else 1) for nm in ("RD1","RD2")]
+    tr=[(P[0],tuple(rd["RD1"]["pads"][0]),1),(tuple(rd["RD1"]["pads"][1]),P[1],1),(T[0],tuple(rd["RD2"]["pads"][0]),2),(tuple(rd["RD2"]["pads"][1]),T[1],2)]
+    return fps,tr
 def kicad(name,net,deg,path):
     L,vias,pads,holes=board(deg); CX,CY=150.0,120.0; k=lambda p:(CX+p[0],CY-p[1]); o=[]
     o.append('(kicad_pcb (version 20221018) (generator "arx_sbq")\n  (general (thickness 0.8) (legacy_teardrops no))\n  (paper "A3")\n  (layers (0 "F.Cu" signal) (1 "In1.Cu" signal) (2 "In2.Cu" signal) (31 "B.Cu" signal) (34 "B.Paste" user) (35 "F.Paste" user) (36 "B.SilkS" user "B.Silkscreen") (37 "F.SilkS" user "F.Silkscreen") (38 "B.Mask" user) (39 "F.Mask" user) (40 "Dwgs.User" user "User.Drawings") (41 "Cmts.User" user "User.Comments") (44 "Edge.Cuts" user) (47 "F.CrtYd" user "F.Courtyard") (49 "F.Fab" user))')
     o.append('  (setup (pad_to_mask_clearance 0.05) (stackup (layer "F.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 1" (type "prepreg") (thickness 0.15)) (layer "In1.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 2" (type "core") (thickness 0.34)) (layer "In2.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 3" (type "prepreg") (thickness 0.15)) (layer "B.Cu" (type "copper") (thickness 0.035)) (copper_finish "ENIG")))')
-    o.append(f'  (net 0 "")\n  (net 1 "{net}")')
+    o.append(f'  (net 0 "")\n  (net 1 "{net}")' + ('\n  (net 2 "QB_COIL")' if deg==0.0 else ''))
+    fps,tr=extras(deg)
+    for i,(x,y) in enumerate(G["padsB"] if deg==0.0 else []): X,Y=k((x,y)); o.append(f'  (footprint "SB1R:TRANSFER_PAD" (layer "F.Cu") (at {X:.3f} {Y:.3f}) (property "Reference" "T{i+1}" (at 0 -2) (layer "F.SilkS")) (pad "1" thru_hole circle (at 0 0) (size 1.6 1.6) (drill 0.8) (layers "*.Cu" "*.Mask") (net 2 "QB_COIL")))')
+    for nm,fp,ni in fps:
+        X,Y=k(fp["centre"]); nn="QB_COIL" if ni==2 else net
+        o.append(f'  (footprint "Resistor_SMD:R_0805_2012Metric" (layer "F.Cu") (at {X:.3f} {Y:.3f} {fp["angle"]:.3f}) (property "Reference" "{nm}" (at 0 -1.6) (layer "F.SilkS")) (property "Value" "680R 0.1% thin film 0805, non-magnetic terminations preferred (unverified)" (at 0 1.6) (layer "F.Fab")) (pad "1" smd roundrect (at -0.95 0 {fp["angle"]:.3f}) (size {RDP[0]} {RDP[1]}) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25) (net {ni} "{nn}")) (pad "2" smd roundrect (at 0.95 0 {fp["angle"]:.3f}) (size {RDP[0]} {RDP[1]}) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25) (net {ni} "{nn}")))')
+    for a,b,ni in tr: (x0,y0),(x1,y1)=k(a),k(b); o.append(f'  (segment (start {x0:.4f} {y0:.4f}) (end {x1:.4f} {y1:.4f}) (width {RDW}) (layer "F.Cu") (net {ni}))')
     for i,(x,y) in enumerate(pads): X,Y=k((x,y)); o.append(f'  (footprint "SB1R:LEAD_PAD" (layer "F.Cu") (at {X:.3f} {Y:.3f}) (property "Reference" "P{i+1}" (at 0 -2) (layer "F.SilkS")) (pad "1" thru_hole circle (at 0 0) (size 1.6 1.6) (drill 0.8) (layers "*.Cu" "*.Mask") (net 1 "{net}")))')
     for i,(x,y) in enumerate(holes): X,Y=k((x,y)); o.append(f'  (footprint "SB1R:MH_M3" (layer "F.Cu") (at {X:.3f} {Y:.3f}) (property "Reference" "H{i+1}" (at 0 -3) (layer "F.SilkS")) (pad "" np_thru_hole circle (at 0 0) (size 3.4 3.4) (drill 3.4) (layers "*.Cu" "*.Mask")))')
     for li,polys in L.items():
@@ -35,14 +49,22 @@ def gerber(prefix,deg,outdir):
         for i,(x,y) in enumerate(p): s.append(f"X{f6(x)}Y{f6(y)}D0{2 if i==0 else 1}*")
         return s
     def fl(x,y): return f"X{f6(x)}Y{f6(y)}D03*"
+    fps,tr=extras(deg); T=[tuple(x) for x in G["padsB"]] if deg==0.0 else []
+    def rect(c,ang):                                         # rotated pad as a G36/G37 region
+        a=math.radians(ang); u=np.array([math.cos(a),math.sin(a)]); v=np.array([-u[1],u[0]]); c=np.asarray(c); h,w=RDP[0]/2,RDP[1]/2
+        q=[c-u*h-v*w,c+u*h-v*w,c+u*h+v*w,c-u*h+v*w,c-u*h-v*w]; return ["G36*"]+[f"X{f6(x)}Y{f6(y)}D0{2 if i==0 else 1}*" for i,(x,y) in enumerate(q)]+["G37*"]
+    def rdpads(): return [l for _,fp,_ in fps for c in fp["pads"] for l in rect(c,fp["angle"])]
     names=["F_Cu","In1_Cu","In2_Cu","B_Cu"]
     for li,nm in enumerate(names):
         s=hdr(f"Copper,L{li+1},{'Top' if li==0 else 'Bot' if li==3 else 'Inr'}")
         for p in L[li]: s+=poly(p,10)
-        s.append("D11*"); s+=[fl(*v) for v in vias]; s.append("D12*"); s+=[fl(*p) for p in pads]; s.append("M02*"); open(f"{outdir}/{prefix}-{nm}.gbr","w").write("\n".join(s))
-    for nm in ("F_Mask","B_Mask"): s=hdr("Soldermask,"+("Top" if nm[0]=="F" else "Bot")); s.append("D14*"); s+=[fl(*p) for p in pads]; s.append("M02*"); open(f"{outdir}/{prefix}-{nm}.gbr","w").write("\n".join(s))
+        s.append("D11*"); s+=[fl(*v) for v in vias]; s.append("D12*"); s+=[fl(*p) for p in pads+T]
+        if li==0 and fps: s.append("%ADD15C,0.400*%"); [s.extend(poly(np.array([a,b]),15)) for a,b,_ in tr]; s+=rdpads()
+        s.append("M02*"); open(f"{outdir}/{prefix}-{nm}.gbr","w").write("\n".join(s))
+    for nm in ("F_Mask","B_Mask"): s=hdr("Soldermask,"+("Top" if nm[0]=="F" else "Bot")); s.append("D14*"); s+=[fl(*p) for p in pads+T]; s+=(rdpads() if nm=="F_Mask" else []); s.append("M02*"); open(f"{outdir}/{prefix}-{nm}.gbr","w").write("\n".join(s))
+    if fps: s=hdr("Paste,Top"); s+=rdpads(); s.append("M02*"); open(f"{outdir}/{prefix}-F_Paste.gbr","w").write("\n".join(s))
     s=hdr("Profile,NP"); s+=poly(outline(),13); s.append("M02*"); open(f"{outdir}/{prefix}-Edge_Cuts.gbr","w").write("\n".join(s))
-    d=["M48","METRIC,TZ",f"T1C{2*VR:.3f}",f"T2C0.800","%","T1"]+[f"X{x:.3f}Y{y:.3f}" for x,y in vias]+["T2"]+[f"X{x:.3f}Y{y:.3f}" for x,y in pads]+["M30"]; open(f"{outdir}/{prefix}-PTH.drl","w").write("\n".join(d))
+    d=["M48","METRIC,TZ",f"T1C{2*VR:.3f}",f"T2C0.800","%","T1"]+[f"X{x:.3f}Y{y:.3f}" for x,y in vias]+["T2"]+[f"X{x:.3f}Y{y:.3f}" for x,y in pads+T]+["M30"]; open(f"{outdir}/{prefix}-PTH.drl","w").write("\n".join(d))
     d=["M48","METRIC,TZ","T1C3.400","%","T1"]+[f"X{x:.3f}Y{y:.3f}" for x,y in holes]+["M30"]; open(f"{outdir}/{prefix}-NPTH.drl","w").write("\n".join(d))
 os.makedirs("kit_v22/KICAD_SBQ",exist_ok=True)
 kicad("SB1R-QA","QA_COIL",0.0,"kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb"); kicad("SB1R-QB","QB_COIL",45.0,"kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb")
