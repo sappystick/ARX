@@ -8,7 +8,7 @@ def rd(p):
 def chk(name,ok,detail=""): res.append(("PASS" if ok else "FAIL",name,detail))
 def skip(name): res.append(("SKIP",name,"result file not present: run the matching make target"))
 d=rd("kit_v22/check_v22.json")
-if d: bad=[c["check"] for c in d["checks"] if c["result"]!="PASS"]; chk("v5 geometry checks (43 expected: cylinder, TX-lead channel, roof, tray, septum, comb, bosses, base plate, receive-board holes)",len(d["checks"])>=43 and not bad,f"{len(d['checks'])} checks, fails={bad}")
+if d: bad=[c["check"] for c in d["checks"] if c["result"]!="PASS"]; chk("v5 geometry checks (47 expected: cylinder, TX-lead channel, roof, tray, septum, comb, bosses, base plate, receive-board holes, QB lead access, damping resistors)",len(d["checks"])>=47 and not bad,f"{len(d['checks'])} checks, fails={bad}")
 else: skip("v5 geometry checks")
 d=rd("kit_v20/sim_head1.json")
 if d:
@@ -44,6 +44,13 @@ if d:
 else: skip("SB1R-Q simulation")
 d=rd("kit_v22/sbq_geometry.json")
 if d: chk("SB1R-Q geometry: via margin >= 0.3, hole margin >= 0.5, equal lobe area-turns",d["via_margin_mm"]>=0.3 and d["hole_margin_mm"]>=0.5 and len({abs(a) for a in d["area_turns_mm2"]})==1,str((d["via_margin_mm"],d["hole_margin_mm"],d["area_turns_mm2"])))
+if d: chk("SB1R-Q damping: RD1/RD2 fitted, QB transfer pads clear of QA copper",all(k in d.get("rd",{}) for k in ("RD1","RD2")) and d.get("transfer_margin_mm",-1)>=0 and min(d.get("rd_margin_mm",[-1]))>=0,str((d.get("transfer_margin_mm"),d.get("rd_margin_mm"))))
+d=rd("kit_v22/sbq_damping2.json")
+if d:
+    fc=d["first_clean_gate_us"]; w=[k for k in fc if k.startswith("worst modeled") and "blank release 0 us" in k]; a=[k for k in fc if k.startswith("A aligned") and "blank release 0 us" in k]
+    chk("SB1R-Q first clean gate with Rd 680, no blanking: A aligned 5.1-5.5 us, worst real leak <= 7.6 us (Cself 50-200 pF)",all(5.0<=fc[k]["Rd 680"]<=5.6 for k in a) and all(fc[k]["Rd 680"]<=7.6 for k in w) and all(fc[k]["no Rd"]>=59 for k in a+w),str([fc[k]["Rd 680"] for k in a+w]))
+    n=d["gate_noise_nV_rtHz"]; chk("SB1R-Q gated noise with Rd 680 within 6% of no Rd (Cself 100 pF, gates 6-40 us)",all(v["Rd 680"]<=1.06*v["no Rd"] for k,v in n.items() if k.startswith("Cself 100")),str({k.split(", ")[1]:v["Rd 680"] for k,v in n.items() if k.startswith("Cself 100")}))
+else: skip("SB1R-Q damping")
 for b in ("LB1","CB1D"):
     d=rd(f"kit_v22/drc_{b}.json")
     if d: chk(f"{b} independent DRC: 0 clearance violations, 0 open nets, edge and notch clean",d["clearance_violations"]==0 and d["open_nets"]==0 and d["edge_samples"]==0 and d["notch_samples"]==0,str({k:d[k] for k in ('clearance_violations','open_nets','min_gap_by_layer')}))
