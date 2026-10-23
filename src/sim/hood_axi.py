@@ -121,7 +121,7 @@ if __name__ == "__main__":
          "13 spokes, tiles 5 mm thick": (13, [(57.0, 84.0, 26.2), (86.0, 112.5, 40.5)], ZC + 1.25, 5.0),
          "13 spokes, extended outward to r116 (outer tile 86-116)": (13, [(57.0, 84.0, 26.2), (86.0, 116.0, 40.5)], ZC, TH),
          "continuous MnZn annulus r52.6-116.1, 2.5 mm (upper limit)": (1, [(52.6, 116.1, 1e6)], ZC, TH)}
-    for g in (2.0, 1.0, 0.5, 0.2, 0.1):                                    # radial gap between butted inner/outer tiles, as a series reluctance (2.0 = v2 cross-check)
+    for g in (2.0, 1.0, 0.5, 0.2, 0.1, 0.0):                               # radial gap between butted inner/outer tiles, as a series reluctance (2.0 = v2 cross-check; 0.0 = the no-gap end of the v3 range)
         V[("v3 (hood_v20.py): " if g == 0.2 else "") + f"13 spokes, butted tiles, radial gap {g} mm (series model)"] = (13, [(57.0, 84.0, 26.2), (84.0, 112.5, spoke_width(13, 84.0 + g, 112.5))], ZC, TH, g)
     res = dict(validation_no_hood=val, rings=nturns, grid=[len(R), len(Z)], assumptions=dict(mu=MU, I_A=I_TX, homogenisation="Wiener bounds, straight tiles, fill N w / 2 pi r", losses="none (DC)"), variants={})
     keep = {}

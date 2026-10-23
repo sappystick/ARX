@@ -29,9 +29,9 @@ def head(exploded=False):
     P.append(PT(stl("kit_v18/PARTS/HUB_CAP_HTA_v3_vault.stl"),COL["cap"],1.0,"cap"))
     P.append(PT(disc(45.0,45.4,47.0,120),COL["pcb"],1.0,"HTA board"))
     NT=1.915; th=np.linspace(0,NT*2*math.pi,300); r=43.0+(35.5-43.0)*th/(NT*2*math.pi); P.append(PT(tube_poly(np.c_[r*np.cos(th),r*np.sin(th),np.full(300,47.15)],0.3,5),COL["copper"],1.0,"HTA coil"))
-    P.append(PT(stl("kit_v18/PARTS/LOTUS_HOOD_CARRIER_v2_spokes.stl"),COL["hood"],1.0,"hood carrier"))
+    P.append(PT(stl("kit_v18/PARTS/LOTUS_HOOD_CARRIER_v3_butted.stl"),COL["hood"],1.0,"hood carrier v3"))
     tl=[]
-    for r in csv.DictReader(open("kit_v18/PARTS/hood_tile_cut_list.csv")):
+    for r in csv.DictReader(open("kit_v18/PARTS/hood_v3_tile_cut_list.csv")):
         a=float(r["azimuth_deg"]); rc_=float(r["centre_r_mm"]); L=float(r["length_mm"]); W=float(r["width_mm"]); S=rotz(box(rc_,0,31.65,L,W,2.5),a); tl.append(S)
     P.append(PT(merge(tl),COL["tile"],1.0,"MnZn tiles"))
     P.append(PT(stl("kit_v19/PARTS/HEAD_SKIRT.stl"),COL["skirt"],0.30,"skirt"))

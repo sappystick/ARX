@@ -1,6 +1,6 @@
 """Ferrite hood v3: 13 radial spokes, each spoke one stepped pocket holding the inner and outer MnZn tile butted end to end (design joint 0.2 mm
 adhesive). v2 (hood_v19.py) held the two tiles in separate pocket frames with a 2.0 mm radial air gap; the axisymmetric model (src/sim/hood_axi.py)
-puts the v3 gain at +13.0-14.1 % at 200 mm (v2 +9.8 %) for 9 g more ferrite (modeled, docs/ASSUMPTIONS.md 8, 23).
+puts the v3 gain at +12.9-14.2 % at 200 mm (v2 +9.8 %) for 9 g more ferrite (modeled, docs/ASSUMPTIONS.md 8, 23).
 Placement: spoke k at azimuth k x 360/13 deg (k = 0..12, head frame), inner tile r57.0-84.0, outer tile r84.2-112.5; tiles 2.5 mm, z30.4-32.9.
 Carrier: base ring r52.6-116.1 z29.4-30.4 + a stepped pocket frame per spoke (wall 1.2, clearance 0.15 per side) z30.4-33.4. Print flat (base ring on
 the bed, pockets up, no supports); tiles bonded into the pockets after printing."""

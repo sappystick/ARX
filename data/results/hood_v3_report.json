@@ -1,0 +1,128 @@
+{
+ "LOTUS_HOOD_CARRIER_v3_butted": {
+  "shells": 14,
+  "tris": 6592,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -116.1,
+   -116.1,
+   29.4,
+   116.1,
+   116.1,
+   33.4
+  ],
+  "note": "13 radial spokes, one stepped pocket per spoke: inner tile 27.0 x 26.2, outer 28.3 x 39.7 x 2.5 mm MnZn butted (joint 0.2 mm); carrier r52.6-116.1, z29.4-33.4; print flat, no supports"
+ },
+ "FERRITE_TILE_INNER_v3_reference": {
+  "shells": 1,
+  "tris": 12,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -13.5,
+   -13.1,
+   0.0,
+   13.5,
+   13.1,
+   2.5
+  ],
+  "note": "MnZn tile 27.0 x 26.2 x 2.5, 13 pieces"
+ },
+ "FERRITE_TILE_OUTER_v3_reference": {
+  "shells": 1,
+  "tris": 12,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -14.15,
+   -19.85,
+   0.0,
+   14.15,
+   19.85,
+   2.5
+  ],
+  "note": "MnZn tile 28.3 x 39.7 x 2.5, 13 pieces"
+ },
+ "hood_v3_audit": {
+  "tiles": 26,
+  "spokes": 13,
+  "spoke_azimuths_deg": [
+   0.0,
+   27.6923,
+   55.3846,
+   83.0769,
+   110.7692,
+   138.4615,
+   166.1538,
+   193.8462,
+   221.5385,
+   249.2308,
+   276.9231,
+   304.6154,
+   332.3077
+  ],
+  "min_tile_gap": 1.7,
+  "butt_joint": 0.2,
+  "tile_to_pocket_wall_min": 0.15,
+  "frame_into_neighbour_pocket_gap": 0.1,
+  "outer_frame_corner_r": 115.81,
+  "inner_frame_r": 57.5,
+  "tile_area_mm2": 23802,
+  "mass_g": 286,
+  "dims": {
+   "inner": [
+    27.0,
+    26.2
+   ],
+   "outer": [
+    28.3,
+    39.7
+   ]
+  },
+  "tiles_z": [
+   30.4,
+   32.9
+  ],
+  "print": "flat on the base ring, pockets up, no supports; bond tiles after printing (joint 0.2 mm, adhesive)"
+ },
+ "checks": [
+  {
+   "check": "carrier and tiles closed meshes (open edges)",
+   "value": 0,
+   "result": "PASS"
+  },
+  {
+   "check": "tile gap between neighbouring spokes >= 1.7 mm",
+   "value": 1.7,
+   "result": "PASS"
+  },
+  {
+   "check": "butt joint inner/outer tile 0.2 mm",
+   "value": 0.2,
+   "result": "PASS"
+  },
+  {
+   "check": "every tile inside its pocket with >= 0.15 mm clearance",
+   "value": 0.15,
+   "result": "PASS"
+  },
+  {
+   "check": "neighbour frame wall clear of the next pocket",
+   "value": 0.1,
+   "result": "PASS"
+  },
+  {
+   "check": "outer frame corner within the carrier r116.1",
+   "value": 115.81,
+   "result": "PASS"
+  },
+  {
+   "check": "inner frame edge outside the carrier inner r52.6",
+   "value": 57.5,
+   "result": "PASS"
+  },
+  {
+   "check": "tile top below the bridge floor z33.7 (yoke clearance)",
+   "value": 32.9,
+   "result": "PASS"
+  }
+ ]
+}
