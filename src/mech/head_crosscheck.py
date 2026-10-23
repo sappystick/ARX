@@ -31,7 +31,7 @@ mesh("HUB", "Central cylinder v5", "L1-L6", "printed", "kit_v22/SET/02_CORE_PCB_
 mesh("TRAY", "Analog tray", "L2", "printed", "kit_v22/ANALOG_TRAY_v5.stl"); mesh("SEPTUM", "Septum frame", "L3", "printed", "kit_v22/SEPTUM_FRAME_v5.stl")
 mesh("COMB", "Spine comb", "L2-L6", "printed", "kit_v22/SPINE_COMB_v5.stl"); mesh("ROOF", "Roof plate (TX-lead channel)", "L7", "printed", "kit_v22/ROOF_PLATE_v5.stl")
 mesh("CAP", "Cap v3 with HTA recess", "L8", "printed", first("kit_v18/PARTS/HUB_CAP_HTA_v3_vault.stl"))
-mesh("HOOD", "Ferrite hood carrier v2 (26 tiles)", "outer", "printed", "kit_v18/PARTS/LOTUS_HOOD_CARRIER_v2_spokes.stl")
+mesh("HOOD", "Ferrite hood carrier v3 (26 tiles, butted)", "outer", "printed", "kit_v18/PARTS/LOTUS_HOOD_CARRIER_v3_butted.stl")
 mesh("SKIRT", "Head skirt", "outer", "printed", first("kit_v19/PARTS/HEAD_SKIRT.stl")); mesh("CRADLE", "TXJ1 cradle", "outer", "printed", "kit_v22/TXJ1_CRADLE_v1.stl")
 mesh("BRIDGE", "Umbilical bridge", "outer", "printed", "kit_v19/YOKE/UMBILICAL_BRIDGE.stl"); mesh("BRIDGE_LID", "Bridge lid", "outer", "printed", "kit_v19/YOKE/UMBILICAL_BRIDGE_LID.stl")
 LEG = first("legacy/PHIFOLD233_FINAL_KIT_v3/04_PCB_receiver_AB1A/PF233-AB1A_board_with_components.stl", "legacy/PHIFOLD233_FINAL_KIT_v3/04_PCB_receiver_AB1A/PF233-AB1A_board_with_components.stl")

@@ -17,3 +17,4 @@
 15. **Dual-PCB bench checks**: first articles of SB1R-QA/QB, LB1 (0.8 mm), CB1D, TXJ1: continuity against the netlists, then power-up with a current-limited supply.
 16. **Joystick push switch** is not wired to the head (7-core cable full). Options: an 8-core cable, or a resistor-coded switch on the dial ladder; decide in the handle redesign (item 4).
 17. **BOM_MASTER.csv is stale** for HB1 HS1 (still SS49E) and CB1D RP1 (still 10k): mfg_v19.py, which builds it, reads legacy/PHIFOLD233_FINAL_FLAT_SET meshes that are not in the repo. Move it to the current BOMs (kit_v6/HB1, kit_v18) and regenerate.
+18. **Hood v3 first article**: cut 26 tiles (27.0 x 26.2 and 28.3 x 39.7 x 2.5 mm MnZn), print the v3 carrier, bond; measure the axis field with and without the tiles and the receive ring-down with the hood fitted (ASSUMPTIONS 8, 23).

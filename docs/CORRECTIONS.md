@@ -40,3 +40,5 @@
 | The trigger is a Hall sensor on CB1D TRIG_IN | HB1 used a linear SS49E (rest output near VCC/2) on a digital-only GPIO with a 10k pull-up: the trigger state, and so boost, was undefined. HB1 now uses a digital open-drain Hall switch | trigger_check.py |
 | A 10k pull-up is enough for the trigger input | With RH1 + RT1 = 2 kohm in series the low level was 0.88 V (VIL 0.8 V): RP1 is now 47k (0.52 V, 0.47 ms) | trigger_check.py |
 | Every handle control reaches the head | The joystick push switch ends at its pull-up on HB1; no cable conductor | trigger_check.py |
+| Hood v2 adds +6.7 / +5.3 / +4.3 % field at 100 / 200 / 300 mm | That came from the coupled-moment model at 8 mm cells, which does not converge for a 2.5 mm plate. The axisymmetric model gives v2 +12.7 / +9.8 / +7.8 %, and v3 (butted tiles) +16.9-18.5 / +12.9-14.2 / +10.2-11.2 % (0.2 mm joint as a series gap .. no gap) | hood_axi.py, hood_dipole convergence (8/6/4/3/2.5 mm cells) |
+| The 2 mm gap between a spoke's inner and outer tile is harmless | It is a series air gap in the radial flux path: closing it is worth about +4 points at 200 mm, more than doubling the tile thickness | hood_axi.py |

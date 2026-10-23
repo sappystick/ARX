@@ -31,7 +31,7 @@ def voxelize(T):
             a = int(np.ceil((zs[k] - Z0) / H - 0.5)); b = int(np.floor((zs[k + 1] - Z0) / H - 0.5))
             if b >= a: V[i, j, max(a, 0):min(b + 1, nz)] = True
     return V
-P = {"hub": "kit_v22/SET/02_CORE_PCB_CYLINDER/CORE_CYLINDER_v5_integrated.stl", "roof": "kit_v22/ROOF_PLATE_v5.stl", "hood_carrier": "kit_v18/PARTS/LOTUS_HOOD_CARRIER_v2_spokes.stl",
+P = {"hub": "kit_v22/SET/02_CORE_PCB_CYLINDER/CORE_CYLINDER_v5_integrated.stl", "roof": "kit_v22/ROOF_PLATE_v5.stl", "hood_carrier": "kit_v18/PARTS/LOTUS_HOOD_CARRIER_v3_butted.stl",
      "cradle": "kit_v22/TXJ1_CRADLE_v1.stl", "bridge": "kit_v19/YOKE/UMBILICAL_BRIDGE.stl", "bridge_lid": "kit_v19/YOKE/UMBILICAL_BRIDGE_LID.stl", "cap": "kit_v18/PARTS/HUB_CAP_HTA_v3_vault.stl"}
 if os.path.exists("kit_v19/PARTS/HEAD_SKIRT.stl"): P["skirt"] = "kit_v19/PARTS/HEAD_SKIRT.stl"
 vox = {}
