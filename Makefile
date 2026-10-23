@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: pcb-hb1 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: upper pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -11,6 +11,7 @@ help:
 	@echo "make verify-full     adds the quadrupole/receiver sims, thermal, hood, yoke, display-board PCB flow"
 	@echo "make formers-low     low-resolution formers (needed by audits/renders)"
 	@echo "make formers-print   full-resolution formers (about 70 MB each, slow)"
+	@echo "make upper           upper assembly v1 (S-stem, trigger, battery dock, twin-cavity shaft): STLs, checks, balance, figure"
 	@echo "see docs/PROCESS.md for the engineering loop"
 
 setup:
@@ -52,6 +53,10 @@ yoke:
 yoke-check:
 	cd $(W) && $(PY) yoke_check.py
 
+# upper assembly v1 (S-stem, armrest, trigger, battery dock and pack, telescoping twin-cavity shaft): STLs in kit_v23/UPPER, checks and balance
+upper: pcb-pm2
+	cd $(W) && $(PY) shaft_calc_v20.py > /dev/null && $(PY) upper_v21.py && $(PY) upper_check.py && $(PY) upper_figure.py
+
 sims:
 	cd $(W) && $(PY) sim_head1.py && $(PY) sim_head2.py && $(PY) sim_cage_rx.py && $(PY) sim_tanr.py && $(PY) sim_quadbearing.py
 
@@ -61,8 +66,15 @@ pcb-lb1:
 pcb-hb1:
 	cd $(W) && PW=H $(PY) pw_design.py && PW=H $(PY) pw_export.py
 
+# upper assembly v1 boards: HB2 (grip board, no joystick) and PM2 (MT60 battery dock power path)
+pcb-hb2:
+	cd $(W) && PW=G $(PY) pw_design.py && PW=G $(PY) pw_export.py
+
+pcb-pm2: pcb-cb1d
+	cd $(W) && PW=P $(PY) pw_design.py && PW=P $(PY) pw_export.py && $(PY) power_dock_check.py
+
 # KiCad schematics from the netlists (round-trip checked) and the handle-input / trigger chain check
-sch: pcb-lb1 pcb-cb1d pcb-hb1
+sch: pcb-lb1 pcb-cb1d pcb-hb1 pcb-hb2 pcb-pm2
 	cd $(W) && $(PY) sch_export.py && $(PY) trigger_check.py
 
 pcb-cb1d:
@@ -82,6 +94,7 @@ verify-quick: check
 
 verify-full: verify-quick hood yoke
 	$(MAKE) yoke-check
+	$(MAKE) upper
 	$(MAKE) audit-system
 	$(MAKE) sch
 	cd $(W) && $(PY) sim_head2.py && $(PY) sim_cage_rx.py && $(PY) sim_tanr.py && $(PY) sim_quadbearing.py
@@ -115,7 +128,7 @@ pcb-release: gerber-lb1 gerber-cb1d drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d sbq-fa
 tx:
 	cd $(W) && $(PY) tx_system.py
 
-audit-system: tx pcb-lb1 pcb-cb1d
+audit-system: tx pcb-lb1 pcb-cb1d pcb-hb2 pcb-pm2
 	cd $(W) && $(PY) wiring_audit.py && $(PY) system_budget.py && $(PY) stack_check.py && $(PY) interference_audit.py
 
 # full cross-check of the assembled head (3D interference at 0.5 and 0.2 mm, layers, radial fits, LED/TX/RX/wiring) and the cut-away drawings

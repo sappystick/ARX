@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Handle inputs end to end: the trigger (boost) chain HB1 HS1 -> RH1 -> JH.3 -> harness -> CB1D JTR.3 -> RT1 -> TRIG_IN -> Pico pin 7, the
+"""Handle inputs end to end (upper assembly v1: HB2 and harness v3): the trigger (boost) chain HB2 HS1 -> RH1 -> JH.3 -> signal cord -> CB1D JTR.3 -> RT1 -> TRIG_IN -> Pico pin 7, the
 dial ladder (DIAL -> ADC) and the joystick switch. Checks connectivity in the generated netlists and the harness, that the sensor type
 matches the GPIO type (a digital-only pin needs a digital switch), the logic levels and time constant of the trigger node, the dial ladder
 levels at the ADC, and the boost-mode stress rows. Logic thresholds, Hall-switch saturation voltage and the Pico ADC pin list are
 UNVERIFIED (docs/ASSUMPTIONS.md 22)."""
-import json, csv, re, sys
+import json, csv, re, sys, os
 sys.path.insert(0, "."); from sch_export import parse_net
 
 VCC, VIL, VIH, VSAT, ILEAK = 3.3, 0.8, 2.0, 0.4, 1e-6          # RP2350 IOVDD 3.3 V thresholds, Hall-switch Vsat, input + clamp leakage (unverified)
@@ -17,11 +17,11 @@ def val(s):
 def libpart(path):
     return dict(re.findall(r'\(comp \(ref "([^"]+)"\).*?\(part "([^"]+)"\)', open(path).read()))
 
-hc, hn = parse_net("kit_v6/HB1/PF233-HB1.net"); cc, cn = parse_net("kit_v18/CB1D/PF233-CB1D.net"); hp = libpart("kit_v6/HB1/PF233-HB1.net")
+hc, hn = parse_net("kit_v6/HB2/PF233-HB2.net"); cc, cn = parse_net("kit_v18/CB1D/PF233-CB1D.net"); hp = libpart("kit_v6/HB2/PF233-HB2.net")
 def net_of(nets, ref, pin): return next((n for n, nodes in nets.items() if any(r == ref and p == pin for r, p, _ in nodes)), None)
 def on(nets, n, ref, pin): return any(r == ref and p == pin for r, p, _ in nets.get(n, []))
-H = list(csv.DictReader(open("harness/HARNESS_MASTER_v2.csv")))
-row = next((h for h in H if "HB1.JH.3" in json.dumps(h) and "CB1D.JTR.3" in json.dumps(h)), None)
+H = list(csv.DictReader(open("harness/HARNESS_MASTER_v3.csv")))
+row = next((h for h in H if "HB2.JH.3" in json.dumps(h) and "CB1D.JTR.3" in json.dumps(h)), None)
 
 # 1 connectivity of the trigger chain
 t_hb = net_of(hn, "JH", "3"); chain = [on(hn, net_of(hn, "HS1", "3"), "RH1", "1"), on(hn, t_hb, "RH1", "2"), row is not None,
@@ -45,10 +45,15 @@ def vdial(rpos):
 lv = {k: round(vdial(v), 3) for k, v in pos.items()}; sep = min(abs(a - b) for i, a in enumerate(lv.values()) for b in list(lv.values())[i + 1:])
 chk("dial reaches an ADC pin (DIAL_IN on U1.32)", on(cn, "DIAL_IN", "U1", "32") and 32 in ADC_PINS, ADC_PINS.get(32))
 chk("dial ladder levels at the ADC separated by >= 0.3 V (incl. the CB1D pull-up)", sep >= 0.3, lv, f"min separation {sep:.2f} V; firmware thresholds must use these levels, not the HB1-only ladder")
-# 5 joystick switch
-js = hn.get("JOY_SW", []); chk("joystick push switch reaches the head", any(r == "JH" for r, _, _ in js), [f"{r}.{p}" for r, p, _ in js],
-    "JOY_SW ends at the pull-up RSW: the 7-core cable has no spare conductor (open item, handle redesign P04)", warn=True)
-# 6 boost mode stress (20 A / 400 Hz, selected by the trigger in firmware)
+# 5 joystick removed (owner decision 2026-10-23): no joystick nets on HB2, no joystick conductor in the signal cord
+joy = [n for n in hn if n.startswith("JOY")] + [h["id"] for h in H if "JOY" in h["signal"]]
+chk("joystick removed: no JOY nets on HB2 and no JOY conductor in harness v3", not joy, joy, "CB1D JTR.5/.6 (JOY_X/JOY_Y) are left without a conductor until the CB1D revision")
+# 6 trigger polarity from the lever geometry (upper_check.py): pressing swings the magnet away from the Hall switch -> switch off -> RP1 pulls TRIG high
+uc = json.load(open("kit_v23/upper_check.json")) if os.path.exists("kit_v23/upper_check.json") else dict(checks=[])
+drop = next((c["value"] for c in uc["checks"] if c["check"].startswith("magnet travel away from the Hall sensor")), None)
+chk("trigger polarity: rest = TRIG low (magnet near, switch on), pressed = TRIG high (magnet >= 2 mm further away)", drop is not None and drop >= 2.0, drop,
+    "firmware: enter boost on TRIG high only after TRIG was seen low since power-up (a broken TRIG conductor reads high)")
+# 7 boost mode stress (20 A / 400 Hz, selected by the trigger in firmware)
 sb = json.load(open("kit_v22/system_budget.json")); boost = [r for r in sb["rows"] if any(w in (r["stress"] + r["part"]) for w in ("20 A", "boost"))]
 chk("boost-mode stress rows (20 A / 400 Hz) all pass", all(r["status"] == "PASS" for r in boost), [(r["part"], r["margin_pct"]) for r in boost])
 out = dict(checks=R, levels=dict(trig_low_V=round(vlow, 3), trig_high_V=round(vhigh, 3), tau_ms=round(tau * 1e3, 3), dial_V=lv),

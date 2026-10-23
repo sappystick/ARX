@@ -1,0 +1,523 @@
+{
+ "parts": {
+  "U1_TOP_HOUSING": {
+   "shells": 8,
+   "triangles": 1860,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    -38.74,
+    -23.0,
+    46.71,
+    116.26,
+    23.0,
+    108.21
+   ],
+   "volume_cm3": 84.88,
+   "material": "PETG/ASA",
+   "mass_g": 107.8,
+   "note": "sealed shell 46.0 x 48.0, wall 2.5; tube A socket D33.4 x 44.0; dial boss x -14.7, power button x 11.3; trigger ears; HB2 inside"
+  },
+  "U2_GRIP": {
+   "shells": 2,
+   "triangles": 588,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    -37.64,
+    -16.0,
+    -58.71,
+    37.64,
+    16.0,
+    58.71
+   ],
+   "volume_cm3": 53.75,
+   "material": "PETG/TPU sleeve",
+   "mass_g": 68.3,
+   "note": "hollow ellipse 40.0 x 32.0 (perimeter about 113 mm), wall 4.0, raked 16.0 deg; septum: front channel power pair, rear channel button pair; over-grip sleeve optional"
+  },
+  "U3_BOTTOM_HOUSING": {
+   "shells": 4,
+   "triangles": 1196,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    -166.26,
+    -23.0,
+    -96.71,
+    15.74,
+    23.0,
+    -56.71
+   ],
+   "volume_cm3": 93.01,
+   "material": "PETG/ASA",
+   "mass_g": 118.1,
+   "note": "shell 46.0 x 40.0, wall 2.5; armrest socket D22.4 x 95.0 with detents at insertion (90.0, 68.0, 46.0); PM2 bay x -66..8"
+  },
+  "U4_TRIGGER": {
+   "shells": 5,
+   "triangles": 304,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    28.1,
+    -7.0,
+    11.37,
+    70.57,
+    7.0,
+    55.91
+   ],
+   "volume_cm3": 4.79,
+   "material": "PETG",
+   "mass_g": 6.1,
+   "note": "lever on a D3.2 pin through the ears, pad 5 x 14 x 26 at 33 mm above the grip centre, 3.5 mm in front of the grip; magnet on a 22 mm tail ahead of the pivot, 0.8 mm under the housing wall at rest; pressing swings it away from Hall HS1 on HB2 (through 2.5 mm PETG): active-low trigger; pad travel 3 mm to the stop"
+  },
+  "U5_ARMREST_CUP": {
+   "shells": 5,
+   "triangles": 1104,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    -278.76,
+    -50.13,
+    -90.91,
+    -193.76,
+    50.13,
+    14.26
+   ],
+   "volume_cm3": 62.18,
+   "material": "PETG/TPU liner",
+   "mass_g": 79.0,
+   "note": "forearm cup R46.0 inner, 85.0 long, 230 deg arc, strap anchors; clamp + saddle on the D22.0 tube; shown at position 1"
+  },
+  "ARMREST_TUBE_CFRP_pos1": {
+   "shells": 1,
+   "triangles": 512,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    -276.26,
+    -11.0,
+    -87.71,
+    -76.26,
+    11.0,
+    -65.71
+   ],
+   "volume_cm3": 19.29,
+   "material": "CFRP",
+   "mass_g": 29.9,
+   "note": "purchased CFRP tube OD22.0/ID19.0 x 200.0"
+  },
+  "U6_BATTERY_DOCK": {
+   "shells": 13,
+   "triangles": 156,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    -178.0,
+    -36.5,
+    -130.51,
+    24.5,
+    36.5,
+    -96.71
+   ],
+   "volume_cm3": 79.88,
+   "material": "PETG/PC (rails optionally aluminium)",
+   "mass_g": 101.4,
+   "note": "plate 201 x 73.0, two T rails (stem 5.0, head 11.0 x 2.8) at y +-28.0; MT60-M pedestal, vertical mating face, mating along -x; latch pocket x -174.5..-167.5 through the plate"
+  },
+  "U7_BATTERY_PACK_SHELL": {
+   "shells": 22,
+   "triangles": 264,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    -168.5,
+    -36.5,
+    -131.71,
+    0.0,
+    36.5,
+    -100.21
+   ],
+   "volume_cm3": 108.26,
+   "material": "PC (UL94 V-0) or PETG",
+   "mass_g": 129.9,
+   "note": "168 x 73 x 31.5 mm; rail channels slot 5.6 / undercut 11.6 x 3.4; BMS bay 41.4 x 5.9; cell bay 7 x 18650 transverse at 19.6 mm pitch; MT60-F front bay; latch plate"
+  },
+  "TUBE_A_CFRP": {
+   "shells": 1,
+   "triangles": 512,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    72.26,
+    -16.5,
+    64.21,
+    522.26,
+    16.5,
+    97.21
+   ],
+   "volume_cm3": 66.69,
+   "material": "CFRP",
+   "mass_g": 103.4,
+   "note": "purchased CFRP OD33.0/ID30.0 x 450.0"
+  },
+  "TUBE_B_CFRP_extended": {
+   "shells": 1,
+   "triangles": 512,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    442.26,
+    -14.25,
+    66.46,
+    892.26,
+    14.25,
+    94.96
+   ],
+   "volume_cm3": 48.08,
+   "material": "CFRP",
+   "mass_g": 74.5,
+   "note": "purchased CFRP OD28.5/ID26.0 x 450.0, extended"
+  },
+  "U8_SEPTUM_extended": {
+   "shells": 7,
+   "triangles": 7020,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    444.26,
+    -12.8,
+    67.91,
+    890.26,
+    12.8,
+    93.51
+   ],
+   "volume_cm3": 30.89,
+   "material": "PETG",
+   "mass_g": 39.2,
+   "note": "twin cavity in tube B: full-length septum strip 1.4 mm (PETG with a slit Cu-mesh shield laminated, drain at PM2) + 6 twin-bore spacers 8.0 mm long every 75.0 mm (bores 2 x D11.2 at y +-6.4); each half-bore holds a D12.3 circle"
+  },
+  "TUBE_B_CFRP_collapsed": {
+   "shells": 1,
+   "triangles": 512,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    86.26,
+    -14.25,
+    66.46,
+    536.26,
+    14.25,
+    94.96
+   ],
+   "volume_cm3": 48.08,
+   "material": "CFRP",
+   "mass_g": 74.5,
+   "note": "purchased CFRP OD28.5/ID26.0 x 450.0, collapsed"
+  },
+  "U8_SEPTUM_collapsed": {
+   "shells": 7,
+   "triangles": 7020,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    88.26,
+    -12.8,
+    67.91,
+    534.26,
+    12.8,
+    93.51
+   ],
+   "volume_cm3": 30.89,
+   "material": "PETG",
+   "mass_g": 39.2,
+   "note": "twin cavity in tube B: full-length septum strip 1.4 mm (PETG with a slit Cu-mesh shield laminated, drain at PM2) + 6 twin-bore spacers 8.0 mm long every 75.0 mm (bores 2 x D11.2 at y +-6.4); each half-bore holds a D12.3 circle"
+  },
+  "U8_CORD_ANCHOR": {
+   "shells": 1,
+   "triangles": 1360,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    72.96,
+    -14.8,
+    65.91,
+    85.26,
+    14.8,
+    95.51
+   ],
+   "volume_cm3": 6.05,
+   "material": "PETG",
+   "mass_g": 7.7,
+   "note": "twin-bore cord anchor at the rear of tube A (start of the two cavities), cords clamped"
+  },
+  "U9_CAM_COLLAR": {
+   "shells": 3,
+   "triangles": 1036,
+   "nonmanifold_edges": 0,
+   "bbox_mm": [
+    498.26,
+    -20.5,
+    60.21,
+    526.26,
+    20.5,
+    109.21
+   ],
+   "volume_cm3": 15.27,
+   "material": "PA12/PETG",
+   "mass_g": 17.6,
+   "note": "cam-lock collar (lever block on top), stops tube B at the 80 mm overlap"
+  }
+ },
+ "envelopes": {
+  "trigger_magnet": {
+   "d": 5.0,
+   "h": 3.0,
+   "centre": [
+    67.07,
+    0.0,
+    54.41
+   ],
+   "tail_mm": 22.0
+  },
+  "HB2_board": {
+   "x": [
+    32.068592710434984,
+    70.06859271043498
+   ],
+   "y": [
+    -12.0,
+    12.0
+   ],
+   "z_board": [
+    60.214440060360815,
+    61.814440060360816
+   ],
+   "parts_height": 4.5,
+   "hall_x": 67.06859271043498
+  },
+  "PM2_board": {
+   "x": [
+    -66.26260399320296,
+    3.7373960067970415
+   ],
+   "y": [
+    -14.0,
+    14.0
+   ],
+   "z_board": [
+    -92.21444006036081,
+    -90.61444006036082
+   ],
+   "parts_height": 10.8
+  },
+  "MT60_M": {
+   "x": [
+    0.5,
+    20.5
+   ],
+   "y": [
+    -8.25,
+    8.25
+   ],
+   "z": [
+    -124.51444006036081,
+    -115.91444006036082
+   ],
+   "mating_face_x": 0.5
+  },
+  "cells": {
+   "d": 18.6,
+   "l": 65.3,
+   "axis": "y",
+   "centres": [
+    {
+     "x": -36.8,
+     "z": -119.51
+    },
+    {
+     "x": -56.4,
+     "z": -119.51
+    },
+    {
+     "x": -76.0,
+     "z": -119.51
+    },
+    {
+     "x": -95.6,
+     "z": -119.51
+    },
+    {
+     "x": -115.2,
+     "z": -119.51
+    },
+    {
+     "x": -134.8,
+     "z": -119.51
+    },
+    {
+     "x": -154.4,
+     "z": -119.51
+    }
+   ]
+  },
+  "BMS": {
+   "size": [
+    60.0,
+    41.0,
+    5.4
+   ],
+   "x": [
+    -90.0,
+    -30.0
+   ],
+   "y": [
+    -20.5,
+    20.5
+   ],
+   "z": [
+    -108.31444006036081,
+    -102.9144400603608
+   ]
+  },
+  "MT60_F": {
+   "x": [
+    -20.0,
+    0.0
+   ],
+   "y": [
+    -8.25,
+    8.25
+   ],
+   "z": [
+    -124.51444006036081,
+    -115.91444006036082
+   ]
+  },
+  "latch": {
+   "x": [
+    -174.0,
+    -168.5
+   ],
+   "y": [
+    -8.0,
+    8.0
+   ],
+   "z_rest": [
+    -112.21444006036081,
+    -97.21444006036081
+   ],
+   "travel": 4.0
+  },
+  "latch_pocket": {
+   "x": [
+    -174.5,
+    -167.5
+   ],
+   "y": [
+    -10.0,
+    10.0
+   ],
+   "z": [
+    -99.71444006036081,
+    -96.71444006036081
+   ]
+  }
+ },
+ "params": {
+  "rake_deg": 16.0,
+  "grip_axis_len": 118.0,
+  "grip_semi_axes": [
+   20.0,
+   16.0
+  ],
+  "ZT": 80.71,
+  "ZB": -76.71,
+  "top_housing_x": [
+   -38.74,
+   116.26
+  ],
+  "bottom_housing_x": [
+   -166.26,
+   15.74
+  ],
+  "Pt": [
+   16.26,
+   0.0,
+   56.71
+  ],
+  "Pb": [
+   -16.26,
+   -0.0,
+   -56.71
+  ],
+  "ug": [
+   0.27564,
+   0.0,
+   0.96126
+  ],
+  "un": [
+   0.96126,
+   0.0,
+   -0.27564
+  ],
+  "trigger_pad_s": 33.0,
+  "trigger_pad_gap": 3.5,
+  "trigger_travel": 3.0,
+  "pad_centre": [
+   34.09,
+   0.0,
+   24.56
+  ],
+  "pivot": [
+   45.07,
+   0.0,
+   50.71
+  ],
+  "dial_x": -14.737396006797049,
+  "button_x": 11.262603993202951,
+  "tube_A": {
+   "od": 33.0,
+   "id": 30.0,
+   "x": [
+    72.26260399320296,
+    522.2626039932029
+   ]
+  },
+  "tube_B": {
+   "od": 28.5,
+   "id": 26.0,
+   "extended": [
+    442.2626039932029,
+    892.2626039932029
+   ],
+   "collapsed": [
+    86.26260399320296,
+    536.2626039932029
+   ]
+  },
+  "min_overlap": 80.0,
+  "anchor_x": [
+   72.96260399320296,
+   85.26260399320296
+  ],
+  "armrest": {
+   "od": 22.0,
+   "id": 19.0,
+   "length": 200.0,
+   "socket": 95.0,
+   "insertion_depths": [
+    90.0,
+    68.0,
+    46.0
+   ],
+   "cup_centre_x": [
+    -236.3,
+    -258.3,
+    -280.3
+   ],
+   "cup_axis_z": -10.71
+  },
+  "dock": {
+   "rail_y": 28.0,
+   "z_pack_top": -100.21,
+   "z_dock": -96.71
+  },
+  "pack": {
+   "L": 168.0,
+   "W": 73.0,
+   "H": 31.5,
+   "front_x": 0.0
+  },
+  "cord_od": 10.4,
+  "bore_r": 5.6,
+  "bore_y": 6.4
+ }
+}

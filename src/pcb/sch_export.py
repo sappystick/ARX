@@ -91,7 +91,8 @@ BOARDS = {  # board -> netlist (current generators first, legacy kits where no g
     "CB1D": "kit_v18/CB1D/PF233-CB1D.net", "LB1": "kit_v18/LB1/PF233-LB1.net",
     "AB1A": "legacy/PHIFOLD233_FINAL_KIT_v3/04_PCB_receiver_AB1A/PF233-AB1A.net", "AB1B": "legacy/PHIFOLD233_FINAL_KIT_v3/05_PCB_receiver_AB1B/PF233-AB1B.net",
     "PB1R": "legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/PB1R/PF233-PB1R.net", "PM1": "legacy/PHIFOLD233_FINAL_KIT_v4/03_POWER_BOARD_PM1/PF233-PM1.net",
-    "HB1": "kit_v6/HB1/PF233-HB1.net"}                                   # make pcb-hb1 (digital trigger switch); the legacy HB1 netlist has the linear SS49E
+    "HB1": "kit_v6/HB1/PF233-HB1.net",                                   # superseded by HB2 (upper assembly v1, no joystick)
+    "HB2": "kit_v6/HB2/PF233-HB2.net", "PM2": "kit_v6/PM2/PF233-PM2.net"}   # make pcb-hb2 / pcb-pm2                                   # make pcb-hb1 (digital trigger switch); the legacy HB1 netlist has the linear SS49E
 
 if __name__ == "__main__":
     os.makedirs("kit_v22/SCH", exist_ok=True); res = {}

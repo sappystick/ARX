@@ -42,4 +42,4 @@ mm / deg; z up from the underside of the base plate; azimuth CCW from +x; heel (
 - Simulations that load kit_v15/LOW/paths.pkl need `make formers-low` or the seed copy (already in work/ after setup).
 
 ## Current priorities
-See docs/OPEN_ITEMS.md (1 coil damping resistor placement, 2 CAM/KiCad verification, 3 rigid-flex spine, 4 handle/knuckle/pod from photos, 5 DSP in Python).
+See docs/OPEN_ITEMS.md (2 CAM/KiCad verification, 3 rigid-flex spine, 4 and 19 upper assembly first article, 5 DSP in Python, 20 CB1D revision for the joystick removal).
