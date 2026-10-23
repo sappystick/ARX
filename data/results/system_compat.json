@@ -1,0 +1,302 @@
+{
+ "rows": [
+  {
+   "area": "mech",
+   "interface": "tube B into the neck-module upper socket",
+   "side_a": "upper v1 tube B OD",
+   "side_b": "NPM_N1 socket_hi ID (mech_v20.py)",
+   "value": "28.5 in 28.9 (radial 0.20 mm)",
+   "status": "OK",
+   "source": "source constants",
+   "action": ""
+  },
+  {
+   "area": "mech",
+   "interface": "coiled cords through the neck-module tunnel",
+   "side_a": "2 coiled cords OD <= 10.4 side by side",
+   "side_b": "NPM tunnel 17.8 x 17.8",
+   "value": "20.8 > 17.8",
+   "status": "ACTION",
+   "source": "source constants",
+   "action": "add U10: cord end anchor at the tube B front; below it the signal runs as straight 5-core shielded cable (OD about 4.5) and the power pair ends at the NPM splice"
+  },
+  {
+   "area": "mech",
+   "interface": "telescoping overlap at full extension (mm)",
+   "side_a": "upper v1",
+   "side_b": "upper v1",
+   "value": 80.0,
+   "status": "OK",
+   "source": "upper_check.py (meshes)",
+   "action": ""
+  },
+  {
+   "area": "mech",
+   "interface": "tube A in the top-housing socket: radial clearance (mm)",
+   "side_a": "upper v1",
+   "side_b": "upper v1",
+   "value": 0.172,
+   "status": "OK",
+   "source": "upper_check.py (meshes)",
+   "action": ""
+  },
+  {
+   "area": "mech",
+   "interface": "armrest tube in its socket: radial clearance (mm)",
+   "side_a": "upper v1",
+   "side_b": "upper v1",
+   "value": 0.178,
+   "status": "OK",
+   "source": "upper_check.py (meshes)",
+   "action": ""
+  },
+  {
+   "area": "mech",
+   "interface": "lower GFRP tube, hinge, yoke, bridge to the head",
+   "side_a": "head side (unchanged)",
+   "side_b": "yoke_check.py",
+   "value": "20/20 checks",
+   "status": "OK",
+   "source": "yoke_check.py",
+   "action": ""
+  },
+  {
+   "area": "mech",
+   "interface": "hood carrier v4 (one tile per spoke, configurations C1-C3)",
+   "side_a": "hood v3 envelope r52.6-116.1 z29.4-33.4",
+   "side_b": "v4 not generated",
+   "value": "-",
+   "status": "ACTION",
+   "source": "hood_axi.py variant",
+   "action": "generate hood_v21.py with the same envelope and run the hood, yoke and head cross-checks"
+  },
+  {
+   "area": "elec",
+   "interface": "handle cord to CB1D JTR",
+   "side_a": "HB2 JH (5 conductors)",
+   "side_b": "CB1D JTR (7 pins)",
+   "value": "53 link pins, errors 0; open by design: 2",
+   "status": "ACTION",
+   "source": "wiring_audit.py",
+   "action": "CB1D revision: tie or depopulate RJX/RJY, CJX/CJY (OPEN_ITEMS 20)"
+  },
+  {
+   "area": "elec",
+   "interface": "harness conductors vs the netlists",
+   "side_a": "HARNESS_MASTER_v3",
+   "side_b": "all netlists",
+   "value": "50 conductors, bad 0",
+   "status": "OK",
+   "source": "wiring_audit.py",
+   "action": ""
+  },
+  {
+   "area": "elec",
+   "interface": "pack interlock and soft start",
+   "side_a": "MT60 pin 3 loop",
+   "side_b": "PM2 Q1",
+   "value": "True, ramp 19.9 ms, inrush 2.12 A",
+   "status": "OK",
+   "source": "power_dock_check.py",
+   "action": ""
+  },
+  {
+   "area": "elec",
+   "interface": "VBUS range vs CB1D input regulator",
+   "side_a": "19.6-29.4 V",
+   "side_b": "OKI-78SR-5 (36 V max, from memory)",
+   "value": "82 % of max",
+   "status": "DATA",
+   "source": "system_budget.py",
+   "action": "read the OKI-78SR datasheet (C05)"
+  },
+  {
+   "area": "elec",
+   "interface": "VBUS range vs PB1R 12 V module",
+   "side_a": "19.6-29.4 V",
+   "side_b": "M12 '12 V 1.5 A switching module' (input range not recorded)",
+   "value": "unknown",
+   "status": "DATA",
+   "source": "PB1R netlist",
+   "action": "choose the module; input >= 36 V and drop-out below 19.6 V"
+  },
+  {
+   "area": "elec",
+   "interface": "VBUS vs PB1R bulk capacitors",
+   "side_a": "29.4 V",
+   "side_b": "CD1-CD6 150 uF 35 V polymer tantalum",
+   "value": "84 % of rating",
+   "status": "ACTION",
+   "source": "PB1R netlist; KEMET polymer-Ta guidance about 80 %",
+   "action": "use 50 V polymer/hybrid parts (as PM2) or keep 35 V only after the series datasheet allows 84 % (this predates v1: v20 also reached 29.4 V)"
+  },
+  {
+   "area": "elec",
+   "interface": "TX on-time at the lowest pack voltage (boost 20 A)",
+   "side_a": "19.6 V",
+   "side_b": "400 Hz period 2500 us",
+   "value": "55.1 us",
+   "status": "OK",
+   "source": "L I / V",
+   "action": "firmware constant-current rule: ton = L I / VBUS from VBUS_SENSE"
+  },
+  {
+   "area": "elec",
+   "interface": "trigger levels and polarity",
+   "side_a": "HB2 HS1 + RH1",
+   "side_b": "CB1D TRIG_IN (RP1 47k)",
+   "value": "low 0.518 V, high 3.253 V",
+   "status": "OK",
+   "source": "trigger_check.py",
+   "action": "firmware boot rule for the active-low lever"
+  },
+  {
+   "area": "elec",
+   "interface": "stress: SMCJ33A TVS",
+   "side_a": "VBUS maximum (7S full charge 29.4 V)",
+   "side_b": "33 V",
+   "value": "29.4 (10.9 %)",
+   "status": "OK",
+   "source": "system_budget.py",
+   "action": ""
+  },
+  {
+   "area": "elec",
+   "interface": "stress: OKI-78SR-5 module",
+   "side_a": "input voltage maximum",
+   "side_b": "36 V",
+   "value": "29.4 (18.3 %)",
+   "status": "DATA",
+   "source": "system_budget.py",
+   "action": ""
+  },
+  {
+   "area": "elec",
+   "interface": "stress: Power cord AWG20 pair (upper v1)",
+   "side_a": "average current in boost (7.7 W / 25.2 V",
+   "side_b": "5.0 A",
+   "value": "0.359 (92.8 %)",
+   "status": "OK",
+   "source": "system_budget.py",
+   "action": ""
+  },
+  {
+   "area": "elec",
+   "interface": "stress: PM2 fuse F1 5 A slow",
+   "side_a": "pulse-recharge peak of the PB1R bulk thr",
+   "side_b": "5.0 A",
+   "value": "3.788 (24.2 %)",
+   "status": "OK",
+   "source": "system_budget.py",
+   "action": ""
+  },
+  {
+   "area": "elec",
+   "interface": "stress: Battery pack 7S1P Molicel P30B",
+   "side_a": "average current in boost",
+   "side_b": "30.0 A",
+   "value": "0.359 (98.8 %)",
+   "status": "OK",
+   "source": "system_budget.py",
+   "action": ""
+  },
+  {
+   "area": "eddy",
+   "interface": "metal in the handle (latch, MT60 brass, cells, optional aluminium rails)",
+   "side_a": "elbow/handle region",
+   "side_b": "field there",
+   "value": "0.4 % of the 200 mm target field at the elbow",
+   "status": "OK",
+   "source": "shaft_calc_v20.py",
+   "action": "keep the GFRP lower tube; no closed loops in the septum shield (slit), drain only at PM2"
+  },
+  {
+   "area": "system",
+   "interface": "torque about the grip vs v20 at the same reach",
+   "side_a": "upper v1",
+   "side_b": "v20",
+   "value": "2.875 vs 2.88 kg m",
+   "status": "OK",
+   "source": "upper_check.py",
+   "action": ""
+  },
+  {
+   "area": "system",
+   "interface": "runtime vs v20",
+   "side_a": "7S1P P30B 75.6 Wh",
+   "side_b": "v20 90.7 Wh",
+   "value": "boost 9.8 vs 11.8 h",
+   "status": "ACTION",
+   "source": "power_dock_check.py",
+   "action": "accept, carry two packs, or use the P42A 21700 pack (configuration C3)"
+  }
+ ],
+ "summary": {
+  "OK": 15,
+  "ACTION": 5,
+  "DATA": 3,
+  "FAIL": 0
+ },
+ "data_to_gather": [
+  {
+   "item": "D044-A stem: tube ODs, housing sections, grip, armrest positions, mass by part",
+   "how": "measure a stem or the owner's arm; trial-print grip and cup",
+   "ref": "ASSUMPTIONS 24"
+  },
+  {
+   "item": "Amass MT60 drawing: body, pin pitch, keying, mating depth, current rating",
+   "how": "Amass datasheet",
+   "ref": "ASSUMPTIONS 25"
+  },
+  {
+   "item": "Molicel P30B / P42A datasheets: envelope, mass, continuous current, cut-offs",
+   "how": "Molicel PDFs",
+   "ref": "ASSUMPTIONS 27"
+  },
+  {
+   "item": "7S BMS 10-15 A that fits 60 x 41 x 5.4 mm (or a resized bay)",
+   "how": "supplier drawing",
+   "ref": "ASSUMPTIONS 27"
+  },
+  {
+   "item": "coiled cords: OD, retracted length, 356 mm stroke, conductor count, shield",
+   "how": "supplier drawing",
+   "ref": "ASSUMPTIONS 27"
+  },
+  {
+   "item": "SO-8 P-MOSFET part: pinout, Rds(on) at -8 V, Vgs max",
+   "how": "datasheet",
+   "ref": "ASSUMPTIONS 26"
+  },
+  {
+   "item": "Hall switch part and magnet grade: operate/release points at 6.6 / 9.1 mm",
+   "how": "datasheet + first-article test",
+   "ref": "ASSUMPTIONS 22, 27"
+  },
+  {
+   "item": "PB1R M12 module input range; OKI-78SR maximum input",
+   "how": "datasheets",
+   "ref": "ASSUMPTIONS 19"
+  },
+  {
+   "item": "PB1R bulk: polymer-Ta series derating at 29.4 V or a 50 V replacement",
+   "how": "KEMET/series datasheet",
+   "ref": "this matrix"
+  },
+  {
+   "item": "coil self-capacitance and ring-down of the built TX coil and SB1R boards (with RD)",
+   "how": "bench",
+   "ref": "ASSUMPTIONS 1, 14"
+  },
+  {
+   "item": "ADC noise (ADS8860 class) to decide gain 40 vs 100",
+   "how": "datasheet",
+   "ref": "enhancement review 7"
+  },
+  {
+   "item": "weights of the printed parts and the pack; torque about the grip",
+   "how": "scale + spring balance",
+   "ref": "ASSUMPTIONS 10, 27"
+  }
+ ]
+}
