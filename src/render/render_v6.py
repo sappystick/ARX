@@ -13,7 +13,8 @@ def load_stl(p):
 # ------------------------------------------------------------------ primitives
 def tri2d(poly):
     poly = np.asarray(poly, float)
-    if (np.cross(np.roll(poly, -1, 0) - poly, np.roll(poly, -2, 0) - np.roll(poly, -1, 0)).sum()) < 0 and ((poly[:, 0] * np.roll(poly[:, 1], -1) - np.roll(poly[:, 0], -1) * poly[:, 1]).sum() < 0): poly = poly[::-1]
+    e1 = np.roll(poly, -1, 0) - poly; e2 = np.roll(poly, -2, 0) - np.roll(poly, -1, 0)   # 2D cross written out: np.cross rejects 2D vectors from NumPy 2.x
+    if ((e1[:, 0] * e2[:, 1] - e1[:, 1] * e2[:, 0]).sum()) < 0 and ((poly[:, 0] * np.roll(poly[:, 1], -1) - np.roll(poly[:, 0], -1) * poly[:, 1]).sum() < 0): poly = poly[::-1]
     idx = list(range(len(poly))); tris = []
     a2 = lambda a, b, c: (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
     guard = 0

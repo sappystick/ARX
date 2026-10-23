@@ -16,7 +16,7 @@ Parametric CAD (Python -> STL), PCB placement/routing/Gerber tooling, physics si
 - `make setup` then `make verify-quick` (v5 cylinder, parts, 22 geometry checks, transmit-stage/field sim; about 2 min) then `python3 tests/regress.py`.
 - `make verify-full` adds the quadrupole/receiver sims, hood, yoke and the display-board PCB flow (routing 52 s).
 - Single steps: make v5 | check | hood | yoke | sims | pcb-lb1 | route-lb1 | gerber-lb1 | pcb-cb1d | route-cb1d | formers-low | formers-print.
-- Python 3.12, numpy, scipy, matplotlib, pillow (requirements.txt). Linux/macOS (or WSL) for the Makefile.
+- Python 3.12+, numpy, scipy, matplotlib, pillow (requirements.txt). Linux/macOS (or WSL) for the Makefile. Full pipeline checked on Python 3.13 with numpy 2.1 and 2.5 (scipy 1.14 and 1.18): same outputs. numpy 2.x rejects 2D vectors in np.cross, so write 2D cross products out.
 
 ## Rules of engagement (non-negotiable)
 1. Change generators, never STLs by hand. New versions get new names; superseded files are marked.
