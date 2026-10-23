@@ -1,0 +1,88 @@
+{
+ "CB1D_height_budget": {
+  "board_top_z": 28.6,
+  "LB1_underside_z": 39.2,
+  "room_mm": 10.6,
+  "tallest_parts": [
+   [
+    "M5",
+    "OKI3",
+    10.2
+   ],
+   [
+    "JDBG",
+    "HDR1x2",
+    9.0
+   ],
+   [
+    "JPW",
+    "TERM4",
+    9.0
+   ],
+   [
+    "JTR",
+    "HDR1x7",
+    9.0
+   ],
+   [
+    "JA",
+    "HDR2x6S",
+    9.0
+   ],
+   [
+    "JB",
+    "HDR2x6S",
+    9.0
+   ],
+   [
+    "JPB",
+    "HDR2x4",
+    9.0
+   ],
+   [
+    "JCL",
+    "TERM2",
+    9.0
+   ]
+  ],
+  "all_fit": true
+ },
+ "AB1A": {
+  "x": [
+   -20.0,
+   20.0
+  ],
+  "y": [
+   -20.0,
+   20.0
+  ],
+  "z": [
+   -2.7,
+   4.0
+  ],
+  "height_above_board_mm": 4.0,
+  "fits_cup_A": true
+ },
+ "AB1B": {
+  "x": [
+   -20.0,
+   20.0
+  ],
+  "y": [
+   -20.0,
+   20.0
+  ],
+  "z": [
+   -2.7,
+   4.0
+  ],
+  "height_above_board_mm": 4.0,
+  "fits_cup_A": true
+ },
+ "old_CB1": {
+  "outline": "70x70 square, diagonal 99 mm",
+  "fits_D78": false,
+  "reason": "diagonal 99 mm > 78 mm; the 63-part disc re-placement replaces it"
+ },
+ "wiring_rows": 87
+}

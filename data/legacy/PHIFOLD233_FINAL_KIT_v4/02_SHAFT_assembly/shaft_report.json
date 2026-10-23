@@ -1,0 +1,170 @@
+{
+ "SH01_battery_segment_165": {
+  "shells": 13,
+  "triangles": 1836,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -29.0,
+   -20.5,
+   0.0,
+   29.0,
+   20.5,
+   177.0
+  ],
+  "note": "two D22.4 cartridge bores, centre raceway 6x12, septum for foil shield; spigot on top, receives the next segment; print upright"
+ },
+ "SH02_battery_segment_165": {
+  "shells": 13,
+  "triangles": 1836,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -29.0,
+   -20.5,
+   0.0,
+   29.0,
+   20.5,
+   177.0
+  ],
+  "note": "two D22.4 cartridge bores, centre raceway 6x12, septum for foil shield; spigot on top, receives the next segment; print upright"
+ },
+ "SH03_battery_segment_165": {
+  "shells": 13,
+  "triangles": 1836,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -29.0,
+   -20.5,
+   0.0,
+   29.0,
+   20.5,
+   177.0
+  ],
+  "note": "two D22.4 cartridge bores, centre raceway 6x12, septum for foil shield; spigot on top, receives the next segment; print upright"
+ },
+ "SH04_electronics_segment_232": {
+  "shells": 8,
+  "triangles": 648,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -29.0,
+   -20.5,
+   0.0,
+   29.0,
+   20.5,
+   244.0
+  ],
+  "note": "upper compartment = PM1 sled, lower compartment = PB1 sled; septum 2.4 mm carries the foil shield; front bulkhead"
+ },
+ "SH05_front_cap_cartridge_entry": {
+  "shells": 4,
+  "triangles": 1452,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -29.9,
+   -20.5,
+   0.0,
+   29.9,
+   20.5,
+   38.0
+  ],
+  "note": "faces the head; two cartridge bores with funnel lead-in and latch windows"
+ },
+ "SH06_rear_cap_cable_exit": {
+  "shells": 3,
+  "triangles": 588,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -29.0,
+   -20.5,
+   0.0,
+   29.0,
+   20.5,
+   45.0
+  ],
+  "note": "closes the electronics segment at the grip end; 3 cable grommet seats on the cap are to be drilled 8 mm"
+ },
+ "CT01_cartridge_sleeve_segment_121": {
+  "shells": 1,
+  "triangles": 768,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -10.6,
+   -10.6,
+   0.0,
+   10.6,
+   10.6,
+   121.0
+  ],
+  "note": "print 4 per cartridge; butt-joined, wrapped in 2 layers of heat-shrink; holds 7S 18650 in line (cells 65 mm x 7 = 455 mm)"
+ },
+ "CT02_cartridge_contact_plug": {
+  "shells": 4,
+  "triangles": 1560,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -10.6,
+   -10.6,
+   0.0,
+   10.6,
+   10.6,
+   30.0
+  ],
+  "note": "contact end: 4 blade slots 1.0 x 6.3 in the carrier at x = -6,-2,2,6; blade protrusion NEG 14.0 / PRE 12.2 / POS 10.6 / ID 10.6 mm (mate order NEG, PRE, POS+ID)"
+ },
+ "CT03_cartridge_rear_cap": {
+  "shells": 3,
+  "triangles": 1548,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -10.6,
+   -10.6,
+   0.0,
+   10.6,
+   10.6,
+   12.0
+  ],
+  "note": "closes the cell stack; pull-tab eyelet for removal"
+ },
+ "SL01_sled_PM1_136": {
+  "shells": 11,
+  "triangles": 2892,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -25.8,
+   -69.0,
+   0.0,
+   25.8,
+   69.0,
+   3.5
+  ],
+  "note": "PM1 carrier: 28 x 136 board on 10 stand-offs; slides into the UPPER compartment rails"
+ },
+ "SL02_sled_PB1_224": {
+  "shells": 17,
+  "triangles": 4620,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -25.8,
+   -113.0,
+   0.0,
+   25.8,
+   113.0,
+   3.5
+  ],
+  "note": "PB1 carrier: 28 x 224 board on 16 stand-offs; slides into the LOWER compartment; add 2.5 mm thermal pad to the aluminium plate under the FETs"
+ },
+ "LT01_cartridge_latch_slider": {
+  "shells": 3,
+  "triangles": 312,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -5.0,
+   -3.0,
+   0.0,
+   5.0,
+   3.0,
+   20.0
+  ],
+  "note": "push-button latch: hook engages the cartridge plug shoulder; 3 x 8 mm compression spring in the tube pocket"
+ }
+}

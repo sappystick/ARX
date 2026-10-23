@@ -1,0 +1,4 @@
+# P03 Rigid-flex spine
+Goal: the signal/power spine between L1 gallery, L2 analog boards, L5 CB1D and L6 LB1 through the 12 mm channel at 90 deg (see the SPINE_COMB_v5 part and the level netlist in data/results/LEVEL_NETLIST.csv).
+Requirements: signal and return adjacent (small loop area against the axial field), hatched shield, no solid planes, Z-fold bend radius >= 10x the polyimide stack thickness, stubs to each board (connector footprints: 12-pin 1.27 mm for AB1T J2/CB1D JA JB, 4-pin for LB1 JLB), 8 spine signals as in docs/DESIGN_STATE.md and LEVELS_SCHEMATIC.png.
+Deliver: stackup, outline drawing, bend calculation, connector-to-connector pin table, Gerbers for a prototype flex (single flat tape with stiffeners), the board-to-board connector variant, and a fit check inside the comb windows and channel. Add checks and docs. State the unverified assumptions (flex fabrication limits).

@@ -1,0 +1,15 @@
+{
+ "board": "CB1D",
+ "clearance_violations": 0,
+ "open_nets": 0,
+ "edge_samples": 0,
+ "notch_samples": 0,
+ "min_gap_by_layer": {
+  "F.Cu": 0.17,
+  "In2.Cu": 0.17,
+  "In3.Cu": 0.17,
+  "B.Cu": 0.17
+ },
+ "violations": [],
+ "opens": []
+}

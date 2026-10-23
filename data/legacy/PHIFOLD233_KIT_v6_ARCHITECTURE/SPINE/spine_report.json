@@ -1,0 +1,207 @@
+{
+ "CAS_R1_cassette_segment_150": {
+  "shells": 6,
+  "triangles": 624,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -8.7,
+   -8.7,
+   0.0,
+   8.7,
+   8.7,
+   150.0
+  ],
+  "note": "dual chamber 17.4 x 17.4: A (power ribbon) y>0, B (signal ribbon) y<0, 14.4 x 7.0 inner, guide ribs on both side walls; print 3 pcs per tube, bond end to end"
+ },
+ "CAS_R2_trolley": {
+  "shells": 2,
+  "triangles": 396,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -6.3,
+   -2.8,
+   0.0,
+   6.3,
+   2.8,
+   23.2
+  ],
+  "note": "slider 12.6 x 5.6 x 18 with 5.5 mm U-loop post (ribbon bend radius 3.0 with ribbon thickness); one per chamber"
+ },
+ "CAS_R3_end_anchor": {
+  "shells": 3,
+  "triangles": 36,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -8.5,
+   -8.5,
+   0.0,
+   8.5,
+   8.5,
+   12.0
+  ],
+  "note": "ribbon clamp block: ribbon end is glued/clamped, drain wire to the foil lining; one at each end"
+ },
+ "NPM_N1_body_with_tunnel": {
+  "shells": 11,
+  "triangles": 1152,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -42.0,
+   -19.8,
+   -22.0,
+   42.0,
+   37.0,
+   106.0
+  ],
+  "note": "pocket 78 x 20 x 78 for PB1R, 12 mm cable window, straight ribbon tunnel and tube sockets D32.4 (lower fixed tube and upper OUTER tube, both D32)"
+ },
+ "NPM_N2_lid_with_fill_ports": {
+  "shells": 5,
+  "triangles": 1548,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -42.0,
+   37.0,
+   0.0,
+   42.0,
+   46.0,
+   84.0
+  ],
+  "note": "lid with 2 x D8 fill ports (hot zone x -25, main zone x +15) and 2 x D3 vents at the far end; bond with epoxy, fill through the ports under vacuum"
+ },
+ "NPM_N3_hot_zone_dam": {
+  "shells": 1,
+  "triangles": 12,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -6.0,
+   14.0,
+   4.0,
+   -4.0,
+   34.0,
+   80.0
+  ],
+  "note": "vertical dam at x -5 separating the alumina-filled hot zone (FETs, clamp bank) from the syntactic main zone; leave 6 mm gaps top and bottom for the interface"
+ },
+ "ELB_E1_elbow_and_grip": {
+  "shells": 5,
+  "triangles": 1728,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -27.0,
+   -23.0,
+   -40.0,
+   190.0,
+   23.0,
+   58.0
+  ],
+  "note": "shaft socket D28.8 (inner tube), elbow cavity 48 x 40 and grip cavity 31 x 37 hold PM1, HB1 and the 1 F supercap bridge; fill ports D8 + D3 vent on the elbow top; grip 36 x 42 stadium, 163 mm"
+ },
+ "ELB_E2_grip_endcap": {
+  "shells": 1,
+  "triangles": 12,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   190.0,
+   -21.0,
+   2.0,
+   196.0,
+   21.0,
+   38.0
+  ],
+  "note": "end cap, bonded after potting"
+ },
+ "ELB_E3_trigger": {
+  "shells": 2,
+  "triangles": 24,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   52.0,
+   -6.0,
+   -25.0,
+   72.0,
+   6.0,
+   6.0
+  ],
+  "note": "trigger lever (magnet in the tip over the HB1 Hall sensor, travel 0-4 mm), index-finger curve"
+ },
+ "ELB_E4_joystick_boss": {
+  "shells": 2,
+  "triangles": 768,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -14.0,
+   -14.0,
+   0.0,
+   14.0,
+   14.0,
+   24.0
+  ],
+  "note": "thumb joystick boss and stick, sits on the grip top at x = 95 mm"
+ },
+ "ELB_E5_forearm_cuff": {
+  "shells": 2,
+  "triangles": 396,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   -50.0,
+   -50.0,
+   -24.0,
+   50.0,
+   50.0,
+   55.0
+  ],
+  "note": "forearm cuff D86 inner, 55 mm wide, centred 55 mm above the grip axis so the forearm rests ABOVE the battery drawer; bridge arm to the grip end; strap slots to be added by the user"
+ },
+ "BAT_B1_drawer_sleeve": {
+  "shells": 1,
+  "triangles": 288,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   20.0,
+   -24.0,
+   -29.5,
+   332.0,
+   24.0,
+   0.5
+  ],
+  "note": "U-pack drawer 41 x 23 inside, 312 mm long, hangs under the grip: 4+3 U-pack 290 x 38 x 20 plus contacts; bonded under the elbow and grip with 4 M3 inserts"
+ },
+ "BAT_B2_end_cap_with_latch": {
+  "shells": 2,
+  "triangles": 396,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   332.0,
+   -24.0,
+   -29.5,
+   350.0,
+   24.0,
+   0.5
+  ],
+  "note": "end cap with push latch boss; O-ring groove to be added, pressure-relief membrane in the cap"
+ },
+ "BAT_B3_contact_plate": {
+  "shells": 5,
+  "triangles": 60,
+  "nonmanifold_edges": 0,
+  "bbox_mm": [
+   18.0,
+   -20.5,
+   -26.0,
+   35.0,
+   20.5,
+   -3.0
+  ],
+  "note": "contact receptacle: NEG, PRE (22 ohm pre-charge), POS, ID blade pads (same sequence as the v4 cartridge: NEG first, POS last)"
+ },
+ "potting_volumes": {
+  "NPM_free_cm3": 86.0,
+  "NPM_alumina_hot_zone_cm3": 28.0,
+  "NPM_alumina_g": 54.0,
+  "NPM_syntactic_cm3": 58.0,
+  "NPM_syntactic_g": 43.0,
+  "elbow_grip_free_cm3": 233.0,
+  "elbow_grip_syntactic_g": 175.0
+ }
+}

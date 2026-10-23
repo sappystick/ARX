@@ -1,0 +1,104 @@
+{
+ "slope_tan": 0.3451,
+ "slope_deg": 19.04,
+ "layer_vertical_thickness_mm": 3.174,
+ "top_height_at_opening_mm": 44.5,
+ "rim_height_mm": 22.24,
+ "lod": "print",
+ "L1": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_directed_edges": 0,
+  "bbox": [
+   -103.8,
+   -111.6,
+   19.1,
+   116.5,
+   111.6,
+   44.8
+  ],
+  "shift_deg": 0.0,
+  "shift_mod_120": 0.0,
+  "post": "TX post 1"
+ },
+ "L2": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_directed_edges": 0,
+  "bbox": [
+   -107.7,
+   -115.6,
+   15.9,
+   114.8,
+   106.1,
+   41.7
+  ],
+  "shift_deg": 137.51,
+  "shift_mod_120": 17.51,
+  "post": "TX post 2"
+ },
+ "L3": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_directed_edges": 0,
+  "bbox": [
+   -113.0,
+   -116.4,
+   12.7,
+   110.1,
+   104.3,
+   38.5
+  ],
+  "shift_deg": 275.02,
+  "shift_mod_120": 35.02,
+  "post": "TX post 0"
+ },
+ "L4": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_directed_edges": 0,
+  "bbox": [
+   -116.2,
+   -113.7,
+   9.5,
+   104.8,
+   109.3,
+   35.3
+  ],
+  "shift_deg": 52.52,
+  "shift_mod_120": 52.52,
+  "post": "TX post 1"
+ },
+ "L5": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_directed_edges": 0,
+  "bbox": [
+   -115.9,
+   -108.5,
+   6.4,
+   105.4,
+   114.3,
+   32.2
+  ],
+  "shift_deg": 190.03,
+  "shift_mod_120": 70.03,
+  "post": "TX post 2"
+ },
+ "L6": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_directed_edges": 0,
+  "bbox": [
+   -112.4,
+   -103.9,
+   3.2,
+   110.9,
+   116.5,
+   29.0
+  ],
+  "shift_deg": 327.54,
+  "shift_mod_120": 87.54,
+  "post": "TX post 0"
+ }
+}

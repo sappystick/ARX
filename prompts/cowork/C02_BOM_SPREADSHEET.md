@@ -1,0 +1,2 @@
+# C02 BOM and procurement workbook
+Use the xlsx skill. Read data/results/BOM_MASTER.csv, BOM_SHAFT_YOKE.csv, printed_parts_mass.csv and the board BOMs in data/legacy. Build Outputs/BOM_PROCUREMENT.xlsx: sheets Boards, Mechanical, Printed parts (mass, material, print orientation), Shaft and yoke, Consumables (litz 53.8 m, potting, ferrite tiles 26, copper cloth, silicone gasket), with columns for quantity, unit cost (leave blank), supplier (leave blank), datasheet-verified (yes/no), ratings flagged from docs/ASSUMPTIONS.md. Formulas for totals. Do not invent prices.

@@ -1,0 +1,49 @@
+Ref,Val,Package,PosX_mm,PosY_mm,Rot,Side
+JP,Power in: VBUS VBUS GND GND,Terminal_block_1x4_P5.08mm,-7,100,0,top
+CB1,470u 50V,CP_Elec_10x10,-6.7,84,0,top
+CB2,470u 50V,CP_Elec_10x10,6.7,84,0,top
+CM1,10u 50V,C_1210_3225Metric,-9,76,0,top
+CM2,10u 50V,C_1210_3225Metric,-3,76,0,top
+CM3,10u 50V,C_1210_3225Metric,3,76,0,top
+CM4,10u 50V,C_1210_3225Metric,9,76,0,top
+JC,Controller I/F,Pin_header_2x6_P2.54mm,7,-100,0,top
+RNTC,10k NTC,R_0603_1608Metric,11,14,0,top
+U3,LM393,SOIC-8_3.9x4.9mm_P1.27mm,0,-12,0,top
+CU3,1u 25V,C_0805_2012Metric,9,-12,0,top
+U1,TC4420,SOIC-8_3.9x4.9mm_P1.27mm,0,8,0,top
+CD1,1u 25V,C_0805_2012Metric,-8,4,0,top
+CE1,100n,C_0603_1608Metric,8,4,0,top
+RIN1,100,R_0603_1608Metric,-5,-1,0,top
+DOC1,BAS16,D_SOD-123,5,-1,0,top
+RGP1,10k,R_0603_1608Metric,0,-3,0,top
+Q1A,650V SJ 95mR,TO-263-3_TabPin2,-7,34,90,top
+RGQ1A,10,R_0603_1608Metric,-7,22,0,top
+Q1B,650V SJ 95mR,TO-263-3_TabPin2,7,34,90,top
+RGQ1B,10,R_0603_1608Metric,7,22,0,top
+RS1S,10m 3W,R_2512_6332Metric,0,18,0,top
+DC1,ES3J 600V 3A,D_SMC,0,60,0,top
+CL1A,100n 630V,C_1210_3225Metric,-7,54,0,top
+CL1B,100n 630V,C_1210_3225Metric,7,54,0,top
+RCL1,external 5k 10W,SolderPad_2x_P5.08mm,0,69,0,top
+JL1,"Coil outer: DRAIN, VBUS",Terminal_block_1x2_P5.08mm,0,50,0,top
+RK1,100,R_0603_1608Metric,-8,12,0,top
+CK1,100p,C_0603_1608Metric,-8,15,0,top
+RPU1,10k,R_0603_1608Metric,-7,-18,0,top
+RF1,1k,R_0603_1608Metric,-7,-21,0,top
+U2,TC4420,SOIC-8_3.9x4.9mm_P1.27mm,0,-90,0,top
+CD2,1u 25V,C_0805_2012Metric,-9,-86,0,top
+CE2,100n,C_0603_1608Metric,9,-86,0,top
+RIN2,100,R_0603_1608Metric,-7,-96,0,top
+DOC2,BAS16,D_SOD-123,-1,-94,0,top
+RGP2,10k,R_0603_1608Metric,0,-98,0,top
+Q2A,100V 10mR,TO-263-3_TabPin2,0,-44,90,top
+RGQ2A,10,R_0603_1608Metric,-9,-36,0,top
+RS2S,10m 3W,R_2512_6332Metric,0,-31,0,top
+DC2,ES2D 200V 2A,D_SMB,0,-56,0,top
+CL2A,1u 100V,C_1210_3225Metric,0,-62,0,top
+RCL2,external 100R 5W,SolderPad_2x_P5.08mm,0,-68,0,top
+JL2,"Coil inner: DRAIN, VBUS",Terminal_block_1x2_P5.08mm,0,-78,0,top
+RK2,100,R_0603_1608Metric,-8,-26,0,top
+CK2,100p,C_0603_1608Metric,-4,-26,0,top
+RPU2,10k,R_0603_1608Metric,7,-18,0,top
+RF2,1k,R_0603_1608Metric,7,-21,0,top

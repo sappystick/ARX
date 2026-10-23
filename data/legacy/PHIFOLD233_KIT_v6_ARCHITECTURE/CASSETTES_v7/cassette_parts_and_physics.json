@@ -1,0 +1,189 @@
+{
+ "parts": {
+  "POST_TX_1_at_90deg": {
+   "tris": 476,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    -2.4,
+    51.4,
+    3.2,
+    2.4,
+    56.2,
+    47.9
+   ],
+   "note": "D5 guide post, 4 open wire channels 1.4 x 1.2 mm, rests on the RX board; length 44.7"
+  },
+  "POST_TX_2_at_210deg": {
+   "tris": 476,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    -49.0,
+    -29.3,
+    3.2,
+    -44.2,
+    -24.5,
+    47.9
+   ],
+   "note": "D5 guide post, 4 open wire channels 1.4 x 1.2 mm, rests on the RX board; length 44.7"
+  },
+  "POST_TX_3_at_330deg": {
+   "tris": 476,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    44.2,
+    -29.3,
+    3.2,
+    49.0,
+    -24.5,
+    47.9
+   ],
+   "note": "D5 guide post, 4 open wire channels 1.4 x 1.2 mm, rests on the RX board; length 44.7"
+  },
+  "POST_RX_1_at_30deg": {
+   "tris": 476,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    44.2,
+    24.5,
+    3.2,
+    49.0,
+    29.3,
+    47.9
+   ],
+   "note": "D5 guide post, 4 open wire channels 1.4 x 1.2 mm, rests on the RX board; length 44.7"
+  },
+  "POST_RX_2_at_150deg": {
+   "tris": 476,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    -49.0,
+    24.5,
+    3.2,
+    -44.2,
+    29.3,
+    47.9
+   ],
+   "note": "D5 guide post, 4 open wire channels 1.4 x 1.2 mm, rests on the RX board; length 44.7"
+  },
+  "POST_RX_3_at_270deg": {
+   "tris": 476,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    -2.4,
+    -56.2,
+    3.2,
+    2.4,
+    -51.4,
+    47.9
+   ],
+   "note": "D5 guide post, 4 open wire channels 1.4 x 1.2 mm, rests on the RX board; length 44.7"
+  },
+  "L1_vault_tube_and_roof": {
+   "tris": 1536,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    -52.0,
+    -52.0,
+    6.0,
+    52.0,
+    52.0,
+    44.5
+   ],
+   "note": "PCB housing hung under the top cassette: tube r46.5-49.5, roof with D20 gland/fill port; fuse to L1; inner height 35.3 mm"
+  },
+  "V2_vault_floor_plate": {
+   "tris": 768,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    -49.5,
+    -49.5,
+    3.4,
+    49.5,
+    49.5,
+    6.0
+   ],
+   "note": "floor seat for the ferrite/nanocrystalline bottom plate"
+  },
+  "L7_RX_tray_cassette": {
+   "tris": 1536,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    -116.5,
+    -116.5,
+    0.0,
+    116.5,
+    116.5,
+    3.2
+   ],
+   "note": "RX tray: 0.8 mm floor, PCB recess D229 x 2.4 mm for the SB1R receive board (rim wall 2 mm); open back; no metal in the tray"
+  }
+ },
+ "physics": {
+  "stack": {
+   "slope_deg": 19.04,
+   "layer_thickness_vertical_mm": 3.17,
+   "rim_height_mm": 22.2,
+   "opening_top_mm": 44.5,
+   "post_length_mm": 44.7
+  },
+  "wire_per_layer_m": [
+   6.38,
+   6.38,
+   6.38,
+   6.38,
+   6.38,
+   6.38
+  ],
+  "total_wire_m": 38.3,
+  "Bz_uT_per_A_single_layer_at_100_200_300mm": [
+   [
+    13.74,
+    3.6,
+    1.36
+   ],
+   [
+    15.19,
+    3.87,
+    1.43
+   ],
+   [
+    17.73,
+    4.33,
+    1.56
+   ]
+  ],
+  "all_six_in_series_Bz_uT_per_A": [
+   93.93,
+   23.72,
+   8.74
+  ],
+  "per_wire_vs_current_band": [
+   0.92,
+   0.88,
+   0.88
+  ],
+  "single_layer_vs_all_copper_vs_current_band": [
+   0.17,
+   0.16,
+   0.16
+  ],
+  "self_inductance_uH_per_layer": [
+   43.2,
+   43.2,
+   43.2,
+   43.2,
+   43.2,
+   43.2
+  ],
+  "coupling_k_adjacent": [
+   0.71,
+   0.71,
+   0.71,
+   0.71,
+   0.71
+  ],
+  "coupling_k_L1_L6": 0.51,
+  "all_six_series_L_uH": 1077.0,
+  "all_six_parallel_L_uH": 29.6
+ }
+}

@@ -1,0 +1,210 @@
+{
+ "region": [
+  -100.0,
+  -40.0,
+  -16.0,
+  20.0,
+  28.0,
+  47.0
+ ],
+ "voxel_mm": 0.2,
+ "pairs": [
+  {
+   "a": "hub",
+   "b": "roof",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 0.2
+  },
+  {
+   "a": "hub",
+   "b": "hood_carrier",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 0.63
+  },
+  {
+   "a": "hub",
+   "b": "cradle",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 1.22
+  },
+  {
+   "a": "hub",
+   "b": "bridge",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 0.4
+  },
+  {
+   "a": "hub",
+   "b": "bridge_lid",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 0.4
+  },
+  {
+   "a": "hub",
+   "b": "cap",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 3.4
+  },
+  {
+   "a": "hub",
+   "b": "skirt",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": null
+  },
+  {
+   "a": "roof",
+   "b": "hood_carrier",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 8.81
+  },
+  {
+   "a": "roof",
+   "b": "cradle",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 3.16
+  },
+  {
+   "a": "roof",
+   "b": "bridge",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 1.0
+  },
+  {
+   "a": "roof",
+   "b": "bridge_lid",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 0.4
+  },
+  {
+   "a": "roof",
+   "b": "cap",
+   "overlap_mm3": 69.98,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": null
+  },
+  {
+   "a": "roof",
+   "b": "skirt",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": null
+  },
+  {
+   "a": "hood_carrier",
+   "b": "cradle",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 1.2
+  },
+  {
+   "a": "hood_carrier",
+   "b": "bridge",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 0.6
+  },
+  {
+   "a": "hood_carrier",
+   "b": "bridge_lid",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 7.6
+  },
+  {
+   "a": "hood_carrier",
+   "b": "cap",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 11.79
+  },
+  {
+   "a": "hood_carrier",
+   "b": "skirt",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": null
+  },
+  {
+   "a": "cradle",
+   "b": "bridge",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 0.2
+  },
+  {
+   "a": "cradle",
+   "b": "bridge_lid",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 1.4
+  },
+  {
+   "a": "cradle",
+   "b": "cap",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 5.64
+  },
+  {
+   "a": "cradle",
+   "b": "skirt",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": null
+  },
+  {
+   "a": "bridge",
+   "b": "bridge_lid",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 0.2
+  },
+  {
+   "a": "bridge",
+   "b": "cap",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 3.88
+  },
+  {
+   "a": "bridge",
+   "b": "skirt",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": null
+  },
+  {
+   "a": "bridge_lid",
+   "b": "cap",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": 2.63
+  },
+  {
+   "a": "bridge_lid",
+   "b": "skirt",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": null
+  },
+  {
+   "a": "cap",
+   "b": "skirt",
+   "overlap_mm3": 0.0,
+   "overlap_core_mm3": 0.0,
+   "min_gap_mm": null
+  }
+ ],
+ "interferences": []
+}

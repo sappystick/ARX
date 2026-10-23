@@ -1,0 +1,10 @@
+(version 1)
+(rule "HV nets 1.0 mm"
+  (condition "A.NetName == 'COIL_A' || A.NetName == 'COIL_B' || A.NetName == 'DM1' || A.NetName == 'DM2' || A.NetName == 'MONO_IN'")
+  (constraint clearance (min 1.0mm)))
+(rule "power track width"
+  (condition "A.NetName == 'VBUS' || A.NetName == 'VBUS_IN' || A.NetName == '+5V'")
+  (constraint track_width (min 0.6mm)))
+(rule "min track / space"
+  (constraint track_width (min 0.127mm))
+  (constraint clearance (min 0.127mm)))

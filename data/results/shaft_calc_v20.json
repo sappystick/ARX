@@ -1,0 +1,262 @@
+{
+ "cavity": {
+  "dual_envelope_mm": [
+   17.4,
+   17.4
+  ],
+  "dual_diagonal_mm": 24.6,
+  "min_bore_dual_mm": 25.6,
+  "triple_envelope_mm": [
+   17.4,
+   25.6
+  ],
+  "triple_diagonal_mm": 31.0,
+  "min_bore_triple_mm": 32.0,
+  "third_cavity_verdict": "not needed: the only heavy conductors (20 A TX pair) stay in the 0.25 m between the head and the neck module; a 20 A silicone pair cannot bend round a 3.5 mm trolley loop (min radius about 15 mm), so it must never ride the telescoping part"
+ },
+ "tube_grades": [
+  {
+   "nesting": "small_at_hand",
+   "telescoping_tubes": "E-glass/epoxy (GFRP)",
+   "lower_fixed_tube": "E-glass/epoxy (GFRP)",
+   "stiffness_N_per_mm": 0.58,
+   "sway_Hz": 2.5,
+   "deflection_mm_at_2g": 73.8
+  },
+  {
+   "nesting": "small_at_hand",
+   "telescoping_tubes": "carbon/epoxy (CFRP)",
+   "lower_fixed_tube": "E-glass/epoxy (GFRP)",
+   "stiffness_N_per_mm": 1.45,
+   "sway_Hz": 3.9,
+   "deflection_mm_at_2g": 29.8
+  },
+  {
+   "nesting": "small_at_hand",
+   "telescoping_tubes": "aluminium 6061-T6",
+   "lower_fixed_tube": "E-glass/epoxy (GFRP)",
+   "stiffness_N_per_mm": 1.13,
+   "sway_Hz": 3.4,
+   "deflection_mm_at_2g": 38.3
+  },
+  {
+   "nesting": "big_at_hand",
+   "telescoping_tubes": "E-glass/epoxy (GFRP)",
+   "lower_fixed_tube": "E-glass/epoxy (GFRP)",
+   "stiffness_N_per_mm": 0.76,
+   "sway_Hz": 2.8,
+   "deflection_mm_at_2g": 56.8
+  },
+  {
+   "nesting": "big_at_hand",
+   "telescoping_tubes": "carbon/epoxy (CFRP)",
+   "lower_fixed_tube": "E-glass/epoxy (GFRP)",
+   "stiffness_N_per_mm": 1.86,
+   "sway_Hz": 4.4,
+   "deflection_mm_at_2g": 23.1
+  },
+  {
+   "nesting": "big_at_hand",
+   "telescoping_tubes": "aluminium 6061-T6",
+   "lower_fixed_tube": "E-glass/epoxy (GFRP)",
+   "stiffness_N_per_mm": 1.45,
+   "sway_Hz": 3.9,
+   "deflection_mm_at_2g": 29.7
+  }
+ ],
+ "tube_masses_g": {
+  "telescoping_pair_CFRP": 179,
+  "telescoping_pair_GFRP": 218,
+  "lower_fixed_GFRP_0p40m": 109
+ },
+ "tubes": [
+  {
+   "name": "tube A (hand end, biggest)",
+   "OD": 33.0,
+   "ID": 30.0,
+   "length_m": 0.45
+  },
+  {
+   "name": "tube B (head end, slides in A)",
+   "OD": 28.5,
+   "ID": 26.0,
+   "length_m": 0.45
+  },
+  {
+   "name": "lower fixed tube (neck module to hinge)",
+   "OD": 32.0,
+   "ID": 29.0,
+   "length_m": 0.4
+  }
+ ],
+ "telescoping": {
+  "collapsed_tube_length_m": 0.45,
+  "extended_tube_length_m": 0.82,
+  "stroke_m": 0.37,
+  "trolley_travel_m": 0.185,
+  "min_overlap_m": 0.08,
+  "radial_clearance_B_in_A_mm": 0.75,
+  "hinge_to_elbow_socket_collapsed_m": 0.98,
+  "hinge_to_elbow_socket_extended_m": 1.35,
+  "ribbon_loop_radius_mm": 3.5,
+  "cassette_track_mm": 450,
+  "ribbon_length_each_m": 1.72,
+  "ribbon_note": "path from the neck-module tunnel to the elbow + the stroke as folded slack on the trolley"
+ },
+ "field_along_shaft": {
+  "reference_target_field_uT_per_A_at_200mm": 6.1,
+  "points": [
+   {
+    "where": "hinge",
+    "axial_m": 0.0,
+    "B_uT_per_A": 13.84,
+    "percent_of_200mm_target_field": 226.6
+   },
+   {
+    "where": "0.15 m",
+    "axial_m": 0.15,
+    "B_uT_per_A": 1.99,
+    "percent_of_200mm_target_field": 32.5
+   },
+   {
+    "where": "0.30 m",
+    "axial_m": 0.3,
+    "B_uT_per_A": 0.63,
+    "percent_of_200mm_target_field": 10.3
+   },
+   {
+    "where": "neck module bottom (chosen)",
+    "axial_m": 0.4,
+    "B_uT_per_A": 0.35,
+    "percent_of_200mm_target_field": 5.8
+   },
+   {
+    "where": "neck module top",
+    "axial_m": 0.484,
+    "B_uT_per_A": 0.23,
+    "percent_of_200mm_target_field": 3.8
+   },
+   {
+    "where": "tube B",
+    "axial_m": 0.7,
+    "B_uT_per_A": 0.1,
+    "percent_of_200mm_target_field": 1.6
+   },
+   {
+    "where": "tube A",
+    "axial_m": 0.95,
+    "B_uT_per_A": 0.05,
+    "percent_of_200mm_target_field": 0.8
+   },
+   {
+    "where": "elbow",
+    "axial_m": 1.25,
+    "B_uT_per_A": 0.02,
+    "percent_of_200mm_target_field": 0.4
+   }
+  ]
+ },
+ "tx_to_ribbon": {
+  "lead_length_m": 0.25,
+  "added_inductance_uH_two_leads": 0.25,
+  "pct_of_coil": 0.46,
+  "induced_emf_V_worst_untwisted": 0.019,
+  "note": "a 1 mm ribbon conductor pair next to an untwisted TX pair 10 mm away; twisting reduces it further"
+ },
+ "neck_module_thermal": {
+  "dissipation_W": 5.9,
+  "earlier_rise_K_for_6p8_W": 18.5,
+  "scaled_rise_K": 16.0,
+  "note": "clamp 4.32 W (20 A, 400 Hz, 54 uH) + FET/shunt 1.1 + damping 0.5, scaled from the earlier module study"
+ },
+ "head_mass_kg": {
+  "total": 2.22,
+  "parts": {
+   "six formers": 786,
+   "hub": 125,
+   "base plate": 49,
+   "cap": 14,
+   "hood carrier": 58,
+   "ferrite tiles": 278,
+   "skirt": 61,
+   "cups": 23,
+   "pins": 1,
+   "receive board SB1R (est)": 200,
+   "vault boards (est)": 83,
+   "litz copper + insulation (est)": 330,
+   "potting and gap fill (est)": 216
+  },
+  "note": "'est' = estimate, not weighed"
+ },
+ "balance": {
+  "baseline_kg_m": 2.88,
+  "head_horizontal_distance_m": 0.97,
+  "battery_horizontal_under_forearm": 2.88,
+  "battery_at_45deg": 2.92,
+  "option_steeper_shaft_55deg": 2.47,
+  "option_light_formers_minus_0p3kg": 2.59,
+  "option_no_hood_minus_0p28kg": 2.61,
+  "option_battery_on_rear_boom_0p40m": 2.79,
+  "option_all_together": 1.89,
+  "typical_detector_kg_m": "1.3-1.7"
+ },
+ "ergonomics": {
+  "rows": [
+   {
+    "user_height_m": 1.55,
+    "grip_height_m": 0.84,
+    "shaft_angle_deg": 45,
+    "axial_hinge_to_elbow_socket_m": 1.08
+   },
+   {
+    "user_height_m": 1.55,
+    "grip_height_m": 0.84,
+    "shaft_angle_deg": 50,
+    "axial_hinge_to_elbow_socket_m": 1.0
+   },
+   {
+    "user_height_m": 1.75,
+    "grip_height_m": 0.95,
+    "shaft_angle_deg": 45,
+    "axial_hinge_to_elbow_socket_m": 1.24
+   },
+   {
+    "user_height_m": 1.75,
+    "grip_height_m": 0.95,
+    "shaft_angle_deg": 50,
+    "axial_hinge_to_elbow_socket_m": 1.14
+   },
+   {
+    "user_height_m": 1.95,
+    "grip_height_m": 1.06,
+    "shaft_angle_deg": 45,
+    "axial_hinge_to_elbow_socket_m": 1.39
+   },
+   {
+    "user_height_m": 1.95,
+    "grip_height_m": 1.06,
+    "shaft_angle_deg": 50,
+    "axial_hinge_to_elbow_socket_m": 1.28
+   }
+  ],
+  "telescope_covers_m": [
+   0.98,
+   1.35
+  ]
+ },
+ "fold": {
+  "lower_tube_socket_OD_mm": 39.6,
+  "hinge_height_mm": 76,
+  "cap_top_mm": 47.1,
+  "clearance_over_cap_mm": 9.1
+ },
+ "elbow": {
+  "bend_deg": 47,
+  "note": "the shaft socket is tilted 43 deg off the elbow axis so the grip bar is horizontal when the shaft is at 47 deg; the old 90 deg elbow assumed a vertical shaft",
+  "battery_drop_below_grip_mm": {
+   "0 deg": 0,
+   "20 deg": 107,
+   "45 deg": 221
+  }
+ }
+}

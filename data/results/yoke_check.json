@@ -1,0 +1,443 @@
+{
+ "checks": [
+  {
+   "check": "open edges BUSHING_IN_TUBE_A.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges BUSHING_ON_TUBE_B.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges HEEL_SADDLE_TOWER.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges HINGE_ARM.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges TELESCOPE_LOCK_COLLAR.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges UMBILICAL_BRIDGE.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges UMBILICAL_BRIDGE_LID.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges BAT_B1_drawer_sleeve.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges BAT_B2_end_cap_with_latch.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges BAT_B3_contact_plate.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges CAS_R1_cassette_segment_150.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges CAS_R2_trolley.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges CAS_R3_end_anchor.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges ELB_E1_elbow_and_grip.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges ELB_E2_grip_endcap.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges ELB_E3_trigger.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges ELB_E4_joystick_boss.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges ELB_E5_forearm_cuff.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges NPM_N1_body_with_tunnel.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges NPM_N2_lid_with_fill_ports.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "open edges NPM_N3_hot_zone_dam.stl",
+   "value": 0.0,
+   "min": 0,
+   "max": 0,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "saddle inner radius vs skirt outer (epoxy gap)",
+   "value": 0.4,
+   "min": 0.3,
+   "max": 0.6,
+   "result": "PASS",
+   "note": "skirt r119.0, saddle r119.4"
+  },
+  {
+   "check": "bridge floor vs hood frame tops",
+   "value": 0.3,
+   "min": 0.2,
+   "max": null,
+   "result": "PASS",
+   "note": "floor 33.70, hood top 33.40"
+  },
+  {
+   "check": "bridge floor vs skirt top",
+   "value": 0.3,
+   "min": 0.2,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "bridge start radius vs hub collar r52",
+   "value": 0.2,
+   "min": 0.0,
+   "max": 0.5,
+   "result": "PASS",
+   "note": "bridge begins at x'=52.2"
+  },
+  {
+   "check": "hub exit window width at r47 (mesh)",
+   "value": 14.1,
+   "min": 13.0,
+   "max": null,
+   "result": "PASS",
+   "note": "open from -8.6 to 8.6 deg (heel frame)"
+  },
+  {
+   "check": "window height vs bridge interior height (34.4-40.8)",
+   "value": 6.2,
+   "min": 6.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "bridge interior width vs the 12 mm ribbon",
+   "value": 14.0,
+   "min": 13.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "tower window width (14) vs bridge interior (14)",
+   "value": 0.0,
+   "min": 0.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "sweep 20-180 deg: smallest clearance to the head profile",
+   "value": 12.9,
+   "min": 3.0,
+   "max": null,
+   "result": "PASS",
+   "note": "head profile: cap top 47.1 inside r52, hood/skirt 33.4 inside r119"
+  },
+  {
+   "check": "sweep 25-180 deg: smallest clearance to the tower back wall",
+   "value": 2.0,
+   "min": 2.0,
+   "max": null,
+   "result": "PASS",
+   "note": "angles below 25 deg are excluded (stop): [(20, 60.0, 6.2)]"
+  },
+  {
+   "check": "hinge: arm hub half-width + serration vs lug face",
+   "value": 0.1,
+   "min": 0.05,
+   "max": null,
+   "result": "PASS",
+   "note": "ribs interleave with 5 deg offset; rib gap checked below"
+  },
+  {
+   "check": "serration interleave gap (inner radius)",
+   "value": 0.316,
+   "min": 0.25,
+   "max": null,
+   "result": "PASS",
+   "note": "rib width 0.6, offset 5 deg"
+  },
+  {
+   "check": "fold position: tube bottom vs cap top",
+   "value": 9.1,
+   "min": 5.0,
+   "max": null,
+   "result": "PASS",
+   "note": "socket OD 39.6 at hinge height 76"
+  }
+ ],
+ "sweep": [
+  [
+   20,
+   60.0,
+   6.2
+  ],
+  [
+   25,
+   60.0,
+   8.0
+  ],
+  [
+   30,
+   60.0,
+   9.9
+  ],
+  [
+   35,
+   60.0,
+   11.6
+  ],
+  [
+   40,
+   60.0,
+   11.6
+  ],
+  [
+   45,
+   60.0,
+   11.6
+  ],
+  [
+   50,
+   60.0,
+   11.6
+  ],
+  [
+   55,
+   60.0,
+   11.6
+  ],
+  [
+   60,
+   60.0,
+   11.6
+  ],
+  [
+   65,
+   60.0,
+   11.6
+  ],
+  [
+   70,
+   60.0,
+   11.6
+  ],
+  [
+   75,
+   60.0,
+   11.6
+  ],
+  [
+   80,
+   60.0,
+   11.6
+  ],
+  [
+   85,
+   60.0,
+   11.6
+  ],
+  [
+   90,
+   60.0,
+   11.6
+  ],
+  [
+   95,
+   60.0,
+   11.6
+  ],
+  [
+   100,
+   60.0,
+   11.6
+  ],
+  [
+   105,
+   60.0,
+   11.6
+  ],
+  [
+   110,
+   60.0,
+   11.6
+  ],
+  [
+   115,
+   60.0,
+   11.6
+  ],
+  [
+   120,
+   60.0,
+   11.6
+  ],
+  [
+   125,
+   60.0,
+   11.6
+  ],
+  [
+   130,
+   60.0,
+   11.6
+  ],
+  [
+   135,
+   56.9,
+   11.6
+  ],
+  [
+   140,
+   53.1,
+   11.6
+  ],
+  [
+   145,
+   49.3,
+   11.6
+  ],
+  [
+   150,
+   45.5,
+   11.6
+  ],
+  [
+   155,
+   41.6,
+   11.6
+  ],
+  [
+   160,
+   37.7,
+   11.6
+  ],
+  [
+   165,
+   33.8,
+   11.6
+  ],
+  [
+   170,
+   30.0,
+   8.9
+  ],
+  [
+   175,
+   22.5,
+   5.2
+  ],
+  [
+   180,
+   12.9,
+   2.0
+  ]
+ ]
+}

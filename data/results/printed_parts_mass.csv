@@ -1,0 +1,16 @@
+part,material,qty,volume_cm3,mass_g_100pct_infill,note
+FORMER_L1,PETG,1,104.1,132,exact (single solid)
+FORMER_L2,PETG,1,103.5,131,exact (single solid)
+FORMER_L3,PETG,1,103.5,131,exact (single solid)
+FORMER_L4,PETG,1,103.5,131,exact (single solid)
+FORMER_L5,PETG,1,103.5,131,exact (single solid)
+FORMER_L6,PETG,1,103.6,132,exact (single solid)
+CORE_PCB_CYLINDER_v3_vault,PETG,1,98.3,125,upper bound (overlapping shells counted twice)
+BASE_PLATE_RX_CASSETTE_v2,PETG,1,38.7,49,upper bound (overlapping shells counted twice)
+HUB_CAP_HTA_v3_vault,PETG,1,11.1,14,upper bound (overlapping shells counted twice)
+LOTUS_HOOD_CARRIER_v2_spokes,PETG,1,45.5,58,upper bound (overlapping shells counted twice)
+VAULT_CUP_A_ANALOG,PETG,1,5.8,7,upper bound (overlapping shells counted twice)
+VAULT_CUP_B_ISOLATION,PETG,1,5.6,7,upper bound (overlapping shells counted twice)
+VAULT_CUP_CD_CONTROL_DISPLAY,PETG,1,7.2,9,upper bound (overlapping shells counted twice)
+HEAD_SKIRT,PETG,1,48.3,61,upper bound (overlapping shells counted twice)
+15 stepped pins,PETG,15,0.9,1,exact

@@ -1,0 +1,12 @@
+piece,size_mm,qty,note
+liner panel 1,8.9 x 23.0,1,"nanocrystalline ribbon (stack to 0.12-0.25 mm) or mesh-backed foil; z10-33; no ring, ribs and the spine channel are the slits"
+liner panel 2,20.8 x 23.0,1,"nanocrystalline ribbon (stack to 0.12-0.25 mm) or mesh-backed foil; z10-33; no ring, ribs and the spine channel are the slits"
+liner panel 3,5.5 x 23.0,1,"nanocrystalline ribbon (stack to 0.12-0.25 mm) or mesh-backed foil; z10-33; no ring, ribs and the spine channel are the slits"
+liner panel 4,7.3 x 23.0,1,"nanocrystalline ribbon (stack to 0.12-0.25 mm) or mesh-backed foil; z10-33; no ring, ribs and the spine channel are the slits"
+liner panel 5,74.0 x 23.0,1,"nanocrystalline ribbon (stack to 0.12-0.25 mm) or mesh-backed foil; z10-33; no ring, ribs and the spine channel are the slits"
+liner panel 6,8.9 x 23.0,1,"nanocrystalline ribbon (stack to 0.12-0.25 mm) or mesh-backed foil; z10-33; no ring, ribs and the spine channel are the slits"
+liner panel 7,31.9 x 23.0,1,"nanocrystalline ribbon (stack to 0.12-0.25 mm) or mesh-backed foil; z10-33; no ring, ribs and the spine channel are the slits"
+liner panel 8,31.9 x 23.0,1,"nanocrystalline ribbon (stack to 0.12-0.25 mm) or mesh-backed foil; z10-33; no ring, ribs and the spine channel are the slits"
+liner panel 9,18.8 x 23.0,1,"nanocrystalline ribbon (stack to 0.12-0.25 mm) or mesh-backed foil; z10-33; no ring, ribs and the spine channel are the slits"
+mesh septum cloth,D64,1,copper cloth bonded over the D62 window of the septum frame
+roof gasket,"D98.4 / D91.2 ring, 0.5 mm",1,silicone sheet; cut round the 8 screw posts: they sit inside r45.5

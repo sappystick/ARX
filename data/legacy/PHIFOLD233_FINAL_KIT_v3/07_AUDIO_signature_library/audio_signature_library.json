@@ -1,0 +1,122 @@
+[
+ {
+  "file": "01_scan_gold_1g_shallow.wav",
+  "class_": "small gold or pull-tab zone",
+  "tau_us": 10.0,
+  "snr": 80,
+  "depth_mm": 60,
+  "trigger": false,
+  "dial": "ALL-METAL",
+  "sound": "gold 383 Hz, amp 0.44"
+ },
+ {
+  "file": "02_scan_gold_10g_deep.wav",
+  "class_": "medium gold",
+  "tau_us": 48.0,
+  "snr": 9,
+  "depth_mm": 300,
+  "trigger": false,
+  "dial": "ALL-METAL",
+  "sound": "gold 559 Hz, amp 0.27"
+ },
+ {
+  "file": "03_scan_silver_coin.wav",
+  "class_": "large gold / coin",
+  "tau_us": 245.0,
+  "snr": 60,
+  "depth_mm": 120,
+  "trigger": false,
+  "dial": "ALL-METAL",
+  "sound": "bell 828 Hz, amp 0.42"
+ },
+ {
+  "file": "04_scan_foil.wav",
+  "class_": "foil / tiny",
+  "tau_us": 2.3,
+  "snr": 40,
+  "depth_mm": 50,
+  "trigger": false,
+  "dial": "ALL-METAL",
+  "sound": "chirp 269 Hz, amp 0.39"
+ },
+ {
+  "file": "05_scan_iron_nail.wav",
+  "class_": "iron",
+  "tau_us": 30.0,
+  "snr": 50,
+  "depth_mm": 80,
+  "trigger": false,
+  "dial": "ALL-METAL",
+  "sound": "iron 110 Hz, amp 0.41"
+ },
+ {
+  "file": "06_scan_nothing_silent.wav",
+  "class_": "medium gold",
+  "tau_us": 48.0,
+  "snr": 2,
+  "depth_mm": 400,
+  "trigger": false,
+  "dial": "ALL-METAL",
+  "sound": "silent (below threshold)"
+ },
+ {
+  "file": "07_TRIGGER_allmetal_gold_10g_deep.wav",
+  "class_": "medium gold",
+  "tau_us": 48.0,
+  "snr": 22.5,
+  "depth_mm": 300,
+  "trigger": true,
+  "dial": "ALL-METAL",
+  "sound": "gold 559 Hz, amp 0.96"
+ },
+ {
+  "file": "08_TRIGGER_allmetal_pulltab.wav",
+  "class_": "small gold or pull-tab zone",
+  "tau_us": 14.0,
+  "snr": 70,
+  "depth_mm": 80,
+  "trigger": true,
+  "dial": "ALL-METAL",
+  "sound": "gold 415 Hz, amp 1.00"
+ },
+ {
+  "file": "09_TRIGGER_GOLD_gold_10g.wav",
+  "class_": "medium gold",
+  "tau_us": 48.0,
+  "snr": 25,
+  "depth_mm": 250,
+  "trigger": true,
+  "dial": "GOLD",
+  "sound": "gold_chime 559 Hz, amp 0.98"
+ },
+ {
+  "file": "10_TRIGGER_GOLD_iron_muted.wav",
+  "class_": "iron",
+  "tau_us": 30.0,
+  "snr": 50,
+  "depth_mm": 80,
+  "trigger": true,
+  "dial": "GOLD",
+  "sound": "muted by GOLD mode"
+ },
+ {
+  "file": "11_TRIGGER_GOLD_foil_muted.wav",
+  "class_": "foil / tiny",
+  "tau_us": 2.3,
+  "snr": 40,
+  "depth_mm": 50,
+  "trigger": true,
+  "dial": "GOLD",
+  "sound": "muted by GOLD mode"
+ },
+ {
+  "file": "12_TRIGGER_GOLD_pulltab_STILL_SOUNDS.wav",
+  "class_": "small gold or pull-tab zone",
+  "tau_us": 14.0,
+  "snr": 70,
+  "depth_mm": 80,
+  "trigger": true,
+  "dial": "GOLD",
+  "sound": "gold_chime 415 Hz, amp 1.00"
+ }
+]

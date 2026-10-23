@@ -1,0 +1,4 @@
+*.gbr text
+*.drl text
+*.png binary
+*.stl binary

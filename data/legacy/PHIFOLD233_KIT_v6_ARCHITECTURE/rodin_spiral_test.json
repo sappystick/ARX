@@ -1,0 +1,43 @@
+{
+ "z=100mm": {
+  "per_section_Bz_uT_per_A": [
+   18.5,
+   18.5,
+   18.5
+  ],
+  "per_section_horizontal_over_vertical_pct": [
+   0.1,
+   0.1,
+   0.1
+  ],
+  "all_three_Bz_uT_per_A": 55.49
+ },
+ "z=200mm": {
+  "per_section_Bz_uT_per_A": [
+   4.81,
+   4.81,
+   4.81
+  ],
+  "per_section_horizontal_over_vertical_pct": [
+   0.1,
+   0.1,
+   0.1
+  ],
+  "all_three_Bz_uT_per_A": 14.44
+ },
+ "z=300mm": {
+  "per_section_Bz_uT_per_A": [
+   1.79,
+   1.79,
+   1.79
+  ],
+  "per_section_horizontal_over_vertical_pct": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "all_three_Bz_uT_per_A": 5.36
+ },
+ "literal mirror (circulation reversed) Bz uT/A at 200mm": 0.0,
+ "wire_per_arm_m": 7.31
+}

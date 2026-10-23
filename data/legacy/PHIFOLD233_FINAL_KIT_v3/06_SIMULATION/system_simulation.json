@@ -1,0 +1,259 @@
+{
+ "field": {
+  "normal": {
+   "Bz_uT": [
+    674.18,
+    310.73,
+    152.13,
+    81.45,
+    29.74,
+    13.68
+   ],
+   "Bxy_rotating_uT": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "precession_half_angle_deg": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "boost": {
+   "Bz_uT": [
+    1685.46,
+    776.82,
+    380.31,
+    203.64,
+    74.34,
+    34.19
+   ],
+   "Bxy_rotating_uT": [
+    72.11,
+    19.1,
+    6.14,
+    2.4,
+    0.56,
+    0.19
+   ],
+   "precession_half_angle_deg": [
+    2.4,
+    1.4,
+    0.9,
+    0.7,
+    0.4,
+    0.3
+   ]
+  },
+  "depth_mm": [
+   50.0,
+   100.0,
+   150.0,
+   200.0,
+   300.0,
+   400.0
+  ]
+ },
+ "detection_depth_mm": {
+  "gold 0.1 g": {
+   "mono normal": 120,
+   "mono normal moderate": 110,
+   "mono boost": 150,
+   "mono boost moderate": 150,
+   "grad normal": 40,
+   "grad normal moderate": 40,
+   "grad boost": 50,
+   "grad boost moderate": 50
+  },
+  "gold 1 g": {
+   "mono normal": 250,
+   "mono normal moderate": 240,
+   "mono boost": 300,
+   "mono boost moderate": 290,
+   "grad normal": 90,
+   "grad normal moderate": 80,
+   "grad boost": 100,
+   "grad boost moderate": 100
+  },
+  "gold 10 g": {
+   "mono normal": 350,
+   "mono normal moderate": 350,
+   "mono boost": 420,
+   "mono boost moderate": 410,
+   "grad normal": 120,
+   "grad normal moderate": 120,
+   "grad boost": 140,
+   "grad boost moderate": 140
+  },
+  "gold 50 g": {
+   "mono normal": 440,
+   "mono normal moderate": 430,
+   "mono boost": 520,
+   "mono boost moderate": 510,
+   "grad normal": 150,
+   "grad normal moderate": 150,
+   "grad boost": 170,
+   "grad boost moderate": 170
+  },
+  "aluminium foil": {
+   "mono normal": 270,
+   "mono normal moderate": 260,
+   "mono boost": 320,
+   "mono boost moderate": 310,
+   "grad normal": 90,
+   "grad normal moderate": 90,
+   "grad boost": 110,
+   "grad boost moderate": 110
+  },
+  "pull-tab": {
+   "mono normal": 340,
+   "mono normal moderate": 330,
+   "mono boost": 400,
+   "mono boost moderate": 390,
+   "grad normal": 120,
+   "grad normal moderate": 110,
+   "grad boost": 140,
+   "grad boost moderate": 130
+  },
+  "silver coin": {
+   "mono normal": 400,
+   "mono normal moderate": 400,
+   "mono boost": 480,
+   "mono boost moderate": 470,
+   "grad normal": 140,
+   "grad normal moderate": 140,
+   "grad boost": 160,
+   "grad boost moderate": 160
+  },
+  "iron nail": {
+   "mono normal": 260,
+   "mono normal moderate": 250,
+   "mono boost": 310,
+   "mono boost moderate": 310,
+   "grad normal": 90,
+   "grad normal moderate": 90,
+   "grad boost": 110,
+   "grad boost moderate": 110
+  }
+ },
+ "ground_balance_holes_us": {
+  "pair 10/20 us": 14.4,
+  "pair 40/80 us": 57.7
+ },
+ "classifier_confusion": {
+  "gold 0.1 g": {
+   "iron": 2,
+   "foil / tiny": 18,
+   "small gold or pull-tab zone": 3,
+   "medium gold": 0,
+   "large gold / coin": 1,
+   "not detected": 96
+  },
+  "gold 1 g": {
+   "iron": 7,
+   "foil / tiny": 1,
+   "small gold or pull-tab zone": 81,
+   "medium gold": 0,
+   "large gold / coin": 0,
+   "not detected": 31
+  },
+  "gold 10 g": {
+   "iron": 0,
+   "foil / tiny": 0,
+   "small gold or pull-tab zone": 0,
+   "medium gold": 119,
+   "large gold / coin": 0,
+   "not detected": 1
+  },
+  "gold 50 g": {
+   "iron": 0,
+   "foil / tiny": 0,
+   "small gold or pull-tab zone": 0,
+   "medium gold": 2,
+   "large gold / coin": 118,
+   "not detected": 0
+  },
+  "aluminium foil": {
+   "iron": 8,
+   "foil / tiny": 86,
+   "small gold or pull-tab zone": 2,
+   "medium gold": 0,
+   "large gold / coin": 0,
+   "not detected": 24
+  },
+  "pull-tab": {
+   "iron": 2,
+   "foil / tiny": 0,
+   "small gold or pull-tab zone": 112,
+   "medium gold": 0,
+   "large gold / coin": 0,
+   "not detected": 6
+  },
+  "silver coin": {
+   "iron": 0,
+   "foil / tiny": 0,
+   "small gold or pull-tab zone": 0,
+   "medium gold": 0,
+   "large gold / coin": 120,
+   "not detected": 0
+  },
+  "iron nail": {
+   "iron": 72,
+   "foil / tiny": 3,
+   "small gold or pull-tab zone": 0,
+   "medium gold": 0,
+   "large gold / coin": 0,
+   "not detected": 45
+  }
+ },
+ "gold_mode_sound_pct": {
+  "gold 0.1 g": 3,
+  "gold 1 g": 68,
+  "gold 10 g": 99,
+  "gold 50 g": 100,
+  "aluminium foil": 2,
+  "pull-tab": 93,
+  "silver coin": 100,
+  "iron nail": 0
+ },
+ "depth_estimate_mean_abs_error_mm": 17.6,
+ "power": {
+  "normal": {
+   "I_peak_A": 8.0,
+   "ramp_us": 34.2,
+   "pulse_energy_mJ": 3.35,
+   "copper_W": 0.39,
+   "tx_W": 1.06,
+   "xy_W": 0.0,
+   "system_W": 2.66,
+   "hours_on_4S1P_50Wh": 18.8,
+   "hours_on_4S2P_100Wh": 37.6,
+   "R_xy_ohm": 3.93
+  },
+  "boost": {
+   "I_peak_A": 20.0,
+   "ramp_us": 85.5,
+   "pulse_energy_mJ": 20.94,
+   "copper_W": 3.02,
+   "tx_W": 7.2,
+   "xy_W": 3.93,
+   "system_W": 12.73,
+   "hours_on_4S1P_50Wh": 3.9,
+   "hours_on_4S2P_100Wh": 7.9,
+   "R_xy_ohm": 3.93
+  }
+ },
+ "notes": [
+  "Target signals use an equivalent conducting-sphere model; foil and pull-tabs are flat in reality.",
+  "Ferrous flag uses the rotating-field (5 kHz) in-phase sign; nail model is empirical.",
+  "Noise floor 1 uV per gate; residual ground after balancing 2 %.",
+  "Pull-tabs overlap small gold in decay time - GOLD mode cannot reject them by physics alone."
+ ]
+}

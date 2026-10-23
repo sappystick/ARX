@@ -1,0 +1,12 @@
+{
+ "spec": {
+  "board": "D90 x 1.6, 4 layers (F.Cu, In1, In2, B.Cu), trace 0.5, via 0.3/0.6, 66 NPTH 1.7 (light pipes), centre NPTH 8.0, 2 PTH pads 0.8/1.6",
+  "coil": "2 x 1.95 turns, r35.5-43.0, F.Cu inward then In1 outward (same sense, 3.9 turns total)"
+ },
+ "L1_end_radius": 35.5,
+ "B_azimuth_deg": 298.8,
+ "min_dist_coil_to_pixel_hole_mm": 1.63,
+ "min_dist_B_route_to_pixel_hole_mm": 2.91,
+ "min_dist_A_route_to_pixel_hole_mm": 2.34,
+ "inductance_estimate_uH": 2.8
+}

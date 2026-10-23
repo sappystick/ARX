@@ -1,0 +1,44 @@
+id,signal,from (board.connector.pin),medium,spec,length_m,to (board.connector.pin),shield / isolation,test
+W001,VBUS,PM1.JP.1,power ribbon pin 1,"AWG28 silicone, 1.0 mm pitch",1.72,NPM splice -> PB1R.JP.1/2 and CB1D.JPW.1/2,"chamber P, foil lining, drain at the elbow","T01,T02"
+W002,VBUS,PM1.JP.2,power ribbon pin 2,"AWG28 silicone, 1.0 mm pitch",1.72,NPM splice -> PB1R.JP.1/2 and CB1D.JPW.1/2,"chamber P, foil lining, drain at the elbow","T01,T02"
+W003,VBUS,PM1.JP.1 (spliced),power ribbon pin 3,"AWG28 silicone, 1.0 mm pitch",1.72,NPM splice -> PB1R.JP.1/2 and CB1D.JPW.1/2,"chamber P, foil lining, drain at the elbow","T01,T02"
+W004,GND,PM1.JP.3,power ribbon pin 4,"AWG28 silicone, 1.0 mm pitch",1.72,NPM splice -> PB1R.JP.3/4 and CB1D.JPW.3/4,"chamber P, foil lining, drain at the elbow","T01,T02"
+W005,GND,PM1.JP.4,power ribbon pin 5,"AWG28 silicone, 1.0 mm pitch",1.72,NPM splice -> PB1R.JP.3/4 and CB1D.JPW.3/4,"chamber P, foil lining, drain at the elbow","T01,T02"
+W006,GND,PM1.JP.3 (spliced),power ribbon pin 6,"AWG28 silicone, 1.0 mm pitch",1.72,NPM splice -> PB1R.JP.3/4 and CB1D.JPW.3/4,"chamber P, foil lining, drain at the elbow","T01,T02"
+W007,+12V,reserved (no source on PM1 yet),power ribbon pin 7,"AWG28 silicone, 1.0 mm pitch",1.72,not connected at the head (CB1D has no pin for it),"chamber P, foil lining, drain at the elbow","T01,T02"
+W008,+5V5,reserved (no source on PM1 yet),power ribbon pin 8,"AWG28 silicone, 1.0 mm pitch",1.72,not connected at the head (CB1D has no pin for it),"chamber P, foil lining, drain at the elbow","T01,T02"
+W009,+3V6,reserved (no source on PM1 yet),power ribbon pin 9,"AWG28 silicone, 1.0 mm pitch",1.72,not connected at the head (CB1D has no pin for it),"chamber P, foil lining, drain at the elbow","T01,T02"
+W010,GND,PM1.JS.2,power ribbon pin 10,"AWG28 silicone, 1.0 mm pitch",1.72,NPM splice -> PB1R.JP.3/4 and CB1D.JPW.3/4,"chamber P, foil lining, drain at the elbow","T01,T02"
+W011,EN_MAIN,reserved (no source on PM1 yet),power ribbon pin 11,"AWG28 silicone, 1.0 mm pitch",1.72,not connected at the head (CB1D has no pin for it),"chamber P, foil lining, drain at the elbow","T01,T02"
+W012,spare,reserved (no source on PM1 yet),power ribbon pin 12,"AWG28 silicone, 1.0 mm pitch",1.72,not connected at the head (CB1D has no pin for it),"chamber P, foil lining, drain at the elbow","T01,T02"
+W013,TRIG,HB1.JH.3,signal ribbon pin 1,"AWG28 silicone, 1.0 mm pitch",1.72,CB1D.JTR.3 (TRIG_EXT),"chamber S, foil lining, drain wire","T01,T03"
+W014,JOY_X,HB1.JH.5,signal ribbon pin 2,"AWG28 silicone, 1.0 mm pitch",1.72,CB1D.JTR.5,"chamber S, foil lining, drain wire","T01,T03"
+W015,JOY_Y,HB1.JH.6,signal ribbon pin 3,"AWG28 silicone, 1.0 mm pitch",1.72,CB1D.JTR.6,"chamber S, foil lining, drain wire","T01,T03"
+W016,DIAL,HB1.JH.4,signal ribbon pin 4,"AWG28 silicone, 1.0 mm pitch",1.72,CB1D.JTR.4 (DIAL_EXT),"chamber S, foil lining, drain wire","T01,T03"
+W017,AUDIO,reserved,signal ribbon pin 5,"AWG28 silicone, 1.0 mm pitch",1.72,not wired: CB1D has no audio output,"chamber S, foil lining, drain wire","T01,T03"
+W018,GND,HB1.JH.2,signal ribbon pin 6,"AWG28 silicone, 1.0 mm pitch",1.72,CB1D.JTR.2,"chamber S, foil lining, drain wire","T01,T03"
+W019,GND,HB1.JH.2,signal ribbon pin 7,"AWG28 silicone, 1.0 mm pitch",1.72,CB1D.JTR.2 (second pin),"chamber S, foil lining, drain wire","T01,T03"
+W020,SHIELD,HB1.JH.7,signal ribbon pin 8,"AWG28 silicone, 1.0 mm pitch",1.72,CB1D.JTR.7 (single-point ground in the head),"chamber S, foil lining, drain wire","T01,T03"
+W021,P3V3,HB1.JH.1,signal ribbon pin 9,"AWG28 silicone, 1.0 mm pitch",1.72,CB1D.JTR.1  [pin 9 was 'spare': used so the handle board gets its 3.3 V],"chamber S, foil lining, drain wire","T01,T03"
+W022,spare,-,signal ribbon pin 10,"AWG28 silicone, 1.0 mm pitch",1.72,-,"chamber S, foil lining, drain wire","T01,T03"
+W023,spare,-,signal ribbon pin 11,"AWG28 silicone, 1.0 mm pitch",1.72,-,"chamber S, foil lining, drain wire","T01,T03"
+W024,spare,-,signal ribbon pin 12,"AWG28 silicone, 1.0 mm pitch",1.72,-,"chamber S, foil lining, drain wire","T01,T03"
+W025,UMB_SHLD,PB1R.JC.1,8-way ribbon pin 1,AWG28 silicone,0.8,CB1D.JPB.1,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W026,GND,PB1R.JC.2,8-way ribbon pin 2,AWG28 silicone,0.8,CB1D.JPB.2,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W027,TX1_IN,PB1R.JC.3,8-way ribbon pin 3,AWG28 silicone,0.8,CB1D.JPB.3,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W028,REF_I1,PB1R.JC.4,8-way ribbon pin 4,AWG28 silicone,0.8,CB1D.JPB.4,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W029,FAULT1_N,PB1R.JC.5,8-way ribbon pin 5,AWG28 silicone,0.8,CB1D.JPB.5,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W030,ISENSE1,PB1R.JC.6,8-way ribbon pin 6,AWG28 silicone,0.8,CB1D.JPB.6,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W031,NTC_SENSE,PB1R.JC.7,8-way ribbon pin 7,AWG28 silicone,0.8,CB1D.JPB.7,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W032,GND,PB1R.JC.8,8-way ribbon pin 8,AWG28 silicone,0.8,CB1D.JPB.8,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W033,"COIL B (DRAIN1, 500 V flyback)",PB1R.JL1.1,"TX pair, conductor 1","AWG12 silicone, 600 V, twisted, foil + drain",0.8,head TX junction (6 B leads) + CB1D.JCL.1,HV: 1 kV hipot to everything else,"T05,T06"
+W034,COIL A (VBUS side),PB1R.JL1.2,"TX pair, conductor 2","AWG12 silicone, 600 V, twisted, foil + drain",0.8,head TX junction (6 A leads) + CB1D.JCL.2,HV: 1 kV hipot,"T05,T06"
+W035,LED_IN,CB1D.JLB.2,4 wires,AWG30,0.06,LB1.JLB.2,inside cup CD,T08
+W036,+5V,CB1D.JLB.1,4 wires,AWG30,0.06,LB1.JLB.1,inside cup CD,T08
+W037,GND,CB1D.JLB.3 / .4,4 wires,AWG30,0.06,LB1.JLB.3 / .4,inside cup CD,T08
+W038,HTA_P / HTA_N,"antenna board pads A, B",twisted pair,AWG30,0.13,CB1D.JHTA.1 / .2,"twisted, drain to the cap strap gap",T07
+W039,receive channel X8 / GX,SB1R pad pair 1,short lead via bottom port,AWG36 harness,0.04,AB1A.J1.3,foil lining of cup A,T09
+W040,receive channel W8 / Y8,SB1R pad pair 2,short lead via bottom port,AWG36 harness,0.04,AB1B.J1.1,foil lining of cup A,T09
+W041,receive channel V8 / GX,SB1R pad pair 3,short lead via bottom port,AWG36 harness,0.04,AB1A.J1.1,foil lining of cup A,T09
+W042,receive channel QUAD / GY,SB1R pad pair 4,short lead via bottom port,AWG36 harness,0.04,AB1A.J1.2,foil lining of cup A,T09
+W043,receive channel MONO,SB1R pad pair 5,short lead via bottom port,AWG36 harness,0.04,AB1B.J2.10 via CB1D.JB.10,foil lining of cup A,T09

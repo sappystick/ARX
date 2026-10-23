@@ -1,0 +1,141 @@
+{
+ "lod": "print",
+ "hub": {
+  "outer_r": 49.5,
+  "inner_r": 44.0,
+  "layer_bore_r": 49.9,
+  "tooth": "3.6 wide x 2.6 high",
+  "track": "4.0 wide x 3.0 deep blind groove"
+ },
+ "lane_map": {
+  "layer_1": {
+   "track_deg": 0,
+   "TX_lane_A_deg": 9,
+   "TX_lane_B_deg": 15,
+   "RX_lane_deg": 36,
+   "dimples": 1
+  },
+  "layer_2": {
+   "track_deg": 60,
+   "TX_lane_A_deg": 69,
+   "TX_lane_B_deg": 75,
+   "RX_lane_deg": 96,
+   "dimples": 2,
+   "stop_z": 29.87
+  },
+  "layer_3": {
+   "track_deg": 120,
+   "TX_lane_A_deg": 129,
+   "TX_lane_B_deg": 135,
+   "RX_lane_deg": 156,
+   "dimples": 3,
+   "stop_z": 26.34
+  },
+  "layer_4": {
+   "track_deg": 180,
+   "TX_lane_A_deg": 189,
+   "TX_lane_B_deg": 195,
+   "RX_lane_deg": 216,
+   "dimples": 4,
+   "stop_z": 22.7
+  },
+  "layer_5": {
+   "track_deg": 240,
+   "TX_lane_A_deg": 249,
+   "TX_lane_B_deg": 255,
+   "RX_lane_deg": 276,
+   "dimples": 5,
+   "stop_z": 19.1
+  },
+  "layer_6": {
+   "track_deg": 300,
+   "TX_lane_A_deg": 309,
+   "TX_lane_B_deg": 315,
+   "RX_lane_deg": 336,
+   "dimples": 6,
+   "stop_z": 15.54
+  }
+ },
+ "stack": {
+  "layer_thickness": 3.6,
+  "nested_gap": 0.0,
+  "top_at_bore": 33.0,
+  "rim_top": 24.8
+ },
+ "L1": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 0.0
+ },
+ "L2": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 137.51
+ },
+ "L3": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 275.02
+ },
+ "L4": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 52.52
+ },
+ "L5": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 190.03
+ },
+ "L6": {
+  "tris": 364800,
+  "open_edges": 0,
+  "duplicate_edges": 0,
+  "petal_phase_deg": 327.54
+ },
+ "L1_hub_foundation_with_tracks_lanes_PCB_slots": {
+  "tris": 16248,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -52.0,
+   -52.0,
+   6.0,
+   52.0,
+   52.0,
+   44.5
+  ],
+  "note": "central PCB cylinder fused to L1: 6 numbered blind tracks (4x3), 18 closed wire lanes (12 TX + 6 RX, 1.8x1.4), 4 PCB ledges for D83 discs at 8 mm pitch, stop plugs and snap bumps, roof with D20 port"
+ },
+ "V2_floor_plate_and_lock_seat": {
+  "tris": 768,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -49.5,
+   -49.5,
+   3.4,
+   49.5,
+   49.5,
+   6.0
+  ],
+  "note": "floor plate seat; clamp the tray to the hub with 3 M3 screws (bosses to be added)"
+ },
+ "L7_RX_tray_cassette": {
+  "tris": 1536,
+  "nonmanifold_edges": 0,
+  "bbox": [
+   -116.5,
+   -116.5,
+   0.0,
+   116.5,
+   116.5,
+   3.2
+  ],
+  "note": "RX tray, PCB recess D229 x 2.4, open back"
+ },
+ "feedthrough": "18 lane exits (12 TX, 6 RX) pass through the hub wall at z=38..40 into the vault; drill 2 mm ports at the lane angles after fitting, then pot"
+}

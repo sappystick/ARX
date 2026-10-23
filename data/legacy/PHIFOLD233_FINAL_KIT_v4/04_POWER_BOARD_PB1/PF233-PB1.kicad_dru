@@ -1,0 +1,10 @@
+(version 1)
+(rule "HV clamp nets 1.0 mm (coated)"
+  (condition "A.NetName == 'DRAIN1' || A.NetName == 'CLAMP1'")
+  (constraint clearance (min 1.0mm)))
+(rule "MV nets 0.5 mm"
+  (condition "A.NetName == 'DRAIN2' || A.NetName == 'CLAMP2'")
+  (constraint clearance (min 0.5mm)))
+(rule "Power track width"
+  (condition "A.NetName == 'VBUS' || A.NetName == 'DRAIN1' || A.NetName == 'DRAIN2' || A.NetName == 'GND'")
+  (constraint track_width (min 1.5mm)))

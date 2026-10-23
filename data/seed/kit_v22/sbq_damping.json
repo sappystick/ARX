@@ -1,0 +1,61 @@
+{
+ "board A aligned leak 0.01 mV, Cself 50 pF": {
+  "no damping": 60.0,
+  "2200 ohm": 5.1,
+  "1000 ohm": 5.2,
+  "680 ohm": 5.1,
+  "470 ohm": 5.3,
+  "330 ohm": 6.0,
+  "220 ohm": 7.1
+ },
+ "board A aligned leak 0.01 mV, Cself 100 pF": {
+  "no damping": 60.0,
+  "2200 ohm": 5.8,
+  "1000 ohm": 5.2,
+  "680 ohm": 5.2,
+  "470 ohm": 5.3,
+  "330 ohm": 5.9,
+  "220 ohm": 7.0
+ },
+ "board A aligned leak 0.01 mV, Cself 200 pF": {
+  "no damping": 60.0,
+  "2200 ohm": 8.0,
+  "1000 ohm": 6.0,
+  "680 ohm": 5.4,
+  "470 ohm": 4.8,
+  "330 ohm": 5.7,
+  "220 ohm": 7.0
+ },
+ "worst modeled leak 12 mV, Cself 50 pF": {
+  "no damping": 60.0,
+  "2200 ohm": 8.5,
+  "1000 ohm": 8.2,
+  "680 ohm": 8.2,
+  "470 ohm": 8.7,
+  "330 ohm": 10.9,
+  "220 ohm": 14.5
+ },
+ "worst modeled leak 12 mV, Cself 100 pF": {
+  "no damping": 60.0,
+  "2200 ohm": 9.8,
+  "1000 ohm": 8.7,
+  "680 ohm": 8.3,
+  "470 ohm": 8.0,
+  "330 ohm": 10.7,
+  "220 ohm": 14.3
+ },
+ "worst modeled leak 12 mV, Cself 200 pF": {
+  "no damping": 60.0,
+  "2200 ohm": 16.5,
+  "1000 ohm": 9.9,
+  "680 ohm": 8.5,
+  "470 ohm": 8.3,
+  "330 ohm": 10.1,
+  "220 ohm": 14.0
+ },
+ "critical damping Rd = 0.5 sqrt(L/C)": {
+  "50 pF": 938,
+  "100 pF": 663,
+  "200 pF": 469
+ }
+}

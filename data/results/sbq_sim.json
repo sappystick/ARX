@@ -1,0 +1,97 @@
+{
+ "leak": {
+  "QUAD-A board": {
+   "aligned": {
+    "rel": 2.769665049113665e-08,
+    "peak_V": 8.043124492085832e-06
+   },
+   "aligned (lobes only)": {
+    "rel": 0.0006185119362620044,
+    "peak_V": 0.1796162501595043
+   },
+   "0.1 mm x": {
+    "rel": 5.220422725448791e-08,
+    "peak_V": 1.5160139994377877e-05
+   },
+   "0.1 mm x (lobes only)": {
+    "rel": 0.0006102409919717835,
+    "peak_V": 0.17721436280440186
+   },
+   "0.5 mm x": {
+    "rel": 4.421251539350724e-07,
+    "peak_V": 0.00012839341910027695
+   },
+   "0.5 mm x (lobes only)": {
+    "rel": 0.0005772223624586455,
+    "peak_V": 0.16762573230133015
+   },
+   "0.5 mm y": {
+    "rel": 1.3511652333282308e-05,
+    "peak_V": 0.003923792223364682
+   },
+   "0.5 mm y (lobes only)": {
+    "rel": 0.0006426500072261036,
+    "peak_V": 0.186625960948366
+   }
+  },
+  "QUAD-B board (rotated 45 deg)": {
+   "aligned": {
+    "rel": 1.5398746461175412e-08,
+    "peak_V": 4.471805529298034e-06
+   },
+   "aligned (lobes only)": {
+    "rel": 0.0005335656780080872,
+    "peak_V": 0.15494780404210196
+   },
+   "0.1 mm x": {
+    "rel": 2.92524263032439e-06,
+    "peak_V": 0.0008494922753487838
+   },
+   "0.1 mm x (lobes only)": {
+    "rel": 0.0005244975992586648,
+    "peak_V": 0.1523144283453193
+   },
+   "0.5 mm x": {
+    "rel": 1.5194349603455608e-05,
+    "peak_V": 0.004412448554960735
+   },
+   "0.5 mm x (lobes only)": {
+    "rel": 0.0005181048450363917,
+    "peak_V": 0.15045796855161594
+   },
+   "0.5 mm y": {
+    "rel": 3.7791363290294255e-05,
+    "peak_V": 0.010974635354074716
+   },
+   "0.5 mm y (lobes only)": {
+    "rel": 0.00047626451610944035,
+    "peak_V": 0.13830751106373365
+   }
+  }
+ },
+ "L_uH": 176.3,
+ "length_m": 16.87,
+ "R_1oz_ohm": 10.4,
+ "R_2oz_ohm": 5.2,
+ "unnulled_peak_V": 290.4,
+ "pattern": {
+  "depth 100 mm, radius 60 mm": {
+   "bearing_offset_deg": -45.0,
+   "bearing_scatter_deg": 0.46,
+   "rss_flat_max_over_min": 1.049,
+   "signal_vs_idealised_quad_A": 3.16
+  },
+  "depth 100 mm, radius 100 mm": {
+   "bearing_offset_deg": -45.0,
+   "bearing_scatter_deg": 0.46,
+   "rss_flat_max_over_min": 1.051,
+   "signal_vs_idealised_quad_A": 3.15
+  },
+  "depth 200 mm, radius 80 mm": {
+   "bearing_offset_deg": -45.0,
+   "bearing_scatter_deg": 0.33,
+   "rss_flat_max_over_min": 1.038,
+   "signal_vs_idealised_quad_A": 3.16
+  }
+ }
+}

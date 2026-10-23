@@ -1,0 +1,12 @@
+Qty,Refs,Type,Value,MPN / note,Footprint
+1,CH1,C0603,100n,,Capacitor_SMD:C_0603_1608Metric
+1,JDIAL,HDR1x5,Dial: COM P1 P2 P3 P4 (4-position rotary switch),4-position rotary switch,Connector:Pin_header_1x5_P2.54mm
+1,JJOY,HDR1x5,Joystick: V GND X Y SW,2-axis thumb joystick module,Connector:Pin_header_1x5_P2.54mm
+1,JH,HDR1x7,Cable to head: +3V3 GND TRIG DIAL JOYX JOYY SHLD,shielded 6-core + drain,Connector:Pin_header_1x7_P2.54mm
+1,RSHH,R0603,0R,shield to grip foil,Resistor_SMD:R_0603_1608Metric
+2,"RD0,RD3",R0603,10k,,Resistor_SMD:R_0603_1608Metric
+1,RSW,R0603,10k,joystick switch pull-up,Resistor_SMD:R_0603_1608Metric
+1,RH1,R0603,1k,,Resistor_SMD:R_0603_1608Metric
+1,RD4,R0603,33k,,Resistor_SMD:R_0603_1608Metric
+1,RD2,R0603,3k3,,Resistor_SMD:R_0603_1608Metric
+1,HS1,SS49E,SS49E,Honeywell SS49E linear Hall (trigger magnet travel 0-4 mm),Package_TO_SOT_THT:TO-92_Inline

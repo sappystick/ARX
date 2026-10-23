@@ -1,0 +1,179 @@
+{
+ "parts": {
+  "CORE_PCB_CYLINDER": {
+   "file": "kit_v15/SET/02_CORE_PCB_CYLINDER/CORE_PCB_CYLINDER_central_former.stl",
+   "tris": 112396,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    -52.0,
+    -52.0,
+    3.2,
+    52.0,
+    52.0,
+    44.5
+   ],
+   "note": "tube r44-49.5 z6-41.3; 6 bond lugs for L1; 6 numbered blind tracks; 18 closed wire lanes ending in 18 lead-port windows (2.0 x 2.0 at z38-40); 3 M3 heat-set bosses at 90/210/330 deg r41; 4 PCB ledges; roof with D20 port + 4 vent/fill windows 4x4 at r30"
+  },
+  "COUPON_hub": {
+   "file": "kit_v15/SET/05_TEST_COUPONS/COUPON_hub_segment_track_lane.stl",
+   "tris": 1924,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    43.04,
+    -10.29,
+    0.0,
+    49.46,
+    10.29,
+    15.0
+   ],
+   "note": "24 deg hub segment: one 4.0 x 3.0 track at 0 deg, one 1.8 x 1.4 lane at 7 deg"
+  },
+  "COUPON_layer": {
+   "file": "kit_v15/SET/05_TEST_COUPONS/COUPON_layer_segment_tooth_notch.stl",
+   "tris": 1924,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    47.27,
+    -12.89,
+    0.0,
+    62.0,
+    12.89,
+    3.6
+   ],
+   "note": "24 deg layer segment: bore 49.9, key tooth 3.6 x 2.6 at 0 deg, pin half-hole at 8 deg"
+  },
+  "COUPON_pin": {
+   "file": "kit_v15/SET/05_TEST_COUPONS/COUPON_pin_single.stl",
+   "tris": 324,
+   "nonmanifold_edges": 0,
+   "bbox": [
+    -2.1,
+    -2.1,
+    0.0,
+    2.1,
+    2.1,
+    8.0
+   ],
+   "note": "one stepped pin: stem D3.0 x 3.6, shoulder D4.2 x 0.8, stem D3.0 x 3.6"
+  }
+ },
+ "verification": {
+  "lead_ports": {
+   "count": 18,
+   "window_mm": "2.0 wide x 2.0 tall",
+   "z_range": [
+    38.0,
+    40.0
+   ],
+   "angles_deg": [
+    6.0,
+    11.0,
+    16.0,
+    58.52,
+    63.52,
+    68.52,
+    143.51,
+    148.51,
+    153.51,
+    196.03,
+    201.03,
+    206.03,
+    281.02,
+    286.02,
+    291.02,
+    333.54,
+    338.54,
+    343.54
+   ],
+   "wall_thickness_at_lane_mm": 4.1,
+   "match_lane_angles": true
+  },
+  "m3_bosses": {
+   "angles_deg": [
+    90,
+    210,
+    330
+   ],
+   "radius_mm": 41.0,
+   "post_dia": 6.8,
+   "insert_hole_dia": 4.0,
+   "hole_depth": 9.0,
+   "z_range": [
+    6.0,
+    17.0
+   ],
+   "note": "PCB disc in slot 1 (z=9) needs 3 relief notches R4.5 at these angles; flange windows 3.6 square at the same positions; use M3x8 screws into heat-set inserts"
+  },
+  "fit_clearances_mm": {
+   "layer_bore_vs_hub_radial": 0.4,
+   "tooth_vs_track_width": 0.4,
+   "tooth_vs_track_depth": 0.4,
+   "pin_stem_in_notch_radial": 0.4,
+   "pin_shoulder_to_hub": 0.1,
+   "layer_gap": 0.8
+  },
+  "boss_vs_lane_angle_gaps_deg": [
+   21.5,
+   4.0,
+   2.5
+  ],
+  "L1_bond_lugs": {
+   "count": 6,
+   "dia": 2.8,
+   "centre_r": 50.0,
+   "notch_R_in_L1": 1.8,
+   "clearance": 0.4,
+   "table": [
+    {
+     "theta_deg": 80.25,
+     "z": [
+      25.0,
+      29.07
+     ]
+    },
+    {
+     "theta_deg": 132.77,
+     "z": [
+      25.0,
+      29.05
+     ]
+    },
+    {
+     "theta_deg": 217.76,
+     "z": [
+      25.0,
+      29.1
+     ]
+    },
+    {
+     "theta_deg": 257.88,
+     "z": [
+      25.0,
+      29.05
+     ]
+    },
+    {
+     "theta_deg": 302.74,
+     "z": [
+      25.0,
+      29.15
+     ]
+    },
+    {
+     "theta_deg": 355.26,
+     "z": [
+      25.0,
+      29.13
+     ]
+    }
+   ]
+  },
+  "stack": {
+   "layer_thickness": 3.6,
+   "nested_gap": 0.8,
+   "top_at_bore": 37.0,
+   "rim_top": 28.8
+  },
+  "layer_audit_ref": "06_DATA/audit.json, audit_groove_detrended.json"
+ }
+}

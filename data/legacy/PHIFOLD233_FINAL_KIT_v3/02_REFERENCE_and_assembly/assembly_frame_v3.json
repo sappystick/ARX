@@ -1,0 +1,38 @@
+{
+ "frame": "z=0 flat ground-facing underside; +z toward handle",
+ "parts": [
+  "body_outer",
+  "body_inner",
+  "body_ring",
+  "P04b",
+  "P05b",
+  "P07b",
+  "P11_",
+  "P06",
+  "P08",
+  "P09",
+  "R01",
+  "R02",
+  "R03",
+  "SB1",
+  "ABA",
+  "ABB",
+  "MAIN"
+ ],
+ "exploded_dz_mm": {
+  "P09": -60,
+  "SB1": -35,
+  "P08": 75,
+  "P11": 92,
+  "P05b": 120,
+  "P04b": 62,
+  "P07b": 22,
+  "P06": 38,
+  "R01": 10,
+  "R02": -10,
+  "R03": 34,
+  "ABA": 30,
+  "ABB": 58,
+  "MAIN": -4
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "DRC": {
+  "L1": {
+   "violations": 0,
+   "min_track_gap_mm": 0.56,
+   "at": []
+  },
+  "L2": {
+   "violations": 0,
+   "min_track_gap_mm": 0.56,
+   "at": []
+  },
+  "L3": {
+   "violations": 0,
+   "min_track_gap_mm": 0.295,
+   "at": []
+  },
+  "L4": {
+   "violations": 0,
+   "min_track_gap_mm": 0.56,
+   "at": []
+  },
+  "L5": {
+   "violations": 0,
+   "min_track_gap_mm": 0.146,
+   "at": []
+  },
+  "L6": {
+   "violations": 0,
+   "min_track_gap_mm": 0.146,
+   "at": []
+  },
+  "L7": {
+   "violations": 0,
+   "min_track_gap_mm": 0.146,
+   "at": []
+  },
+  "L8": {
+   "violations": 0,
+   "min_track_gap_mm": 0.146,
+   "at": []
+  }
+ },
+ "X8": {
+  "layers": [
+   1,
+   2
+  ],
+  "turns_per_lobe_per_layer": 18,
+  "trace_mm": 1.8,
+  "pitch_mm": 2.4,
+  "track_length_m": 28.49
+ },
+ "Y8": {
+  "layers": [
+   3,
+   4
+  ],
+  "turns_per_lobe_per_layer": 18,
+  "trace_mm": 1.8,
+  "pitch_mm": 2.4,
+  "track_length_m": 28.83
+ },
+ "GX": {
+  "layers": [
+   5,
+   6
+  ],
+  "turns_per_lobe_per_layer": 24,
+  "trace_mm": 0.15,
+  "pitch_mm": 0.3,
+  "track_length_m": 8.12
+ },
+ "GY": {
+  "layers": [
+   7,
+   8
+  ],
+  "turns_per_lobe_per_layer": 24,
+  "trace_mm": 0.15,
+  "pitch_mm": 0.3,
+  "track_length_m": 8.17
+ }
+}

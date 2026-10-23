@@ -1,0 +1,4 @@
+# P05 Detection DSP in Python (before any firmware)
+Goal: a tested reference implementation of: TX-synchronous capture, air-template subtraction (rolling, per channel), adaptive filter on the HTA reference (LMS/RLS) with a stability analysis, matched-filter bank tau = t1 x 1.618^n, ground balance, quadrupole bearing 0.5 atan2(B,A) + 45 deg, depth class from the filter-bank ratios, and the LED mapping to the 66-pixel layout (data/seed/.../PIXEL_MAP_66.csv).
+Use waveforms from src/sim/sim_head1.py (leak, target response, noise). Add ground (mineralised soil with viscosity, tau distribution) and temperature drift of the air template.
+Deliver: package src/sim/dsp/, unit tests, ROC-style detection curves vs depth and target size, sensitivity of the first clean gate (5.1 us with a 3% residual) to template accuracy and drift, and the minimum ADC bits and sample rate. State which parts are modeled only.

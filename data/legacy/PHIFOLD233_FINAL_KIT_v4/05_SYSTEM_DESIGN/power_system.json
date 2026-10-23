@@ -1,0 +1,173 @@
+{
+ "coil": {
+  "L_outer_uH": 102.59999999999998,
+  "R_outer_ohm": 0.102,
+  "L_inner_uH": 14.9,
+  "R_inner_ohm": 0.032,
+  "inner_current_ratio": 0.374
+ },
+ "pack": {
+  "cell": "18650 Li-ion, 3.5 Ah, 8 A cont. (Samsung 35E / LG MJ1 class)",
+  "config": "7S1P per cartridge, two cartridges (A and B)",
+  "V_full": 29.400000000000002,
+  "V_nom": 25.900000000000002,
+  "V_cutoff": 21.0,
+  "energy_Wh_per_cartridge": 90.7,
+  "energy_Wh_both": 181.3,
+  "cell_mass_g": 336.0,
+  "est_cartridge_mass_g": 461.0,
+  "cartridge_length_mm": 485.0,
+  "note": "24 V or higher requirement: 24.5 V (7S at 3.5 V/cell) .. 29.4 V"
+ },
+ "tx_stage": {
+  "scan_8A_800Hz": {
+   "I_peak_A": 8,
+   "I_inner_A": 2.99,
+   "prf_Hz": 800,
+   "ramp_us": 31.7,
+   "duty_pct": 5.65,
+   "i_rms_A": 1.9,
+   "pulse_energy_mJ": 3.35,
+   "clamp_dissipation_W": 2.68,
+   "coil_copper_W": 0.38,
+   "turn_off_time_us_at_500V": 1.64,
+   "turn_off_time_us_at_400V": 2.05,
+   "charge_per_pulse_mC": 0.61,
+   "bulk_droop_V": {
+    "470 uF": 1.3,
+    "940 uF": 0.65
+   }
+  },
+  "boost_20A_800Hz": {
+   "I_peak_A": 20,
+   "I_inner_A": 7.48,
+   "prf_Hz": 800,
+   "ramp_us": 79.2,
+   "duty_pct": 6.91,
+   "i_rms_A": 5.26,
+   "pulse_energy_mJ": 20.94,
+   "clamp_dissipation_W": 16.75,
+   "coil_copper_W": 2.94,
+   "turn_off_time_us_at_500V": 4.1,
+   "turn_off_time_us_at_400V": 5.13,
+   "charge_per_pulse_mC": 1.99,
+   "bulk_droop_V": {
+    "470 uF": 4.23,
+    "940 uF": 2.12
+   }
+  },
+  "boost_20A_300Hz": {
+   "I_peak_A": 20,
+   "I_inner_A": 7.48,
+   "prf_Hz": 300,
+   "ramp_us": 79.2,
+   "duty_pct": 2.59,
+   "i_rms_A": 3.22,
+   "pulse_energy_mJ": 20.94,
+   "clamp_dissipation_W": 6.28,
+   "coil_copper_W": 1.1,
+   "turn_off_time_us_at_500V": 4.1,
+   "turn_off_time_us_at_400V": 5.13,
+   "charge_per_pulse_mC": 1.99,
+   "bulk_droop_V": {
+    "470 uF": 4.23,
+    "940 uF": 2.12
+   }
+  },
+  "boost_14A_800Hz": {
+   "I_peak_A": 14,
+   "I_inner_A": 5.24,
+   "prf_Hz": 800,
+   "ramp_us": 55.5,
+   "duty_pct": 6.28,
+   "i_rms_A": 3.51,
+   "pulse_energy_mJ": 10.26,
+   "clamp_dissipation_W": 8.21,
+   "coil_copper_W": 1.31,
+   "turn_off_time_us_at_500V": 2.87,
+   "turn_off_time_us_at_400V": 3.59,
+   "charge_per_pulse_mC": 1.23,
+   "bulk_droop_V": {
+    "470 uF": 2.62,
+    "940 uF": 1.31
+   }
+  }
+ },
+ "fet_sizing": {
+  "rating_V": ">= 650",
+  "I_pulse_A": ">= 40 (33 A equal-depth boost case)",
+  "Rds_on_hot_budget_mohm": 30,
+  "conduction_W_boost": 0.5,
+  "note": "two 650 V devices in parallel per outer channel; inner channel needs a 100 V class device only (clamp ~60 V)"
+ },
+ "inner_channel": {
+  "clamp_V": 27.2,
+  "note": "inner band L is 7x smaller: equal turn-off time needs only ~1/20 of the clamp voltage"
+ },
+ "hot_swap": {
+  "bulk_C_mF": 1.5,
+  "precharge_R_ohm": 22.0,
+  "peak_inrush_A": 1.11,
+  "precharge_tau_ms": 33.0,
+  "energy_in_resistor_J": 0.45,
+  "resistor_power_rating_W": ">= 2 W pulse-rated (0.6 J per event, 5 s repeat)",
+  "contact_mate_sequence": "PACK- (1.5 mm longer) -> PRECHARGE+ via 22 ohm (0.8 mm longer) -> PACK+ main -> ID/1-wire",
+  "swap_rule": "the cartridge with the higher terminal voltage carries the load; the other idles through its OR-ing diode"
+ },
+ "runtime": {
+  "scan": {
+   "battery_W": 6.05,
+   "hours_one_cartridge": 15.0,
+   "hours_two_cartridges": 30.0
+  },
+  "trigger_boost_300Hz": {
+   "battery_W": 15.29,
+   "hours_one_cartridge": 5.9,
+   "hours_two_cartridges": 11.8
+  }
+ },
+ "wiring": {
+  "vbat_pair": "2 x AWG16 (1.31 mm2) + 2 x AWG16 return, 0.9 m",
+  "drop_at_2A_mV": 47.3,
+  "coil_leads": "4 x AWG12 equivalent per band bundle, 0.15 m (driver can at the neck)",
+  "coil_cable_L_uH_est": 0.15,
+  "rs485": "1 twisted pair AWG26",
+  "aux": "+12 V AWG24 pair",
+  "shield": "overall braid, one-end grounded at the driver can"
+ },
+ "protection": {
+  "cell_level": "BMS 7S per cartridge: OVP 4.25 V/cell, UVP 2.8 V/cell (pack 19.6 V hard cut, soft warning 21.0 V), OCP 12 A (>2 s), SCP 40 A / 200 us, OTP 60 C, balance 60 mA",
+  "cartridge_fuse": "5 A slow-blow, 32 V DC rated, in the PM1 board per cartridge path",
+  "load_dump": "TVS SMDJ33A on the OR-ed bus (stand-off 33 V, clamp 53 V), 1.5 kW 10/1000 us",
+  "reverse": "OR-ing Schottky diodes block reverse; contact keying prevents reverse insertion",
+  "inrush": "22 ohm precharge via early contact",
+  "undervoltage_lockout": "supervisor releases the TX driver only when the bus is between 21 V and 30 V",
+  "tx_fault": "hardware current limit (comparator, 30 A) removes the gate drive within 300 ns; MCU watchdog disables TX if pulses stop or timing is wrong",
+  "thermal": "NTC on the FET heat spreader (trip 90 C) and in each cartridge"
+ },
+ "shielding": {
+  "copper_foil_35um": {
+   "5 kHz": {
+    "skin_depth_mm": 0.935,
+    "absorption_dB_35um_Cu": 0.33
+   },
+   "20 kHz": {
+    "skin_depth_mm": 0.467,
+    "absorption_dB_35um_Cu": 0.65
+   },
+   "100 kHz": {
+    "skin_depth_mm": 0.209,
+    "absorption_dB_35um_Cu": 1.45
+   },
+   "1000 kHz": {
+    "skin_depth_mm": 0.066,
+    "absorption_dB_35um_Cu": 4.6
+   },
+   "10000 kHz": {
+    "skin_depth_mm": 0.021,
+    "absorption_dB_35um_Cu": 14.55
+   }
+  },
+  "conclusion": "35 um copper foil is an effective ELECTRIC-field/RF shield above ~1 MHz but gives almost no magnetic shielding at the 5-100 kHz pulse frequencies; isolation of the pulsed power stage therefore relies on distance, twisted/coaxial routing, local bulk capacitors, a closed current loop in the driver can, and keeping the analog board AB1 gate-blanked during TX edges"
+ }
+}
