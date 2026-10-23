@@ -15,7 +15,7 @@ python3 tests/regress.py
 - prompts/: P00-P10 for Claude Code (the next engineering tasks), prompts/cowork/C00-C06 for Cowork.
 - .claude/: slash commands (/status /verify /newpart /route /release), skills, subagents, settings. CLAUDE.md at the root is the project memory.
 - src/: generators and simulations (current) + archive/. data/: seeds, legacy boards, results, Gerbers. stl/: curated final STLs with hashes (formers are generated: `make formers-print`).
-- scripts/push_to_github.sh: publish to GitHub yourself (git + LFS).
+- scripts/push_to_github.sh: publish to GitHub yourself (plain git; STLs are ordinary binary files, all under GitHub's 100 MB limit).
 
 ## Honest scope
 Nothing here has been printed, wound, assembled or measured. Performance numbers are modeled from stated assumptions. SB1R-QA/QB, LB1 and CB1D now have KiCad files and Gerbers that pass the repo's own checks and independent DRC; none has been opened in KiCad or a CAM viewer. A coil damping resistor, the rigid-flex spine, the handle redesign, KiCad schematic files and the DSP are open (docs/OPEN_ITEMS.md).
