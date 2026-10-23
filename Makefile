@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -48,6 +48,10 @@ hood:
 yoke:
 	cd $(W) && $(PY) yoke_v20.py
 
+# yoke fit against the v5 cylinder, skirt and hood carrier: needs make v5, hood and yoke first (verify-full runs them)
+yoke-check:
+	cd $(W) && $(PY) yoke_check.py
+
 sims:
 	cd $(W) && $(PY) sim_head1.py && $(PY) sim_head2.py && $(PY) sim_cage_rx.py && $(PY) sim_tanr.py && $(PY) sim_quadbearing.py
 
@@ -70,6 +74,7 @@ verify-quick: check
 	cd $(W) && $(PY) sim_head1.py
 
 verify-full: verify-quick hood yoke
+	$(MAKE) yoke-check
 	$(MAKE) audit-system
 	cd $(W) && $(PY) sim_head2.py && $(PY) sim_cage_rx.py && $(PY) sim_tanr.py && $(PY) sim_quadbearing.py
 	$(MAKE) gerber-lb1
