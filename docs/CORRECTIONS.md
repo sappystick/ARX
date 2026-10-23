@@ -1,7 +1,7 @@
 # Claims that were wrong or revised (do not repeat the old versions)
 | Old claim | Correct statement | Evidence |
 |---|---|---|
-| Turn-off 2.2 us at a 500 V clamp, first gate 6 us | The clamp is a capacitor snubber; current zero 3.8-5.0 us, quiet 5.6-6.7 us, first clean gate 7.3-8.8 us (6.3 us with quadrupoles) | sim_head1.py on the PB1R/CB1D netlists |
+| Turn-off 2.2 us at a 500 V clamp, first gate 6 us | The clamp is a capacitor snubber; current zero 3.8-5.0 us, quiet 5.6-6.7 us, first clean gate 7.3-8.8 us (figure-8); with the quadrupoles see the damping rows below | sim_head1.py on the PB1R/CB1D netlists |
 | Analog multiplying-DAC trim cancels the leak | Needs about 20 MHz and under 10 ns; at 1 MHz it is worse than nothing; magnetic trim cannot cancel volts | sim_tanr.py |
 | TANR gives +40-50 % depth from the adaptive null | Most of the gain is the input-noise fix (RS 1 kohm -> 100 ohm); the null mostly buys robustness and an earlier gate | sim_head1.py improvement steps |
 | Figure-8 receive net with nulls 0.003-0.025 % | Null is first-order sensitive to misalignment: 0.5 mm -> 0.63 V; quadrupoles are 300-1000x better | sim_tanr.py |
@@ -20,7 +20,7 @@
 | Router keeps HV clearance for all copper | Vias of ordinary nets were only kept 0.2 mm from HV copper; patched in router.py | drc.py found 0.34 mm |
 | The coil can be connected straight to the amplifier | 176 uH with tens of pF rings for more than 60 us: a 470-680 ohm damping resistor across each coil is required | sbq_damp.py |
 | Screw bosses at r41 (90/210/330) | Moved to r28 (22.5/157.5/247.5) so the receive-board copper clears them; base plate v3 | check_v22.py |
-| First clean gate about 5 us with quadrupoles | 5.2 us only for a well-nulled board; 8.3 us at 11 mV leak | sbq_damp.py |
+| First clean gate about 5 us with quadrupoles | 5.2 us only for a well-nulled board; 8.3 us at 11 mV leak (itself wrong, next rows) | sbq_damp.py |
 | The 12 transmit leads reach the exit window inside the vault | Posts, ribs and track fillers blocked every circumferential path: the leads had no route. Fixed with a wall-top groove + roof channel and trimmed fillers | hub mesh check (channel volume) |
 | TX lead junction part pending | TXJ1 board + cradle designed, checked and exported | tx_system.py |
 | LB1 is a 1.6 mm board | Must be 0.8 mm: 1.6 mm puts the LED tops 0.3 mm into the roof; KiCad stackup, STL and notes changed | stack_check.py |
@@ -32,3 +32,8 @@
 | CB1D fits inside the cylinder with ribs at 28/48/112/130/235/255/305/355 | JPW (4-way terminal block) hit the 130 deg rib and a 0603 hit the 235 deg rib; ribs moved to 24/48/109/135/225/244/300/317 | head_crosscheck.py exact polygon test |
 | Board notch 12 mm (half-width 6.0) clears the spine channel | The spine walls' outer faces reach 7.24 mm at r39: notch widened to half-width 7.6 on CB1D and LB1 | head_crosscheck.py |
 | The *_board_with_components.stl files are valid envelopes | They draw every body as an unrotated, uncentred box: use pickplace + BOM + lib_bodies (head_crosscheck.py) | head_crosscheck.py |
+| sbq_damp.py: first clean gate 8.3 us at the worst modeled leak (12 mV) | Its worst case took the maximum over every sbq_sim.json row, including the 'lobes only' diagnostic rows: it was computed at 187 mV. With the real leak (10 mV) and the real input network: 7.1-7.5 us with RD 680 ohm | sbq_damp2.py |
+| A bare coil with RD across it is the damping model | The AB1T input (RS 100 ohm, blank switch to VCM, input capacitance) matters: holding BLANK through turn-off stores current in the coil and releasing the switch kicks the coil; blanking costs 0.1-1.5 us of first gate | sbq_damp2.py |
+| SB1R-QB lead pads at r33 (128/142 deg) can be wired from the gallery | QB is the lower board and QA copper covers those pads (free radius 0.61 mm): no route. QB terminals now end at r23 under two QA transfer PTHs; head_crosscheck only tested the QA pads | sbq_gen2.py transfer-pad margin, check_v22.py |
+| sbq_sim.py closes board B between its own lead pads | It closed B with a chord between board A's pads (90 deg instead of 135 deg); aligned results were nearly unchanged (axisymmetric field), offsets were not exact. Fixed | sbq_sim.py |
+| check_v22.py runs 22 geometry checks (CLAUDE.md, DESIGN_STATE), 38 (README) | 43 before this change, 47 now | check_v22.json |

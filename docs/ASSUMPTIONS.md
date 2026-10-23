@@ -14,10 +14,11 @@
 | 11 | Saddle/hinge loads (30 N m) and epoxy strength | yoke | FEA + pull test |
 | 12 | Router results are grid-quantised (0.15 mm) with no independent DRC | CB1D/LB1 | import into KiCad or another CAM tool and run DRC |
 | 13 | Receive-board copper modeled as thin-wire polylines (Biot-Savart / Neumann), no skin or proximity, traces at z of the layers | SBQ results | impedance and TX-leak measurement on the first boards |
-| 14 | Coil self-capacitance 50-200 pF, input pole at the amplifier negligible, damping resistor across the coil | sbq_damp | measure the self-resonance of a built board |
+| 14 | Coil self-capacitance 50-200 pF; damping resistor 680 ohm across the coil on the QA top | sbq_damp2 | measure the self-resonance and ring-down of a built board with and without RD |
 | 15 | Tuned link radii cancel the lobe residual at the modeled z positions and 0.0 mm offset | sbq_tune | etch tolerance +-0.05 mm and layer spacing change the real leak; measure and re-tune |
 | 16 | The independent DRC samples copper at 0.1 mm and uses the pad rectangles from pads.json; it does not check mask, silk, drill-to-copper, annular ring | drc.py | open the Gerbers in KiCad/Gerbv and run KiCad DRC |
 | 17 | Litz resistance 30 mohm/m (from R_coil 45 mohm = 6 x 8.97 m in parallel); minimum bend radius 3 x OD = 3.6 mm; two leads 4 mm apart for the loop inductance | tx_system | measure a wound layer and a lead pair |
 | 18 | Creepage: 3.0 mm edge gap plus 1.6 mm FR4 is enough for 460 V peak (about 2.5 mm needed, pollution 2) | TXJ1 | check against the applicable standard and hipot test at 1 kV |
 | 19 | Part ratings in system_budget.py (FET 24 A, ES3J IFSM, R2512 200 V, BAV199 surge, TVS, TC4420 6 A, FET Qg 45 nC) are from memory | stress table | read the datasheets (prompt C05) |
 | 20 | Junction hand-soldering and wire dressing fit in the 14 x 6.4 mm bridge channel together with the ribbons | bridge | build a dummy bridge with real cable |
+| 21 | AB1T input parts: 74LVC1G66 on-resistance 8 ohm (sensitivity 4-20 ohm), input-node capacitance 15 pF (5-30 pF: BAV199 + switch off-capacitance + OPA2211 input), BAV199 off for small signals, OPA2211 1.1 nV/rtHz; RD resistor with non-magnetic terminations is available in 0805 (unverified) | sbq_damp2 | datasheets (C05); ring-down measurement on AB1T with a built coil |

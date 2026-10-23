@@ -39,6 +39,17 @@ def gate_noise(Rd, Cs, tc, Cin=CIN):
     Hg = np.sinc(f * Tg) ** 2 / (1 + (f / F_AA) ** 2)                    # boxcar gate x anti-alias pole
     var = np.trapezoid(S * Hg, f); return float(math.sqrt(var * 2 * Tg)), dict(Rc=float(np.trapezoid(v_rc ** 2 * Hg, f) * 2 * Tg), Rd=float(np.trapezoid(v_rd ** 2 * Hg, f) * 2 * Tg) if Rd else 0.0, RS=float(np.trapezoid(v_rs ** 2 * Hg, f) * 2 * Tg), amp=float(np.trapezoid(EN_AMP ** 2 * Hg, f) * 2 * Tg))
 
+def plot(out):
+    """one figure: first clean gate vs Rd (worst real leak, 100 pF) for each blank release, and the gated noise vs Rd"""
+    fc, nz = out["first_clean_gate_us"], out["gate_noise_nV_rtHz"]; worst = [k for k in fc if k.startswith("worst modeled") and "Cself 100 pF" in k]
+    xs = [x for x in next(iter(fc.values())) if x != "no Rd"]; fig, ax = plt.subplots(1, 2, figsize=(12, 4.5))
+    for k in worst: ax[0].plot(range(len(xs)), [fc[k][x] for x in xs], "o-", label=k.split(", ")[-1])
+    ax[0].set_xticks(range(len(xs))); ax[0].set_xticklabels(xs); ax[0].set_ylabel("first clean gate (us)"); ax[0].set_ylim(4, 18)
+    ax[0].set_title(f"{worst[0].split(',')[0]}, Cself 100 pF (modeled). No Rd: rings > 60 us", fontsize=10); ax[0].legend(fontsize=8); ax[0].grid(alpha=0.3)
+    for k in [k for k in nz if k.startswith("Cself 100 pF")]: ax[1].plot(range(len(xs) + 1), [nz[k][x] for x in ["no Rd"] + xs], "o-", label=k.split(", ")[-1])
+    ax[1].set_xticks(range(len(xs) + 1)); ax[1].set_xticklabels(["no Rd"] + xs); ax[1].set_ylabel("equivalent input noise (nV/rtHz)"); ax[1].set_title("Gated input noise, Cself 100 pF (modeled)", fontsize=10); ax[1].legend(fontsize=8); ax[1].grid(alpha=0.3)
+    fig.tight_layout(); fig.savefig("kit_v22/SBQ_DAMPING2.png", dpi=90)
+
 if __name__ == "__main__":
     J = json.load(open("kit_v22/sbq_sim.json")); worst = max(v["peak_V"] for bd in J["leak"].values() for k, v in bd.items() if "lobes only" not in k)   # real board cases only (sbq_damp.py also took the lobes-only diagnostic rows, 187 mV)
     LEAKS = (("A aligned 0.01 mV", 1e-5), ("1 mV", 1e-3), (f"worst modeled {worst*1e3:.0f} mV", worst))
@@ -66,12 +77,4 @@ if __name__ == "__main__":
     out["sensitivity_worst_leak_100pF_release_5us"] = sens; print("sensitivity", sens)
     out["critical_damping_ohm"] = {f"{int(Cs*1e12)} pF": round(0.5 * math.sqrt(L / Cs)) for Cs in CSS}
     json.dump(out, open("kit_v22/sbq_damping2.json", "w"), indent=1)
-    # one figure: first clean gate vs Rd (worst leak, 100 pF) for each blank release, and gate noise vs Rd
-    fig, ax = plt.subplots(1, 2, figsize=(12, 4.5)); xs = ["no Rd"] + [f"Rd {r}" for r in RDS[1:]]
-    for tb in TBS:
-        k = f"{LEAKS[2][0]}, Cself 100 pF, blank release {tb*1e6:.0f} us"; ax[0].plot(range(len(xs)), [out["first_clean_gate_us"][k][x] for x in xs], "o-", label=f"blank released at {tb*1e6:.0f} us")
-    ax[0].set_xticks(range(len(xs))); ax[0].set_xticklabels(xs); ax[0].set_ylabel("first clean gate (us)"); ax[0].set_title(f"Worst modeled leak ({worst*1e3:.0f} mV), Cself 100 pF (modeled)"); ax[0].legend(fontsize=8); ax[0].grid(alpha=0.3)
-    for tc in (6, 10, 20, 40):
-        k = f"Cself 100 pF, gate at {tc} us"; ax[1].plot(range(len(xs)), [nz[k][x] for x in xs], "o-", label=f"gate at {tc} us")
-    ax[1].set_xticks(range(len(xs))); ax[1].set_xticklabels(xs); ax[1].set_ylabel("equivalent input noise (nV/rtHz)"); ax[1].set_title("Gated input noise, Cself 100 pF (modeled)"); ax[1].legend(fontsize=8); ax[1].grid(alpha=0.3)
-    fig.tight_layout(); fig.savefig("kit_v22/SBQ_DAMPING2.png", dpi=90); print("critical", out["critical_damping_ohm"])
+    plot(out); print("critical", out["critical_damping_ohm"])

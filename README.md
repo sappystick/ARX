@@ -5,7 +5,7 @@ Everything from the engineering sessions in one place: parametric CAD generators
 ```
 pip install -r requirements.txt
 make setup
-make verify-quick        # about 3 minutes: v5 cylinder + base plate + parts + 38 checks + transmit-stage and field simulation
+make verify-quick        # about 3 minutes: v5 cylinder + base plate + parts + 47 checks + transmit-stage and field simulation
 python3 tests/regress.py
 ```
 `make verify-full` (incl. `make audit-system`: wiring audit, stress table, stack-up, voxel interference) adds the receiver simulations, hood, yoke and the display-board routing and Gerbers. Then paste prompts/P00_BOOTSTRAP_CLAUDE_CODE.md into Claude Code.
