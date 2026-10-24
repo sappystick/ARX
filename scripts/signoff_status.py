@@ -62,7 +62,6 @@ SYS = {
     "PM2 dock chain (time-domain)": chk("kit_v23/power_dock_check.json", lambda d: (all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} checks")),
     "full head cross-check (26 solids, 3D interference)": chk("kit_v22/head_crosscheck.json", lambda d: (d["fails"] == 0, f"{len(d['checks'])} checks, {d['warns']} warnings")),
     "0.2 mm fine check": chk("kit_v22/fine_check.json", lambda d: (d[0][1] == 0 and d[1][1] == [] and d[2][1] == 0 and d[3][1] == [], "board discs and bodies clear")),
-    "release-tx / sign-off controls (refusals, evidence rule, idempotence)": chk("kit_v22/controls_3_9.json", lambda d: (d["all_ok"], f"{sum(c['ok'] for c in d['cases'])}/{len(d['cases'])} controls behave as intended")),
     "voxel interference (window, bridge, junction)": chk("kit_v22/interference_audit.json", lambda d: (len(d["interferences"]) == 0, f"{len(d['pairs'])} pairs")),
 }
 # An UNVERIFIED item can be closed only by deleting its row in docs/UNVERIFIED.md AND having its evidence on disk: removing the row without evidence is a FAIL (not a silent PASS).
@@ -72,6 +71,9 @@ import glob as _g
 def ev_state(k):
     if k in UNV: return ("UNVERIFIED", UNV[k])
     return ("PASS", f"evidence present: {KNOWN_EVIDENCE[k]}") if _g.glob(KNOWN_EVIDENCE[k]) else ("FAIL", f"row removed from the register but no evidence at {KNOWN_EVIDENCE[k]}")
+CONTROLS_ROW = ("release-tx / sign-off controls (refusals, evidence rule, idempotence)", chk("kit_v22/controls_3_9.json", lambda d: (d["all_ok"], f"{sum(c['ok'] for c in d['cases'])}/{len(d['cases'])} controls behave as intended")))
+if "--ignore-controls" not in sys.argv:       # used only by tests/release_signoff_controls.py: its own result file cannot be an input of its baseline (cold-start chicken and egg)
+    SYS[CONTROLS_ROW[0]] = CONTROLS_ROW[1]
 EV = {k: ev_state(k) for k in KNOWN_EVIDENCE}
 for k in UNV:                                                      # a registered ID nothing displays would be invisible: show it
     if k not in EV and not k.startswith(("U-ROUTE-", "U-KICAD-")): EV[k] = ("UNVERIFIED", UNV[k])

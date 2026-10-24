@@ -32,7 +32,7 @@ def status(name, register=None, expect_rc=0, expect_text=None, what=None):
     regf = "docs/UNVERIFIED.md"
     if register is not None: regf = os.path.join(T, name + ".md"); open(regf, "w").write(register)
     oj = os.path.join(T, name + ".json"); om = os.path.join(T, name + "_status.md")
-    rc, tx = run("scripts/signoff_status.py", "--no-regress", "--register", regf, "--out-json", oj, "--out-md", om)
+    rc, tx = run("scripts/signoff_status.py", "--no-regress", "--ignore-controls", "--register", regf, "--out-json", oj, "--out-md", om)
     j = json.load(open(oj)) if os.path.exists(oj) else {}; extra = True
     if what: extra = what(j)
     return rc, tx, j, extra
