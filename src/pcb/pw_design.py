@@ -184,7 +184,9 @@ if PW == "C":
     add("RV1", "R0603", "100k", "0.1%"); add("RV2", "R0603", "10k", "0.1%"); add("CV4", "C0603", "100n", "X7R")
     net("VBUS", ("RV1", 1)); net("VBUS_SENSE", ("RV2", 1), ("RV1", 2), ("CV4", 1)); net("GND", ("RV2", 2), ("CV4", 2))
     # handle: trigger + dial (the only things that leave the head besides power)
-    add("JTR", "HDR1x7", "Handle: +3V3 GND TRIG DIAL JOYX JOYY SHLD", "shielded 6-core + drain (the only signal cable leaving the head)"); net("P3V3", ("JTR", 1)); net("GND", ("JTR", 2)); net("TRIG_EXT", ("JTR", 3), ("RT1", 1)); net("DIAL_EXT", ("JTR", 4), ("RD1", 1)); net("SHIELD", ("JTR", 7), ("RSH", 1), ("CSH", 1)); net("JTR5_NC", ("JTR", 5)); net("JTR6_NC", ("JTR", 6))   # JTR.5/.6 (JOYX/JOYY) unconnected: joystick removed (owner decision 2026-10-23), CB1D-B
+    add("JTR", "HDR1x7", "Handle: +3V3 GND TRIG DIAL JOYX JOYY SHLD", "shielded 6-core + drain (the only signal cable leaving the head)"); net("P3V3", ("JTR", 1)); net("GND", ("JTR", 2)); net("TRIG_EXT", ("JTR", 3), ("RT1", 1)); net("DIAL_EXT", ("JTR", 4), ("RD1", 1)); net("SHIELD", ("JTR", 7), ("RSH", 1), ("CSH", 1)); net("JTR5_NC", ("JTR", 5), ("RJ5", 1)); net("JTR6_NC", ("JTR", 6), ("RJ6", 1)); net("GND", ("RJ5", 2), ("RJ6", 2))
+    add("RJ5", "R0603", "0R DNP", "option: fit to ground JTR.5 at the CB1D end (handle-end check: OPEN_ITEMS 25)"); add("RJ6", "R0603", "0R DNP", "option: fit to ground JTR.6 at the CB1D end (handle-end check: OPEN_ITEMS 25)")
+    add("RJB10", "R0603", "0R", "FITTED: JB.10 (AB1B idle MONO input, RS2 into the MONO amplifier) to VCM_OUT; remove only to isolate the input, which then floats: not for service"); net("JB10_VCM", ("RJB10", 1)); net("VCM_OUT", ("RJB10", 2))   # JTR.5/.6 (JOYX/JOYY) unconnected: joystick removed (owner decision 2026-10-23), CB1D-B
     add("RSH", "R0603", "1M", ""); add("CSH", "C0603", "1n 100V", "C0G"); net("GND", ("RSH", 2), ("CSH", 2))
     for k, (ext, inn) in enumerate((("TRIG_EXT", "TRIG_IN"), ("DIAL_EXT", "DIAL_IN")), 1):
         r = "RT1" if k == 1 else "RD1"; add(r, "R0603", "1k", "series protection"); add(f"DH{k}", "DSOD", "BAS16", ""); add(f"DL{k}", "DSOD", "BAS16", ""); add(f"CQ{k}", "C0603", "10n", "X7R"); add(f"RP{k}", "R0603", "47k" if k == 1 else "10k", "pull-up (47k on TRIG: low level with the 2 kohm series path stays under VIL)" if k == 1 else "pull-up")
@@ -192,7 +194,7 @@ if PW == "C":
     # headers to the receiver boards, PB1R and the power
     add("JA", "HDR2x6S", "to AB1A J2", "1.27 mm 2x6 header"); add("JB", "HDR2x6S", "to AB1B J2", "1.27 mm 2x6 header")
     for ref, sd in (("JA", ["SDOA1", "SDOA2", "SDOA3"]), ("JB", ["SDOB1", "SDOB2"])):
-        names = ["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS"] + sd + (["BLANK", "GND", "GND"] if ref == "JA" else ["BLANK", "VCM_OUT", "VCM_OUT", "GND"])
+        names = ["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS"] + sd + (["BLANK", "GND", "GND"] if ref == "JA" else ["BLANK", "JB10_VCM", "VCM_OUT", "GND"])
         for i, nm in enumerate(names, 1): net(nm, (ref, i))
     add("JPB", "HDR2x4", "to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND", "2.54 mm header")
     for i, nm in enumerate(["UMB_SHLD", "GND", "TX1_IN", "REF_I1", "FAULT1_N", "ISENSE1", "NTC_SENSE", "GND"], 1): net(nm, ("JPB", i))
