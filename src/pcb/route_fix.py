@@ -26,6 +26,14 @@ for tr in r["tracks"]:
 ECO = {"CB1D": [dict(net="GND", layer="F.Cu", width=0.2, pts=[[4.775, 9.5], [4.25, 8.9]])]}     # C5B.2 had no plane stub from the router: tie it to the existing GND via at (4.25, 8.45)
 for e in ECO.get(board, []):
     if not any(e["pts"][0] == t["pts"][0] and e["net"] == t["net"] for t in r["tracks"]): r["tracks"].append(e); added += 1
+# Kelvin ECO: the shunt voltage must be sensed AT the shunt pad over its own narrow track, not through the 20 A copper. Remove the router's connection to the sense resistor pad and run a direct track.
+KELVIN = {"PB1R": [(("RK1", "1"), ("RS1S", "1"), 0.3)]}
+padd = {(p["ref"], p["num"]): p for p in P}
+for a, b, w in KELVIN.get(board, []):
+    ca = [padd[a]["x"], padd[a]["y"]]; cb = [padd[b]["x"], padd[b]["y"]]; net = padd[a]["net"]
+    if any(t["net"] == net and len(t["pts"]) == 2 and t["pts"][0] == ca and t["pts"][1] == cb for t in r["tracks"]): continue          # already applied
+    keep = [t for t in r["tracks"] if not (t["net"] == net and (math.dist(t["pts"][0], ca) < 0.01 or math.dist(t["pts"][-1], ca) < 0.01))]
+    removed = len(r["tracks"]) - len(keep); r["tracks"] = keep + [dict(net=net, layer="F.Cu", width=w, pts=[ca, cb])]; added += 1; print(f"Kelvin ECO {a} -> {b}: removed {removed} router track(s), added a {w} mm sense track")
 seen = set(); uniq = []
 for v in r["vias"]:                                            # the router can drop two identical vias on one spot (KiCad: holes_co_located): keep one
     k = (round(v[0], 3), round(v[1], 3), v[2])

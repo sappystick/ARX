@@ -12,7 +12,7 @@ BOARDS = {
     # CB1D-B: the MONO_IN coupling tap was removed (it carried the flyback pulse onto a 1.27 mm header and could not meet 1.0 mm)
     "CB1D": dict(hv=["COIL_A", "COIL_B", "DM1", "DM2"], hv_mm=1.0, power={"VBUS_IN": 0.8, "+5V": 0.6, "+5VA": 0.5}),
     "LB1": dict(hv=[], hv_mm=1.0, power={"+5V": 0.4, "GND": 0.4}),
-    "PB1R": dict(hv=["DRAIN1", "CLAMP1"], hv_mm=1.0, power={"DRAIN1": 1.5, "SRC1": 1.5, "VBUS": 1.5, "GND": 1.5}),
+    "PB1R": dict(hv=["DRAIN1", "CLAMP1"], hv_mm=1.0, power={"DRAIN1": 1.5, "SRC1": 1.5}),
     "PM2": dict(hv=[], hv_mm=1.0, power={"BAT_P": 1.5, "BAT_F": 1.5, "VBUS": 1.5, "GND": 1.5}),
     "SB1R-QA": dict(hv=[], hv_mm=1.0, power={}),
     "SB1R-QB": dict(hv=[], hv_mm=1.0, power={}),

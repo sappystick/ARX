@@ -17,7 +17,7 @@ a = subprocess.run(["kicad-cli", "pcb", "export", "gerbers", "--layers", layers,
 b = subprocess.run(["kicad-cli", "pcb", "export", "drill", "--format", "excellon", "--excellon-units", "mm", "--excellon-separate-th", "--drill-origin", "absolute", "-o", g + "/", dst], capture_output=True, text=True)
 files = sorted(glob.glob(g + "/*"))
 for f in files:
-    nm = os.path.basename(f).replace("b-", "").replace("b.", "")
+    nm = os.path.basename(f); nm = nm[2:] if nm.startswith(("b-", "b.")) else nm            # strip the temporary board name only at the start
     shutil.copy(f, os.path.join(outdir, f"{prefix}-{nm}"))
 print(json.dumps(dict(board=key, files=[os.path.basename(f) for f in files], gerber_rc=a.returncode, drill_rc=b.returncode)))
 if a.returncode or b.returncode: print(a.stderr[-300:], b.stderr[-300:])
