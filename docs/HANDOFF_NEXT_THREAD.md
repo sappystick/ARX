@@ -133,3 +133,56 @@ Propose this to the owner and wait for their prompt; their text replaces this li
 Resume the Arx / PHI-FOLD 233 transmit-region sign-off. Read docs/HANDOFF_NEXT_THREAD.md, then CLAUDE.md's read-first list. Verify the state with the five commands in section 0 (counts only); if anything differs, stop and report. Keep all CLAUDE.md rules and the standing rules in the handoff (pause after each numbered step, one final commit per step with source + data + docs, push only to claude/nice-turing-8i4gkt, cite URL + exact number for every rating, never fill from memory, nothing is built or measured).
 First message: confirm the recommended order 5 -> 4 -> 6 (datasheets and vendor sheets before routing PM2/HB2), in one line, then start Step 5a. Do not start the system simulation, firmware, audio, LED, improvement review or epoxy-chamber work until I paste the Steps 7-13 prompt.
 ```
+
+## 9. Default decisions (already approved: apply them, state the choice in the step report, do not ask)
+
+| Situation | Default |
+|---|---|
+| A datasheet or fabricator page is unreachable, blocked, or only a marketing page exists | Mark the item UNVERIFIED, keep its register row, record the URL tried and the failure in `docs/design/DATASHEET_LOG.md`, carry on. Never fill a rating from memory. Try WebSearch for the real PDF link before giving up; try the distributor copy only if it is the manufacturer's own PDF. |
+| Two sources disagree | Use the manufacturer's PDF; record both numbers and the revision/date; take the more conservative one for margins. |
+| The 150 uF / 50 V polymer-Ta in 7343-43 does not exist | Choose a verified 50 V part giving >= 130 uF each at 19.6 V (derated): polymer-aluminium hybrid can, or more/larger polymer-Ta, or a re-sized bank (total effective >= 625 uF at 19.6 V, droop <= 5 %). Re-place PB1R (`pw_export.py`), re-route, re-run the cross-check. Same for PM2's CB1 470 uF. |
+| ES3J (600 V) vs the 630 V rule | Switch to a verified >= 630 V ultrafast diode in the same SMC footprint (ES3K or equivalent). If none is verified, keep ES3J and show the rule-6 deviation as an explicit WATCH row for the owner; do not hide it. |
+| Four-terminal shunt | Adopt it only if a manufacturer datasheet gives the footprint and pad function; otherwise keep the two-pad R2512 with the Kelvin sense track and record why. |
+| Vendor rule is stricter than the dru_gen floor | Tighten `dru_gen.py`, fix the designs (generators, not files), re-run every DRC. |
+| Vendor rule is looser than the floor | Keep the floor (it is the design margin); record the vendor number. Never relax below the router's 0.2 mm clearance or the 1.0 mm HV rule without the owner. |
+| Vendor offers no filled/plugged via-in-pad | Move the via farm beside the pads (new variant of `viafarm.py`), re-route, re-check. |
+| HB2 Hall switch (part not chosen) | Choose a digital open-drain Hall switch for 3.3 V with a verified pinout and operate/release points that fit the 2.5 mm magnet travel; update `pw_design.py` and the trigger check. |
+| The router cannot route a net | (1) nudge the placement anchors in `pw_export.py`; (2) allow the other signal layer; (3) report with the failing net and what was tried. Never edit a KiCad file by hand. |
+| KiCad DRC reports an error | Fix the generator, regenerate, re-run; never edit the board file. A new warning class: record it, decide if cosmetic, list it in OPEN_ITEMS. |
+| A sign-off check FAILs after your change | It is your regression: fix it without asking and say so in the step report. |
+| A number moves | Report it in the step report with before/after; add a CORRECTIONS row if an earlier statement was wrong. |
+| A design-changing decision with no default here | Choose, state the choice and the reason, proceed, and list it in the step report as a decision the owner may overrule. Ask only if it cannot be undone. |
+
+## 10. Contingency matrix (what to do if the environment or session differs)
+
+| If | Then |
+|---|---|
+| `docs/HANDOFF_NEXT_THREAD.md` is missing | You are on the wrong branch. `git fetch origin claude/nice-turing-8i4gkt && git checkout claude/nice-turing-8i4gkt`. This work is NOT merged into the default branch. |
+| The session designates a different branch | Work on the designated branch, but start it from `origin/claude/nice-turing-8i4gkt` (`git checkout -B <designated> origin/claude/nice-turing-8i4gkt`), say so in the first message, never push to the default branch, never force-push. |
+| `git status` is dirty at the start | Read `git diff --stat`. If it is yours from an interrupted step, finish or checkpoint it; if you cannot tell, stop and report. Never discard changes. |
+| The branch is behind or diverged from origin | `git fetch`, fast-forward if possible; if it diverged, stop and report (never force-push, never rebase published commits). |
+| A push is rejected | Retry up to 4 times with 2 s, 4 s, 8 s, 16 s waits only for network errors; otherwise fetch, look at why, and report. |
+| `scripts/bootstrap.sh` fails or KiCad is missing | Re-run it and read the failing line; KiCad 9 comes from the PPA with the Launchpad key fetched by hand (steps are in the script). If the network is blocked, say which steps are blocked, run only what does not need KiCad (`--allow-skip` partial regress), and mark the rest UNVERIFIED. |
+| No network at all | Datasheet and vendor items stay UNVERIFIED; do the offline work (routing, generators, bench document, handoff); report what was blocked. |
+| `make signoff` exceeds the Monitor window | The 30-minute Monitor expiry is only the timer: re-arm once; the job continues. Never sleep-poll. |
+| A background job died (container restarted) | Router states and results survive only in `work/` of the same container; in a fresh container re-run `make signoff` from scratch (60 min cold). |
+| The strict regression shows a missing result | Run the matching make target (the flow produces results; the seed does not). Do not use `--allow-skip` for sign-off. |
+| `publish_data.py --check` reports stale files | `make publish`, review `git diff --stat`, commit with the step; a Gerber that differs only in KiCad's ordering is not a change (geometry comparison handles it). |
+| `release-tx` refuses | Read the message: existing revision -> new name (r2, r3); sign-off FAIL -> fix; stale data -> publish. Never edit the script to get past it. |
+| The owner pastes evidence or a new decision | Use prompt 4 in `prompts/HANDOFF_PROMPTS.md`. |
+| Context is getting large | At the end of the current step update section 11 and the state snapshot, commit, push, and tell the owner the thread can be restarted with prompt 1. |
+
+## 11. Progress log (living: append a row in every step's final commit; refresh sections 0 and 2)
+
+| Date | Step | Commit | Strict regress | Sign-off | Notes |
+|---|---|---|---|---|---|
+| 2026-10-24 | 1: external KiCad 9 DRC, CB1D-B, HV plane keep-out | a2b9cfb | 39 | n/a | MONO tap + joystick parts removed; KiCad 7 cannot load the files, KiCad 9 can |
+| 2026-10-24 | 2: CB1D options, SB1R vias, TXJ1 pads, fab floor, finishes | 268a96f | 42 | n/a | SB1R vias had no annular ring (0.8 mm drill in 0.8 mm pad) |
+| 2026-10-24 | 3: PB1R routed (rectangular), KiCad-written Gerbers, cross-check | a82e93e | 47 | n/a | cross-check forced a re-placement (JL1 left edge, Kelvin ECO, via farm) |
+| 2026-10-24 | 3.5: bootstrap, hook, signoff, strict policy, release-tx | 50a51c3 | 47 | 37/0/0/17 | first release releases/TX_r1 |
+| 2026-10-24 | 3.9: controls, evidence rule, seed clobbering fixed | fbfef49 | 48 | 38/0/0/17 | warm run idempotent; cold clone reproduced all committed data |
+| 2026-10-24 | handoff written | e218427 | 48 | 38/0/0/17 | this file |
+
+## 12. Prompts that go with this file
+
+`prompts/HANDOFF_PROMPTS.md` holds five paste-ready prompts: (1) start/resume (two modes: pause after each step, or run 5 -> 4 -> 6 without pausing), (2) the Steps 7-13 program (paste only after the Step 6 regroup summary), (3) recovery when something is off, (4) ingest evidence or a new owner decision, (5) read-only status brief. They assume this file and nothing else.
