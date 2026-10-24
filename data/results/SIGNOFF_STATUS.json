@@ -274,13 +274,13 @@
    "state": "PASS",
    "detail": "board discs and bodies clear"
   },
-  "release-tx / sign-off controls (refusals, evidence rule, idempotence)": {
-   "state": "PASS",
-   "detail": "11/11 controls behave as intended"
-  },
   "voxel interference (window, bridge, junction)": {
    "state": "PASS",
    "detail": "28 pairs"
+  },
+  "release-tx / sign-off controls (refusals, evidence rule, idempotence)": {
+   "state": "PASS",
+   "detail": "11/11 controls behave as intended"
   },
   "tests/regress.py (strict: a missing result FAILs)": {
    "state": "PASS",

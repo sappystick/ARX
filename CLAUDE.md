@@ -42,6 +42,7 @@ mm / deg; z up from the underside of the base plate; azimuth CCW from +x; heel (
 - Transmit leads must run in the wall-top channel to the 178 deg window and TXJ1 (never inside the vault past the posts). LB1 is 0.8 mm with flat wire pads. Run `make audit-system` after any change to boards, harness, cylinder or bridge.
 - Receive boards: sbq_gen2.py (geometry) -> sbq_tune.py A/B (link radii) -> sbq_export.py (KiCad + Gerber) -> sbq_sim.py / sbq_damp.py. Lobes MUST be exact full rings with identical relative angles; continuous spirals leak volts (see docs/CORRECTIONS.md).
 - Simulations that load kit_v15/LOW/paths.pkl need `make formers-low` or the seed copy (already in work/ after setup).
+- `make setup` copies INPUT seeds only: it never takes a result from data/seed and never overwrites a warm work/ (scripts/seed_copy.py). Results exist only if their make target ran; `make clean` refreshes inputs. KiCad's Gerber export is not byte-deterministic: compare layers with src/pcb/gerber_geom.py, never by hash or text diff.
 
 ## Current priorities
-See docs/OPEN_ITEMS.md (2 CAM/KiCad verification, 3 rigid-flex spine, 4 and 19 upper assembly first article, 5 DSP in Python, 20 CB1D revision for the joystick removal).
+See docs/OPEN_ITEMS.md and docs/STATUS.md (generated): transmit-region sign-off steps 4-6 (PM2/HB2 routing, datasheets and vendor sheets, bench procedure), 2 CAM viewer + fabricator DRC, 3 rigid-flex spine, 4 and 19 upper assembly first article, 5 DSP in Python, 28 PB1R follow-ups. (20, the CB1D joystick revision, is done: CB1D-B.)

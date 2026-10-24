@@ -28,8 +28,8 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 | PM2 dock chain (time-domain) | PASS | 13 checks |
 | full head cross-check (26 solids, 3D interference) | PASS | 42 checks, 2 warnings |
 | 0.2 mm fine check | PASS | board discs and bodies clear |
-| release-tx / sign-off controls (refusals, evidence rule, idempotence) | PASS | 11/11 controls behave as intended |
 | voxel interference (window, bridge, junction) | PASS | 28 pairs |
+| release-tx / sign-off controls (refusals, evidence rule, idempotence) | PASS | 11/11 controls behave as intended |
 | tests/regress.py (strict: a missing result FAILs) | PASS | 48 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0 |
 
 ## Evidence still missing (docs/UNVERIFIED.md)
