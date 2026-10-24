@@ -1,3 +1,2 @@
-# optional: independent reading of KiCad-written Gerbers (src/pcb/gerber_plane_check.py)
-gerbonara
-shapely
+# merged into requirements.txt (2026-10-24): gerbonara and shapely are required, not optional. Kept as a stub so older notes that name this file still resolve.
+-r requirements.txt

@@ -13,7 +13,9 @@ Parametric CAD (Python -> STL), PCB placement/routing/Gerber tooling, physics si
 - prompts/: ready-made task prompts (P*, C*). .claude/: commands, skills, agents, settings.
 
 ## Commands
-- `make setup` then `make verify-quick` (v5 cylinder, parts, 47 geometry checks, transmit-stage/field sim; about 2 min) then `python3 tests/regress.py`.
+- Fresh container: `scripts/bootstrap.sh` (KiCad 9 PPA, pip requirements incl. gerbonara + shapely, make setup, self-test; also the SessionStart hook).
+- `make setup` then `make verify-quick` (v5 cylinder, parts, 47 geometry checks, transmit-stage/field sim; about 2 min) then `python3 tests/regress.py --allow-skip` (partial run). Plain `python3 tests/regress.py` is strict: a missing result FAILs unless the item is registered UNVERIFIED in docs/UNVERIFIED.md.
+- `make signoff` = every board flow + every check + the table (docs/STATUS.md and data/results/SIGNOFF_STATUS.json are generated; 30-40 min cold: run it as one background job); `make publish` copies work/ outputs into data/; `make release-tx REV=r1` packages the transmit-region boards with a hash manifest (refuses on a FAIL or stale data).
 - `make verify-full` adds the quadrupole/receiver sims, hood, yoke and the display-board PCB flow (routing 52 s).
 - Single steps: make v5 | check | hood | yoke | yoke-check (after v5, hood, yoke) | sims | pcb-lb1 | route-lb1 | gerber-lb1 | pcb-cb1d | route-cb1d | formers-low | formers-print.
 - Python 3.12+, numpy, scipy, matplotlib, pillow (requirements.txt). Linux/macOS (or WSL) for the Makefile. Full pipeline checked on Python 3.13 with numpy 2.1 and 2.5 (scipy 1.14 and 1.18): same outputs. numpy 2.x rejects 2D vectors in np.cross, so write 2D cross products out.

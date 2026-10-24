@@ -1,6 +1,14 @@
-import sys, json, time
+import sys, json, time, os, hashlib
 from router import Router
 board=sys.argv[1]
+# a saved router state is only valid for the netlist/pads, router code and configuration it was made with (a stale state produced stale routes twice): key it to a hash of all three
+_pads={"LB1":"kit_v18/LB1/pads.json","PB1R":"kit_v6/PB1R/pads.json"}.get(board,"kit_v18/CB1D/pads.json")
+_h=hashlib.sha1(b"".join(open(f,"rb").read() for f in (_pads,"router.py","route_run.py"))).hexdigest()
+_shaf=f"kit_v20/state_{board}.sha"; _old=open(_shaf).read().strip() if os.path.exists(_shaf) else None
+if _old != _h:
+    for _f in (f"kit_v20/state_{board}.pkl", f"kit_v20/route_{board}.json"):
+        if os.path.exists(_f): os.remove(_f)
+    os.makedirs("kit_v20",exist_ok=True); open(_shaf,"w").write(_h); print(board,"router state reset (pads / router / config changed)" if _old else "router state: new")
 if board=="LB1":
     R=Router("kit_v18/LB1/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu","+5V":"In2.Cu"},{"+5V":0.4,"GND":0.4},clr=0.2)
 elif board=="PB1R":

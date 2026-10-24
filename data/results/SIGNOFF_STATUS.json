@@ -1,0 +1,325 @@
+{
+ "generated": "2026-10-24 04:25 UTC",
+ "commit": "a82e93e",
+ "counts": {
+  "PASS": 36,
+  "FAIL": 1,
+  "SKIP": 0,
+  "UNVERIFIED": 17
+ },
+ "boards": {
+  "CB1D": {
+   "route": {
+    "state": "PASS",
+    "detail": "44/44 nets"
+   },
+   "indep": {
+    "state": "PASS",
+    "detail": "0 violations, 0 opens"
+   },
+   "kicad": {
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0, HV control live"
+   },
+   "gerber": {
+    "state": "PASS",
+    "detail": "10 files"
+   },
+   "plane": {
+    "state": "PASS",
+    "detail": "8 HV pad/via x plane checks"
+   },
+   "cross": {
+    "state": "PASS",
+    "detail": "53 link pins, 59 conductors"
+   }
+  },
+  "LB1": {
+   "route": {
+    "state": "PASS",
+    "detail": "68/68 nets"
+   },
+   "indep": {
+    "state": "PASS",
+    "detail": "0 violations, 0 opens"
+   },
+   "kicad": {
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
+   },
+   "gerber": {
+    "state": "PASS",
+    "detail": "8 files"
+   },
+   "plane": {
+    "state": "-",
+    "detail": ""
+   },
+   "cross": {
+    "state": "PASS",
+    "detail": "9 stack-up checks"
+   }
+  },
+  "PB1R": {
+   "route": {
+    "state": "PASS",
+    "detail": "15/15 nets"
+   },
+   "indep": {
+    "state": "PASS",
+    "detail": "0 violations, 0 opens"
+   },
+   "kicad": {
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0, HV control live"
+   },
+   "gerber": {
+    "state": "PASS",
+    "detail": "12 files"
+   },
+   "plane": {
+    "state": "PASS",
+    "detail": "4 checks, min 1.0 mm, control True"
+   },
+   "cross": {
+    "state": "PASS",
+    "detail": "13 checks, 1 warn"
+   }
+  },
+  "TXJ1": {
+   "route": {
+    "state": "-",
+    "detail": ""
+   },
+   "indep": {
+    "state": "-",
+    "detail": ""
+   },
+   "kicad": {
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0, HV control live"
+   },
+   "gerber": {
+    "state": "PASS",
+    "detail": "6 files"
+   },
+   "plane": {
+    "state": "-",
+    "detail": ""
+   },
+   "cross": {
+    "state": "PASS",
+    "detail": "14 lead/TXJ1 checks"
+   }
+  },
+  "SB1R-QA": {
+   "route": {
+    "state": "-",
+    "detail": ""
+   },
+   "indep": {
+    "state": "-",
+    "detail": ""
+   },
+   "kicad": {
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
+   },
+   "gerber": {
+    "state": "PASS",
+    "detail": "10 files"
+   },
+   "plane": {
+    "state": "-",
+    "detail": ""
+   },
+   "cross": {
+    "state": "PASS",
+    "detail": "via margin 0.89, hole margin 2.36 mm"
+   }
+  },
+  "SB1R-QB": {
+   "route": {
+    "state": "-",
+    "detail": ""
+   },
+   "indep": {
+    "state": "-",
+    "detail": ""
+   },
+   "kicad": {
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
+   },
+   "gerber": {
+    "state": "PASS",
+    "detail": "9 files"
+   },
+   "plane": {
+    "state": "-",
+    "detail": ""
+   },
+   "cross": {
+    "state": "PASS",
+    "detail": "via margin 0.89, hole margin 2.36 mm"
+   }
+  },
+  "PM2": {
+   "route": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-PM2"
+   },
+   "indep": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-PM2"
+   },
+   "kicad": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-PM2"
+   },
+   "gerber": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-PM2"
+   },
+   "plane": {
+    "state": "-",
+    "detail": ""
+   },
+   "cross": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-PM2"
+   }
+  },
+  "HB2": {
+   "route": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-HB2"
+   },
+   "indep": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-HB2"
+   },
+   "kicad": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-HB2"
+   },
+   "gerber": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-HB2"
+   },
+   "plane": {
+    "state": "-",
+    "detail": ""
+   },
+   "cross": {
+    "state": "UNVERIFIED",
+    "detail": "U-ROUTE-HB2"
+   }
+  },
+  "HTA": {
+   "route": {
+    "state": "-",
+    "detail": ""
+   },
+   "indep": {
+    "state": "-",
+    "detail": ""
+   },
+   "kicad": {
+    "state": "UNVERIFIED",
+    "detail": "U-KICAD-HTA"
+   },
+   "gerber": {
+    "state": "FAIL",
+    "detail": "0 files"
+   },
+   "plane": {
+    "state": "-",
+    "detail": ""
+   },
+   "cross": {
+    "state": "-",
+    "detail": ""
+   }
+  }
+ },
+ "system": {
+  "cylinder v5 + parts + 47 geometry checks": {
+   "state": "PASS",
+   "detail": "47 checks"
+  },
+  "KiCad schematics (9 boards, nets rebuilt = netlists)": {
+   "state": "PASS",
+   "detail": "9 boards"
+  },
+  "wiring audit (links + harness)": {
+   "state": "PASS",
+   "detail": "53 pins, 59 conductors"
+  },
+  "stress table (only the documented LED-rail row may fail)": {
+   "state": "PASS",
+   "detail": "1 fail (LED rail, by design), 1 watch"
+  },
+  "TX stage over 19.6-29.4 V (reproduces sim_head1 at 26 V)": {
+   "state": "PASS",
+   "detail": "Vds 456-466 V, ton table"
+  },
+  "PM2 dock chain (time-domain)": {
+   "state": "PASS",
+   "detail": "13 checks"
+  },
+  "full head cross-check (26 solids, 3D interference)": {
+   "state": "PASS",
+   "detail": "42 checks, 2 warnings"
+  },
+  "0.2 mm fine check": {
+   "state": "PASS",
+   "detail": "board discs and bodies clear"
+  },
+  "voxel interference (window, bridge, junction)": {
+   "state": "PASS",
+   "detail": "28 pairs"
+  },
+  "tests/regress.py (strict: a missing result FAILs)": {
+   "state": "PASS",
+   "detail": "47 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
+  }
+ },
+ "evidence": {
+  "U-DS-PARTS": {
+   "state": "UNVERIFIED",
+   "detail": "Part ratings (IPB65R095C7, ES3J/ES3K, TC4420, LM393, OKI-78SR-12/-5, SMCJ33A, R2512, MT60, P30B, BAV199, 74HC4051, OPA2365, OPA2211, 50 V bulk capacitor, four-terminal shunt)"
+  },
+  "U-FAB-RULES": {
+   "state": "UNVERIFIED",
+   "detail": "Advanced Circuits / TTM capability, via-in-pad/filled-via and finish pages vs the dru_gen.py floor"
+  },
+  "U-FAB-DRC": {
+   "state": "UNVERIFIED",
+   "detail": "Fabricator's own DRC/CAM review of every board"
+  },
+  "U-CAM-VIEW": {
+   "state": "UNVERIFIED",
+   "detail": "Gerbers opened in a CAM viewer (visual check of the KiCad-written and gerber_out.py files)"
+  },
+  "U-BENCH": {
+   "state": "UNVERIFIED",
+   "detail": "Every bench item in docs/design/BENCH_FIRST_ARTICLE_TX.md (written in Step 6, NOT RUN)"
+  },
+  "U-COLD-BOOTSTRAP": {
+   "state": "UNVERIFIED",
+   "detail": "scripts/bootstrap.sh cold path (KiCad install in a bare container) tested end to end; the warm path and the PPA key/source steps are tested"
+  }
+ },
+ "unverified": {
+  "U-DS-PARTS": "Part ratings (IPB65R095C7, ES3J/ES3K, TC4420, LM393, OKI-78SR-12/-5, SMCJ33A, R2512, MT60, P30B, BAV199, 74HC4051, OPA2365, OPA2211, 50 V bulk capacitor, four-terminal shunt)",
+  "U-FAB-RULES": "Advanced Circuits / TTM capability, via-in-pad/filled-via and finish pages vs the dru_gen.py floor",
+  "U-FAB-DRC": "Fabricator's own DRC/CAM review of every board",
+  "U-CAM-VIEW": "Gerbers opened in a CAM viewer (visual check of the KiCad-written and gerber_out.py files)",
+  "U-ROUTE-PM2": "PM2 routed, KiCad-DRC'd, Gerbers",
+  "U-ROUTE-HB2": "HB2 routed, KiCad-DRC'd, Gerbers",
+  "U-KICAD-HTA": "HTA in the KiCad DRC flow",
+  "U-COLD-BOOTSTRAP": "scripts/bootstrap.sh cold path (KiCad install in a bare container) tested end to end; the warm path and the PPA key/source steps are tested",
+  "U-BENCH": "Every bench item in docs/design/BENCH_FIRST_ARTICLE_TX.md (written in Step 6, NOT RUN)"
+ }
+}

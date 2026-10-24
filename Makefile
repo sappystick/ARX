@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -88,10 +88,10 @@ pcb-cb1d:
 	cd $(W) && PW=C DISC=1 $(PY) pw_design.py && PW=C DISC=1 $(PY) cb1d_export.py
 
 route-lb1: pcb-lb1
-	cd $(W) && $(PY) route_run.py LB1 && $(PY) route_fix.py LB1 kit_v20/route_LB1.json
+	cd $(W) && for i in 1 2 3 4 5 6; do $(PY) route_run.py LB1; [ -f kit_v20/route_LB1.json ] && break; done; test -f kit_v20/route_LB1.json && $(PY) route_fix.py LB1 kit_v20/route_LB1.json
 
 route-cb1d: pcb-cb1d
-	cd $(W) && $(PY) route_run.py CB1D && $(PY) route_fix.py CB1D kit_v20/route_CB1D.json
+	cd $(W) && for i in 1 2 3 4 5 6; do $(PY) route_run.py CB1D; [ -f kit_v20/route_CB1D.json ] && break; done; test -f kit_v20/route_CB1D.json && $(PY) route_fix.py CB1D kit_v20/route_CB1D.json
 
 gerber-lb1: route-lb1
 	cd $(W) && $(PY) gerber_out.py LB1 hatch notch-1
@@ -124,7 +124,7 @@ kicad-cb1d:
 
 # PB1R (rectangular neck-module board): route, independent DRC, KiCad file, KiCad-written Gerbers/drill with the HV plane carve-out
 route-pb1r: pcb-pb1r
-	cd $(W) && $(PY) route_run.py PB1R && $(PY) route_fix.py PB1R kit_v20/route_PB1R.json && $(PY) viafarm.py PB1R kit_v20/route_PB1R.json
+	cd $(W) && for i in 1 2 3 4 5 6; do $(PY) route_run.py PB1R; [ -f kit_v20/route_PB1R.json ] && break; done; test -f kit_v20/route_PB1R.json && $(PY) route_fix.py PB1R kit_v20/route_PB1R.json && $(PY) viafarm.py PB1R kit_v20/route_PB1R.json
 
 drc-pb1r:
 	cd $(W) && $(PY) drc.py PB1R kit_v20/route_PB1R.json 0 DRAIN1,CLAMP1
@@ -134,14 +134,18 @@ kicad-pb1r: route-pb1r
 
 gerber-pb1r: kicad-pb1r
 	$(PY) src/pcb/kicad_gerber.py $(W)/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb PB1R $(W)/kit_v22/GERBER_PB1R PF233-PB1R
-	@cd $(W) && if $(PY) -c "import gerbonara, shapely" 2>/dev/null; then $(PY) gerber_plane_check.py PB1R kit_v22/GERBER_PB1R PF233-PB1R DRAIN1,CLAMP1 In1:GND,In2:VBUS; else echo "gerbonara / shapely missing: plane keep-out check SKIPPED (pip install -r requirements-cam.txt)"; fi
+	cd $(W) && $(PY) gerber_plane_check.py PB1R kit_v22/GERBER_PB1R PF233-PB1R DRAIN1,CLAMP1 In1:GND,In2:VBUS
 
 # PB1R cross-check against the transmit stage (pulse path R/L, return vias, Kelvin, flyback-net parts, connectors, eddy estimate)
 check-pb1r: route-pb1r
 	cd $(W) && mkdir -p kit_v23 && $(PY) tx_vbus_sweep.py > /dev/null && $(PY) pb1r_check.py
 
+# HTA (hub-top antenna) Gerbers and drill; needs the v5 cylinder outputs (PIXEL_MAP_66.csv from `make check`)
+pcb-hta:
+	cd $(W) && $(PY) hta_gerber.py > /dev/null
+
 # KiCad 9 DRC (zones filled, design rules from dru_gen.py, automatic negative control) on the routed boards: needs `kicad-cli` and the system python3 with pcbnew
-kicad-drc: kicad-cb1d kicad-lb1 kicad-pb1r
+kicad-drc: kicad-cb1d kicad-lb1 kicad-pb1r tx sbq-fast
 	for b in CB1D LB1; do $(PY) src/pcb/kicad_drc.py $(W)/kit_v22/KICAD/PF233-$${b}_routed.kicad_pcb $(W)/kit_v22/kicad_drc_$$b.json $$b | head -1; done
 	$(PY) src/pcb/kicad_drc.py $(W)/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb $(W)/kit_v22/kicad_drc_PB1R.json PB1R | head -1
 	$(PY) src/pcb/kicad_drc.py $(W)/kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb $(W)/kit_v22/kicad_drc_TXJ1.json TXJ1 | head -1
@@ -154,7 +158,7 @@ sbq-fast:
 sbq:
 	cd $(W) && rm -f kit_v22/sbq_radii.json && $(PY) sbq_gen2.py && $(PY) sbq_tune.py A && $(PY) sbq_tune.py B && $(MAKE) -C .. sbq-fast
 
-pcb-release: gerber-lb1 gerber-cb1d gerber-pb1r drc-lb1 drc-cb1d drc-pb1r kicad-lb1 kicad-cb1d kicad-drc sbq-fast
+pcb-release: pcb-hta gerber-lb1 gerber-cb1d gerber-pb1r drc-lb1 drc-cb1d drc-pb1r kicad-lb1 kicad-cb1d kicad-drc sbq-fast
 
 # transmit lead system (channel, TXJ1 board, cradle, schematics) and the system audits
 tx:
@@ -165,4 +169,30 @@ audit-system: tx tx-vbus pcb-lb1 pcb-cb1d pcb-pb1r pcb-hb2 pcb-pm2
 
 # full cross-check of the assembled head (3D interference at 0.5 and 0.2 mm, layers, radial fits, LED/TX/RX/wiring) and the cut-away drawings
 head-audit: audit-system
+	@test -f $(W)/kit_v15/LOW/FORMER_L1_petal_coil_former.stl || $(MAKE) formers-low
 	cd $(W) && mkdir -p kit_v21 && $(PY) head_crosscheck.py && $(PY) fine_check.py && $(PY) head_drawings.py
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+# SIGN-OFF of the transmit region: every flow, every check, one table (docs/STATUS.md and data/results/SIGNOFF_STATUS.json are GENERATED, never hand-edited).
+# From a cold work/ this takes 30-40 minutes (routing, sims, head audit): run it as ONE background job. Fails if any check fails; UNVERIFIED items (docs/UNVERIFIED.md) are listed, not hidden.
+signoff:
+	$(MAKE) setup
+	$(MAKE) verify-full
+	$(MAKE) pcb-release
+	$(MAKE) check-pb1r
+	$(MAKE) head-audit
+	$(PY) scripts/publish_data.py
+	$(PY) scripts/signoff_status.py
+
+# copy the generated outputs from work/ into the committed data/ folders (version names in scripts/publish_data.py)
+publish:
+	$(PY) scripts/publish_data.py
+
+# refresh the STL hashes (release skill: hashes are refreshed only after the gate has passed)
+manifest-stl:
+	$(PY) scripts/manifest.py stl/MANIFEST.csv stl
+
+# versioned package of the transmit-region boards with a hash manifest and the per-board list of checks passed / still UNVERIFIED; refuses to run if the sign-off has a failure
+release-tx: manifest-stl
+	$(PY) scripts/release_tx.py $(or $(REV),r1)
+

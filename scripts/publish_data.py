@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+"""Publish generated outputs from work/ into the committed data/ folders (replaces the ad-hoc copy scripts of Steps 1-3).
+Version names live in VERSIONS: a changed design gets a NEW name there (and a SUPERSEDED.txt in the old folder), never an overwrite of a released set.
+A file is rewritten only if its content differs; KiCad's Gerber creation timestamp is ignored in that comparison so an unchanged board does not churn in git.
+usage: scripts/publish_data.py [--check]     --check lists stale files and exits 1 (used by scripts/release_tx.py)"""
+import os, re, shutil, glob, subprocess, sys, json
+W = "work"; CHECK = "--check" in sys.argv; stale = []; changed = 0
+VERSIONS = {   # board -> (gerber folder in data/gerber, work gerber dir, work prefix, published prefix)
+    "CB1D": ("CB1D_B2", "kit_v22/GERBER_CB1D_v2", "PF233-CB1D-v2", "PF233-CB1D-B2"),
+    "LB1": ("LB1_v4", "kit_v22/GERBER_LB1_v2", "PF233-LB1-v2", "PF233-LB1-v4"),
+    "PB1R": ("PB1R", "kit_v22/GERBER_PB1R", "PF233-PB1R", "PF233-PB1R"),
+    "TXJ1": ("TXJ1_v2", "kit_v22/GERBER_TXJ1", "TXJ1-", "TXJ1-v2-"),
+    "SB1R-QA": ("SB1R_QA_v2", "kit_v22/GERBER_SB1R_QA", "SB1R-QA-", "SB1R-QA-v2-"),
+    "HTA": ("HTA", "kit_v18/HTA", "PF233-HTA", "PF233-HTA"),
+    "SB1R-QB": ("SB1R_QB_v2", "kit_v22/GERBER_SB1R_QB", "SB1R-QB-", "SB1R-QB-v2-"),
+}
+KICAD = {"PF233-CB1D_routed.kicad_pcb": "kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb", "PF233-LB1_routed.kicad_pcb": "kit_v22/KICAD/PF233-LB1_routed.kicad_pcb", "PF233-PB1R_routed.kicad_pcb": "kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb",
+         "PF233-PB1R_placed.kicad_pcb": "kit_v6/PB1R/PF233-PB1R.kicad_pcb", "TXJ1.kicad_pcb": "kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb", "SB1R-QA.kicad_pcb": "kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb", "SB1R-QB.kicad_pcb": "kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb"}
+DRU = {"PF233-CB1D_routed": "CB1D", "PF233-LB1_routed": "LB1", "PF233-PB1R_routed": "PB1R", "TXJ1": "TXJ1", "SB1R-QA": "SB1R-QA", "SB1R-QB": "SB1R-QB"}
+RESULTS = ["kit_v20/route_CB1D.json", "kit_v20/route_LB1.json", "kit_v20/route_PB1R.json", "kit_v22/drc_CB1D.json", "kit_v22/drc_LB1.json", "kit_v22/drc_PB1R.json", "kit_v22/kicad_drc_CB1D.json", "kit_v22/kicad_drc_LB1.json",
+           "kit_v22/kicad_drc_PB1R.json", "kit_v22/kicad_drc_TXJ1.json", "kit_v22/kicad_drc_SB1R-QA.json", "kit_v22/kicad_drc_SB1R-QB.json", "kit_v22/gerber_hv_CB1D.json", "kit_v22/gerber_plane_PB1R.json", "kit_v22/pb1r_check.json",
+           "kit_v22/head_crosscheck.json", "kit_v22/fine_check.json", "kit_v22/sch_check.json", "kit_v22/stack_check.json", "kit_v22/system_budget.json", "kit_v22/SYSTEM_STRESS_MARGINS.csv", "kit_v22/wiring_audit.json",
+           "kit_v22/trigger_check.json", "kit_v22/tx_system.json", "kit_v22/sbq_geometry.json", "kit_v23/tx_vbus.json", "kit_v23/TX_ONTIME_LUT.csv", "kit_v23/power_dock_check.json",
+           "kit_v6/PB1R/PF233-PB1R_BOM.csv", "kit_v6/PB1R/PF233-PB1R_pickplace.csv", "kit_v6/PB1R/PF233-PB1R.net"]
+def norm(b):
+    try: t = b.decode()
+    except UnicodeDecodeError: return b
+    return re.sub(r"%TF\.CreationDate,[^*]*\*%", "", t).encode()
+def put(src, dst, transform=None):
+    global changed
+    if not os.path.exists(src): stale.append(f"missing source {src}"); return
+    data = open(src, "rb").read()
+    if transform: data = transform(data)
+    if os.path.exists(dst) and norm(open(dst, "rb").read()) == norm(data): return
+    stale.append(dst)
+    if not CHECK: os.makedirs(os.path.dirname(dst), exist_ok=True); open(dst, "wb").write(data); changed += 1
+for b, (dest, wd, wp, pp) in VERSIONS.items():
+    for f in sorted(glob.glob(f"{W}/{wd}/*")):
+        n = os.path.basename(f)
+        if n.endswith("jogbrjob") or not n.startswith(wp): continue
+        put(f, f"data/gerber/{dest}/{pp}{n[len(wp):]}", lambda d, wp=wp, pp=pp: d.replace(wp.encode(), pp.encode()) if wp != pp else d)
+for dst, src in KICAD.items(): put(f"{W}/{src}", f"data/kicad/{dst}")
+sys.path.insert(0, "src/pcb"); import dru_gen
+for base, key in DRU.items():                                    # rule files are generated text (dru_gen.py), not copied
+    p = f"data/kicad/{base}.kicad_dru"; want = dru_gen.rules(key); have = open(p).read() if os.path.exists(p) else None
+    if have != want:
+        stale.append(p)
+        if not CHECK: open(p, "w").write(want); changed += 1
+for r in RESULTS: put(f"{W}/{r}", f"data/results/{os.path.basename(r)}")
+for f in glob.glob(f"{W}/kit_v22/SCH/*.kicad_sch"): put(f, f"data/kicad/sch/{os.path.basename(f)}")
+print(f"publish_data: {len(stale)} {'stale' if CHECK else 'updated'} file(s)" + ("" if CHECK else f", {changed} written"))
+for s in stale[:12]: print("  ", s)
+sys.exit(1 if (CHECK and stale) else 0)

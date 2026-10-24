@@ -6,7 +6,15 @@ def rd(p):
     try: return json.load(open(os.path.join(W,p)))
     except Exception: return None
 def chk(name,ok,detail=""): res.append(("PASS" if ok else "FAIL",name,detail))
-def skip(name): res.append(("SKIP",name,"result file not present: run the matching make target"))
+import re
+ALLOW="--allow-skip" in sys.argv                                      # partial runs while developing; never for sign-off
+try: UNV=set(re.findall(r"^\|\s*(U-[A-Z0-9-]+)\s*\|",open("docs/UNVERIFIED.md").read(),re.M))
+except Exception: UNV=set()
+def skip(name,uid=None):
+    """a missing result is FAIL unless the item is registered as UNVERIFIED in docs/UNVERIFIED.md (then it is reported as UNVERIFIED); --allow-skip keeps the old SKIP for partial runs"""
+    if uid and uid in UNV: res.append(("UNVERIFIED",name,f"{uid}: see docs/UNVERIFIED.md"))
+    elif ALLOW: res.append(("SKIP",name,"result file not present: run the matching make target (--allow-skip)"))
+    else: res.append(("FAIL",name,"result file missing and the item is not registered UNVERIFIED in docs/UNVERIFIED.md"))
 d=rd("kit_v22/check_v22.json")
 if d: bad=[c["check"] for c in d["checks"] if c["result"]!="PASS"]; chk("v5 geometry checks (47 expected: cylinder, TX-lead channel, roof, tray, septum, comb, bosses, base plate, receive-board holes, QB lead access, damping resistors)",len(d["checks"])>=47 and not bad,f"{len(d['checks'])} checks, fails={bad}")
 else: skip("v5 geometry checks")
@@ -88,7 +96,7 @@ if d: st=d["stats"]; chk("PB1R routed: all nets, no failures (70 x 70 mm rectang
 else: skip("PB1R routing")
 d=rd("kit_v22/gerber_plane_PB1R.json")
 if d: chk("PB1R KiCad-written Gerbers: HV pads and vias >= 1.0 mm from the plane copper (rebuilt with gerbonara/shapely, control reaches the plane's own pads)",d["failures"]==0 and d["control_ok"] and d["hv_checks"]>=4,f"{d['hv_checks']} checks, min {d['min_distance_mm']} mm, control {d['control_pads']} pads")
-else: skip("PB1R Gerber plane check (needs requirements-cam.txt)")
+else: skip("PB1R Gerber plane check (gerbonara + shapely, requirements.txt)")
 d=rd("kit_v22/pb1r_check.json")
 if d: bad=[c["check"][:60] for c in d["checks"] if c["result"]=="FAIL"]; chk("PB1R cross-check vs the TX stage: pulse path R/L, return vias, Kelvin tap, connectors vs CB1D/PM2/TXJ1, neck-module eddy (solid plane rejected, hatched ring negligible)",not bad and d["eddy"]["ratio_solid"]>1 and d["eddy"]["ratio_hatch_ring"]<1e-3,f"{len(d['checks'])} checks, fails {bad}, solid plane {d['eddy']['ratio_solid']:.1f}x a 1 g nugget, hatched ring {d['eddy']['ratio_hatch_ring']:.1e}")
 else: skip("PB1R cross-check")
@@ -123,4 +131,4 @@ d=rd("kit_v22/fine_check.json")
 if d: chk("0.2 mm test: CB1D and LB1 discs and bodies clear of the cylinder",d[0][1]==0 and d[1][1]==[] and d[2][1]==0 and d[3][1]==[],str(d)[:120])
 else: skip("fine check")
 for r in res: print(*r)
-f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP")); sys.exit(1 if f else 0)
+f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)
