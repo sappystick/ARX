@@ -6,9 +6,9 @@ Read this first, then CLAUDE.md's read-first list. It tells you where the work s
 
 ```bash
 cd /home/user/ARX            # branch claude/nice-turing-8i4gkt, push only here, never force, never open a PR unless asked
-git status --short | wc -l; git log -3 --format='%h %s'          # expect 0 and fbfef49 (or later) Step 3.9
+git status --short | wc -l; git log -3 --format='%h %s'          # expect 0 and the Step 3.95 commit (or later)
 scripts/bootstrap.sh | tail -1                                    # "environment OK" (also the SessionStart hook)
-python3 tests/regress.py | tail -1                                # strict: expect FAILS 0 SKIPS 0, 48 PASS
+python3 tests/regress.py | tail -1                                # strict: expect FAILS 0 SKIPS 0, 50 PASS
 python3 scripts/publish_data.py --check | head -1                 # expect 0 stale file(s)
 ```
 If any of these differs from the numbers above, stop and report the difference before doing anything else. Then read docs/STATUS.md (generated sign-off table), docs/UNVERIFIED.md (open evidence), docs/OPEN_ITEMS.md.
@@ -26,12 +26,12 @@ If any of these differs from the numbers above, stop and report the difference b
 - **Approved design changes**: CB1D-B (MONO 460 V tap and joystick parts removed). JB.10 0R (RJB10) is FITTED. RJ5/RJ6 (JTR.5/.6 to ground) are DNP. Hatched planes only (eddy rule); a solid plane on PB1R was shown to return 8x a 1 g nugget and is rejected.
 - **Do NOT start** the system simulation, firmware, audio, LED tuning, improvement review or epoxy-chamber work until the owner approves it and pastes the "Steps 7-13" prompt (section 6 is only a proposal for how to scope it).
 
-## 2. State snapshot (commit fbfef49)
+## 2. State snapshot (Step 3.95)
 
 | Item | State |
 |---|---|
-| Strict `tests/regress.py` | 48 PASS, 0 FAIL, 0 SKIP |
-| `make signoff` (docs/STATUS.md) | 38 PASS, 0 FAIL, 0 SKIP, 17 UNVERIFIED. Warm run (55 min): clean `git status`. Cold run in a fresh clone (62 min): every committed data file reproduced. |
+| Strict `tests/regress.py` | 50 PASS, 0 FAIL, 0 SKIP |
+| `make signoff` (docs/STATUS.md) | 38 PASS, 0 FAIL, 0 SKIP, 17 UNVERIFIED. `make signoff` is now incremental and parallel (section 13): no-change run 1 s, one-script edit about 23 s, forced full run 11 min (was 32.5 min). Before Step 3.95: cold run in a fresh clone reproduced every committed data file. |
 | Controls (`tests/release_signoff_controls.py`) | 11/11: release-tx refusals (existing revision, sign-off FAIL, stale data), evidence rule, vanishing rows, idempotent output |
 | Boards, KiCad 9.0.9 DRC with HV negative control | CB1D (61 parts, 44/44 nets), LB1, PB1R (15 nets + planes), TXJ1, SB1R-QA, SB1R-QB: 0 errors, 0 unconnected |
 | Not routed / not in the KiCad flow | PM2 (placed), HB2 (placed), HTA (Gerbers only, no KiCad file) |
@@ -182,7 +182,16 @@ First message: confirm the recommended order 5 -> 4 -> 6 (datasheets and vendor 
 | 2026-10-24 | 3.5: bootstrap, hook, signoff, strict policy, release-tx | 50a51c3 | 47 | 37/0/0/17 | first release releases/TX_r1 |
 | 2026-10-24 | 3.9: controls, evidence rule, seed clobbering fixed | fbfef49 | 48 | 38/0/0/17 | warm run idempotent; cold clone reproduced all committed data |
 | 2026-10-24 | handoff written | e218427 | 48 | 38/0/0/17 | this file |
+| 2026-10-24 | 3.95: incremental parallel sign-off pipeline | (this step's final commit) | 50 | 38/0/0/17 | forced full run 680 s (was 1953 s), no-change 1 s; see docs/PERFORMANCE.md |
 
 ## 12. Prompts that go with this file
 
 `prompts/HANDOFF_PROMPTS.md` holds five paste-ready prompts: (1) start/resume (two modes: pause after each step, or run 5 -> 4 -> 6 without pausing), (2) the Steps 7-13 program (paste only after the Step 6 regroup summary), (3) recovery when something is off, (4) ingest evidence or a new owner decision, (5) read-only status brief. They assume this file and nothing else.
+
+## 13. Fast pipeline (Step 3.95): how to run the checks quickly and correctly
+
+- `make signoff` is incremental and parallel (4 jobs, `J=2 make signoff` to change). Every step is traced, so an unchanged step is skipped and independent steps overlap. After editing one script or generator just run `make signoff`: only the affected steps and the checks that read their outputs re-run (about 23 s for a one-script edit). `make pipeline-plan` lists what would run and why.
+- Before any `make release-tx`: `make signoff-cold` (forces every step), then the strict `tests/regress.py`. `make signoff-serial` is the original one-at-a-time path, kept as the reference.
+- `GRAPH STALE` in the output means two conflicting steps overlapped: `make pipeline-graph` (serial run that re-learns `data/pipeline/graph.json`), then `make signoff`. Adding a step to `STEPS` in `scripts/pipeline.py` also needs `make pipeline-graph`; the regress guards fail until the graph covers every step and every script the serial path runs.
+- Logs `work/.pipeline/logs/<step>.log`, times `work/.pipeline/timing.json`, cache `work/.pipeline/cache/` (wiped by `make clean`). Performance figures and limits: docs/PERFORMANCE.md.
+- Do not force BLAS/OpenMP thread counts in steps: the stiff-ODE solves change their last digit with the thread count. Steps with an internal pool read `ARX_INNER_JOBS`.

@@ -13,7 +13,7 @@ out = f"""# START HERE - Arx / PHI-FOLD 233 (attach this file to a new Claude Co
 
 ## B. Instructions to Claude (follow in order, do not ask the owner to repeat anything in this file)
 1. Get the work. It is on branch `claude/nice-turing-8i4gkt` of sappystick/arx and is NOT merged into the default branch:
-   `git fetch origin claude/nice-turing-8i4gkt && git checkout claude/nice-turing-8i4gkt` (if this session designates a different branch, create it from origin/claude/nice-turing-8i4gkt, say so in your first message, never push the default branch). The repo copy of this material is docs/HANDOFF_NEXT_THREAD.md; if it is missing you are on the wrong branch. Generated from commit {head}.
+   `git fetch origin claude/nice-turing-8i4gkt && git checkout claude/nice-turing-8i4gkt` (if this session designates a different branch, create it from origin/claude/nice-turing-8i4gkt, say so in your first message, never push the default branch). The repo copy of this material is docs/HANDOFF_NEXT_THREAD.md; if it is missing you are on the wrong branch. The progress log (section 11) names the latest step.
 2. Run `scripts/bootstrap.sh | tail -1`, then verify the state with the commands in section 0 below (counts only). If anything differs, stop and report the difference.
 3. Everything below (standing rules, default decisions, contingencies) is pre-approved. Ask a question only if a decision cannot be undone and has no default.
 4. MODE from the owner's line: A = after each numbered step stop and wait for "go". B = run Step 5, Step 4, Step 6 in that order, one table per step, stop only after Step 6 or on (a) a regression you cannot fix, (b) a conflict with a CLAUDE.md rule, (c) an irreversible decision with no default. No mode given = A.

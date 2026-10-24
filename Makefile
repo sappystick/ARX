@@ -181,7 +181,7 @@ head-audit: audit-system
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 # SIGN-OFF of the transmit region: every flow, every check, one table (docs/STATUS.md and data/results/SIGNOFF_STATUS.json are GENERATED, never hand-edited).
-# From a cold work/ this takes 30-40 minutes (routing, sims, head audit): run it as ONE background job. Fails if any check fails; UNVERIFIED items (docs/UNVERIFIED.md) are listed, not hidden.
+# `make signoff-serial` is the original path (30-40 minutes from a cold work/); `make signoff` is the incremental parallel pipeline below. Fails if any check fails; UNVERIFIED items (docs/UNVERIFIED.md) are listed, not hidden.
 # DEFAULT: incremental + parallel (scripts/pipeline.py): traced inputs/outputs, unchanged steps are skipped, independent steps overlap (J=4 jobs by default).
 # `make signoff-cold` re-runs every step (use before a release); `make pipeline-plan` shows what would run and why; `make signoff-serial` is the original one-step-at-a-time path.
 signoff:
