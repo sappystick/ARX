@@ -34,19 +34,19 @@ def rect_poly(u0, u1, v0, v1): return [(u0, v0), (u1, v0), (u1, v1), (u0, v1), (
 def kicad_txj1(path):
     CX, CY = 100.0, 100.0; o = []
     o.append('(kicad_pcb (version 20221018) (generator "arx_txj1")\n  (general (thickness 1.6) (legacy_teardrops no))\n  (paper "A4")\n  (layers (0 "F.Cu" signal) (31 "B.Cu" signal) (36 "B.SilkS" user "B.Silkscreen") (37 "F.SilkS" user "F.Silkscreen") (38 "B.Mask" user) (39 "F.Mask" user) (44 "Edge.Cuts" user))')
-    o.append('  (setup (pad_to_mask_clearance 0.05) (stackup (layer "F.Cu" (type "copper") (thickness 0.07)) (layer "dielectric 1" (type "core") (thickness 1.46)) (layer "B.Cu" (type "copper") (thickness 0.07)) (copper_finish "ENIG")))')
+    o.append('  (setup (pad_to_mask_clearance 0.05) (stackup (layer "F.Cu" (type "copper") (thickness 0.07)) (layer "dielectric 1" (type "core") (thickness 1.46)) (layer "B.Cu" (type "copper") (thickness 0.07)) (copper_finish "Immersion silver")))')
     o.append('  (net 0 "")\n  (net 1 "TX_A")\n  (net 2 "TX_B")')
     def pad(ref, u, v, net, size, drill, lab):
         o.append(f'  (footprint "TXJ1:PTH" (layer "F.Cu") (at {CX+u:.3f} {CY-v:.3f}) (property "Reference" "{ref}" (at 0 -2.4) (layer "F.SilkS")) (pad "1" thru_hole circle (at 0 0) (size {size} {size}) (drill {drill}) (layers "*.Cu" "*.Mask") (net {net} "{"TX_A" if net==1 else "TX_B"}")))')
     for i, u in enumerate(U_PADS): pad(f"A{i+1}", u, VA, 1, 2.0, 1.3, "A"); pad(f"B{i+1}", u, VB, 2, 2.0, 1.3, "B")
-    pad("TAPA", -3.0, VA, 1, 2.0, 1.0, "tap"); pad("TAPB", -3.0, VB, 2, 2.0, 1.0, "tap"); pad("A12", 15.5, VA, 1, 4.2, 2.6, "AWG12"); pad("B12", 15.5, VB, 2, 4.2, 2.6, "AWG12")
+    pad("TAPA", -3.0, VA, 1, 2.0, 1.0, "tap"); pad("TAPB", -3.0, VB, 2, 2.0, 1.0, "tap"); pad("A12", 15.5, VA, 1, 3.8, 2.6, "AWG12"); pad("B12", 15.5, VB, 2, 3.8, 2.6, "AWG12")
     for lay, v, net in (("F.Cu", VA, 1), ("B.Cu", VB, 2)): o.append(f'  (segment (start {CX-3.0:.3f} {CY-v:.3f}) (end {CX+15.5:.3f} {CY-v:.3f}) (width {BAR_W}) (layer "{lay}") (net {net}))')
     pts = rect_poly(-5.0, 18.0, -5.5, 5.5)
     for a, b in zip(pts[:-1], pts[1:]): o.append(f'  (gr_line (start {CX+a[0]:.3f} {CY-a[1]:.3f}) (end {CX+b[0]:.3f} {CY-b[1]:.3f}) (stroke (width 0.1) (type default)) (layer "Edge.Cuts"))')
     o.append(f'  (gr_text "TX_A (VBUS side)" (at {CX+6:.2f} {CY+VA+0.0:.2f}) (layer "F.SilkS") (effects (font (size 0.8 0.8))))\n  (gr_text "TX_B (DRAIN, 460 V peak)" (at {CX+6:.2f} {CY-VB:.2f}) (layer "B.SilkS") (effects (font (size 0.8 0.8))))\n)')
     t = "\n".join(o); assert t.count("(") == t.count(")"); open(path, "w").write(t)
 def gerber_txj1(prefix, outdir):
-    f6 = lambda v: int(round(v * 1e6)); H = ["%FSLAX46Y46*%", "%MOMM*%", f"%ADD10C,{BAR_W:.3f}*%", "%ADD11C,2.000*%", "%ADD12C,4.200*%", "%ADD13C,0.100*%", "%ADD14C,2.200*%", "%ADD15C,4.400*%", "G01*", "%LPD*%"]
+    f6 = lambda v: int(round(v * 1e6)); H = ["%FSLAX46Y46*%", "%MOMM*%", f"%ADD10C,{BAR_W:.3f}*%", "%ADD11C,2.000*%", "%ADD12C,3.800*%", "%ADD13C,0.100*%", "%ADD14C,2.200*%", "%ADD15C,4.000*%", "G01*", "%LPD*%"]
     def bar(v): return [f"D10*", f"X{f6(-3.0)}Y{f6(v)}D02*", f"X{f6(15.5)}Y{f6(v)}D01*"]
     def fl(code, u, v): return f"D{code}*\nX{f6(u)}Y{f6(v)}D03*"
     allp = lambda code_small, code_big, lst: [fl(code_small, u, v) for u, v in lst]
@@ -121,7 +121,7 @@ b.add_patch(Rectangle((-5, -5.5), 23, 11, fc="#14634a", ec=FG));
 for i, u in enumerate(U_PADS): b.add_patch(Circle((u, VA), 1.0, fc="#f2c94c", ec=FG)); b.add_patch(Circle((u, VB), 1.0, fc="#f2c94c", ec=FG)); b.text(u, VA - 2.0, f"A{i+1}", color=CY, fontsize=8, ha="center"); b.text(u, VB + 1.6, f"B{i+1}", color=ORG, fontsize=8, ha="center")
 b.add_patch(Rectangle((-3, VA - 1.5), 18.5, 3.0, fc=CY, alpha=0.35, ec=CY)); b.add_patch(Rectangle((-3, VB - 1.5), 18.5, 3.0, fc=ORG, alpha=0.35, ec=ORG, ls="--"))
 for (u, v, t, c) in ((15.5, VA, "AWG12 A", CY), (15.5, VB, "AWG12 B", ORG), (-3, VA, "tap A", CY), (-3, VB, "tap B", ORG)): b.add_patch(Circle((u, v), 2.1 if u > 10 else 1.0, fc="#f2c94c", ec=FG)); b.text(u, v + (-3.4 if v < 0 else 3.0), t, color=c, fontsize=8, ha="center")
-b.text(6, 9.5, "TXJ1: 2-layer, 2 oz, 23 x 11 mm. Bus A on the top layer, bus B (dashed) on the bottom layer, 3 mm bars.\n12 litz leads soldered into PTH rows; AWG12 TX pair on the 4.2 mm pads; AWG22 taps to CB1D JCL.", color=FG, fontsize=10, ha="center")
+b.text(6, 9.5, "TXJ1: 2-layer, 2 oz, 23 x 11 mm. Bus A on the top layer, bus B (dashed) on the bottom layer, 3 mm bars.\n12 litz leads soldered into PTH rows; AWG12 TX pair on the 3.8 mm pads; AWG22 taps to CB1D JCL.", color=FG, fontsize=10, ha="center")
 b.text(6, -11.5, "no copper plane, no closed loop; printed cradle (divider rib) keeps the rows apart; x' = 58 + u in the heel frame", color=FG, fontsize=10, ha="center")
 b.set_title("TXJ1 junction board (u radial, v tangential)", color=FG, fontsize=13, loc="left")
 fig.suptitle("PHI-FOLD 233 transmit lead system: wall-top channel -> exit window -> TXJ1 -> TX pair", color=FG, fontsize=18, x=0.02, ha="left")
@@ -139,7 +139,7 @@ S.plot([8, 8], [60, 90], color=CY, lw=2.2); S.plot([40, 40], [60, 90], color=ORG
 for k in range(6):
     y = 88 - k * 5; S.plot([8, 11], [y, y], color=CY, lw=1.2); ind(11, y, 22, f"L{k+1}: layer coil, about 324 uH, 270 mohm"); S.plot([34, 40], [y, y], color=ORG, lw=1.2)
     S.text(9.5, y + 1.0, f"A{k+1}", color=CY, fontsize=7); S.text(37, y + 1.0, f"B{k+1}", color=ORG, fontsize=7)
-box_(3, 36, 42, 18, "TXJ1 + exit window (178 deg)", "12 litz leads (6 per side) soldered into two copper bus bars; AWG12 TX pair (600 V) on the 4.2 mm pads;\nAWG22 taps from both buses to CB1D JCL (COIL_A = JCL.2, COIL_B = JCL.1).\nLead R 4-7 mohm each; current sharing between layers within 1 percent (DC); lead loop L under 0.15 uH.")
+box_(3, 36, 42, 18, "TXJ1 + exit window (178 deg)", "12 litz leads (6 per side) soldered into two copper bus bars; AWG12 TX pair (600 V) on the 3.8 mm pads;\nAWG22 taps from both buses to CB1D JCL (COIL_A = JCL.2, COIL_B = JCL.1).\nLead R 4-7 mohm each; current sharing between layers within 1 percent (DC); lead loop L under 0.15 uH.")
 box_(3, 8, 42, 24, "CB1D: monitor and tap network (vault)", "damping chain 3 x 110 ohm (330 ohm) across the coil, 0.33-0.46 W\nMONO tap: 100 nF / 630 V + RS 1 kohm -> AB1B.J2.10 (RAW_MONO)\nHTA pickup coil (2.8 uH) -> 10 kohm + 1 nF + clamps -> mux Y4: di/dt reference for the adaptive filter\nreceive: SB1R-QA/QB (176 uH, damped 470-680 ohm) -> AB1A.J1.1 / J1.2 (RS 100 ohm)")
 box_(52, 62, 44, 31, "NECK MODULE PB1R (0.4 m up the shaft, outside the head field)", "TX pair: JL1.1 DRAIN1 <-> bus B, JL1.2 VBUS <-> bus A (AWG12, 0.8 m, twisted)\nQ1, Q2: 2 x IPB65R095C7 (650 V) in parallel, TC4420 gate driver, 10 mohm shunt -> ISENSE1\nflyback clamp: ES3J -> ONE 100 nF C0G/film (630 V) || RCL1 5 kohm 10 W to VBUS (design value)\nstage results: i = 20 A, turn-off 3.8 us, quiet 5.6 us, Vds peak 462 V (29 percent margin), RCL1 3.8 W\nbulk: 6 x 150 uF polymer; LM393 over-current -> FAULT1_N; NTC -> NTC_SENSE\nJC (8-way) <-> CB1D.JPB: UMB_SHLD, GND, TX1_IN, REF_I1, FAULT1_N, ISENSE1, NTC_SENSE, GND", ORG)
 box_(52, 36, 44, 22, "POWER PATH (elbow)", "PM1: dual 7S1P pack OR-ing, 2 x 470 uF, SMCJ33A TVS (33 V standoff vs 29.4 V full charge)\npower ribbon: VBUS x3 / GND x3 (12-way AWG28, 1.72 m) -> PB1R.JP and CB1D.JPW (0.49 V drop at 2 A)\nOKI-78SR 5 V (36 V max in) and AMS1117 3V3 on CB1D\nbudget: scan 8 A / 800 Hz about 4.7 W, boost 20 A / 400 Hz about 7.7 W; 90.7 Wh gives 11.8 h boost", CY)

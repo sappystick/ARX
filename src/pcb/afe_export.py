@@ -132,7 +132,7 @@ L = ["(kicad_pcb (version 20221018) (generator \"pf233_export\")", "  (general (
      " (layer \"In2.Cu\" (type \"copper\") (thickness 0.035)) (layer \"dielectric 3\" (type \"prepreg\") (thickness 0.2) (material \"FR4\") (epsilon_r 4.5) (loss_tangent 0.02))"
      " (layer \"In3.Cu\" (type \"copper\") (thickness 0.035)) (layer \"dielectric 4\" (type \"core\") (thickness 0.4) (material \"FR4\") (epsilon_r 4.5) (loss_tangent 0.02))"
      " (layer \"In4.Cu\" (type \"copper\") (thickness 0.035)) (layer \"dielectric 5\" (type \"prepreg\") (thickness 0.2) (material \"FR4\") (epsilon_r 4.5) (loss_tangent 0.02))"
-     " (layer \"B.Cu\" (type \"copper\") (thickness 0.035)) (copper_finish \"ENIG\")))", '  (net 0 "")']
+     " (layer \"B.Cu\" (type \"copper\") (thickness 0.035)) (copper_finish \"Immersion silver\")))", '  (net 0 "")']
 for n, i in sorted(NETID.items(), key=lambda t: t[1]): L.append(f'  (net {i} "{n}")')
 for p in D.PARTS:
     ref = p["ref"]; lib = D.LIB[p["type"]]; x0, y0, rot, side = A.PLACE[ref]; lay_ = "F.Cu" if side == "F" else "B.Cu"; sk = "F.SilkS" if side == "F" else "B.SilkS"

@@ -53,7 +53,7 @@ gerber(f"{OUT}/PF233-HTA-F_Cu.gbr",fcu); gerber(f"{OUT}/PF233-HTA-In1_Cu.gbr",in
 gerber(f"{OUT}/PF233-HTA-F_Mask.gbr",fmask); gerber(f"{OUT}/PF233-HTA-B_Mask.gbr",fmask); gerber(f"{OUT}/PF233-HTA-Edge_Cuts.gbr",edge)
 ex=lambda tools,name: open(f"{OUT}/{name}","w").write("M48\nMETRIC,TZ\n"+"".join(f"T{i+1}C{d:.3f}\n" for i,(d,_) in enumerate(tools))+"%\nG90\n"+"".join(f"T{i+1}\n"+"".join(f"X{x:.3f}Y{y:.3f}\n" for x,y in pts) for i,(d,pts) in enumerate(tools))+"M30\n")
 ex([(0.3,[viaA,viaB,viaM]),(0.8,[padA,padB])],"PF233-HTA-PTH.drl"); ex([(1.7,holes),(8.0,[(0.0,0.0)])],"PF233-HTA-NPTH.drl")
-with open(f"{OUT}/PF233-HTA_BOM.csv","w",newline="") as f: w=csv.writer(f); w.writerow(["Qty","Ref","Value","Note"]); w.writerow([1,"PCB","4-layer 1.6 mm D90 FR-4, 1 oz outer/inner, ENIG, mask both sides","no components; the coil is the copper"]); w.writerow([1,"wires","twisted pair AWG30, 130 mm","solder to pads A and B, down the D8 port to JHTA on CB1D"])
+with open(f"{OUT}/PF233-HTA_BOM.csv","w",newline="") as f: w=csv.writer(f); w.writerow(["Qty","Ref","Value","Note"]); w.writerow([1,"PCB","4-layer 1.6 mm D90 FR-4, 1 oz outer/inner, Immersion silver, mask both sides","no components; the coil is the copper"]); w.writerow([1,"wires","twisted pair AWG30, 130 mm","solder to pads A and B, down the D8 port to JHTA on CB1D"])
 json.dump(dict(spec=dict(board="D90 x 1.6, 4 layers (F.Cu, In1, In2, B.Cu), trace 0.5, via 0.3/0.6, 66 NPTH 1.7 (light pipes), centre NPTH 8.0, 2 PTH pads 0.8/1.6",coil="2 x 1.95 turns, r35.5-43.0, F.Cu inward then In1 outward (same sense, 3.9 turns total)"),**rep),open(f"{OUT}/hta_report.json","w"),indent=1); print(json.dumps(rep))
 # preview
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
