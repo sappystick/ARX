@@ -49,6 +49,22 @@ else: skip("upper assembly")
 d=rd("kit_v23/power_dock_check.json")
 if d: bad=[c["check"] for c in d["checks"] if c["result"]!="PASS"]; chk("PM2 battery dock: interlock (on only when seated AND switched), gate drive, soft start, ratings, runtime (12 checks)",len(d["checks"])>=12 and not bad,f"ramp {d['soft_start']['ramp_ms']} ms, inrush {d['soft_start']['inrush_A']} A, boost {d['runtime']['boost_h_one_pack']} h/pack, fails={bad[:2]}")
 else: skip("PM2 battery dock")
+d=rd("kit_v23/config_study.json")
+if d:
+    c=list(d["configs"].values()); c0=c[0]
+    chk("configuration study: 4 configs; C1 lighter and lower torque than C0, C2 earlier first gate, C3 longer runtime (modeled)",len(c)==4 and c[1]["mass_kg"]["total"]<c0["mass_kg"]["total"] and c[1]["torque_47deg_kg_m"]<c0["torque_47deg_kg_m"] and c[2]["first_gate_us"]["worst_leak"]<c0["first_gate_us"]["worst_leak"] and c[3]["runtime_h"]["boost"]>c0["runtime_h"]["boost"],
+        str({k.split(" ")[0]:(v["depth_mm_worst_leak"]["1.0 g"],v["first_gate_us"]["worst_leak"],v["mass_kg"]["total"],v["torque_47deg_kg_m"],v["runtime_h"]["boost"]) for k,v in d["configs"].items()}))
+else: skip("configuration study")
+d=rd("kit_v23/system_compat.json")
+if d: chk("system compatibility matrix: no incompatibility (ACTION and DATA rows are listed changes and unverified facts)",d["summary"]["FAIL"]==0,str(d["summary"]))
+else: skip("system compatibility")
+d=rd("kit_v23/target_field.json")
+if d:
+    v=d["validation"]; ds=list(d["designs"].values()); a=ds[1]
+    chk("target-field winding study: equivalent loops match the real-path axis field (<0.5 %) and 54 uH (<5 %); as-built within 5 % of the optimum energy and field",
+        all(abs(x["dev_pct"])<0.5 for x in v["axis_field"].values()) and abs(v["L_equivalent_uH"]/v["L_repo_uH"]-1)<0.05 and abs(a["L_uH"]/ds[0]["L_uH"]-1)<0.05 and all(abs(x-1)<0.05 for x in a["field_ratio_vs_as_built"].values()),
+        f"L {ds[0]['L_uH']} -> {a['L_uH']} uH, field at 200 mm x{a['field_ratio_vs_as_built']['r0 z200']}")
+else: skip("target-field study")
 d=rd("kit_v22/sbq_sim.json")
 if d:
     L=d["leak"]; worst=max(v["peak_V"] for b in L.values() for k,v in b.items() if "lobes only" not in k and "0.5" in k)

@@ -23,12 +23,13 @@ import math, json, os
 import numpy as np
 import rodin_core_v4 as rc, golden_cone_head as g
 from render_v6 import tri2d
-OUT = "kit_v23/UPPER"; os.makedirs(OUT, exist_ok=True); rep = dict(parts={}, envelopes={}, params={})
+OUT = os.environ.get("UPPER_OUT", "kit_v23/UPPER"); os.makedirs(OUT, exist_ok=True); rep = dict(parts={}, envelopes={}, params={})   # UPPER_OUT / UPPER_WALL / UPPER_DT: variants for config_study.py
 
 # ------------------------------------------------------------------ parameters (mm, deg)
 RAKE = 16.0; GL = 118.0; GA, GB = 20.0, 16.0; GWALL = 4.0                 # grip: axis length between the housings, ellipse semi-axes (fore-aft, side), wall
 WT, HT, RT_, WALL = 46.0, 48.0, 10.0, 2.5                                   # top housing section and wall
 WB, HB_, RB_ = 46.0, 40.0, 10.0                                             # bottom housing section
+WALL = float(os.environ.get("UPPER_WALL", WALL))                            # housing wall (variant override)
 TA = (33.0, 30.0); TB = (28.5, 26.0); TAL, TBL, OVL = 450.0, 450.0, 80.0    # shaft tubes A (hand end) and B (head end), CFRP, as shaft_calc_v20.py
 SOCK = 44.0; CLR_T = 0.2                                                    # tube A bonded depth in the top housing (1.33 x OD), radial clearance of tubes in sockets
 AT = (22.0, 19.0); ATL = 200.0; DET = (90.0, 68.0, 46.0); ASOCK = 95.0      # armrest tube, length, insertion depths of the 3 positions, socket length
@@ -157,7 +158,7 @@ emit("U5_ARMREST_CUP", armrest(DET[0]), f"forearm cup R{RC} inner, {CL_} long, 2
 emit("ARMREST_TUBE_CFRP_pos1", [tube_x(AT[0] / 2, AT[1] / 2, arm_rear(DET[0]), arm_rear(DET[0]) + ATL, ZB)], f"purchased CFRP tube OD{AT[0]}/ID{AT[1]} x {ATL}", "CFRP", 1.55)
 
 # ------------------------------------------------------------------ U6 battery dock
-DY = 36.5; RAIL_Y = 28.0; DT = 3.0                                                            # dock half-width, rail offset, plate thickness
+DY = 36.5; RAIL_Y = 28.0; DT = float(os.environ.get("UPPER_DT", 3.0))                                                            # dock half-width, rail offset, plate thickness
 DOCK_X0, DOCK_X1 = -178.0, 23.0
 Z_PT = ZDOCK - DT - 0.5                                                                               # pack top (0.5 mm below the dock plate)
 POCKET = (-174.5, -167.5, 10.0)                                                                         # latch pocket through the dock plate (x0, x1, half-width)

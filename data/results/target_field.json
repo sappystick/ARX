@@ -1,0 +1,231 @@
+{
+ "method": "MRI-style target-field / stream-function design of the TX turn distribution, compared with the as-built Fermat petal winding.",
+ "validation": {
+  "axis_field": {
+   "50": {
+    "eq_uT": 1135.4,
+    "real_path_uT": 1135.8,
+    "dev_pct": -0.04
+   },
+   "100": {
+    "eq_uT": 491.5,
+    "real_path_uT": 491.2,
+    "dev_pct": 0.06
+   },
+   "150": {
+    "eq_uT": 231.4,
+    "real_path_uT": 231.2,
+    "dev_pct": 0.09
+   },
+   "200": {
+    "eq_uT": 122.1,
+    "real_path_uT": 122.0,
+    "dev_pct": 0.08
+   },
+   "300": {
+    "eq_uT": 44.4,
+    "real_path_uT": 44.4,
+    "dev_pct": 0.0
+   }
+  },
+  "L_equivalent_uH": 51.54,
+  "L_repo_uH": 54.0,
+  "as_built_radii_mm": [
+   65.98,
+   65.99,
+   73.31,
+   73.32,
+   79.98,
+   79.98,
+   86.13,
+   86.13,
+   91.87,
+   91.87,
+   97.27,
+   97.27,
+   102.38,
+   102.39,
+   107.26,
+   107.26
+  ]
+ },
+ "band_mm": [
+  62.0,
+  109.6
+ ],
+ "pitch_min_mm": 4.8,
+ "optimiser": {
+  "A": "`gtol` termination condition is satisfied.",
+  "C": "`gtol` termination condition is satisfied."
+ },
+ "designs": {
+  "as built (Fermat petal, 16 turns/layer)": {
+   "turns_per_layer": 16,
+   "peak_A": 20.0,
+   "L_uH": 51.54,
+   "energy_mJ": 10.31,
+   "Bz_uT_at_20A": {
+    "r0 z150": 231.4,
+    "r0 z200": 122.1,
+    "r0 z300": 44.4,
+    "r50 z200": 109.3,
+    "r100 z200": 78.8
+   },
+   "field_ratio_vs_as_built": {
+    "r0 z150": 1.0,
+    "r0 z200": 1.0,
+    "r0 z300": 1.0,
+    "r50 z200": 1.0,
+    "r100 z200": 1.0
+   },
+   "tx_zero_us": 3.67,
+   "tx_quiet_us": 5.67,
+   "Vds_peak_V": 452.8,
+   "clamp_W_400Hz": 3.65,
+   "first_clean_gate_worst_us": 7.42,
+   "copper_m": 53.1,
+   "min_pitch_per_arm_mm": 4.87,
+   "arm_radii_mm": [
+    65.98,
+    73.32,
+    79.98,
+    86.13,
+    91.87,
+    97.27,
+    102.39,
+    107.26
+   ],
+   "depth_mm_worst_leak": {
+    "0.1 g": 114,
+    "1.0 g": 162,
+    "5.0 g": 193
+   }
+  },
+  "A: target field, least energy at the as-built field": {
+   "turns_per_layer": 16,
+   "peak_A": 20.0,
+   "L_uH": 50.4,
+   "energy_mJ": 10.08,
+   "Bz_uT_at_20A": {
+    "r0 z150": 229.5,
+    "r0 z200": 121.0,
+    "r0 z300": 44.0,
+    "r50 z200": 108.4,
+    "r100 z200": 78.1
+   },
+   "field_ratio_vs_as_built": {
+    "r0 z150": 0.9916,
+    "r0 z200": 0.9915,
+    "r0 z300": 0.9915,
+    "r50 z200": 0.9915,
+    "r100 z200": 0.9915
+   },
+   "tx_zero_us": 3.63,
+   "tx_quiet_us": 5.63,
+   "Vds_peak_V": 448.3,
+   "clamp_W_400Hz": 3.57,
+   "first_clean_gate_worst_us": 7.35,
+   "copper_m": 52.78,
+   "min_pitch_per_arm_mm": 4.84,
+   "arm_radii_mm": [
+    64.42,
+    69.44,
+    79.16,
+    87.72,
+    92.56,
+    97.4,
+    102.24,
+    107.08
+   ],
+   "depth_mm_worst_leak": {
+    "0.1 g": 114,
+    "1.0 g": 162,
+    "5.0 g": 193
+   }
+  },
+  "B: design A at 20.2 A (as-built stored energy, more field)": {
+   "turns_per_layer": 16,
+   "peak_A": 20.22,
+   "L_uH": 50.4,
+   "energy_mJ": 10.31,
+   "Bz_uT_at_20A": {
+    "r0 z150": 232.1,
+    "r0 z200": 122.4,
+    "r0 z300": 44.5,
+    "r50 z200": 109.6,
+    "r100 z200": 79.0
+   },
+   "field_ratio_vs_as_built": {
+    "r0 z150": 1.0027,
+    "r0 z200": 1.0026,
+    "r0 z300": 1.0026,
+    "r50 z200": 1.0026,
+    "r100 z200": 1.0026
+   },
+   "tx_zero_us": 3.63,
+   "tx_quiet_us": 5.63,
+   "Vds_peak_V": 453.1,
+   "clamp_W_400Hz": 3.65,
+   "first_clean_gate_worst_us": 7.35,
+   "copper_m": 52.78,
+   "min_pitch_per_arm_mm": 4.84,
+   "arm_radii_mm": [
+    64.42,
+    69.44,
+    79.16,
+    87.72,
+    92.56,
+    97.4,
+    102.24,
+    107.08
+   ],
+   "depth_mm_worst_leak": {
+    "0.1 g": 114,
+    "1.0 g": 162,
+    "5.0 g": 193
+   }
+  },
+  "C: target field for deep targets (300-400 mm)": {
+   "turns_per_layer": 16,
+   "peak_A": 20.0,
+   "L_uH": 52.15,
+   "energy_mJ": 10.43,
+   "Bz_uT_at_20A": {
+    "r0 z150": 233.0,
+    "r0 z200": 123.1,
+    "r0 z300": 44.8,
+    "r50 z200": 110.3,
+    "r100 z200": 79.6
+   },
+   "field_ratio_vs_as_built": {
+    "r0 z150": 1.0068,
+    "r0 z200": 1.0083,
+    "r0 z300": 1.0096,
+    "r50 z200": 1.0087,
+    "r100 z200": 1.0098
+   },
+   "tx_zero_us": 3.69,
+   "tx_quiet_us": 5.68,
+   "Vds_peak_V": 455.2,
+   "clamp_W_400Hz": 3.69,
+   "first_clean_gate_worst_us": 7.45,
+   "copper_m": 53.36,
+   "min_pitch_per_arm_mm": 4.76,
+   "arm_radii_mm": [
+    64.38,
+    72.56,
+    82.81,
+    88.09,
+    92.85,
+    97.6,
+    102.36,
+    107.12
+   ],
+   "depth_mm_worst_leak": {
+    "0.1 g": 114,
+    "1.0 g": 162,
+    "5.0 g": 193
+   }
+  }
+ }
+}

@@ -1,0 +1,284 @@
+{
+ "configs": {
+  "C0 as built (head v5, hood v3, upper v1, P30B 7S1P)": {
+   "first_gate_us": {
+    "aligned": 5.14,
+    "worst_leak": 7.48
+   },
+   "tx_quiet_us": 5.56,
+   "hood_gain_200mm": 1.1291,
+   "depth_mm_worst_leak": {
+    "0.1 g": 116,
+    "1.0 g": 165,
+    "5.0 g": 196
+   },
+   "depth_mm_aligned": {
+    "0.1 g": 121,
+    "1.0 g": 167,
+    "5.0 g": 197
+   },
+   "mass_kg": {
+    "upper": 1.434,
+    "head_neck_lower": 3.308,
+    "total": 4.742
+   },
+   "torque_47deg_kg_m": 2.883,
+   "runtime_h": {
+    "boost": 9.8,
+    "scan": 16.1
+   },
+   "peak_A": 20.0,
+   "fet_margin_pct": 58.3,
+   "changes": [],
+   "vs_C0": {
+    "depth_1g_worst_mm": 0,
+    "depth_0p1g_worst_mm": 0,
+    "first_gate_worst_us": 0.0,
+    "total_mass_g": 0,
+    "torque_kg_m": 0.0,
+    "boost_runtime_h": 0.0
+   }
+  },
+  "C1 light and balanced": {
+   "first_gate_us": {
+    "aligned": 5.14,
+    "worst_leak": 7.48
+   },
+   "tx_quiet_us": 5.56,
+   "hood_gain_200mm": 1.1387,
+   "depth_mm_worst_leak": {
+    "0.1 g": 116,
+    "1.0 g": 165,
+    "5.0 g": 196
+   },
+   "depth_mm_aligned": {
+    "0.1 g": 122,
+    "1.0 g": 167,
+    "5.0 g": 197
+   },
+   "mass_kg": {
+    "upper": 1.391,
+    "head_neck_lower": 3.249,
+    "total": 4.64
+   },
+   "torque_47deg_kg_m": 2.827,
+   "runtime_h": {
+    "boost": 9.8,
+    "scan": 16.1
+   },
+   "peak_A": 20.0,
+   "fet_margin_pct": 58.3,
+   "changes": [
+    "hood carrier v4: one 55.5 mm tile per spoke (generator change, same carrier envelope)",
+    "upper housings 2.0 mm walls, dock plate 2.5 mm (regenerated)",
+    "PB1R bulk 35 V polymer Ta -> 50 V parts (29.4 V is 84 % of 35 V; about 80 % is the polymer-Ta guideline)",
+    "firmware rules (constant-current ton, boost duty, BLANK policy, LED cap, TRIG boot rule)"
+   ],
+   "vs_C0": {
+    "depth_1g_worst_mm": 0,
+    "depth_0p1g_worst_mm": 0,
+    "first_gate_worst_us": 0.0,
+    "total_mass_g": -102,
+    "torque_kg_m": -0.056,
+    "boost_runtime_h": 0.0
+   }
+  },
+  "C2 early gate (12 turns per layer)": {
+   "first_gate_us": {
+    "aligned": 3.98,
+    "worst_leak": 6.45
+   },
+   "tx_quiet_us": 4.79,
+   "hood_gain_200mm": 1.1387,
+   "depth_mm_worst_leak": {
+    "0.1 g": 119,
+    "1.0 g": 166,
+    "5.0 g": 197
+   },
+   "depth_mm_aligned": {
+    "0.1 g": 124,
+    "1.0 g": 168,
+    "5.0 g": 198
+   },
+   "mass_kg": {
+    "upper": 1.391,
+    "head_neck_lower": 3.249,
+    "total": 4.64
+   },
+   "torque_47deg_kg_m": 2.827,
+   "runtime_h": {
+    "boost": 9.8,
+    "scan": 16.1
+   },
+   "peak_A": 26.7,
+   "fet_margin_pct": 44.4,
+   "changes": [
+    "C1 changes",
+    "six formers regenerated for 12 turns per layer (0.75 x), 26.7 A peak",
+    "self-capacitance and damping chain re-derived for the new coil, then this study re-run",
+    "PB1R: 26.7 A peak, 13.3 A per FET (44 % margin); shunt and OCP reference rescaled"
+   ],
+   "vs_C0": {
+    "depth_1g_worst_mm": 1,
+    "depth_0p1g_worst_mm": 3,
+    "first_gate_worst_us": -1.03,
+    "total_mass_g": -102,
+    "torque_kg_m": -0.056,
+    "boost_runtime_h": 0.0
+   }
+  },
+  "C3 endurance (P42A 21700 pack)": {
+   "first_gate_us": {
+    "aligned": 5.14,
+    "worst_leak": 7.48
+   },
+   "tx_quiet_us": 5.56,
+   "hood_gain_200mm": 1.1387,
+   "depth_mm_worst_leak": {
+    "0.1 g": 116,
+    "1.0 g": 165,
+    "5.0 g": 196
+   },
+   "depth_mm_aligned": {
+    "0.1 g": 122,
+    "1.0 g": 167,
+    "5.0 g": 197
+   },
+   "mass_kg": {
+    "upper": 1.577,
+    "head_neck_lower": 3.249,
+    "total": 4.826
+   },
+   "torque_47deg_kg_m": 2.795,
+   "runtime_h": {
+    "boost": 13.7,
+    "scan": 22.5
+   },
+   "peak_A": 20.0,
+   "fet_margin_pct": 58.3,
+   "changes": [
+    "C1 changes",
+    "pack shell U7 regenerated for 7 x 21700 (21.7 x 70.2 mm) and the BMS bay; dock rails unchanged",
+    "pack 0.16 kg heavier, behind the grip"
+   ],
+   "vs_C0": {
+    "depth_1g_worst_mm": 0,
+    "depth_0p1g_worst_mm": 0,
+    "first_gate_worst_us": 0.0,
+    "total_mass_g": 84,
+    "torque_kg_m": -0.088,
+    "boost_runtime_h": 3.9
+   }
+  }
+ },
+ "sweeps": {
+  "torque_vs_shaft_angle": {
+   "40": 2.856,
+   "45": 2.875,
+   "47": 2.883,
+   "50": 2.896,
+   "55": 2.919
+  },
+  "torque_vs_pack_shift_rearward_mm": {
+   "0": 2.883,
+   "50": 2.865,
+   "100": 2.847,
+   "150": 2.83
+  },
+  "pack_options": {
+   "7S1P Molicel P30B (18650, as built)": {
+    "Wh": 75.6,
+    "boost_h": 9.8,
+    "cells_g": 329,
+    "torque": 2.883,
+    "new_shell": false
+   },
+   "7S1P Molicel P42A (21700)": {
+    "Wh": 105.8,
+    "boost_h": 13.7,
+    "cells_g": 490,
+    "torque": 2.85,
+    "new_shell": true
+   },
+   "7S2P Molicel P30B (18650)": {
+    "Wh": 151.2,
+    "boost_h": 19.6,
+    "cells_g": 658,
+    "torque": 2.827,
+    "new_shell": true
+   }
+  },
+  "hood_options": {
+   "v3 butted (as built)": {
+    "gain_200mm": 1.1291,
+    "tiles_g": 286,
+    "torque": 2.883,
+    "depth_1g_worst": 165
+   },
+   "v4 one tile per spoke": {
+    "gain_200mm": 1.1387,
+    "tiles_g": 227,
+    "torque": 2.826,
+    "depth_1g_worst": 165
+   },
+   "no tiles (carrier only)": {
+    "gain_200mm": 1.0,
+    "tiles_g": 0,
+    "torque": 2.605,
+    "depth_1g_worst": 162
+   }
+  },
+  "first_gate_vs_turns": {
+   "0.5 x": {
+    "worst_leak_us": 5.5,
+    "tx_quiet_us": 4.15
+   },
+   "0.75 x": {
+    "worst_leak_us": 6.45,
+    "tx_quiet_us": 4.79
+   },
+   "1.0 x": {
+    "worst_leak_us": 7.48,
+    "tx_quiet_us": 5.56
+   }
+  },
+  "negative_capacitance_research": {
+   "Cself 100 pF, RD 680": 7.48,
+   "Cself 50 pF, RD 680": 7.14,
+   "Cself 50 pF, RD 1000": 7.54
+  },
+  "averaging": {
+   "N 100": 165,
+   "N 400": 183
+  },
+  "trigger_tail_mm_vs_magnet_travel": {
+   "15": {
+    "travel_mm": 1.72,
+    "fits_before_socket": true
+   },
+   "18": {
+    "travel_mm": 2.07,
+    "fits_before_socket": true
+   },
+   "22": {
+    "travel_mm": 2.52,
+    "fits_before_socket": true
+   },
+   "25": {
+    "travel_mm": 2.87,
+    "fits_before_socket": false
+   },
+   "28": {
+    "travel_mm": 3.21,
+    "fits_before_socket": false
+   }
+  }
+ },
+ "model": {
+  "noise_nV_rtHz": 1.726,
+  "worst_leak_V": 0.01034421140233218,
+  "aligned_leak_V": 8.043124492085832e-06,
+  "head_mass_v20_kg": 2.22
+ },
+ "notes": "depth: idealised quadrupole x 3.2 real-pattern signal (DESIGN_STATE 6), free air, no ground, 100 pulses at 20 A ampere-turns; compare configurations with each other, not with field results"
+}
