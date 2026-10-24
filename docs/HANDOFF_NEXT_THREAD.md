@@ -11,7 +11,8 @@ scripts/bootstrap.sh | tail -1                                    # "environment
 python3 tests/regress.py | tail -1                                # strict: expect FAILS 0 SKIPS 0, 50 PASS
 python3 scripts/publish_data.py --check | head -1                 # expect 0 stale file(s)
 ```
-If any of these differs from the numbers above, stop and report the difference before doing anything else. Then read docs/STATUS.md (generated sign-off table), docs/UNVERIFIED.md (open evidence), docs/OPEN_ITEMS.md.
+**Fresh container exception (expected, not a fault):** `work/` and its results are not in git. In a brand-new container the strict regress shows many FAILs (every one "result file missing") and `publish_data.py --check` shows about 38 stale ("missing source"). That is normal. Do not stop: run `make signoff` once in the background (one Monitor; about 11 min if routing state is warm, longer from a truly cold container because routing restarts from scratch), then re-check. Stop only if, after that run, the counts below still differ. Commit trailer: use the model name this session is actually running on.
+If any of these differs from the numbers above after that run, stop and report the difference before doing anything else. Then read docs/STATUS.md (generated sign-off table), docs/UNVERIFIED.md (open evidence), docs/OPEN_ITEMS.md.
 
 ## 1. Standing rules from the owner (do not ask again)
 

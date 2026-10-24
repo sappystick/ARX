@@ -6,12 +6,12 @@
 ## B. Instructions to Claude (follow in order, do not ask the owner to repeat anything in this file)
 1. Get the work. It is on branch `claude/nice-turing-8i4gkt` of sappystick/arx and is NOT merged into the default branch:
    `git fetch origin claude/nice-turing-8i4gkt && git checkout claude/nice-turing-8i4gkt` (if this session designates a different branch, create it from origin/claude/nice-turing-8i4gkt, say so in your first message, never push the default branch). The repo copy of this material is docs/HANDOFF_NEXT_THREAD.md; if it is missing you are on the wrong branch. The progress log (section 11) names the latest step.
-2. Run `scripts/bootstrap.sh | tail -1`, then verify the state with the commands in section 0 below (counts only). If anything differs, stop and report the difference.
+2. Run `scripts/bootstrap.sh | tail -1`, then verify the state with the commands in section 0 below (counts only). In a brand-new container the strict regress FAILs (missing results) and publish shows ~38 stale: that is expected. Run `make signoff` once in the background (one Monitor), then re-check; stop only if the counts still differ afterwards.
 3. Everything below (standing rules, default decisions, contingencies) is pre-approved. Ask a question only if a decision cannot be undone and has no default.
 4. MODE from the owner's line: A = after each numbered step stop and wait for "go". B = run Step 5, Step 4, Step 6 in that order, one table per step, stop only after Step 6 or on (a) a regression you cannot fix, (b) a conflict with a CLAUDE.md rule, (c) an irreversible decision with no default. No mode given = A.
 5. Order: Step 3.95 (pipeline, already built: see section C) is done; next is Step 5 (datasheets, vendor sheets) -> Step 4 (PM2/HB2/HTA routing and audits) -> Step 6 (bench procedure, final sign-off, release r2, regroup summary). Resume where the progress log (section 11) says.
 6. Do NOT start system simulation, firmware, audio, LED, improvement review or epoxy-chamber work (Steps 7-13): the owner pastes that program separately from prompts/HANDOFF_PROMPTS.md (prompt 2).
-7. Reporting: per step one paragraph + one table (what changed, what passed with counts, what is unproven, strict regress count, sign-off counts). Quiet output. One final commit per step (source + data + docs + progress-log row), push only to the working branch, no PR, no force-push. Commit trailers: `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>` and the session trailer given by the harness.
+7. Reporting: per step one paragraph + one table (what changed, what passed with counts, what is unproven, strict regress count, sign-off counts). Quiet output. One final commit per step (source + data + docs + progress-log row), push only to the working branch, no PR, no force-push. Commit trailers: the Co-Authored-By line for the model this session actually runs on, plus the session trailer given by the harness.
 8. Claims: everything is MODELED or tool-checked; nothing is built or measured. Never write proven, ready for fabrication, record, will detect.
 
 ## C. Fast pipeline (use it; it replaces re-running everything)
@@ -38,7 +38,8 @@ scripts/bootstrap.sh | tail -1                                    # "environment
 python3 tests/regress.py | tail -1                                # strict: expect FAILS 0 SKIPS 0, 50 PASS
 python3 scripts/publish_data.py --check | head -1                 # expect 0 stale file(s)
 ```
-If any of these differs from the numbers above, stop and report the difference before doing anything else. Then read docs/STATUS.md (generated sign-off table), docs/UNVERIFIED.md (open evidence), docs/OPEN_ITEMS.md.
+**Fresh container exception (expected, not a fault):** `work/` and its results are not in git. In a brand-new container the strict regress shows many FAILs (every one "result file missing") and `publish_data.py --check` shows about 38 stale ("missing source"). That is normal. Do not stop: run `make signoff` once in the background (one Monitor; about 11 min if routing state is warm, longer from a truly cold container because routing restarts from scratch), then re-check. Stop only if, after that run, the counts below still differ. Commit trailer: use the model name this session is actually running on.
+If any of these differs from the numbers above after that run, stop and report the difference before doing anything else. Then read docs/STATUS.md (generated sign-off table), docs/UNVERIFIED.md (open evidence), docs/OPEN_ITEMS.md.
 
 ## 1. Standing rules from the owner (do not ask again)
 
