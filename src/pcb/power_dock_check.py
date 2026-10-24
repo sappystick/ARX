@@ -4,6 +4,7 @@
 real bus capacitance, voltage ratings, cord drop, runtime of a 7S1P Molicel P30B pack. Cell, MOSFET, BMS and connector figures are
 ASSUMPTIONS 24-26 (datasheets not opened in this container)."""
 import json, re, itertools, os
+import numpy as np
 from sch_export import parse_net
 R = []
 def chk(n, ok, v="", note=""): R.append(dict(check=n, result="PASS" if ok else "FAIL", value=v, note=note))
@@ -45,7 +46,7 @@ chk("gate drive at the BMS cut-off 19.6 V above the -4.5 V logic-level rating (V
 # 3 soft start: Miller plateau at about 3 V; gate current through R2 minus R1 charges C1; load = every capacitor on the bus (PM2 + PB1R + CB1D input)
 VPL = 3.0
 cap = sum(val(c["value"].split()[0]) for r, c in pc.items() if r.startswith("C") and node_of(r, "1") == "VBUS" and node_of(r, "2") == "GND")
-rc, rn = parse_net("legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/PB1R/PF233-PB1R.net"); cc_, cn_ = parse_net("kit_v18/CB1D/PF233-CB1D.net")
+rc, rn = parse_net("kit_v6/PB1R/PF233-PB1R.net" if os.path.exists("kit_v6/PB1R/PF233-PB1R.net") else "legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/PB1R/PF233-PB1R.net"); cc_, cn_ = parse_net("kit_v18/CB1D/PF233-CB1D.net")
 def bus_caps(comps, nets, busnames):
     tot = 0.0
     for ref, c in comps.items():
@@ -64,15 +65,38 @@ chk("bulk capacitor rating >= 1.5 x pack maximum (V)", 50.0 >= 1.5 * VMAX, f"50 
 chk("MOSFET rating >= 1.25 x pack maximum (V)", 40.0 >= 1.25 * VMAX, f"-40 V vs {1.25*VMAX:.1f}")
 # 5 currents, drop and runtime
 P_SCAN, P_BOOST = 4.7, 7.7                                              # system_budget.py
-i_avg = P_BOOST / VNOM; q = 20.0 * 41.5e-6 / 2; droop = q / cap_pb; R_cord = 2 * 1.75 * 0.0333; i_pk = droop / R_cord
-chk("battery current: boost average and pulse-recharge peak under the 5 A slow fuse (A)", i_pk < 5.0, f"avg {i_avg:.2f}, peak {i_pk:.2f}", f"PB1R bulk droop {droop:.2f} V per 20 A pulse through {R_cord*1000:.0f} mohm of cord")
+i_avg = P_BOOST / VMIN / 0.85; R_cord = 2 * 1.75 * 0.0333
+# crude bound (earlier version of this check): the whole bank droop of one 20 A pulse recharged instantly through the cord, at the worst-case charge (BMS cut-off, loop resistance, -20 % capacitance: tx_vbus.json)
+q = max(r["charge_uC"] for r in json.load(open("kit_v23/tx_vbus.json"))["ton_rule"] if r["I_A"] == 20) * 1e-6 if os.path.exists("kit_v23/tx_vbus.json") else 20.0 * 41.5e-6 / 2
+droop = q / cap_pb; i_pk_bound = droop / R_cord
+# time-domain model of the real chain at the BMS cut-off (largest charge per pulse): pack -> R_src (cells, BMS, F1, Q1, MT60) -> CB1 (PM2) -> cord R_cord -> PB1R bank -> coil (switched on until it reaches 20 A, 400 Hz).
+# F1 and Q1 sit BEFORE CB1, so they carry the filtered current, not the cord's pulse. R_src is an assumption swept 0.10-0.30 ohm (ASSUMPTIONS 28); capacitors -20 %; cord inductance ignored (conservative peaks)
+C_CB, C_PB, L_COIL, R_LOOP = cap * 0.8, cap_pb * 0.8, 54e-6, 0.113
+def chain(R_src, Vp=VMIN, f=400.0, dt=1e-7, periods=8):
+    n = int(periods / f / dt); vcb = vpb = Vp; iL = 0.0; on = True; steps = int(1 / f / dt); i_f = []; i_c = []
+    for k in range(n):
+        if k % steps == 0: on = True; iL = 0.0
+        ic = (vcb - vpb) / R_cord; i_s = (Vp - vcb) / R_src
+        if on:
+            iL += dt * (vpb - R_LOOP * iL) / L_COIL
+            if iL >= 20.0: on = False                      # the coil then freewheels into the clamp: no more bank current
+        il = iL if on else 0.0
+        vcb += dt * (i_s - ic) / C_CB; vpb += dt * (ic - il) / C_PB
+        if k >= n - 3 * steps: i_f.append(i_s); i_c.append(ic)
+    i_f, i_c = np.array(i_f), np.array(i_c)
+    return dict(R_src=R_src, F1_mean=float(i_f.mean()), F1_peak=float(i_f.max()), F1_rms=float(np.sqrt((i_f ** 2).mean())), cord_peak=float(i_c.max()), cord_rms=float(np.sqrt((i_c ** 2).mean())))
+sweep = [chain(r) for r in (0.10, 0.20, 0.30)]
+F1_peak = max(x["F1_peak"] for x in sweep); F1_rms = max(x["F1_rms"] for x in sweep); cord_peak = max(x["cord_peak"] for x in sweep); cord_rms = max(x["cord_rms"] for x in sweep)
+i_pk = F1_peak
+chk("battery side (F1, Q1) at the BMS cut-off: peak under the 5 A slow fuse and RMS under 70 % of it (A)", F1_peak < 5.0 and F1_rms < 3.5, f"peak {F1_peak:.2f}, rms {F1_rms:.2f}, mean {max(x['F1_mean'] for x in sweep):.2f}", f"time-domain, R_src 0.10-0.30 ohm; the crude instant-recharge bound through the cord alone is {i_pk_bound:.2f} A")
+chk("power cord (2 x AWG20) RMS under its 5 A enclosed rating at the BMS cut-off (A)", cord_rms < 5.0, f"rms {cord_rms:.2f}, peak {cord_peak:.2f}", f"pulse charge {q*1e6:.0f} uC, droop {droop:.2f} V on {cap_pb*1e6:.0f} uF nominal; cord {R_cord*1000:.0f} mohm")
 chk("power-cord drop at the boost average (mV)", i_avg * R_cord * 1000 < 100, round(i_avg * R_cord * 1000, 1))
-chk("Q1 dissipation at the pulse-recharge peak, 15 mohm (W)", i_pk ** 2 * 0.015 < 0.25, round(i_pk ** 2 * 0.015, 3), "no heat sink (eddy rule: no metal sinks)")
+chk("Q1 dissipation from the RMS battery-side current, 15 mohm (W)", F1_rms ** 2 * 0.015 < 0.25, round(F1_rms ** 2 * 0.015, 4), "no heat sink (eddy rule: no metal sinks)")
 E = NS * V_NOM * AH
 run = dict(pack_Wh=round(E, 1), scan_h_one_pack=round(E / P_SCAN, 1), boost_h_one_pack=round(E / P_BOOST, 1), scan_h_two_packs=round(2 * E / P_SCAN, 1), boost_h_two_packs=round(2 * E / P_BOOST, 1),
            v20_pack_Wh=90.7, v20_boost_h=round(90.7 / P_BOOST, 1))
 chk("runtime of one P30B pack in boost (h)", run["boost_h_one_pack"] >= 8.0, run["boost_h_one_pack"], f"{E:.1f} Wh vs 90.7 Wh in v20 ({run['v20_boost_h']} h)")
-out = dict(checks=R, interlock_table=table, runtime=run, currents_A=dict(boost_avg=round(i_avg, 3), recharge_peak=round(i_pk, 3)), gate_V=dict(at_max=round(vgs(VMAX), 2), at_min=round(vgs(VMIN), 2)), soft_start=dict(ramp_ms=round(t_ramp * 1e3, 1), inrush_A=round(i_in, 2), C_load_uF=round(C_load * 1e6)),
+out = dict(checks=R, interlock_table=table, runtime=run, currents_A=dict(boost_avg=round(i_avg, 3), recharge_peak=round(i_pk, 3), F1_rms=round(F1_rms, 3), cord_peak=round(cord_peak, 2), cord_rms=round(cord_rms, 3), cord_peak_instant_bound=round(i_pk_bound, 2)), chain_sweep=sweep, gate_V=dict(at_max=round(vgs(VMAX), 2), at_min=round(vgs(VMIN), 2)), soft_start=dict(ramp_ms=round(t_ramp * 1e3, 1), inrush_A=round(i_in, 2), C_load_uF=round(C_load * 1e6)),
            assumptions=dict(cell="Molicel INR-18650-P30B: 3.0 Ah, 3.6 V nominal, 4.2 V charge, 30 A continuous, 47 g (retailer copies of the datasheet, unverified)", BMS_uv_per_cell=V_UV, miller_plateau_V=VPL, mosfet="SO-8 P-channel -40 V, 15 mohm (to be chosen)"))
 os.makedirs("kit_v23", exist_ok=True); json.dump(out, open("kit_v23/power_dock_check.json", "w"), indent=1, default=str)
 for x in R: print(x["result"], x["check"], "=", x["value"], "|", x["note"][:90])

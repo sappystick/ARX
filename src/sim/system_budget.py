@@ -3,6 +3,7 @@
 import json, csv, math
 S = json.load(open("kit_v20/sim_head1.json"))["tx_stage"]; T = json.load(open("kit_v20/sim_thermal.json")); tx = json.load(open("kit_v22/tx_system.json"))
 film = [x for x in S if x["case"] == "100 nF C0G/film"][0]; x7r = [x for x in S if "DC-bias" in x["case"]][0]
+V_PACK_MAX, V_PACK_MIN = 29.4, 19.6                                                        # 7S1P: 4.2 V full charge, 2.8 V BMS cut-off
 rows = []
 def R(part, what, stress, rating, unit, minmargin, note, higher_is_worse=True):
     margin = (rating - stress) / rating * 100 if higher_is_worse else (stress - rating) / rating * 100
@@ -20,15 +21,19 @@ R("MONO coupling cap 100 nF / 630 V", "voltage", film["vd_peak"], 630, "V", 20, 
 R("BAV199 input clamp (MONO path)", "peak clamp current through RS 1 kohm", (film["vd_peak"] - 5) / 1000, 4.0, "A", 50, "1 us surge rating assumed 4 A; average power negligible")
 R("TXJ1 bus A to B", "creepage gap for 460 V peak", 460, 460 * 3.0 / 2.5, "V", 0, "3.0 mm edge gap vs about 2.5 mm needed (IEC 60664-1 style estimate, pollution 2); plus 1.6 mm FR4 between layers", True)
 R("TX pair AWG12 600 V", "voltage", film["vd_peak"], 600, "V", 20, "")
-R("SMCJ33A TVS", "VBUS maximum (7S full charge 29.4 V)", 29.4, 33, "V", 5, "standoff voltage")
-R("OKI-78SR-5 module", "input voltage maximum", 29.4, 36, "V", 20, "")
+R("SMCJ33A TVS", "VBUS maximum (7S full charge 29.4 V)", V_PACK_MAX, 33, "V", 5, "standoff voltage")
+R("OKI-78SR-5 module", "input voltage maximum", V_PACK_MAX, 36, "V", 20, "")
 R("TX coil litz", "rms current at 20 A / 400 Hz (Ipk sqrt(D/3))", 20 * math.sqrt(41.538e-6 * 400 / 3), 3.0, "A", 30, "about 3 A rms for 1.2 mm litz is conservative")
 R("Vault", "worst-case hot spot (boost + 0.5 W LEDs, 25 C ambient)", max(v["max_C"] for k, v in T.items() if "worst" in k and "25 C" in k), 80, "C", 30, "PETG Tg about 80 C; FR4 85 C")
 R("Vault", "hot spot at 40 C ambient", max(v["max_C"] for k, v in T.items() if "worst" in k and "40 C" in k), 80, "C", 30, "")
-bulk = 6 * 150e-6; dv = (10 * 41.5e-6) / bulk; R("PB1R bulk capacitors 6 x 150 uF", "voltage droop per pulse (charge 415 uC)", dv, 26 * 0.05, "V", 0, "5 percent of VBUS allowed")
-R("Power cord AWG20 pair (upper v1)", "average current in boost (7.7 W / 25.2 V / 0.85)", 7.7 / 25.2 / 0.85, 5.0, "A", 50, "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon")
-R("PM2 fuse F1 5 A slow", "pulse-recharge peak of the PB1R bulk through the cord (power_dock_check.py)", json.load(open("kit_v23/power_dock_check.json"))["currents_A"]["recharge_peak"], 5.0, "A", 20, "slow-blow: carries the rated current continuously; peaks last about a millisecond")
-R("Battery pack 7S1P Molicel P30B", "average current in boost", 7.7 / 25.2 / 0.85, 30.0, "A", 50, "30 A continuous (datasheet value, unverified here)")
+tv = json.load(open("kit_v23/tx_vbus.json")); bb = tv["bulk_bank"]; w20 = [r for r in tv["ton_rule"] if r["I_A"] == 20]; wd = max(w20, key=lambda r: r["droop_pct"])
+R("PB1R bulk capacitors 6 x 150 uF -20 %", f"voltage droop per 20 A pulse at {wd['V']} V (charge {wd['charge_uC']} uC, loop R and sag included; tx_vbus_sweep.py)", wd["droop_V"], wd["V"] * 0.05, "V", 10, "5 percent of VBUS allowed; the earlier row used 415 uC at 26 V and 900 uF nominal (CORRECTIONS)")
+R("PB1R bulk capacitors CD1-CD6 (50 V)", "voltage at the 7S full charge", V_PACK_MAX, 50.0, "V", 30, "was 35 V parts at 84 percent of rating; 150 uF at 50 V in 7343-43 is UNVERIFIED (ASSUMPTIONS 28); each part must supply >= %d uF at 19.6 V" % bb["min_nominal_uF_per_cap_if_6"])
+R("PB1R 12 V module M12", "input voltage maximum", V_PACK_MAX, 36, "V", 15, "Murata OKI-78SR-12/1.5-W36 class (UNVERIFIED, ASSUMPTIONS 29)")
+R("PB1R 12 V module M12", "pack voltage at the BMS cut-off vs the module minimum input (15 V)", V_PACK_MIN, 15.0, "V", 15, "datasheet minimum input (UNVERIFIED, ASSUMPTIONS 29)", False)
+R("Power cord AWG20 pair (upper v1)", "average current in boost (7.7 W / 19.6 V BMS cut-off / 0.85)", 7.7 / V_PACK_MIN / 0.85, 5.0, "A", 50, "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon")
+R("PM2 fuse F1 5 A slow", "battery-side peak through F1 at the BMS cut-off (time-domain chain, power_dock_check.py)", json.load(open("kit_v23/power_dock_check.json"))["currents_A"]["recharge_peak"], 5.0, "A", 20, "slow-blow: carries the rated current continuously; peaks last about a millisecond")
+R("Battery pack 7S1P Molicel P30B", "average current in boost", 7.7 / V_PACK_MIN / 0.85, 30.0, "A", 50, "30 A continuous (datasheet value, unverified here)")
 R("LED rail (OKI-78SR 1.5 A)", "66 LEDs at full white 60 mA each", 66 * 0.06, 1.5, "A", 0, "FAILS unless the firmware caps the LED current: REQUIREMENT firmware limit 0.35 A total (about 1.75 W)")
 R("LED rail with the firmware cap", "capped LED current + Pico + ADC (0.35 + 0.15)", 0.50, 1.5, "A", 30, "requires the firmware cap")
 R("TX lead channel", "litz fill ratio", tx["bundle_area_mm2"] / tx["channel_area_mm2"], 0.7, "ratio", 15, "wall-top groove + roof channel")

@@ -47,8 +47,18 @@ if d:
     b=d["balance"]; chk("upper assembly v1: torque about the grip at the v20 head reach <= v20, mass <= 1.6 kg incl. pack",b["new_47deg_working"]<=b["baseline_v20_kg_m"] and d["mass"]["upper_total_kg"]<=1.6,f"{b['new_47deg_working']} vs {b['baseline_v20_kg_m']} kg m, {d['mass']['upper_total_kg']} kg")
 else: skip("upper assembly")
 d=rd("kit_v23/power_dock_check.json")
-if d: bad=[c["check"] for c in d["checks"] if c["result"]!="PASS"]; chk("PM2 battery dock: interlock (on only when seated AND switched), gate drive, soft start, ratings, runtime (12 checks)",len(d["checks"])>=12 and not bad,f"ramp {d['soft_start']['ramp_ms']} ms, inrush {d['soft_start']['inrush_A']} A, boost {d['runtime']['boost_h_one_pack']} h/pack, fails={bad[:2]}")
+if d: bad=[c["check"] for c in d["checks"] if c["result"]!="PASS"]; chk("PM2 battery dock: interlock (on only when seated AND switched), gate drive, soft start, ratings, runtime (13 checks: battery-side and cord currents from a time-domain model)",len(d["checks"])>=13 and not bad,f"ramp {d['soft_start']['ramp_ms']} ms, inrush {d['soft_start']['inrush_A']} A, boost {d['runtime']['boost_h_one_pack']} h/pack, fails={bad[:2]}")
 else: skip("PM2 battery dock")
+d=rd("kit_v23/tx_vbus.json")
+if d:
+    tv=[r for r in d["tx_stage_vs_vbus"] if r["case"].startswith("100 nF")]; t20=[r for r in d["ton_rule"] if r["I_A"]==20]; lo=next(r for r in t20 if r["V"]==19.6); hi=next(r for r in t20 if r["V"]==29.4)
+    chk("TX over the 7S range (19.6-29.4 V), 20 A: reproduces sim_head1 at 26 V; Vds peak <= 480 V (650 V FET, >= 25 % margin); turn-off quiet time independent of VBUS (+-0.05 us)",d["validation_ok"] and max(r["Vds_peak"] for r in tv)<=480 and max(r["t_quiet_us"] for r in tv)-min(r["t_quiet_us"] for r in tv)<0.05,f"Vds {min(r['Vds_peak'] for r in tv):.1f}-{max(r['Vds_peak'] for r in tv):.1f} V, quiet {tv[0]['t_quiet_us']:.2f} us")
+    chk("firmware on-time for 20 A: 59.5 us at 19.6 V and 38.5 us at 29.4 V (loop R and bulk droop, +-1 us); lossless L I / V (55.1 / 36.7 us) under-delivers by > 4 %; bulk droop at 19.6 V under 5 %; CD1-CD6 at most 60 % of 50 V",abs(lo["ton_loop_droop_us"]-59.5)<1 and abs(hi["ton_loop_droop_us"]-38.5)<1 and lo["I_if_lossless_ton_A"]<19.2 and hi["I_if_lossless_ton_A"]<19.2 and lo["droop_pct"]<5.0 and d["bulk_bank"]["util_new_pct"]<=60,f"ton {lo['ton_loop_droop_us']} / {hi['ton_loop_droop_us']} us, lossless gives {lo['I_if_lossless_ton_A']} / {hi['I_if_lossless_ton_A']} A, droop {lo['droop_pct']} %, CD {d['bulk_bank']['util_new_pct']} %")
+else: skip("TX voltage sweep")
+try: bom=open(os.path.join(W,"kit_v6/PB1R/PF233-PB1R_BOM.csv")).read()
+except Exception: bom=None
+if bom: chk("PB1R generated BOM: CD1-CD6 are 50 V parts, M12 module listed with the 15-36 V input range",all(f"CD{n}" in bom for n in range(1,7)) and "150u 50V" in bom and "35V" not in bom and "15-36 V" in bom,"150u 50V x6")
+else: skip("PB1R BOM")
 d=rd("kit_v22/sbq_sim.json")
 if d:
     L=d["leak"]; worst=max(v["peak_V"] for b in L.values() for k,v in b.items() if "lobes only" not in k and "0.5" in k)

@@ -54,21 +54,27 @@
    "note": ""
   },
   {
-   "check": "battery current: boost average and pulse-recharge peak under the 5 A slow fuse (A)",
+   "check": "battery side (F1, Q1) at the BMS cut-off: peak under the 5 A slow fuse and RMS under 70 % of it (A)",
    "result": "PASS",
-   "value": "avg 0.31, peak 3.79",
-   "note": "PB1R bulk droop 0.44 V per 20 A pulse through 117 mohm of cord"
+   "value": "peak 2.52, rms 0.60, mean 0.24",
+   "note": "time-domain, R_src 0.10-0.30 ohm; the crude instant-recharge bound through the cord alone is 5.59 A"
+  },
+  {
+   "check": "power cord (2 x AWG20) RMS under its 5 A enclosed rating at the BMS cut-off (A)",
+   "result": "PASS",
+   "value": "rms 0.66, peak 4.37",
+   "note": "pulse charge 612 uC, droop 0.65 V on 940 uF nominal; cord 117 mohm"
   },
   {
    "check": "power-cord drop at the boost average (mV)",
    "result": "PASS",
-   "value": 35.6,
+   "value": 53.9,
    "note": ""
   },
   {
-   "check": "Q1 dissipation at the pulse-recharge peak, 15 mohm (W)",
+   "check": "Q1 dissipation from the RMS battery-side current, 15 mohm (W)",
    "result": "PASS",
-   "value": 0.215,
+   "value": 0.0054,
    "note": "no heat sink (eddy rule: no metal sinks)"
   },
   {
@@ -94,9 +100,39 @@
   "v20_boost_h": 11.8
  },
  "currents_A": {
-  "boost_avg": 0.306,
-  "recharge_peak": 3.788
+  "boost_avg": 0.462,
+  "recharge_peak": 2.518,
+  "F1_rms": 0.597,
+  "cord_peak": 4.37,
+  "cord_rms": 0.656,
+  "cord_peak_instant_bound": 5.59
  },
+ "chain_sweep": [
+  {
+   "R_src": 0.1,
+   "F1_mean": 0.2438896757297515,
+   "F1_peak": 2.5184713412235737,
+   "F1_rms": 0.5972819136205142,
+   "cord_peak": 4.37082000449739,
+   "cord_rms": 0.6560306226475462
+  },
+  {
+   "R_src": 0.2,
+   "F1_mean": 0.2438851952833946,
+   "F1_peak": 1.660404340646835,
+   "F1_rms": 0.4814067914796096,
+   "cord_peak": 4.175350231484428,
+   "cord_rms": 0.5843448228625784
+  },
+  {
+   "R_src": 0.3,
+   "F1_mean": 0.2438693284255358,
+   "F1_peak": 1.2497939703802174,
+   "F1_rms": 0.41471405874669737,
+   "cord_peak": 4.099703404414422,
+   "cord_rms": 0.5474106806403883
+  }
+ ],
  "gate_V": {
   "at_max": 12.02,
   "at_min": 8.01

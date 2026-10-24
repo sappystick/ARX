@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: upper pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -70,11 +70,18 @@ pcb-hb1:
 pcb-hb2:
 	cd $(W) && PW=G $(PY) pw_design.py && PW=G $(PY) pw_export.py
 
-pcb-pm2: pcb-cb1d
+pcb-pb1r:
+	cd $(W) && PW=R $(PY) pw_design.py && PW=R $(PY) pw_export.py
+
+# TX stage over the 7S pack range (19.6-29.4 V), firmware on-time rule and look-up table, bulk-bank droop
+tx-vbus:
+	cd $(W) && mkdir -p kit_v23 && $(PY) tx_vbus_sweep.py
+
+pcb-pm2: pcb-cb1d pcb-pb1r tx-vbus
 	cd $(W) && PW=P $(PY) pw_design.py && PW=P $(PY) pw_export.py && $(PY) power_dock_check.py
 
 # KiCad schematics from the netlists (round-trip checked) and the handle-input / trigger chain check
-sch: pcb-lb1 pcb-cb1d pcb-hb1 pcb-hb2 pcb-pm2
+sch: pcb-lb1 pcb-cb1d pcb-pb1r pcb-hb1 pcb-hb2 pcb-pm2
 	cd $(W) && $(PY) sch_export.py && $(PY) trigger_check.py
 
 pcb-cb1d:
@@ -128,7 +135,7 @@ pcb-release: gerber-lb1 gerber-cb1d drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d sbq-fa
 tx:
 	cd $(W) && $(PY) tx_system.py
 
-audit-system: tx pcb-lb1 pcb-cb1d pcb-hb2 pcb-pm2
+audit-system: tx tx-vbus pcb-lb1 pcb-cb1d pcb-pb1r pcb-hb2 pcb-pm2
 	cd $(W) && $(PY) wiring_audit.py && $(PY) system_budget.py && $(PY) stack_check.py && $(PY) interference_audit.py
 
 # full cross-check of the assembled head (3D interference at 0.5 and 0.2 mm, layers, radial fits, LED/TX/RX/wiring) and the cut-away drawings

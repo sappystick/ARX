@@ -206,7 +206,7 @@ if PW == "C":
 if PW == "R":
     # ------------------------------------------------------------------ PB1R: single-channel TX power stage for the head vault (70 x 70)
     add("JP", "TERM4", "Power in: VBUS VBUS GND GND", "5.08 mm terminal block 10 A"); net("VBUS", ("JP", 1), ("JP", 2)); net("GND", ("JP", 3), ("JP", 4))
-    for n in range(1, 7): add(f"CD{n}", "CAPD", "150u 35V polymer Ta", "KEMET T52x/Panasonic POSCAP class, low ESR"); net("VBUS", (f"CD{n}", 1)); net("GND", (f"CD{n}", 2))
+    for n in range(1, 7): add(f"CD{n}", "CAPD", "150u 50V polymer Ta", "50 V polymer Ta or hybrid, low ESR; >= 130 uF each at 19.6 V (tx_vbus_sweep.py); 150 uF in 7343-43 at 50 V UNVERIFIED (ASSUMPTIONS 28)"); net("VBUS", (f"CD{n}", 1)); net("GND", (f"CD{n}", 2))
     for n in range(1, 5): add(f"CM{n}", "C1210", "10u 50V", "X7R"); net("VBUS", (f"CM{n}", 1)); net("GND", (f"CM{n}", 2))
     add("JC", "HDR2x4", "Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND", "2.54 mm header")
     for i, nm in enumerate(["UMB_SHLD", "GND", "TX1_IN", "REF_I1", "FAULT1_N", "ISENSE1", "NTC_SENSE", "GND"], 1): net(nm, ("JC", i))
@@ -227,7 +227,7 @@ if PW == "R":
     add("JL1", "TERM2", "Coil outer band: DRAIN, VBUS", "5.08 mm terminal block"); net("DRAIN1", ("JL1", 1)); net("VBUS", ("JL1", 2))
     add("RK1", "R0603", "100", ""); add("CK1", "C0603", "100p", "C0G"); add("RPU1", "R0603", "10k", ""); add("RF1", "R0603", "1k", "")
     net("SRC1", ("RK1", 1)); net("ISENSE1", ("RK1", 2), ("CK1", 1), ("U3", 2)); net("GND", ("CK1", 2)); net("REF_I1", ("U3", 3)); net("OC1_OUT", ("U3", 1), ("RPU1", 1), ("RF1", 1)); net("AUX12", ("RPU1", 2)); net("FAULT1_N", ("RF1", 2))
-    add("M12", "OKI3", "12 V 1.5 A switching module", "Murata OKI-78SR-12/1.5-W36 class (Vin 15-36 V)"); net("VBUS", ("M12", 1)); net("GND", ("M12", 2)); net("AUX12", ("M12", 3))
+    add("M12", "OKI3", "12 V 1.5 A switching module", "Murata OKI-78SR-12/1.5-W36 class, Vin 15-36 V covers the 7S range 19.6-29.4 V (datasheet UNVERIFIED, ASSUMPTIONS 29)"); net("VBUS", ("M12", 1)); net("GND", ("M12", 2)); net("AUX12", ("M12", 3))
     add("C12A", "C1210", "22u 25V", "X7R"); add("C12B", "C0603", "100n", "X7R"); net("AUX12", ("C12A", 1), ("C12B", 1)); net("GND", ("C12A", 2), ("C12B", 2))
 
 if PW == "H":
