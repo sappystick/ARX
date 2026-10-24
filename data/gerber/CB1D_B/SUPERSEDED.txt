@@ -1,0 +1,1 @@
+SUPERSEDED by data/gerber/CB1D_B2 (2026-10-24): B2 adds RJB10 (0R, fitted), RJ5/RJ6 (DNP) and the corrected route_fix (nearest pad). Not fabricated.

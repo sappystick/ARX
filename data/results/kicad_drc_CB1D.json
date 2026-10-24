@@ -3,11 +3,11 @@
  "board_key": "CB1D",
  "kicad": "9.0.9",
  "zones_filled": true,
- "violations": 58,
+ "violations": 61,
  "unconnected": 0,
  "errors": {},
  "warnings": {},
- "lib_footprint_warnings": 58,
+ "lib_footprint_warnings": 61,
  "control_hv50mm_clearance_violations": 500,
  "rules_loaded": true,
  "examples": []

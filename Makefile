@@ -125,6 +125,8 @@ kicad-cb1d:
 # KiCad 9 DRC (zones filled, design rules from dru_gen.py, automatic negative control) on the routed boards: needs `kicad-cli` and the system python3 with pcbnew
 kicad-drc: kicad-cb1d kicad-lb1
 	for b in CB1D LB1; do $(PY) src/pcb/kicad_drc.py $(W)/kit_v22/KICAD/PF233-$${b}_routed.kicad_pcb $(W)/kit_v22/kicad_drc_$$b.json $$b | head -1; done
+	$(PY) src/pcb/kicad_drc.py $(W)/kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb $(W)/kit_v22/kicad_drc_TXJ1.json TXJ1 | head -1
+	for b in SB1R-QA SB1R-QB; do $(PY) src/pcb/kicad_drc.py $(W)/kit_v22/KICAD_SBQ/$$b.kicad_pcb $(W)/kit_v22/kicad_drc_$$b.json $$b | head -1; done
 
 # receive boards: sbq-fast uses the stored tuned radii (data/seed/kit_v22/sbq_radii.json); sbq re-tunes them (about 3 min)
 sbq-fast:

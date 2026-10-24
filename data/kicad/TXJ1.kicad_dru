@@ -1,0 +1,16 @@
+(version 1)
+(rule "general 0.15 mm / 0.15 mm"
+  (constraint clearance (min 0.15mm))
+  (constraint track_width (min 0.15mm))
+  (constraint hole_size (min 0.3mm))
+  (constraint annular_width (min 0.15mm))
+  (constraint edge_clearance (min 0.5mm)))
+(rule "power width TX_A"
+  (condition "A.NetName == 'TX_A'")
+  (constraint track_width (min 3.0mm)))
+(rule "power width TX_B"
+  (condition "A.NetName == 'TX_B'")
+  (constraint track_width (min 3.0mm)))
+(rule "HV flyback nets 1.0 mm"
+  (condition "A.NetName == 'TX_A' || A.NetName == 'TX_B'")
+  (constraint clearance (min 1.0mm)))

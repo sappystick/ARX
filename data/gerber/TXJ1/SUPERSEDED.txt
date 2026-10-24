@@ -1,0 +1,1 @@
+SUPERSEDED by data/gerber/TXJ1_v2 (2026-10-24): the 4.2 mm AWG12 pads sat 0.4 mm from the board edge (rule 0.5 mm); v2 uses 3.8 mm pads (0.6 mm).

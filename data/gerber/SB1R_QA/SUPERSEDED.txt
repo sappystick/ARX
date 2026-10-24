@@ -1,0 +1,1 @@
+SUPERSEDED by data/gerber/SB1R_QA_v2 (2026-10-24). DEFECTIVE: the via drill was written as 0.800 mm in 0.800 mm via pads (T1C0.800 in the PTH drill file): no annular ring on any via. v2 uses 0.400 mm drills (0.2 mm annular ring).
