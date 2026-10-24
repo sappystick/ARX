@@ -1,0 +1,400 @@
+{
+ "assumptions": {
+  "L_uH": 54.0,
+  "R_loop_mohm": 112.99999999999999,
+  "R_parts_mohm": {
+   "coil": 45.0,
+   "fets": 50.0,
+   "shunt": 10.0,
+   "wire": 8.0
+  },
+  "C_bulk_nom_uF": 900.0,
+  "C_bulk_tol": 0.8,
+  "V_range": [
+   19.6,
+   29.4
+  ]
+ },
+ "validation_vs_sim_head1_26V": {
+  "100 nF C0G/film": {
+   "Vds_new": 462.37,
+   "Vds_sim_head1": 462.37,
+   "t_quiet_new": 5.561,
+   "t_quiet_sim_head1": 5.561,
+   "P_RCL_new": 3.815,
+   "P_RCL_sim_head1": 3.815
+  },
+  "as built: 2 x 100 nF X7R, with DC-bias derating": {
+   "Vds_new": 379.45,
+   "Vds_sim_head1": 379.45,
+   "t_quiet_new": 6.441,
+   "t_quiet_sim_head1": 6.441,
+   "P_RCL_new": 4.679,
+   "P_RCL_sim_head1": 4.679
+  }
+ },
+ "validation_ok": true,
+ "tx_stage_vs_vbus": [
+  {
+   "Vbus": 19.6,
+   "I0": 20,
+   "CL_nF": 100.0,
+   "derated": false,
+   "ton_us": 55.10204081632653,
+   "vd_peak": 436.3694222824649,
+   "vc_peak": 435.1638839793742,
+   "Vds_peak": 455.9694222824649,
+   "t_zero_us": 3.7606267711285213,
+   "t_quiet_us": 5.5609268211368565,
+   "P_RCL_W": 3.814596164136989,
+   "P_damp_W": 0.4583004779982483,
+   "peak_i_diode": 19.87670388071985,
+   "case": "100 nF C0G/film (design)"
+  },
+  {
+   "Vbus": 19.6,
+   "I0": 20,
+   "CL_nF": 200.0,
+   "derated": true,
+   "ton_us": 55.10204081632653,
+   "vd_peak": 353.5036736191852,
+   "vc_peak": 352.29875997422243,
+   "Vds_peak": 373.1036736191852,
+   "t_zero_us": 4.68078013002167,
+   "t_quiet_us": 6.441073512252042,
+   "P_RCL_W": 4.679745713273172,
+   "P_damp_W": 0.3610857881170908,
+   "peak_i_diode": 19.84506473448738,
+   "case": "2 x 100 nF X7R derated (as built)"
+  },
+  {
+   "Vbus": 26.0,
+   "I0": 20,
+   "CL_nF": 100.0,
+   "derated": false,
+   "ton_us": 41.53846153846154,
+   "vd_peak": 436.3682095060234,
+   "vc_peak": 435.1628487571733,
+   "Vds_peak": 462.3682095060234,
+   "t_zero_us": 3.7606267711285213,
+   "t_quiet_us": 5.5609268211368565,
+   "P_RCL_W": 3.814587796260896,
+   "P_damp_W": 0.45829811718817404,
+   "peak_i_diode": 19.876984302660222,
+   "case": "100 nF C0G/film (design)"
+  },
+  {
+   "Vbus": 26.0,
+   "I0": 20,
+   "CL_nF": 200.0,
+   "derated": true,
+   "ton_us": 41.53846153846154,
+   "vd_peak": 353.45153684033534,
+   "vc_peak": 352.2470088459357,
+   "Vds_peak": 379.45153684033534,
+   "t_zero_us": 4.68078013002167,
+   "t_quiet_us": 6.441073512252042,
+   "P_RCL_W": 4.679402956292292,
+   "P_damp_W": 0.36099668067468904,
+   "peak_i_diode": 19.846341584547304,
+   "case": "2 x 100 nF X7R derated (as built)"
+  },
+  {
+   "Vbus": 29.4,
+   "I0": 20,
+   "CL_nF": 100.0,
+   "derated": false,
+   "ton_us": 36.734693877551024,
+   "vd_peak": 436.3677878259608,
+   "vc_peak": 435.16248881681884,
+   "Vds_peak": 465.7677878259608,
+   "t_zero_us": 3.7606267711285213,
+   "t_quiet_us": 5.5609268211368565,
+   "P_RCL_W": 3.8145848783985374,
+   "P_damp_W": 0.45829730151617476,
+   "peak_i_diode": 19.877081805956806,
+   "case": "100 nF C0G/film (design)"
+  },
+  {
+   "Vbus": 29.4,
+   "I0": 20,
+   "CL_nF": 200.0,
+   "derated": true,
+   "ton_us": 36.734693877551024,
+   "vd_peak": 353.43319283459374,
+   "vc_peak": 352.2289331480472,
+   "Vds_peak": 382.8331928345937,
+   "t_zero_us": 4.68078013002167,
+   "t_quiet_us": 6.441073512252042,
+   "P_RCL_W": 4.679283313335851,
+   "P_damp_W": 0.3609655306408738,
+   "peak_i_diode": 19.846789671865167,
+   "case": "2 x 100 nF X7R derated (as built)"
+  }
+ ],
+ "ton_rule": [
+  {
+   "I_A": 8,
+   "f_Hz": 800.0,
+   "V": 19.6,
+   "ton_lossless_us": 22.04,
+   "ton_loop_us": 22.57,
+   "ton_loop_droop_us": 22.62,
+   "I_if_lossless_ton_A": 7.8,
+   "duty_pct": 1.809,
+   "charge_uC": 91.3,
+   "droop_V": 0.127,
+   "droop_pct": 0.65,
+   "supply_energy_mJ": 1.789,
+   "half_LI2_mJ": 1.728
+  },
+  {
+   "I_A": 8,
+   "f_Hz": 800.0,
+   "V": 26.0,
+   "ton_lossless_us": 16.62,
+   "ton_loop_us": 16.91,
+   "ton_loop_droop_us": 16.93,
+   "I_if_lossless_ton_A": 7.85,
+   "duty_pct": 1.355,
+   "charge_uC": 68.2,
+   "droop_V": 0.095,
+   "droop_pct": 0.36,
+   "supply_energy_mJ": 1.772,
+   "half_LI2_mJ": 1.728
+  },
+  {
+   "I_A": 8,
+   "f_Hz": 800.0,
+   "V": 29.4,
+   "ton_lossless_us": 14.69,
+   "ton_loop_us": 14.92,
+   "ton_loop_droop_us": 14.94,
+   "I_if_lossless_ton_A": 7.87,
+   "duty_pct": 1.195,
+   "charge_uC": 60.1,
+   "droop_V": 0.083,
+   "droop_pct": 0.28,
+   "supply_energy_mJ": 1.767,
+   "half_LI2_mJ": 1.728
+  },
+  {
+   "I_A": 14,
+   "f_Hz": 600.0,
+   "V": 19.6,
+   "ton_lossless_us": 38.57,
+   "ton_loop_us": 40.22,
+   "ton_loop_droop_us": 40.51,
+   "I_if_lossless_ton_A": 13.36,
+   "duty_pct": 2.431,
+   "charge_uC": 288.6,
+   "droop_V": 0.401,
+   "droop_pct": 2.05,
+   "supply_energy_mJ": 5.657,
+   "half_LI2_mJ": 5.292
+  },
+  {
+   "I_A": 14,
+   "f_Hz": 600.0,
+   "V": 26.0,
+   "ton_lossless_us": 29.08,
+   "ton_loop_us": 30.0,
+   "ton_loop_droop_us": 30.12,
+   "I_if_lossless_ton_A": 13.53,
+   "duty_pct": 1.807,
+   "charge_uC": 213.5,
+   "droop_V": 0.296,
+   "droop_pct": 1.14,
+   "supply_energy_mJ": 5.55,
+   "half_LI2_mJ": 5.292
+  },
+  {
+   "I_A": 14,
+   "f_Hz": 600.0,
+   "V": 29.4,
+   "ton_lossless_us": 25.71,
+   "ton_loop_us": 26.43,
+   "ton_loop_droop_us": 26.51,
+   "I_if_lossless_ton_A": 13.59,
+   "duty_pct": 1.591,
+   "charge_uC": 187.6,
+   "droop_V": 0.261,
+   "droop_pct": 0.89,
+   "supply_energy_mJ": 5.515,
+   "half_LI2_mJ": 5.292
+  },
+  {
+   "I_A": 20,
+   "f_Hz": 400.0,
+   "V": 19.6,
+   "ton_lossless_us": 55.1,
+   "ton_loop_us": 58.55,
+   "ton_loop_droop_us": 59.5,
+   "I_if_lossless_ton_A": 18.65,
+   "duty_pct": 2.38,
+   "charge_uC": 612.1,
+   "droop_V": 0.85,
+   "droop_pct": 4.34,
+   "supply_energy_mJ": 11.996,
+   "half_LI2_mJ": 10.8
+  },
+  {
+   "I_A": 20,
+   "f_Hz": 400.0,
+   "V": 26.0,
+   "ton_lossless_us": 41.54,
+   "ton_loop_us": 43.46,
+   "ton_loop_droop_us": 43.83,
+   "I_if_lossless_ton_A": 19.01,
+   "duty_pct": 1.753,
+   "charge_uC": 446.9,
+   "droop_V": 0.621,
+   "droop_pct": 2.39,
+   "supply_energy_mJ": 11.619,
+   "half_LI2_mJ": 10.8
+  },
+  {
+   "I_A": 20,
+   "f_Hz": 400.0,
+   "V": 29.4,
+   "ton_lossless_us": 36.73,
+   "ton_loop_us": 38.22,
+   "ton_loop_droop_us": 38.48,
+   "I_if_lossless_ton_A": 19.14,
+   "duty_pct": 1.539,
+   "charge_uC": 391.2,
+   "droop_V": 0.543,
+   "droop_pct": 1.85,
+   "supply_energy_mJ": 11.501,
+   "half_LI2_mJ": 10.8
+  }
+ ],
+ "current_sensitivity": [
+  {
+   "V": 19.6,
+   "case": "nominal",
+   "ton_us": 59.5,
+   "I_peak_A": 20.0,
+   "error_pct": 0.0
+  },
+  {
+   "V": 19.6,
+   "case": "V measured 1 % high (ton too short)",
+   "ton_us": 58.85,
+   "I_peak_A": 19.8,
+   "error_pct": -0.99
+  },
+  {
+   "V": 19.6,
+   "case": "V measured 1 % low (ton too long)",
+   "ton_us": 60.16,
+   "I_peak_A": 20.2,
+   "error_pct": 1.01
+  },
+  {
+   "V": 19.6,
+   "case": "coil L +5 %",
+   "ton_us": 59.5,
+   "I_peak_A": 19.12,
+   "error_pct": -4.42
+  },
+  {
+   "V": 19.6,
+   "case": "coil L -5 %",
+   "ton_us": 59.5,
+   "I_peak_A": 20.97,
+   "error_pct": 4.84
+  },
+  {
+   "V": 19.6,
+   "case": "R_loop +25 % (hot FETs, joints)",
+   "ton_us": 59.5,
+   "I_peak_A": 19.7,
+   "error_pct": -1.51
+  },
+  {
+   "V": 19.6,
+   "case": "ton timer 1 us late",
+   "ton_us": 60.5,
+   "I_peak_A": 20.3,
+   "error_pct": 1.52
+  },
+  {
+   "V": 19.6,
+   "case": "lossless rule L I / V used instead",
+   "ton_us": 55.1,
+   "I_peak_A": 18.65,
+   "error_pct": -6.77
+  },
+  {
+   "V": 29.4,
+   "case": "nominal",
+   "ton_us": 38.48,
+   "I_peak_A": 20.0,
+   "error_pct": -0.0
+  },
+  {
+   "V": 29.4,
+   "case": "V measured 1 % high (ton too short)",
+   "ton_us": 38.08,
+   "I_peak_A": 19.8,
+   "error_pct": -0.99
+  },
+  {
+   "V": 29.4,
+   "case": "V measured 1 % low (ton too long)",
+   "ton_us": 38.89,
+   "I_peak_A": 20.2,
+   "error_pct": 1.01
+  },
+  {
+   "V": 29.4,
+   "case": "coil L +5 %",
+   "ton_us": 38.48,
+   "I_peak_A": 19.09,
+   "error_pct": -4.55
+  },
+  {
+   "V": 29.4,
+   "case": "coil L -5 %",
+   "ton_us": 38.48,
+   "I_peak_A": 21.0,
+   "error_pct": 5.01
+  },
+  {
+   "V": 29.4,
+   "case": "R_loop +25 % (hot FETs, joints)",
+   "ton_us": 38.48,
+   "I_peak_A": 19.8,
+   "error_pct": -0.99
+  },
+  {
+   "V": 29.4,
+   "case": "ton timer 1 us late",
+   "ton_us": 39.48,
+   "I_peak_A": 20.49,
+   "error_pct": 2.46
+  },
+  {
+   "V": 29.4,
+   "case": "lossless rule L I / V used instead",
+   "ton_us": 36.73,
+   "I_peak_A": 19.14,
+   "error_pct": -4.3
+  }
+ ],
+ "bulk_bank": {
+  "CD_rating_old_V": 35.0,
+  "CD_rating_new_V": 50.0,
+  "util_old_pct": 84.0,
+  "util_new_pct": 58.8,
+  "min_effective_uF_for_5pct_droop": {
+   "19.6": 625.0,
+   "26.0": 344.0,
+   "29.4": 266.0
+  },
+  "bank_effective_uF": 720.0,
+  "bank_nominal_uF": 900.0,
+  "min_nominal_uF_per_cap_if_6": 130.0
+ }
+}

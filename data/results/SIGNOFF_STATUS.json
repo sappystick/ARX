@@ -1,6 +1,6 @@
 {
- "generated": "2026-10-24 05:07 UTC",
- "commit": "4630a72",
+ "generated": "2026-10-24 05:14 UTC",
+ "commit": "491e696",
  "counts": {
   "PASS": 37,
   "FAIL": 0,
@@ -31,7 +31,7 @@
    },
    "cross": {
     "state": "PASS",
-    "detail": "53 link pins, 50 conductors"
+    "detail": "53 link pins, 59 conductors"
    }
   },
   "LB1": {
@@ -254,7 +254,7 @@
   },
   "wiring audit (links + harness)": {
    "state": "PASS",
-   "detail": "53 pins, 50 conductors"
+   "detail": "53 pins, 59 conductors"
   },
   "stress table (only the documented LED-rail row may fail)": {
    "state": "PASS",

@@ -1,0 +1,151 @@
+{
+ "checks": [
+  {
+   "check": "interlock: Q1 conducts only with the pack seated AND the switch closed",
+   "result": "PASS",
+   "value": {
+    "switch open, pack absent": false,
+    "switch open, pack seated": false,
+    "switch closed, pack absent": false,
+    "switch closed, pack seated": true
+   },
+   "note": ""
+  },
+  {
+   "check": "gate drive at full charge 29.4 V below the 15 V zener and the 20 V Vgs limit (V)",
+   "result": "PASS",
+   "value": 12.02,
+   "note": ""
+  },
+  {
+   "check": "gate drive at the BMS cut-off 19.6 V above the -4.5 V logic-level rating (V)",
+   "result": "PASS",
+   "value": 8.01,
+   "note": ""
+  },
+  {
+   "check": "soft-start ramp to full charge 5-50 ms",
+   "result": "PASS",
+   "value": 19.9,
+   "note": "slew 1.47 V/ms"
+  },
+  {
+   "check": "inrush into the bus capacitance below the 5 A fuse and the MT60 rating (A)",
+   "result": "PASS",
+   "value": 2.12,
+   "note": "C_load 1440 uF (PM2 480, PB1R 940, CB1D 20)"
+  },
+  {
+   "check": "TVS stand-off above the pack maximum (V)",
+   "result": "PASS",
+   "value": "SMCJ33A vs 29.400000000000002",
+   "note": ""
+  },
+  {
+   "check": "bulk capacitor rating >= 1.5 x pack maximum (V)",
+   "result": "PASS",
+   "value": "50 V vs 44.1",
+   "note": ""
+  },
+  {
+   "check": "MOSFET rating >= 1.25 x pack maximum (V)",
+   "result": "PASS",
+   "value": "-40 V vs 36.8",
+   "note": ""
+  },
+  {
+   "check": "battery side (F1, Q1) at the BMS cut-off: peak under the 5 A slow fuse and RMS under 70 % of it (A)",
+   "result": "PASS",
+   "value": "peak 2.52, rms 0.60, mean 0.24",
+   "note": "time-domain, R_src 0.10-0.30 ohm; the crude instant-recharge bound through the cord alone is 5.59 A"
+  },
+  {
+   "check": "power cord (2 x AWG20) RMS under its 5 A enclosed rating at the BMS cut-off (A)",
+   "result": "PASS",
+   "value": "rms 0.66, peak 4.37",
+   "note": "pulse charge 612 uC, droop 0.65 V on 940 uF nominal; cord 117 mohm"
+  },
+  {
+   "check": "power-cord drop at the boost average (mV)",
+   "result": "PASS",
+   "value": 53.9,
+   "note": ""
+  },
+  {
+   "check": "Q1 dissipation from the RMS battery-side current, 15 mohm (W)",
+   "result": "PASS",
+   "value": 0.0054,
+   "note": "no heat sink (eddy rule: no metal sinks)"
+  },
+  {
+   "check": "runtime of one P30B pack in boost (h)",
+   "result": "PASS",
+   "value": 9.8,
+   "note": "75.6 Wh vs 90.7 Wh in v20 (11.8 h)"
+  }
+ ],
+ "interlock_table": {
+  "switch open, pack absent": false,
+  "switch open, pack seated": false,
+  "switch closed, pack absent": false,
+  "switch closed, pack seated": true
+ },
+ "runtime": {
+  "pack_Wh": 75.6,
+  "scan_h_one_pack": 16.1,
+  "boost_h_one_pack": 9.8,
+  "scan_h_two_packs": 32.2,
+  "boost_h_two_packs": 19.6,
+  "v20_pack_Wh": 90.7,
+  "v20_boost_h": 11.8
+ },
+ "currents_A": {
+  "boost_avg": 0.462,
+  "recharge_peak": 2.518,
+  "F1_rms": 0.597,
+  "cord_peak": 4.37,
+  "cord_rms": 0.656,
+  "cord_peak_instant_bound": 5.59
+ },
+ "chain_sweep": [
+  {
+   "R_src": 0.1,
+   "F1_mean": 0.2438896757297515,
+   "F1_peak": 2.5184713412235737,
+   "F1_rms": 0.5972819136205142,
+   "cord_peak": 4.37082000449739,
+   "cord_rms": 0.6560306226475462
+  },
+  {
+   "R_src": 0.2,
+   "F1_mean": 0.2438851952833946,
+   "F1_peak": 1.660404340646835,
+   "F1_rms": 0.4814067914796096,
+   "cord_peak": 4.175350231484428,
+   "cord_rms": 0.5843448228625784
+  },
+  {
+   "R_src": 0.3,
+   "F1_mean": 0.2438693284255358,
+   "F1_peak": 1.2497939703802174,
+   "F1_rms": 0.41471405874669737,
+   "cord_peak": 4.099703404414422,
+   "cord_rms": 0.5474106806403883
+  }
+ ],
+ "gate_V": {
+  "at_max": 12.02,
+  "at_min": 8.01
+ },
+ "soft_start": {
+  "ramp_ms": 19.9,
+  "inrush_A": 2.12,
+  "C_load_uF": 1440
+ },
+ "assumptions": {
+  "cell": "Molicel INR-18650-P30B: 3.0 Ah, 3.6 V nominal, 4.2 V charge, 30 A continuous, 47 g (retailer copies of the datasheet, unverified)",
+  "BMS_uv_per_cell": 2.8,
+  "miller_plateau_V": 3.0,
+  "mosfet": "SO-8 P-channel -40 V, 15 mohm (to be chosen)"
+ }
+}

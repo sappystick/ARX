@@ -16,3 +16,9 @@
 analytic check -> mesh/geometry check -> circuit/field simulation -> independent re-derivation (another method) -> bench test -> field test. Most items here sit at rungs 1-3.
 ## Definition of done for a part or board
 Generator committed; checks pass in tests/regress.py; assumptions listed; superseded files marked; STL/Gerber manifest updated; a figure exists that a reviewer can read in one minute.
+
+## Sign-off flow (2026-10-24)
+- `scripts/bootstrap.sh` (also the SessionStart hook) makes a fresh container identical: KiCad 9 PPA, pip requirements (gerbonara and shapely are required), make setup, self-test.
+- `make signoff` runs every board flow and every check (30-40 min cold: one background job) and writes docs/STATUS.md and data/results/SIGNOFF_STATUS.json (generated, never hand-edited). `make publish` copies work/ outputs into data/ (version names in scripts/publish_data.py; Gerber layers compared by geometry). `make release-tx REV=rN` packages the transmit-region boards with a hash manifest and per-board check lists; it refuses on a FAIL, on stale data, or on an existing revision.
+- Failure policy: a missing result is a FAIL unless the item is registered in docs/UNVERIFIED.md. Close an item by deleting its row in the commit that adds the evidence.
+
