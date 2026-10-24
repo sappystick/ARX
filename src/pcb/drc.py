@@ -4,7 +4,9 @@ usage: drc.py BOARD ROUTE.json NOTCH_SIGN [HV nets comma separated]"""
 import json, sys, math, numpy as np
 from scipy.spatial import cKDTree
 board, rj, nsign = sys.argv[1], sys.argv[2], int(sys.argv[3]); HV = set(sys.argv[4].split(",")) if len(sys.argv) > 4 else set()
-P = json.load(open(f"kit_v18/{board}/pads.json"))["pads"]
+import os
+PJ = f"kit_v18/{board}/pads.json" if os.path.exists(f"kit_v18/{board}/pads.json") else f"kit_v6/{board}/pads.json"
+PD = json.load(open(PJ)); P = PD["pads"]
 for _i, _p in enumerate(P):
     if not _p.get("net"): _p["net"] = f"~NC{_i}"
 r = json.load(open(rj)); R = r["R"]; routing = r["layers"]; planes = r["planes"]; STEP = 0.1
@@ -76,8 +78,9 @@ for net, ks in bynet.items():
 # edge and notch
 edge = []; bad = 0
 for X, in [(x,) for x in allx]:
-    rr = np.hypot(X[:, 0], X[:, 1]); bad += int(np.sum(rr > R - 0.35))
-notch = sum(int(np.sum((np.abs(X[:, 0]) < 8.1) & (nsign * X[:, 1] > 35.9))) for X in allx)
+    if PD.get('rect'): bad += int(np.sum((np.abs(X[:, 0]) > PD['rect'][0] / 2 - 0.35) | (np.abs(X[:, 1]) > PD['rect'][1] / 2 - 0.35)))     # rectangular outline (PB1R)
+    else: rr = np.hypot(X[:, 0], X[:, 1]); bad += int(np.sum(rr > R - 0.35))
+notch = 0 if (nsign == 0 or PD.get('rect')) else sum(int(np.sum((np.abs(X[:, 0]) < 8.1) & (nsign * X[:, 1] > 35.9))) for X in allx)
 print(f"{board}: clearance violations (different nets, gap below class minus 0.06 sampling tolerance): {len(viol)}; open nets: {len(opens)}; copper samples within 0.35 mm of the edge: {bad}; copper samples in the notch keep-out: {notch}")
 print("  minimum gap per routed layer (mm):", minrow)
 for v in viol[:8]: print("  VIOLATION", v)

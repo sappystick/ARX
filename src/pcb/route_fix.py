@@ -3,7 +3,9 @@
 usage: route_fix.py BOARD ROUTE.json"""
 import json, sys, math
 board, rj = sys.argv[1], sys.argv[2]
-P = json.load(open(f"kit_v18/{board}/pads.json"))["pads"]; r = json.load(open(rj)); added = 0
+import os
+PJ = f"kit_v18/{board}/pads.json" if os.path.exists(f"kit_v18/{board}/pads.json") else f"kit_v6/{board}/pads.json"
+P = json.load(open(PJ))["pads"]; r = json.load(open(rj)); added = 0
 def edge_dist(p, q):
     """distance from the point q to the copper of pad p (0 inside a rectangle; the circle test keeps the track's half-width of 0.1 mm on the pad)"""
     if p.get("shape") == "circle": return math.dist(q, (p["x"], p["y"])) - (p["w"] / 2 - 0.1)

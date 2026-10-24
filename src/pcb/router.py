@@ -9,6 +9,8 @@ class Router:
         s.off=s.R+1.0; s.N=int(2*s.off/GR)+1
         names=sorted({p["net"] for p in s.pads if p["net"]}); s.nid={n:i+1 for i,n in enumerate(names)}; s.nid[None]=0
         s.own=np.zeros((s.nl,s.N,s.N),np.int32); yy,xx=np.mgrid[0:s.N,0:s.N]; s.rad=np.hypot((xx*GR-s.off),(yy*GR-s.off))
+        # distance of each cell to the board edge (positive inside): a circle of radius R for the discs, a W x H rectangle when pads.json carries "rect" (PB1R)
+        s.edged=(np.minimum(d['rect'][0]/2-np.abs(xx*GR-s.off),d['rect'][1]/2-np.abs(yy*GR-s.off)) if d.get('rect') else s.R-s.rad)
         s.padcells=[]; s.tracks=[]; s.vias=[]; s.fail=[]; s.unnet=1000
         for k,p in enumerate(s.pads):
             nid=s.nid[p["net"]] if p["net"] else s.unnet+k
@@ -34,12 +36,12 @@ class Router:
             rh=int(math.ceil(((s.hv_clr if (ishv or True) else s.clr)+hw)/GR))
             if ishv: b=ndi.binary_dilation(others,structure=disk(rh))
             else: b|=ndi.binary_dilation(hvm,structure=disk(rh))
-            b|=(s.rad>s.R-s.edge-hw)
+            b|=(s.edged<s.edge+hw)
             blk.append(b)
             rv=int(math.ceil((s.clr+s.via_pad/2)/GR)); vb=ndi.binary_dilation(others,structure=disk(rv)) if not ishv else ndi.binary_dilation(others,structure=disk(int(math.ceil((s.hv_clr+s.via_pad/2)/GR))))
             if not ishv and len(hvm.nonzero()[0]): vb|=ndi.binary_dilation(hvm,structure=disk(int(math.ceil((s.hv_clr+s.via_pad/2)/GR))))
             viablk|=vb
-        viablk|=(s.rad>s.R-s.edge-s.via_pad/2)
+        viablk|=(s.edged<s.edge+s.via_pad/2)
         for l in range(s.nl): viablk|=False
         return blk,viablk
     def astar(s,sources,goal_set,goal_fn,blk,viablk,nid):

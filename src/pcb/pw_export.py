@@ -171,3 +171,5 @@ for pd in PADS:
 for p in D.PARTS: ax.text(PL[p["ref"]][0], PL[p["ref"]][1], p["ref"], color="w", fontsize=6, ha="center", va="center")
 ax.set_title(f"PF233-{NAME} placement (UNROUTED)  red = 500 V clamp nets (>=1.0 mm), orange = ~100 V nets (>=0.5 mm)", fontsize=8); fig.tight_layout(); fig.savefig(f"{OUT}/PF233-{NAME}_placement_preview.png", dpi=110)
 json.dump(chk, open(f"{OUT}/PF233-{NAME}_placement_check.json", "w"), indent=1); print("exported", OUT)
+if PW == "R":     # router input for the rectangular PB1R (router.py edge distance, drc.py, route_fix.py)
+    json.dump(dict(R=max(SIZE) / 2, rect=list(SIZE), pads=PADS), open(f"{OUT}/pads.json", "w"))

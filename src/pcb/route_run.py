@@ -3,6 +3,10 @@ from router import Router
 board=sys.argv[1]
 if board=="LB1":
     R=Router("kit_v18/LB1/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu","+5V":"In2.Cu"},{"+5V":0.4,"GND":0.4},clr=0.2)
+elif board=="PB1R":
+    # 70 x 70 neck-module board, rectangular outline, F/B signal layers, hatched GND (In1) and VBUS (In2) planes (eddy rule: no solid planes); flyback nets DRAIN1/CLAMP1 keep 1.0 mm
+    wid={"DRAIN1":1.5,"CLAMP1":1.5,"SRC1":1.5,"VBUS":1.5,"GND":1.5,"AUX12":0.5}
+    R=Router("kit_v6/PB1R/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu","VBUS":"In2.Cu"},wid,hv={"DRAIN1","CLAMP1"},clr=0.2)
 else:
     wid={"VBUS_IN":0.8,"+5V":0.6,"+5VA":0.5,"P3V3":0.3,"+3V3D":0.4,"VCM_OUT":0.3}
     R=Router("kit_v18/CB1D/pads.json",["F.Cu","In2.Cu","In3.Cu","B.Cu"],{"GND":"In1.Cu","P3V3":"In4.Cu"},wid,hv={"COIL_B","DM1","DM2","COIL_A"},clr=0.2)
