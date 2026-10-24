@@ -1,8 +1,6 @@
 {
- "generated": "2026-10-24 05:14 UTC",
- "commit": "491e696",
  "counts": {
-  "PASS": 37,
+  "PASS": 38,
   "FAIL": 0,
   "SKIP": 0,
   "UNVERIFIED": 17
@@ -276,13 +274,17 @@
    "state": "PASS",
    "detail": "board discs and bodies clear"
   },
+  "release-tx / sign-off controls (refusals, evidence rule, idempotence)": {
+   "state": "PASS",
+   "detail": "11/11 controls behave as intended"
+  },
   "voxel interference (window, bridge, junction)": {
    "state": "PASS",
    "detail": "28 pairs"
   },
   "tests/regress.py (strict: a missing result FAILs)": {
    "state": "PASS",
-   "detail": "47 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
+   "detail": "48 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {

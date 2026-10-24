@@ -182,6 +182,7 @@ signoff:
 	$(MAKE) check-pb1r
 	$(MAKE) head-audit
 	$(PY) scripts/publish_data.py
+	$(PY) tests/release_signoff_controls.py
 	$(PY) scripts/signoff_status.py
 
 # copy the generated outputs from work/ into the committed data/ folders (version names in scripts/publish_data.py)
