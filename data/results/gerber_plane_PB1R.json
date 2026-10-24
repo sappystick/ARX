@@ -1,0 +1,9 @@
+{
+ "board": "PB1R",
+ "hv_checks": 4,
+ "failures": 0,
+ "failing": [],
+ "min_distance_mm": 1.0,
+ "control_pads": 10,
+ "control_ok": true
+}

@@ -14,3 +14,5 @@ Status 2026-10-24: **UNVERIFIED**. The vendors' capability sheets have not been 
 |---|---|---|
 | SB1R-QA, SB1R-QB, AB1A, AB1B, HTA, CB1D, LB1, TXJ1 | immersion silver (OSP is the alternative) | no nickel (magnetic) near the coil and receivers |
 | PB1R, PM2, HB2 | HASL lead-free | power boards away from the head; bench comparison in OPEN_ITEMS 26 |
+
+Via-in-pad (PB1R shunt, bulk and decoupling pads, `viafarm.py`): 0.3 mm vias inside SMD pads need filled or plugged vias or solder wicks into them. Ask both vendors for the option (OPEN_ITEMS 28a).

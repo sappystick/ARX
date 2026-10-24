@@ -1,0 +1,3 @@
+# optional: independent reading of KiCad-written Gerbers (src/pcb/gerber_plane_check.py)
+gerbonara
+shapely

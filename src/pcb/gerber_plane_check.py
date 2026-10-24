@@ -34,11 +34,12 @@ for ly, net in planes.items():
     for p in P:
         if not p["tht"]: continue
         c = pt(p["x"], p["y"]); r = max(p["w"], p["h"]) / 2
-        if p["net"] in hv: res.append(dict(layer=ly, item=f"{p['ref']}.{p['num']} ({p['net']})", distance_mm=round(max(cu.distance(Point(c)) - r, 0.0), 3)))
+        # a through-hole pad has its own copper flash on the inner layers: remove that disc before measuring the distance to the PLANE copper
+        if p["net"] in hv: res.append(dict(layer=ly, item=f"{p['ref']}.{p['num']} ({p['net']})", distance_mm=round(max(cu.difference(Point(c).buffer(r + 0.02)).distance(Point(c)) - r, 0.0), 3)))
         if p["net"] == net: ctl.append(dict(layer=ly, item=f"{p['ref']}.{p['num']}", plane_within_mm=round(cu.distance(Point(c)), 3)))
     for v in RT["vias"]:
         c = pt(v[0], v[1])
-        if v[2] in hv: res.append(dict(layer=ly, item=f"via {v[2]}", distance_mm=round(max(cu.distance(Point(c)) - 0.3, 0.0), 3)))
+        if v[2] in hv: res.append(dict(layer=ly, item=f"via {v[2]}", distance_mm=round(max(cu.difference(Point(c).buffer(0.32)).distance(Point(c)) - 0.3, 0.0), 3)))
 bad = [x for x in res if x["distance_mm"] < 1.0 - 0.01]
 control_ok = len(ctl) > 0 and sum(1 for x in ctl if x["plane_within_mm"] < 0.7) >= 0.8 * len(ctl)
 out = dict(board=board, hv_checks=len(res), failures=len(bad), failing=bad[:10], min_distance_mm=min((x["distance_mm"] for x in res), default=None), control_pads=len(ctl), control_ok=control_ok)

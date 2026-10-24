@@ -1,0 +1,14 @@
+{
+ "board": "PF233-PB1R_routed.kicad_pcb",
+ "board_key": "PB1R",
+ "kicad": "9.0.9",
+ "zones_filled": true,
+ "violations": 39,
+ "unconnected": 0,
+ "errors": {},
+ "warnings": {},
+ "lib_footprint_warnings": 39,
+ "control_hv50mm_clearance_violations": 500,
+ "rules_loaded": true,
+ "examples": []
+}

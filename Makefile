@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -134,6 +134,11 @@ kicad-pb1r: route-pb1r
 
 gerber-pb1r: kicad-pb1r
 	$(PY) src/pcb/kicad_gerber.py $(W)/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb PB1R $(W)/kit_v22/GERBER_PB1R PF233-PB1R
+	@cd $(W) && if $(PY) -c "import gerbonara, shapely" 2>/dev/null; then $(PY) gerber_plane_check.py PB1R kit_v22/GERBER_PB1R PF233-PB1R DRAIN1,CLAMP1 In1:GND,In2:VBUS; else echo "gerbonara / shapely missing: plane keep-out check SKIPPED (pip install -r requirements-cam.txt)"; fi
+
+# PB1R cross-check against the transmit stage (pulse path R/L, return vias, Kelvin, flyback-net parts, connectors, eddy estimate)
+check-pb1r: route-pb1r
+	cd $(W) && mkdir -p kit_v23 && $(PY) tx_vbus_sweep.py > /dev/null && $(PY) pb1r_check.py
 
 # KiCad 9 DRC (zones filled, design rules from dru_gen.py, automatic negative control) on the routed boards: needs `kicad-cli` and the system python3 with pcbnew
 kicad-drc: kicad-cb1d kicad-lb1 kicad-pb1r

@@ -75,14 +75,23 @@ if d:
     chk("SB1R-Q first clean gate with Rd 680, no blanking: A aligned 5.1-5.5 us, worst real leak <= 7.6 us (Cself 50-200 pF)",all(5.0<=fc[k]["Rd 680"]<=5.6 for k in a) and all(fc[k]["Rd 680"]<=7.6 for k in w) and all(fc[k]["no Rd"]>=59 for k in a+w),str([fc[k]["Rd 680"] for k in a+w]))
     n=d["gate_noise_nV_rtHz"]; chk("SB1R-Q gated noise with Rd 680 within 6% of no Rd (Cself 100 pF, gates 6-40 us)",all(v["Rd 680"]<=1.06*v["no Rd"] for k,v in n.items() if k.startswith("Cself 100")),str({k.split(", ")[1]:v["Rd 680"] for k,v in n.items() if k.startswith("Cself 100")}))
 else: skip("SB1R-Q damping")
-for b in ("LB1","CB1D"):
+for b in ("LB1","CB1D","PB1R"):
     d=rd(f"kit_v22/drc_{b}.json")
     if d: chk(f"{b} independent DRC: 0 clearance violations, 0 open nets, edge and notch clean",d["clearance_violations"]==0 and d["open_nets"]==0 and d["edge_samples"]==0 and d["notch_samples"]==0,str({k:d[k] for k in ('clearance_violations','open_nets','min_gap_by_layer')}))
     else: skip(f"{b} DRC")
-for b in ("CB1D","LB1","TXJ1","SB1R-QA","SB1R-QB"):
+for b in ("CB1D","LB1","PB1R","TXJ1","SB1R-QA","SB1R-QB"):
     d=rd(f"kit_v22/kicad_drc_{b}.json")
     if d: chk(f"{b} KiCad 9 DRC (zones filled, fab-floor rules from dru_gen.py): 0 errors, 0 unconnected"+(", HV rules proven live by the negative control" if "rules_loaded" in d else ""),not d["errors"] and d["unconnected"]==0 and d.get("rules_loaded",True) and (not d["warnings"] or b not in ("CB1D","LB1")),str({k:d[k] for k in ("errors","unconnected","warnings")}))
     else: skip(f"{b} KiCad DRC")
+d=rd("kit_v20/route_PB1R.json")
+if d: st=d["stats"]; chk("PB1R routed: all nets, no failures (70 x 70 mm rectangular board, hatched GND/VBUS planes)",st["nets_routed"]==st["nets_to_route"]>=15 and not st["failures"],str(st))
+else: skip("PB1R routing")
+d=rd("kit_v22/gerber_plane_PB1R.json")
+if d: chk("PB1R KiCad-written Gerbers: HV pads and vias >= 1.0 mm from the plane copper (rebuilt with gerbonara/shapely, control reaches the plane's own pads)",d["failures"]==0 and d["control_ok"] and d["hv_checks"]>=4,f"{d['hv_checks']} checks, min {d['min_distance_mm']} mm, control {d['control_pads']} pads")
+else: skip("PB1R Gerber plane check (needs requirements-cam.txt)")
+d=rd("kit_v22/pb1r_check.json")
+if d: bad=[c["check"][:60] for c in d["checks"] if c["result"]=="FAIL"]; chk("PB1R cross-check vs the TX stage: pulse path R/L, return vias, Kelvin tap, connectors vs CB1D/PM2/TXJ1, neck-module eddy (solid plane rejected, hatched ring negligible)",not bad and d["eddy"]["ratio_solid"]>1 and d["eddy"]["ratio_hatch_ring"]<1e-3,f"{len(d['checks'])} checks, fails {bad}, solid plane {d['eddy']['ratio_solid']:.1f}x a 1 g nugget, hatched ring {d['eddy']['ratio_hatch_ring']:.1e}")
+else: skip("PB1R cross-check")
 d=rd("kit_v22/gerber_hv_CB1D.json")
 if d: chk("CB1D Gerbers: every HV through-hole pad and via has a plane keep-out of pad + 2.0 mm (1.0 mm rule)",d["failures"]==0 and d["checked"]>=8,f"{d['checked']} checks, {d['failures']} failures")
 else: skip("CB1D Gerber HV check")
