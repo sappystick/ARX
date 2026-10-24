@@ -3,6 +3,7 @@
 Parametric CAD (Python -> STL), PCB placement/routing/Gerber tooling, physics simulation and verification for a pulse-induction metal/gemstone detector head: six golden-angle petal coil formers in parallel (54 uH), integrated central cylinder (vault) v5, dual rotated quadrupole receiver RX-Q, ferrite hood, shaft/yoke. Owner works with this repo from Claude Code and Claude Cowork.
 
 ## Read first (in order)
+0. docs/HANDOFF_NEXT_THREAD.md (current state, remaining work in order, standing rules, traps; written for resuming in a new thread)
 1. docs/DESIGN_STATE.md  2. docs/CORRECTIONS.md  3. docs/ASSUMPTIONS.md  4. docs/OPEN_ITEMS.md  5. docs/PROCESS.md  6. docs/CONVENTIONS.md
 
 ## Layout
