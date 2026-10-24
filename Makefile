@@ -60,7 +60,7 @@ upper: pcb-pm2
 
 # system configuration study (C0 as built .. C3) and the compatibility matrix + system schematic; needs upper, sims, hood, sbq, audit-system, yoke-check
 study:
-	cd $(W) && $(PY) config_study.py > /dev/null && $(PY) system_compat.py
+	cd $(W) && $(PY) config_study.py > /dev/null && $(PY) system_compat.py && $(PY) target_field_study.py > /dev/null
 
 sims:
 	cd $(W) && $(PY) sim_head1.py && $(PY) sim_head2.py && $(PY) sim_cage_rx.py && $(PY) sim_tanr.py && $(PY) sim_quadbearing.py

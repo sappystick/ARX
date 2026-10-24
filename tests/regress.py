@@ -58,6 +58,13 @@ else: skip("configuration study")
 d=rd("kit_v23/system_compat.json")
 if d: chk("system compatibility matrix: no incompatibility (ACTION and DATA rows are listed changes and unverified facts)",d["summary"]["FAIL"]==0,str(d["summary"]))
 else: skip("system compatibility")
+d=rd("kit_v23/target_field.json")
+if d:
+    v=d["validation"]; ds=list(d["designs"].values()); a=ds[1]
+    chk("target-field winding study: equivalent loops match the real-path axis field (<0.5 %) and 54 uH (<5 %); as-built within 5 % of the optimum energy and field",
+        all(abs(x["dev_pct"])<0.5 for x in v["axis_field"].values()) and abs(v["L_equivalent_uH"]/v["L_repo_uH"]-1)<0.05 and abs(a["L_uH"]/ds[0]["L_uH"]-1)<0.05 and all(abs(x-1)<0.05 for x in a["field_ratio_vs_as_built"].values()),
+        f"L {ds[0]['L_uH']} -> {a['L_uH']} uH, field at 200 mm x{a['field_ratio_vs_as_built']['r0 z200']}")
+else: skip("target-field study")
 d=rd("kit_v22/sbq_sim.json")
 if d:
     L=d["leak"]; worst=max(v["peak_V"] for b in L.values() for k,v in b.items() if "lobes only" not in k and "0.5" in k)
