@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -17,7 +17,7 @@ help:
 setup:
 	mkdir -p $(W)
 	find src -name '*.py' -not -path 'src/archive/*' -exec cp {} $(W)/ \;
-	cp -r data/seed/* $(W)/
+	$(PY) scripts/seed_copy.py
 	mkdir -p $(W)/legacy && cp -r data/legacy/* $(W)/legacy/
 	cd $(W) && mkdir -p kit_v15/LOW kit_v15/PRINT kit_v15/SET kit_v16/PARTS kit_v17/PARTS kit_v18/SET/02_CORE_PCB_CYLINDER kit_v18/PARTS kit_v18/CB1D kit_v18/LB1 kit_v18/HTA kit_v18/MFG kit_v19/SET/02_CORE_PCB_CYLINDER kit_v19/PARTS kit_v19/YOKE kit_v19/SPINE kit_v19/MFG kit_v20 kit_v21 kit_v22/SET/02_CORE_PCB_CYLINDER kit_v22/DXF
 	@echo "setup done: now make verify-quick"
@@ -57,6 +57,13 @@ yoke-check:
 upper: pcb-pm2
 	cd $(W) && $(PY) shaft_calc_v20.py > /dev/null && $(PY) upper_v21.py && $(PY) upper_check.py && $(PY) upper_figure.py
 
+# single producers of the results the budget / sweep scripts read (they used to come from the seed folder)
+sim-head1:
+	cd $(W) && $(PY) sim_head1.py > /dev/null
+
+sim-head2:
+	cd $(W) && $(PY) sim_head2.py > /dev/null
+
 sims:
 	cd $(W) && $(PY) sim_head1.py && $(PY) sim_head2.py && $(PY) sim_cage_rx.py && $(PY) sim_tanr.py && $(PY) sim_quadbearing.py
 
@@ -74,7 +81,7 @@ pcb-pb1r:
 	cd $(W) && PW=R $(PY) pw_design.py && PW=R $(PY) pw_export.py
 
 # TX stage over the 7S pack range (19.6-29.4 V), firmware on-time rule and look-up table, bulk-bank droop
-tx-vbus:
+tx-vbus: sim-head1
 	cd $(W) && mkdir -p kit_v23 && $(PY) tx_vbus_sweep.py
 
 pcb-pm2: pcb-cb1d pcb-pb1r tx-vbus
@@ -164,7 +171,7 @@ pcb-release: pcb-hta gerber-lb1 gerber-cb1d gerber-pb1r drc-lb1 drc-cb1d drc-pb1
 tx:
 	cd $(W) && $(PY) tx_system.py
 
-audit-system: tx tx-vbus pcb-lb1 pcb-cb1d pcb-pb1r pcb-hb2 pcb-pm2
+audit-system: sim-head1 sim-head2 tx tx-vbus pcb-lb1 pcb-cb1d pcb-pb1r pcb-hb2 pcb-pm2
 	cd $(W) && $(PY) wiring_audit.py && $(PY) system_budget.py && $(PY) stack_check.py && $(PY) interference_audit.py
 
 # full cross-check of the assembled head (3D interference at 0.5 and 0.2 mm, layers, radial fits, LED/TX/RX/wiring) and the cut-away drawings

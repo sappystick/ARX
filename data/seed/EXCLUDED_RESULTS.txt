@@ -1,0 +1,2 @@
+These seed files are RESULTS of a flow and are NOT copied by `make setup` (scripts/seed_copy.py, RESULTS table): wiring_audit.json, system_budget.json, tx_system.json, sim_head1.json, sim_thermal.json,
+sbq_sim.json, sbq_damping2.json, sbq_geometry.json, drc_CB1D.json, drc_LB1.json. They are stale (older than the generators) and are kept only for provenance. Produce them with the make target named in scripts/seed_copy.py.

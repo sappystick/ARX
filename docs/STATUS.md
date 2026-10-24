@@ -22,7 +22,7 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 |---|---|---|
 | cylinder v5 + parts + 47 geometry checks | PASS | 47 checks |
 | KiCad schematics (9 boards, nets rebuilt = netlists) | PASS | 9 boards |
-| wiring audit (links + harness) | PASS | 53 pins, 59 conductors |
+| wiring audit (links + harness) | PASS | 53 pins, 50 conductors |
 | stress table (only the documented LED-rail row may fail) | PASS | 1 fail (LED rail, by design), 1 watch |
 | TX stage over 19.6-29.4 V (reproduces sim_head1 at 26 V) | PASS | Vds 456-466 V, ton table |
 | PM2 dock chain (time-domain) | PASS | 13 checks |

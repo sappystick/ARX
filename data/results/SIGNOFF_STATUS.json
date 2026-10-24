@@ -29,7 +29,7 @@
    },
    "cross": {
     "state": "PASS",
-    "detail": "53 link pins, 59 conductors"
+    "detail": "53 link pins, 50 conductors"
    }
   },
   "LB1": {
@@ -252,7 +252,7 @@
   },
   "wiring audit (links + harness)": {
    "state": "PASS",
-   "detail": "53 pins, 59 conductors"
+   "detail": "53 pins, 50 conductors"
   },
   "stress table (only the documented LED-rail row may fail)": {
    "state": "PASS",
