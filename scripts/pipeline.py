@@ -9,7 +9,7 @@ How it works
   * The order of independent steps comes from data/pipeline/graph.json (committed, paths only: learned from a traced serial run). Two steps may overlap only if neither
     writes what the other reads or writes. A step missing from the graph runs alone, in the declared order. After every run the fresh traces are checked against the
     graph; an uncovered conflict is reported as GRAPH STALE (fix: serial run, then --update-graph).
-  * Steps tagged 'kicad' never overlap each other (memory); BLAS threads are divided between parallel jobs.
+  * Steps tagged 'kicad' never overlap each other (memory); BLAS thread counts are left alone (forcing 1 changed last digits of stiff-ODE results); steps with internal pools read ARX_INNER_JOBS.
 usage: python3 scripts/pipeline.py run [--jobs N] [--cold] [--only STEP[,STEP]] [--update-graph] [--no-setup]
        python3 scripts/pipeline.py plan          (what would run and why; runs nothing)
        python3 scripts/pipeline.py list
@@ -274,7 +274,7 @@ def main():
     running = set()
     failed = []
     cpu = os.cpu_count() or 4
-    env_extra = {"OMP_NUM_THREADS": str(max(1, cpu // jobs)), "OPENBLAS_NUM_THREADS": str(max(1, cpu // jobs)), "MKL_NUM_THREADS": str(max(1, cpu // jobs))}
+    env_extra = {"ARX_INNER_JOBS": str(max(2, cpu // 2) if jobs > 1 else cpu)}   # thread counts are NOT overridden: BLAS thread count changes the last digit of stiff-ODE results
 
     def worker(n):
         c, tags = cmds[n]
