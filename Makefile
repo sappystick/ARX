@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -108,7 +108,7 @@ verify-full: verify-quick hood yoke
 	$(MAKE) gerber-lb1
 
 gerber-cb1d: route-cb1d
-	cd $(W) && $(PY) gerber_out.py CB1D hatch notch1 hv=COIL_A,COIL_B,DM1,DM2
+	cd $(W) && $(PY) gerber_out.py CB1D hatch notch1 hv=COIL_A,COIL_B,DM1,DM2 && $(PY) gerber_hv_check.py CB1D kit_v22/GERBER_CB1D_v2 PF233-CB1D-v2 COIL_A,COIL_B,DM1,DM2
 
 drc-lb1:
 	cd $(W) && $(PY) drc.py LB1 kit_v20/route_LB1.json -1
@@ -122,6 +122,10 @@ kicad-lb1:
 kicad-cb1d:
 	mkdir -p $(W)/kit_v22/KICAD && cd $(W) && $(PY) kicad_inject.py CB1D kit_v20/route_CB1D.json kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb 1 six
 
+# KiCad 9 DRC (zones filled, design rules from dru_gen.py, automatic negative control) on the routed boards: needs `kicad-cli` and the system python3 with pcbnew
+kicad-drc: kicad-cb1d kicad-lb1
+	for b in CB1D LB1; do $(PY) src/pcb/kicad_drc.py $(W)/kit_v22/KICAD/PF233-$${b}_routed.kicad_pcb $(W)/kit_v22/kicad_drc_$$b.json $$b | head -1; done
+
 # receive boards: sbq-fast uses the stored tuned radii (data/seed/kit_v22/sbq_radii.json); sbq re-tunes them (about 3 min)
 sbq-fast:
 	cd $(W) && $(PY) sbq_gen2.py && $(PY) sbq_export.py && $(PY) sbq_sim.py && $(PY) sbq_damp2.py
@@ -129,7 +133,7 @@ sbq-fast:
 sbq:
 	cd $(W) && rm -f kit_v22/sbq_radii.json && $(PY) sbq_gen2.py && $(PY) sbq_tune.py A && $(PY) sbq_tune.py B && $(MAKE) -C .. sbq-fast
 
-pcb-release: gerber-lb1 gerber-cb1d drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d sbq-fast
+pcb-release: gerber-lb1 gerber-cb1d drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d kicad-drc sbq-fast
 
 # transmit lead system (channel, TXJ1 board, cradle, schematics) and the system audits
 tx:

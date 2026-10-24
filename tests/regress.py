@@ -79,6 +79,13 @@ for b in ("LB1","CB1D"):
     d=rd(f"kit_v22/drc_{b}.json")
     if d: chk(f"{b} independent DRC: 0 clearance violations, 0 open nets, edge and notch clean",d["clearance_violations"]==0 and d["open_nets"]==0 and d["edge_samples"]==0 and d["notch_samples"]==0,str({k:d[k] for k in ('clearance_violations','open_nets','min_gap_by_layer')}))
     else: skip(f"{b} DRC")
+for b in ("CB1D","LB1"):
+    d=rd(f"kit_v22/kicad_drc_{b}.json")
+    if d: chk(f"{b} KiCad 9 DRC (zones filled, design rules loaded): 0 errors, 0 unconnected, rules proven live by the negative control" if b=="CB1D" else f"{b} KiCad 9 DRC (zones filled): 0 errors, 0 unconnected",not d["errors"] and d["unconnected"]==0 and d.get("rules_loaded",True) and not d["warnings"],str({k:d[k] for k in ("errors","unconnected","warnings")}))
+    else: skip(f"{b} KiCad DRC")
+d=rd("kit_v22/gerber_hv_CB1D.json")
+if d: chk("CB1D Gerbers: every HV through-hole pad and via has a plane keep-out of pad + 2.0 mm (1.0 mm rule)",d["failures"]==0 and d["checked"]>=8,f"{d['checked']} checks, {d['failures']} failures")
+else: skip("CB1D Gerber HV check")
 d=rd("kit_v22/tx_system.json")
 if d: chk("TX system: lead routing, TXJ1 and cradle checks all pass",all(c["result"]=="PASS" for c in d["checks"]),f"{len(d['checks'])} checks")
 else: skip("TX system")

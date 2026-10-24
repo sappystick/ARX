@@ -1,0 +1,14 @@
+{
+ "board": "PF233-CB1D_routed.kicad_pcb",
+ "board_key": "CB1D",
+ "kicad": "9.0.9",
+ "zones_filled": true,
+ "violations": 58,
+ "unconnected": 0,
+ "errors": {},
+ "warnings": {},
+ "lib_footprint_warnings": 58,
+ "control_hv50mm_clearance_violations": 500,
+ "rules_loaded": true,
+ "examples": []
+}

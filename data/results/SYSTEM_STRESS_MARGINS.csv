@@ -8,8 +8,6 @@ CL1A/B clamp capacitor 630 V,voltage,435.163,630,V,30.9,20,PASS,C0G/film only; X
 RCL1 5 kohm 10 W,power,3.815,10,W,61.9,30,PASS,x7r case 4.7 W
 3 x 110 ohm R2512 chain,voltage per resistor at flyback peak,145.456,200,V,27.3,20,PASS,assumed 200 V working voltage for R2512
 3 x 110 ohm R2512 chain,power per resistor,0.153,1.0,W,84.7,50,PASS,
-MONO coupling cap 100 nF / 630 V,voltage,436.368,630,V,30.7,20,PASS,
-BAV199 input clamp (MONO path),peak clamp current through RS 1 kohm,0.431,4.0,A,89.2,50,PASS,1 us surge rating assumed 4 A; average power negligible
 TXJ1 bus A to B,creepage gap for 460 V peak,460,552.0,V,16.7,0,PASS,"3.0 mm edge gap vs about 2.5 mm needed (IEC 60664-1 style estimate, pollution 2); plus 1.6 mm FR4 between layers"
 TX pair AWG12 600 V,voltage,436.368,600,V,27.3,20,PASS,
 SMCJ33A TVS,VBUS maximum (7S full charge 29.4 V),29.4,33,V,10.9,5,PASS,standoff voltage

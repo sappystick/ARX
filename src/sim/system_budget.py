@@ -17,8 +17,6 @@ R("CL1A/B clamp capacitor 630 V", "voltage", film["vc_peak"], 630, "V", 20, "C0G
 R("RCL1 5 kohm 10 W", "power", film["P_RCL_W"], 10, "W", 30, "x7r case 4.7 W")
 R("3 x 110 ohm R2512 chain", "voltage per resistor at flyback peak", film["vd_peak"] / 3, 200, "V", 20, "assumed 200 V working voltage for R2512")
 R("3 x 110 ohm R2512 chain", "power per resistor", film["P_damp_W"] / 3, 1.0, "W", 50, "")
-R("MONO coupling cap 100 nF / 630 V", "voltage", film["vd_peak"], 630, "V", 20, "")
-R("BAV199 input clamp (MONO path)", "peak clamp current through RS 1 kohm", (film["vd_peak"] - 5) / 1000, 4.0, "A", 50, "1 us surge rating assumed 4 A; average power negligible")
 R("TXJ1 bus A to B", "creepage gap for 460 V peak", 460, 460 * 3.0 / 2.5, "V", 0, "3.0 mm edge gap vs about 2.5 mm needed (IEC 60664-1 style estimate, pollution 2); plus 1.6 mm FR4 between layers", True)
 R("TX pair AWG12 600 V", "voltage", film["vd_peak"], 600, "V", 20, "")
 R("SMCJ33A TVS", "VBUS maximum (7S full charge 29.4 V)", V_PACK_MAX, 33, "V", 5, "standoff voltage")

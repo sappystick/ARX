@@ -100,28 +100,6 @@
    "note": ""
   },
   {
-   "part": "MONO coupling cap 100 nF / 630 V",
-   "stress": "voltage",
-   "value": 436.368,
-   "rating": 630,
-   "unit": "V",
-   "margin_pct": 30.7,
-   "required_margin_pct": 20,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "part": "BAV199 input clamp (MONO path)",
-   "stress": "peak clamp current through RS 1 kohm",
-   "value": 0.431,
-   "rating": 4.0,
-   "unit": "A",
-   "margin_pct": 89.2,
-   "required_margin_pct": 50,
-   "status": "PASS",
-   "note": "1 us surge rating assumed 4 A; average power negligible"
-  },
-  {
    "part": "TXJ1 bus A to B",
    "stress": "creepage gap for 460 V peak",
    "value": 460,

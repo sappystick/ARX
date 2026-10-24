@@ -1,13 +1,9 @@
 {
- "connectors_checked": 43,
+ "connectors_checked": 37,
  "links": 8,
  "link_pins": 53,
- "harness_conductors": 50,
+ "harness_conductors": 59,
  "harness_bad": 0,
- "open_by_design": [
-  "CB1D.JTR.5 (JOY_X) vs HB2.JH.5 (JH5_NC)",
-  "CB1D.JTR.6 (JOY_Y) vs HB2.JH.6 (JH6_NC)"
- ],
  "errors": [],
  "harness": [
   [
@@ -17,17 +13,57 @@
   ],
   [
    "W002",
-   "GND",
+   "VBUS",
    "OK"
   ],
   [
    "W003",
-   "SHIELD",
+   "VBUS",
    "OK"
   ],
   [
    "W004",
-   "SHIELD",
+   "GND",
+   "OK"
+  ],
+  [
+   "W005",
+   "GND",
+   "OK"
+  ],
+  [
+   "W006",
+   "GND",
+   "OK"
+  ],
+  [
+   "W007",
+   "+12V",
+   "OK"
+  ],
+  [
+   "W008",
+   "+5V5",
+   "OK"
+  ],
+  [
+   "W009",
+   "+3V6",
+   "OK"
+  ],
+  [
+   "W010",
+   "GND",
+   "OK"
+  ],
+  [
+   "W011",
+   "EN_MAIN",
+   "OK"
+  ],
+  [
+   "W012",
+   "spare",
    "OK"
   ],
   [
@@ -36,12 +72,32 @@
    "OK"
   ],
   [
+   "W014",
+   "JOY_X",
+   "OK"
+  ],
+  [
+   "W015",
+   "JOY_Y",
+   "OK"
+  ],
+  [
    "W016",
    "DIAL",
    "OK"
   ],
   [
+   "W017",
+   "AUDIO",
+   "OK"
+  ],
+  [
    "W018",
+   "GND",
+   "OK"
+  ],
+  [
+   "W019",
    "GND",
    "OK"
   ],
@@ -53,6 +109,21 @@
   [
    "W021",
    "P3V3",
+   "OK"
+  ],
+  [
+   "W022",
+   "spare",
+   "OK"
+  ],
+  [
+   "W023",
+   "spare",
+   "OK"
+  ],
+  [
+   "W024",
+   "spare",
    "OK"
   ],
   [
@@ -152,12 +223,12 @@
   ],
   [
    "W044",
-   "damping 680 ohm across QUAD-A",
+   "damping 470-680 ohm across QUAD-A",
    "OK"
   ],
   [
    "W045",
-   "damping 680 ohm across QUAD-B",
+   "damping 470-680 ohm across QUAD-B",
    "OK"
   ],
   [
@@ -228,36 +299,6 @@
   [
    "W059",
    "RAW_Y8 tied to VCM (spare input terminated)",
-   "OK"
-  ],
-  [
-   "W060",
-   "BAT_P",
-   "OK"
-  ],
-  [
-   "W061",
-   "GND",
-   "OK"
-  ],
-  [
-   "W062",
-   "ILK",
-   "OK"
-  ],
-  [
-   "W063",
-   "SW_A",
-   "OK"
-  ],
-  [
-   "W064",
-   "ILK",
-   "OK"
-  ],
-  [
-   "W065",
-   "pack interlock loop",
    "OK"
   ]
  ]

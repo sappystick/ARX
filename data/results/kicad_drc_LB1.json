@@ -1,0 +1,12 @@
+{
+ "board": "PF233-LB1_routed.kicad_pcb",
+ "board_key": "LB1",
+ "kicad": "9.0.9",
+ "zones_filled": true,
+ "violations": 81,
+ "unconnected": 0,
+ "errors": {},
+ "warnings": {},
+ "lib_footprint_warnings": 81,
+ "examples": []
+}

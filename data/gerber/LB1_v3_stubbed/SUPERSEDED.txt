@@ -1,0 +1,1 @@
+SUPERSEDED by data/gerber/LB1_v4 (2026-10-24). route_fix connected some track ends to a pad up to 2 mm away instead of the nearest pad; KiCad reported 3 unconnected stubs. v4 has KiCad 9 DRC 0 errors / 0 unconnected.

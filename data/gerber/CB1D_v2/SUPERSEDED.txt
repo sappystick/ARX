@@ -1,0 +1,4 @@
+SUPERSEDED by data/gerber/CB1D_B (2026-10-24). Do not fabricate from this folder.
+Reasons: (1) the plane layers cut only 0.3 mm around the COIL_A / COIL_B / DM1 / DM2 through-hole pads and vias: the 1.0 mm high-voltage rule (CLAUDE.md rule 6) was not met (gerber_hv_check.py: 8 of 8 failed);
+(2) the board carried the MONO 460 V coupling tap and the joystick inputs, both removed in revision B;
+(3) a track grazed U1.6 by 0.005 mm (route_fix circle test).
