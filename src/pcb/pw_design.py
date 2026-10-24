@@ -176,7 +176,7 @@ if PW == "C":
     # analog mux for slow signals
     add("UM", "HC4051", "74HC4051", "Nexperia/TI 74HC4051D"); add("CM1", "C0603", "100n", "X7R")
     net("P3V3", ("UM", 16), ("CM1", 1)); net("GND", ("UM", 8), ("UM", 7), ("UM", 6), ("UM", 9), ("UM", 1), ("UM", 2), ("UM", 4), ("UM", 5), ("CM1", 2))
-    net("ISENSE1", ("UM", 13)); net("NTC_SENSE", ("UM", 14)); net("JOY_XF", ("UM", 15)); net("JOY_YF", ("UM", 12)); net("MUX_S0", ("UM", 11)); net("MUX_S1", ("UM", 10)); net("MUX_COM", ("UM", 3), ("RMO", 1))
+    net("ISENSE1", ("UM", 13)); net("NTC_SENSE", ("UM", 14)); net("GND", ("UM", 15), ("UM", 12)); net("MUX_S0", ("UM", 11)); net("MUX_S1", ("UM", 10)); net("MUX_COM", ("UM", 3), ("RMO", 1))
     add("RMO", "R0603", "1k", ""); add("CMO", "C0603", "1n", "C0G"); net("MUX_OUT", ("RMO", 2), ("CMO", 1)); net("GND", ("CMO", 2))
     # reference PWM filters (two-pole RC) and VBUS sense
     add("RR1", "R0603", "10k", ""); add("RR2", "R0603", "10k", ""); add("CR1", "C0603", "1u", "X7R"); add("CR2", "C0603", "1u", "X7R")
@@ -184,8 +184,7 @@ if PW == "C":
     add("RV1", "R0603", "100k", "0.1%"); add("RV2", "R0603", "10k", "0.1%"); add("CV4", "C0603", "100n", "X7R")
     net("VBUS", ("RV1", 1)); net("VBUS_SENSE", ("RV2", 1), ("RV1", 2), ("CV4", 1)); net("GND", ("RV2", 2), ("CV4", 2))
     # handle: trigger + dial (the only things that leave the head besides power)
-    add("JTR", "HDR1x7", "Handle: +3V3 GND TRIG DIAL JOYX JOYY SHLD", "shielded 6-core + drain (the only signal cable leaving the head)"); net("P3V3", ("JTR", 1)); net("GND", ("JTR", 2)); net("TRIG_EXT", ("JTR", 3), ("RT1", 1)); net("DIAL_EXT", ("JTR", 4), ("RD1", 1)); net("JOY_X", ("JTR", 5), ("RJX", 1)); net("JOY_Y", ("JTR", 6), ("RJY", 1)); net("SHIELD", ("JTR", 7), ("RSH", 1), ("CSH", 1))
-    add("RJX", "R0603", "1k", ""); add("RJY", "R0603", "1k", ""); add("CJX", "C0603", "10n", ""); add("CJY", "C0603", "10n", ""); net("JOY_XF", ("RJX", 2), ("CJX", 1)); net("JOY_YF", ("RJY", 2), ("CJY", 1)); net("GND", ("CJX", 2), ("CJY", 2))
+    add("JTR", "HDR1x7", "Handle: +3V3 GND TRIG DIAL JOYX JOYY SHLD", "shielded 6-core + drain (the only signal cable leaving the head)"); net("P3V3", ("JTR", 1)); net("GND", ("JTR", 2)); net("TRIG_EXT", ("JTR", 3), ("RT1", 1)); net("DIAL_EXT", ("JTR", 4), ("RD1", 1)); net("SHIELD", ("JTR", 7), ("RSH", 1), ("CSH", 1)); net("JTR5_NC", ("JTR", 5)); net("JTR6_NC", ("JTR", 6))   # JTR.5/.6 (JOYX/JOYY) unconnected: joystick removed (owner decision 2026-10-23), CB1D-B
     add("RSH", "R0603", "1M", ""); add("CSH", "C0603", "1n 100V", "C0G"); net("GND", ("RSH", 2), ("CSH", 2))
     for k, (ext, inn) in enumerate((("TRIG_EXT", "TRIG_IN"), ("DIAL_EXT", "DIAL_IN")), 1):
         r = "RT1" if k == 1 else "RD1"; add(r, "R0603", "1k", "series protection"); add(f"DH{k}", "DSOD", "BAS16", ""); add(f"DL{k}", "DSOD", "BAS16", ""); add(f"CQ{k}", "C0603", "10n", "X7R"); add(f"RP{k}", "R0603", "47k" if k == 1 else "10k", "pull-up (47k on TRIG: low level with the 2 kohm series path stays under VIL)" if k == 1 else "pull-up")
@@ -193,7 +192,7 @@ if PW == "C":
     # headers to the receiver boards, PB1R and the power
     add("JA", "HDR2x6S", "to AB1A J2", "1.27 mm 2x6 header"); add("JB", "HDR2x6S", "to AB1B J2", "1.27 mm 2x6 header")
     for ref, sd in (("JA", ["SDOA1", "SDOA2", "SDOA3"]), ("JB", ["SDOB1", "SDOB2"])):
-        names = ["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS"] + sd + (["BLANK", "GND", "GND"] if ref == "JA" else ["BLANK", "MONO_IN", "VCM_OUT", "GND"])
+        names = ["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS"] + sd + (["BLANK", "GND", "GND"] if ref == "JA" else ["BLANK", "VCM_OUT", "VCM_OUT", "GND"])
         for i, nm in enumerate(names, 1): net(nm, (ref, i))
     add("JPB", "HDR2x4", "to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND", "2.54 mm header")
     for i, nm in enumerate(["UMB_SHLD", "GND", "TX1_IN", "REF_I1", "FAULT1_N", "ISENSE1", "NTC_SENSE", "GND"], 1): net(nm, ("JPB", i))
@@ -201,8 +200,8 @@ if PW == "C":
     # coil interface at the HEAD end of the coil leads: critical damping (3 x 110 R = 330 R, 600 V) and the AC-coupled MONO receive tap to AB1B
     add("JCL", "TERM2", "Coil leads from the neck module: COIL_B (drain side), COIL_A (VBUS side)", "5.08 mm terminal block, silicone AWG12 leads")
     for k in (1, 2, 3): add(f"RDM{k}", "R2512", "110R", "damping chain 3 x 110 = 330 R (600 V)")
-    net("COIL_B", ("JCL", 1), ("RDM1", 1), ("CMON", 1)); net("DM1", ("RDM1", 2), ("RDM2", 1)); net("DM2", ("RDM2", 2), ("RDM3", 1)); net("COIL_A", ("JCL", 2), ("RDM3", 2))
-    add("CMON", "C1210", "100n 630V", "HV coupling cap, MONO receive tap"); add("RBI", "R0603", "100k", "bias to VCM"); net("MONO_IN", ("CMON", 2), ("RBI", 1)); net("VCM_OUT", ("RBI", 2))
+    net("COIL_B", ("JCL", 1), ("RDM1", 1)); net("DM1", ("RDM1", 2), ("RDM2", 1)); net("DM2", ("RDM2", 2), ("RDM3", 1)); net("COIL_A", ("JCL", 2), ("RDM3", 2))
+    # CB1D-B: the AC-coupled MONO tap (CMON 100 nF / 630 V, RBI) is removed: a 460 V node on a 1.27 mm header could not meet the 1.0 mm HV rule (KiCad DRC), and the mono/disc channel is not used with RX-Q
 if PW == "R":
     # ------------------------------------------------------------------ PB1R: single-channel TX power stage for the head vault (70 x 70)
     add("JP", "TERM4", "Power in: VBUS VBUS GND GND", "5.08 mm terminal block 10 A"); net("VBUS", ("JP", 1), ("JP", 2)); net("GND", ("JP", 3), ("JP", 4))

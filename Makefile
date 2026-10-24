@@ -108,7 +108,7 @@ verify-full: verify-quick hood yoke
 	$(MAKE) gerber-lb1
 
 gerber-cb1d: route-cb1d
-	cd $(W) && $(PY) gerber_out.py CB1D hatch notch1
+	cd $(W) && $(PY) gerber_out.py CB1D hatch notch1 hv=COIL_A,COIL_B,DM1,DM2
 
 drc-lb1:
 	cd $(W) && $(PY) drc.py LB1 kit_v20/route_LB1.json -1

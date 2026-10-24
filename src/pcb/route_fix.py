@@ -5,6 +5,9 @@ import json, sys, math
 board, rj = sys.argv[1], sys.argv[2]
 P = json.load(open(f"kit_v18/{board}/pads.json"))["pads"]; r = json.load(open(rj)); added = 0
 def inside(p, q, m):
+    # the track end must lie on the pad copper with the track's own half-width to spare: round pads need a circle test (a square test accepted the corners of the bounding box,
+    # leaving the CS track on CB1D grazing U1.6 by 0.005 mm: a hairline open that KiCad's DRC reported)
+    if p.get("shape") == "circle": return math.dist(q, (p["x"], p["y"])) <= p["w"] / 2 - 0.1 + m
     return abs(q[0] - p["x"]) <= p["w"] / 2 + m and abs(q[1] - p["y"]) <= p["h"] / 2 + m
 for tr in r["tracks"]:
     for end in (0, -1):

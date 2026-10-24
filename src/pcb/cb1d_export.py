@@ -36,6 +36,7 @@ def bbox_of(ref, x, y, rot):
     return (min(min(xs), x - bw / 2), min(min(ys), y - bh / 2), max(max(xs), x + bw / 2), max(max(ys), y + bh / 2))
 _HVREFS = set(r for name, v in D.NETS.items() if name in HV for (r, pin) in v)
 def is_hv(ref): return ref in _HVREFS
+R_RIB = 37.2                                              # inner radius of the cylinder ribs (head_crosscheck.py rib_polys)
 def autoplace(fixed, anchors, rots=None):
     rots = rots or {}; placed = {}
     for ref, (x, y, rot) in fixed.items(): placed[ref] = (x, y, rot)
@@ -43,7 +44,7 @@ def autoplace(fixed, anchors, rots=None):
     boxes = {r: bbox_of(r, *placed[r]) for r in placed}
     def free(ref, x, y, rot):
         b = bbox_of(ref, x, y, rot)
-        if max(math.hypot(b[i], b[j]) for i in (0, 2) for j in (1, 3)) > SIZE[0] / 2 - 0.8: return False
+        if max(math.hypot(b[i], b[j]) for i in (0, 2) for j in (1, 3)) > min(SIZE[0] / 2 - 0.8, R_RIB - 0.3): return False       # bodies stay inside the rib annulus (r >= 37.2 in the vault): clear of every rib, wherever the ribs sit
         for r2, b2 in boxes.items():
             m = 1.2 if (is_hv(ref) != is_hv(r2)) else 0.5
             if not (b[2] + m < b2[0] or b[0] - m > b2[2] or b[3] + m < b2[1] or b[1] - m > b2[3]): return False

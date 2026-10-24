@@ -13,7 +13,7 @@ for b,p in P.items():
     for net,nodes in parse(p).items():
         for ref,pin in nodes:
             if ref.startswith("J"): PIN.setdefault(b,{}).setdefault(ref,{})[pin]=net
-ALIAS={("SDOA1","SDO1"),("SDOA2","SDO2"),("SDOA3","SDO3"),("SDOB1","SDO1"),("SDOB2","SDO2"),("MONO_IN","RAW_MONO"),("VCM_OUT","VCM"),("TRIG_EXT","TRIG"),("DIAL_EXT","DIAL"),("VBUS_IN","VBUS"),("COIL_B","DRAIN1"),("COIL_A","VBUS"),("HTA_P","HTA_P")}
+ALIAS={("SDOA1","SDO1"),("SDOA2","SDO2"),("SDOA3","SDO3"),("SDOB1","SDO1"),("SDOB2","SDO2"),("VCM_OUT","RAW_MONO"),("VCM_OUT","VCM"),("TRIG_EXT","TRIG"),("DIAL_EXT","DIAL"),("VBUS_IN","VBUS"),("COIL_B","DRAIN1"),("COIL_A","VBUS"),("HTA_P","HTA_P")}
 def same(a,b): return a==b or (a,b) in ALIAS or (b,a) in ALIAS or (a=="GND" and b=="GND")
 errors=[]; rows=[("level","from","pin","net","to","pin","net","status")]
 LINKS=[("CB1D","JA","AB1A","J2","L2"),("CB1D","JB","AB1B","J2","L2"),("CB1D","JLB","LB1","JLB","L6"),("CB1D","JPB","PB1R","JC","neck"),("CB1D","JTR","HB2","JH","handle"),("CB1D","JPW","PB1R","JP","power"),("CB1D","JPW","PM2","JP","power"),("CB1D","JCL","PB1R","JL1","TX")]

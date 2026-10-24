@@ -7,7 +7,7 @@ nets = {n: int(i) for i, n in re.findall(r'\(net (\d+) "([^"]*)"\)', t)}
 if six:
     t = t.replace('(0 "F.Cu" signal) (1 "In1.Cu" signal) (2 "In2.Cu" signal) (31 "B.Cu" signal)', '(0 "F.Cu" signal) (1 "In1.Cu" signal) (2 "In2.Cu" signal) (3 "In3.Cu" signal) (4 "In4.Cu" signal) (31 "B.Cu" signal)')
     t = re.sub(r'\(stackup .*?\(copper_finish "ENIG"\)\)\)', '(stackup (layer "F.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 1" (type "prepreg") (thickness 0.12)) (layer "In1.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 2" (type "core") (thickness 0.4)) (layer "In2.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 3" (type "prepreg") (thickness 0.35)) (layer "In3.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 4" (type "core") (thickness 0.4)) (layer "In4.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 5" (type "prepreg") (thickness 0.12)) (layer "B.Cu" (type "copper") (thickness 0.035)) (copper_finish "ENIG")))', t, flags=re.S)
-t = "\n".join(l for l in t.split("\n") if not l.strip().startswith("(zone") and "Edge.Cuts\"))" not in l or "gr_circle" not in l)
+t = "\n".join(l for l in t.split("\n") if not l.strip().startswith("(zone") and not ("Edge.Cuts\"))" in l and "gr_circle" in l))   # drop the template zones and the template circle outline (the earlier "A and B or C" kept every zone)
 def outline(Rr, s):
     w = 7.6; yb = 36.5; yc = math.sqrt(Rr * Rr - w * w); A = math.atan2(s * yc, w); B = math.atan2(s * yc, -w)
     a0, a1 = (A, B + 2 * math.pi) if s < 0 else (B, A + 2 * math.pi); a = np.linspace(a0, a1, 180); pts = [(Rr * math.cos(x), Rr * math.sin(x)) for x in a]

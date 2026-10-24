@@ -1,8 +1,10 @@
 import json, math, os, sys
 import numpy as np
-def export(pads_json,route_json,outdir,prefix,via_pad=0.6,via_drill=0.3,hatch=False,notch=None):
+def export(pads_json,route_json,outdir,prefix,via_pad=0.6,via_drill=0.3,hatch=False,notch=None,hv=(),hv_clr=1.0):
     os.makedirs(outdir,exist_ok=True); d=json.load(open(pads_json)); r=json.load(open(route_json)); R=d["R"]; pads=d["pads"]; layers=r["layers"]; planes=r["planes"]
-    pl_layers={}
+    pl_layers={}; hv=set(hv)
+    # plane anti-pads: 0.3 mm around ordinary through-hole pads and vias, hv_clr (1.0 mm, CLAUDE.md rule 6) around pads and vias of the flyback nets (the writer used a fixed 0.3 mm for every net before)
+    ap_pad=lambda p:max(p['w'],p['h'])+(2*hv_clr if p['net'] in hv else 0.6); ap_via=lambda nn:via_pad+(2*hv_clr-0.0 if nn in hv else 0.5)
     for n_,l_ in planes.items():
         for ly_ in (l_ if isinstance(l_,list) else [l_]): pl_layers[ly_]=n_
     all_layers=[l for l in ["F.Cu","In1.Cu","In2.Cu","In3.Cu","In4.Cu","B.Cu"] if l in layers or l in pl_layers]; fl=lambda x:"%d"%round(x*1e6)
@@ -43,18 +45,18 @@ def export(pads_json,route_json,outdir,prefix,via_pad=0.6,via_drill=0.3,hatch=Fa
                     if p["tht"] and p["net"]==net: flash(body,ap,"C",max(p["w"],p["h"])+0.2,None,p["x"],p["y"])
                 body.append("%LPC*%")
                 for p in pads:
-                    if p["tht"] and p["net"]!=net: flash(body,ap,"C",max(p["w"],p["h"])+0.6,None,p["x"],p["y"])
+                    if p["tht"] and p["net"]!=net: flash(body,ap,"C",ap_pad(p),None,p["x"],p["y"])
                 for (x,y,nn) in r["vias"]:
-                    if nn!=net: flash(body,ap,"C",via_pad+0.5,None,x,y)
+                    if nn!=net: flash(body,ap,"C",ap_via(nn),None,x,y)
                 body.append("%LPD*%"); return
             n=360; ang=np.linspace(0,2*math.pi,n,endpoint=False); body.append("G36*"); 
             body.append(f"X{fl((R-0.3)*1)}Y{fl(0)}D02*")
             for a in ang[1:]: body.append(f"X{fl((R-0.3)*math.cos(a))}Y{fl((R-0.3)*math.sin(a))}D01*")
             body.append(f"X{fl(R-0.3)}Y{fl(0)}D01*"); body.append("G37*"); body.append("%LPC*%")
             for p in pads:
-                if p["tht"] and p["net"]!=net: flash(body,ap,"C",max(p["w"],p["h"])+0.6,None,p["x"],p["y"])
+                if p["tht"] and p["net"]!=net: flash(body,ap,"C",ap_pad(p),None,p["x"],p["y"])
             for (x,y,nn) in r["vias"]:
-                if nn!=net: flash(body,ap,"C",via_pad+0.5,None,x,y)
+                if nn!=net: flash(body,ap,"C",ap_via(nn),None,x,y)
             body.append("%LPD*%")
         return fn
     names={"F.Cu":"F_Cu","In1.Cu":"In1_Cu","In2.Cu":"In2_Cu","In3.Cu":"In3_Cu","In4.Cu":"In4_Cu","B.Cu":"B_Cu"}
@@ -81,4 +83,4 @@ def export(pads_json,route_json,outdir,prefix,via_pad=0.6,via_drill=0.3,hatch=Fa
     open(f"{outdir}/{prefix}-PTH.drl","w").write(txt)
     return dict(layers=[names[l] for l in all_layers],drill_sizes={str(k):len(v) for k,v in tools.items()})
 if __name__=="__main__":
-    b=sys.argv[1]; hatch="hatch" in sys.argv; nt=[int(x[5:]) for x in sys.argv if x.startswith("notch")]; print(export(f"kit_v18/{b}/pads.json",f"kit_v20/route_{b}.json",f"kit_v22/GERBER_{b}_v2",f"PF233-{b}-v2",hatch=hatch,notch=(nt[0] if nt else None)))
+    b=sys.argv[1]; hatch="hatch" in sys.argv; nt=[int(x[5:]) for x in sys.argv if x.startswith("notch")]; hv=[x[3:].split(",") for x in sys.argv if x.startswith("hv=")]; print(export(f"kit_v18/{b}/pads.json",f"kit_v20/route_{b}.json",f"kit_v22/GERBER_{b}_v2",f"PF233-{b}-v2",hatch=hatch,notch=(nt[0] if nt else None),hv=(hv[0] if hv else ())))
