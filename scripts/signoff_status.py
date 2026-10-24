@@ -4,12 +4,15 @@ A missing result is FAIL unless its item is registered in docs/UNVERIFIED.md (th
 usage: scripts/signoff_status.py [--no-regress]      exit 1 if anything FAILs"""
 import json, os, re, subprocess, sys, datetime, glob
 W = "work"
+def arg(flag, default):
+    return sys.argv[sys.argv.index(flag) + 1] if flag in sys.argv else default
+REG, OUT_JSON, OUT_MD = arg("--register", "docs/UNVERIFIED.md"), arg("--out-json", "data/results/SIGNOFF_STATUS.json"), arg("--out-md", "docs/STATUS.md")
 def rd(p):
     try: return json.load(open(os.path.join(W, p)))
     except Exception: return None
 UNV = {}
 try:
-    for m in re.finditer(r"^\|\s*(U-[A-Z0-9-]+)\s*\|\s*([^|]*)\|", open("docs/UNVERIFIED.md").read(), re.M): UNV[m[1]] = m[2].strip()
+    for m in re.finditer(r"^\|\s*(U-[A-Z0-9-]+)\s*\|\s*([^|]*)\|", open(REG).read(), re.M): UNV[m[1]] = m[2].strip()
 except Exception: pass
 def chk(path, f, uid=None):
     """-> (state, detail). path=None means the check needs no file."""
@@ -61,7 +64,22 @@ SYS = {
     "0.2 mm fine check": chk("kit_v22/fine_check.json", lambda d: (d[0][1] == 0 and d[1][1] == [] and d[2][1] == 0 and d[3][1] == [], "board discs and bodies clear")),
     "voxel interference (window, bridge, junction)": chk("kit_v22/interference_audit.json", lambda d: (len(d["interferences"]) == 0, f"{len(d['pairs'])} pairs")),
 }
-EV = {k: ("UNVERIFIED", UNV[k]) if k in UNV else ("PASS", "evidence recorded (row removed from docs/UNVERIFIED.md)") for k in ("U-DS-PARTS", "U-FAB-RULES", "U-FAB-DRC", "U-CAM-VIEW", "U-BENCH", "U-COLD-BOOTSTRAP")}
+# An UNVERIFIED item can be closed only by deleting its row in docs/UNVERIFIED.md AND having its evidence on disk: removing the row without evidence is a FAIL (not a silent PASS).
+KNOWN_EVIDENCE = {"U-DS-PARTS": "docs/design/DATASHEET_LOG.md", "U-FAB-RULES": "docs/design/FAB_RULES_VERIFIED.md", "U-FAB-DRC": "data/results/fab_drc/*", "U-CAM-VIEW": "data/results/cam_view/*",
+                  "U-BENCH": "data/bench/*", "U-COLD-BOOTSTRAP": "data/results/bootstrap_cold.json"}
+import glob as _g
+def ev_state(k):
+    if k in UNV: return ("UNVERIFIED", UNV[k])
+    return ("PASS", f"evidence present: {KNOWN_EVIDENCE[k]}") if _g.glob(KNOWN_EVIDENCE[k]) else ("FAIL", f"row removed from the register but no evidence at {KNOWN_EVIDENCE[k]}")
+EV = {k: ev_state(k) for k in KNOWN_EVIDENCE}
+for k in UNV:                                                      # a registered ID nothing displays would be invisible: show it
+    if k not in EV and not k.startswith(("U-ROUTE-", "U-KICAD-")): EV[k] = ("UNVERIFIED", UNV[k])
+# board rows: a registered board ID must belong to a board row, an unregistered missing result is a FAIL (see chk); the table shape is fixed
+EXPECTED_BOARDS = ["CB1D", "LB1", "PB1R", "TXJ1", "SB1R-QA", "SB1R-QB", "PM2", "HB2", "HTA"]
+assert list(B) == EXPECTED_BOARDS, f"board rows changed: {list(B)}"
+for b_, row in B.items(): assert set(row) == {"route", "indep", "kicad", "gerber", "plane", "cross"}, f"{b_}: check columns changed"
+for k in UNV:
+    if k.startswith(("U-ROUTE-", "U-KICAD-")) and not any(v[1] == k for row in B.values() for v in row.values()): EV[k] = ("FAIL", f"registered but shown by no board row: {k}")
 reg = None
 if "--no-regress" not in sys.argv:
     r = subprocess.run([sys.executable, "tests/regress.py"], capture_output=True, text=True); last = (r.stdout.strip().splitlines() or ["?"])[-1]
@@ -70,24 +88,22 @@ if "--no-regress" not in sys.argv:
 cols = ["route", "indep", "kicad", "gerber", "plane", "cross"]; names = ["route", "indep. DRC", "KiCad DRC", "Gerber+drill", "plane HV", "cross-check"]
 allst = [v[0] for b in B.values() for v in b.values()] + [v[0] for v in SYS.values()] + [v[0] for v in EV.values()]
 cnt = {k: allst.count(k) for k in ("PASS", "FAIL", "SKIP", "UNVERIFIED")}
-git = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
-now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 sym = {"PASS": "PASS", "FAIL": "FAIL", "SKIP": "SKIP", "UNVERIFIED": "UNVERIFIED", "-": "-"}
 def table():
     L = ["| board | " + " | ".join(names) + " |", "|---|" + "---|" * len(cols)]
     for b, v in B.items(): L.append(f"| {b} | " + " | ".join(sym[v[c][0]] for c in cols) + " |")
     return L
-out = dict(generated=now, commit=git, counts=cnt, boards={b: {c: dict(state=v[c][0], detail=v[c][1]) for c in cols} for b, v in B.items()},
+out = dict(counts=cnt, boards={b: {c: dict(state=v[c][0], detail=v[c][1]) for c in cols} for b, v in B.items()},
            system={k: dict(state=v[0], detail=v[1]) for k, v in SYS.items()}, evidence={k: dict(state=v[0], detail=v[1]) for k, v in EV.items()}, unverified=UNV)
-os.makedirs("data/results", exist_ok=True); json.dump(out, open("data/results/SIGNOFF_STATUS.json", "w"), indent=1)
+os.makedirs(os.path.dirname(OUT_JSON) or ".", exist_ok=True); json.dump(out, open(OUT_JSON, "w"), indent=1)
 md = ["# Sign-off status of the transmit region (GENERATED by `make signoff` / scripts/signoff_status.py: do not edit)", "",
-      f"Generated {now} at commit {git}. Everything here is MODELED or tool-checked; nothing is built or measured. PASS means the tool check passed, not that a board is ready for fabrication.", "",
+      f"Everything here is MODELED or tool-checked; nothing is built or measured. PASS means the tool check passed, not that a board is ready for fabrication.", "",
       f"**{cnt['PASS']} PASS, {cnt['FAIL']} FAIL, {cnt['SKIP']} SKIP, {cnt['UNVERIFIED']} UNVERIFIED**", "", "## Boards"] + table() + ["", "## System checks", "| check | state | detail |", "|---|---|---|"]
 md += [f"| {k} | {v[0]} | {v[1]} |" for k, v in SYS.items()]
 md += ["", "## Evidence still missing (docs/UNVERIFIED.md)", "| id | state | item |", "|---|---|---|"] + [f"| {k} | {v[0]} | {UNV.get(k, 'closed')[:110]} |" for k, v in EV.items()]
-open("docs/STATUS.md", "w").write("\n".join(md) + "\n")
+open(OUT_MD, "w").write("\n".join(md) + "\n")
 print("\n".join(table())); print()
 for k, v in SYS.items(): print(f"{v[0]:10} {k}: {v[1]}")
 print(); [print(f"{v[0]:10} {k}") for k, v in EV.items()]
-print(f"\nSIGN-OFF: {cnt['PASS']} PASS, {cnt['FAIL']} FAIL, {cnt['SKIP']} SKIP, {cnt['UNVERIFIED']} UNVERIFIED -> data/results/SIGNOFF_STATUS.json, docs/STATUS.md")
+print(f"\nSIGN-OFF: {cnt['PASS']} PASS, {cnt['FAIL']} FAIL, {cnt['SKIP']} SKIP, {cnt['UNVERIFIED']} UNVERIFIED -> {OUT_JSON}, {OUT_MD}")
 sys.exit(1 if cnt["FAIL"] else 0)
