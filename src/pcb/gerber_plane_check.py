@@ -4,28 +4,11 @@ dark = add, clear = subtract) and measure the distance from every HV through-hol
 CONTROL: the same reconstruction must find plane copper touching the pads of the plane's own net, otherwise the rebuild is empty or mis-placed and the result is void.
 usage: PYTHONPATH=<gerbonara dir> gerber_plane_check.py BOARD GERBER_DIR PREFIX HV_NETS(comma) PLANE_LAYER:NET[,..]   e.g. In1:GND,In2:VBUS     -> kit_v22/gerber_plane_<BOARD>.json"""
 import sys, os, json, math, re
-from gerbonara import GerberFile
-from shapely.geometry import Point, LineString, Polygon, box
-from shapely.ops import unary_union
-from shapely import affinity
+from shapely.geometry import Point
+from gerber_geom import layer_geometry as layer_copper
 board, d, prefix, hv, planes = sys.argv[1], sys.argv[2], sys.argv[3], set(sys.argv[4].split(",")), dict(x.split(":") for x in sys.argv[5].split(","))
 PJ = f"kit_v18/{board}/pads.json" if os.path.exists(f"kit_v18/{board}/pads.json") else f"kit_v6/{board}/pads.json"
 P = json.load(open(PJ))["pads"]; RT = json.load(open(f"kit_v20/route_{board}.json")); CX = CY = 100.0
-def geom(pr):
-    n = type(pr).__name__
-    if n == "Circle": return Point(pr.x, pr.y).buffer(pr.r, 16)
-    if n == "Rectangle": return affinity.rotate(box(pr.x - pr.w / 2, pr.y - pr.h / 2, pr.x + pr.w / 2, pr.y + pr.h / 2), math.degrees(pr.rotation) if pr.rotation else 0)
-    if n == "Line": return LineString([(pr.x1, pr.y1), (pr.x2, pr.y2)]).buffer(pr.width / 2, 8)
-    if n == "ArcPoly": return Polygon(pr.outline).buffer(0)
-    return None
-def layer_copper(path):
-    g = GerberFile.open(path); cu = Polygon(); n = 0
-    for o in g.objects:
-        for pr in o.to_primitives("mm"):
-            s = geom(pr)
-            if s is None or s.is_empty: continue
-            cu = cu.union(s) if pr.polarity_dark else cu.difference(s); n += 1
-    return cu, n
 res = []; ctl = []
 for ly, net in planes.items():
     path = os.path.join(d, f"{prefix}-{ly}_Cu.gbr"); cu, n = layer_copper(path)

@@ -25,13 +25,25 @@ RESULTS = ["kit_v20/route_CB1D.json", "kit_v20/route_LB1.json", "kit_v20/route_P
 def norm(b):
     try: t = b.decode()
     except UnicodeDecodeError: return b
-    return re.sub(r"%TF\.CreationDate,[^*]*\*%", "", t).encode()
+    t = re.sub(r"%TF\.CreationDate,[^*]*\*%", "", t); t = re.sub(r"G04 Created by KiCad[^\n]*\n", "", t); t = re.sub(r"; DRILL file[^\n]*\n", "", t)
+    t = re.sub(r"; #@! TF\.CreationDate[^\n]*\n", "", t); t = re.sub(r'"CreationDate": "[^"]*"', "", t)
+    return t.encode()
+sys.path.insert(0, "src/pcb")
+def same_file(dst, data):
+    """Gerber layers: same copper geometry (KiCad's export is not byte-deterministic); everything else: same text apart from the timestamps"""
+    if dst.endswith(".gbr"):
+        import tempfile
+        from gerber_geom import same_geometry
+        with tempfile.NamedTemporaryFile(suffix=".gbr", delete=False) as t: t.write(data)
+        try: return same_geometry(dst, t.name)[0]
+        finally: os.remove(t.name)
+    return norm(open(dst, "rb").read()) == norm(data)
 def put(src, dst, transform=None):
     global changed
     if not os.path.exists(src): stale.append(f"missing source {src}"); return
     data = open(src, "rb").read()
     if transform: data = transform(data)
-    if os.path.exists(dst) and norm(open(dst, "rb").read()) == norm(data): return
+    if os.path.exists(dst) and same_file(dst, data): return
     stale.append(dst)
     if not CHECK: os.makedirs(os.path.dirname(dst), exist_ok=True); open(dst, "wb").write(data); changed += 1
 for b, (dest, wd, wp, pp) in VERSIONS.items():

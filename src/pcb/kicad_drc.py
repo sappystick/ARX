@@ -37,7 +37,8 @@ res = dict(board=os.path.basename(src), board_key=key, kicad=d.get("kicad_versio
 if key in dru_gen.BOARDS and dru_gen.BOARDS[key]["hv"]:
     strict = dict(dru_gen.BOARDS[key], hv_mm=50.0); old = dru_gen.BOARDS[key]; dru_gen.BOARDS[key] = strict
     ctl = drc(dru_gen.rules(key), "control"); dru_gen.BOARDS[key] = old
-    res["control_hv50mm_clearance_violations"] = sum(1 for v in ctl["violations"] if v["type"] == "clearance"); res["rules_loaded"] = res["control_hv50mm_clearance_violations"] > 0
+    nctl = sum(1 for v in ctl["violations"] if v["type"] == "clearance"); res["control_hv50mm_clearance_violations"] = ">100" if nctl > 100 else nctl      # the exact count wobbles by one between KiCad runs: not published
+    res["rules_loaded"] = nctl > 0
 res["examples"] = [dict(type=v["type"], desc=v["description"], items=[i["description"][:90] for i in v.get("items", [])][:3], pos=v["items"][0]["pos"] if v.get("items") else None) for v in V if v["severity"] == "error"][:8]
 json.dump(res, open(out, "w"), indent=1)
 print(json.dumps({k: v for k, v in res.items() if k != "examples"}))

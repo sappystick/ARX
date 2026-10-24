@@ -100,6 +100,28 @@
    "note": ""
   },
   {
+   "part": "MONO coupling cap 100 nF / 630 V",
+   "stress": "voltage",
+   "value": 436.368,
+   "rating": 630,
+   "unit": "V",
+   "margin_pct": 30.7,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "part": "BAV199 input clamp (MONO path)",
+   "stress": "peak clamp current through RS 1 kohm",
+   "value": 0.431,
+   "rating": 4.0,
+   "unit": "A",
+   "margin_pct": 89.2,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "1 us surge rating assumed 4 A; average power negligible"
+  },
+  {
    "part": "TXJ1 bus A to B",
    "stress": "creepage gap for 460 V peak",
    "value": 460,
@@ -177,81 +199,26 @@
    "note": ""
   },
   {
-   "part": "PB1R bulk capacitors 6 x 150 uF -20 %",
-   "stress": "voltage droop per 20 A pulse at 19.6 V (charge 612.1 uC, loop R and sag included; tx_vbus_sweep.py)",
-   "value": 0.85,
-   "rating": 0.9800000000000001,
+   "part": "PB1R bulk capacitors 6 x 150 uF",
+   "stress": "voltage droop per pulse (charge 415 uC)",
+   "value": 0.461,
+   "rating": 1.3,
    "unit": "V",
-   "margin_pct": 13.3,
-   "required_margin_pct": 10,
+   "margin_pct": 64.5,
+   "required_margin_pct": 0,
    "status": "PASS",
-   "note": "5 percent of VBUS allowed; the earlier row used 415 uC at 26 V and 900 uF nominal (CORRECTIONS)"
+   "note": "5 percent of VBUS allowed"
   },
   {
-   "part": "PB1R bulk capacitors CD1-CD6 (50 V)",
-   "stress": "voltage at the 7S full charge",
-   "value": 29.4,
-   "rating": 50.0,
-   "unit": "V",
-   "margin_pct": 41.2,
-   "required_margin_pct": 30,
-   "status": "PASS",
-   "note": "was 35 V parts at 84 percent of rating; 150 uF at 50 V in 7343-43 is UNVERIFIED (ASSUMPTIONS 28); each part must supply >= 130 uF at 19.6 V"
-  },
-  {
-   "part": "PB1R 12 V module M12",
-   "stress": "input voltage maximum",
-   "value": 29.4,
-   "rating": 36,
-   "unit": "V",
-   "margin_pct": 18.3,
-   "required_margin_pct": 15,
-   "status": "PASS",
-   "note": "Murata OKI-78SR-12/1.5-W36 class (UNVERIFIED, ASSUMPTIONS 29)"
-  },
-  {
-   "part": "PB1R 12 V module M12",
-   "stress": "pack voltage at the BMS cut-off vs the module minimum input (15 V)",
-   "value": 19.6,
-   "rating": 15.0,
-   "unit": "V",
-   "margin_pct": 30.7,
-   "required_margin_pct": 15,
-   "status": "PASS",
-   "note": "datasheet minimum input (UNVERIFIED, ASSUMPTIONS 29)"
-  },
-  {
-   "part": "Power cord AWG20 pair (upper v1)",
-   "stress": "average current in boost (7.7 W / 19.6 V BMS cut-off / 0.85)",
-   "value": 0.462,
-   "rating": 5.0,
+   "part": "Power ribbon AWG28 x 3",
+   "stress": "average current in boost (7.7 W / 26 V / 0.85)",
+   "value": 0.348,
+   "rating": 1.5,
    "unit": "A",
-   "margin_pct": 90.8,
+   "margin_pct": 76.8,
    "required_margin_pct": 50,
    "status": "PASS",
-   "note": "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon"
-  },
-  {
-   "part": "PM2 fuse F1 5 A slow",
-   "stress": "battery-side peak through F1 at the BMS cut-off (time-domain chain, power_dock_check.py)",
-   "value": 2.518,
-   "rating": 5.0,
-   "unit": "A",
-   "margin_pct": 49.6,
-   "required_margin_pct": 20,
-   "status": "PASS",
-   "note": "slow-blow: carries the rated current continuously; peaks last about a millisecond"
-  },
-  {
-   "part": "Battery pack 7S1P Molicel P30B",
-   "stress": "average current in boost",
-   "value": 0.462,
-   "rating": 30.0,
-   "unit": "A",
-   "margin_pct": 98.5,
-   "required_margin_pct": 50,
-   "status": "PASS",
-   "note": "30 A continuous (datasheet value, unverified here)"
+   "note": "3 conductors in parallel, 0.5 A each continuous"
   },
   {
    "part": "LED rail (OKI-78SR 1.5 A)",
@@ -325,12 +292,11 @@
  "power": {
   "scan 8 A / 800 Hz": {
    "W": 4.7,
-   "hours": 16.1
+   "hours": 19.3
   },
   "boost 20 A / 400 Hz": {
    "W": 7.7,
-   "hours": 9.8
-  },
-  "pack_Wh": 75.6
+   "hours": 11.8
+  }
  }
 }

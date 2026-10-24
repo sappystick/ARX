@@ -1,9 +1,9 @@
 {
- "generated": "2026-10-24 04:25 UTC",
- "commit": "a82e93e",
+ "generated": "2026-10-24 05:07 UTC",
+ "commit": "4630a72",
  "counts": {
-  "PASS": 36,
-  "FAIL": 1,
+  "PASS": 37,
+  "FAIL": 0,
   "SKIP": 0,
   "UNVERIFIED": 17
  },
@@ -31,7 +31,7 @@
    },
    "cross": {
     "state": "PASS",
-    "detail": "53 link pins, 59 conductors"
+    "detail": "53 link pins, 50 conductors"
    }
   },
   "LB1": {
@@ -230,8 +230,8 @@
     "detail": "U-KICAD-HTA"
    },
    "gerber": {
-    "state": "FAIL",
-    "detail": "0 files"
+    "state": "PASS",
+    "detail": "12 files"
    },
    "plane": {
     "state": "-",
@@ -254,7 +254,7 @@
   },
   "wiring audit (links + harness)": {
    "state": "PASS",
-   "detail": "53 pins, 59 conductors"
+   "detail": "53 pins, 50 conductors"
   },
   "stress table (only the documented LED-rail row may fail)": {
    "state": "PASS",

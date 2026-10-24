@@ -1,0 +1,3 @@
+Qty,Ref,Value,Note
+1,PCB,"4-layer 1.6 mm D90 FR-4, 1 oz outer/inner, Immersion silver, mask both sides",no components; the coil is the copper
+1,wires,"twisted pair AWG30, 130 mm","solder to pads A and B, down the D8 port to JHTA on CB1D"

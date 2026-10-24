@@ -8,7 +8,7 @@
  "errors": {},
  "warnings": {},
  "lib_footprint_warnings": 61,
- "control_hv50mm_clearance_violations": 500,
+ "control_hv50mm_clearance_violations": ">100",
  "rules_loaded": true,
  "examples": []
 }
