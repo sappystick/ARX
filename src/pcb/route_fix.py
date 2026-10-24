@@ -24,4 +24,9 @@ for tr in r["tracks"]:
 ECO = {"CB1D": [dict(net="GND", layer="F.Cu", width=0.2, pts=[[4.775, 9.5], [4.25, 8.9]])]}     # C5B.2 had no plane stub from the router: tie it to the existing GND via at (4.25, 8.45)
 for e in ECO.get(board, []):
     if not any(e["pts"][0] == t["pts"][0] and e["net"] == t["net"] for t in r["tracks"]): r["tracks"].append(e); added += 1
-json.dump(r, open(rj, "w")); print(board, "stubs added:", added)
+seen = set(); uniq = []
+for v in r["vias"]:                                            # the router can drop two identical vias on one spot (KiCad: holes_co_located): keep one
+    k = (round(v[0], 3), round(v[1], 3), v[2])
+    if k not in seen: seen.add(k); uniq.append(v)
+dup = len(r["vias"]) - len(uniq); r["vias"] = uniq
+json.dump(r, open(rj, "w")); print(board, "stubs added:", added, "duplicate vias removed:", dup)
