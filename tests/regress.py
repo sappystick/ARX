@@ -133,5 +133,14 @@ else: skip("head cross-check")
 d=rd("kit_v22/fine_check.json")
 if d: chk("0.2 mm test: CB1D and LB1 discs and bodies clear of the cylinder",d[0][1]==0 and d[1][1]==[] and d[2][1]==0 and d[3][1]==[],str(d)[:120])
 else: skip("fine check")
+# --- pipeline: the incremental runner must run every script the original serial sign-off runs, and its overlap graph must cover every step
+import re as _re, subprocess as _sp
+_dry=_sp.run(["make","-n","signoff-serial"],capture_output=True,text=True).stdout
+_serial=set(_re.findall(r"[A-Za-z0-9_]+\.py",_dry))-{"seed_copy.py"}
+sys.path.insert(0,"scripts"); import pipeline as _pl
+_pipe=set(_re.findall(r"[A-Za-z0-9_]+\.py"," ".join(c for _,c,_t in _pl.STEPS)))
+chk("pipeline runs every script of the serial sign-off (no step silently dropped)",_serial<=_pipe,f"{len(_serial)} scripts, missing {sorted(_serial-_pipe)}")
+_g=_pl.load_graph()
+chk("pipeline overlap graph (data/pipeline/graph.json) covers all steps",all(n in _g for n in _pl.NAMES if n not in _pl.OPEN_ENDED),f"{len(_g)} of {len(_pl.NAMES)} steps recorded; missing {[n for n in _pl.NAMES if n not in _g and n not in _pl.OPEN_ENDED]}")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

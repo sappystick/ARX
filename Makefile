@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: signoff-serial signoff-cold pipeline-plan pipeline-graph sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -182,7 +182,22 @@ head-audit: audit-system
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 # SIGN-OFF of the transmit region: every flow, every check, one table (docs/STATUS.md and data/results/SIGNOFF_STATUS.json are GENERATED, never hand-edited).
 # From a cold work/ this takes 30-40 minutes (routing, sims, head audit): run it as ONE background job. Fails if any check fails; UNVERIFIED items (docs/UNVERIFIED.md) are listed, not hidden.
+# DEFAULT: incremental + parallel (scripts/pipeline.py): traced inputs/outputs, unchanged steps are skipped, independent steps overlap (J=4 jobs by default).
+# `make signoff-cold` re-runs every step (use before a release); `make pipeline-plan` shows what would run and why; `make signoff-serial` is the original one-step-at-a-time path.
 signoff:
+	$(PY) scripts/pipeline.py run --jobs $(or $(J),4)
+
+signoff-cold:
+	$(PY) scripts/pipeline.py run --jobs $(or $(J),4) --cold
+
+pipeline-plan:
+	@$(PY) scripts/pipeline.py plan
+
+# serial run that also re-learns data/pipeline/graph.json (which steps may overlap); needed only after a step is added or its files change
+pipeline-graph:
+	$(PY) scripts/pipeline.py run --jobs 1 --cold --update-graph
+
+signoff-serial:
 	$(MAKE) setup
 	$(MAKE) verify-full
 	$(MAKE) pcb-release
