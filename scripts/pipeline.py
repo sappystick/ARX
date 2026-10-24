@@ -75,6 +75,7 @@ STEPS = [
     ("status", "python3 scripts/signoff_status.py", ""),
 ]
 NAMES = [s[0] for s in STEPS]
+IGNORE_READS = {"controls": {"data/results/SIGNOFF_STATUS.json", "docs/STATUS.md"}}   # the controls only use the previous table as a template; it is rewritten by the step after them (would re-run them forever)
 OPEN_ENDED = {"publish", "controls", "status"}  # always run alone, last, in order (controls temporarily edit a work/ file)
 
 
@@ -142,7 +143,7 @@ def why_stale(name, cmd, envfp):
         if sha_file(os.path.join(ROOT, p)) != h:
             return f"output missing or edited: {p}"
     for p, h in c["reads"].items():
-        if p not in c["writes"] and sha_file(os.path.join(ROOT, p)) != h:
+        if p not in c["writes"] and p not in IGNORE_READS.get(name, ()) and sha_file(os.path.join(ROOT, p)) != h:
             return f"input changed: {p}"
     for d, h in c["lists"].items():
         if sha_dir(os.path.join(ROOT, d)) != h:
@@ -234,6 +235,16 @@ def main():
     a = sys.argv[1:]
     cmd = a[0] if a else "run"
     opt = lambda k, d=None: (a[a.index(k) + 1] if k in a else d)
+    if cmd == "graph":                       # write data/pipeline/graph.json from the cached traces of the last run (every step that succeeded)
+        g = {}
+        for n in NAMES:
+            c = load_cache(n)
+            if c:
+                g[n] = footprint(c)
+        os.makedirs(os.path.dirname(GRAPH), exist_ok=True)
+        json.dump(dict(note="learned by scripts/pipeline.py graph from the traces of a serial run; paths only", steps=g), open(GRAPH, "w"), indent=0, sort_keys=True)
+        print(f"graph written: {len(g)} of {len(NAMES)} steps")
+        return 0
     if cmd == "list":
         for n, c, t in STEPS:
             print(f"{n:14s} {t:6s} {c[:100]}")

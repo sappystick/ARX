@@ -1,0 +1,1401 @@
+{
+"note": "learned by scripts/pipeline.py graph from the traces of a serial run; paths only",
+"steps": {
+"audit-system": {
+"L": [
+"scripts/tracehook",
+"work",
+"work/legacy",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/02_REFERENCE_and_assembly",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/03_PCB_antenna_board_PF233-SB1",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/04_PCB_receiver_AB1A",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/05_PCB_receiver_AB1B",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/06_SIMULATION",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/07_AUDIO_signature_library",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/08_SCRIPTS",
+"work/legacy/PHIFOLD233_FINAL_KIT_v4",
+"work/legacy/PHIFOLD233_FINAL_KIT_v4/02_SHAFT_assembly",
+"work/legacy/PHIFOLD233_FINAL_KIT_v4/03_POWER_BOARD_PM1",
+"work/legacy/PHIFOLD233_FINAL_KIT_v4/04_POWER_BOARD_PB1",
+"work/legacy/PHIFOLD233_FINAL_KIT_v4/05_SYSTEM_DESIGN",
+"work/legacy/PHIFOLD233_FINAL_KIT_v4/06_SCRIPTS",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/CASSETTES_v10",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/CASSETTES_v7",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/CASSETTES_v8",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/CASSETTES_v9",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/CB1",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/FORMERS_v11_PRINT",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/HB1",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/HEAD",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/PB1R",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/RENDER",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/SCH_CB1",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/SCH_HB1",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/SCH_PB1R",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/SCH_PM1",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/SPINE"
+],
+"R": [
+"work/harness/HARNESS_MASTER_v3.csv",
+"work/interference_audit.py",
+"work/kit_v18/CB1D/PF233-CB1D.net",
+"work/kit_v18/CB1D/PF233-CB1D_board_with_components.stl",
+"work/kit_v18/LB1/PF233-LB1.net",
+"work/kit_v18/LB1/PF233-LB1_board_with_components.stl",
+"work/kit_v18/PARTS/HUB_CAP_HTA_v3_vault.stl",
+"work/kit_v18/PARTS/LOTUS_HOOD_CARRIER_v3_butted.stl",
+"work/kit_v19/PARTS/HEAD_SKIRT.stl",
+"work/kit_v19/YOKE/UMBILICAL_BRIDGE.stl",
+"work/kit_v19/YOKE/UMBILICAL_BRIDGE_LID.stl",
+"work/kit_v20/sim_head1.json",
+"work/kit_v20/sim_thermal.json",
+"work/kit_v22/ROOF_PLATE_v5.stl",
+"work/kit_v22/SET/02_CORE_PCB_CYLINDER/CORE_CYLINDER_v5_integrated.stl",
+"work/kit_v22/TXJ1_CRADLE_v1.stl",
+"work/kit_v22/tx_system.json",
+"work/kit_v23/power_dock_check.json",
+"work/kit_v23/tx_vbus.json",
+"work/kit_v6/HB2/PF233-HB2.net",
+"work/kit_v6/PM2/PF233-PM2.net",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/04_PCB_receiver_AB1A/PF233-AB1A.net",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/04_PCB_receiver_AB1A/PF233-AB1A_board_with_components.stl",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/05_PCB_receiver_AB1B/PF233-AB1B.net",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/05_PCB_receiver_AB1B/PF233-AB1B_board_with_components.stl",
+"work/legacy/PHIFOLD233_FINAL_KIT_v4/03_POWER_BOARD_PM1/PF233-PM1.net",
+"work/legacy/PHIFOLD233_FINAL_KIT_v4/04_POWER_BOARD_PB1/PF233-PB1.net",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/CB1/PF233-CB1.net",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/HB1/PF233-HB1.net",
+"work/legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/PB1R/PF233-PB1R.net",
+"work/stack_check.py",
+"work/system_budget.py",
+"work/wiring_audit.py"
+],
+"W": [
+"work/kit_v22/LEVEL_NETLIST_FROM_NETLISTS.csv",
+"work/kit_v22/SYSTEM_STRESS_MARGINS.csv",
+"work/kit_v22/interference_audit.json",
+"work/kit_v22/stack_check.json",
+"work/kit_v22/system_budget.json",
+"work/kit_v22/wiring_audit.json"
+]
+},
+"baseplate": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/cap_hood_v16.py",
+"work/golden_cone_head.py",
+"work/render_v6.py",
+"work/rodin_core_v4.py"
+],
+"W": [
+"work/kit_v16/PARTS/BASE_PLATE_RX_CASSETTE_v3.stl",
+"work/kit_v16/PARTS/FERRITE_TILE_A_reference.stl",
+"work/kit_v16/PARTS/FERRITE_TILE_B_reference.stl",
+"work/kit_v16/PARTS/FERRITE_TILE_C_reference.stl",
+"work/kit_v16/PARTS/HUB_CAP_HTA.stl",
+"work/kit_v16/PARTS/LOTUS_HOOD_CARRIER.stl",
+"work/kit_v16/PARTS/report.json"
+]
+},
+"check": {
+"L": [
+"work"
+],
+"R": [
+"work/check_v22.py",
+"work/kit_v16/PARTS/BASE_PLATE_RX_CASSETTE_v3.stl",
+"work/kit_v22/ANALOG_TRAY_v5.stl",
+"work/kit_v22/ROOF_PLATE_v5.stl",
+"work/kit_v22/SEPTUM_FRAME_v5.stl",
+"work/kit_v22/SET/02_CORE_PCB_CYLINDER/CORE_CYLINDER_v5_integrated.stl",
+"work/kit_v22/SPINE_COMB_v5.stl",
+"work/kit_v22/sbq_geometry.json"
+],
+"W": [
+"work/kit_v22/check_v22.json"
+]
+},
+"check-pb1r": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v18/CB1D/PF233-CB1D.net",
+"work/kit_v20/route_PB1R.json",
+"work/kit_v20/sim_head1.json",
+"work/kit_v6/PB1R/PF233-PB1R.net",
+"work/kit_v6/PB1R/pads.json",
+"work/kit_v6/PM2/PF233-PM2.net",
+"work/pb1r_check.py",
+"work/tx_vbus_sweep.py"
+],
+"W": [
+"work/kit_v22/pb1r_check.json",
+"work/kit_v23/TX_ONTIME_LUT.csv",
+"work/kit_v23/TX_VBUS_SWEEP.png",
+"work/kit_v23/tx_vbus.json"
+]
+},
+"controls": {
+"L": [
+"data/gerber/CB1D_B2",
+"data/gerber/PB1R",
+"data/gerber/TXJ1_v2",
+"scripts/tracehook",
+"src/pcb",
+"tests",
+"work/kit_v18/HTA",
+"work/kit_v22/GERBER_CB1D_v2",
+"work/kit_v22/GERBER_LB1_v2",
+"work/kit_v22/GERBER_PB1R",
+"work/kit_v22/GERBER_SB1R_QA",
+"work/kit_v22/GERBER_SB1R_QB",
+"work/kit_v22/GERBER_TXJ1",
+"work/kit_v22/SCH"
+],
+"R": [
+"data/gerber/CB1D_B2/PF233-CB1D-B2-B_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-B_Mask.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-Edge_Cuts.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-F_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-F_Mask.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-In1_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-In2_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-In3_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-In4_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-PTH.drl",
+"data/gerber/HTA/PF233-HTA-B_Cu.gbr",
+"data/gerber/HTA/PF233-HTA-B_Mask.gbr",
+"data/gerber/HTA/PF233-HTA-Edge_Cuts.gbr",
+"data/gerber/HTA/PF233-HTA-F_Cu.gbr",
+"data/gerber/HTA/PF233-HTA-F_Mask.gbr",
+"data/gerber/HTA/PF233-HTA-In1_Cu.gbr",
+"data/gerber/HTA/PF233-HTA-In2_Cu.gbr",
+"data/gerber/HTA/PF233-HTA-NPTH.drl",
+"data/gerber/HTA/PF233-HTA-PTH.drl",
+"data/gerber/HTA/PF233-HTA_BOM.csv",
+"data/gerber/HTA/PF233-HTA_preview.png",
+"data/gerber/LB1_v4/PF233-LB1-v4-B_Cu.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-B_Mask.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-Edge_Cuts.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-F_Cu.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-F_Mask.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-In1_Cu.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-In2_Cu.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-PTH.drl",
+"data/gerber/PB1R/PF233-PB1R-B_Cu.gbr",
+"data/gerber/PB1R/PF233-PB1R-B_Mask.gbr",
+"data/gerber/PB1R/PF233-PB1R-Edge_Cuts.gbr",
+"data/gerber/PB1R/PF233-PB1R-F_Cu.gbr",
+"data/gerber/PB1R/PF233-PB1R-F_Mask.gbr",
+"data/gerber/PB1R/PF233-PB1R-F_Paste.gbr",
+"data/gerber/PB1R/PF233-PB1R-F_Silkscreen.gbr",
+"data/gerber/PB1R/PF233-PB1R-In1_Cu.gbr",
+"data/gerber/PB1R/PF233-PB1R-In2_Cu.gbr",
+"data/gerber/PB1R/PF233-PB1R-NPTH.drl",
+"data/gerber/PB1R/PF233-PB1R-PTH.drl",
+"data/gerber/PB1R/PF233-PB1R-job.gbrjob",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-B_Cu.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-B_Mask.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-Edge_Cuts.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-F_Cu.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-F_Mask.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-F_Paste.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-In1_Cu.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-In2_Cu.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-NPTH.drl",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-PTH.drl",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-B_Cu.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-B_Mask.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-Edge_Cuts.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-F_Cu.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-F_Mask.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-In1_Cu.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-In2_Cu.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-NPTH.drl",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-PTH.drl",
+"data/gerber/TXJ1_v2/TXJ1-v2-B_Cu.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-B_Mask.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-Edge_Cuts.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-F_Cu.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-F_Mask.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-PTH.drl",
+"data/kicad/PF233-CB1D_routed.kicad_dru",
+"data/kicad/PF233-CB1D_routed.kicad_pcb",
+"data/kicad/PF233-HB2_placed.kicad_pcb",
+"data/kicad/PF233-LB1_routed.kicad_dru",
+"data/kicad/PF233-LB1_routed.kicad_pcb",
+"data/kicad/PF233-PB1R_placed.kicad_pcb",
+"data/kicad/PF233-PB1R_routed.kicad_dru",
+"data/kicad/PF233-PB1R_routed.kicad_pcb",
+"data/kicad/PF233-PM2_placed.kicad_pcb",
+"data/kicad/SB1R-QA.kicad_dru",
+"data/kicad/SB1R-QA.kicad_pcb",
+"data/kicad/SB1R-QB.kicad_dru",
+"data/kicad/SB1R-QB.kicad_pcb",
+"data/kicad/TXJ1.kicad_dru",
+"data/kicad/TXJ1.kicad_pcb",
+"data/kicad/sch/PF233-AB1A.kicad_sch",
+"data/kicad/sch/PF233-AB1B.kicad_sch",
+"data/kicad/sch/PF233-CB1D.kicad_sch",
+"data/kicad/sch/PF233-HB1.kicad_sch",
+"data/kicad/sch/PF233-HB2.kicad_sch",
+"data/kicad/sch/PF233-LB1.kicad_sch",
+"data/kicad/sch/PF233-PB1R.kicad_sch",
+"data/kicad/sch/PF233-PM1.kicad_sch",
+"data/kicad/sch/PF233-PM2.kicad_sch",
+"data/results/PF233-PB1R.net",
+"data/results/PF233-PB1R_BOM.csv",
+"data/results/PF233-PB1R_pickplace.csv",
+"data/results/SIGNOFF_STATUS.json",
+"data/results/SYSTEM_STRESS_MARGINS.csv",
+"data/results/TX_ONTIME_LUT.csv",
+"data/results/drc_CB1D.json",
+"data/results/drc_LB1.json",
+"data/results/drc_PB1R.json",
+"data/results/fine_check.json",
+"data/results/gerber_hv_CB1D.json",
+"data/results/gerber_plane_PB1R.json",
+"data/results/head_crosscheck.json",
+"data/results/kicad_drc_CB1D.json",
+"data/results/kicad_drc_LB1.json",
+"data/results/kicad_drc_PB1R.json",
+"data/results/kicad_drc_SB1R-QA.json",
+"data/results/kicad_drc_SB1R-QB.json",
+"data/results/kicad_drc_TXJ1.json",
+"data/results/pb1r_check.json",
+"data/results/power_dock_check.json",
+"data/results/route_CB1D.json",
+"data/results/route_LB1.json",
+"data/results/route_PB1R.json",
+"data/results/sbq_geometry.json",
+"data/results/sch_check.json",
+"data/results/stack_check.json",
+"data/results/system_budget.json",
+"data/results/trigger_check.json",
+"data/results/tx_system.json",
+"data/results/tx_vbus.json",
+"data/results/wiring_audit.json",
+"docs/STATUS.md",
+"docs/UNVERIFIED.md",
+"docs/design/FAB_RULES.md",
+"scripts/manifest.py",
+"scripts/release_tx.py",
+"scripts/signoff_status.py",
+"tests/release_signoff_controls.py",
+"work/kit_v18/HTA/PF233-HTA-B_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-B_Mask.gbr",
+"work/kit_v18/HTA/PF233-HTA-Edge_Cuts.gbr",
+"work/kit_v18/HTA/PF233-HTA-F_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-F_Mask.gbr",
+"work/kit_v18/HTA/PF233-HTA-In1_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-In2_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-NPTH.drl",
+"work/kit_v18/HTA/PF233-HTA-PTH.drl",
+"work/kit_v18/HTA/PF233-HTA_BOM.csv",
+"work/kit_v18/HTA/PF233-HTA_preview.png",
+"work/kit_v20/route_CB1D.json",
+"work/kit_v20/route_LB1.json",
+"work/kit_v20/route_PB1R.json",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-B_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-B_Mask.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-F_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-F_Mask.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In1_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In2_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In3_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In4_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-PTH.drl",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-B_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-B_Mask.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-F_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-F_Mask.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-In1_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-In2_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-PTH.drl",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-B_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-B_Mask.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Mask.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Paste.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Silkscreen.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-In1_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-In2_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-NPTH.drl",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-PTH.drl",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-job.gbrjob",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-B_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-B_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-F_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-F_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-F_Paste.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-In1_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-In2_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-NPTH.drl",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-PTH.drl",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-B_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-B_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-F_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-F_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-In1_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-In2_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-NPTH.drl",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-PTH.drl",
+"work/kit_v22/GERBER_TXJ1/TXJ1-B_Cu.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-B_Mask.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-F_Cu.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-F_Mask.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-PTH.drl",
+"work/kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb",
+"work/kit_v22/KICAD/PF233-LB1_routed.kicad_pcb",
+"work/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb",
+"work/kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb",
+"work/kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb",
+"work/kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb",
+"work/kit_v22/SCH/PF233-AB1A.kicad_sch",
+"work/kit_v22/SCH/PF233-AB1B.kicad_sch",
+"work/kit_v22/SCH/PF233-CB1D.kicad_sch",
+"work/kit_v22/SCH/PF233-HB1.kicad_sch",
+"work/kit_v22/SCH/PF233-HB2.kicad_sch",
+"work/kit_v22/SCH/PF233-LB1.kicad_sch",
+"work/kit_v22/SCH/PF233-PB1R.kicad_sch",
+"work/kit_v22/SCH/PF233-PM1.kicad_sch",
+"work/kit_v22/SCH/PF233-PM2.kicad_sch",
+"work/kit_v22/SYSTEM_STRESS_MARGINS.csv",
+"work/kit_v22/check_v22.json",
+"work/kit_v22/drc_CB1D.json",
+"work/kit_v22/drc_LB1.json",
+"work/kit_v22/drc_PB1R.json",
+"work/kit_v22/fine_check.json",
+"work/kit_v22/gerber_hv_CB1D.json",
+"work/kit_v22/gerber_plane_PB1R.json",
+"work/kit_v22/head_crosscheck.json",
+"work/kit_v22/interference_audit.json",
+"work/kit_v22/kicad_drc_CB1D.json",
+"work/kit_v22/kicad_drc_LB1.json",
+"work/kit_v22/kicad_drc_PB1R.json",
+"work/kit_v22/kicad_drc_SB1R-QA.json",
+"work/kit_v22/kicad_drc_SB1R-QB.json",
+"work/kit_v22/kicad_drc_TXJ1.json",
+"work/kit_v22/pb1r_check.json",
+"work/kit_v22/sbq_geometry.json",
+"work/kit_v22/sch_check.json",
+"work/kit_v22/stack_check.json",
+"work/kit_v22/system_budget.json",
+"work/kit_v22/trigger_check.json",
+"work/kit_v22/tx_system.json",
+"work/kit_v23/TX_ONTIME_LUT.csv",
+"work/kit_v23/power_dock_check.json",
+"work/kit_v23/tx_vbus.json",
+"work/kit_v6/PB1R/PF233-PB1R.kicad_pcb",
+"work/kit_v6/PB1R/PF233-PB1R.net",
+"work/kit_v6/PB1R/PF233-PB1R_BOM.csv",
+"work/kit_v6/PB1R/PF233-PB1R_pickplace.csv"
+],
+"W": [
+"scripts/publish_data.py",
+"work/kit_v22/controls_3_9.json",
+"work/kit_v22/wiring_audit.json"
+]
+},
+"drc-cb1d": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/drc.py",
+"work/kit_v18/CB1D/pads.json",
+"work/kit_v20/route_CB1D.json"
+],
+"W": [
+"work/kit_v22/drc_CB1D.json"
+]
+},
+"drc-lb1": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/drc.py",
+"work/kit_v18/LB1/pads.json",
+"work/kit_v20/route_LB1.json"
+],
+"W": [
+"work/kit_v22/drc_LB1.json"
+]
+},
+"drc-pb1r": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/drc.py",
+"work/kit_v20/route_PB1R.json",
+"work/kit_v6/PB1R/pads.json"
+],
+"W": [
+"work/kit_v22/drc_PB1R.json"
+]
+},
+"formers-low": {
+"L": [],
+"R": [],
+"W": []
+},
+"gerber-cb1d": {
+"L": [
+"work"
+],
+"R": [
+"work/gerber_hv_check.py",
+"work/gerber_out.py",
+"work/kit_v18/CB1D/pads.json",
+"work/kit_v20/route_CB1D.json"
+],
+"W": [
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-B_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-B_Mask.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-F_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-F_Mask.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In1_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In2_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In3_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In4_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-PTH.drl",
+"work/kit_v22/gerber_hv_CB1D.json"
+]
+},
+"gerber-lb1": {
+"L": [
+"work"
+],
+"R": [
+"work/gerber_out.py",
+"work/kit_v18/LB1/pads.json",
+"work/kit_v20/route_LB1.json"
+],
+"W": [
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-B_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-B_Mask.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-F_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-F_Mask.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-In1_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-In2_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-PTH.drl"
+]
+},
+"gerber-pb1r": {
+"L": [
+".",
+"scripts/tracehook",
+"src/pcb",
+"work"
+],
+"R": [
+"src/pcb/kicad_gerber.py",
+"work/gerber_geom.py",
+"work/gerber_plane_check.py",
+"work/kit_v20/route_PB1R.json",
+"work/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb",
+"work/kit_v6/PB1R/pads.json"
+],
+"W": [
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-B_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-B_Mask.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Mask.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Paste.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Silkscreen.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-In1_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-In2_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-NPTH.drl",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-PTH.drl",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-job.gbrjob",
+"work/kit_v22/gerber_plane_PB1R.json"
+]
+},
+"head-audit": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"data/gerber/HTA/PF233-HTA-NPTH.drl",
+"work/fine_check.py",
+"work/head_crosscheck.py",
+"work/head_drawings.py",
+"work/kit_v15/LOW/FORMER_L1_petal_coil_former.stl",
+"work/kit_v15/LOW/FORMER_L2_petal_coil_former.stl",
+"work/kit_v15/LOW/FORMER_L3_petal_coil_former.stl",
+"work/kit_v15/LOW/FORMER_L4_petal_coil_former.stl",
+"work/kit_v15/LOW/FORMER_L5_petal_coil_former.stl",
+"work/kit_v15/LOW/FORMER_L6_petal_coil_former.stl",
+"work/kit_v16/PARTS/BASE_PLATE_RX_CASSETTE_v3.stl",
+"work/kit_v18/CB1D/PF233-CB1D_BOM.csv",
+"work/kit_v18/CB1D/PF233-CB1D_pickplace.csv",
+"work/kit_v18/LB1/PF233-LB1.net",
+"work/kit_v18/LB1/PF233-LB1_BOM.csv",
+"work/kit_v18/LB1/PF233-LB1_pickplace.csv",
+"work/kit_v18/PARTS/HUB_CAP_HTA_v3_vault.stl",
+"work/kit_v18/PARTS/LOTUS_HOOD_CARRIER_v3_butted.stl",
+"work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv",
+"work/kit_v19/PARTS/HEAD_SKIRT.stl",
+"work/kit_v19/YOKE/UMBILICAL_BRIDGE.stl",
+"work/kit_v19/YOKE/UMBILICAL_BRIDGE_LID.stl",
+"work/kit_v19/lib_bodies.json",
+"work/kit_v22/ANALOG_TRAY_v5.stl",
+"work/kit_v22/ROOF_PLATE_v5.stl",
+"work/kit_v22/SEPTUM_FRAME_v5.stl",
+"work/kit_v22/SET/02_CORE_PCB_CYLINDER/CORE_CYLINDER_v5_integrated.stl",
+"work/kit_v22/SPINE_COMB_v5.stl",
+"work/kit_v22/TXJ1_CRADLE_v1.stl",
+"work/kit_v22/drc_CB1D.json",
+"work/kit_v22/drc_LB1.json",
+"work/kit_v22/sbq_geometry.json",
+"work/kit_v22/sbq_sim.json",
+"work/kit_v22/system_budget.json",
+"work/kit_v22/tx_system.json",
+"work/kit_v22/wiring_audit.json",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/04_PCB_receiver_AB1A/PF233-AB1A_board_with_components.stl",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/05_PCB_receiver_AB1B/PF233-AB1B_board_with_components.stl"
+],
+"W": [
+"work/kit_v22/HEAD_CUTAWAY_A_HEEL.png",
+"work/kit_v22/HEAD_CUTAWAY_B_SPINE.png",
+"work/kit_v22/HEAD_EXPLODED_LAYERS.png",
+"work/kit_v22/SEARCH_HEAD_FULL_SCHEMATIC.png",
+"work/kit_v22/fine_check.json",
+"work/kit_v22/head_crosscheck.json"
+]
+},
+"hood": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/hood_axi.py",
+"work/hood_v20.py",
+"work/kit_v15/LOW/paths.pkl"
+],
+"W": [
+"work/kit_v18/PARTS/FERRITE_TILE_INNER_v3_reference.stl",
+"work/kit_v18/PARTS/FERRITE_TILE_OUTER_v3_reference.stl",
+"work/kit_v18/PARTS/HOOD_V3_LAYOUT.png",
+"work/kit_v18/PARTS/LOTUS_HOOD_CARRIER_v3_butted.stl",
+"work/kit_v18/PARTS/hood_v3_report.json",
+"work/kit_v18/PARTS/hood_v3_tile_cut_list.csv",
+"work/kit_v18/PARTS/hood_v3_tile_cut_sheet.dxf",
+"work/kit_v22/HOOD_AXI.png",
+"work/kit_v22/hood_axi.json"
+]
+},
+"kicad-cb1d": {
+"L": [
+"work"
+],
+"R": [
+"work/kicad_inject.py",
+"work/kit_v18/CB1D/PF233-CB1D.kicad_pcb",
+"work/kit_v20/route_CB1D.json"
+],
+"W": [
+"work/kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb"
+]
+},
+"kicad-drc": {
+"L": [
+".",
+"src/pcb"
+],
+"R": [
+"src/pcb/kicad_drc.py",
+"work/kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb",
+"work/kit_v22/KICAD/PF233-LB1_routed.kicad_pcb",
+"work/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb",
+"work/kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb",
+"work/kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb",
+"work/kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb"
+],
+"W": [
+"work/kit_v22/kicad_drc_CB1D.json",
+"work/kit_v22/kicad_drc_LB1.json",
+"work/kit_v22/kicad_drc_PB1R.json",
+"work/kit_v22/kicad_drc_SB1R-QA.json",
+"work/kit_v22/kicad_drc_SB1R-QB.json",
+"work/kit_v22/kicad_drc_TXJ1.json"
+]
+},
+"kicad-lb1": {
+"L": [
+"work"
+],
+"R": [
+"work/kicad_inject.py",
+"work/kit_v18/LB1/PF233-LB1.kicad_pcb",
+"work/kit_v20/route_LB1.json"
+],
+"W": [
+"work/kit_v22/KICAD/PF233-LB1_routed.kicad_pcb"
+]
+},
+"kicad-pb1r": {
+"L": [
+"work"
+],
+"R": [
+"work/kit_v20/route_PB1R.json",
+"work/kit_v6/PB1R/PF233-PB1R.kicad_pcb",
+"work/rect_inject.py"
+],
+"W": [
+"work/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb"
+]
+},
+"pcb-cb1d": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/cb1d_export.py",
+"work/pw_design.py"
+],
+"W": [
+"work/kit_v18/CB1D/PF233-CB1D.kicad_pcb",
+"work/kit_v18/CB1D/PF233-CB1D.net",
+"work/kit_v18/CB1D/PF233-CB1D_BOM.csv",
+"work/kit_v18/CB1D/PF233-CB1D_board_with_components.stl",
+"work/kit_v18/CB1D/PF233-CB1D_pickplace.csv",
+"work/kit_v18/CB1D/PF233-CB1D_placement_check.json",
+"work/kit_v18/CB1D/PF233-CB1D_placement_preview.png",
+"work/kit_v18/CB1D/pads.json"
+]
+},
+"pcb-hb1": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/pw_design.py",
+"work/pw_export.py"
+],
+"W": [
+"work/kit_v6/HB1/PF233-HB1.kicad_pcb",
+"work/kit_v6/HB1/PF233-HB1.net",
+"work/kit_v6/HB1/PF233-HB1_BOM.csv",
+"work/kit_v6/HB1/PF233-HB1_board_with_components.stl",
+"work/kit_v6/HB1/PF233-HB1_pickplace.csv",
+"work/kit_v6/HB1/PF233-HB1_placement_check.json",
+"work/kit_v6/HB1/PF233-HB1_placement_preview.png"
+]
+},
+"pcb-hb2": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/pw_design.py",
+"work/pw_export.py"
+],
+"W": [
+"work/kit_v6/HB2/PF233-HB2.kicad_pcb",
+"work/kit_v6/HB2/PF233-HB2.net",
+"work/kit_v6/HB2/PF233-HB2_BOM.csv",
+"work/kit_v6/HB2/PF233-HB2_board_with_components.stl",
+"work/kit_v6/HB2/PF233-HB2_pickplace.csv",
+"work/kit_v6/HB2/PF233-HB2_placement_check.json",
+"work/kit_v6/HB2/PF233-HB2_placement_preview.png"
+]
+},
+"pcb-hta": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/hta_gerber.py",
+"work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv"
+],
+"W": [
+"work/kit_v18/HTA/PF233-HTA-B_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-B_Mask.gbr",
+"work/kit_v18/HTA/PF233-HTA-Edge_Cuts.gbr",
+"work/kit_v18/HTA/PF233-HTA-F_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-F_Mask.gbr",
+"work/kit_v18/HTA/PF233-HTA-In1_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-In2_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-NPTH.drl",
+"work/kit_v18/HTA/PF233-HTA-PTH.drl",
+"work/kit_v18/HTA/PF233-HTA_BOM.csv",
+"work/kit_v18/HTA/PF233-HTA_preview.png",
+"work/kit_v18/HTA/hta_report.json"
+]
+},
+"pcb-lb1": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv",
+"work/lb1_export.py",
+"work/pw_design.py"
+],
+"W": [
+"work/kit_v18/LB1/PF233-LB1.kicad_pcb",
+"work/kit_v18/LB1/PF233-LB1.net",
+"work/kit_v18/LB1/PF233-LB1_BOM.csv",
+"work/kit_v18/LB1/PF233-LB1_board_with_components.stl",
+"work/kit_v18/LB1/PF233-LB1_pickplace.csv",
+"work/kit_v18/LB1/PF233-LB1_placement_check.json",
+"work/kit_v18/LB1/PF233-LB1_placement_preview.png",
+"work/kit_v18/LB1/pads.json"
+]
+},
+"pcb-pb1r": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/pw_design.py",
+"work/pw_export.py"
+],
+"W": [
+"work/kit_v6/PB1R/PF233-PB1R.kicad_pcb",
+"work/kit_v6/PB1R/PF233-PB1R.net",
+"work/kit_v6/PB1R/PF233-PB1R_BOM.csv",
+"work/kit_v6/PB1R/PF233-PB1R_board_with_components.stl",
+"work/kit_v6/PB1R/PF233-PB1R_pickplace.csv",
+"work/kit_v6/PB1R/PF233-PB1R_placement_check.json",
+"work/kit_v6/PB1R/PF233-PB1R_placement_preview.png",
+"work/kit_v6/PB1R/pads.json"
+]
+},
+"pcb-pm2": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v18/CB1D/PF233-CB1D.net",
+"work/kit_v23/tx_vbus.json",
+"work/kit_v6/PB1R/PF233-PB1R.net",
+"work/power_dock_check.py",
+"work/pw_design.py",
+"work/pw_export.py",
+"work/sch_export.py"
+],
+"W": [
+"work/kit_v23/power_dock_check.json",
+"work/kit_v6/PM2/PF233-PM2.kicad_pcb",
+"work/kit_v6/PM2/PF233-PM2.net",
+"work/kit_v6/PM2/PF233-PM2_BOM.csv",
+"work/kit_v6/PM2/PF233-PM2_board_with_components.stl",
+"work/kit_v6/PM2/PF233-PM2_pickplace.csv",
+"work/kit_v6/PM2/PF233-PM2_placement_check.json",
+"work/kit_v6/PM2/PF233-PM2_placement_preview.png"
+]
+},
+"publish": {
+"L": [
+"scripts",
+"scripts/tracehook",
+"src/pcb",
+"work/kit_v18/HTA",
+"work/kit_v22/GERBER_CB1D_v2",
+"work/kit_v22/GERBER_LB1_v2",
+"work/kit_v22/GERBER_PB1R",
+"work/kit_v22/GERBER_SB1R_QA",
+"work/kit_v22/GERBER_SB1R_QB",
+"work/kit_v22/GERBER_TXJ1",
+"work/kit_v22/SCH"
+],
+"R": [
+"data/gerber/CB1D_B2/PF233-CB1D-B2-B_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-B_Mask.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-Edge_Cuts.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-F_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-F_Mask.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-In1_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-In2_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-In3_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-In4_Cu.gbr",
+"data/gerber/CB1D_B2/PF233-CB1D-B2-PTH.drl",
+"data/gerber/HTA/PF233-HTA-B_Cu.gbr",
+"data/gerber/HTA/PF233-HTA-B_Mask.gbr",
+"data/gerber/HTA/PF233-HTA-Edge_Cuts.gbr",
+"data/gerber/HTA/PF233-HTA-F_Cu.gbr",
+"data/gerber/HTA/PF233-HTA-F_Mask.gbr",
+"data/gerber/HTA/PF233-HTA-In1_Cu.gbr",
+"data/gerber/HTA/PF233-HTA-In2_Cu.gbr",
+"data/gerber/HTA/PF233-HTA-NPTH.drl",
+"data/gerber/HTA/PF233-HTA-PTH.drl",
+"data/gerber/HTA/PF233-HTA_BOM.csv",
+"data/gerber/HTA/PF233-HTA_preview.png",
+"data/gerber/LB1_v4/PF233-LB1-v4-B_Cu.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-B_Mask.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-Edge_Cuts.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-F_Cu.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-F_Mask.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-In1_Cu.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-In2_Cu.gbr",
+"data/gerber/LB1_v4/PF233-LB1-v4-PTH.drl",
+"data/gerber/PB1R/PF233-PB1R-B_Cu.gbr",
+"data/gerber/PB1R/PF233-PB1R-B_Mask.gbr",
+"data/gerber/PB1R/PF233-PB1R-Edge_Cuts.gbr",
+"data/gerber/PB1R/PF233-PB1R-F_Cu.gbr",
+"data/gerber/PB1R/PF233-PB1R-F_Mask.gbr",
+"data/gerber/PB1R/PF233-PB1R-F_Paste.gbr",
+"data/gerber/PB1R/PF233-PB1R-F_Silkscreen.gbr",
+"data/gerber/PB1R/PF233-PB1R-In1_Cu.gbr",
+"data/gerber/PB1R/PF233-PB1R-In2_Cu.gbr",
+"data/gerber/PB1R/PF233-PB1R-NPTH.drl",
+"data/gerber/PB1R/PF233-PB1R-PTH.drl",
+"data/gerber/PB1R/PF233-PB1R-job.gbrjob",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-B_Cu.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-B_Mask.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-Edge_Cuts.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-F_Cu.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-F_Mask.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-F_Paste.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-In1_Cu.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-In2_Cu.gbr",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-NPTH.drl",
+"data/gerber/SB1R_QA_v2/SB1R-QA-v2-PTH.drl",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-B_Cu.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-B_Mask.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-Edge_Cuts.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-F_Cu.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-F_Mask.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-In1_Cu.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-In2_Cu.gbr",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-NPTH.drl",
+"data/gerber/SB1R_QB_v2/SB1R-QB-v2-PTH.drl",
+"data/gerber/TXJ1_v2/TXJ1-v2-B_Cu.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-B_Mask.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-Edge_Cuts.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-F_Cu.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-F_Mask.gbr",
+"data/gerber/TXJ1_v2/TXJ1-v2-PTH.drl",
+"data/kicad/PF233-CB1D_routed.kicad_dru",
+"data/kicad/PF233-CB1D_routed.kicad_pcb",
+"data/kicad/PF233-LB1_routed.kicad_dru",
+"data/kicad/PF233-LB1_routed.kicad_pcb",
+"data/kicad/PF233-PB1R_placed.kicad_pcb",
+"data/kicad/PF233-PB1R_routed.kicad_dru",
+"data/kicad/PF233-PB1R_routed.kicad_pcb",
+"data/kicad/SB1R-QA.kicad_dru",
+"data/kicad/SB1R-QA.kicad_pcb",
+"data/kicad/SB1R-QB.kicad_dru",
+"data/kicad/SB1R-QB.kicad_pcb",
+"data/kicad/TXJ1.kicad_dru",
+"data/kicad/TXJ1.kicad_pcb",
+"data/kicad/sch/PF233-AB1A.kicad_sch",
+"data/kicad/sch/PF233-AB1B.kicad_sch",
+"data/kicad/sch/PF233-CB1D.kicad_sch",
+"data/kicad/sch/PF233-HB1.kicad_sch",
+"data/kicad/sch/PF233-HB2.kicad_sch",
+"data/kicad/sch/PF233-LB1.kicad_sch",
+"data/kicad/sch/PF233-PB1R.kicad_sch",
+"data/kicad/sch/PF233-PM1.kicad_sch",
+"data/kicad/sch/PF233-PM2.kicad_sch",
+"data/results/PF233-PB1R.net",
+"data/results/PF233-PB1R_BOM.csv",
+"data/results/PF233-PB1R_pickplace.csv",
+"data/results/SYSTEM_STRESS_MARGINS.csv",
+"data/results/TX_ONTIME_LUT.csv",
+"data/results/drc_CB1D.json",
+"data/results/drc_LB1.json",
+"data/results/drc_PB1R.json",
+"data/results/fine_check.json",
+"data/results/gerber_hv_CB1D.json",
+"data/results/gerber_plane_PB1R.json",
+"data/results/head_crosscheck.json",
+"data/results/kicad_drc_CB1D.json",
+"data/results/kicad_drc_LB1.json",
+"data/results/kicad_drc_PB1R.json",
+"data/results/kicad_drc_SB1R-QA.json",
+"data/results/kicad_drc_SB1R-QB.json",
+"data/results/kicad_drc_TXJ1.json",
+"data/results/pb1r_check.json",
+"data/results/power_dock_check.json",
+"data/results/route_CB1D.json",
+"data/results/route_LB1.json",
+"data/results/route_PB1R.json",
+"data/results/sbq_geometry.json",
+"data/results/sch_check.json",
+"data/results/stack_check.json",
+"data/results/system_budget.json",
+"data/results/trigger_check.json",
+"data/results/tx_system.json",
+"data/results/tx_vbus.json",
+"data/results/wiring_audit.json",
+"scripts/publish_data.py",
+"work/kit_v18/HTA/PF233-HTA-B_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-B_Mask.gbr",
+"work/kit_v18/HTA/PF233-HTA-Edge_Cuts.gbr",
+"work/kit_v18/HTA/PF233-HTA-F_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-F_Mask.gbr",
+"work/kit_v18/HTA/PF233-HTA-In1_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-In2_Cu.gbr",
+"work/kit_v18/HTA/PF233-HTA-NPTH.drl",
+"work/kit_v18/HTA/PF233-HTA-PTH.drl",
+"work/kit_v18/HTA/PF233-HTA_BOM.csv",
+"work/kit_v18/HTA/PF233-HTA_preview.png",
+"work/kit_v20/route_CB1D.json",
+"work/kit_v20/route_LB1.json",
+"work/kit_v20/route_PB1R.json",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-B_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-B_Mask.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-F_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-F_Mask.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In1_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In2_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In3_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-In4_Cu.gbr",
+"work/kit_v22/GERBER_CB1D_v2/PF233-CB1D-v2-PTH.drl",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-B_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-B_Mask.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-F_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-F_Mask.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-In1_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-In2_Cu.gbr",
+"work/kit_v22/GERBER_LB1_v2/PF233-LB1-v2-PTH.drl",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-B_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-B_Mask.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Mask.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Paste.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-F_Silkscreen.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-In1_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-In2_Cu.gbr",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-NPTH.drl",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-PTH.drl",
+"work/kit_v22/GERBER_PB1R/PF233-PB1R-job.gbrjob",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-B_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-B_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-F_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-F_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-F_Paste.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-In1_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-In2_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-NPTH.drl",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-PTH.drl",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-B_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-B_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-F_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-F_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-In1_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-In2_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-NPTH.drl",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-PTH.drl",
+"work/kit_v22/GERBER_TXJ1/TXJ1-B_Cu.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-B_Mask.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-F_Cu.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-F_Mask.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-PTH.drl",
+"work/kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb",
+"work/kit_v22/KICAD/PF233-LB1_routed.kicad_pcb",
+"work/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb",
+"work/kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb",
+"work/kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb",
+"work/kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb",
+"work/kit_v22/SCH/PF233-AB1A.kicad_sch",
+"work/kit_v22/SCH/PF233-AB1B.kicad_sch",
+"work/kit_v22/SCH/PF233-CB1D.kicad_sch",
+"work/kit_v22/SCH/PF233-HB1.kicad_sch",
+"work/kit_v22/SCH/PF233-HB2.kicad_sch",
+"work/kit_v22/SCH/PF233-LB1.kicad_sch",
+"work/kit_v22/SCH/PF233-PB1R.kicad_sch",
+"work/kit_v22/SCH/PF233-PM1.kicad_sch",
+"work/kit_v22/SCH/PF233-PM2.kicad_sch",
+"work/kit_v22/SYSTEM_STRESS_MARGINS.csv",
+"work/kit_v22/drc_CB1D.json",
+"work/kit_v22/drc_LB1.json",
+"work/kit_v22/drc_PB1R.json",
+"work/kit_v22/fine_check.json",
+"work/kit_v22/gerber_hv_CB1D.json",
+"work/kit_v22/gerber_plane_PB1R.json",
+"work/kit_v22/head_crosscheck.json",
+"work/kit_v22/kicad_drc_CB1D.json",
+"work/kit_v22/kicad_drc_LB1.json",
+"work/kit_v22/kicad_drc_PB1R.json",
+"work/kit_v22/kicad_drc_SB1R-QA.json",
+"work/kit_v22/kicad_drc_SB1R-QB.json",
+"work/kit_v22/kicad_drc_TXJ1.json",
+"work/kit_v22/pb1r_check.json",
+"work/kit_v22/sbq_geometry.json",
+"work/kit_v22/sch_check.json",
+"work/kit_v22/stack_check.json",
+"work/kit_v22/system_budget.json",
+"work/kit_v22/trigger_check.json",
+"work/kit_v22/tx_system.json",
+"work/kit_v22/wiring_audit.json",
+"work/kit_v23/TX_ONTIME_LUT.csv",
+"work/kit_v23/power_dock_check.json",
+"work/kit_v23/tx_vbus.json",
+"work/kit_v6/PB1R/PF233-PB1R.kicad_pcb",
+"work/kit_v6/PB1R/PF233-PB1R.net",
+"work/kit_v6/PB1R/PF233-PB1R_BOM.csv",
+"work/kit_v6/PB1R/PF233-PB1R_pickplace.csv"
+],
+"W": []
+},
+"route-cb1d": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v18/CB1D/pads.json",
+"work/kit_v20/state_CB1D.sha",
+"work/route_fix.py",
+"work/route_run.py",
+"work/router.py"
+],
+"W": [
+"work/kit_v20/route_CB1D.json",
+"work/kit_v20/state_CB1D.pkl"
+]
+},
+"route-lb1": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v18/LB1/pads.json",
+"work/kit_v20/state_LB1.sha",
+"work/route_fix.py",
+"work/route_run.py",
+"work/router.py"
+],
+"W": [
+"work/kit_v20/route_LB1.json",
+"work/kit_v20/state_LB1.pkl"
+]
+},
+"route-pb1r": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v20/state_PB1R.sha",
+"work/kit_v6/PB1R/pads.json",
+"work/route_fix.py",
+"work/route_run.py",
+"work/router.py",
+"work/viafarm.py"
+],
+"W": [
+"work/kit_v20/route_PB1R.json",
+"work/kit_v20/state_PB1R.pkl"
+]
+},
+"sbq-fast": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v15/LOW/paths.pkl",
+"work/kit_v22/sbq_radii.json",
+"work/sbq_damp2.py",
+"work/sbq_export.py",
+"work/sbq_gen2.py",
+"work/sbq_sim.py",
+"work/sim_head1.py"
+],
+"W": [
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-B_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-B_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-F_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-F_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-F_Paste.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-In1_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-In2_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-NPTH.drl",
+"work/kit_v22/GERBER_SB1R_QA/SB1R-QA-PTH.drl",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-B_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-B_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-F_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-F_Mask.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-In1_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-In2_Cu.gbr",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-NPTH.drl",
+"work/kit_v22/GERBER_SB1R_QB/SB1R-QB-PTH.drl",
+"work/kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb",
+"work/kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb",
+"work/kit_v22/SBQ_DAMPING2.png",
+"work/kit_v22/SBQ_LAYERS.png",
+"work/kit_v22/sbq_damping2.json",
+"work/kit_v22/sbq_geometry.json",
+"work/kit_v22/sbq_sim.json"
+]
+},
+"sbq-geom": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v22/sbq_radii.json",
+"work/sbq_gen2.py"
+],
+"W": [
+"work/kit_v22/sbq_geometry.json"
+]
+},
+"sch": {
+"L": [
+"work"
+],
+"R": [
+"work/harness/HARNESS_MASTER_v3.csv",
+"work/kit_v18/CB1D/PF233-CB1D.net",
+"work/kit_v18/LB1/PF233-LB1.net",
+"work/kit_v22/system_budget.json",
+"work/kit_v23/upper_check.json",
+"work/kit_v6/HB1/PF233-HB1.net",
+"work/kit_v6/HB2/PF233-HB2.net",
+"work/kit_v6/PB1R/PF233-PB1R.net",
+"work/kit_v6/PM2/PF233-PM2.net",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/04_PCB_receiver_AB1A/PF233-AB1A.net",
+"work/legacy/PHIFOLD233_FINAL_KIT_v3/05_PCB_receiver_AB1B/PF233-AB1B.net",
+"work/legacy/PHIFOLD233_FINAL_KIT_v4/03_POWER_BOARD_PM1/PF233-PM1.net",
+"work/sch_export.py",
+"work/trigger_check.py"
+],
+"W": [
+"work/kit_v22/SCH/PF233-AB1A.kicad_sch",
+"work/kit_v22/SCH/PF233-AB1B.kicad_sch",
+"work/kit_v22/SCH/PF233-CB1D.kicad_sch",
+"work/kit_v22/SCH/PF233-HB1.kicad_sch",
+"work/kit_v22/SCH/PF233-HB2.kicad_sch",
+"work/kit_v22/SCH/PF233-LB1.kicad_sch",
+"work/kit_v22/SCH/PF233-PB1R.kicad_sch",
+"work/kit_v22/SCH/PF233-PM1.kicad_sch",
+"work/kit_v22/SCH/PF233-PM2.kicad_sch",
+"work/kit_v22/sch_check.json",
+"work/kit_v22/trigger_check.json"
+]
+},
+"sim-head1": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v15/LOW/paths.pkl",
+"work/sim_head1.py"
+],
+"W": [
+"work/kit_v20/SIM_TX_STAGE_AND_TARGET.png",
+"work/kit_v20/sim_head1.json"
+]
+},
+"sim-head2": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/sim_head2.py"
+],
+"W": [
+"work/kit_v20/SIM_THERMAL.png",
+"work/kit_v20/sim_thermal.json"
+]
+},
+"sims-rx": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v15/LOW/paths.pkl",
+"work/sim_cage_rx.py",
+"work/sim_head1.py",
+"work/sim_head2.py",
+"work/sim_quadbearing.py",
+"work/sim_tanr.py"
+],
+"W": [
+"work/kit_v21/SIM_CAGE_RX.png",
+"work/kit_v21/sim_cage_rx.json",
+"work/kit_v21/sim_quadbearing.json",
+"work/kit_v21/sim_tanr.json"
+]
+},
+"tx": {
+"L": [
+"work"
+],
+"R": [
+"work/tx_system.py"
+],
+"W": [
+"work/kit_v22/GERBER_TXJ1/TXJ1-B_Cu.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-B_Mask.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-Edge_Cuts.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-F_Cu.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-F_Mask.gbr",
+"work/kit_v22/GERBER_TXJ1/TXJ1-PTH.drl",
+"work/kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb",
+"work/kit_v22/TXJ1_CRADLE_v1.stl",
+"work/kit_v22/TX_LEAD_ROUTING.png",
+"work/kit_v22/TX_LEAD_TABLE.csv",
+"work/kit_v22/TX_SYSTEM_SCHEMATIC.png",
+"work/kit_v22/tx_system.json"
+]
+},
+"tx-vbus": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v20/sim_head1.json",
+"work/tx_vbus_sweep.py"
+],
+"W": [
+"work/kit_v23/TX_ONTIME_LUT.csv",
+"work/kit_v23/TX_VBUS_SWEEP.png",
+"work/kit_v23/tx_vbus.json"
+]
+},
+"upper": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/kit_v15/LOW/paths.pkl",
+"work/kit_v23/power_dock_check.json",
+"work/shaft_calc_v20.py",
+"work/upper_check.py",
+"work/upper_figure.py",
+"work/upper_v21.py"
+],
+"W": [
+"work/kit_v19/shaft_calc_v20.json",
+"work/kit_v23/UPPER/ARMREST_TUBE_CFRP_pos1.stl",
+"work/kit_v23/UPPER/TUBE_A_CFRP.stl",
+"work/kit_v23/UPPER/TUBE_B_CFRP_collapsed.stl",
+"work/kit_v23/UPPER/TUBE_B_CFRP_extended.stl",
+"work/kit_v23/UPPER/U1_TOP_HOUSING.stl",
+"work/kit_v23/UPPER/U2_GRIP.stl",
+"work/kit_v23/UPPER/U3_BOTTOM_HOUSING.stl",
+"work/kit_v23/UPPER/U4_TRIGGER.stl",
+"work/kit_v23/UPPER/U5_ARMREST_CUP.stl",
+"work/kit_v23/UPPER/U6_BATTERY_DOCK.stl",
+"work/kit_v23/UPPER/U7_BATTERY_PACK_SHELL.stl",
+"work/kit_v23/UPPER/U8_CORD_ANCHOR.stl",
+"work/kit_v23/UPPER/U8_SEPTUM_collapsed.stl",
+"work/kit_v23/UPPER/U8_SEPTUM_extended.stl",
+"work/kit_v23/UPPER/U9_CAM_COLLAR.stl",
+"work/kit_v23/UPPER/UPPER_ASSEMBLY_collapsed.stl",
+"work/kit_v23/UPPER/UPPER_ASSEMBLY_extended.stl",
+"work/kit_v23/UPPER/upper_v21_report.json",
+"work/kit_v23/UPPER_ASSEMBLY_v1.png",
+"work/kit_v23/upper_check.json"
+]
+},
+"v5": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/hub_v22.py",
+"work/kit_v11/PRINT/report.json",
+"work/kit_v15/PRINT/report.json",
+"work/parts_v22.py"
+],
+"W": [
+"work/kit_v22/ANALOG_TRAY_v5.stl",
+"work/kit_v22/ROOF_PLATE_v5.stl",
+"work/kit_v22/SEPTUM_FRAME_v5.stl",
+"work/kit_v22/SET/02_CORE_PCB_CYLINDER/CORE_CYLINDER_v5_integrated.stl",
+"work/kit_v22/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv",
+"work/kit_v22/SET/02_CORE_PCB_CYLINDER/hub_v2_report.json",
+"work/kit_v22/SPINE_COMB_v5.stl",
+"work/kit_v22/parts_report.json"
+]
+},
+"yoke": {
+"L": [
+"scripts/tracehook",
+"work"
+],
+"R": [
+"work/cap_hood_v16.py",
+"work/yoke_v20.py"
+],
+"W": [
+"work/kit_v19/YOKE/BUSHING_IN_TUBE_A.stl",
+"work/kit_v19/YOKE/BUSHING_ON_TUBE_B.stl",
+"work/kit_v19/YOKE/HEEL_SADDLE_TOWER.stl",
+"work/kit_v19/YOKE/HINGE_ARM.stl",
+"work/kit_v19/YOKE/TELESCOPE_LOCK_COLLAR.stl",
+"work/kit_v19/YOKE/UMBILICAL_BRIDGE.stl",
+"work/kit_v19/YOKE/UMBILICAL_BRIDGE_LID.stl",
+"work/kit_v19/YOKE/yoke_report.json"
+]
+},
+"yoke-check": {
+"L": [
+"work",
+"work/kit_v19/SPINE",
+"work/kit_v19/YOKE"
+],
+"R": [
+"work/kit_v18/PARTS/LOTUS_HOOD_CARRIER_v3_butted.stl",
+"work/kit_v19/PARTS/HEAD_SKIRT.stl",
+"work/kit_v19/YOKE/BUSHING_IN_TUBE_A.stl",
+"work/kit_v19/YOKE/BUSHING_ON_TUBE_B.stl",
+"work/kit_v19/YOKE/HEEL_SADDLE_TOWER.stl",
+"work/kit_v19/YOKE/HINGE_ARM.stl",
+"work/kit_v19/YOKE/TELESCOPE_LOCK_COLLAR.stl",
+"work/kit_v19/YOKE/UMBILICAL_BRIDGE.stl",
+"work/kit_v19/YOKE/UMBILICAL_BRIDGE_LID.stl",
+"work/kit_v22/SET/02_CORE_PCB_CYLINDER/CORE_CYLINDER_v5_integrated.stl",
+"work/yoke_check.py"
+],
+"W": [
+"work/kit_v19/yoke_check.json"
+]
+}
+}
+}
