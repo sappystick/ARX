@@ -7,6 +7,7 @@ Noise after release: Rc, Rd, RS thermal noise + OPA2211 voltage noise, shaped by
 CAAF 2.2 nF), integrated through a boxcar gate of width Tg = 0.5 tc (the gate rule of sim_head1.py).
 Unverified part values (docs/ASSUMPTIONS.md 21): Ron 8 ohm, Cin 15 pF (BAV199 + switch off-capacitance + op-amp input), BAV199 off for |v| < 0.5 V."""
 import numpy as np, json, math
+import os
 from scipy.integrate import solve_ivp
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 src = open('sim_head1.py').read().split("# ======================= S2")[0]; ns = {}; exec(src, ns); wf = ns["wf"]
@@ -23,6 +24,16 @@ def first_clean(e_pk, Rd, Cs, t_b, Cin=CIN, Ron=RON):
     tt = np.arange(0, TEND, 5e-9); s = solve_ivp(f, (0, TEND), [0, 0, 0], t_eval=tt, method="Radau", rtol=1e-8, atol=[1e-12, 1e-12, 1e-12], max_step=2e-8)
     vin = s.y[2]; after = s.t >= t_b; bad = np.where(after & (np.abs(vin) > THR))[0]
     return float(max(t_b, s.t[bad[-1]] if len(bad) else 0.0) * 1e6), float(np.max(np.abs(vin[after])) if after.any() else 0.0)
+
+def _fc(a):
+    return first_clean(*a)
+
+def pmap(fn, items):
+    """order-preserving parallel map over the cores (ARX_INNER_JOBS, default all); serial if 1"""
+    n = int(os.environ.get("ARX_INNER_JOBS", os.cpu_count() or 1))
+    if n <= 1 or len(items) < 2: return [fn(x) for x in items]
+    import multiprocessing as mp
+    with mp.get_context("fork").Pool(min(n, len(items))) as pool: return pool.map(fn, items, chunksize=1)
 
 def gate_noise(Rd, Cs, tc, Cin=CIN):
     """equivalent white density (V/rtHz) at the amplifier input for a boxcar gate of width 0.5 tc, switch open"""
@@ -55,12 +66,14 @@ if __name__ == "__main__":
     LEAKS = (("A aligned 0.01 mV", 1e-5), ("1 mV", 1e-3), (f"worst modeled {worst*1e3:.0f} mV", worst))
     RDS = (None, 2200, 1000, 680, 470, 330); TBS = (0.0, 4e-6, 5e-6, 6e-6, 7e-6); CSS = (50e-12, 100e-12, 200e-12)
     out = dict(assumptions=dict(L_uH=176, Rc_ohm=Rc, RS_ohm=RS, Ron_ohm_unverified=RON, Cin_pF_unverified=CIN * 1e12, en_amp_nV=EN_AMP * 1e9, threshold_nV=THR * 1e9, tx_case="100 nF C0G/film, 20 A"), first_clean_gate_us={}, peak_after_release_uV={})
+    cases = [(epk, Rd, Cs, tb) for lab, epk in LEAKS for Cs in CSS for tb in TBS for Rd in RDS]          # 270 independent stiff solves: spread over the cores (same results, same order)
+    done = iter(pmap(_fc, cases))
     for lab, epk in LEAKS:
         for Cs in CSS:
             for tb in TBS:
                 key = f"{lab}, Cself {int(Cs*1e12)} pF, blank release {tb*1e6:.0f} us"; row = {}; pk = {}
                 for Rd in RDS:
-                    tf, p = first_clean(epk, Rd, Cs, tb); nm = "no Rd" if Rd is None else f"Rd {Rd}"; row[nm] = round(tf, 2); pk[nm] = round(p * 1e6, 3)
+                    tf, p = next(done); nm = "no Rd" if Rd is None else f"Rd {Rd}"; row[nm] = round(tf, 2); pk[nm] = round(p * 1e6, 3)
                 out["first_clean_gate_us"][key] = row; out["peak_after_release_uV"][key] = pk; print(key, row)
     nz = {}
     for Cs in CSS:
@@ -70,10 +83,10 @@ if __name__ == "__main__":
             nz[f"Cself {int(Cs*1e12)} pF, gate at {tc*1e6:.0f} us"] = row
     out["gate_noise_nV_rtHz"] = nz; print("gate noise", json.dumps(nz, indent=0))
     # sensitivity: input capacitance and switch resistance (worst leak, 100 pF, release 5 us, Rd 470 and none)
-    sens = {}
+    sens = {}; scases = [(worst, Rd, 100e-12, 5e-6, Cin, Ron) for Cin in (5e-12, 15e-12, 30e-12) for Ron in (4.0, 8.0, 20.0) for Rd in (None, 470)]; sdone = iter(pmap(_fc, scases))
     for Cin in (5e-12, 15e-12, 30e-12):
         for Ron in (4.0, 8.0, 20.0):
-            sens[f"Cin {Cin*1e12:.0f} pF, Ron {Ron:.0f} ohm"] = {nm: round(first_clean(worst, Rd, 100e-12, 5e-6, Cin, Ron)[0], 2) for nm, Rd in (("no Rd", None), ("Rd 470", 470))}
+            sens[f"Cin {Cin*1e12:.0f} pF, Ron {Ron:.0f} ohm"] = {nm: round(next(sdone)[0], 2) for nm, Rd in (("no Rd", None), ("Rd 470", 470))}
     out["sensitivity_worst_leak_100pF_release_5us"] = sens; print("sensitivity", sens)
     out["critical_damping_ohm"] = {f"{int(Cs*1e12)} pF": round(0.5 * math.sqrt(L / Cs)) for Cs in CSS}
     json.dump(out, open("kit_v22/sbq_damping2.json", "w"), indent=1)

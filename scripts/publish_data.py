@@ -31,6 +31,7 @@ def norm(b):
 sys.path.insert(0, "src/pcb")
 def same_file(dst, data):
     """Gerber layers: same copper geometry (KiCad's export is not byte-deterministic); everything else: same text apart from the timestamps"""
+    if norm(open(dst, "rb").read()) == norm(data): return True        # identical text apart from timestamps: same geometry, skip the (slow) shapely comparison
     if dst.endswith(".gbr"):
         import tempfile
         from gerber_geom import same_geometry
