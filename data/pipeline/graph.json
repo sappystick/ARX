@@ -4,7 +4,6 @@
 "audit-system": {
 "L": [
 "scripts/tracehook",
-"work",
 "work/legacy",
 "work/legacy/PHIFOLD233_FINAL_KIT_v3",
 "work/legacy/PHIFOLD233_FINAL_KIT_v3/02_REFERENCE_and_assembly",
@@ -83,8 +82,7 @@
 },
 "baseplate": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/cap_hood_v16.py",
@@ -103,9 +101,7 @@
 ]
 },
 "check": {
-"L": [
-"work"
-],
+"L": [],
 "R": [
 "work/check_v22.py",
 "work/kit_v16/PARTS/BASE_PLATE_RX_CASSETTE_v3.stl",
@@ -122,8 +118,7 @@
 },
 "check-pb1r": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v18/CB1D/PF233-CB1D.net",
@@ -147,6 +142,7 @@
 "data/gerber/CB1D_B2",
 "data/gerber/PB1R",
 "data/gerber/TXJ1_v2",
+"scripts",
 "scripts/tracehook",
 "src/pcb",
 "tests",
@@ -286,6 +282,7 @@
 "docs/UNVERIFIED.md",
 "docs/design/FAB_RULES.md",
 "scripts/manifest.py",
+"scripts/publish_data.py",
 "scripts/release_tx.py",
 "scripts/signoff_status.py",
 "tests/release_signoff_controls.py",
@@ -405,15 +402,13 @@
 "work/kit_v6/PB1R/PF233-PB1R_pickplace.csv"
 ],
 "W": [
-"scripts/publish_data.py",
 "work/kit_v22/controls_3_9.json",
 "work/kit_v22/wiring_audit.json"
 ]
 },
 "drc-cb1d": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/drc.py",
@@ -426,8 +421,7 @@
 },
 "drc-lb1": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/drc.py",
@@ -440,8 +434,7 @@
 },
 "drc-pb1r": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/drc.py",
@@ -458,9 +451,7 @@
 "W": []
 },
 "gerber-cb1d": {
-"L": [
-"work"
-],
+"L": [],
 "R": [
 "work/gerber_hv_check.py",
 "work/gerber_out.py",
@@ -482,9 +473,7 @@
 ]
 },
 "gerber-lb1": {
-"L": [
-"work"
-],
+"L": [],
 "R": [
 "work/gerber_out.py",
 "work/kit_v18/LB1/pads.json",
@@ -503,10 +492,8 @@
 },
 "gerber-pb1r": {
 "L": [
-".",
 "scripts/tracehook",
-"src/pcb",
-"work"
+"src/pcb"
 ],
 "R": [
 "src/pcb/kicad_gerber.py",
@@ -534,8 +521,7 @@
 },
 "head-audit": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "data/gerber/HTA/PF233-HTA-NPTH.drl",
@@ -588,8 +574,7 @@
 },
 "hood": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/hood_axi.py",
@@ -609,9 +594,7 @@
 ]
 },
 "kicad-cb1d": {
-"L": [
-"work"
-],
+"L": [],
 "R": [
 "work/kicad_inject.py",
 "work/kit_v18/CB1D/PF233-CB1D.kicad_pcb",
@@ -623,7 +606,6 @@
 },
 "kicad-drc": {
 "L": [
-".",
 "src/pcb"
 ],
 "R": [
@@ -645,9 +627,7 @@
 ]
 },
 "kicad-lb1": {
-"L": [
-"work"
-],
+"L": [],
 "R": [
 "work/kicad_inject.py",
 "work/kit_v18/LB1/PF233-LB1.kicad_pcb",
@@ -658,9 +638,7 @@
 ]
 },
 "kicad-pb1r": {
-"L": [
-"work"
-],
+"L": [],
 "R": [
 "work/kit_v20/route_PB1R.json",
 "work/kit_v6/PB1R/PF233-PB1R.kicad_pcb",
@@ -672,8 +650,7 @@
 },
 "pcb-cb1d": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/cb1d_export.py",
@@ -692,8 +669,7 @@
 },
 "pcb-hb1": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/pw_design.py",
@@ -711,8 +687,7 @@
 },
 "pcb-hb2": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/pw_design.py",
@@ -730,8 +705,7 @@
 },
 "pcb-hta": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/hta_gerber.py",
@@ -754,8 +728,7 @@
 },
 "pcb-lb1": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv",
@@ -775,8 +748,7 @@
 },
 "pcb-pb1r": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/pw_design.py",
@@ -795,8 +767,7 @@
 },
 "pcb-pm2": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v18/CB1D/PF233-CB1D.net",
@@ -1071,8 +1042,7 @@
 },
 "route-cb1d": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v18/CB1D/pads.json",
@@ -1088,8 +1058,7 @@
 },
 "route-lb1": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v18/LB1/pads.json",
@@ -1105,8 +1074,7 @@
 },
 "route-pb1r": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v20/state_PB1R.sha",
@@ -1123,8 +1091,7 @@
 },
 "sbq-fast": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v15/LOW/paths.pkl",
@@ -1166,8 +1133,7 @@
 },
 "sbq-geom": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v22/sbq_radii.json",
@@ -1178,9 +1144,7 @@
 ]
 },
 "sch": {
-"L": [
-"work"
-],
+"L": [],
 "R": [
 "work/harness/HARNESS_MASTER_v3.csv",
 "work/kit_v18/CB1D/PF233-CB1D.net",
@@ -1213,8 +1177,7 @@
 },
 "sim-head1": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v15/LOW/paths.pkl",
@@ -1227,8 +1190,7 @@
 },
 "sim-head2": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/sim_head2.py"
@@ -1240,8 +1202,7 @@
 },
 "sims-rx": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v15/LOW/paths.pkl",
@@ -1258,10 +1219,72 @@
 "work/kit_v21/sim_tanr.json"
 ]
 },
-"tx": {
+"status": {
 "L": [
-"work"
+"scripts",
+"tests",
+"work/kit_v18/HTA",
+"work/kit_v22/GERBER_CB1D_v2",
+"work/kit_v22/GERBER_LB1_v2",
+"work/kit_v22/GERBER_PB1R",
+"work/kit_v22/GERBER_SB1R_QA",
+"work/kit_v22/GERBER_SB1R_QB",
+"work/kit_v22/GERBER_TXJ1"
 ],
+"R": [
+"data/pipeline/graph.json",
+"docs/UNVERIFIED.md",
+"scripts/pipeline.py",
+"scripts/signoff_status.py",
+"tests/regress.py",
+"work/kit_v18/PARTS/hood_v3_report.json",
+"work/kit_v19/yoke_check.json",
+"work/kit_v20/route_CB1D.json",
+"work/kit_v20/route_LB1.json",
+"work/kit_v20/route_PB1R.json",
+"work/kit_v20/sim_head1.json",
+"work/kit_v21/sim_quadbearing.json",
+"work/kit_v21/sim_tanr.json",
+"work/kit_v22/check_v22.json",
+"work/kit_v22/controls_3_9.json",
+"work/kit_v22/drc_CB1D.json",
+"work/kit_v22/drc_LB1.json",
+"work/kit_v22/drc_PB1R.json",
+"work/kit_v22/fine_check.json",
+"work/kit_v22/gerber_hv_CB1D.json",
+"work/kit_v22/gerber_plane_PB1R.json",
+"work/kit_v22/head_crosscheck.json",
+"work/kit_v22/hood_axi.json",
+"work/kit_v22/interference_audit.json",
+"work/kit_v22/kicad_drc_CB1D.json",
+"work/kit_v22/kicad_drc_LB1.json",
+"work/kit_v22/kicad_drc_PB1R.json",
+"work/kit_v22/kicad_drc_SB1R-QA.json",
+"work/kit_v22/kicad_drc_SB1R-QB.json",
+"work/kit_v22/kicad_drc_TXJ1.json",
+"work/kit_v22/parts_report.json",
+"work/kit_v22/pb1r_check.json",
+"work/kit_v22/sbq_damping2.json",
+"work/kit_v22/sbq_geometry.json",
+"work/kit_v22/sbq_sim.json",
+"work/kit_v22/sch_check.json",
+"work/kit_v22/stack_check.json",
+"work/kit_v22/system_budget.json",
+"work/kit_v22/trigger_check.json",
+"work/kit_v22/tx_system.json",
+"work/kit_v22/wiring_audit.json",
+"work/kit_v23/power_dock_check.json",
+"work/kit_v23/tx_vbus.json",
+"work/kit_v23/upper_check.json",
+"work/kit_v6/PB1R/PF233-PB1R_BOM.csv"
+],
+"W": [
+"data/results/SIGNOFF_STATUS.json",
+"docs/STATUS.md"
+]
+},
+"tx": {
+"L": [],
 "R": [
 "work/tx_system.py"
 ],
@@ -1282,8 +1305,7 @@
 },
 "tx-vbus": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v20/sim_head1.json",
@@ -1297,8 +1319,7 @@
 },
 "upper": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/kit_v15/LOW/paths.pkl",
@@ -1334,8 +1355,7 @@
 },
 "v5": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/hub_v22.py",
@@ -1356,8 +1376,7 @@
 },
 "yoke": {
 "L": [
-"scripts/tracehook",
-"work"
+"scripts/tracehook"
 ],
 "R": [
 "work/cap_hood_v16.py",
@@ -1376,7 +1395,6 @@
 },
 "yoke-check": {
 "L": [
-"work",
 "work/kit_v19/SPINE",
 "work/kit_v19/YOKE"
 ],

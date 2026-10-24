@@ -146,7 +146,7 @@ def why_stale(name, cmd, envfp):
         if p not in c["writes"] and p not in IGNORE_READS.get(name, ()) and sha_file(os.path.join(ROOT, p)) != h:
             return f"input changed: {p}"
     for d, h in c["lists"].items():
-        if sha_dir(os.path.join(ROOT, d)) != h:
+        if d not in (".", "work") and sha_dir(os.path.join(ROOT, d)) != h:
             return f"directory listing changed: {d}"
     return None
 
@@ -197,7 +197,7 @@ def run_step(name, cmd, env_extra, envfp):
 
 
 def footprint(rec):
-    d = {"R": sorted(p for p in rec["reads"] if p not in rec["writes"]), "W": sorted(rec["writes"]), "L": sorted(rec["lists"])}
+    d = {"R": sorted(p for p in rec["reads"] if p not in rec["writes"]), "W": sorted(rec["writes"]), "L": sorted(x for x in rec["lists"] if x not in (".", "work"))}   # work/ and the repo root are listed by python's import finder in every step: not a data dependency
     return d
 
 
@@ -207,7 +207,7 @@ def conflicts(a, b):
     if aw & (bw | br) or ar & bw:
         return True
     for lst, other in ((a["L"], b["W"]), (b["L"], a["W"])):
-        if any(os.path.dirname(w) == d or w.startswith(d + "/") for d in lst for w in other):
+        if any(os.path.dirname(w) == d for d in lst for w in other):
             return True
     return False
 
