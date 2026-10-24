@@ -73,8 +73,9 @@ C("each bulk capacitor ground pad has at least 2 GND vias within 3 mm", all(v >=
 rk = pad[("RK1", "1")]; rs1 = pad[("RS1S", "1")]; rs2 = pad[("RS1S", "2")]
 pk = path((rk["x"], rk["y"]), (rs1["x"], rs1["y"]))
 if pk:
-    Lk, sg = pk; Rk, _ = rl(sg); err = Rk * 20.0 / (0.010 * 20.0) * 100
-    C("shunt Kelvin: the ISENSE1 tap (RK1.1) joins the SRC1 copper within 3 mm of the shunt pad, or the trace drop between tap and pad is under 5 % of the shunt voltage", Lk <= 3.0 or err < 5.0, f"{Lk:.1f} mm, drop {Rk * 20 * 1e3:.0f} mV = {err:.1f} % of 200 mV", "<= 3 mm or < 5 %", "RK1 100 ohm into the comparator: the tap carries almost no current; the error is the 20 A trace drop between the tap point and the shunt pad")
+    Lk, sg = pk; wide = [(L, w) for L, w in sg if w >= 1.0]          # only the wide (power) segments carry the 20 A; a narrow sense track carries microamps
+    Rk, _ = rl(wide) if wide else (0.0, 0.0); err = Rk * 20.0 / (0.010 * 20.0) * 100
+    C("shunt Kelvin: the ISENSE1 tap (RK1.1) reaches the shunt pad over a sense track, so the 20 A power copper between tap and pad is under 5 % of the shunt voltage", err < 5.0, f"sense path {Lk:.1f} mm of which {sum(L for L, _ in wide):.1f} mm power copper, drop {Rk * 20 * 1e3:.1f} mV = {err:.1f} % of 200 mV", "< 5 %", "RK1 100 ohm into the comparator: the tap carries almost no current")
 else: C("shunt Kelvin: RK1.1 is connected to the shunt pad by SRC1 copper", False, None, "connected")
 u3g = pad[("U3", "4")]; dg = math.dist((rs2["x"], rs2["y"]), (u3g["x"], u3g["y"]))
 Rs_h = 0.5e-3 / (1 - (1.5 / 1.8) ** 2) * 1.0      # hatched 1 oz plane: 0.5 mohm/sq / copper coverage (0.3 mm lines, 1.5 mm gaps)

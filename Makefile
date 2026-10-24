@@ -124,7 +124,7 @@ kicad-cb1d:
 
 # PB1R (rectangular neck-module board): route, independent DRC, KiCad file, KiCad-written Gerbers/drill with the HV plane carve-out
 route-pb1r: pcb-pb1r
-	cd $(W) && $(PY) route_run.py PB1R && $(PY) route_fix.py PB1R kit_v20/route_PB1R.json
+	cd $(W) && $(PY) route_run.py PB1R && $(PY) route_fix.py PB1R kit_v20/route_PB1R.json && $(PY) viafarm.py PB1R kit_v20/route_PB1R.json
 
 drc-pb1r:
 	cd $(W) && $(PY) drc.py PB1R kit_v20/route_PB1R.json 0 DRAIN1,CLAMP1
