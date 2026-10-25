@@ -167,5 +167,12 @@ if d:
     _w=[c for c in d["checks"] if c["check"].startswith("NPM cable window")]
     chk("PB1R JL1 and JP leave the board within 10 mm of the NPM cable window",bool(_w) and _w[0]["result"]=="PASS",str(_w[0]["value"]) if _w else "missing")
 else: skip("PB1R NPM window")
+_bd="docs/design/BENCH_FIRST_ARTICLE_TX.md"
+if os.path.exists(_bd):
+    _t=open(_bd).read(); _rows=[l for l in _t.splitlines() if re.match(r"^\| (\d+\.\d+) \|",l)]
+    _bad=[l[:12] for l in _rows if not l.rstrip().endswith("NOT RUN |")]
+    _data=[f for f in __import__("glob").glob("data/bench/**/*",recursive=True) if os.path.isfile(f)]
+    chk("bench procedure written, every item marked NOT RUN, and data/bench holds no files while U-BENCH is open (no bench claim without bench data)",len(_rows)>=35 and not _bad and (not _data or "U-BENCH" not in UNV),f"{len(_rows)} items, not NOT RUN: {_bad}, bench files {len(_data)}")
+else: chk("bench procedure present (docs/design/BENCH_FIRST_ARTICLE_TX.md)",False,"missing")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)
