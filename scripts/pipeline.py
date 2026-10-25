@@ -351,7 +351,9 @@ def main():
               steps={n: dict(state=state.get(n), seconds=round(secs.get(n, 0), 1)) for n in order})
     os.makedirs(PIPE, exist_ok=True)
     json.dump(tm, open(os.path.join(PIPE, "timing.json"), "w"), indent=1)
-    if "--update-graph" in a and not failed:
+    # the graph is learned from the traces of the steps that ran; a failure of the open-ended reporting steps (status reads the regress, which fails while the graph is missing
+    # steps: the catch-22 hit when Step 4 added eight steps) must not block writing it
+    if "--update-graph" in a and not [f for f in failed if f not in OPEN_ENDED]:
         g = {n: trace_fp[n] for n in order if trace_fp.get(n)}
         os.makedirs(os.path.dirname(GRAPH), exist_ok=True)
         old = load_graph()
