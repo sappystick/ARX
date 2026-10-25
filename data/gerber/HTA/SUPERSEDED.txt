@@ -1,0 +1,1 @@
+Superseded 2026-10-25 by HTA_v2 (Step 4). DEFECTIVE: the In2 lead A ran along y = +0.9 mm at both ends and stopped 0.35 mm short of the outer via at (43, 0): the timing coil was open. Found when HTA entered the KiCad DRC (1 unconnected item). Do not fabricate this set.
