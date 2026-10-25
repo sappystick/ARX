@@ -1,15 +1,15 @@
 # START HERE - Arx / PHI-FOLD 233 (attach this file to a new Claude Code thread; generated, do not edit by hand)
 
 ## A. What the owner types (one line; nothing else is needed)
-`Read the attached START_HERE.md and follow it exactly. MODE: A.`   (or `MODE: B.` to run Step 6 straight through; A pauses for "go" after each step)
+`Read the attached START_HERE.md and follow it exactly. MODE: A.`   (MODE does not matter any more: all steps are done)
 
 ## B. Instructions to Claude (follow in order, do not ask the owner to repeat anything in this file)
 1. Get the work. It is on branch `claude/hopeful-bell-wms3xo` of sappystick/arx and is NOT merged into the default branch:
    `git fetch origin claude/hopeful-bell-wms3xo && git checkout claude/hopeful-bell-wms3xo` (if this session designates a different branch, create it from origin/claude/hopeful-bell-wms3xo, say so in your first message, never push the default branch). The repo copy of this material is docs/HANDOFF_NEXT_THREAD.md; if it is missing you are on the wrong branch. The progress log (section 11) names the latest step.
 2. Run `scripts/bootstrap.sh | tail -1`, then verify the state with the commands in section 0 below (counts only). If anything differs, stop and report the difference.
 3. Everything below (standing rules, default decisions, contingencies) is pre-approved. Ask a question only if a decision cannot be undone and has no default.
-4. MODE from the owner's line: A = after each numbered step stop and wait for "go". B = run Step 6, stop only after it or on (a) a regression you cannot fix, (b) a conflict with a CLAUDE.md rule, (c) an irreversible decision with no default. No mode given = A.
-5. Order: Steps 3.95, 5 and 4 are done; next is Step 6 only (bench procedure, final sign-off, release r2, regroup summary). Resume where the progress log (section 11) says.
+4. MODE from the owner's line: A = after each numbered step stop and wait for "go". B = nothing is left to run or on (a) a regression you cannot fix, (b) a conflict with a CLAUDE.md rule, (c) an irreversible decision with no default. No mode given = A.
+5. Order: Steps 3.95, 5, 4 and 6 are done (release r2 cut). The transmit-region sign-off is complete as far as tools can take it; what remains is hardware (docs/design/BENCH_FIRST_ARTICLE_TX.md), the open evidence rows, and the owner's Steps 7-13 program. Resume where the progress log (section 11) says.
 6. Do NOT start system simulation, firmware, audio, LED, improvement review or epoxy-chamber work (Steps 7-13): the owner pastes that program separately from prompts/HANDOFF_PROMPTS.md (prompt 2).
 7. Reporting: per step one paragraph + one table (what changed, what passed with counts, what is unproven, strict regress count, sign-off counts). Quiet output. One final commit per step (source + data + docs + progress-log row), push only to the working branch, no PR, no force-push. Commit trailers: the Co-Authored-By and Claude-Session lines the current session's harness gives.
 8. Claims: everything is MODELED or tool-checked; nothing is built or measured. Never write proven, ready for fabrication, record, will detect.
@@ -35,7 +35,7 @@ Read this first, then CLAUDE.md's read-first list. It tells you where the work s
 cd /home/user/ARX            # branch claude/hopeful-bell-wms3xo, push only here, never force, never open a PR unless asked
 git status --short | wc -l; git log -3 --format='%h %s'          # expect 0 and the Step 3.95 commit (or later)
 scripts/bootstrap.sh | tail -1                                    # "environment OK" (also the SessionStart hook)
-python3 tests/regress.py | tail -1                                # strict: expect FAILS 0 SKIPS 0, 62 PASS
+python3 tests/regress.py | tail -1                                # strict: expect FAILS 0 SKIPS 0, 63 PASS
 python3 scripts/publish_data.py --check | head -1                 # expect 0 stale file(s)
 ```
 If any of these differs from the numbers above, stop and report the difference before doing anything else. Then read docs/STATUS.md (generated sign-off table), docs/UNVERIFIED.md (open evidence), docs/OPEN_ITEMS.md.
@@ -57,12 +57,12 @@ If any of these differs from the numbers above, stop and report the difference b
 
 | Item | State |
 |---|---|
-| Strict `tests/regress.py` | 62 PASS, 0 FAIL, 0 SKIP |
+| Strict `tests/regress.py` | 63 PASS, 0 FAIL, 0 SKIP |
 | `make signoff` (docs/STATUS.md) | 55 PASS, 0 FAIL, 0 SKIP, 8 UNVERIFIED (after Step 4). `make signoff` is now incremental and parallel (section 13): no-change run 1 s, one-script edit about 23 s, forced full run 11 min (was 32.5 min). Before Step 3.95: cold run in a fresh clone reproduced every committed data file. |
 | Controls (`tests/release_signoff_controls.py`) | 12/12: release-tx refusals (existing revision, sign-off FAIL, stale data), evidence rule (file and datasheet-section), vanishing rows, idempotent output; the vanish/evidence controls run on fixture folders (Step 5), so closing production IDs does not silence them |
 | Boards, KiCad 9.0.9 DRC with HV negative control | CB1D (61 parts, 44/44 nets), LB1, PB1R (15 nets + planes), TXJ1, SB1R-QA, SB1R-QB: 0 errors, 0 unconnected |
 | Boards | all nine boards (CB1D, LB1, PB1R, PM2, HB2, TXJ1, SB1R-QA/QB, HTA) are in the KiCad 9 DRC flow with 0 errors / 0 unconnected; PM2/HB2/HTA were added in Step 4 |
-| Release package | `releases/TX_r1` (69 files, hash manifest, per-board CHECKS.md); `stl/MANIFEST.csv` 60 files, 0 changed |
+| Release package | `releases/TX_r2` (107 files, hash manifest verified, per-board CHECKS.md; PB1R, CB1D, TXJ1, PM2, HB2); `TX_r1` is SUPERSEDED (plane copper in the notch). `stl/MANIFEST.csv` 60 files, 0 changed |
 | Open evidence (docs/UNVERIFIED.md, 8 rows) | U-DS-TXDRIVE, U-DS-OKI, U-DS-PACK, U-DS-BAV199, U-DS-HVTERM, U-FAB-DRC, U-CAM-VIEW, U-BENCH (Step 4 closed U-ROUTE-PM2, U-ROUTE-HB2, U-KICAD-HTA) |
 
 Key MODELED numbers (assumptions in docs/ASSUMPTIONS.md, so you do not re-derive them):
@@ -212,6 +212,7 @@ First message: confirm the recommended order 5 -> 4 -> 6 (datasheets and vendor 
 | 2026-10-24 | 3.95: incremental parallel sign-off pipeline | 63140fe | 50 | 38/0/0/17 | forced full run 680 s (was 1953 s), no-change 1 s; see docs/PERFORMANCE.md |
 | 2026-10-25 | 5: datasheets + vendor sheets (branch claude/hopeful-bell-wms3xo, started from 63140fe on claude/nice-turing-8i4gkt) | (this step's final commit) | 55 | 44/0/0/19 | vendor floor tightened (0.16 clearance, 0.18 PTH ring, 0.26 drill-copper, 0.41 drill-drill, all severity error); PB1R bank 9 x 100 uF hybrid (re-placed, PB1R_v2), CB1D_B3, LB1_v5; SMCJ30A, Si4401FDY, SF-1206S500-2, DRV5023BI; cans are eddy targets (OPEN_ITEMS 34); controls on fixtures; cold bootstrap closed; Gerber planes were in the notch since r1 (fixed, read back) |
 | 2026-10-25 | 4: PM2/HB2 routed, HTA in the KiCad flow, NPM window, JTR wording | (this step's final commit) | 62 | 55/0/0/8 | HTA Gerbers were an open coil (fixed, HTA_v2); pipeline graph re-learned (50 steps; graph now written when only reporting steps fail); controls/status cycle broken with `signoff_status.py --ignore-controls --no-regress` once |
+| 2026-10-25 | 6: bench procedure, wording fixes, cold sign-off, release r2 | (this step's final commit) | 63 | 55/0/0/8 | cold run (50 steps, 729 s, no GRAPH STALE) reproduced every committed data file; releases/TX_r2 written; bench doc has 37 items, all NOT RUN (U-BENCH open) |
 
 ## 12. Prompts that go with this file
 

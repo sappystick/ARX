@@ -1,0 +1,17 @@
+{
+ "board": "TXJ1.kicad_pcb",
+ "board_key": "TXJ1",
+ "kicad": "9.0.9",
+ "zones_filled": true,
+ "violations": 19,
+ "unconnected": 0,
+ "errors": {},
+ "warnings": {
+  "nonmirrored_text_on_back_layer": 1,
+  "silk_over_copper": 2
+ },
+ "lib_footprint_warnings": 16,
+ "control_hv50mm_clearance_violations": 80,
+ "rules_loaded": true,
+ "examples": []
+}

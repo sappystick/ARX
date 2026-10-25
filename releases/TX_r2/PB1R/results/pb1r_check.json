@@ -1,0 +1,229 @@
+{
+ "checks": [
+  {
+   "check": "pulse path: every 20 A segment (JL1.1 to both drains, both sources to the shunt) is connected by routed copper",
+   "result": "PASS",
+   "value": {
+    "DRAIN1 JL1.1 -> Q1A.2": [
+     15.2,
+     1.5
+    ],
+    "DRAIN1 JL1.1 -> Q1B.2": [
+     32.7,
+     1.5
+    ],
+    "SRC1 Q1A.3 -> RS1S.1": [
+     26.8,
+     1.5
+    ],
+    "SRC1 Q1B.3 -> RS1S.1": [
+     14.6,
+     1.5
+    ]
+   },
+   "limit": "all connected",
+   "note": "length mm, min width mm"
+  },
+  {
+   "check": "PB1R pulse-path copper resistance (two FET branches in parallel) under 5 % of the 113 mohm loop budget (mohm)",
+   "result": "PASS",
+   "value": 4.88,
+   "limit": 5.65,
+   "note": "2 oz outer copper, widths as routed"
+  },
+  {
+   "check": "stray-inductance spike at turn-off (L x di/dt, 20 A in 20 ns, gate-drive time assumed) leaves the 650 V FET margin: spike under 30 V (V)",
+   "result": "PASS",
+   "value": 7.5,
+   "limit": 30.0,
+   "note": "stray 7.5 nH (strip over the hatched GND plane, x1.5); Vds peak 466 V at 29.4 V from tx_vbus.json",
+   "extra": {
+    "R_mohm": 4.88,
+    "L_nH": 7.5
+   }
+  },
+  {
+   "check": "shunt ground pad: at least 4 GND vias within 3 mm (pulse 20 A peak, 1.8 A rms; 5 A per via peak at most)",
+   "result": "PASS",
+   "value": 7,
+   "limit": ">= 4",
+   "note": "2.9 A peak and 0.20 A rms per via; via rating from memory, UNVERIFIED"
+  },
+  {
+   "check": "each bulk capacitor ground pad has at least 2 GND vias within 3 mm",
+   "result": "PASS",
+   "value": {
+    "CB1.2": 4,
+    "CB2.2": 4,
+    "CB3.2": 4,
+    "CB4.2": 4,
+    "CB5.2": 4,
+    "CB6.2": 4,
+    "CB7.2": 4,
+    "CB8.2": 4,
+    "CB9.2": 4
+   },
+   "limit": ">= 2",
+   "note": ""
+  },
+  {
+   "check": "shunt Kelvin: the ISENSE1 tap (RK1.1) reaches the shunt pad over a sense track, so the 20 A power copper between tap and pad is under 5 % of the shunt voltage",
+   "result": "PASS",
+   "value": "sense path 5.3 mm of which 0.0 mm power copper, drop 0.0 mV = 0.0 % of 200 mV",
+   "limit": "< 5 %",
+   "note": "RK1 100 ohm into the comparator: the tap carries almost no current"
+  },
+  {
+   "check": "comparator ground reference: the GND-plane drop between the shunt's ground pad and U3 pin 4 (20 A pulse) is under 10 % of the 200 mV shunt signal (mV)",
+   "result": "PASS",
+   "value": 15.5,
+   "limit": 20.0,
+   "note": "distance 9 mm, hatched 1 oz plane about 1.6 mohm/sq over a 20 mm effective width: a one-sided estimate, NOT a field solution"
+  },
+  {
+   "check": "parts on the flyback nets are 630 V or better (BOM text): exceptions are listed, not hidden",
+   "result": "WARN",
+   "value": {
+    "CL1A": [
+     "100n 630V",
+     630
+    ],
+    "CL1B": [
+     "100n 630V",
+     630
+    ],
+    "DC1": [
+     "ES3J 600V 3A",
+     600
+    ],
+    "JL1": [
+     "Coil outer band: DRAIN, VBUS",
+     null
+    ],
+    "Q1A": [
+     "650V SJ 95mR",
+     650
+    ],
+    "Q1B": [
+     "650V SJ 95mR",
+     650
+    ],
+    "RCL1": [
+     "external 5k 10W (lid bank)",
+     null
+    ]
+   },
+   "limit": ">= 630 V",
+   "note": "below 630: ['DC1']; no voltage in the BOM text: ['JL1', 'RCL1']; stress: capacitor peak 435 V, Vds 462 V (UNVERIFIED ratings, Step 5)"
+  },
+  {
+   "check": "PB1R JC (umbilical) pin names equal CB1D JPB pin names",
+   "result": "PASS",
+   "value": "8 pins",
+   "limit": "identical",
+   "note": "{}"
+  },
+  {
+   "check": "PB1R JP (power in): VBUS on pins 1-2 and GND on pins 3-4; PM2 JP supplies VBUS and GND on the same count",
+   "result": "PASS",
+   "value": {
+    "PB1R": {
+     "3": "GND",
+     "4": "GND",
+     "1": "VBUS",
+     "2": "VBUS"
+    },
+    "PM2": {
+     "3": "GND",
+     "4": "GND",
+     "1": "VBUS",
+     "2": "VBUS"
+    }
+   },
+   "limit": "VBUS 1-2, GND 3-4",
+   "note": ""
+  },
+  {
+   "check": "PB1R JL1 (coil band) pin 1 = DRAIN1, pin 2 = VBUS; CB1D JCL pin 1 = COIL_B (drain side), pin 2 = COIL_A (VBUS side); TXJ1 bus B = drain side, bus A = VBUS side",
+   "result": "PASS",
+   "value": {
+    "JL1": {
+     "1": "DRAIN1",
+     "2": "VBUS"
+    },
+    "JCL": {
+     "2": "COIL_A",
+     "1": "COIL_B"
+    }
+   },
+   "limit": "as stated",
+   "note": "TXJ1: pads B12 = TX_B (bus B), A12 = TX_A (bus A), tx_system.py"
+  },
+  {
+   "check": "neck module at 0.4 m: a SOLID copper plane the size of PB1R would return more than a 1 g gold nugget at 150 mm (on-axis upper bound): shown, and not used",
+   "result": "PASS",
+   "value": "8.0 x the nugget",
+   "limit": "> 1 (rejected)",
+   "note": "plane 70 x 70 mm (disc-equivalent R 39 mm), tau 16.0 us, gate 7 us; nugget a 2.31 mm, tau 28 us; dipole z^-6 scaling; the air template removes a static plane but not its motion with the hinge"
+  },
+  {
+   "check": "hatched planes: the closed hatch border ring (0.3 mm, r 35 mm) decays before the first gate and returns less than 1e-3 of the nugget",
+   "result": "PASS",
+   "value": "4.7e-05 x the nugget",
+   "limit": "< 1e-3",
+   "note": "ring L 213 nH, R 0.36 ohm, tau 0.59 us vs gate 7 us; mesh cells (1.5 mm gaps) are smaller loops with shorter tau"
+  },
+  {
+   "check": "NPM cable window: JL1 (TX pair) and JP (power) leave the board within 10 mm of the 12 mm window (x -26..-14); JC umbilical run reported (mm)",
+   "result": "PASS",
+   "value": {
+    "JL1": 5.0,
+    "JP": 5.0,
+    "JC": 40.7
+   },
+   "limit": "<= 10 (JL1, JP)",
+   "note": "lateral distance from the connector's pads to the window edge, in the 19 mm pocket between board and back wall"
+  },
+  {
+   "check": "bulk-capacitor cans (9 x aluminium): return less than 1e-3 of the nugget (as the hatched planes do); WARN = listed exception, owner decision (OPEN_ITEMS 34)",
+   "result": "WARN",
+   "value": "0.51 x the nugget",
+   "limit": "< 1e-3",
+   "note": "tau 110 us (1.0 mm wall; 0.3 mm gives 33 us) vs gate 7 us: the cans do NOT decay before the gate, so the result hardly depends on the wall. Static and rigidly mounted it is an offset for the air template; the 7343 polymer-Ta it replaces had no closed can"
+  }
+ ],
+ "pulse_path": {
+  "DRAIN1 JL1.1 -> Q1A.2": {
+   "length_mm": 15.2,
+   "min_width_mm": 1.5,
+   "R_mohm": 2.49,
+   "L_nH": 3.82
+  },
+  "DRAIN1 JL1.1 -> Q1B.2": {
+   "length_mm": 32.7,
+   "min_width_mm": 1.5,
+   "R_mohm": 5.36,
+   "L_nH": 8.22
+  },
+  "SRC1 Q1A.3 -> RS1S.1": {
+   "length_mm": 26.8,
+   "min_width_mm": 1.5,
+   "R_mohm": 4.39,
+   "L_nH": 6.73
+  },
+  "SRC1 Q1B.3 -> RS1S.1": {
+   "length_mm": 14.6,
+   "min_width_mm": 1.5,
+   "R_mohm": 2.4,
+   "L_nH": 3.68
+  }
+ },
+ "eddy": {
+  "ratio_solid": 8.015164350863012,
+  "ratio_hatch_ring": 4.72717633855759e-05,
+  "tau_solid_us": 15.974358974358973,
+  "tau_ring_us": 0.5907791311476679,
+  "ratio_cans": 0.5116438093914569,
+  "tau_can_us": 109.95574287564277
+ }
+}
