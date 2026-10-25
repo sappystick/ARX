@@ -1,0 +1,12 @@
+{
+ "board": "PF233-HTA.kicad_pcb",
+ "board_key": "HTA",
+ "kicad": "9.0.9",
+ "zones_filled": true,
+ "violations": 68,
+ "unconnected": 0,
+ "errors": {},
+ "warnings": {},
+ "lib_footprint_warnings": 68,
+ "examples": []
+}

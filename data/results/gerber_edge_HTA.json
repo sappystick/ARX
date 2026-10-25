@@ -1,0 +1,31 @@
+{
+ "floor_mm": 0.5,
+ "sets": {
+  "HTA": {
+   "layers": {
+    "B_Cu": {
+     "outside_mm2": 0.0,
+     "min_edge_gap_mm": 1.699,
+     "ok": true
+    },
+    "F_Cu": {
+     "outside_mm2": 0.0,
+     "min_edge_gap_mm": 1.7,
+     "ok": true
+    },
+    "In1_Cu": {
+     "outside_mm2": 0.0,
+     "min_edge_gap_mm": 1.699,
+     "ok": true
+    },
+    "In2_Cu": {
+     "outside_mm2": 0.0,
+     "min_edge_gap_mm": 1.7,
+     "ok": true
+    }
+   },
+   "ok": true
+  }
+ },
+ "ok": true
+}

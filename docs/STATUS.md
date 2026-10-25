@@ -2,7 +2,7 @@
 
 Everything here is MODELED or tool-checked; nothing is built or measured. PASS means the tool check passed, not that a board is ready for fabrication.
 
-**44 PASS, 0 FAIL, 0 SKIP, 19 UNVERIFIED**
+**55 PASS, 0 FAIL, 0 SKIP, 8 UNVERIFIED**
 
 ## Boards
 | board | route | indep. DRC | KiCad DRC | Gerber+drill | plane HV | cross-check |
@@ -13,9 +13,9 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 | TXJ1 | - | - | PASS | PASS | - | PASS |
 | SB1R-QA | - | - | PASS | PASS | - | PASS |
 | SB1R-QB | - | - | PASS | PASS | - | PASS |
-| PM2 | UNVERIFIED | UNVERIFIED | UNVERIFIED | UNVERIFIED | - | UNVERIFIED |
-| HB2 | UNVERIFIED | UNVERIFIED | UNVERIFIED | UNVERIFIED | - | UNVERIFIED |
-| HTA | - | - | UNVERIFIED | PASS | - | - |
+| PM2 | PASS | PASS | PASS | PASS | - | PASS |
+| HB2 | PASS | PASS | PASS | PASS | - | PASS |
+| HTA | - | - | PASS | PASS | - | - |
 
 ## System checks
 | check | state | detail |
@@ -26,11 +26,11 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 | stress table (only the documented LED-rail row may fail) | PASS | 1 fail (LED rail, by design), 2 watch |
 | TX stage over 19.6-29.4 V (reproduces sim_head1 at 26 V) | PASS | Vds 456-466 V, ton table |
 | PM2 dock chain (time-domain) | PASS | 13 checks |
-| full head cross-check (26 solids, 3D interference) | PASS | 42 checks, 2 warnings |
+| full head cross-check (26 solids, 3D interference) | PASS | 42 checks, 1 warnings |
 | 0.2 mm fine check | PASS | board discs and bodies clear |
 | voxel interference (window, bridge, junction) | PASS | 28 pairs |
 | release-tx / sign-off controls (refusals, evidence rule, idempotence) | PASS | 12/12 controls behave as intended |
-| tests/regress.py (strict: a missing result FAILs) | PASS | 55 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0 |
+| tests/regress.py (strict: a missing result FAILs) | PASS | 62 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0 |
 
 ## Evidence still missing (docs/UNVERIFIED.md)
 | id | state | item |

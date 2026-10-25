@@ -1,9 +1,9 @@
 {
  "counts": {
-  "PASS": 44,
+  "PASS": 55,
   "FAIL": 0,
   "SKIP": 0,
-  "UNVERIFIED": 19
+  "UNVERIFIED": 8
  },
  "boards": {
   "CB1D": {
@@ -81,7 +81,7 @@
    },
    "cross": {
     "state": "PASS",
-    "detail": "14 checks, 2 warn"
+    "detail": "15 checks, 2 warn"
    }
   },
   "TXJ1": {
@@ -164,54 +164,54 @@
   },
   "PM2": {
    "route": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-PM2"
+    "state": "PASS",
+    "detail": "7/7 nets"
    },
    "indep": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-PM2"
+    "state": "PASS",
+    "detail": "0 violations, 0 opens"
    },
    "kicad": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-PM2"
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
    },
    "gerber": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-PM2"
+    "state": "PASS",
+    "detail": "12 files, edge read-back OK"
    },
    "plane": {
     "state": "-",
     "detail": ""
    },
    "cross": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-PM2"
+    "state": "PASS",
+    "detail": "13 dock-chain checks"
    }
   },
   "HB2": {
    "route": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-HB2"
+    "state": "PASS",
+    "detail": "8/8 nets"
    },
    "indep": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-HB2"
+    "state": "PASS",
+    "detail": "0 violations, 0 opens"
    },
    "kicad": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-HB2"
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
    },
    "gerber": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-HB2"
+    "state": "PASS",
+    "detail": "12 files, edge read-back OK"
    },
    "plane": {
     "state": "-",
     "detail": ""
    },
    "cross": {
-    "state": "UNVERIFIED",
-    "detail": "U-ROUTE-HB2"
+    "state": "PASS",
+    "detail": "10 trigger-chain checks"
    }
   },
   "HTA": {
@@ -224,12 +224,12 @@
     "detail": ""
    },
    "kicad": {
-    "state": "UNVERIFIED",
-    "detail": "U-KICAD-HTA"
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
    },
    "gerber": {
     "state": "PASS",
-    "detail": "12 files"
+    "detail": "12 files, edge read-back OK"
    },
    "plane": {
     "state": "-",
@@ -268,7 +268,7 @@
   },
   "full head cross-check (26 solids, 3D interference)": {
    "state": "PASS",
-   "detail": "42 checks, 2 warnings"
+   "detail": "42 checks, 1 warnings"
   },
   "0.2 mm fine check": {
    "state": "PASS",
@@ -284,7 +284,7 @@
   },
   "tests/regress.py (strict: a missing result FAILs)": {
    "state": "PASS",
-   "detail": "55 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
+   "detail": "62 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {
@@ -353,9 +353,6 @@
   "U-DS-HVTERM": "PB1R JL1 (5.08 mm coil terminal block on DRAIN1, about 466 V) and the RCL1 lid resistor bank (5 k 10 W): no part with a manufacturer sheet read; Phoenix MKDS 1,5/2-5,08 is rated 250 / 400 / 630 V by overvoltage category in distributor listings only",
   "U-FAB-DRC": "Fabricator's own DRC/CAM review of every board",
   "U-CAM-VIEW": "Gerbers opened in a CAM viewer (visual check of the KiCad-written and gerber_out.py files)",
-  "U-ROUTE-PM2": "PM2 routed, KiCad-DRC'd, Gerbers",
-  "U-ROUTE-HB2": "HB2 routed, KiCad-DRC'd, Gerbers",
-  "U-KICAD-HTA": "HTA in the KiCad DRC flow",
   "U-BENCH": "Every bench item in docs/design/BENCH_FIRST_ARTICLE_TX.md (written in Step 6, NOT RUN)"
  }
 }

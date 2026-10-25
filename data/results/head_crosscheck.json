@@ -322,19 +322,19 @@
   },
   {
    "section": "E open items",
-   "check": "LB1/CB1D/SB1R/TXJ1 not opened in KiCad or a CAM viewer",
+   "check": "boards pass KiCad 9 DRC but none was opened in a CAM viewer or reviewed by a fabricator (U-CAM-VIEW, U-FAB-DRC)",
    "value": "open",
-   "limit": "external DRC",
+   "limit": "CAM + fabricator DRC",
    "result": "WARN",
    "note": ""
   },
   {
-   "section": "E open items",
-   "check": "PB1R, PM1, HB1 boards are placed but not routed (legacy)",
-   "value": "open",
-   "limit": "route + DRC",
-   "result": "WARN",
-   "note": ""
+   "section": "D PCB",
+   "check": "PB1R, PM2, HB2 routed (every net, no failures)",
+   "value": "{'PB1R': (15, 15), 'PM2': (7, 7), 'HB2': (8, 8)}",
+   "limit": "all nets",
+   "result": "PASS",
+   "note": "route_<board>.json"
   }
  ],
  "contacts": [
@@ -454,7 +454,7 @@
  "interferences": [],
  "voxel_mm": 0.5,
  "fails": 0,
- "warns": 2,
+ "warns": 1,
  "z_ranges": {
   "FORMER_L1": [
    25.2,
