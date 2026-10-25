@@ -62,10 +62,19 @@ STEPS = [
     ("kicad-pb1r", "mkdir -p work/kit_v22/KICAD && " + W + "python3 rect_inject.py PB1R kit_v20/route_PB1R.json kit_v6/PB1R/PF233-PB1R.kicad_pcb kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb", ""),
     ("gerber-pb1r", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb PB1R work/kit_v22/GERBER_PB1R PF233-PB1R && "
                     + W + "python3 gerber_plane_check.py PB1R kit_v22/GERBER_PB1R PF233-PB1R DRAIN1,CLAMP1 In1:GND,In2:VBUS && python3 gerber_edge_check.py kit_v22/gerber_edge_PB1R.json kit_v22/GERBER_PB1R PF233-PB1R", "kicad"),
+    ("route-pm2", route("PM2"), ""),
+    ("drc-pm2", W + "python3 drc.py PM2 kit_v20/route_PM2.json 0", ""),
+    ("kicad-pm2", "mkdir -p work/kit_v22/KICAD && " + W + "python3 rect_inject.py PM2 kit_v20/route_PM2.json kit_v6/PM2/PF233-PM2.kicad_pcb kit_v22/KICAD/PF233-PM2_routed.kicad_pcb", ""),
+    ("gerber-pm2", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-PM2_routed.kicad_pcb PM2 work/kit_v22/GERBER_PM2 PF233-PM2 && " + W + "python3 gerber_edge_check.py kit_v22/gerber_edge_PM2.json kit_v22/GERBER_PM2 PF233-PM2", "kicad"),
+    ("route-hb2", route("HB2"), ""),
+    ("drc-hb2", W + "python3 drc.py HB2 kit_v20/route_HB2.json 0", ""),
+    ("kicad-hb2", "mkdir -p work/kit_v22/KICAD && " + W + "python3 rect_inject.py HB2 kit_v20/route_HB2.json kit_v6/HB2/PF233-HB2.kicad_pcb kit_v22/KICAD/PF233-HB2_routed.kicad_pcb", ""),
+    ("gerber-hb2", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-HB2_routed.kicad_pcb HB2 work/kit_v22/GERBER_HB2 PF233-HB2 && " + W + "python3 gerber_edge_check.py kit_v22/gerber_edge_HB2.json kit_v22/GERBER_HB2 PF233-HB2", "kicad"),
     ("sbq-fast", W + "python3 sbq_gen2.py && python3 sbq_export.py && python3 sbq_sim.py && python3 sbq_damp2.py", ""),
-    ("pcb-hta", W + "python3 hta_gerber.py > /dev/null", ""),
-    ("kicad-drc", "; ".join([f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-{b}_routed.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("CB1D", "LB1", "PB1R")]
+    ("pcb-hta", W + "python3 hta_gerber.py > /dev/null && python3 hta_kicad.py && python3 gerber_edge_check.py kit_v22/gerber_edge_HTA.json kit_v18/HTA PF233-HTA", ""),
+    ("kicad-drc", "; ".join([f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-{b}_routed.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("CB1D", "LB1", "PB1R", "PM2", "HB2")]
                   + ["python3 src/pcb/kicad_drc.py work/kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb work/kit_v22/kicad_drc_TXJ1.json TXJ1 | head -1"]
+                  + ["python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-HTA.kicad_pcb work/kit_v22/kicad_drc_HTA.json HTA | head -1"]
                   + [f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD_SBQ/{b}.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("SB1R-QA", "SB1R-QB")]), "kicad"),
     ("check-pb1r", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py > /dev/null && python3 pb1r_check.py", ""),
     ("formers-low", "test -f work/kit_v15/LOW/FORMER_L1_petal_coil_former.stl || (" + W + "python3 phifold_v15.py low)", ""),

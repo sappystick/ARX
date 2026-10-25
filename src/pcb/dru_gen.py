@@ -2,7 +2,7 @@
 """KiCad custom design rules (.kicad_dru) per board, in the order KiCad evaluates them: the LAST matching rule wins, so the generic rule comes first and the specific
 rules (HV clearance, power track width) after it. The earlier shipped files (mfg_v19.py) ended with an unconditional 0.127 mm rule that overrode both specific rules,
 so KiCad never enforced the 1.0 mm high-voltage clearance (negative control in kicad_drc.py history: a 5 mm HV rule produced no violations).
-usage: dru_gen.py BOARD OUT.kicad_dru      boards: CB1D LB1 PB1R PM2 HB2 TXJ1   (CLAUDE.md rule 6: coil flyback nets need >= 1.0 mm)"""
+usage: dru_gen.py BOARD OUT.kicad_dru      boards: CB1D LB1 PB1R PM2 HB2 TXJ1 HTA SB1R-QA SB1R-QB   (CLAUDE.md rule 6: coil flyback nets need >= 1.0 mm)"""
 import sys
 # Fabrication floor for Advanced Circuits (AdvancedPCB) or TTM, designed to the stricter of the two (owner decision 2026-10-24). Vendor numbers, URLs and the
 # facility table: docs/design/FAB_RULES_VERIFIED.md (Step 5a, read 2026-10-25). Tightened where a vendor was stricter, kept where the floor was already stricter:
@@ -18,10 +18,11 @@ BOARDS = {
     "CB1D": dict(hv=["COIL_A", "COIL_B", "DM1", "DM2"], hv_mm=1.0, power={"VBUS_IN": 0.8, "+5V": 0.6, "+5VA": 0.5}),
     "LB1": dict(hv=[], hv_mm=1.0, power={"+5V": 0.4, "GND": 0.4}),
     "PB1R": dict(hv=["DRAIN1", "CLAMP1"], hv_mm=1.0, power={"DRAIN1": 1.5}),
-    "PM2": dict(hv=[], hv_mm=1.0, power={"BAT_P": 1.5, "BAT_F": 1.5, "VBUS": 1.5, "GND": 1.5}),
+    "PM2": dict(hv=[], hv_mm=1.0, power={"BAT_P": 1.5, "BAT_F": 1.5, "VBUS": 1.0, "GND": 1.0}),      # = the router widths (route_run.py)
     "SB1R-QA": dict(hv=[], hv_mm=1.0, power={}),
     "SB1R-QB": dict(hv=[], hv_mm=1.0, power={}),
-    "HB2": dict(hv=[], hv_mm=1.0, power={}),
+    "HB2": dict(hv=[], hv_mm=1.0, power={"P3V3": 0.3}),
+    "HTA": dict(hv=[], hv_mm=1.0, power={}),
     "TXJ1": dict(hv=["TX_A", "TX_B"], hv_mm=1.0, power={"TX_A": 3.0, "TX_B": 3.0}),
 }
 def rules(board):

@@ -56,8 +56,11 @@ for b in ("PM2", "HB2"):
     if r is None:
         u = ("UNVERIFIED", f"U-ROUTE-{b}") if f"U-ROUTE-{b}" in UNV else ("FAIL", "not routed")
         B[b] = dict(route=u, indep=u, kicad=u, gerber=u, plane=NA, cross=u)
-    else: B[b] = dict(route=route(b), indep=indep(b), kicad=kicad(b, False), gerber=gerbers(f"kit_v22/GERBER_{b}"), plane=NA, cross=chk("kit_v22/wiring_audit.json", lambda d: (not d["errors"], "wiring audit")))
-B["HTA"] = dict(route=NA, indep=NA, kicad=(("UNVERIFIED", "U-KICAD-HTA") if "U-KICAD-HTA" in UNV and rd("kit_v22/kicad_drc_HTA.json") is None else kicad("HTA", False)), gerber=gerbers("kit_v18/HTA") if os.path.isdir(f"{W}/kit_v18/HTA") else NA, plane=NA, cross=NA)
+    elif b == "PM2": B[b] = dict(route=route(b), indep=indep(b), kicad=kicad(b, False), gerber=gerbers(f"kit_v22/GERBER_{b}", edge=f"kit_v22/gerber_edge_{b}.json"), plane=NA,
+                               cross=chk("kit_v23/power_dock_check.json", lambda d: (all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} dock-chain checks")))
+    else: B[b] = dict(route=route(b), indep=indep(b), kicad=kicad(b, False), gerber=gerbers(f"kit_v22/GERBER_{b}", edge=f"kit_v22/gerber_edge_{b}.json"), plane=NA,
+                      cross=chk("kit_v22/trigger_check.json", lambda d: (all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} trigger-chain checks")))
+B["HTA"] = dict(route=NA, indep=NA, kicad=(("UNVERIFIED", "U-KICAD-HTA") if "U-KICAD-HTA" in UNV and rd("kit_v22/kicad_drc_HTA.json") is None else kicad("HTA", False)), gerber=gerbers("kit_v18/HTA", edge="kit_v22/gerber_edge_HTA.json") if os.path.isdir(f"{W}/kit_v18/HTA") else NA, plane=NA, cross=NA)
 SYS = {
     "cylinder v5 + parts + 47 geometry checks": chk("kit_v22/check_v22.json", lambda d: (len(d["checks"]) >= 47 and all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} checks")),
     "KiCad schematics (9 boards, nets rebuilt = netlists)": chk("kit_v22/sch_check.json", lambda d: (all(v["check"]["ok"] for v in d.values() if "check" in v), f"{len([v for v in d.values() if 'check' in v])} boards")),

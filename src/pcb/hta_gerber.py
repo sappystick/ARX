@@ -19,11 +19,11 @@ NT=float(best[1])
 L1=spiral(R_OUT,R_IN,0.0,NT*2*math.pi); th_in=NT*2*math.pi; L2=spiral(R_IN,R_OUT,th_in,2*th_in)
 azB=math.degrees(2*th_in)%360
 # traces on inner layers to the centre pads
-A_line=np.array([[R_OUT,0.0],[6.0,0.0]]); A_line[:,1]=0.9                                  # In2: along y=+0.9 from the outer via to pad A
+A_line=np.array([[R_OUT,0.0],[R_OUT-1.2,0.9],[6.0,0.9]])                          # In2: from the outer via (43, 0) to pad A along y=+0.9; until Step 4 both ends sat at y=0.9, 0.35 mm short of the via: the coil was OPEN (found when HTA entered the KiCad DRC)
 bx,by=R_OUT*math.cos(math.radians(azB)),R_OUT*math.sin(math.radians(azB))
 radial=np.array([[R_OUT*math.cos(math.radians(azB)),R_OUT*math.sin(math.radians(azB))],[10*math.cos(math.radians(azB)),10*math.sin(math.radians(azB))],[6.0,-0.9]])   # B.Cu: radial in, then to pad B
 rep=dict(L1_end_radius=round(float(np.hypot(*L1[-1])),2),B_azimuth_deg=round(azB,1),min_dist_coil_to_pixel_hole_mm=round(min(clear(L1),clear(L2)),2),
-         min_dist_B_route_to_pixel_hole_mm=round(clear(np.vstack([np.linspace(radial[0],radial[1],200),np.linspace(radial[1],radial[2],50)])),2),min_dist_A_route_to_pixel_hole_mm=round(clear(np.linspace(A_line[0],A_line[1],200)),2))
+         min_dist_B_route_to_pixel_hole_mm=round(clear(np.vstack([np.linspace(radial[0],radial[1],200),np.linspace(radial[1],radial[2],50)])),2),min_dist_A_route_to_pixel_hole_mm=round(clear(np.vstack([np.linspace(A_line[0],A_line[1],50),np.linspace(A_line[1],A_line[2],200)])),2))
 # inductance estimate: 4 turns as coaxial circular loops (mean radii per turn), layer gap 0.2+0.035+... = 0.55 mm between L1 and L2 copper centres
 def Mloop(a,b,d):
     k2=4*a*b/((a+b)**2+d**2); k=math.sqrt(k2); return 4e-7*math.pi*math.sqrt(a*b)*((2/k-k)*ellipk(k2)-2/k*ellipe(k2))

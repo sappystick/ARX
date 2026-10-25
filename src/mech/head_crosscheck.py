@@ -220,8 +220,9 @@ dr = [json.load(open(f"kit_v22/drc_{b}.json")) for b in ("LB1", "CB1D")]; C("D P
 sbud = json.load(open("kit_v22/system_budget.json")); bad = [r for r in sbud["rows"] if r["status"] == "FAIL"]; C("D system", "stress table: no failing row except the LED rail without the firmware cap", len(bad) == 1 and "LED" in bad[0]["part"], len(bad), 1, "firmware LED cap 0.35 A required", warn=True)
 tmg = max(1, 1); 
 C("D receive", "damping resistor across each SB1R coil (RD1 on QA P1/P2, RD2 on the QA transfer pads of QB)", all(k in sg.get("rd", {}) for k in ("RD1", "RD2")) and min(sg.get("rd_margin_mm", [-1])) >= 0 and sg.get("transfer_margin_mm", -1) >= 0, f"rd {sorted(sg.get('rd', {}))}, margins {sg.get('rd_margin_mm')}, transfer {sg.get('transfer_margin_mm')}", "both fitted, margins >= 0")
-C("E open items", "LB1/CB1D/SB1R/TXJ1 not opened in KiCad or a CAM viewer", False, "open", "external DRC", "", warn=True)
-C("E open items", "PB1R, PM1, HB1 boards are placed but not routed (legacy)", False, "open", "route + DRC", "", warn=True)
+C("E open items", "boards pass KiCad 9 DRC but none was opened in a CAM viewer or reviewed by a fabricator (U-CAM-VIEW, U-FAB-DRC)", False, "open", "CAM + fabricator DRC", "", warn=True)
+_rt = {b: (json.load(open(f"kit_v20/route_{b}.json"))["stats"] if os.path.exists(f"kit_v20/route_{b}.json") else None) for b in ("PB1R", "PM2", "HB2")}     # PM1 / HB1 are superseded by PM2 / HB2
+C("D PCB", "PB1R, PM2, HB2 routed (every net, no failures)", all(r and r["nets_routed"] == r["nets_to_route"] and not r["failures"] for r in _rt.values()), {b: (r["nets_routed"], r["nets_to_route"]) if r else None for b, r in _rt.items()}, "all nets", "route_<board>.json")
 nf = sum(1 for r in res if r["result"] == "FAIL"); nw = sum(1 for r in res if r["result"] == "WARN")
 json.dump(dict(checks=res, contacts=contacts, pairs=pairs, interferences=inter, voxel_mm=H, fails=nf, warns=nw, z_ranges={k: [round(v[0], 2), round(v[1], 2)] for k, v in Z.items()}), open("kit_v22/head_crosscheck.json", "w"), indent=1)
 for r in res: print(f"{r['result']:4} {r['section']:16} {r['check'][:100]:100} {r['value'][:48]}")

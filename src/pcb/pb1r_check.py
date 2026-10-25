@@ -116,6 +116,15 @@ alpha_ring = (math.pi * 0.035 ** 2) ** 2 / Lring * math.exp(-tg / tau_ring)
 ratio_ring = alpha_ring / alpha_t_nug * geom
 C("neck module at 0.4 m: a SOLID copper plane the size of PB1R would return more than a 1 g gold nugget at 150 mm (on-axis upper bound): shown, and not used", ratio_solid > 1.0, f"{ratio_solid:.1f} x the nugget", "> 1 (rejected)", f"plane 70 x 70 mm (disc-equivalent R {Rpl*1e3:.0f} mm), tau {tau_solid*1e6:.1f} us, gate {tg*1e6:.0f} us; nugget a {a*1e3:.2f} mm, tau {tau_s*1e6:.0f} us; dipole z^-6 scaling; the air template removes a static plane but not its motion with the hinge")
 C("hatched planes: the closed hatch border ring (0.3 mm, r 35 mm) decays before the first gate and returns less than 1e-3 of the nugget", ratio_ring < 1e-3, f"{ratio_ring:.1e} x the nugget", "< 1e-3", f"ring L {Lring*1e9:.0f} nH, R {Rring:.2f} ohm, tau {tau_ring*1e6:.2f} us vs gate {tg*1e6:.0f} us; mesh cells (1.5 mm gaps) are smaller loops with shorter tau")
+# ---- 7 neck-module (NPM) cable window (OPEN_ITEMS 28c): mech_v20.py holds PB1R in the x-z plane, components facing the back wall, so board x = NPM x; the back wall
+# plates leave a 12 mm window at x -26..-14 (tests/regress.py guards that these numbers still match mech_v20.py). The stiff cables (JL1: AWG12 TX pair to the coil,
+# JP: power in) must leave the board within 10 mm (laterally) of the window; the fine 8-way umbilical (JC) may run across the pocket (reported). Cable assignment: ASSUMPTIONS 33
+WIN = (-26.0, -14.0)
+def span(ref): xs = [q["x"] for (r, n), q in pad.items() if r == ref]; return min(xs), max(xs)
+def lat(ref): a, b = span(ref); return max(WIN[0] - b, a - WIN[1], 0.0)
+offs = {r: round(lat(r), 1) for r in ("JL1", "JP", "JC")}
+C("NPM cable window: JL1 (TX pair) and JP (power) leave the board within 10 mm of the 12 mm window (x -26..-14); JC umbilical run reported (mm)", offs["JL1"] <= 10.0 and offs["JP"] <= 10.0, offs, "<= 10 (JL1, JP)",
+  "lateral distance from the connector's pads to the window edge, in the 19 mm pocket between board and back wall")
 # the Step 5 bulk bank is aluminium cans (9 x phi 10 x 10.2 mm hybrid): each wall is a closed loop around the can axis. Thin cylindrical sheet: L = mu0 pi r^2 / h,
 # R = 2 pi r / (sigma t h), tau = mu0 sigma r t / 2. The wall thickness is not in the Panasonic data: 1.0 mm is taken as a deliberate overestimate (ASSUMPTIONS 32)
 sig_al, r_can, h_can, t_can, n_can = 3.5e7, 5.0e-3, 10.2e-3, 1.0e-3, 9

@@ -16,8 +16,8 @@ BOARDS = {   # board -> gerber folder, kicad files, result files, bom/net files
     "PB1R": dict(gerber="data/gerber/PB1R_v2", kicad=["PF233-PB1R_routed.kicad_pcb", "PF233-PB1R_routed.kicad_dru", "PF233-PB1R_placed.kicad_pcb"], results=["route_PB1R.json", "drc_PB1R.json", "kicad_drc_PB1R.json", "gerber_edge_PB1R.json", "gerber_plane_PB1R.json", "pb1r_check.json", "PF233-PB1R_BOM.csv", "PF233-PB1R_pickplace.csv", "PF233-PB1R.net"]),
     "CB1D": dict(gerber="data/gerber/CB1D_B3", kicad=["PF233-CB1D_routed.kicad_pcb", "PF233-CB1D_routed.kicad_dru"], results=["route_CB1D.json", "drc_CB1D.json", "kicad_drc_CB1D.json", "gerber_hv_CB1D.json", "gerber_edge_CB1D.json", "wiring_audit.json", "trigger_check.json"]),
     "TXJ1": dict(gerber="data/gerber/TXJ1_v2", kicad=["TXJ1.kicad_pcb", "TXJ1.kicad_dru"], results=["kicad_drc_TXJ1.json", "tx_system.json"]),
-    "PM2": dict(gerber=None, kicad=["PF233-PM2_placed.kicad_pcb"], results=["power_dock_check.json"]),
-    "HB2": dict(gerber=None, kicad=["PF233-HB2_placed.kicad_pcb"], results=["trigger_check.json"]),
+    "PM2": dict(gerber="data/gerber/PM2", kicad=["PF233-PM2_routed.kicad_pcb", "PF233-PM2_routed.kicad_dru", "PF233-PM2_placed.kicad_pcb"], results=["route_PM2.json", "drc_PM2.json", "kicad_drc_PM2.json", "gerber_edge_PM2.json", "power_dock_check.json"]),
+    "HB2": dict(gerber="data/gerber/HB2", kicad=["PF233-HB2_routed.kicad_pcb", "PF233-HB2_routed.kicad_dru", "PF233-HB2_placed.kicad_pcb"], results=["route_HB2.json", "drc_HB2.json", "kicad_drc_HB2.json", "gerber_edge_HB2.json", "trigger_check.json"]),
 }
 SHARED = ["tx_vbus.json", "TX_ONTIME_LUT.csv", "SYSTEM_STRESS_MARGINS.csv", "system_budget.json", "SIGNOFF_STATUS.json"]
 unv = S["unverified"]; os.makedirs(out)

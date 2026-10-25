@@ -83,11 +83,11 @@ if d:
     chk("SB1R-Q first clean gate with Rd 680, no blanking: A aligned 5.1-5.5 us, worst real leak <= 7.6 us (Cself 50-200 pF)",all(5.0<=fc[k]["Rd 680"]<=5.6 for k in a) and all(fc[k]["Rd 680"]<=7.6 for k in w) and all(fc[k]["no Rd"]>=59 for k in a+w),str([fc[k]["Rd 680"] for k in a+w]))
     n=d["gate_noise_nV_rtHz"]; chk("SB1R-Q gated noise with Rd 680 within 6% of no Rd (Cself 100 pF, gates 6-40 us)",all(v["Rd 680"]<=1.06*v["no Rd"] for k,v in n.items() if k.startswith("Cself 100")),str({k.split(", ")[1]:v["Rd 680"] for k,v in n.items() if k.startswith("Cself 100")}))
 else: skip("SB1R-Q damping")
-for b in ("LB1","CB1D","PB1R"):
+for b in ("LB1","CB1D","PB1R","PM2","HB2"):
     d=rd(f"kit_v22/drc_{b}.json")
     if d: chk(f"{b} independent DRC: 0 clearance violations, 0 open nets, edge and notch clean",d["clearance_violations"]==0 and d["open_nets"]==0 and d["edge_samples"]==0 and d["notch_samples"]==0,str({k:d[k] for k in ('clearance_violations','open_nets','min_gap_by_layer')}))
     else: skip(f"{b} DRC")
-for b in ("CB1D","LB1","PB1R","TXJ1","SB1R-QA","SB1R-QB"):
+for b in ("CB1D","LB1","PB1R","TXJ1","SB1R-QA","SB1R-QB","PM2","HB2","HTA"):
     d=rd(f"kit_v22/kicad_drc_{b}.json")
     if d: chk(f"{b} KiCad 9 DRC (zones filled, fab-floor rules from dru_gen.py): 0 errors, 0 unconnected"+(", HV rules proven live by the negative control" if "rules_loaded" in d else ""),not d["errors"] and d["unconnected"]==0 and d.get("rules_loaded",True) and (not d["warnings"] or b not in ("CB1D","LB1")),str({k:d[k] for k in ("errors","unconnected","warnings")}))
     else: skip(f"{b} KiCad DRC")
@@ -157,8 +157,15 @@ chk("PM2 / CB1D fuse land = Bourns SF-1206S recommended layout (gap 2.2, overall
 _net=os.path.join(W,"kit_v6/PB1R/PF233-PB1R.net")
 _nd=re.search(r'\(date "([0-9-]+)"\)',open(_net).read()).group(1) if os.path.exists(_net) else None
 chk("generated netlists carry the fixed design date (not the wall clock), so a regenerated netlist is byte-identical on any day",_nd=="2026-10-24" and "date.today()" not in open("src/pcb/pw_design.py").read(),str(_nd))
-_e={b:rd(f"kit_v22/gerber_edge_{b}.json") for b in ("CB1D","LB1","PB1R")}
-if all(_e.values()): chk("Gerber copper read back from the files: nothing outside the outline (notch included) and >= 0.5 mm to the edge on every layer of CB1D, LB1, PB1R",all(v["ok"] for v in _e.values()),str({b:min(r["min_edge_gap_mm"] for r in v["sets"][list(v["sets"])[0]]["layers"].values() if r["min_edge_gap_mm"] is not None) for b,v in _e.items()}))
+_e={b:rd(f"kit_v22/gerber_edge_{b}.json") for b in ("CB1D","LB1","PB1R","PM2","HB2","HTA")}
+if all(_e.values()): chk("Gerber copper read back from the files: nothing outside the outline (notch included) and >= 0.5 mm to the edge on every layer of CB1D, LB1, PB1R, PM2, HB2, HTA",all(v["ok"] for v in _e.values()),str({b:min(r["min_edge_gap_mm"] for r in v["sets"][list(v["sets"])[0]]["layers"].values() if r["min_edge_gap_mm"] is not None) for b,v in _e.items()}))
 else: skip("Gerber edge read-back")
+_m=open("src/mech/mech_v20.py").read()
+chk("NPM cable window in mech_v20.py is still x -26..-14 (the numbers pb1r_check.py measures PB1R's JL1 / JP / JC against)","plate(-34, 12.5, NZ / 2, 16.0, 3.0, NZ), plate(14, 12.5, NZ / 2, 56.0, 3.0, NZ)" in _m,"back-wall plates")
+d=rd("kit_v22/pb1r_check.json")
+if d:
+    _w=[c for c in d["checks"] if c["check"].startswith("NPM cable window")]
+    chk("PB1R JL1 and JP leave the board within 10 mm of the NPM cable window",bool(_w) and _w[0]["result"]=="PASS",str(_w[0]["value"]) if _w else "missing")
+else: skip("PB1R NPM window")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

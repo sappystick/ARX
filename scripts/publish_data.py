@@ -11,14 +11,16 @@ VERSIONS = {   # board -> (gerber folder in data/gerber, work gerber dir, work p
     "PB1R": ("PB1R_v2", "kit_v22/GERBER_PB1R", "PF233-PB1R", "PF233-PB1R-v2"),          # v2 (Step 5): bulk bank 9 x 10 mm hybrid cans, re-placed and re-routed
     "TXJ1": ("TXJ1_v2", "kit_v22/GERBER_TXJ1", "TXJ1-", "TXJ1-v2-"),
     "SB1R-QA": ("SB1R_QA_v2", "kit_v22/GERBER_SB1R_QA", "SB1R-QA-", "SB1R-QA-v2-"),
-    "HTA": ("HTA", "kit_v18/HTA", "PF233-HTA", "PF233-HTA"),
+    "HTA": ("HTA_v2", "kit_v18/HTA", "PF233-HTA", "PF233-HTA-v2"),                    # v2 (Step 4): lead A reaches the outer via (the first set was an open coil)
+    "PM2": ("PM2", "kit_v22/GERBER_PM2", "PF233-PM2", "PF233-PM2"),                      # first routed set (Step 4)
+    "HB2": ("HB2", "kit_v22/GERBER_HB2", "PF233-HB2", "PF233-HB2"),                      # first routed set (Step 4)
     "SB1R-QB": ("SB1R_QB_v2", "kit_v22/GERBER_SB1R_QB", "SB1R-QB-", "SB1R-QB-v2-"),
 }
 KICAD = {"PF233-CB1D_routed.kicad_pcb": "kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb", "PF233-LB1_routed.kicad_pcb": "kit_v22/KICAD/PF233-LB1_routed.kicad_pcb", "PF233-PB1R_routed.kicad_pcb": "kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb",
-         "PF233-PB1R_placed.kicad_pcb": "kit_v6/PB1R/PF233-PB1R.kicad_pcb", "TXJ1.kicad_pcb": "kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb", "SB1R-QA.kicad_pcb": "kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb", "SB1R-QB.kicad_pcb": "kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb"}
-DRU = {"PF233-CB1D_routed": "CB1D", "PF233-LB1_routed": "LB1", "PF233-PB1R_routed": "PB1R", "TXJ1": "TXJ1", "SB1R-QA": "SB1R-QA", "SB1R-QB": "SB1R-QB"}
+         "PF233-PB1R_placed.kicad_pcb": "kit_v6/PB1R/PF233-PB1R.kicad_pcb", "PF233-PM2_routed.kicad_pcb": "kit_v22/KICAD/PF233-PM2_routed.kicad_pcb", "PF233-HTA.kicad_pcb": "kit_v22/KICAD/PF233-HTA.kicad_pcb", "PF233-HB2_routed.kicad_pcb": "kit_v22/KICAD/PF233-HB2_routed.kicad_pcb", "TXJ1.kicad_pcb": "kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb", "SB1R-QA.kicad_pcb": "kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb", "SB1R-QB.kicad_pcb": "kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb"}
+DRU = {"PF233-CB1D_routed": "CB1D", "PF233-LB1_routed": "LB1", "PF233-PB1R_routed": "PB1R", "PF233-PM2_routed": "PM2", "PF233-HTA": "HTA", "PF233-HB2_routed": "HB2", "TXJ1": "TXJ1", "SB1R-QA": "SB1R-QA", "SB1R-QB": "SB1R-QB"}
 RESULTS = ["kit_v20/route_CB1D.json", "kit_v20/route_LB1.json", "kit_v20/route_PB1R.json", "kit_v22/drc_CB1D.json", "kit_v22/drc_LB1.json", "kit_v22/drc_PB1R.json", "kit_v22/kicad_drc_CB1D.json", "kit_v22/kicad_drc_LB1.json",
-           "kit_v22/kicad_drc_PB1R.json", "kit_v22/kicad_drc_TXJ1.json", "kit_v22/kicad_drc_SB1R-QA.json", "kit_v22/kicad_drc_SB1R-QB.json", "kit_v22/gerber_hv_CB1D.json", "kit_v22/gerber_plane_PB1R.json", "kit_v22/gerber_edge_CB1D.json", "kit_v22/gerber_edge_LB1.json", "kit_v22/gerber_edge_PB1R.json", "kit_v22/pb1r_check.json",
+           "kit_v22/kicad_drc_PB1R.json", "kit_v22/kicad_drc_TXJ1.json", "kit_v22/kicad_drc_SB1R-QA.json", "kit_v22/kicad_drc_SB1R-QB.json", "kit_v22/gerber_hv_CB1D.json", "kit_v22/gerber_plane_PB1R.json", "kit_v22/gerber_edge_CB1D.json", "kit_v22/gerber_edge_LB1.json", "kit_v22/gerber_edge_PB1R.json", "kit_v22/gerber_edge_PM2.json", "kit_v22/gerber_edge_HTA.json", "kit_v22/kicad_drc_HTA.json", "kit_v22/gerber_edge_HB2.json", "kit_v20/route_PM2.json", "kit_v20/route_HB2.json", "kit_v22/drc_PM2.json", "kit_v22/drc_HB2.json", "kit_v22/kicad_drc_PM2.json", "kit_v22/kicad_drc_HB2.json", "kit_v22/pb1r_check.json",
            "kit_v22/head_crosscheck.json", "kit_v22/fine_check.json", "kit_v22/sch_check.json", "kit_v22/stack_check.json", "kit_v22/system_budget.json", "kit_v22/SYSTEM_STRESS_MARGINS.csv", "kit_v22/wiring_audit.json",
            "kit_v22/trigger_check.json", "kit_v22/tx_system.json", "kit_v22/sbq_geometry.json", "kit_v23/tx_vbus.json", "kit_v23/TX_ONTIME_LUT.csv", "kit_v23/power_dock_check.json",
            "kit_v6/PB1R/PF233-PB1R_BOM.csv", "kit_v6/PB1R/PF233-PB1R_pickplace.csv", "kit_v6/PB1R/PF233-PB1R.net"]
