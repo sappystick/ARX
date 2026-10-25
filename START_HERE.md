@@ -1,17 +1,17 @@
 # START HERE - Arx / PHI-FOLD 233 (attach this file to a new Claude Code thread; generated, do not edit by hand)
 
 ## A. What the owner types (one line; nothing else is needed)
-`Read the attached START_HERE.md and follow it exactly. MODE: A.`   (or `MODE: B.` to run Steps 5, 4, 6 straight through; A pauses for "go" after each step)
+`Read the attached START_HERE.md and follow it exactly. MODE: A.`   (or `MODE: B.` to run Steps 4 and 6 straight through; A pauses for "go" after each step)
 
 ## B. Instructions to Claude (follow in order, do not ask the owner to repeat anything in this file)
-1. Get the work. It is on branch `claude/nice-turing-8i4gkt` of sappystick/arx and is NOT merged into the default branch:
-   `git fetch origin claude/nice-turing-8i4gkt && git checkout claude/nice-turing-8i4gkt` (if this session designates a different branch, create it from origin/claude/nice-turing-8i4gkt, say so in your first message, never push the default branch). The repo copy of this material is docs/HANDOFF_NEXT_THREAD.md; if it is missing you are on the wrong branch. The progress log (section 11) names the latest step.
+1. Get the work. It is on branch `claude/hopeful-bell-wms3xo` of sappystick/arx and is NOT merged into the default branch:
+   `git fetch origin claude/hopeful-bell-wms3xo && git checkout claude/hopeful-bell-wms3xo` (if this session designates a different branch, create it from origin/claude/hopeful-bell-wms3xo, say so in your first message, never push the default branch). The repo copy of this material is docs/HANDOFF_NEXT_THREAD.md; if it is missing you are on the wrong branch. The progress log (section 11) names the latest step.
 2. Run `scripts/bootstrap.sh | tail -1`, then verify the state with the commands in section 0 below (counts only). If anything differs, stop and report the difference.
 3. Everything below (standing rules, default decisions, contingencies) is pre-approved. Ask a question only if a decision cannot be undone and has no default.
-4. MODE from the owner's line: A = after each numbered step stop and wait for "go". B = run Step 5, Step 4, Step 6 in that order, one table per step, stop only after Step 6 or on (a) a regression you cannot fix, (b) a conflict with a CLAUDE.md rule, (c) an irreversible decision with no default. No mode given = A.
-5. Order: Step 3.95 (pipeline, already built: see section C) is done; next is Step 5 (datasheets, vendor sheets) -> Step 4 (PM2/HB2/HTA routing and audits) -> Step 6 (bench procedure, final sign-off, release r2, regroup summary). Resume where the progress log (section 11) says.
+4. MODE from the owner's line: A = after each numbered step stop and wait for "go". B = run Step 4 then Step 6, one table per step, stop only after Step 6 or on (a) a regression you cannot fix, (b) a conflict with a CLAUDE.md rule, (c) an irreversible decision with no default. No mode given = A.
+5. Order: Step 3.95 (pipeline, see section C) and Step 5 (datasheets, vendor sheets) are done; next is Step 4 (PM2/HB2/HTA routing and audits) -> Step 6 (bench procedure, final sign-off, release r2, regroup summary). Resume where the progress log (section 11) says.
 6. Do NOT start system simulation, firmware, audio, LED, improvement review or epoxy-chamber work (Steps 7-13): the owner pastes that program separately from prompts/HANDOFF_PROMPTS.md (prompt 2).
-7. Reporting: per step one paragraph + one table (what changed, what passed with counts, what is unproven, strict regress count, sign-off counts). Quiet output. One final commit per step (source + data + docs + progress-log row), push only to the working branch, no PR, no force-push. Commit trailers: `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>` and the session trailer given by the harness.
+7. Reporting: per step one paragraph + one table (what changed, what passed with counts, what is unproven, strict regress count, sign-off counts). Quiet output. One final commit per step (source + data + docs + progress-log row), push only to the working branch, no PR, no force-push. Commit trailers: the Co-Authored-By and Claude-Session lines the current session's harness gives.
 8. Claims: everything is MODELED or tool-checked; nothing is built or measured. Never write proven, ready for fabrication, record, will detect.
 
 ## C. Fast pipeline (use it; it replaces re-running everything)
@@ -32,10 +32,10 @@ Read this first, then CLAUDE.md's read-first list. It tells you where the work s
 ## 0. Resume in five commands
 
 ```bash
-cd /home/user/ARX            # branch claude/nice-turing-8i4gkt, push only here, never force, never open a PR unless asked
+cd /home/user/ARX            # branch claude/hopeful-bell-wms3xo, push only here, never force, never open a PR unless asked
 git status --short | wc -l; git log -3 --format='%h %s'          # expect 0 and the Step 3.95 commit (or later)
 scripts/bootstrap.sh | tail -1                                    # "environment OK" (also the SessionStart hook)
-python3 tests/regress.py | tail -1                                # strict: expect FAILS 0 SKIPS 0, 50 PASS
+python3 tests/regress.py | tail -1                                # strict: expect FAILS 0 SKIPS 0, 55 PASS
 python3 scripts/publish_data.py --check | head -1                 # expect 0 stale file(s)
 ```
 If any of these differs from the numbers above, stop and report the difference before doing anything else. Then read docs/STATUS.md (generated sign-off table), docs/UNVERIFIED.md (open evidence), docs/OPEN_ITEMS.md.
@@ -43,7 +43,7 @@ If any of these differs from the numbers above, stop and report the difference b
 ## 1. Standing rules from the owner (do not ask again)
 
 - **Pause after each numbered step**: report what changed, what passed (counts), what is unproven, the regress count and the sign-off counts; wait for the word "go". One paragraph plus one table per step; quiet output; counts and failures only.
-- **Git**: WIP source-only checkpoint commits whenever the stop hook demands; ONE final commit per step with source + data + docs and the trailers below; push only to `claude/nice-turing-8i4gkt`; never force-push; no PR unless asked. This overrides the generic release skill's "do not push".
+- **Git**: WIP source-only checkpoint commits whenever the stop hook demands; ONE final commit per step with source + data + docs and the trailers below; push only to `claude/hopeful-bell-wms3xo`; never force-push; no PR unless asked. This overrides the generic release skill's "do not push".
   Trailers: `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>` and `Claude-Session: https://claude.ai/code/session_01T7iU5pGiBfkKRBbe2JcTJx` (use the trailer the current session reminder gives).
 - **Files**: create/edit under src/, tests/, scripts/, docs/, data/, work/ through generators; delete/regenerate only inside work/; never `rm -rf` or glob deletes; never hand-edit STLs, Gerbers or KiCad files; new versions get new names and a `SUPERSEDED.txt` (with the reason) in the old folder.
 - **Network/dependencies**: apt, pip and the KiCad 9 PPA are approved (install only into the container or an isolated `--target` folder, never remove system packages). Fetch manufacturer datasheets and fabricator pages; **cite the URL and the exact number for every rating; if a page is unreachable mark it UNVERIFIED, never fill from memory.**
@@ -57,13 +57,13 @@ If any of these differs from the numbers above, stop and report the difference b
 
 | Item | State |
 |---|---|
-| Strict `tests/regress.py` | 50 PASS, 0 FAIL, 0 SKIP |
-| `make signoff` (docs/STATUS.md) | 38 PASS, 0 FAIL, 0 SKIP, 17 UNVERIFIED. `make signoff` is now incremental and parallel (section 13): no-change run 1 s, one-script edit about 23 s, forced full run 11 min (was 32.5 min). Before Step 3.95: cold run in a fresh clone reproduced every committed data file. |
-| Controls (`tests/release_signoff_controls.py`) | 11/11: release-tx refusals (existing revision, sign-off FAIL, stale data), evidence rule, vanishing rows, idempotent output |
+| Strict `tests/regress.py` | 55 PASS, 0 FAIL, 0 SKIP (Step 5 added 5 guards: vendor floor, through-hole rings, fuse land, fixed netlist date, Gerber edge read-back) |
+| `make signoff` (docs/STATUS.md) | 44 PASS, 0 FAIL, 0 SKIP, 19 UNVERIFIED (after Step 5). `make signoff` is now incremental and parallel (section 13): no-change run 1 s, one-script edit about 23 s, forced full run 11 min (was 32.5 min). Before Step 3.95: cold run in a fresh clone reproduced every committed data file. |
+| Controls (`tests/release_signoff_controls.py`) | 12/12: release-tx refusals (existing revision, sign-off FAIL, stale data), evidence rule (file and datasheet-section), vanishing rows, idempotent output; the vanish/evidence controls run on fixture folders (Step 5), so closing production IDs does not silence them |
 | Boards, KiCad 9.0.9 DRC with HV negative control | CB1D (61 parts, 44/44 nets), LB1, PB1R (15 nets + planes), TXJ1, SB1R-QA, SB1R-QB: 0 errors, 0 unconnected |
 | Not routed / not in the KiCad flow | PM2 (placed), HB2 (placed), HTA (Gerbers only, no KiCad file) |
 | Release package | `releases/TX_r1` (69 files, hash manifest, per-board CHECKS.md); `stl/MANIFEST.csv` 60 files, 0 changed |
-| Open evidence (docs/UNVERIFIED.md, 9 rows) | U-DS-PARTS, U-FAB-RULES, U-FAB-DRC, U-CAM-VIEW, U-ROUTE-PM2, U-ROUTE-HB2, U-KICAD-HTA, U-COLD-BOOTSTRAP, U-BENCH |
+| Open evidence (docs/UNVERIFIED.md, 11 rows) | U-DS-TXDRIVE, U-DS-OKI, U-DS-PACK, U-DS-BAV199, U-DS-HVTERM, U-FAB-DRC, U-CAM-VIEW, U-ROUTE-PM2, U-ROUTE-HB2, U-KICAD-HTA, U-BENCH (Step 5 closed U-FAB-RULES, U-COLD-BOOTSTRAP and the datasheet groups U-DS-PB1R, U-DS-POWERPATH, U-DS-RXAMP, U-DS-HALL) |
 
 Key MODELED numbers (assumptions in docs/ASSUMPTIONS.md, so you do not re-derive them):
 - TX stage over 7S 19.6-29.4 V at 20 A: turn-off identical (zero 3.76 us, quiet 5.56 us, RCL1 3.81 W); Vds peak 456 / 462 / 466 V at 19.6 / 26 / 29.4 V (650 V FET, film clamp).
@@ -103,7 +103,7 @@ Make targets worth knowing: `pcb-cb1d route-cb1d kicad-cb1d drc-cb1d gerber-cb1d
 8. **pcbnew module** lives in the system python (`/usr/bin/python3`, 3.12); the project python is 3.13. gerbonara needs `pip install --ignore-installed blinker` first (Debian owns blinker).
 9. **Sandbox/permissions**: `rm -rf` and glob deletes are blocked; write background scripts with the file tool (not a heredoc containing `rm`); run long jobs with `run_in_background` and ONE Monitor (its 30-minute window expires: re-arm once, that is only the timer). Never sleep-poll. `infineon.com` answered HTTP 202 and a guessed `ti.com` PDF URL gave 404: find real datasheet links with WebSearch first.
 10. **Stop hook** demands a commit+push whenever the tree is dirty: make a WIP source-only checkpoint, then the single final commit for the step.
-11. **Controls hard-code production IDs** (`tests/release_signoff_controls.py` deletes `U-ROUTE-PM2`, `U-KICAD-HTA`, `U-DS-PARTS` from a register COPY and expects FAIL). When Step 4/5 closes those IDs the controls will stop behaving: retarget them to a fixture first (see 5.4).
+11. **Controls used to hard-code production IDs**: RESOLVED in Step 5. `signoff_status.py` takes `--work` and `--evidence-root`; the controls build symlink fixtures (one result or evidence file removed, or a datasheet section marked UNVERIFIED). Datasheet evidence is per group: `docs/design/DATASHEET_LOG.md#U-DS-...` needs a `## U-DS-...: VERIFIED` heading. `rm -rf` stays blocked: build scratch work in new folders.
 
 ## 5. What is left, in the recommended order (and why)
 
@@ -157,7 +157,7 @@ Propose this to the owner and wait for their prompt; their text replaces this li
 ## 8. Paste-ready starter prompt for the new thread
 
 ```
-Resume the Arx / PHI-FOLD 233 transmit-region sign-off. Read docs/HANDOFF_NEXT_THREAD.md, then CLAUDE.md's read-first list. Verify the state with the five commands in section 0 (counts only); if anything differs, stop and report. Keep all CLAUDE.md rules and the standing rules in the handoff (pause after each numbered step, one final commit per step with source + data + docs, push only to claude/nice-turing-8i4gkt, cite URL + exact number for every rating, never fill from memory, nothing is built or measured).
+Resume the Arx / PHI-FOLD 233 transmit-region sign-off. Read docs/HANDOFF_NEXT_THREAD.md, then CLAUDE.md's read-first list. Verify the state with the five commands in section 0 (counts only); if anything differs, stop and report. Keep all CLAUDE.md rules and the standing rules in the handoff (pause after each numbered step, one final commit per step with source + data + docs, push only to claude/hopeful-bell-wms3xo, cite URL + exact number for every rating, never fill from memory, nothing is built or measured).
 First message: confirm the recommended order 5 -> 4 -> 6 (datasheets and vendor sheets before routing PM2/HB2), in one line, then start Step 5a. Do not start the system simulation, firmware, audio, LED, improvement review or epoxy-chamber work until I paste the Steps 7-13 prompt.
 ```
 
@@ -184,8 +184,8 @@ First message: confirm the recommended order 5 -> 4 -> 6 (datasheets and vendor 
 
 | If | Then |
 |---|---|
-| `docs/HANDOFF_NEXT_THREAD.md` is missing | You are on the wrong branch. `git fetch origin claude/nice-turing-8i4gkt && git checkout claude/nice-turing-8i4gkt`. This work is NOT merged into the default branch. |
-| The session designates a different branch | Work on the designated branch, but start it from `origin/claude/nice-turing-8i4gkt` (`git checkout -B <designated> origin/claude/nice-turing-8i4gkt`), say so in the first message, never push to the default branch, never force-push. |
+| `docs/HANDOFF_NEXT_THREAD.md` is missing | You are on the wrong branch. `git fetch origin claude/hopeful-bell-wms3xo && git checkout claude/hopeful-bell-wms3xo`. This work is NOT merged into the default branch. |
+| The session designates a different branch | Work on the designated branch, but start it from `origin/claude/hopeful-bell-wms3xo` (`git checkout -B <designated> origin/claude/hopeful-bell-wms3xo`), say so in the first message, never push to the default branch, never force-push. |
 | `git status` is dirty at the start | Read `git diff --stat`. If it is yours from an interrupted step, finish or checkpoint it; if you cannot tell, stop and report. Never discard changes. |
 | The branch is behind or diverged from origin | `git fetch`, fast-forward if possible; if it diverged, stop and report (never force-push, never rebase published commits). |
 | A push is rejected | Retry up to 4 times with 2 s, 4 s, 8 s, 16 s waits only for network errors; otherwise fetch, look at why, and report. |
@@ -209,7 +209,8 @@ First message: confirm the recommended order 5 -> 4 -> 6 (datasheets and vendor 
 | 2026-10-24 | 3.5: bootstrap, hook, signoff, strict policy, release-tx | 50a51c3 | 47 | 37/0/0/17 | first release releases/TX_r1 |
 | 2026-10-24 | 3.9: controls, evidence rule, seed clobbering fixed | fbfef49 | 48 | 38/0/0/17 | warm run idempotent; cold clone reproduced all committed data |
 | 2026-10-24 | handoff written | e218427 | 48 | 38/0/0/17 | this file |
-| 2026-10-24 | 3.95: incremental parallel sign-off pipeline | (this step's final commit) | 50 | 38/0/0/17 | forced full run 680 s (was 1953 s), no-change 1 s; see docs/PERFORMANCE.md |
+| 2026-10-24 | 3.95: incremental parallel sign-off pipeline | 63140fe | 50 | 38/0/0/17 | forced full run 680 s (was 1953 s), no-change 1 s; see docs/PERFORMANCE.md |
+| 2026-10-25 | 5: datasheets + vendor sheets (branch claude/hopeful-bell-wms3xo, started from 63140fe on claude/nice-turing-8i4gkt) | (this step's final commit) | 55 | 44/0/0/19 | vendor floor tightened (0.16 clearance, 0.18 PTH ring, 0.26 drill-copper, 0.41 drill-drill, all severity error); PB1R bank 9 x 100 uF hybrid (re-placed, PB1R_v2), CB1D_B3, LB1_v5; SMCJ30A, Si4401FDY, SF-1206S500-2, DRV5023BI; cans are eddy targets (OPEN_ITEMS 34); controls on fixtures; cold bootstrap closed; Gerber planes were in the notch since r1 (fixed, read back) |
 
 ## 12. Prompts that go with this file
 

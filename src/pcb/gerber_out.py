@@ -33,10 +33,19 @@ def export(pads_json,route_json,outdir,prefix,via_pad=0.6,via_drill=0.3,hatch=Fa
                 elif t["layer"]==layer and len(t["pts"])==1: flash(body,ap,"C",t["width"],t["width"],*t["pts"][0])
             for (x,y,n) in r["vias"]: flash(body,ap,"C",via_pad,via_pad,x,y)
         return fn
+    # planes keep the fabrication edge floor (dru_gen.GEN["edge"], 0.5 mm) from the round edge AND from the notch: before Step 5 they were clipped to a circle only
+    # (hatch copper reached R - 0.1 mm and 12-16 mm2 of it lay inside the notch; gerber_edge_check.py reads the files back)
+    import dru_gen; EDGE=dru_gen.GEN["edge"]+0.05
+    def clear_notch(ap,body):
+        if notch is None: return
+        s=notch; w=7.6+EDGE; y0=s*(36.5-EDGE); y1=s*(R+1.0)
+        body.append("%LPC*%"); body.append("G36*"); body.append(f"X{fl(-w)}Y{fl(-y0)}D02*")      # board y-down -> Gerber y-up, as stroke() and flash()
+        for (x,y) in ((w,y0),(w,y1),(-w,y1),(-w,y0)): body.append(f"X{fl(x)}Y{fl(-y)}D01*")
+        body.append("G37*"); body.append("%LPD*%")
     def plane(net):
         def fn(ap,body):
             if hatch:
-                pitch=1.6; w=0.4; rr=R-0.3
+                pitch=1.6; w=0.4; rr=R-EDGE-w/2
                 for v in np.arange(-rr+0.4,rr-0.3,pitch):
                     x=math.sqrt(max(rr*rr-v*v,0.0)); stroke(body,ap,w,[(-x,v),(x,v)]); stroke(body,ap,w,[(v,-x),(v,x)])
                 for (x,y,nn) in r["vias"]:
@@ -48,16 +57,16 @@ def export(pads_json,route_json,outdir,prefix,via_pad=0.6,via_drill=0.3,hatch=Fa
                     if p["tht"] and p["net"]!=net: flash(body,ap,"C",ap_pad(p),None,p["x"],p["y"])
                 for (x,y,nn) in r["vias"]:
                     if nn!=net: flash(body,ap,"C",ap_via(nn),None,x,y)
-                body.append("%LPD*%"); return
+                body.append("%LPD*%"); clear_notch(ap,body); return
             n=360; ang=np.linspace(0,2*math.pi,n,endpoint=False); body.append("G36*"); 
-            body.append(f"X{fl((R-0.3)*1)}Y{fl(0)}D02*")
-            for a in ang[1:]: body.append(f"X{fl((R-0.3)*math.cos(a))}Y{fl((R-0.3)*math.sin(a))}D01*")
-            body.append(f"X{fl(R-0.3)}Y{fl(0)}D01*"); body.append("G37*"); body.append("%LPC*%")
+            body.append(f"X{fl((R-EDGE)*1)}Y{fl(0)}D02*")
+            for a in ang[1:]: body.append(f"X{fl((R-EDGE)*math.cos(a))}Y{fl((R-EDGE)*math.sin(a))}D01*")
+            body.append(f"X{fl(R-EDGE)}Y{fl(0)}D01*"); body.append("G37*"); body.append("%LPC*%")
             for p in pads:
                 if p["tht"] and p["net"]!=net: flash(body,ap,"C",ap_pad(p),None,p["x"],p["y"])
             for (x,y,nn) in r["vias"]:
                 if nn!=net: flash(body,ap,"C",ap_via(nn),None,x,y)
-            body.append("%LPD*%")
+            body.append("%LPD*%"); clear_notch(ap,body)
         return fn
     names={"F.Cu":"F_Cu","In1.Cu":"In1_Cu","In2.Cu":"In2_Cu","In3.Cu":"In3_Cu","In4.Cu":"In4_Cu","B.Cu":"B_Cu"}
     for ly in all_layers:

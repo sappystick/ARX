@@ -24,9 +24,12 @@ def chk(path, f, uid=None):
     try: ok, detail = f(d)
     except Exception as e: return ("FAIL", f"unreadable {path}: {e}")
     return ("PASS" if ok else "FAIL", detail)
-def gerbers(dirn, prefix=None):
+def gerbers(dirn, prefix=None, edge=None):
     files = [f for f in glob.glob(f"{W}/{dirn}/*") if not f.endswith("jogbrjob")]
     ok = len([f for f in files if f.endswith(".gbr")]) >= 4 and any("PTH" in f and f.endswith(".drl") for f in files)
+    if edge:                                                       # copper-to-edge read back from the files (gerber_edge_check.py, Step 5)
+        e = rd(edge); ok = ok and bool(e) and e["ok"]
+        return ("PASS" if ok else "FAIL", f"{len(files)} files, edge read-back " + ("missing" if not e else ("OK" if e["ok"] else "FAIL")))
     return ("PASS" if ok else "FAIL", f"{len(files)} files")
 NA = ("-", "")
 def kicad(b, hv):
@@ -35,12 +38,12 @@ def kicad(b, hv):
 def indep(b): return chk(f"kit_v22/drc_{b}.json", lambda d: (d["clearance_violations"] == 0 and d["open_nets"] == 0 and d["edge_samples"] == 0 and d["notch_samples"] == 0, f"{d['clearance_violations']} violations, {d['open_nets']} opens"))
 def route(b): return chk(f"kit_v20/route_{b}.json", lambda d: (d["stats"]["nets_routed"] == d["stats"]["nets_to_route"] and not d["stats"]["failures"], f"{d['stats']['nets_routed']}/{d['stats']['nets_to_route']} nets"))
 B = {}
-B["CB1D"] = dict(route=route("CB1D"), indep=indep("CB1D"), kicad=kicad("CB1D", True), gerber=gerbers("kit_v22/GERBER_CB1D_v2"),
+B["CB1D"] = dict(route=route("CB1D"), indep=indep("CB1D"), kicad=kicad("CB1D", True), gerber=gerbers("kit_v22/GERBER_CB1D_v2", edge="kit_v22/gerber_edge_CB1D.json"),
                  plane=chk("kit_v22/gerber_hv_CB1D.json", lambda d: (d["failures"] == 0 and d["checked"] >= 8, f"{d['checked']} HV pad/via x plane checks")),
                  cross=chk("kit_v22/wiring_audit.json", lambda d: (not d["errors"], f"{d['link_pins']} link pins, {d['harness_conductors']} conductors")))
-B["LB1"] = dict(route=route("LB1"), indep=indep("LB1"), kicad=kicad("LB1", False), gerber=gerbers("kit_v22/GERBER_LB1_v2"), plane=NA,
+B["LB1"] = dict(route=route("LB1"), indep=indep("LB1"), kicad=kicad("LB1", False), gerber=gerbers("kit_v22/GERBER_LB1_v2", edge="kit_v22/gerber_edge_LB1.json"), plane=NA,
                 cross=chk("kit_v22/stack_check.json", lambda d: (all(r["result"] == "PASS" for r in d), f"{len(d)} stack-up checks")))
-B["PB1R"] = dict(route=route("PB1R"), indep=indep("PB1R"), kicad=kicad("PB1R", True), gerber=gerbers("kit_v22/GERBER_PB1R"),
+B["PB1R"] = dict(route=route("PB1R"), indep=indep("PB1R"), kicad=kicad("PB1R", True), gerber=gerbers("kit_v22/GERBER_PB1R", edge="kit_v22/gerber_edge_PB1R.json"),
                  plane=chk("kit_v22/gerber_plane_PB1R.json", lambda d: (d["failures"] == 0 and d["control_ok"] and d["hv_checks"] >= 4, f"{d['hv_checks']} checks, min {d['min_distance_mm']} mm, control {d['control_ok']}")),
                  cross=chk("kit_v22/pb1r_check.json", lambda d: (not [c for c in d["checks"] if c["result"] == "FAIL"], f"{len(d['checks'])} checks, {len([c for c in d['checks'] if c['result'] == 'WARN'])} warn")))
 B["TXJ1"] = dict(route=NA, indep=NA, kicad=kicad("TXJ1", True), gerber=gerbers("kit_v22/GERBER_TXJ1"), plane=NA,

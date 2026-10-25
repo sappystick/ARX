@@ -5,9 +5,9 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 2,"CL1A,CL1B",C1210,100n 630V,C0G/X7R HV,Capacitor_SMD:C_1210_3225Metric
 4,"CM1,CM2,CM3,CM4",C1210,10u 50V,X7R,Capacitor_SMD:C_1210_3225Metric
 1,C12A,C1210,22u 25V,X7R,Capacitor_SMD:C_1210_3225Metric
-6,"CD1,CD2,CD3,CD4,CD5,CD6",CAPD,150u 50V polymer Ta,"50 V polymer Ta or hybrid, low ESR; >= 130 uF each at 19.6 V (tx_vbus_sweep.py); 150 uF in 7343-43 at 50 V UNVERIFIED (ASSUMPTIONS 28)",Capacitor_Tantalum_SMD:CP_EIA-7343-43_Kemet-X
+9,"CB1,CB2,CB3,CB4,CB5,CB6,CB7,CB8,CB9",CAN10,100u 50V hybrid,"Panasonic EEHZC1H101P (ZC, 10x10.2, 28 mohm, 1.6 A rms)",Capacitor_SMD:CP_Elec_10x10
 2,"Q1A,Q1B",D2PAK,650V SJ 95mR,IPB65R095C7 class (VERIFY),Package_TO_SOT_SMD:TO-263-3_TabPin2
-1,DC1,DSMC,ES3J 600V 3A,ultrafast clamp diode,Diode_SMD:D_SMC
+1,DC1,DSMC,ES3J 600V 3A,"ultrafast clamp diode (Good-Ark ES3J: 600 V, trr 35 ns); below the 630 V rule: WATCH, no verified >= 630 V ultrafast SMC part",Diode_SMD:D_SMC
 1,DOC1,DSOD,BAS16,,Diode_SMD:D_SOD-123
 1,JC,HDR2x4,Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND,2.54 mm header,Connector:Pin_header_2x4_P2.54mm
 1,U3,LM393,LM393,TI LM393DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
@@ -18,7 +18,7 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,RNTC,R0603,10k NTC,NTC on the FET spreader,Resistor_SMD:R_0603_1608Metric
 1,RUS,R0603,1M,,Resistor_SMD:R_0603_1608Metric
 1,RF1,R0603,1k,,Resistor_SMD:R_0603_1608Metric
-1,RS1S,R2512,10m 3W,Kelvin shunt,Resistor_SMD:R_2512_6332Metric
+1,RS1S,R2512,10m 1W,Vishay WSL2512 10 mohm 1 % (1.0 W at 70 C; ordering code not checked); two-pad with the Kelvin sense track: the WSK2512 four-terminal sheet does not place its sense pads fully,Resistor_SMD:R_2512_6332Metric
 1,U1,TC4420,TC4420,Microchip TC4420,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
 1,JL1,TERM2,"Coil outer band: DRAIN, VBUS",5.08 mm terminal block,Connector:Terminal_block_1x2_P5.08mm
 1,JP,TERM4,Power in: VBUS VBUS GND GND,5.08 mm terminal block 10 A,Connector:Terminal_block_1x4_P5.08mm

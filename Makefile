@@ -101,7 +101,7 @@ route-cb1d: pcb-cb1d
 	cd $(W) && for i in 1 2 3 4 5 6; do $(PY) route_run.py CB1D; [ -f kit_v20/route_CB1D.json ] && break; done; test -f kit_v20/route_CB1D.json && $(PY) route_fix.py CB1D kit_v20/route_CB1D.json
 
 gerber-lb1: route-lb1
-	cd $(W) && $(PY) gerber_out.py LB1 hatch notch-1
+	cd $(W) && $(PY) gerber_out.py LB1 hatch notch-1 && $(PY) gerber_edge_check.py kit_v22/gerber_edge_LB1.json kit_v22/GERBER_LB1_v2 PF233-LB1-v2
 
 verify-quick: check
 	cd $(W) && $(PY) sim_head1.py
@@ -115,7 +115,7 @@ verify-full: verify-quick hood yoke
 	$(MAKE) gerber-lb1
 
 gerber-cb1d: route-cb1d
-	cd $(W) && $(PY) gerber_out.py CB1D hatch notch1 hv=COIL_A,COIL_B,DM1,DM2 && $(PY) gerber_hv_check.py CB1D kit_v22/GERBER_CB1D_v2 PF233-CB1D-v2 COIL_A,COIL_B,DM1,DM2
+	cd $(W) && $(PY) gerber_out.py CB1D hatch notch1 hv=COIL_A,COIL_B,DM1,DM2 && $(PY) gerber_hv_check.py CB1D kit_v22/GERBER_CB1D_v2 PF233-CB1D-v2 COIL_A,COIL_B,DM1,DM2 && $(PY) gerber_edge_check.py kit_v22/gerber_edge_CB1D.json kit_v22/GERBER_CB1D_v2 PF233-CB1D-v2
 
 drc-lb1:
 	cd $(W) && $(PY) drc.py LB1 kit_v20/route_LB1.json -1
@@ -141,7 +141,7 @@ kicad-pb1r: route-pb1r
 
 gerber-pb1r: kicad-pb1r
 	$(PY) src/pcb/kicad_gerber.py $(W)/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb PB1R $(W)/kit_v22/GERBER_PB1R PF233-PB1R
-	cd $(W) && $(PY) gerber_plane_check.py PB1R kit_v22/GERBER_PB1R PF233-PB1R DRAIN1,CLAMP1 In1:GND,In2:VBUS
+	cd $(W) && $(PY) gerber_plane_check.py PB1R kit_v22/GERBER_PB1R PF233-PB1R DRAIN1,CLAMP1 In1:GND,In2:VBUS && $(PY) gerber_edge_check.py kit_v22/gerber_edge_PB1R.json kit_v22/GERBER_PB1R PF233-PB1R
 
 # PB1R cross-check against the transmit stage (pulse path R/L, return vias, Kelvin, flyback-net parts, connectors, eddy estimate)
 check-pb1r: route-pb1r

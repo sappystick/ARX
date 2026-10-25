@@ -1,0 +1,579 @@
+{
+ "note": "Extracted 2026-10-25 from the AdvancedPCB capability page (facility rows: data-location attribute; columns Standard/Advanced/Development; units inches as on the page, no unit printed). Used by docs/design/FAB_RULES_VERIFIED.md.",
+ "sources": {
+  "advancedpcb_capabilities": {
+   "url": "https://www.advancedpcb.com/en-us/resources/pcb-capabilities-and-expanded-capabilities/",
+   "redirected_from": "https://4pcb.com/pcb-capabilities.html",
+   "sha256": "9e8a1fa97ef517be56c1e6d3f181ac929c2f7a16bfffbcae2a37c1e1b570965b"
+  },
+  "advancedpcb_tolerances": {
+   "url": "https://www.advancedpcb.com/en-us/resources/tolerances/",
+   "redirected_from": "https://4pcb.com/pcb-design-specifications",
+   "sha256": "cb88da68749e4715857d80aaf927d718f81c100ef2020b0394a9597e3136c37d"
+  },
+  "advancedpcb_finishes": {
+   "url": "https://www.advancedpcb.com/en-us/resources/pcb-finishes/",
+   "sha256": "771fe922c7f8c83942eb407d7b20d1cb71aee68c74bf9504f2a8e24c2247173f"
+  },
+  "ttm_conventional": {
+   "url": "https://www.ttm.com/en/solutions/printed-circuit-boards/conventional-pcb",
+   "sha256": "1321300f4f90a8ae7b82e9b6b7ae4b028c3c8b83da549532660a932db1c165d8"
+  },
+  "ttm_hdi_matrix": {
+   "url": "https://www.ttm.com/sites/default/files/documents/AMII-Overview.pdf",
+   "doc": "0001-000004-2024, PDF created 2024-11-22",
+   "sha256": "4c189f5d18bf8d3a2be10101fd6f7fe40c14e6326c5d16614eee123402628048"
+  },
+  "ttm_best_practices": {
+   "url": "https://www.ttm.com/sites/default/files/documents/5_Essential_PCB_Design_Best_Practices_(General).pdf",
+   "doc": "PDF created 2017-07-21",
+   "sha256": "b2056cd0bd07a483150a98c89836c57dbddee0c908276dd3c3c7f0b4ef91ca28"
+  }
+ },
+ "advancedpcb_facility_rows": {
+  "Outer Layer Width - 1 oz. Cu. Base": {
+   "SantaClaraCA": {
+    "standard": "0.0055",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.005",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "ChandlerAZ": {
+    "standard": "0.0055",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "AnaheimCA": {
+    "standard": "0.0055",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "MapleGroveMN": {
+    "standard": "0.004",
+    "advanced": "0.004",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.005",
+    "advanced": "",
+    "development": ""
+   }
+  },
+  "Outer Layer Space - Trace to Trace - 1 oz. Cu. Base": {
+   "SantaClaraCA": {
+    "standard": "0.0055",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.006",
+    "advanced": "0.0055",
+    "development": "0.005"
+   },
+   "ChandlerAZ": {
+    "standard": "0.0055",
+    "advanced": "0.0045",
+    "development": "0.0035"
+   },
+   "AnaheimCA": {
+    "standard": "0.0055",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "MapleGroveMN": {
+    "standard": "0.005",
+    "advanced": "0.004",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.005",
+    "advanced": "",
+    "development": ""
+   }
+  },
+  "Inner Layer Width - 1 oz. Cu": {
+   "SantaClaraCA": {
+    "standard": "0.0045",
+    "advanced": "0.0035",
+    "development": "0.003"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.004",
+    "advanced": "0.0035",
+    "development": "0.003"
+   },
+   "ChandlerAZ": {
+    "standard": "0.0045",
+    "advanced": "0.0035",
+    "development": "0.003"
+   },
+   "AnaheimCA": {
+    "standard": "0.0045",
+    "advanced": "0.0035",
+    "development": "0.003"
+   },
+   "MapleGroveMN": {
+    "standard": "0.004",
+    "advanced": "0.0035",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.004",
+    "advanced": "",
+    "development": ""
+   }
+  },
+  "Inner Layer Space - Trace to Trace - 1 oz. Cu": {
+   "SantaClaraCA": {
+    "standard": "0.0045",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.005",
+    "advanced": "0.004",
+    "development": "0.0035"
+   },
+   "ChandlerAZ": {
+    "standard": "0.0045",
+    "advanced": "0.004",
+    "development": "0.0035"
+   },
+   "AnaheimCA": {
+    "standard": "0.0045",
+    "advanced": "0.0035",
+    "development": "0.003"
+   },
+   "MapleGroveMN": {
+    "standard": "0.004",
+    "advanced": "0.004",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.004",
+    "advanced": "",
+    "development": ""
+   }
+  },
+  "Smallest Mechanical PTH - Via (aspect ratio driven)": {
+   "SantaClaraCA": {
+    "standard": "0.0059",
+    "advanced": "0.005",
+    "development": ""
+   },
+   "OrangeCountyCA": {
+    "standard": "0.0059",
+    "advanced": "0.0051",
+    "development": "0.004"
+   },
+   "ChandlerAZ": {
+    "standard": "0.0059",
+    "advanced": "0.005",
+    "development": ""
+   },
+   "AnaheimCA": {
+    "standard": "0.0059",
+    "advanced": "0.005",
+    "development": ""
+   },
+   "MapleGroveMN": {
+    "standard": "0.0043",
+    "advanced": "",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.006",
+    "advanced": "0.004",
+    "development": ""
+   }
+  },
+  "Smallest PTH - Component": {
+   "SantaClaraCA": {
+    "standard": "0.015",
+    "advanced": "",
+    "development": ""
+   },
+   "OrangeCountyCA": {
+    "standard": "0.018",
+    "advanced": "0.012",
+    "development": ""
+   },
+   "ChandlerAZ": {
+    "standard": "0.015",
+    "advanced": "",
+    "development": ""
+   },
+   "AnaheimCA": {
+    "standard": "0.015",
+    "advanced": "0.012",
+    "development": ""
+   },
+   "MapleGroveMN": {
+    "standard": "0.015",
+    "advanced": "",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.015",
+    "advanced": "",
+    "development": ""
+   }
+  },
+  "Minimum Drill to Copper for PTH": {
+   "SantaClaraCA": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": "0.006"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.008",
+    "advanced": "0.007",
+    "development": "0.006"
+   },
+   "ChandlerAZ": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": "0.007"
+   },
+   "AnaheimCA": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": "0.006"
+   },
+   "MapleGroveMN": {
+    "standard": "0.007",
+    "advanced": "0.006",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": ""
+   }
+  },
+  "Minimum hole to hole edge for PTH": {
+   "SantaClaraCA": {
+    "standard": "0.012",
+    "advanced": "0.01",
+    "development": "0.008"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.015",
+    "advanced": "0.008",
+    "development": "0.007"
+   },
+   "ChandlerAZ": {
+    "standard": "0.012",
+    "advanced": "0.01",
+    "development": "0.008"
+   },
+   "AnaheimCA": {
+    "standard": "0.012",
+    "advanced": "0.01",
+    "development": "0.008"
+   },
+   "MapleGroveMN": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.01",
+    "advanced": "",
+    "development": ""
+   }
+  },
+  "Drill/Pad Size - No Break Out - Thru drill.": {
+   "SantaClaraCA": {
+    "standard": "nominal +.015",
+    "advanced": "nominal + .012",
+    "development": ""
+   },
+   "OrangeCountyCA": {
+    "standard": "nominal +.012",
+    "advanced": "nominal + .010",
+    "development": "nominal + .008"
+   },
+   "ChandlerAZ": {
+    "standard": "nominal +.014",
+    "advanced": "nominal + .012",
+    "development": ""
+   },
+   "AnaheimCA": {
+    "standard": "nominal +.017",
+    "advanced": "nominal + .015",
+    "development": ""
+   },
+   "MapleGroveMN": {
+    "standard": "nominal +.012",
+    "advanced": "nominal + .010",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "nominal + .01",
+    "advanced": "",
+    "development": ""
+   }
+  },
+  "Minimum Pad": {
+   "SantaClaraCA": {
+    "standard": "0.015",
+    "advanced": "0.01",
+    "development": "0.008"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.012",
+    "advanced": "0.01",
+    "development": "N/A"
+   },
+   "ChandlerAZ": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": "0.008"
+   },
+   "AnaheimCA": {
+    "standard": "0.015",
+    "advanced": "0.01",
+    "development": "0.008"
+   },
+   "MapleGroveMN": {
+    "standard": "0.012",
+    "advanced": "0.01",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.015",
+    "advanced": "",
+    "development": ""
+   }
+  },
+  "Minimum Copper spacing To Board Edge": {
+   "SantaClaraCA": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": "0.005"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": "0.005"
+   },
+   "ChandlerAZ": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": "0.005"
+   },
+   "AnaheimCA": {
+    "standard": ".010",
+    "advanced": ".008",
+    "development": ".005"
+   },
+   "MapleGroveMN": {
+    "standard": "0.01",
+    "advanced": "0.008",
+    "development": "0.005"
+   },
+   "AuroraCO": {
+    "standard": "0.01",
+    "advanced": "",
+    "development": ""
+   }
+  },
+  "Minimum PTH Size That Can Be Filled With Non Conductive Material and Plated Over": {
+   "SantaClaraCA": {
+    "standard": "0.0079",
+    "advanced": "0.0059",
+    "development": "0.005"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.006",
+    "advanced": "0.005",
+    "development": ""
+   },
+   "ChandlerAZ": {
+    "standard": "0.0098",
+    "advanced": "0.0079",
+    "development": ""
+   },
+   "AnaheimCA": {
+    "standard": "0.0091",
+    "advanced": "0.0078",
+    "development": ""
+   },
+   "MapleGroveMN": {
+    "standard": "0.0059",
+    "advanced": "0.0059",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.008",
+    "advanced": ".004 or 10:1 aspect ratio",
+    "development": ""
+   }
+  },
+  "Maximum PTH Size That Can Be Filled With Non Conductive Material and Plated Over": {
+   "SantaClaraCA": {
+    "standard": "0.018",
+    "advanced": "0.02",
+    "development": ""
+   },
+   "OrangeCountyCA": {
+    "standard": "0.018",
+    "advanced": "0.025",
+    "development": "0.03"
+   },
+   "ChandlerAZ": {
+    "standard": "0.035",
+    "advanced": "0.04",
+    "development": ""
+   },
+   "AnaheimCA": {
+    "standard": "0.025",
+    "advanced": "0.028",
+    "development": "0.038"
+   },
+   "MapleGroveMN": {
+    "standard": "0.04",
+    "advanced": "0.03",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.018",
+    "advanced": "2:1 aspect ratio",
+    "development": ""
+   }
+  },
+  "Minimum Outer Layer Trace Widths for Boards With Filled and Plated Over Vias.": {
+   "SantaClaraCA": {
+    "standard": "0.005",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.005",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "ChandlerAZ": {
+    "standard": "0.005",
+    "advanced": "0.004",
+    "development": "0.0035"
+   },
+   "AnaheimCA": {
+    "standard": "0.005",
+    "advanced": "0.004",
+    "development": "0.003"
+   },
+   "MapleGroveMN": {
+    "standard": "0.004",
+    "advanced": "0.0035",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.005",
+    "advanced": "0.003",
+    "development": ""
+   }
+  },
+  "Minimum Outer Layer Spacing for Boards With Filled and Plated Over Vias.": {
+   "SantaClaraCA": {
+    "standard": "0.006",
+    "advanced": "0.005",
+    "development": "0.004"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.006",
+    "advanced": "0.005",
+    "development": "0.004"
+   },
+   "ChandlerAZ": {
+    "standard": "0.006",
+    "advanced": "0.005",
+    "development": "0.0045"
+   },
+   "AnaheimCA": {
+    "standard": ".006",
+    "advanced": ".005",
+    "development": ".004"
+   },
+   "MapleGroveMN": {
+    "standard": "0.004",
+    "advanced": "0.0035",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.005",
+    "advanced": "0.003",
+    "development": ""
+   }
+  },
+  "Solder Mask Web width over laminate (i.e. between pads)": {
+   "SantaClaraCA": {
+    "standard": "0.004",
+    "advanced": "0.003",
+    "development": "0.002"
+   },
+   "OrangeCountyCA": {
+    "standard": "0.0035",
+    "advanced": "0.003",
+    "development": "n/a"
+   },
+   "ChandlerAZ": {
+    "standard": "0.004",
+    "advanced": "0.0035",
+    "development": "0.003"
+   },
+   "AnaheimCA": {
+    "standard": "0.004",
+    "advanced": "0.003",
+    "development": "0.002"
+   },
+   "MapleGroveMN": {
+    "standard": "0.004",
+    "advanced": "0.004",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.004",
+    "advanced": "0.003",
+    "development": ""
+   }
+  },
+  "Maximum Tented Via": {
+   "SantaClaraCA": {
+    "standard": "0.016",
+    "advanced": "0.02",
+    "development": ""
+   },
+   "OrangeCountyCA": {
+    "standard": "0.014",
+    "advanced": "0.016",
+    "development": "0.018"
+   },
+   "ChandlerAZ": {
+    "standard": "0.016",
+    "advanced": "0.02",
+    "development": ""
+   },
+   "AnaheimCA": {
+    "standard": "0.016",
+    "advanced": "0.02",
+    "development": ""
+   },
+   "MapleGroveMN": {
+    "standard": "0.016",
+    "advanced": "0.02",
+    "development": ""
+   },
+   "AuroraCO": {
+    "standard": "0.018",
+    "advanced": "",
+    "development": ""
+   }
+  }
+ }
+}

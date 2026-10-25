@@ -5,10 +5,10 @@
  "edge_samples": 0,
  "notch_samples": 0,
  "min_gap_by_layer": {
-  "F.Cu": 0.17,
-  "In2.Cu": 0.17,
-  "In3.Cu": 0.17,
-  "B.Cu": 0.17
+  "F.Cu": 0.205,
+  "In2.Cu": 0.205,
+  "In3.Cu": 0.205,
+  "B.Cu": 0.205
  },
  "violations": [],
  "opens": []

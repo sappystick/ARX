@@ -1,9 +1,9 @@
 {
  "counts": {
-  "PASS": 38,
+  "PASS": 44,
   "FAIL": 0,
   "SKIP": 0,
-  "UNVERIFIED": 17
+  "UNVERIFIED": 19
  },
  "boards": {
   "CB1D": {
@@ -21,7 +21,7 @@
    },
    "gerber": {
     "state": "PASS",
-    "detail": "10 files"
+    "detail": "10 files, edge read-back OK"
    },
    "plane": {
     "state": "PASS",
@@ -47,7 +47,7 @@
    },
    "gerber": {
     "state": "PASS",
-    "detail": "8 files"
+    "detail": "8 files, edge read-back OK"
    },
    "plane": {
     "state": "-",
@@ -73,7 +73,7 @@
    },
    "gerber": {
     "state": "PASS",
-    "detail": "12 files"
+    "detail": "12 files, edge read-back OK"
    },
    "plane": {
     "state": "PASS",
@@ -81,7 +81,7 @@
    },
    "cross": {
     "state": "PASS",
-    "detail": "13 checks, 1 warn"
+    "detail": "14 checks, 2 warn"
    }
   },
   "TXJ1": {
@@ -256,7 +256,7 @@
   },
   "stress table (only the documented LED-rail row may fail)": {
    "state": "PASS",
-   "detail": "1 fail (LED rail, by design), 1 watch"
+   "detail": "1 fail (LED rail, by design), 2 watch"
   },
   "TX stage over 19.6-29.4 V (reproduces sim_head1 at 26 V)": {
    "state": "PASS",
@@ -280,21 +280,53 @@
   },
   "release-tx / sign-off controls (refusals, evidence rule, idempotence)": {
    "state": "PASS",
-   "detail": "11/11 controls behave as intended"
+   "detail": "12/12 controls behave as intended"
   },
   "tests/regress.py (strict: a missing result FAILs)": {
    "state": "PASS",
-   "detail": "50 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
+   "detail": "55 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {
-  "U-DS-PARTS": {
+  "U-DS-TXDRIVE": {
    "state": "UNVERIFIED",
-   "detail": "Part ratings (IPB65R095C7, ES3J/ES3K, TC4420, LM393, OKI-78SR-12/-5, SMCJ33A, R2512, MT60, P30B, BAV199, 74HC4051, OPA2365, OPA2211, 50 V bulk capacitor, four-terminal shunt)"
+   "detail": "Infineon IPB65R095C7 (Rds(on) vs temperature, Qg, current rating) and Microchip TC4420 (pinout, drive current): both pages refused (202 / 403), DATASHEET_LOG"
+  },
+  "U-DS-PB1R": {
+   "state": "PASS",
+   "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-PB1R"
+  },
+  "U-DS-OKI": {
+   "state": "UNVERIFIED",
+   "detail": "Murata OKI-78SR-12/1.5-W36 and -5/1.5-W36 (input range, pinout): murata.com answered 500"
+  },
+  "U-DS-POWERPATH": {
+   "state": "PASS",
+   "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-POWERPATH"
+  },
+  "U-DS-PACK": {
+   "state": "UNVERIFIED",
+   "detail": "Molicel P30B cell data (molicel.com 404) and the Amass MT60 body envelope (drawing not read; ratings verified)"
+  },
+  "U-DS-RXAMP": {
+   "state": "PASS",
+   "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-RXAMP"
+  },
+  "U-DS-BAV199": {
+   "state": "UNVERIFIED",
+   "detail": "Nexperia BAV199 (leakage, capacitance, surge): page answered 403"
+  },
+  "U-DS-HALL": {
+   "state": "PASS",
+   "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-HALL"
+  },
+  "U-DS-HVTERM": {
+   "state": "UNVERIFIED",
+   "detail": "PB1R JL1 (5.08 mm coil terminal block on DRAIN1, about 466 V) and the RCL1 lid resistor bank (5 k 10 W): no part with a manufacturer sheet read; Phoenix MKDS 1,5/2-5,08 is rated 250 / 400 / 630 V by overvoltage category in distributor listings only"
   },
   "U-FAB-RULES": {
-   "state": "UNVERIFIED",
-   "detail": "Advanced Circuits / TTM capability, via-in-pad/filled-via and finish pages vs the dru_gen.py floor"
+   "state": "PASS",
+   "detail": "evidence present: docs/design/FAB_RULES_VERIFIED.md"
   },
   "U-FAB-DRC": {
    "state": "UNVERIFIED",
@@ -309,19 +341,21 @@
    "detail": "Every bench item in docs/design/BENCH_FIRST_ARTICLE_TX.md (written in Step 6, NOT RUN)"
   },
   "U-COLD-BOOTSTRAP": {
-   "state": "UNVERIFIED",
-   "detail": "scripts/bootstrap.sh cold path (KiCad install in a bare container) tested end to end; the warm path and the PPA key/source steps are tested"
+   "state": "PASS",
+   "detail": "evidence present: data/results/bootstrap_cold.json"
   }
  },
  "unverified": {
-  "U-DS-PARTS": "Part ratings (IPB65R095C7, ES3J/ES3K, TC4420, LM393, OKI-78SR-12/-5, SMCJ33A, R2512, MT60, P30B, BAV199, 74HC4051, OPA2365, OPA2211, 50 V bulk capacitor, four-terminal shunt)",
-  "U-FAB-RULES": "Advanced Circuits / TTM capability, via-in-pad/filled-via and finish pages vs the dru_gen.py floor",
+  "U-DS-TXDRIVE": "Infineon IPB65R095C7 (Rds(on) vs temperature, Qg, current rating) and Microchip TC4420 (pinout, drive current): both pages refused (202 / 403), DATASHEET_LOG",
+  "U-DS-OKI": "Murata OKI-78SR-12/1.5-W36 and -5/1.5-W36 (input range, pinout): murata.com answered 500",
+  "U-DS-PACK": "Molicel P30B cell data (molicel.com 404) and the Amass MT60 body envelope (drawing not read; ratings verified)",
+  "U-DS-BAV199": "Nexperia BAV199 (leakage, capacitance, surge): page answered 403",
+  "U-DS-HVTERM": "PB1R JL1 (5.08 mm coil terminal block on DRAIN1, about 466 V) and the RCL1 lid resistor bank (5 k 10 W): no part with a manufacturer sheet read; Phoenix MKDS 1,5/2-5,08 is rated 250 / 400 / 630 V by overvoltage category in distributor listings only",
   "U-FAB-DRC": "Fabricator's own DRC/CAM review of every board",
   "U-CAM-VIEW": "Gerbers opened in a CAM viewer (visual check of the KiCad-written and gerber_out.py files)",
   "U-ROUTE-PM2": "PM2 routed, KiCad-DRC'd, Gerbers",
   "U-ROUTE-HB2": "HB2 routed, KiCad-DRC'd, Gerbers",
   "U-KICAD-HTA": "HTA in the KiCad DRC flow",
-  "U-COLD-BOOTSTRAP": "scripts/bootstrap.sh cold path (KiCad install in a bare container) tested end to end; the warm path and the PPA key/source steps are tested",
   "U-BENCH": "Every bench item in docs/design/BENCH_FIRST_ARTICLE_TX.md (written in Step 6, NOT RUN)"
  }
 }

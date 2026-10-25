@@ -1,0 +1,32 @@
+{
+ "item": "U-COLD-BOOTSTRAP",
+ "date": "2026-10-25",
+ "container": "fresh Claude Code cloud container, no KiCad and no warm work/ before the run (Step 5 thread)",
+ "bootstrap": {
+  "command": "scripts/bootstrap.sh",
+  "result": [
+   "[bootstrap] installing KiCad 9 (PPA by hand)",
+   "[bootstrap] python      Python 3.13.17",
+   "[bootstrap] numpy       2.5.3 scipy 1.18.1 matplotlib 3.11.2",
+   "[bootstrap] gerbonara   1.6.3 shapely 2.2.0",
+   "[bootstrap] kicad-cli   9.0.9 | pcbnew 9.0.9",
+   "[bootstrap] work/       116 files",
+   "[bootstrap] environment OK"
+  ],
+  "kicad_install": "PPA added by hand by the script; apt set up 4 packages including kicad 9.0.9~ubuntu24.04.1",
+  "packages_set_up": 4
+ },
+ "cold_signoff": {
+  "command": "make signoff-cold",
+  "pipeline": "pipeline: 42 ran, 0 skipped, wall 494.0s, sum of step times 1206.9s, jobs 4",
+  "steps_ok": 42,
+  "graph_stale": "formers-low overlapped sim-head1, hood, upper, sims-rx, sbq-fast and head-audit (the graph had been learned in a warm container); every output still matched the committed data; graph re-learned with make pipeline-graph",
+  "after": {
+   "regress_strict": "50 PASS, FAILS 0 SKIPS 0",
+   "publish_check": "0 stale file(s)",
+   "git_status_lines": 0,
+   "signoff": "38 PASS, 0 FAIL, 0 SKIP, 17 UNVERIFIED"
+  }
+ },
+ "not_tested": "a container without network access to the KiCad PPA"
+}

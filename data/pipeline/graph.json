@@ -1,5 +1,5 @@
 {
-"note": "learned by scripts/pipeline.py graph from the traces of a serial run; paths only",
+"note": "learned by scripts/pipeline.py --update-graph from a traced run; paths only",
 "steps": {
 "audit-system": {
 "L": [
@@ -892,7 +892,6 @@
 "data/kicad/sch/PF233-PB1R.kicad_sch",
 "data/kicad/sch/PF233-PM1.kicad_sch",
 "data/kicad/sch/PF233-PM2.kicad_sch",
-"data/results/PF233-PB1R.net",
 "data/results/PF233-PB1R_BOM.csv",
 "data/results/PF233-PB1R_pickplace.csv",
 "data/results/SYSTEM_STRESS_MARGINS.csv",
@@ -1038,7 +1037,9 @@
 "work/kit_v6/PB1R/PF233-PB1R_BOM.csv",
 "work/kit_v6/PB1R/PF233-PB1R_pickplace.csv"
 ],
-"W": []
+"W": [
+"data/results/PF233-PB1R.net"
+]
 },
 "route-cb1d": {
 "L": [
@@ -1234,7 +1235,6 @@
 "R": [
 "data/pipeline/graph.json",
 "docs/UNVERIFIED.md",
-"scripts/pipeline.py",
 "scripts/signoff_status.py",
 "tests/regress.py",
 "work/kit_v18/PARTS/hood_v3_report.json",

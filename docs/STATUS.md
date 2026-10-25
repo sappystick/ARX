@@ -2,7 +2,7 @@
 
 Everything here is MODELED or tool-checked; nothing is built or measured. PASS means the tool check passed, not that a board is ready for fabrication.
 
-**38 PASS, 0 FAIL, 0 SKIP, 17 UNVERIFIED**
+**44 PASS, 0 FAIL, 0 SKIP, 19 UNVERIFIED**
 
 ## Boards
 | board | route | indep. DRC | KiCad DRC | Gerber+drill | plane HV | cross-check |
@@ -23,21 +23,29 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 | cylinder v5 + parts + 47 geometry checks | PASS | 47 checks |
 | KiCad schematics (9 boards, nets rebuilt = netlists) | PASS | 9 boards |
 | wiring audit (links + harness) | PASS | 53 pins, 50 conductors |
-| stress table (only the documented LED-rail row may fail) | PASS | 1 fail (LED rail, by design), 1 watch |
+| stress table (only the documented LED-rail row may fail) | PASS | 1 fail (LED rail, by design), 2 watch |
 | TX stage over 19.6-29.4 V (reproduces sim_head1 at 26 V) | PASS | Vds 456-466 V, ton table |
 | PM2 dock chain (time-domain) | PASS | 13 checks |
 | full head cross-check (26 solids, 3D interference) | PASS | 42 checks, 2 warnings |
 | 0.2 mm fine check | PASS | board discs and bodies clear |
 | voxel interference (window, bridge, junction) | PASS | 28 pairs |
-| release-tx / sign-off controls (refusals, evidence rule, idempotence) | PASS | 11/11 controls behave as intended |
-| tests/regress.py (strict: a missing result FAILs) | PASS | 50 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0 |
+| release-tx / sign-off controls (refusals, evidence rule, idempotence) | PASS | 12/12 controls behave as intended |
+| tests/regress.py (strict: a missing result FAILs) | PASS | 55 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0 |
 
 ## Evidence still missing (docs/UNVERIFIED.md)
 | id | state | item |
 |---|---|---|
-| U-DS-PARTS | UNVERIFIED | Part ratings (IPB65R095C7, ES3J/ES3K, TC4420, LM393, OKI-78SR-12/-5, SMCJ33A, R2512, MT60, P30B, BAV199, 74HC4 |
-| U-FAB-RULES | UNVERIFIED | Advanced Circuits / TTM capability, via-in-pad/filled-via and finish pages vs the dru_gen.py floor |
+| U-DS-TXDRIVE | UNVERIFIED | Infineon IPB65R095C7 (Rds(on) vs temperature, Qg, current rating) and Microchip TC4420 (pinout, drive current) |
+| U-DS-PB1R | PASS | closed |
+| U-DS-OKI | UNVERIFIED | Murata OKI-78SR-12/1.5-W36 and -5/1.5-W36 (input range, pinout): murata.com answered 500 |
+| U-DS-POWERPATH | PASS | closed |
+| U-DS-PACK | UNVERIFIED | Molicel P30B cell data (molicel.com 404) and the Amass MT60 body envelope (drawing not read; ratings verified) |
+| U-DS-RXAMP | PASS | closed |
+| U-DS-BAV199 | UNVERIFIED | Nexperia BAV199 (leakage, capacitance, surge): page answered 403 |
+| U-DS-HALL | PASS | closed |
+| U-DS-HVTERM | UNVERIFIED | PB1R JL1 (5.08 mm coil terminal block on DRAIN1, about 466 V) and the RCL1 lid resistor bank (5 k 10 W): no pa |
+| U-FAB-RULES | PASS | closed |
 | U-FAB-DRC | UNVERIFIED | Fabricator's own DRC/CAM review of every board |
 | U-CAM-VIEW | UNVERIFIED | Gerbers opened in a CAM viewer (visual check of the KiCad-written and gerber_out.py files) |
 | U-BENCH | UNVERIFIED | Every bench item in docs/design/BENCH_FIRST_ARTICLE_TX.md (written in Step 6, NOT RUN) |
-| U-COLD-BOOTSTRAP | UNVERIFIED | scripts/bootstrap.sh cold path (KiCad install in a bare container) tested end to end; the warm path and the PP |
+| U-COLD-BOOTSTRAP | PASS | closed |

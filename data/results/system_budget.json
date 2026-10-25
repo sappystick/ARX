@@ -42,7 +42,7 @@
    "margin_pct": 27.5,
    "required_margin_pct": 20,
    "status": "PASS",
-   "note": ""
+   "note": "VRRM 600 V (Good-Ark ES3x, DATASHEET_LOG); below the 630 V rule: no verified >= 630 V ultrafast SMC part (WATCH in DATASHEET_LOG)"
   },
   {
    "part": "ES3J clamp diode",
@@ -53,7 +53,7 @@
    "margin_pct": 80.1,
    "required_margin_pct": 50,
    "status": "PASS",
-   "note": "datasheet IFSM is non-repetitive 8.3 ms: repetitive 4 us pulses at 400 Hz must be confirmed"
+   "note": "IFSM 100 A is non-repetitive 8.3 ms (Good-Ark ES3x): repetitive 4 us pulses at 400 Hz are not rated by the sheet"
   },
   {
    "part": "CL1A/B clamp capacitor 630 V",
@@ -81,12 +81,12 @@
    "part": "3 x 110 ohm R2512 chain",
    "stress": "voltage per resistor at flyback peak",
    "value": 145.456,
-   "rating": 200,
+   "rating": 500,
    "unit": "V",
-   "margin_pct": 27.3,
+   "margin_pct": 70.9,
    "required_margin_pct": 20,
    "status": "PASS",
-   "note": "assumed 200 V working voltage for R2512"
+   "note": "Vishay CRCW2512 e3 Umax 500 V (document 20035, DATASHEET_LOG; was assumed 200 V); insulation against ambient 300 V for 1 min"
   },
   {
    "part": "3 x 110 ohm R2512 chain",
@@ -122,15 +122,15 @@
    "note": ""
   },
   {
-   "part": "SMCJ33A TVS",
+   "part": "SMCJ30A TVS (PM2, CB1D)",
    "stress": "VBUS maximum (7S full charge 29.4 V)",
    "value": 29.4,
-   "rating": 33,
+   "rating": 30,
    "unit": "V",
-   "margin_pct": 10.9,
+   "margin_pct": 2.0,
    "required_margin_pct": 5,
-   "status": "PASS",
-   "note": "standoff voltage"
+   "status": "WATCH",
+   "note": "rated stand-off VWM (IR <= 1 uA at VWM, Vishay 88394); chosen over SMCJ33A because its 48.4 V clamp stays under the 50 V capacitors (SMCJ33A: 53.3 V)"
   },
   {
    "part": "OKI-78SR-5 module",
@@ -177,7 +177,7 @@
    "note": ""
   },
   {
-   "part": "PB1R bulk capacitors 6 x 150 uF -20 %",
+   "part": "PB1R bulk capacitors 9 x 100 uF -20 %",
    "stress": "voltage droop per 20 A pulse at 19.6 V (charge 612.1 uC, loop R and sag included; tx_vbus_sweep.py)",
    "value": 0.85,
    "rating": 0.9800000000000001,
@@ -188,7 +188,7 @@
    "note": "5 percent of VBUS allowed; the earlier row used 415 uC at 26 V and 900 uF nominal (CORRECTIONS)"
   },
   {
-   "part": "PB1R bulk capacitors CD1-CD6 (50 V)",
+   "part": "PB1R bulk capacitors CB1-CB9 (50 V)",
    "stress": "voltage at the 7S full charge",
    "value": 29.4,
    "rating": 50.0,
@@ -196,7 +196,7 @@
    "margin_pct": 41.2,
    "required_margin_pct": 30,
    "status": "PASS",
-   "note": "was 35 V parts at 84 percent of rating; 150 uF at 50 V in 7343-43 is UNVERIFIED (ASSUMPTIONS 28); each part must supply >= 130 uF at 19.6 V"
+   "note": "Panasonic EEHZC1H101P 50 V 100 uF (ZC technical data, DATASHEET_LOG); each part must supply >= 87 uF at 19.6 V (-20 %)"
   },
   {
    "part": "PB1R 12 V module M12",
@@ -234,10 +234,10 @@
   {
    "part": "PM2 fuse F1 5 A slow",
    "stress": "battery-side peak through F1 at the BMS cut-off (time-domain chain, power_dock_check.py)",
-   "value": 2.518,
+   "value": 3.094,
    "rating": 5.0,
    "unit": "A",
-   "margin_pct": 49.6,
+   "margin_pct": 38.1,
    "required_margin_pct": 20,
    "status": "PASS",
    "note": "slow-blow: carries the rated current continuously; peaks last about a millisecond"
@@ -321,7 +321,7 @@
   }
  ],
  "fails": 1,
- "watch": 1,
+ "watch": 2,
  "power": {
   "scan 8 A / 800 Hz": {
    "W": 4.7,

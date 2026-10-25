@@ -53,12 +53,15 @@
    "check": "each bulk capacitor ground pad has at least 2 GND vias within 3 mm",
    "result": "PASS",
    "value": {
-    "CD1.2": 4,
-    "CD2.2": 4,
-    "CD3.2": 4,
-    "CD4.2": 4,
-    "CD5.2": 4,
-    "CD6.2": 4
+    "CB1.2": 4,
+    "CB2.2": 4,
+    "CB3.2": 4,
+    "CB4.2": 4,
+    "CB5.2": 4,
+    "CB6.2": 4,
+    "CB7.2": 4,
+    "CB8.2": 4,
+    "CB9.2": 4
    },
    "limit": ">= 2",
    "note": ""
@@ -169,6 +172,13 @@
    "value": "4.7e-05 x the nugget",
    "limit": "< 1e-3",
    "note": "ring L 213 nH, R 0.36 ohm, tau 0.59 us vs gate 7 us; mesh cells (1.5 mm gaps) are smaller loops with shorter tau"
+  },
+  {
+   "check": "bulk-capacitor cans (9 x aluminium): return less than 1e-3 of the nugget (as the hatched planes do); WARN = listed exception, owner decision (OPEN_ITEMS 34)",
+   "result": "WARN",
+   "value": "0.51 x the nugget",
+   "limit": "< 1e-3",
+   "note": "tau 110 us (1.0 mm wall; 0.3 mm gives 33 us) vs gate 7 us: the cans do NOT decay before the gate, so the result hardly depends on the wall. Static and rigidly mounted it is an offset for the air template; the 7343 polymer-Ta it replaces had no closed can"
   }
  ],
  "pulse_path": {
@@ -201,6 +211,8 @@
   "ratio_solid": 8.015164350863012,
   "ratio_hatch_ring": 4.72717633855759e-05,
   "tau_solid_us": 15.974358974358973,
-  "tau_ring_us": 0.5907791311476679
+  "tau_ring_us": 0.5907791311476679,
+  "ratio_cans": 0.5116438093914569,
+  "tau_can_us": 109.95574287564277
  }
 }

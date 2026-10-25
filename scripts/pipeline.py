@@ -50,9 +50,9 @@ STEPS = [
     ("sch", W + "python3 sch_export.py && python3 trigger_check.py", ""),
     ("sims-rx", W + "python3 sim_cage_rx.py && python3 sim_tanr.py && python3 sim_quadbearing.py", ""),
     ("route-lb1", route("LB1"), ""),
-    ("gerber-lb1", W + "python3 gerber_out.py LB1 hatch notch-1", ""),
+    ("gerber-lb1", W + "python3 gerber_out.py LB1 hatch notch-1 && python3 gerber_edge_check.py kit_v22/gerber_edge_LB1.json kit_v22/GERBER_LB1_v2 PF233-LB1-v2", ""),
     ("route-cb1d", route("CB1D"), ""),
-    ("gerber-cb1d", W + "python3 gerber_out.py CB1D hatch notch1 hv=COIL_A,COIL_B,DM1,DM2 && python3 gerber_hv_check.py CB1D kit_v22/GERBER_CB1D_v2 PF233-CB1D-v2 COIL_A,COIL_B,DM1,DM2", ""),
+    ("gerber-cb1d", W + "python3 gerber_out.py CB1D hatch notch1 hv=COIL_A,COIL_B,DM1,DM2 && python3 gerber_hv_check.py CB1D kit_v22/GERBER_CB1D_v2 PF233-CB1D-v2 COIL_A,COIL_B,DM1,DM2 && python3 gerber_edge_check.py kit_v22/gerber_edge_CB1D.json kit_v22/GERBER_CB1D_v2 PF233-CB1D-v2", ""),
     ("route-pb1r", route("PB1R") + " && python3 viafarm.py PB1R kit_v20/route_PB1R.json", ""),
     ("drc-lb1", W + "python3 drc.py LB1 kit_v20/route_LB1.json -1", ""),
     ("drc-cb1d", W + "python3 drc.py CB1D kit_v20/route_CB1D.json 1 COIL_A,COIL_B,DM1,DM2", ""),
@@ -61,7 +61,7 @@ STEPS = [
     ("kicad-cb1d", "mkdir -p work/kit_v22/KICAD && " + W + "python3 kicad_inject.py CB1D kit_v20/route_CB1D.json kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb 1 six", ""),
     ("kicad-pb1r", "mkdir -p work/kit_v22/KICAD && " + W + "python3 rect_inject.py PB1R kit_v20/route_PB1R.json kit_v6/PB1R/PF233-PB1R.kicad_pcb kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb", ""),
     ("gerber-pb1r", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb PB1R work/kit_v22/GERBER_PB1R PF233-PB1R && "
-                    + W + "python3 gerber_plane_check.py PB1R kit_v22/GERBER_PB1R PF233-PB1R DRAIN1,CLAMP1 In1:GND,In2:VBUS", "kicad"),
+                    + W + "python3 gerber_plane_check.py PB1R kit_v22/GERBER_PB1R PF233-PB1R DRAIN1,CLAMP1 In1:GND,In2:VBUS && python3 gerber_edge_check.py kit_v22/gerber_edge_PB1R.json kit_v22/GERBER_PB1R PF233-PB1R", "kicad"),
     ("sbq-fast", W + "python3 sbq_gen2.py && python3 sbq_export.py && python3 sbq_sim.py && python3 sbq_damp2.py", ""),
     ("pcb-hta", W + "python3 hta_gerber.py > /dev/null", ""),
     ("kicad-drc", "; ".join([f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-{b}_routed.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("CB1D", "LB1", "PB1R")]

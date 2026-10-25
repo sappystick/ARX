@@ -1,0 +1,1 @@
+Superseded 2026-10-25 by PB1R_v2 (Step 5): the 150 uF / 50 V polymer-Ta bulk capacitors (CD1-CD6, 7343-43) were not found; the bank is now 9 x Panasonic EEHZC1H101P (10 x 10.2 mm hybrid cans, CB1-CB9), so the board was re-placed and re-routed. Kept for provenance and because releases/TX_r1 shipped it.

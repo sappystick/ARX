@@ -57,13 +57,13 @@
  },
  "PB1R": {
   "board": "PB1R",
-  "parts": 39,
+  "parts": 42,
   "nets": 19,
-  "pins": 101,
+  "pins": 107,
   "paper": "A1",
   "check": {
    "nets": 19,
-   "nodes": 101,
+   "nodes": 107,
    "mismatched_nets": [],
    "stray_labels": 0,
    "ok": true
