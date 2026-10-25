@@ -65,7 +65,7 @@ if ok:
 # ---- 2 return vias on the shunt ground pad and the bank
 def vias_near(net, ref, num, rad):
     p = pad[(ref, num)]; return [v for v in RT["vias"] if v[2] == net and math.dist(v[:2], (p["x"], p["y"])) <= rad]
-n_sh = len(vias_near("GND", "RS1S", "2", 3.0)); n_bank = {f"CD{i}.2": len(vias_near("GND", f"CD{i}", "2", 3.0)) for i in range(1, 7)}
+n_sh = len(vias_near("GND", "RS1S", "2", 3.0)); n_bank = {f"CB{i}.2": len(vias_near("GND", f"CB{i}", "2", 3.0)) for i in range(1, 10)}
 I_rms = 20 * math.sqrt(tx["ton_rule"][-1]["duty_pct"] / 100 / 3)
 C("shunt ground pad: at least 4 GND vias within 3 mm (pulse 20 A peak, 1.8 A rms; 5 A per via peak at most)", n_sh >= 4, n_sh, ">= 4", f"{20 / max(n_sh, 1):.1f} A peak and {I_rms / max(n_sh, 1):.2f} A rms per via; via rating from memory, UNVERIFIED")
 C("each bulk capacitor ground pad has at least 2 GND vias within 3 mm", all(v >= 2 for v in n_bank.values()), n_bank, ">= 2")
@@ -116,7 +116,14 @@ alpha_ring = (math.pi * 0.035 ** 2) ** 2 / Lring * math.exp(-tg / tau_ring)
 ratio_ring = alpha_ring / alpha_t_nug * geom
 C("neck module at 0.4 m: a SOLID copper plane the size of PB1R would return more than a 1 g gold nugget at 150 mm (on-axis upper bound): shown, and not used", ratio_solid > 1.0, f"{ratio_solid:.1f} x the nugget", "> 1 (rejected)", f"plane 70 x 70 mm (disc-equivalent R {Rpl*1e3:.0f} mm), tau {tau_solid*1e6:.1f} us, gate {tg*1e6:.0f} us; nugget a {a*1e3:.2f} mm, tau {tau_s*1e6:.0f} us; dipole z^-6 scaling; the air template removes a static plane but not its motion with the hinge")
 C("hatched planes: the closed hatch border ring (0.3 mm, r 35 mm) decays before the first gate and returns less than 1e-3 of the nugget", ratio_ring < 1e-3, f"{ratio_ring:.1e} x the nugget", "< 1e-3", f"ring L {Lring*1e9:.0f} nH, R {Rring:.2f} ohm, tau {tau_ring*1e6:.2f} us vs gate {tg*1e6:.0f} us; mesh cells (1.5 mm gaps) are smaller loops with shorter tau")
-out_ = dict(checks=out, pulse_path=res, eddy=dict(ratio_solid=ratio_solid, ratio_hatch_ring=ratio_ring, tau_solid_us=tau_solid * 1e6, tau_ring_us=tau_ring * 1e6))
+# the Step 5 bulk bank is aluminium cans (9 x phi 10 x 10.2 mm hybrid): each wall is a closed loop around the can axis. Thin cylindrical sheet: L = mu0 pi r^2 / h,
+# R = 2 pi r / (sigma t h), tau = mu0 sigma r t / 2. The wall thickness is not in the Panasonic data: 1.0 mm is taken as a deliberate overestimate (ASSUMPTIONS 32)
+sig_al, r_can, h_can, t_can, n_can = 3.5e7, 5.0e-3, 10.2e-3, 1.0e-3, 9
+L_can = mu0 * math.pi * r_can ** 2 / h_can; tau_can = mu0 * sig_al * r_can * t_can / 2
+ratio_can = n_can * (math.pi * r_can ** 2) ** 2 / L_can * math.exp(-tg / tau_can) / alpha_t_nug * geom
+C("bulk-capacitor cans (9 x aluminium): return less than 1e-3 of the nugget (as the hatched planes do); WARN = listed exception, owner decision (OPEN_ITEMS 34)", ratio_can < 1e-3, f"{ratio_can:.2f} x the nugget", "< 1e-3",
+  f"tau {tau_can*1e6:.0f} us (1.0 mm wall; 0.3 mm gives {mu0*sig_al*r_can*0.3e-3/2*1e6:.0f} us) vs gate {tg*1e6:.0f} us: the cans do NOT decay before the gate, so the result hardly depends on the wall. Static and rigidly mounted it is an offset for the air template; the 7343 polymer-Ta it replaces had no closed can", warn=True)
+out_ = dict(checks=out, pulse_path=res, eddy=dict(ratio_solid=ratio_solid, ratio_hatch_ring=ratio_ring, tau_solid_us=tau_solid * 1e6, tau_ring_us=tau_ring * 1e6, ratio_cans=ratio_can, tau_can_us=tau_can * 1e6))
 json.dump(out_, open("kit_v22/pb1r_check.json", "w"), indent=1, default=str)
 for c in out: print(c["result"], c["check"][:120], "=", str(c["value"])[:90])
 print("FAILS", sum(c["result"] == "FAIL" for c in out), "WARNS", sum(c["result"] == "WARN" for c in out), "of", len(out))

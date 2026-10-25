@@ -6,6 +6,8 @@ Pin maps / land patterns for ICs and power packages are from memory -> VERIFY li
 """
 import os, datetime
 PW = os.environ.get("PW", "M"); BOARD = PW; CH = []
+# netlist date: fixed, so a regenerated netlist is byte-identical on any day (the wall-clock date made data/results/PF233-PB1R.net differ every day); SOURCE_DATE_EPOCH overrides it
+NET_DATE = datetime.datetime.fromtimestamp(int(os.environ["SOURCE_DATE_EPOCH"]), datetime.timezone.utc).date().isoformat() if "SOURCE_DATE_EPOCH" in os.environ else "2026-10-24"
 def pads2(dx, w, h, shape="roundrect"): return [("1", -dx, 0, w, h, shape), ("2", dx, 0, w, h, shape)]
 def pair(desc, fp, dx, w, h, body, names=("1", "2"), types=("passive", "passive")):
     return dict(desc=desc, fp=fp, pins=[("1", names[0], types[0]), ("2", names[1], types[1])], pads=pads2(dx, w, h), body=body)
@@ -25,6 +27,8 @@ LIB = {
  "C1210": pair("Capacitor 1210", "Capacitor_SMD:C_1210_3225Metric", 1.5, 1.2, 2.7, (3.2, 2.5, 2.0)),
  "CAN10": pair("SMD aluminium/hybrid can 10x10", "Capacitor_SMD:CP_Elec_10x10", 4.4, 4.0, 2.6, (10.3, 10.3, 10.5), ("+", "-")),
  "FUSE1812": pair("SMD fuse 1812 (6.1x2.7)", "Fuse:Fuse_1812_4532Metric", 2.9, 2.0, 3.4, (4.5, 3.2, 1.8)),
+ # Bourns SF-1206S recommended pad layout (datasheet rev. J 04/21): 2.2 mm gap, 4.7 mm overall, pads 1.25 x 1.65 mm; body 3.1 x 1.55 x 0.6 mm
+ "FUSE1206B": pair("SMD fuse 1206, Bourns SF-1206S land", "Fuse:Fuse_1206_3216Metric", 1.725, 1.25, 1.65, (3.1, 1.55, 0.6)),
  "DSMC": pair("Diode SMC (DO-214AB)", "Diode_SMD:D_SMC", 3.4, 2.4, 3.4, (7.1, 6.1, 2.4), ("K", "A")),
  "DSMB": pair("Diode SMB (DO-214AA)", "Diode_SMD:D_SMB", 2.2, 2.0, 2.4, (4.6, 3.6, 2.4), ("K", "A")),
  "DSOD": pair("Signal diode SOD-123", "Diode_SMD:D_SOD-123", 1.35, 0.9, 1.2, (2.7, 1.6, 1.1), ("K", "A")),
@@ -32,7 +36,7 @@ LIB = {
  "WIRE2": dict(desc="two solder pads for an external power resistor (wire/lug), 5.08 mm", fp="Connector:SolderPad_2x_P5.08mm", pins=[("1", "1", "passive"), ("2", "2", "passive")],
                pads=[("1", -2.54, 0, 3.0, 3.0, "circle"), ("2", 2.54, 0, 3.0, 3.0, "circle")], body=(8.0, 3.5, 3.0), tht=True, drill=1.6),
  "TERM4": tht(4, 5.08, 1, 3.0, 1.7, "Terminal block"), "TERM2": tht(2, 5.08, 1, 3.0, 1.7, "Terminal block"),
- "HDR1x3": tht(3, 2.54, 1, 1.8, 1.0, "Pin header"), "HDR1x5": tht(5, 2.54, 1, 1.8, 1.0, "Pin header"), "HDR2x6S": tht(6, 1.27, 2, 1.0, 0.65, "Pin header 1.27"), "HDR1x2": tht(2, 2.54, 1, 1.8, 1.0, "Pin header"),
+ "HDR1x3": tht(3, 2.54, 1, 1.8, 1.0, "Pin header"), "HDR1x5": tht(5, 2.54, 1, 1.8, 1.0, "Pin header"), "HDR2x6S": tht(6, 1.27, 2, 1.02, 0.65, "Pin header 1.27"), "HDR1x2": tht(2, 2.54, 1, 1.8, 1.0, "Pin header"),
  "HDR2x4": tht(4, 2.54, 2, 1.8, 1.0, "Pin header"), "HDR1x4": tht(4, 2.54, 1, 1.8, 1.0, "Pin header"), "WIRE1x4": dict(tht(4, 2.54, 1, 1.8, 1.0, "Wire pads"), body=(4.04, 11.66, 0.1)),
  "LED2020": dict(desc="RGB LED SK6812 MINI-E class 3.2x2.8 (VERIFY pinout and land pattern)", fp="LED_SMD:LED_SK6812MINI-E_3.2x2.8mm", pins=[("1", "VDD", "power_in"), ("2", "DOUT", "output"), ("3", "GND", "power_in"), ("4", "DIN", "input")], pads=[("1", -1.45, -0.85, 1.0, 0.7, "roundrect"), ("2", -1.45, 0.85, 1.0, 0.7, "roundrect"), ("3", 1.45, 0.85, 1.0, 0.7, "roundrect"), ("4", 1.45, -0.85, 1.0, 0.7, "roundrect")], body=(3.2, 2.8, 0.8)),
  "SOT23-5": dict(desc="74AHCT1G125 buffer SOT-23-5: 1 OE#, 2 A, 3 GND, 4 Y, 5 VCC (VERIFY)", fp="Package_TO_SOT_SMD:SOT-23-5", pins=[("1", "OE", "input"), ("2", "A", "input"), ("3", "GND", "power_in"), ("4", "Y", "output"), ("5", "VCC", "power_in")], pads=[("1", -1.1, -0.95, 1.0, 0.6, "roundrect"), ("2", -1.1, 0, 1.0, 0.6, "roundrect"), ("3", -1.1, 0.95, 1.0, 0.6, "roundrect"), ("4", 1.1, 0.95, 1.0, 0.6, "roundrect"), ("5", 1.1, -0.95, 1.0, 0.6, "roundrect")], body=(3.0, 1.7, 1.1)), "HDR2x6": tht(6, 2.54, 2, 1.8, 1.0, "Pin header"),
@@ -74,9 +78,10 @@ LIB["LM393"] = dict(desc="LM393 dual comparator SOIC-8", fp="Package_SO:SOIC-8_3
 LIB.pop("SOIC8", None)
 LIB["HDR1x7"] = tht(7, 2.54, 1, 1.8, 1.0, "Pin header")
 LIB["SS49E"] = dict(desc="SS49E linear Hall sensor (TO-92 style)", fp="Package_TO_SOT_THT:TO-92_Inline", pins=[("1", "VCC", "power_in"), ("2", "GND", "power_in"), ("3", "OUT", "output")], pads=[("1", -1.27, 0, 1.0, 1.0, "circle"), ("2", 0, 0, 1.0, 1.0, "circle"), ("3", 1.27, 0, 1.0, 1.0, "circle")], body=(4.0, 3.0, 4.5), tht=True, drill=0.65)
-# digital Hall switch for the trigger (replaces the linear SS49E: CB1D reads TRIG on a digital-only GPIO with a pull-up). Generic open-drain part, same TO-92
-# footprint; pin order VCC/GND/OUT and Vsat <= 0.4 V are UNVERIFIED until a part is chosen (docs/ASSUMPTIONS.md 22, prompt C05)
-LIB["HALL_SW"] = dict(LIB["SS49E"], desc="digital Hall switch, open-drain output, 3.3 V (generic, TO-92 style; pinout unverified)", pins=[("1", "VCC", "power_in"), ("2", "GND", "power_in"), ("3", "OUT", "open_collector")])
+# digital Hall switch for the trigger (replaces the linear SS49E: CB1D reads TRIG on a digital-only GPIO with a pull-up): TI DRV5023BIQLPG, TO-92 pin order
+# VCC/GND/OUT from the SLIS151G pin table; open-drain r_on 50 ohm max at 3.3 V / 10 mA, off leakage 1 uA max (docs/design/DATASHEET_LOG.md)
+LIB["HALL_SW"] = dict(LIB["SS49E"], desc="digital Hall switch TI DRV5023 TO-92 (LPG): 1 VCC, 2 GND, 3 OUT open-drain (SLIS151G pin table)", pins=[("1", "VCC", "power_in"), ("2", "GND", "power_in"), ("3", "OUT", "open_collector")],
+                     pads=[("1", -1.27, 0, 1.02, 1.02, "circle"), ("2", 0, 0, 1.02, 1.02, "circle"), ("3", 1.27, 0, 1.02, 1.02, "circle")])   # 1.02 pad on the 0.65 drill: 0.185 ring >= 0.18 (FAB_RULES_VERIFIED)
 if "HDR1x5" not in LIB: LIB["HDR1x5"] = tht(5, 2.54, 1, 1.8, 1.0, "Pin header")
 # upper assembly v1 (PM2 / HB2): wire pads for panel parts and the cords, and an SO-8 P-channel MOSFET. SO-8 pinout 1-3 S, 4 G, 5-8 D is the common P-FET
 # arrangement but VERIFY against the chosen part (docs/ASSUMPTIONS.md 26)
@@ -164,8 +169,8 @@ if PW == "C":
     add("CP1", "C0805", "10u 10V", "X7R"); add("CP2", "C0603", "100n", "X7R"); net("+5V", ("CP1", 1), ("CP2", 1)); net("GND", ("CP1", 2), ("CP2", 2))
     # power input
     add("JPW", "TERM4", "Power in: VBUS VBUS GND GND (from shaft)", "5.08 mm terminal block"); net("VBUS_IN", ("JPW", 1), ("JPW", 2), ("F1", 1)); net("GND", ("JPW", 3), ("JPW", 4))
-    add("F1", "FUSE1812", "5A slow 32V", "Littelfuse 0453005 class"); net("VBUS", ("F1", 2))
-    add("DTV", "DSMC", "SMCJ33A", "TVS"); net("VBUS", ("DTV", 1)); net("GND", ("DTV", 2))
+    add("F1", "FUSE1206B", "5A slow 32V", "Bourns SF-1206S500-2 (5.00 A slow blow, 32 VDC, 50 A interrupting at 32 VDC)"); net("VBUS", ("F1", 2))
+    add("DTV", "DSMC", "SMCJ30A", "TVS 30 V stand-off, VC 48.4 V (Vishay SMCJ30A): clamps under the 50 V parts"); net("VBUS", ("DTV", 1)); net("GND", ("DTV", 2))
     for n in (1, 2): add(f"CI{n}", "C1210", "10u 50V", "X7R"); net("VBUS", (f"CI{n}", 1)); net("GND", (f"CI{n}", 2))
     add("M5", "OKI3", "5 V 1.5 A switching module", "Murata OKI-78SR-5/1.5-W36 class (Vin 7-36 V)"); net("VBUS", ("M5", 1)); net("GND", ("M5", 2)); net("+5V", ("M5", 3))
     add("C5A", "C1210", "22u 16V", "X7R"); add("C5B", "C0603", "100n", "X7R"); net("+5V", ("C5A", 1), ("C5B", 1)); net("GND", ("C5A", 2), ("C5B", 2))
@@ -207,7 +212,10 @@ if PW == "C":
 if PW == "R":
     # ------------------------------------------------------------------ PB1R: single-channel TX power stage for the head vault (70 x 70)
     add("JP", "TERM4", "Power in: VBUS VBUS GND GND", "5.08 mm terminal block 10 A"); net("VBUS", ("JP", 1), ("JP", 2)); net("GND", ("JP", 3), ("JP", 4))
-    for n in range(1, 7): add(f"CD{n}", "CAPD", "150u 50V polymer Ta", "50 V polymer Ta or hybrid, low ESR; >= 130 uF each at 19.6 V (tx_vbus_sweep.py); 150 uF in 7343-43 at 50 V UNVERIFIED (ASSUMPTIONS 28)"); net("VBUS", (f"CD{n}", 1)); net("GND", (f"CD{n}", 2))
+    # bulk bank (Step 5b): the 150 uF / 50 V polymer Ta in 7343-43 was not found (KEMET T521 50 V tops at 33 uF in the X case); 9 x Panasonic EEHZC1H101P hybrid
+    # polymer-Al 100 uF 50 V (ZC technical data: 10.0 x 10.2 mm, ESR <= 28 mohm at 100 kHz, 1.6 A rms) keep the bank at 900 uF nominal / 720 uF at -20 %, above the 625 uF
+    # tx_vbus_sweep.py needs for 5 % droop at 19.6 V. CD7 is the gate-driver decoupling, so the bank is CB1-CB9 (docs/design/DATASHEET_LOG.md)
+    for n in range(1, 10): add(f"CB{n}", "CAN10", "100u 50V hybrid", "Panasonic EEHZC1H101P (ZC, 10x10.2, 28 mohm, 1.6 A rms)"); net("VBUS", (f"CB{n}", 1)); net("GND", (f"CB{n}", 2))
     for n in range(1, 5): add(f"CM{n}", "C1210", "10u 50V", "X7R"); net("VBUS", (f"CM{n}", 1)); net("GND", (f"CM{n}", 2))
     add("JC", "HDR2x4", "Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND", "2.54 mm header")
     for i, nm in enumerate(["UMB_SHLD", "GND", "TX1_IN", "REF_I1", "FAULT1_N", "ISENSE1", "NTC_SENSE", "GND"], 1): net(nm, ("JC", i))
@@ -221,8 +229,8 @@ if PW == "R":
     net("G1", ("U1", 6), ("U1", 7)); add("RGP1", "R0603", "10k", ""); net("G1", ("RGP1", 1)); net("GND", ("RGP1", 2))
     for q in ("Q1A", "Q1B"):
         add(q, "D2PAK", "650V SJ 95mR", "IPB65R095C7 class (VERIFY)"); add(f"RG{q}", "R0603", "10", ""); net("G1", (f"RG{q}", 1)); net(f"GATE_{q}", (f"RG{q}", 2), (q, 1)); net("DRAIN1", (q, 2)); net("SRC1", (q, 3))
-    add("RS1S", "R2512", "10m 3W", "Kelvin shunt"); net("SRC1", ("RS1S", 1)); net("GND", ("RS1S", 2))
-    add("DC1", "DSMC", "ES3J 600V 3A", "ultrafast clamp diode"); net("DRAIN1", ("DC1", 2)); net("CLAMP1", ("DC1", 1))
+    add("RS1S", "R2512", "10m 1W", "Vishay WSL2512 10 mohm 1 % (1.0 W at 70 C; ordering code not checked); two-pad with the Kelvin sense track: the WSK2512 four-terminal sheet does not place its sense pads fully"); net("SRC1", ("RS1S", 1)); net("GND", ("RS1S", 2))
+    add("DC1", "DSMC", "ES3J 600V 3A", "ultrafast clamp diode (Good-Ark ES3J: 600 V, trr 35 ns); below the 630 V rule: WATCH, no verified >= 630 V ultrafast SMC part"); net("DRAIN1", ("DC1", 2)); net("CLAMP1", ("DC1", 1))
     for cl in ("CL1A", "CL1B"): add(cl, "C1210", "100n 630V", "C0G/X7R HV"); net("CLAMP1", (cl, 1)); net("VBUS", (cl, 2))
     add("RCL1", "WIRE2", "external 5k 10W (lid bank)", "resistor bank bonded under the lid"); net("CLAMP1", ("RCL1", 1)); net("VBUS", ("RCL1", 2))
     add("JL1", "TERM2", "Coil outer band: DRAIN, VBUS", "5.08 mm terminal block"); net("DRAIN1", ("JL1", 1)); net("VBUS", ("JL1", 2))
@@ -248,16 +256,18 @@ if PW == "P":
     # seated (ILK = pack GND) AND the power switch on the top housing is closed; C1 sets the soft-start ramp (power_dock_check.py)
     add("J1", "WIRE3", "MT60-M leads: BAT+ BAT- ILK", "AWG16 x 2 + AWG24, 80 mm, potted at the pedestal")
     net("BAT_P", ("J1", 1), ("F1", 1)); net("GND", ("J1", 2)); net("ILK", ("J1", 3), ("J3", 2))
-    add("F1", "FUSE1812", "5A slow 32V", "Littelfuse 0453005 class (verify DC rating)"); net("BAT_F", ("F1", 2))
-    add("Q1", "PMOS_SO8", "P-MOSFET -40V", "SO-8 P-channel, -40 V, <= 15 mohm (part to be chosen)")
+    add("F1", "FUSE1206B", "5A slow 32V", "Bourns SF-1206S500-2 (5.00 A slow blow, 32 VDC, 50 A interrupting at 32 VDC)"); net("BAT_F", ("F1", 2))
+    add("Q1", "PMOS_SO8", "Si4401FDY -40V", "Vishay Si4401FDY: SO-8, 1-3 S / 4 G / 5-8 D, -40 V, VGS +-20 V, 14.2 mohm max at -10 V")
     net("BAT_F", ("Q1", 1), ("Q1", 2), ("Q1", 3)); net("Q1_G", ("Q1", 4)); net("VBUS", ("Q1", 5), ("Q1", 6), ("Q1", 7), ("Q1", 8))
     add("R1", "R0603", "47k", "gate to source"); net("BAT_F", ("R1", 1)); net("Q1_G", ("R1", 2))
     add("DZ1", "DSOD", "15V zener", "BZT52C15 class, Vgs clamp"); net("BAT_F", ("DZ1", 1)); net("Q1_G", ("DZ1", 2))
     add("R2", "R0603", "68k", "gate pull-down through the switch and the interlock"); net("Q1_G", ("R2", 1)); net("SW_A", ("R2", 2), ("J3", 1))
     add("J3", "WIRE2S", "Power switch pair (top housing)", "AWG28 pair")
     add("R3", "R0603", "1k", "soft-start damping"); add("C1", "C0805", "220n 50V", "X7R, Miller soft-start"); net("Q1_G", ("R3", 1)); net("SS", ("R3", 2), ("C1", 1)); net("VBUS", ("C1", 2))
-    add("DTVS", "DSMC", "SMCJ33A", "TVS 33 V stand-off, uni-directional"); net("VBUS", ("DTVS", 1)); net("GND", ("DTVS", 2))
-    add("CB1", "CAN10", "470u 50V", "hybrid polymer/Al 10x10, low ESR"); net("VBUS", ("CB1", 1)); net("GND", ("CB1", 2))
+    # TVS: SMCJ33A clamps at 53.3 V max (Vishay 88394), above the 50 V capacitors; SMCJ30A clamps at 48.4 V and still stands off the 29.4 V pack maximum (VWM 30 V)
+    add("DTVS", "DSMC", "SMCJ30A", "TVS 30 V stand-off, VC 48.4 V at 31 A, uni-directional (Vishay SMCJ30A)"); net("VBUS", ("DTVS", 1)); net("GND", ("DTVS", 2))
+    # no 470 uF / 50 V hybrid exists in the 10 x 10 can (Panasonic ZC tops at 100 uF at 50 V): the verified 100 uF part, same footprint
+    add("CB1", "CAN10", "100u 50V hybrid", "Panasonic EEHZC1H101P (ZC, 10x10.2, 28 mohm, 1.6 A rms)"); net("VBUS", ("CB1", 1)); net("GND", ("CB1", 2))
     add("CM1", "C1210", "10u 50V", "X7R"); net("VBUS", ("CM1", 1)); net("GND", ("CM1", 2))
     add("RBL", "R1206", "100k", "bleeder"); net("VBUS", ("RBL", 1)); net("GND", ("RBL", 2))
     add("JP", "WIRE4", "Power cord: VBUS VBUS GND GND", "coiled cord 2 x AWG20 shielded (one conductor per net, second pad for strain relief)")
@@ -269,7 +279,7 @@ if PW == "G":
     # JH keeps the CB1D JTR pinout; pins 5/6 (the old joystick) have no conductor in the 5-core signal cord
     add("JH", "HDR1x7", "Signal cord to the head: +3V3 GND TRIG DIAL - - SHLD", "coiled cord 5-core AWG28 shielded")
     for p_, nm in ((1, "P3V3"), (2, "GND"), (3, "TRIG"), (4, "DIAL"), (5, "JH5_NC"), (6, "JH6_NC"), (7, "SHIELD")): net(nm, ("JH", p_))
-    add("HS1", "HALL_SW", "Hall switch OD", "digital Hall switch, open-drain, 3.3 V (part to be chosen); magnet near at rest -> TRIG low, pressed -> TRIG high (active-low lever)")
+    add("HS1", "HALL_SW", "DRV5023BIQLPG", "TI DRV5023BI TO-92: 1 VCC / 2 GND / 3 OUT open-drain, 2.5-38 V, BOP 6-24 mT, BRP 3-9 mT; magnet near at rest -> TRIG low, pressed -> TRIG high")
     add("CH1", "C0603", "100n", ""); add("RH1", "R0603", "1k", "")
     net("P3V3", ("HS1", 1), ("CH1", 1)); net("GND", ("HS1", 2), ("CH1", 2)); net("HALL_OUT", ("HS1", 3), ("RH1", 1)); net("TRIG", ("RH1", 2))
     add("JDIAL", "HDR1x5", "Dial: COM P1 P2 P3 P4 (4-pos rotary, top housing)", "4-position rotary switch"); add("RD0", "R0603", "10k", ""); add("RD2", "R0603", "3k3", ""); add("RD3", "R0603", "10k", ""); add("RD4", "R0603", "33k", "")
@@ -328,7 +338,7 @@ def bom():
     for p in PARTS: rows.setdefault((p["type"], p["value"], p["mpn"]), []).append(p["ref"])
     return [dict(qty=len(r), refs=",".join(r), type=k[0], value=k[1], mpn=k[2], footprint=LIB[k[0]]["fp"]) for k, r in sorted(rows.items())]
 def kicad_netlist(path):
-    L = ['(export (version "E")', f'  (design (source "PF233-{PW}.net") (date "{datetime.date.today()}") (tool "pw_design.py"))', "  (components"]
+    L = ['(export (version "E")', f'  (design (source "PF233-{PW}.net") (date "{NET_DATE}") (tool "pw_design.py"))', "  (components"]
     for p in PARTS:
         lib = LIB[p["type"]]; L.append(f'    (comp (ref "{p["ref"]}") (value "{p["value"]}") (footprint "{lib["fp"]}") (libsource (lib "PF233") (part "{p["type"]}") (description "{lib["desc"]}")) (property (name "MPN") (value "{p["mpn"]}")))')
     L += ["  )", "  (nets"]

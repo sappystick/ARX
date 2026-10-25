@@ -39,4 +39,18 @@ for v in r["vias"]:                                            # the router can 
     k = (round(v[0], 3), round(v[1], 3), v[2])
     if k not in seen: seen.add(k); uniq.append(v)
 dup = len(r["vias"]) - len(uniq); r["vias"] = uniq
-json.dump(r, open(rj, "w")); print(board, "stubs added:", added, "duplicate vias removed:", dup)
+# drill-to-drill floor (dru_gen.GEN["hole_to_hole"], TTM 16 mil same-net guideline, docs/design/FAB_RULES_VERIFIED.md): the router can drop two same-net vias closer than that.
+# Merge them: drop the later via and tie every track vertex that sat on it to the kept via with a stub on that track's layer. The stub is no wider than the via pad, so its
+# copper stays inside the hull of the two via pads; that hull can reach nearer to other copper than the pads did, so the KiCad DRC that follows is the check (Step 5: 0 errors).
+# The kept via carries the layer change and the plane connection.
+import dru_gen
+VIA_DRILL = 0.3; c2c = dru_gen.GEN["hole_to_hole"] + VIA_DRILL; kept = []; merged = 0
+for v in r["vias"]:
+    near = next((k for k in kept if k[2] == v[2] and math.dist(k[:2], v[:2]) < c2c), None)
+    if near is None: kept.append(v); continue
+    for layer in sorted({t["layer"] for t in r["tracks"] if t["net"] == v[2] and any(math.dist(q, v[:2]) < 1e-6 for q in t["pts"])}):
+        w = min(0.6, max(t["width"] for t in r["tracks"] if t["net"] == v[2] and t["layer"] == layer and any(math.dist(q, v[:2]) < 1e-6 for q in t["pts"])))
+        r["tracks"].append(dict(net=v[2], layer=layer, width=w, pts=[list(v[:2]), list(near[:2])])); added += 1
+    merged += 1
+r["vias"] = kept
+json.dump(r, open(rj, "w")); print(board, "stubs added:", added, "duplicate vias removed:", dup, "close same-net vias merged:", merged)

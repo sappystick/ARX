@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Sign-off table for the transmit region: board x check -> PASS / FAIL / SKIP / UNVERIFIED, read from the result files in work/ (nothing is recomputed here except tests/regress.py, run last).
 A missing result is FAIL unless its item is registered in docs/UNVERIFIED.md (then UNVERIFIED). Writes data/results/SIGNOFF_STATUS.json and docs/STATUS.md (GENERATED, never hand-edited).
-usage: scripts/signoff_status.py [--no-regress]      exit 1 if anything FAILs"""
+usage: scripts/signoff_status.py [--no-regress]      exit 1 if anything FAILs
+--work DIR and --evidence-root DIR (default work and the repo root) exist for tests/release_signoff_controls.py: it points them at fixture folders, so the controls never
+depend on which production IDs are still open."""
 import json, os, re, subprocess, sys, datetime, glob
-W = "work"
 def arg(flag, default):
     return sys.argv[sys.argv.index(flag) + 1] if flag in sys.argv else default
+W, EVROOT = arg("--work", "work"), arg("--evidence-root", ".")
 REG, OUT_JSON, OUT_MD = arg("--register", "docs/UNVERIFIED.md"), arg("--out-json", "data/results/SIGNOFF_STATUS.json"), arg("--out-md", "docs/STATUS.md")
 def rd(p):
     try: return json.load(open(os.path.join(W, p)))
@@ -65,12 +67,18 @@ SYS = {
     "voxel interference (window, bridge, junction)": chk("kit_v22/interference_audit.json", lambda d: (len(d["interferences"]) == 0, f"{len(d['pairs'])} pairs")),
 }
 # An UNVERIFIED item can be closed only by deleting its row in docs/UNVERIFIED.md AND having its evidence on disk: removing the row without evidence is a FAIL (not a silent PASS).
-KNOWN_EVIDENCE = {"U-DS-PARTS": "docs/design/DATASHEET_LOG.md", "U-FAB-RULES": "docs/design/FAB_RULES_VERIFIED.md", "U-FAB-DRC": "data/results/fab_drc/*", "U-CAM-VIEW": "data/results/cam_view/*",
-                  "U-BENCH": "data/bench/*", "U-COLD-BOOTSTRAP": "data/results/bootstrap_cold.json"}
+# Datasheet groups (Step 5 split U-DS-PARTS so a partial close is possible): "file#ID" evidence needs the file AND a heading "## ID: VERIFIED ..." in it (an UNVERIFIED heading does not count).
+DS_GROUPS = ("U-DS-TXDRIVE", "U-DS-PB1R", "U-DS-OKI", "U-DS-POWERPATH", "U-DS-PACK", "U-DS-RXAMP", "U-DS-BAV199", "U-DS-HALL", "U-DS-HVTERM")
+KNOWN_EVIDENCE = {**{g: f"docs/design/DATASHEET_LOG.md#{g}" for g in DS_GROUPS}, "U-FAB-RULES": "docs/design/FAB_RULES_VERIFIED.md", "U-FAB-DRC": "data/results/fab_drc/*",
+                  "U-CAM-VIEW": "data/results/cam_view/*", "U-BENCH": "data/bench/*", "U-COLD-BOOTSTRAP": "data/results/bootstrap_cold.json"}
 import glob as _g
+def has_evidence(spec):
+    path, _, anchor = spec.partition("#"); files = _g.glob(os.path.join(EVROOT, path))
+    if not anchor: return bool(files)
+    return any(re.search(rf"^## {re.escape(anchor)}: VERIFIED\b", open(f).read(), re.M) for f in files)
 def ev_state(k):
     if k in UNV: return ("UNVERIFIED", UNV[k])
-    return ("PASS", f"evidence present: {KNOWN_EVIDENCE[k]}") if _g.glob(KNOWN_EVIDENCE[k]) else ("FAIL", f"row removed from the register but no evidence at {KNOWN_EVIDENCE[k]}")
+    return ("PASS", f"evidence present: {KNOWN_EVIDENCE[k]}") if has_evidence(KNOWN_EVIDENCE[k]) else ("FAIL", f"row removed from the register but no evidence at {KNOWN_EVIDENCE[k]}")
 CONTROLS_ROW = ("release-tx / sign-off controls (refusals, evidence rule, idempotence)", chk("kit_v22/controls_3_9.json", lambda d: (d["all_ok"], f"{sum(c['ok'] for c in d['cases'])}/{len(d['cases'])} controls behave as intended")))
 if "--ignore-controls" not in sys.argv:       # used only by tests/release_signoff_controls.py: its own result file cannot be an input of its baseline (cold-start chicken and egg)
     SYS[CONTROLS_ROW[0]] = CONTROLS_ROW[1]

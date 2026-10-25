@@ -9,17 +9,17 @@ head = subprocess.run(["git", "log", "-1", "--format=%h"], cwd=R, capture_output
 out = f"""# START HERE - Arx / PHI-FOLD 233 (attach this file to a new Claude Code thread; generated, do not edit by hand)
 
 ## A. What the owner types (one line; nothing else is needed)
-`Read the attached START_HERE.md and follow it exactly. MODE: A.`   (or `MODE: B.` to run Steps 5, 4, 6 straight through; A pauses for "go" after each step)
+`Read the attached START_HERE.md and follow it exactly. MODE: A.`   (or `MODE: B.` to run Steps 4 and 6 straight through; A pauses for "go" after each step)
 
 ## B. Instructions to Claude (follow in order, do not ask the owner to repeat anything in this file)
-1. Get the work. It is on branch `claude/nice-turing-8i4gkt` of sappystick/arx and is NOT merged into the default branch:
-   `git fetch origin claude/nice-turing-8i4gkt && git checkout claude/nice-turing-8i4gkt` (if this session designates a different branch, create it from origin/claude/nice-turing-8i4gkt, say so in your first message, never push the default branch). The repo copy of this material is docs/HANDOFF_NEXT_THREAD.md; if it is missing you are on the wrong branch. The progress log (section 11) names the latest step.
+1. Get the work. It is on branch `claude/hopeful-bell-wms3xo` of sappystick/arx and is NOT merged into the default branch:
+   `git fetch origin claude/hopeful-bell-wms3xo && git checkout claude/hopeful-bell-wms3xo` (if this session designates a different branch, create it from origin/claude/hopeful-bell-wms3xo, say so in your first message, never push the default branch). The repo copy of this material is docs/HANDOFF_NEXT_THREAD.md; if it is missing you are on the wrong branch. The progress log (section 11) names the latest step.
 2. Run `scripts/bootstrap.sh | tail -1`, then verify the state with the commands in section 0 below (counts only). If anything differs, stop and report the difference.
 3. Everything below (standing rules, default decisions, contingencies) is pre-approved. Ask a question only if a decision cannot be undone and has no default.
-4. MODE from the owner's line: A = after each numbered step stop and wait for "go". B = run Step 5, Step 4, Step 6 in that order, one table per step, stop only after Step 6 or on (a) a regression you cannot fix, (b) a conflict with a CLAUDE.md rule, (c) an irreversible decision with no default. No mode given = A.
-5. Order: Step 3.95 (pipeline, already built: see section C) is done; next is Step 5 (datasheets, vendor sheets) -> Step 4 (PM2/HB2/HTA routing and audits) -> Step 6 (bench procedure, final sign-off, release r2, regroup summary). Resume where the progress log (section 11) says.
+4. MODE from the owner's line: A = after each numbered step stop and wait for "go". B = run Step 4 then Step 6, one table per step, stop only after Step 6 or on (a) a regression you cannot fix, (b) a conflict with a CLAUDE.md rule, (c) an irreversible decision with no default. No mode given = A.
+5. Order: Step 3.95 (pipeline, see section C) and Step 5 (datasheets, vendor sheets) are done; next is Step 4 (PM2/HB2/HTA routing and audits) -> Step 6 (bench procedure, final sign-off, release r2, regroup summary). Resume where the progress log (section 11) says.
 6. Do NOT start system simulation, firmware, audio, LED, improvement review or epoxy-chamber work (Steps 7-13): the owner pastes that program separately from prompts/HANDOFF_PROMPTS.md (prompt 2).
-7. Reporting: per step one paragraph + one table (what changed, what passed with counts, what is unproven, strict regress count, sign-off counts). Quiet output. One final commit per step (source + data + docs + progress-log row), push only to the working branch, no PR, no force-push. Commit trailers: `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>` and the session trailer given by the harness.
+7. Reporting: per step one paragraph + one table (what changed, what passed with counts, what is unproven, strict regress count, sign-off counts). Quiet output. One final commit per step (source + data + docs + progress-log row), push only to the working branch, no PR, no force-push. Commit trailers: the Co-Authored-By and Claude-Session lines the current session's harness gives.
 8. Claims: everything is MODELED or tool-checked; nothing is built or measured. Never write proven, ready for fabrication, record, will detect.
 
 ## C. Fast pipeline (use it; it replaces re-running everything)

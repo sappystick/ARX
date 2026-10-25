@@ -61,11 +61,11 @@ d=rd("kit_v23/tx_vbus.json")
 if d:
     tv=[r for r in d["tx_stage_vs_vbus"] if r["case"].startswith("100 nF")]; t20=[r for r in d["ton_rule"] if r["I_A"]==20]; lo=next(r for r in t20 if r["V"]==19.6); hi=next(r for r in t20 if r["V"]==29.4)
     chk("TX over the 7S range (19.6-29.4 V), 20 A: reproduces sim_head1 at 26 V; Vds peak <= 480 V (650 V FET, >= 25 % margin); turn-off quiet time independent of VBUS (+-0.05 us)",d["validation_ok"] and max(r["Vds_peak"] for r in tv)<=480 and max(r["t_quiet_us"] for r in tv)-min(r["t_quiet_us"] for r in tv)<0.05,f"Vds {min(r['Vds_peak'] for r in tv):.1f}-{max(r['Vds_peak'] for r in tv):.1f} V, quiet {tv[0]['t_quiet_us']:.2f} us")
-    chk("firmware on-time for 20 A: 59.5 us at 19.6 V and 38.5 us at 29.4 V (loop R and bulk droop, +-1 us); lossless L I / V (55.1 / 36.7 us) under-delivers by > 4 %; bulk droop at 19.6 V under 5 %; CD1-CD6 at most 60 % of 50 V",abs(lo["ton_loop_droop_us"]-59.5)<1 and abs(hi["ton_loop_droop_us"]-38.5)<1 and lo["I_if_lossless_ton_A"]<19.2 and hi["I_if_lossless_ton_A"]<19.2 and lo["droop_pct"]<5.0 and d["bulk_bank"]["util_new_pct"]<=60,f"ton {lo['ton_loop_droop_us']} / {hi['ton_loop_droop_us']} us, lossless gives {lo['I_if_lossless_ton_A']} / {hi['I_if_lossless_ton_A']} A, droop {lo['droop_pct']} %, CD {d['bulk_bank']['util_new_pct']} %")
+    chk("firmware on-time for 20 A: 59.5 us at 19.6 V and 38.5 us at 29.4 V (loop R and bulk droop, +-1 us); lossless L I / V (55.1 / 36.7 us) under-delivers by > 4 %; bulk droop at 19.6 V under 5 %; bulk bank CB1-CB9 at most 60 % of 50 V",abs(lo["ton_loop_droop_us"]-59.5)<1 and abs(hi["ton_loop_droop_us"]-38.5)<1 and lo["I_if_lossless_ton_A"]<19.2 and hi["I_if_lossless_ton_A"]<19.2 and lo["droop_pct"]<5.0 and d["bulk_bank"]["util_new_pct"]<=60,f"ton {lo['ton_loop_droop_us']} / {hi['ton_loop_droop_us']} us, lossless gives {lo['I_if_lossless_ton_A']} / {hi['I_if_lossless_ton_A']} A, droop {lo['droop_pct']} %, CD {d['bulk_bank']['util_new_pct']} %")
 else: skip("TX voltage sweep")
 try: bom=open(os.path.join(W,"kit_v6/PB1R/PF233-PB1R_BOM.csv")).read()
 except Exception: bom=None
-if bom: chk("PB1R generated BOM: CD1-CD6 are 50 V parts, M12 module listed with the 15-36 V input range",all(f"CD{n}" in bom for n in range(1,7)) and "150u 50V" in bom and "35V" not in bom and "15-36 V" in bom,"150u 50V x6")
+if bom: chk("PB1R generated BOM: bulk bank CB1-CB9 are the verified 50 V hybrid part (Panasonic EEHZC1H101P), M12 module listed with the 15-36 V input range",all(f"CB{n}" in bom for n in range(1,10)) and bom.count("EEHZC1H101P")>=1 and "100u 50V hybrid" in bom and "35V" not in bom and "15-36 V" in bom,"100u 50V x9")
 else: skip("PB1R BOM")
 d=rd("kit_v22/sbq_sim.json")
 if d:
@@ -142,5 +142,20 @@ _pipe=set(_re.findall(r"[A-Za-z0-9_]+\.py"," ".join(c for _,c,_t in _pl.STEPS)))
 chk("pipeline runs every script of the serial sign-off (no step silently dropped)",_serial<=_pipe,f"{len(_serial)} scripts, missing {sorted(_serial-_pipe)}")
 _g=_pl.load_graph()
 chk("pipeline overlap graph (data/pipeline/graph.json) covers all steps",all(n in _g for n in _pl.NAMES if n not in _pl.OPEN_ENDED),f"{len(_g)} of {len(_pl.NAMES)} steps recorded; missing {[n for n in _pl.NAMES if n not in _g and n not in _pl.OPEN_ENDED]}")
+# --- Step 5 guards: the fabricator floor read from the vendors (docs/design/FAB_RULES_VERIFIED.md), through-hole rings of the generated boards, the verified fuse land, a fixed netlist date
+sys.path.insert(0,"src/pcb"); import dru_gen as _dg
+_rules=_dg.rules("PB1R")
+chk("fab floor = the vendor-derived values (clearance 0.16, track 0.15, via drill 0.30 / ring 0.15, component PTH ring 0.18 / hole 0.46, drill-copper 0.26, drill-drill 0.41, edge 0.5) and every floor rule is (severity error)",
+    _dg.GEN==dict(clearance=0.16,track=0.15,drill=0.3,annular=0.15,edge=0.5,hole_clearance=0.26,hole_to_hole=0.41,pth_annular=0.18,pth_drill=0.46) and _rules.count("(severity error)")==2 and "hole_to_hole (min 0.41mm)" in _rules,str(_dg.GEN))
+_rings={}
+for _b in "RPGC":
+    _o=_sp.run([sys.executable,"-c","import os,sys; sys.path.insert(0,'src/pcb'); import pw_design as D; T={p['type'] for p in D.PARTS if D.LIB[p['type']].get('tht')}; print(round(min((min(min(w,h) for n,x,y,w,h,s in D.LIB[t]['pads'])-D.LIB[t]['drill'])/2 for t in T),3), round(min(D.LIB[t]['drill'] for t in T),3))"],capture_output=True,text=True,env={**os.environ,"PW":_b}).stdout.split()
+    _rings[{"R":"PB1R","P":"PM2","G":"HB2","C":"CB1D"}[_b]]=tuple(map(float,_o)) if len(_o)==2 else None
+chk("through-hole parts of PB1R, PM2, HB2, CB1D: ring >= 0.18 mm and finished hole >= 0.46 mm (AdvancedPCB 0.007\" / 0.018\" for component holes)",all(v and v[0]>=0.18 and v[1]>=0.46 for v in _rings.values()),str(_rings))
+_fo=_sp.run([sys.executable,"-c","import sys; sys.path.insert(0,'src/pcb'); import pw_design as D; a,b=D.LIB['FUSE1206B']['pads']; print(round(b[1]-a[1]-a[3],3), round(b[1]-a[1]+a[3],3), a[3], a[4])"],capture_output=True,text=True,env={**os.environ,"PW":"P"}).stdout.split()
+chk("PM2 / CB1D fuse land = Bourns SF-1206S recommended layout (gap 2.2, overall 4.7, pad height 1.65 mm)",_fo==["2.2","4.7","1.25","1.65"],str(_fo))
+_net=os.path.join(W,"kit_v6/PB1R/PF233-PB1R.net")
+_nd=re.search(r'\(date "([0-9-]+)"\)',open(_net).read()).group(1) if os.path.exists(_net) else None
+chk("generated netlists carry the fixed design date (not the wall clock), so a regenerated netlist is byte-identical on any day",_nd=="2026-10-24" and "date.today()" not in open("src/pcb/pw_design.py").read(),str(_nd))
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

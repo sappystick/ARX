@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""System stress and margin table: simulated stresses (sim_head1, sim_thermal, tx_system) against part ratings. Ratings are from memory of typical datasheets: UNVERIFIED (docs/ASSUMPTIONS.md 9); margins are only as good as those ratings."""
+"""System stress and margin table: simulated stresses (sim_head1, sim_thermal, tx_system) against part ratings. Ratings read from a manufacturer datasheet in Step 5 cite docs/design/DATASHEET_LOG.md in their note; every other rating is from memory: UNVERIFIED (docs/ASSUMPTIONS.md 9, 19); margins are only as good as those ratings."""
 import json, csv, math
 S = json.load(open("kit_v20/sim_head1.json"))["tx_stage"]; T = json.load(open("kit_v20/sim_thermal.json")); tx = json.load(open("kit_v22/tx_system.json"))
 film = [x for x in S if x["case"] == "100 nF C0G/film"][0]; x7r = [x for x in S if "DC-bias" in x["case"]][0]
@@ -11,22 +11,22 @@ def R(part, what, stress, rating, unit, minmargin, note, higher_is_worse=True):
 R("IPB65R095C7 (2 in parallel)", "Vds peak, design case (one 100 nF C0G/film)", film["Vds_peak"], 650, "V", 20, "drain peak at turn-off; X7R as built is lower (379 V) but loses capacitance with bias")
 R("IPB65R095C7", "Vds peak, as-built 2 x X7R derated", x7r["Vds_peak"], 650, "V", 20, "")
 R("IPB65R095C7", "drain current per FET at 20 A peak", 20 / 2, 24, "A", 30, "continuous rating at 25 C used as a conservative pulse reference (datasheet check needed)")
-R("ES3J clamp diode", "reverse voltage (capacitor peak)", film["vc_peak"], 600, "V", 20, "")
-R("ES3J clamp diode", "repetitive peak current", film["peak_i_diode"], 100, "A", 50, "datasheet IFSM is non-repetitive 8.3 ms: repetitive 4 us pulses at 400 Hz must be confirmed")
+R("ES3J clamp diode", "reverse voltage (capacitor peak)", film["vc_peak"], 600, "V", 20, "VRRM 600 V (Good-Ark ES3x, DATASHEET_LOG); below the 630 V rule: no verified >= 630 V ultrafast SMC part (WATCH in DATASHEET_LOG)")
+R("ES3J clamp diode", "repetitive peak current", film["peak_i_diode"], 100, "A", 50, "IFSM 100 A is non-repetitive 8.3 ms (Good-Ark ES3x): repetitive 4 us pulses at 400 Hz are not rated by the sheet")
 R("CL1A/B clamp capacitor 630 V", "voltage", film["vc_peak"], 630, "V", 20, "C0G/film only; X7R loses 65 percent of capacitance at this bias")
 R("RCL1 5 kohm 10 W", "power", film["P_RCL_W"], 10, "W", 30, "x7r case 4.7 W")
-R("3 x 110 ohm R2512 chain", "voltage per resistor at flyback peak", film["vd_peak"] / 3, 200, "V", 20, "assumed 200 V working voltage for R2512")
+R("3 x 110 ohm R2512 chain", "voltage per resistor at flyback peak", film["vd_peak"] / 3, 500, "V", 20, "Vishay CRCW2512 e3 Umax 500 V (document 20035, DATASHEET_LOG; was assumed 200 V); insulation against ambient 300 V for 1 min")
 R("3 x 110 ohm R2512 chain", "power per resistor", film["P_damp_W"] / 3, 1.0, "W", 50, "")
 R("TXJ1 bus A to B", "creepage gap for 460 V peak", 460, 460 * 3.0 / 2.5, "V", 0, "3.0 mm edge gap vs about 2.5 mm needed (IEC 60664-1 style estimate, pollution 2); plus 1.6 mm FR4 between layers", True)
 R("TX pair AWG12 600 V", "voltage", film["vd_peak"], 600, "V", 20, "")
-R("SMCJ33A TVS", "VBUS maximum (7S full charge 29.4 V)", V_PACK_MAX, 33, "V", 5, "standoff voltage")
+R("SMCJ30A TVS (PM2, CB1D)", "VBUS maximum (7S full charge 29.4 V)", V_PACK_MAX, 30, "V", 5, "rated stand-off VWM (IR <= 1 uA at VWM, Vishay 88394); chosen over SMCJ33A because its 48.4 V clamp stays under the 50 V capacitors (SMCJ33A: 53.3 V)")
 R("OKI-78SR-5 module", "input voltage maximum", V_PACK_MAX, 36, "V", 20, "")
 R("TX coil litz", "rms current at 20 A / 400 Hz (Ipk sqrt(D/3))", 20 * math.sqrt(41.538e-6 * 400 / 3), 3.0, "A", 30, "about 3 A rms for 1.2 mm litz is conservative")
 R("Vault", "worst-case hot spot (boost + 0.5 W LEDs, 25 C ambient)", max(v["max_C"] for k, v in T.items() if "worst" in k and "25 C" in k), 80, "C", 30, "PETG Tg about 80 C; FR4 85 C")
 R("Vault", "hot spot at 40 C ambient", max(v["max_C"] for k, v in T.items() if "worst" in k and "40 C" in k), 80, "C", 30, "")
 tv = json.load(open("kit_v23/tx_vbus.json")); bb = tv["bulk_bank"]; w20 = [r for r in tv["ton_rule"] if r["I_A"] == 20]; wd = max(w20, key=lambda r: r["droop_pct"])
-R("PB1R bulk capacitors 6 x 150 uF -20 %", f"voltage droop per 20 A pulse at {wd['V']} V (charge {wd['charge_uC']} uC, loop R and sag included; tx_vbus_sweep.py)", wd["droop_V"], wd["V"] * 0.05, "V", 10, "5 percent of VBUS allowed; the earlier row used 415 uC at 26 V and 900 uF nominal (CORRECTIONS)")
-R("PB1R bulk capacitors CD1-CD6 (50 V)", "voltage at the 7S full charge", V_PACK_MAX, 50.0, "V", 30, "was 35 V parts at 84 percent of rating; 150 uF at 50 V in 7343-43 is UNVERIFIED (ASSUMPTIONS 28); each part must supply >= %d uF at 19.6 V" % bb["min_nominal_uF_per_cap_if_6"])
+R(f"PB1R bulk capacitors {bb['n_caps']} x 100 uF -20 %", f"voltage droop per 20 A pulse at {wd['V']} V (charge {wd['charge_uC']} uC, loop R and sag included; tx_vbus_sweep.py)", wd["droop_V"], wd["V"] * 0.05, "V", 10, "5 percent of VBUS allowed; the earlier row used 415 uC at 26 V and 900 uF nominal (CORRECTIONS)")
+R("PB1R bulk capacitors CB1-CB9 (50 V)", "voltage at the 7S full charge", V_PACK_MAX, 50.0, "V", 30, "Panasonic EEHZC1H101P 50 V 100 uF (ZC technical data, DATASHEET_LOG); each part must supply >= %d uF at 19.6 V (-20 %%)" % bb["min_nominal_uF_per_cap"])
 R("PB1R 12 V module M12", "input voltage maximum", V_PACK_MAX, 36, "V", 15, "Murata OKI-78SR-12/1.5-W36 class (UNVERIFIED, ASSUMPTIONS 29)")
 R("PB1R 12 V module M12", "pack voltage at the BMS cut-off vs the module minimum input (15 V)", V_PACK_MIN, 15.0, "V", 15, "datasheet minimum input (UNVERIFIED, ASSUMPTIONS 29)", False)
 R("Power cord AWG20 pair (upper v1)", "average current in boost (7.7 W / 19.6 V BMS cut-off / 0.85)", 7.7 / V_PACK_MIN / 0.85, 5.0, "A", 50, "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon")

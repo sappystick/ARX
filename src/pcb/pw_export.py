@@ -67,13 +67,19 @@ if PW == "C":
                "RDM1": (23, -9), "RDM2": (23, -4), "RDM3": (23, 1), "CMON": (31, -11), "RBI": (31, -14.5), "RJX": (21, -26), "RJY": (21, -29), "CJX": (25, -26), "CJY": (25, -29), "RUS": (17, -33), "CUS": (21, -33)}
     PL = autoplace(fixed, anchors)
 elif PW == "R":
-    fixed = {"JP": (-31.0, 24.0, 0), "Q1A": (-14.0, -20.0, 180), "Q1B": (-14.0, -6.0, 180), "JL1": (-31.0, -20.0, 0), "JC": (28.0, 24.0, 0), "M12": (14.0, -27.0, 0)}
+    # RS1S / RK1 / CK1 / U3 are pinned where Step 3 tuned the Kelvin sense and the comparator ground reference (pb1r_check 3): the bank must flow around them
+    fixed = {"JP": (-31.0, 24.0, 0), "Q1A": (-14.0, -20.0, 180), "Q1B": (-14.0, -6.0, 180), "JL1": (-31.0, -20.0, 0), "JC": (28.0, 24.0, 0), "M12": (14.0, -27.0, 0),
+             "RS1S": (-3.0, 2.5, 0), "RK1": (-8.0, 7.0, 0), "CK1": (-4.0, 7.0, 0), "U3": (4.0, 10.0, 0)}
     anchors = {"U1": (3, -13), "CD7": (8, -9), "CE1": (8, -16), "RIN1": (3, -6), "DOC1": (-2, -6), "RGP1": (3, -19), "RGQ1A": (-5, -18), "RGQ1B": (-5, -8), "RS1S": (-3, 2), "RK1": (-8, 7), "CK1": (-4, 7),
                "U3": (4, 10), "CU3": (10, 10), "RPU1": (14, 17), "RF1": (18, 17), "RNTC": (0, -26), "DC1": (-30, -12), "CL1A": (-30, -3), "CL1B": (-30, 5), "RCL1": (-30, 14),
                "C12A": (24, -27), "C12B": (24, -31), "RUS": (28, 17)}
-    for i in range(1, 7): anchors[f"CD{i}"] = (-18 + (i - 1) * 8.5, 30)
-    for i in range(1, 5): anchors[f"CM{i}"] = (-22 + (i - 1) * 6, 22)
-    PL = autoplace(fixed, anchors, rots={})
+    # bulk bank CB1-CB9: a 10.3 mm can is 12.8 mm across its pads, so the grid is 13.3 mm along the pads and 10.8 mm across them: two rows of three along the top edge,
+    # three turned 90 deg in the free block right of the gate driver; the VBUS decoupling CM1-CM4 sit between the top rows and the umbilical header JC
+    CANS = [(-20.5, 29.0, 0), (-7.2, 29.0, 0), (6.1, 29.0, 0), (-20.5, 18.2, 0), (-7.2, 18.2, 0), (6.1, 18.2, 0), (17.75, -15.35, 90), (29.05, -15.35, 90), (17.75, -2.05, 90)]
+    for i, (x, y, r) in enumerate(CANS, 1): anchors[f"CB{i}"] = (x, y)
+    for i, xy in enumerate([(15.5, 15.0), (20.5, 15.0), (15.5, 19.0), (20.5, 19.0)], 1): anchors[f"CM{i}"] = xy
+    anchors.update({"RPU1": (29, 5), "RF1": (29, 9), "RUS": (28, 15)})
+    PL = autoplace(fixed, anchors, rots={f"CB{i}": r for i, (x, y, r) in enumerate(CANS, 1)})
 elif PW == "H":
     fixed = {"JH": (-8.0, -17.0, 0), "JJOY": (8.0, -17.0, 0), "JDIAL": (8.0, 4.0, 0), "HS1": (-8.0, 10.0, 0)}
     anchors = {"CH1": (-8, 15), "RH1": (-8, 19), "RSW": (3, -8), "RD0": (-2, 0), "RD2": (-2, 4), "RD3": (-2, 8), "RD4": (-2, 12), "RSHH": (-8, 24)}

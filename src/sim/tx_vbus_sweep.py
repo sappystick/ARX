@@ -12,7 +12,7 @@ L = 54e-6; Rc = 0.045; Cn = 500e-12; Rd = 330.0; Vf = 1.2; Ron = 0.05; RCL = 5e3
 R_SHUNT = 0.010                                                                           # RS1S 10 mohm Kelvin shunt (PB1R BOM)
 R_WIRE = 0.008                                                                            # AWG12 pair 0.8 m (5.2 mohm/m each way) + TXJ1/lead joints, ASSUMPTIONS 28
 R_LOOP = Rc + Ron + R_SHUNT + R_WIRE
-C_BULK_NOM = 6 * 150e-6; C_BULK_TOL = 0.8                                                 # CD1-CD6, -20 % tolerance/ageing, ASSUMPTIONS 28
+N_BULK = 9; C_BULK_NOM = N_BULK * 100e-6; C_BULK_TOL = 0.8                                                 # CB1-CB9 Panasonic EEHZC1H101P (DATASHEET_LOG), -20 % tolerance/ageing, ASSUMPTIONS 28
 V_MIN, V_MAX, V_REF = 19.6, 29.4, 26.0                                                    # 7S1P: BMS cut-off 2.8 V/cell, full charge 4.2 V/cell
 DROOP_BUDGET = 0.05                                                                       # fraction of VBUS (system_budget.py)
 CD_RATING_OLD, CD_RATING_NEW = 35.0, 50.0
@@ -100,7 +100,7 @@ Qmax = max(r["charge_uC"] for r in tab if r["I_A"] == 20) * 1e-6
 need = {str(V): round(max(r["charge_uC"] for r in tab if r["I_A"] == 20 and r["V"] == V) * 1e-6 / (DROOP_BUDGET * V) * 1e6, 0) for V in (V_MIN, V_REF, V_MAX)}
 out["bulk_bank"] = dict(CD_rating_old_V=CD_RATING_OLD, CD_rating_new_V=CD_RATING_NEW, util_old_pct=round(V_MAX / CD_RATING_OLD * 100, 1), util_new_pct=round(V_MAX / CD_RATING_NEW * 100, 1),
                         min_effective_uF_for_5pct_droop=need, bank_effective_uF=C_BULK_NOM * C_BULK_TOL * 1e6, bank_nominal_uF=C_BULK_NOM * 1e6,
-                        min_nominal_uF_per_cap_if_6=round(max(need.values()) / 6 / C_BULK_TOL, 0))
+                        n_caps=N_BULK, min_nominal_uF_per_cap=round(max(need.values()) / N_BULK / C_BULK_TOL, 0))
 
 # 6. firmware look-up table (V in 0.5 V steps), for the Python-first DSP/firmware work (OPEN_ITEMS 5)
 with open("kit_v23/TX_ONTIME_LUT.csv", "w", newline="") as f:

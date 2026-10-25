@@ -6,7 +6,7 @@ usage: viafarm.py BOARD ROUTE.json      (idempotent: counts the vias already ins
 import sys, json, math, os
 board, rj = sys.argv[1:3]
 SPEC = {   # (ref, pin) -> number of vias wanted inside the pad
-    "PB1R": {("RS1S", "2"): 6, **{(f"CD{i}", "1"): 3 for i in range(1, 7)}, **{(f"CD{i}", "2"): 3 for i in range(1, 7)}, **{(f"CM{i}", "1"): 2 for i in range(1, 5)}, **{(f"CM{i}", "2"): 2 for i in range(1, 5)}},
+    "PB1R": {("RS1S", "2"): 6, **{(f"CB{i}", "1"): 3 for i in range(1, 10)}, **{(f"CB{i}", "2"): 3 for i in range(1, 10)}, **{(f"CM{i}", "1"): 2 for i in range(1, 5)}, **{(f"CM{i}", "2"): 2 for i in range(1, 5)}},
 }[board]
 PJ = f"kit_v18/{board}/pads.json" if os.path.exists(f"kit_v18/{board}/pads.json") else f"kit_v6/{board}/pads.json"
 P = json.load(open(PJ))["pads"]; r = json.load(open(rj)); VP, CL = 0.3, 0.2

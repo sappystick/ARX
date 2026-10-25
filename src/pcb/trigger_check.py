@@ -7,7 +7,7 @@ UNVERIFIED (docs/ASSUMPTIONS.md 22)."""
 import json, csv, re, sys, os
 sys.path.insert(0, "."); from sch_export import parse_net
 
-VCC, VIL, VIH, VSAT, ILEAK = 3.3, 0.8, 2.0, 0.4, 1e-6          # RP2350 IOVDD 3.3 V thresholds, Hall-switch Vsat, input + clamp leakage (unverified)
+VCC, VIL, VIH, VSAT, ILEAK = 3.3, 0.8, 2.0, 0.4, 1e-6          # RP2350 IOVDD 3.3 V thresholds (unverified); Vsat 0.4 V bounds the DRV5023 r_on of 50 ohm max (SLIS151G); leakage: DRV5023 off 1 uA max + RP2350 input (unverified)
 ADC_PINS = {31: "GP26/ADC0", 32: "GP27/ADC1", 34: "GP28/ADC2"}     # Pico 2 board pins (unverified pinout from memory)
 R = []
 def chk(n, ok, v="", note="", warn=False): R.append(dict(check=n, result="PASS" if ok else ("WARN" if warn else "FAIL"), value=v, note=note))
