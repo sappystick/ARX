@@ -1,0 +1,1 @@
+Superseded by PHIFOLD233_PACKAGE_r3 (functional schematics, component 3-D models, PB1R_v3 and NPM v2 fit fix). Do not use r2.
