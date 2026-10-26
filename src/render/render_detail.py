@@ -29,7 +29,7 @@ elif which=="joint":
     render(P,"kit_v19/SHAFT_JOINT_CUTAWAY.png",az=90,el=10,centre=ap(1085),scale=4.7,size=(2200,900),title="Telescoping joint and ribbon track: cut-away",caption="carbon tube B slides in tube A on two printed bushings; the split collar locks it; the cassette (two chambers) holds the trolley whose U-loop takes up the ribbon slack",labels=labels,SS=1,rolly=-47.0)
 elif which=="npm":
     npm=stl("kit_v19/SPINE/NPM_N1_body_with_tunnel.stl"); dam=stl("kit_v19/SPINE/NPM_N3_hot_zone_dam.stl")
-    pb=stl("legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/PB1R/PF233-PB1R_board_with_components.stl"); V,F=pb; up=(V[F][:,:,2]>0.001).any(axis=1)
+    pb=stl("kit_v6/PB1R/PF233-PB1R_board_with_components.stl"); V,F=pb; up=(V[F][:,:,2]>0.001).any(axis=1)
     pbT=lambda V: np.c_[V[:,0],34.6-(V[:,2]+1.6),V[:,1]+42.0]
     P=[PT(npm,(0.55,0.60,0.68),1.0,"NPM body"),PT(dam,(0.9,0.5,0.2),1.0,"dam"),PT((pbT(V),F[~up]),COL["pcb"],1.0,"PB1R board"),PT((pbT(V),F[up]),COL["ic"],1.0,"PB1R parts")]
     P.append(PT(tube_shell(16.0,14.5,-120,0),COL["gfrp"],1.0,"lower tube")); P.append(PT(tube_shell(14.25,13.0,84,200),COL["cfrp"],1.0,"tube B"))
@@ -37,7 +37,7 @@ elif which=="npm":
     P.append(PT(box(21,20,28,36,36,76),(0.3,0.7,0.4),0.15,"syntactic zone"))
     for nm,x,y,col in (("P",0,9.0,COL["ribP"]),("S",0,-9.0,COL["ribS"]),("J",0,0.0,COL["ribJ"])): P.append(PT(seg_box((x,y,-110),(x,y,190),(1,0,0),12.0 if nm!="J" else 8.0,0.7),col,1.0,"ribbon "+nm))
     P=clip_ge(P,15.0)
-    lab=[("PB1R (TX driver, 70 x 70, unrouted placement)",(0,24,42),0),("2 x IPB65R095C7 650 V FETs (D2PAK)",(-14,22,22),0),("6 x 150 uF polymer bulk caps",(-18,23,70),0),("clamp diode + 5 k / 10 W bank (hot zone)",(-30,22,60),0),("hot zone: alumina-filled epoxy",(-25,26,10),0),("main zone: syntactic silicone",(25,28,60),0),("straight ribbon tunnel",(0,12,40),0),("lower fixed tube (GFRP) to the hinge",(0,0,-60),0),("tube B (CFRP) from the neck module up",(0,0,150),0),("TX pair + P, S, J ribbons pass straight through",(8,0,-100),0)]
+    lab=[("PB1R (TX driver, 70 x 70, routed 2026-10-25; pb1r_check)",(0,24,42),0),("2 x IPB65R095C7 650 V FETs (D2PAK)",(-14,22,22),0),("9 x 100 uF / 50 V hybrid cans (EEHZC1H101P)",(-18,23,70),0),("clamp diode + 5 k / 10 W bank (hot zone)",(-30,22,60),0),("hot zone: alumina-filled epoxy",(-25,26,10),0),("main zone: syntactic silicone",(25,28,60),0),("straight ribbon tunnel",(0,12,40),0),("lower fixed tube (GFRP) to the hinge",(0,0,-60),0),("tube B (CFRP) from the neck module up",(0,0,150),0),("TX pair + P, S, J ribbons pass straight through",(8,0,-100),0)]
     render(P,"kit_v19/NPM_CUTAWAY.png",az=-90,el=12,centre=(0,22,45),scale=6.2,size=(2000,1400),title="Neck power module cut-away (seen from the component side)",caption="back wall removed: PB1R stands in the pocket with its parts facing the camera; the hot zone is separated by the dam; the ribbons run straight through the tunnel",labels=lab,SS=1)
 elif which=="elbow":
     E={n:stl(f"kit_v19/SPINE/{n}.stl") for n in ("ELB_E1_elbow_and_grip","ELB_E2_grip_endcap","ELB_E3_trigger","ELB_E4_joystick_boss","ELB_E5_forearm_cuff","BAT_B1_drawer_sleeve","BAT_B2_end_cap_with_latch","BAT_B3_contact_plate")}
