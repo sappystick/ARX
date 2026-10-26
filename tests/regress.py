@@ -160,6 +160,16 @@ chk("generated netlists carry the fixed design date (not the wall clock), so a r
 _e={b:rd(f"kit_v22/gerber_edge_{b}.json") for b in ("CB1D","LB1","PB1R","PM2","HB2","HTA")}
 if all(_e.values()): chk("Gerber copper read back from the files: nothing outside the outline (notch included) and >= 0.5 mm to the edge on every layer of CB1D, LB1, PB1R, PM2, HB2, HTA",all(v["ok"] for v in _e.values()),str({b:min(r["min_edge_gap_mm"] for r in v["sets"][list(v["sets"])[0]]["layers"].values() if r["min_edge_gap_mm"] is not None) for b,v in _e.items()}))
 else: skip("Gerber edge read-back")
+try: _pc=json.load(open("data/results/print_check.json"))
+except Exception: _pc=None
+KNOWN_OPEN={"ANALOG_TRAY_v5","BASE_PLATE_RX_CASSETTE_v3","BUSHING_IN_TUBE_A","CORE_CYLINDER_v5_integrated","HEEL_SADDLE_TOWER","HUB_CAP_HTA_v3_vault","NPM_N1_body_with_tunnel_v2","ROOF_PLATE_v5","TXJ1_CRADLE_v1","U1_TOP_HOUSING","U3_BOTTOM_HOUSING","U6_BATTERY_DOCK","U7_BATTERY_PACK_SHELL","U9_CAM_COLLAR","UMBILICAL_BRIDGE"}
+KNOWN_BIG={"U8_SEPTUM_extended"}
+if _pc:
+    _nm=lambda p: p["file"].rsplit("/",1)[-1][:-4]
+    _open={_nm(p) for p in _pc["parts"] if not p["closed"]}; _big={_nm(p) for p in _pc["parts"] if not p["fits_build_cube"]}
+    chk("print check: every PRINT STL is oriented (outward normals), and the only non-watertight / oversize STLs are the KNOWN list (Step 8: 15 non-manifold shells from concatenated overlapping bodies, 1 part larger than 250 mm); a new one FAILS",
+        all(p["oriented"] for p in _pc["parts"]) and _open==KNOWN_OPEN and _big==KNOWN_BIG, f"open {len(_open)} (new {sorted(_open-KNOWN_OPEN)}, gone {sorted(KNOWN_OPEN-_open)}), big {sorted(_big)}")
+else: skip("print check (src/mech/print_check.py)")
 _m3=rd("kit_v22/models3d_check.json")
 if _m3:
     _bs=_m3["boards"]; chk("KiCad 3-D models: every component footprint of CB1D, LB1, PB1R, PM2, HB2 and SB1R-QA/QB links an existing VRML model (bare wire pads excepted), each model touches all its pads and stays within its library height + 0.5 mm",_m3["n_errors"]==0 and all(v["with_model"]==v["components"] for v in _bs.values()) and len(_bs)>=7,str({k:(v["with_model"],v["components"]) for k,v in _bs.items()}))

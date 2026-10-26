@@ -6,17 +6,17 @@ from scipy import ndimage
 import afe_design as D
 
 R_BOARD = 20.0; EDGE_KEEP = 0.35
-TRACK = 0.127; CLEAR = 0.1; VIA_D = 0.45; VIA_DRILL = 0.2
+TRACK = 0.15; CLEAR = 0.16; VIA_D = 0.6; VIA_DRILL = 0.3   # fab floor (src/pcb/dru_gen.py GEN): track 0.15, clearance 0.16 (router designs to the floor itself), via drill 0.30 + annular 0.15 = 0.60; was 0.127 / 0.1 / 0.45 / 0.2 (below every floor, CORRECTIONS)
 GRID = 0.1; N = int(2 * R_BOARD / GRID); OFF = R_BOARD
 BOARD = D.BOARD
 if BOARD == "A":
     ROWY = {1: -10.0, 2: 0.0, 3: 10.0}
     UPOS = {"U1": (0.5, -5.0), "U2": (0.5, 5.0)}; COPOS = {"CO1": (0.5, -1.6), "CO2": (0.5, 8.4)}
-    REF = dict(UR=(8.5, -5.0), CRI=(13.0, -5.0), CRO=(13.0, -7.0), CRN=(10.5, -2.6), UB=(8.5, 5.0), CBD=(13.6, 3.4), RD1=(13.6, 4.9), RD2=(13.6, 6.4), CDF=(10.5, 7.8), CVM=(12.6, 8.2), CB1=(-13.0, -5.0))
+    REF = dict(UR=(8.5, -5.0), CRI=(13.0, -5.0), CRO=(13.0, -7.0), CRN=(10.5, -2.6), UB=(8.5, 5.0), CBD=(13.6, 3.4), RD1=(13.6, 4.9), RD2=(13.6, 6.4), CDF=(10.5, 7.8), CVM=(12.8, 8.2), CB1=(-13.0, -5.0))
 else:
     ROWY = {1: -5.5, 2: 5.5}
     UPOS = {"U1": (0.5, 0.0)}; COPOS = {"CO1": (0.5, 3.4)}
-    REF = dict(UR=(4.0, -13.0), CRI=(9.0, -13.0), CRO=(11.5, -13.0), CRN=(9.0, -11.0), UB=(4.0, 13.0), CBD=(9.0, 13.0), RD1=(11.0, 13.0), RD2=(11.0, 11.4), CDF=(9.0, 11.2), CVM=(13.4, 9.6), CB1=(-13.0, 0.0))
+    REF = dict(UR=(4.0, -13.0), CRI=(9.0, -13.0), CRO=(11.6, -13.0), CRN=(9.0, -11.0), UB=(4.0, 13.0), CBD=(9.0, 13.0), RD1=(11.0, 13.0), RD2=(11.0, 11.4), CDF=(9.0, 11.2), CVM=(13.4, 9.6), CB1=(-13.0, 0.0))
 PLACE = {}
 def put(ref, x, y, rot=0, side="F"): PLACE[ref] = (x, y, rot, side)
 put("J1", -16.4, 0.0, 0); put("J2", 15.6, 0.0, 0)

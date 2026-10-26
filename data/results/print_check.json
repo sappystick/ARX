@@ -1,0 +1,935 @@
+{
+ "summary": {
+  "files": 48,
+  "closed": 33,
+  "oriented": 48,
+  "fits": 47,
+  "thin_wall_flags": 16,
+  "notes": [
+   "closed/oriented/fits: regress.py locks the known open list (15) and the known oversize part (1); any other open or oversize file FAILS. Wall estimates on open (non-manifold) shells are unreliable: rays pass through overlapping shells",
+   "overhang: area fraction of faces more than 45 deg below horizontal above the first 0.3 mm, as stored (z up)",
+   "wall: sampled 10th percentile, not a medial axis; a sampled estimate can miss a thin feature that no sample hits",
+   "draft: near-vertical faces with less than 1 deg draft against a z pull, only meaningful for mould candidates"
+  ]
+ },
+ "parts": [
+  {
+   "file": "stl/head/ANALOG_TRAY_v5.stl",
+   "faces": 7952,
+   "size_mm": [
+    77.6,
+    76.49,
+    2.4
+   ],
+   "volume_cm3": 3.78,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.011,
+   "wall_p10_mm": 0.8,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 1 edges not shared by two faces",
+    "thin wall estimate 0.80 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/head/BASE_PLATE_RX_CASSETTE_v3.stl",
+   "faces": 29552,
+   "size_mm": [
+    233.0,
+    233.0,
+    3.2
+   ],
+   "volume_cm3": 38.7,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.0,
+   "wall_p10_mm": 0.8,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 1 edges not shared by two faces",
+    "thin wall estimate 0.80 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/head/CORE_CYLINDER_v5_integrated.stl",
+   "faces": 296156,
+   "size_mm": [
+    104.0,
+    104.0,
+    38.1
+   ],
+   "volume_cm3": 79.26,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.212,
+   "wall_p10_mm": 0.1,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 9820 edges not shared by two faces",
+    "thin wall estimate 0.10 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/head/HEAD_SKIRT.stl",
+   "faces": 25952,
+   "size_mm": [
+    238.0,
+    238.0,
+    33.4
+   ],
+   "volume_cm3": 48.3,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.05,
+   "wall_p10_mm": 2.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/head/HUB_CAP_HTA_v3_vault.stl",
+   "faces": 44508,
+   "size_mm": [
+    104.0,
+    104.0,
+    6.7
+   ],
+   "volume_cm3": 11.07,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.422,
+   "wall_p10_mm": 0.9,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 108 edges not shared by two faces",
+    "thin wall estimate 0.90 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/head/LOTUS_HOOD_CARRIER_v3_butted.stl",
+   "faces": 6592,
+   "size_mm": [
+    232.2,
+    232.2,
+    4.0
+   ],
+   "volume_cm3": 42.85,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.034,
+   "wall_p10_mm": 1.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "thin wall estimate 1.00 mm (< 1.2 mm)"
+   ],
+   "ok": true
+  },
+  {
+   "file": "stl/head/ROOF_PLATE_v5.stl",
+   "faces": 74344,
+   "size_mm": [
+    104.0,
+    104.0,
+    3.2
+   ],
+   "volume_cm3": 22.56,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.062,
+   "wall_p10_mm": 0.1,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 1548 edges not shared by two faces",
+    "thin wall estimate 0.10 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/head/SEPTUM_FRAME_v5.stl",
+   "faces": 8448,
+   "size_mm": [
+    87.2,
+    86.42,
+    1.7
+   ],
+   "volume_cm3": 4.24,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.0,
+   "wall_p10_mm": 1.7,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/head/SPINE_COMB_v5.stl",
+   "faces": 48,
+   "size_mm": [
+    11.6,
+    2.6,
+    28.2
+   ],
+   "volume_cm3": 0.61,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.111,
+   "wall_p10_mm": 2.4,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/head/TXJ1_CRADLE_v1.stl",
+   "faces": 444,
+   "size_mm": [
+    25.46,
+    14.46,
+    5.2
+   ],
+   "volume_cm3": 0.48,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.069,
+   "wall_p10_mm": 0.19,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 4 edges not shared by two faces",
+    "thin wall estimate 0.19 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/pins/PIN_interface1_n2_275.0deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.43
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.067,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface1_n3_52.5deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.4
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface1_n4_190.0deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.37
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface2_n5_327.5deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.37
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface2_n6_105.0deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.45
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.067,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface2_n7_242.6deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.34
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface3_n15_262.6deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.35
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface3_n8_20.1deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.34
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface3_n9_157.6deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.45
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.067,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface4_n16_40.1deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.35
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface4_n17_177.6deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.43
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.067,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface4_n18_315.1deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.4
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface5_n19_92.7deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.4
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface5_n20_230.2deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.37
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/pins/PIN_interface5_n21_7.7deg.stl",
+   "faces": 768,
+   "size_mm": [
+    4.2,
+    4.2,
+    7.45
+   ],
+   "volume_cm3": 0.06,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.067,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/shaft_handle/CAS_R1_cassette_segment_150.stl",
+   "faces": 624,
+   "size_mm": [
+    17.4,
+    17.4,
+    150.0
+   ],
+   "volume_cm3": 17.08,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.0,
+   "wall_p10_mm": 0.7,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "thin wall estimate 0.70 mm (< 1.2 mm)"
+   ],
+   "ok": true
+  },
+  {
+   "file": "stl/shaft_handle/CAS_R2_trolley.stl",
+   "faces": 396,
+   "size_mm": [
+    12.6,
+    5.6,
+    23.25
+   ],
+   "volume_cm3": 1.52,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.062,
+   "wall_p10_mm": 0.39,
+   "draft_fraction_below_1deg": 0.968,
+   "flags": [
+    "thin wall estimate 0.39 mm (< 1.2 mm)"
+   ],
+   "ok": true
+  },
+  {
+   "file": "stl/shaft_handle/CAS_R3_end_anchor.stl",
+   "faces": 36,
+   "size_mm": [
+    17.0,
+    17.0,
+    12.0
+   ],
+   "volume_cm3": 2.45,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.025,
+   "wall_p10_mm": 8.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/shaft_handle/NPM_N1_body_with_tunnel_v2.stl",
+   "faces": 1152,
+   "size_mm": [
+    84.0,
+    56.8,
+    128.0
+   ],
+   "volume_cm3": 82.73,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.088,
+   "wall_p10_mm": 2.63,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 6 edges not shared by two faces"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/shaft_handle/NPM_N2_lid_with_fill_ports.stl",
+   "faces": 1548,
+   "size_mm": [
+    84.0,
+    9.0,
+    84.0
+   ],
+   "volume_cm3": 22.13,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.016,
+   "wall_p10_mm": 1.5,
+   "draft_fraction_below_1deg": 0.994,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/shaft_handle/NPM_N3_hot_zone_dam_v2.stl",
+   "faces": 12,
+   "size_mm": [
+    2.0,
+    19.0,
+    76.0
+   ],
+   "volume_cm3": 2.89,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.0,
+   "wall_p10_mm": 2.0,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/upper/U1_TOP_HOUSING.stl",
+   "faces": 1860,
+   "size_mm": [
+    155.0,
+    46.0,
+    61.5
+   ],
+   "volume_cm3": 84.88,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.215,
+   "wall_p10_mm": 2.48,
+   "draft_fraction_below_1deg": 0.975,
+   "flags": [
+    "open shell: 32 edges not shared by two faces"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/upper/U2_GRIP.stl",
+   "faces": 588,
+   "size_mm": [
+    75.28,
+    32.0,
+    117.43
+   ],
+   "volume_cm3": 53.75,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.0,
+   "wall_p10_mm": 3.96,
+   "draft_fraction_below_1deg": 0.241,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/upper/U3_BOTTOM_HOUSING.stl",
+   "faces": 1196,
+   "size_mm": [
+    182.0,
+    46.0,
+    40.0
+   ],
+   "volume_cm3": 93.01,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.165,
+   "wall_p10_mm": 2.48,
+   "draft_fraction_below_1deg": 0.956,
+   "flags": [
+    "open shell: 32 edges not shared by two faces"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/upper/U4_TRIGGER.stl",
+   "faces": 304,
+   "size_mm": [
+    42.47,
+    14.0,
+    44.54
+   ],
+   "volume_cm3": 4.79,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.16,
+   "wall_p10_mm": 0.51,
+   "draft_fraction_below_1deg": 0.948,
+   "flags": [
+    "thin wall estimate 0.51 mm (< 1.2 mm)"
+   ],
+   "ok": true
+  },
+  {
+   "file": "stl/upper/U5_ARMREST_CUP.stl",
+   "faces": 1104,
+   "size_mm": [
+    85.0,
+    100.26,
+    105.18
+   ],
+   "volume_cm3": 62.18,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.2,
+   "wall_p10_mm": 3.0,
+   "draft_fraction_below_1deg": 0.635,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/upper/U6_BATTERY_DOCK.stl",
+   "faces": 156,
+   "size_mm": [
+    202.5,
+    73.0,
+    33.8
+   ],
+   "volume_cm3": 79.88,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.376,
+   "wall_p10_mm": 2.8,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 10 edges not shared by two faces"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/upper/U7_BATTERY_PACK_SHELL.stl",
+   "faces": 264,
+   "size_mm": [
+    168.5,
+    73.0,
+    31.5
+   ],
+   "volume_cm3": 108.26,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.227,
+   "wall_p10_mm": 1.5,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 24 edges not shared by two faces"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/upper/U8_CORD_ANCHOR.stl",
+   "faces": 1360,
+   "size_mm": [
+    12.3,
+    29.6,
+    29.6
+   ],
+   "volume_cm3": 6.05,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.144,
+   "wall_p10_mm": 2.92,
+   "draft_fraction_below_1deg": 0.851,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/upper/U8_SEPTUM_extended.stl",
+   "faces": 7020,
+   "size_mm": [
+    446.0,
+    25.6,
+    25.6
+   ],
+   "volume_cm3": 30.89,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": false,
+   "overhang_area_fraction": 0.063,
+   "wall_p10_mm": 0.83,
+   "draft_fraction_below_1deg": 0.977,
+   "flags": [
+    "larger than 250 mm build cube",
+    "thin wall estimate 0.83 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/upper/U9_CAM_COLLAR.stl",
+   "faces": 1036,
+   "size_mm": [
+    28.0,
+    41.0,
+    49.0
+   ],
+   "volume_cm3": 15.27,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.165,
+   "wall_p10_mm": 3.89,
+   "draft_fraction_below_1deg": 0.871,
+   "flags": [
+    "open shell: 64 edges not shared by two faces"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/yoke/BUSHING_IN_TUBE_A.stl",
+   "faces": 1920,
+   "size_mm": [
+    31.6,
+    31.6,
+    21.2
+   ],
+   "volume_cm3": 1.17,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.03,
+   "wall_p10_mm": 0.55,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 120 edges not shared by two faces",
+    "thin wall estimate 0.55 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/yoke/BUSHING_ON_TUBE_B.stl",
+   "faces": 960,
+   "size_mm": [
+    29.6,
+    29.6,
+    20.0
+   ],
+   "volume_cm3": 1.0,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.0,
+   "wall_p10_mm": 0.55,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "thin wall estimate 0.55 mm (< 1.2 mm)"
+   ],
+   "ok": true
+  },
+  {
+   "file": "stl/yoke/HEEL_SADDLE_TOWER.stl",
+   "faces": 4404,
+   "size_mm": [
+    73.72,
+    92.1,
+    94.0
+   ],
+   "volume_cm3": 94.63,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.04,
+   "wall_p10_mm": 1.0,
+   "draft_fraction_below_1deg": 0.995,
+   "flags": [
+    "open shell: 9 edges not shared by two faces",
+    "thin wall estimate 1.00 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/yoke/HINGE_ARM.stl",
+   "faces": 2424,
+   "size_mm": [
+    39.6,
+    39.6,
+    80.0
+   ],
+   "volume_cm3": 47.48,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.068,
+   "wall_p10_mm": 2.0,
+   "draft_fraction_below_1deg": 0.98,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/yoke/TELESCOPE_LOCK_COLLAR.stl",
+   "faces": 2820,
+   "size_mm": [
+    52.5,
+    45.0,
+    30.0
+   ],
+   "volume_cm3": 25.52,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.0,
+   "wall_p10_mm": 5.9,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [],
+   "ok": true
+  },
+  {
+   "file": "stl/yoke/UMBILICAL_BRIDGE.stl",
+   "faces": 36,
+   "size_mm": [
+    73.33,
+    18.93,
+    7.1
+   ],
+   "volume_cm3": 1.95,
+   "closed": false,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.037,
+   "wall_p10_mm": 0.7,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "open shell: 2 edges not shared by two faces",
+    "thin wall estimate 0.70 mm (< 1.2 mm)"
+   ],
+   "ok": false
+  },
+  {
+   "file": "stl/yoke/UMBILICAL_BRIDGE_LID.stl",
+   "faces": 12,
+   "size_mm": [
+    73.33,
+    18.93,
+    1.2
+   ],
+   "volume_cm3": 1.43,
+   "closed": true,
+   "oriented": true,
+   "fits_build_cube": true,
+   "overhang_area_fraction": 0.0,
+   "wall_p10_mm": 1.2,
+   "draft_fraction_below_1deg": 1.0,
+   "flags": [
+    "thin wall estimate 1.20 mm (< 1.2 mm)"
+   ],
+   "ok": true
+  }
+ ]
+}

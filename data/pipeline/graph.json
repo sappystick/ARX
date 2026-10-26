@@ -1115,6 +1115,68 @@
 "work/kit_v6/PM2/pads.json"
 ]
 },
+"print-check": {
+"L": [
+"src/mech",
+"stl"
+],
+"R": [
+"src/mech/print_check.py",
+"stl/MANIFEST.csv",
+"stl/head/ANALOG_TRAY_v5.stl",
+"stl/head/BASE_PLATE_RX_CASSETTE_v3.stl",
+"stl/head/CORE_CYLINDER_v5_integrated.stl",
+"stl/head/HEAD_SKIRT.stl",
+"stl/head/HUB_CAP_HTA_v3_vault.stl",
+"stl/head/LOTUS_HOOD_CARRIER_v3_butted.stl",
+"stl/head/ROOF_PLATE_v5.stl",
+"stl/head/SEPTUM_FRAME_v5.stl",
+"stl/head/SPINE_COMB_v5.stl",
+"stl/head/TXJ1_CRADLE_v1.stl",
+"stl/pins/PIN_interface1_n2_275.0deg.stl",
+"stl/pins/PIN_interface1_n3_52.5deg.stl",
+"stl/pins/PIN_interface1_n4_190.0deg.stl",
+"stl/pins/PIN_interface2_n5_327.5deg.stl",
+"stl/pins/PIN_interface2_n6_105.0deg.stl",
+"stl/pins/PIN_interface2_n7_242.6deg.stl",
+"stl/pins/PIN_interface3_n15_262.6deg.stl",
+"stl/pins/PIN_interface3_n8_20.1deg.stl",
+"stl/pins/PIN_interface3_n9_157.6deg.stl",
+"stl/pins/PIN_interface4_n16_40.1deg.stl",
+"stl/pins/PIN_interface4_n17_177.6deg.stl",
+"stl/pins/PIN_interface4_n18_315.1deg.stl",
+"stl/pins/PIN_interface5_n19_92.7deg.stl",
+"stl/pins/PIN_interface5_n20_230.2deg.stl",
+"stl/pins/PIN_interface5_n21_7.7deg.stl",
+"stl/shaft_handle/CAS_R1_cassette_segment_150.stl",
+"stl/shaft_handle/CAS_R2_trolley.stl",
+"stl/shaft_handle/CAS_R3_end_anchor.stl",
+"stl/shaft_handle/NPM_N1_body_with_tunnel_v2.stl",
+"stl/shaft_handle/NPM_N2_lid_with_fill_ports.stl",
+"stl/shaft_handle/NPM_N3_hot_zone_dam_v2.stl",
+"stl/shaft_handle/SUPERSEDED.txt",
+"stl/upper/U1_TOP_HOUSING.stl",
+"stl/upper/U2_GRIP.stl",
+"stl/upper/U3_BOTTOM_HOUSING.stl",
+"stl/upper/U4_TRIGGER.stl",
+"stl/upper/U5_ARMREST_CUP.stl",
+"stl/upper/U6_BATTERY_DOCK.stl",
+"stl/upper/U7_BATTERY_PACK_SHELL.stl",
+"stl/upper/U8_CORD_ANCHOR.stl",
+"stl/upper/U8_SEPTUM_extended.stl",
+"stl/upper/U9_CAM_COLLAR.stl",
+"stl/yoke/BUSHING_IN_TUBE_A.stl",
+"stl/yoke/BUSHING_ON_TUBE_B.stl",
+"stl/yoke/HEEL_SADDLE_TOWER.stl",
+"stl/yoke/HINGE_ARM.stl",
+"stl/yoke/TELESCOPE_LOCK_COLLAR.stl",
+"stl/yoke/UMBILICAL_BRIDGE.stl",
+"stl/yoke/UMBILICAL_BRIDGE_LID.stl"
+],
+"W": [
+"data/results/print_check.json"
+]
+},
 "publish": {
 "L": [
 "scripts",

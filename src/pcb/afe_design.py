@@ -53,7 +53,7 @@ def hdr(rows, cols, pitch=1.27):
     for i in range(n):
         if cols == 1: x, y = 0.0, (i - (n - 1) / 2) * pitch
         else: k, c = divmod(i, 2); x, y = (c - 0.5) * pitch, (k - (rows - 1) / 2) * pitch
-        pads.append((str(i + 1), x, y, 1.0, 1.0, "circle"))
+        pads.append((str(i + 1), x, y, 1.10, 1.10, "circle"))      # 1.10 mm pad on the 0.65 mm drill: 0.225 mm ring (floor 0.18), pad gap 0.17 mm (clearance floor 0.16); was 1.00 (0.175 ring, OPEN_ITEMS 33)
     return dict(desc=f"{cols}x{rows} through-hole header/solder pads {pitch} mm, drill 0.65", fp=f"Connector_PinHeader_1.27mm:PinHeader_{cols}x{rows if cols==1 else rows}_P1.27mm", pins=pins, pads=pads, body=(cols * pitch + 1.5, rows * pitch + 1.5, 4.0), tht=True, drill=0.65)
 LIB["HDR1x8"] = hdr(8, 1); LIB["HDR1x6"] = hdr(6, 1); LIB["HDR2x6"] = hdr(6, 2)
 for _n in (6, 8, 10, 12, 16): LIB[f"FFC{_n}"] = ffc(_n)
