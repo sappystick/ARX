@@ -1,0 +1,434 @@
+[
+ {
+  "span": 10,
+  "capx": 13.1,
+  "capdy": 1.3,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 45,
+  "unrouted": 13,
+  "nets": [
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9",
+   "+3V3D: UA1.9"
+  ],
+  "tracks": 562,
+  "vias": 60
+ },
+ {
+  "span": 10,
+  "capx": 13.1,
+  "capdy": 1.3,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 42,
+  "unrouted": 8,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "CS: UA3.6",
+   "CS: UA1.6"
+  ],
+  "tracks": 571,
+  "vias": 63
+ },
+ {
+  "span": 10,
+  "capx": 13.1,
+  "capdy": 1.8,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 24,
+  "unrouted": 13,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9"
+  ],
+  "tracks": 585,
+  "vias": 61
+ },
+ {
+  "span": 10,
+  "capx": 13.1,
+  "capdy": 1.8,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 21,
+  "unrouted": 7,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "CS: UA3.6",
+   "+3V3D: UA2.9"
+  ],
+  "tracks": 594,
+  "vias": 63
+ },
+ {
+  "span": 10,
+  "capx": 13.5,
+  "capdy": 1.3,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 37,
+  "unrouted": 13,
+  "nets": [
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9",
+   "+3V3D: UA1.9"
+  ],
+  "tracks": 571,
+  "vias": 60
+ },
+ {
+  "span": 10,
+  "capx": 13.5,
+  "capdy": 1.3,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 34,
+  "unrouted": 7,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "CS: UA3.6",
+   "CS: UA1.6"
+  ],
+  "tracks": 590,
+  "vias": 65
+ },
+ {
+  "span": 10,
+  "capx": 13.5,
+  "capdy": 1.8,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 26,
+  "unrouted": 13,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9"
+  ],
+  "tracks": 581,
+  "vias": 61
+ },
+ {
+  "span": 10,
+  "capx": 13.5,
+  "capdy": 1.8,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 23,
+  "unrouted": 6,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "CS: UA3.6",
+   "+3V3D: UA2.9"
+  ],
+  "tracks": 611,
+  "vias": 65
+ },
+ {
+  "span": 11,
+  "capx": 13.1,
+  "capdy": 1.3,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 45,
+  "unrouted": 12,
+  "nets": [
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9",
+   "+3V3D: UA3.9"
+  ],
+  "tracks": 574,
+  "vias": 60
+ },
+ {
+  "span": 11,
+  "capx": 13.1,
+  "capdy": 1.3,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 42,
+  "unrouted": 9,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "CS: UA3.6",
+   "CS: UA1.6"
+  ],
+  "tracks": 593,
+  "vias": 64
+ },
+ {
+  "span": 11,
+  "capx": 13.1,
+  "capdy": 1.8,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 24,
+  "unrouted": 13,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9"
+  ],
+  "tracks": 586,
+  "vias": 60
+ },
+ {
+  "span": 11,
+  "capx": 13.1,
+  "capdy": 1.8,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 21,
+  "unrouted": 6,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "CS: UA3.6",
+   "+3V3D: UA2.9"
+  ],
+  "tracks": 604,
+  "vias": 65
+ },
+ {
+  "span": 11,
+  "capx": 13.5,
+  "capdy": 1.3,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 37,
+  "unrouted": 12,
+  "nets": [
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9",
+   "+3V3D: UA3.9"
+  ],
+  "tracks": 567,
+  "vias": 60
+ },
+ {
+  "span": 11,
+  "capx": 13.5,
+  "capdy": 1.3,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 34,
+  "unrouted": 9,
+  "nets": [
+   "SDO1: UA1.7",
+   "SCLK: UA2.8",
+   "CS: UA3.6",
+   "CS: UA1.6"
+  ],
+  "tracks": 602,
+  "vias": 64
+ },
+ {
+  "span": 11,
+  "capx": 13.5,
+  "capdy": 1.8,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 26,
+  "unrouted": 13,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9"
+  ],
+  "tracks": 566,
+  "vias": 60
+ },
+ {
+  "span": 11,
+  "capx": 13.5,
+  "capdy": 1.8,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 23,
+  "unrouted": 7,
+  "nets": [
+   "SDO1: UA1.7",
+   "SCLK: UA2.8",
+   "CS: UA3.6",
+   "CS: UA1.6"
+  ],
+  "tracks": 598,
+  "vias": 65
+ },
+ {
+  "span": 12,
+  "capx": 13.1,
+  "capdy": 1.3,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 45,
+  "unrouted": 13,
+  "nets": [
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA3.9",
+   "VREF: CRF1.1"
+  ],
+  "tracks": 609,
+  "vias": 55
+ },
+ {
+  "span": 12,
+  "capx": 13.1,
+  "capdy": 1.3,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 42,
+  "unrouted": 9,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "CS: UA3.6",
+   "CS: UA1.6"
+  ],
+  "tracks": 578,
+  "vias": 56
+ },
+ {
+  "span": 12,
+  "capx": 13.1,
+  "capdy": 1.8,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 26,
+  "unrouted": 14,
+  "nets": [
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9",
+   "+3V3D: UA3.9"
+  ],
+  "tracks": 610,
+  "vias": 55
+ },
+ {
+  "span": 12,
+  "capx": 13.1,
+  "capdy": 1.8,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 23,
+  "unrouted": 7,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "+3V3D: UA2.9",
+   "+3V3D: CDV2.1"
+  ],
+  "tracks": 629,
+  "vias": 55
+ },
+ {
+  "span": 12,
+  "capx": 13.5,
+  "capdy": 1.3,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 39,
+  "unrouted": 14,
+  "nets": [
+   "ADCIN_GX: UA1.3",
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA3.9"
+  ],
+  "tracks": 601,
+  "vias": 54
+ },
+ {
+  "span": 12,
+  "capx": 13.5,
+  "capdy": 1.3,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 36,
+  "unrouted": 10,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "CS: UA3.6",
+   "CS: UA1.6"
+  ],
+  "tracks": 593,
+  "vias": 60
+ },
+ {
+  "span": 12,
+  "capx": 13.5,
+  "capdy": 1.8,
+  "uarot": 0,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 28,
+  "unrouted": 14,
+  "nets": [
+   "SCLK: UA3.8",
+   "+3V3D: CDV2.1",
+   "+3V3D: UA2.9",
+   "+3V3D: UA3.9"
+  ],
+  "tracks": 597,
+  "vias": 55
+ },
+ {
+  "span": 12,
+  "capx": 13.5,
+  "capdy": 1.8,
+  "uarot": 180,
+  "uaside": "B",
+  "capside": "B",
+  "place_err": 25,
+  "unrouted": 9,
+  "nets": [
+   "SCLK: UA2.8",
+   "SCLK: UA1.8",
+   "CS: UA3.6",
+   "+3V3D: UA2.9"
+  ],
+  "tracks": 622,
+  "vias": 59
+ }
+]

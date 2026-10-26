@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """PF233-AB1 layout: placement -> via fanout (GND/+5VA planes) -> grid router -> independent DRC + connectivity check."""
-import math, heapq, json, sys, time
+import os, math, heapq, json, sys, time
 import numpy as np
 from scipy import ndimage
 import afe_design as D
@@ -17,6 +17,10 @@ else:
     ROWY = {1: -5.5, 2: 5.5}
     UPOS = {"U1": (0.5, 0.0)}; COPOS = {"CO1": (0.5, 3.4)}
     REF = dict(UR=(4.0, -13.0), CRI=(9.0, -13.0), CRO=(11.6, -13.0), CRN=(9.0, -11.0), UB=(4.0, 13.0), CBD=(9.0, 13.0), RD1=(11.0, 13.0), RD2=(11.0, 11.4), CDF=(9.0, 11.2), CVM=(13.4, 9.6), CB1=(-13.0, 0.0))
+# Step 10 search overrides (environment only; unset = the committed placement): row pitch, decoupling x and dy, UA rotation
+_AFE = dict(span=os.environ.get("AFE_SPAN"), capx=os.environ.get("AFE_CAPX"), capdy=os.environ.get("AFE_CAPDY"), uarot=os.environ.get("AFE_UAROT"), uaside=os.environ.get("AFE_UASIDE"), capside=os.environ.get("AFE_CAPSIDE"))
+if _AFE["span"] and BOARD == "A": ROWY = {1: -float(_AFE["span"]), 2: 0.0, 3: float(_AFE["span"])}
+if _AFE["span"] and BOARD == "B": ROWY = {1: -float(_AFE["span"]) / 2, 2: float(_AFE["span"]) / 2}
 PLACE = {}
 def put(ref, x, y, rot=0, side="F"): PLACE[ref] = (x, y, rot, side)
 put("J1", -16.4, 0.0, 0); put("J2", 15.6, 0.0, 0)
@@ -27,8 +31,9 @@ for k, y in ROWY.items():
     put(f"RS{k}", -13.0, y); put(f"D{k}", -10.2, y); put(f"SW{k}", -6.4, y); put(f"CSW{k}", -7.4, y + 2.4)
     put(f"RG{k}", 2.2, y); put(f"RF{k}", 4.3, y - 1.2); put(f"CF{k}", 4.3, y + 1.2)
     put(f"RAAF{k}", 6.6, y); put(f"CAAF{k}", 8.9, y)
-    put(f"UA{k}", 10.6, y, 90, "B"); put(f"CRF{k}", 7.1, y, 0, "B")
-    put(f"CAV{k}", 13.1, y - 1.3, 0, "B"); put(f"CDV{k}", 13.1, y + 1.3, 0, "B")
+    put(f"UA{k}", 10.6, y, int(_AFE["uarot"] or 90), _AFE["uaside"] or "B"); put(f"CRF{k}", 7.1, y, 0, "B")
+    cx, cdy = float(_AFE["capx"] or 13.1), float(_AFE["capdy"] or 1.3)
+    put(f"CAV{k}", cx, y - cdy, 0, _AFE["capside"] or "B"); put(f"CDV{k}", cx, y + cdy, 0, _AFE["capside"] or "B")
 PLANE = {"GND": "In1.Cu", "+5VA": "In4.Cu"}
 
 def rotp(x, y, a):
