@@ -1,0 +1,46 @@
+{
+ "all_caught": true,
+ "cases": [
+  {
+   "control": "untouched TXJ1 passes",
+   "fails": {},
+   "n_fail": 0,
+   "caught": true
+  },
+  {
+   "control": "track 0.10 mm (below 0.15 floor) is caught",
+   "fails": {
+    "width_track": 1
+   },
+   "n_fail": 1,
+   "caught": true
+  },
+  {
+   "control": "TX_B track 0.4 mm from TX_A (HV 1.0 mm) is caught",
+   "fails": {
+    "clearance": 4,
+    "split:TX_B": 1
+   },
+   "n_fail": 5,
+   "caught": true
+  },
+  {
+   "control": "removed TX_A track splits the net is caught",
+   "fails": {
+    "split:TX_A": 7
+   },
+   "n_fail": 7,
+   "caught": true
+  },
+  {
+   "control": "pad over the board edge is caught",
+   "fails": {
+    "clearance": 1,
+    "edge": 2,
+    "split:TX_B": 1
+   },
+   "n_fail": 4,
+   "caught": true
+  }
+ ]
+}

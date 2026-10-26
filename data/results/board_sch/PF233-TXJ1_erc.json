@@ -1,0 +1,500 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-26T21:17:04+0000",
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "9.0.9",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/804c5b3f-5048-51c4-9d49-4a41038aaba8",
+            "violations": [
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol A1 [A1]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.3048
+                            },
+                            "uuid": "7091e971-7aee-5d46-8473-757e4529cc48"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol A1 [A1]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.3048
+                            },
+                            "uuid": "7091e971-7aee-5d46-8473-757e4529cc48"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol A2 [A2]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.4064
+                            },
+                            "uuid": "13741794-3d36-54dc-bb3b-8c8c6fbb105f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol A2 [A2]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.4064
+                            },
+                            "uuid": "13741794-3d36-54dc-bb3b-8c8c6fbb105f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol A3 [A3]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.508
+                            },
+                            "uuid": "ec914987-6500-5324-89bc-25bfb0f63f1a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol A3 [A3]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.508
+                            },
+                            "uuid": "ec914987-6500-5324-89bc-25bfb0f63f1a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol A4 [A4]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.6096
+                            },
+                            "uuid": "5087a4df-ad9c-5128-b2e2-02b41e9979ae"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol A4 [A4]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.6096
+                            },
+                            "uuid": "5087a4df-ad9c-5128-b2e2-02b41e9979ae"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol A5 [A5]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.7112
+                            },
+                            "uuid": "b739d1f1-c6c8-5ce4-a0b7-dd0c8786e718"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol A5 [A5]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.7112
+                            },
+                            "uuid": "b739d1f1-c6c8-5ce4-a0b7-dd0c8786e718"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol A6 [A6]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.8128
+                            },
+                            "uuid": "a50af027-bb95-5c4f-88e9-b221580871a2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol A6 [A6]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.8128
+                            },
+                            "uuid": "a50af027-bb95-5c4f-88e9-b221580871a2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol A12 [A12]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.9144
+                            },
+                            "uuid": "6d09d3b0-738b-543e-8098-0385d10d3dab"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol A12 [A12]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.9144
+                            },
+                            "uuid": "6d09d3b0-738b-543e-8098-0385d10d3dab"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol B1 [B1]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.016
+                            },
+                            "uuid": "068cf355-da55-5a14-9941-f2e81a6acce5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol B1 [B1]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.016
+                            },
+                            "uuid": "068cf355-da55-5a14-9941-f2e81a6acce5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol B2 [B2]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.1176
+                            },
+                            "uuid": "d6b7db4a-968b-547c-a964-37a19a091215"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol B2 [B2]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.1176
+                            },
+                            "uuid": "d6b7db4a-968b-547c-a964-37a19a091215"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol B3 [B3]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.2192
+                            },
+                            "uuid": "960a278d-1480-5ed9-8f3b-9605c4ec36ad"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol B3 [B3]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.2192
+                            },
+                            "uuid": "960a278d-1480-5ed9-8f3b-9605c4ec36ad"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol B4 [B4]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.3208
+                            },
+                            "uuid": "7c5b7943-5e7a-521c-8e58-ecefdbfff8b3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol B4 [B4]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.3208
+                            },
+                            "uuid": "7c5b7943-5e7a-521c-8e58-ecefdbfff8b3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol B5 [B5]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.4224
+                            },
+                            "uuid": "832aad0b-95b6-59c3-be94-bfa8b2233a9a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol B5 [B5]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.4224
+                            },
+                            "uuid": "832aad0b-95b6-59c3-be94-bfa8b2233a9a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol B6 [B6]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.524
+                            },
+                            "uuid": "7c290209-adaa-5090-8c19-44e3bc4f61c7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol B6 [B6]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.524
+                            },
+                            "uuid": "7c290209-adaa-5090-8c19-44e3bc4f61c7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol B12 [B12]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.6256
+                            },
+                            "uuid": "34610b22-c174-5b98-8561-207a893416c5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol B12 [B12]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.6256
+                            },
+                            "uuid": "34610b22-c174-5b98-8561-207a893416c5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol TAPA [TAPA]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.7272
+                            },
+                            "uuid": "6239c729-8855-5116-b681-01701a470d1c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol TAPA [TAPA]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.7272
+                            },
+                            "uuid": "6239c729-8855-5116-b681-01701a470d1c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'TXJ1'.",
+                    "items": [
+                        {
+                            "description": "Symbol TAPB [TAPB]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.8288
+                            },
+                            "uuid": "8d908294-56c5-52f6-8e05-465ace04a440"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol TAPB [TAPB]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.8288
+                            },
+                            "uuid": "8d908294-56c5-52f6-8e05-465ace04a440"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                }
+            ]
+        }
+    ],
+    "source": "PF233-TXJ1.kicad_sch"
+}

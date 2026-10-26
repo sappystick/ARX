@@ -765,6 +765,44 @@
 "work/kit_v22/hood_axi.json"
 ]
 },
+"indep-drc": {
+"L": [
+"src/pcb",
+"tests"
+],
+"R": [
+"data/kicad/PF233-HTA.kicad_pcb",
+"data/kicad/SB1R-QA.kicad_pcb",
+"data/kicad/SB1R-QB.kicad_pcb",
+"data/kicad/TXJ1.kicad_pcb",
+"src/pcb/board_sch.py",
+"src/pcb/indep_drc.py",
+"tests/indep_drc_controls.py"
+],
+"W": [
+"data/results/board_sch/PF233-SB1R-QA.kicad_sch",
+"data/results/board_sch/PF233-SB1R-QA.net",
+"data/results/board_sch/PF233-SB1R-QA.pdf",
+"data/results/board_sch/PF233-SB1R-QA_erc.json",
+"data/results/board_sch/PF233-SB1R-QA_kicad.net",
+"data/results/board_sch/PF233-SB1R-QB.kicad_sch",
+"data/results/board_sch/PF233-SB1R-QB.net",
+"data/results/board_sch/PF233-SB1R-QB.pdf",
+"data/results/board_sch/PF233-SB1R-QB_erc.json",
+"data/results/board_sch/PF233-SB1R-QB_kicad.net",
+"data/results/board_sch/PF233-TXJ1.kicad_sch",
+"data/results/board_sch/PF233-TXJ1.net",
+"data/results/board_sch/PF233-TXJ1.pdf",
+"data/results/board_sch/PF233-TXJ1_erc.json",
+"data/results/board_sch/PF233-TXJ1_kicad.net",
+"data/results/board_sch/board_sch_check.json",
+"data/results/indep_drc/HTA.json",
+"data/results/indep_drc/SB1R-QA.json",
+"data/results/indep_drc/SB1R-QB.json",
+"data/results/indep_drc/TXJ1.json",
+"data/results/indep_drc_controls.json"
+]
+},
 "kicad-cb1d": {
 "L": [],
 "R": [

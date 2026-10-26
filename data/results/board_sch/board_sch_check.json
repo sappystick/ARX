@@ -1,0 +1,38 @@
+{
+ "TXJ1": {
+  "parts": 16,
+  "nets": 2,
+  "pins": 16,
+  "drawn_check": true,
+  "drawn_mismatch": [],
+  "stray": 0,
+  "kicad_netlist_ok": true,
+  "erc_errors": 0,
+  "pdf": true,
+  "note": "TXJ1 junction (16 PTH pads on TX_A and TX_B): the two TX coil leads, 3.0 mm tracks, HV 1.0 mm between the nets. Connectivity drawing, no discrete parts."
+ },
+ "SB1R-QA": {
+  "parts": 9,
+  "nets": 3,
+  "pins": 8,
+  "drawn_check": true,
+  "drawn_mismatch": [],
+  "stray": 0,
+  "kicad_netlist_ok": true,
+  "erc_errors": 0,
+  "pdf": true,
+  "note": "SB1R-QA receive coil board: net QA_COIL (leads P1, P2, RD1 across them), transfer pads T1 / T2 on net QB_T1 / QB_T2 with RD2 across them, and three M3 holes. Connectivity drawing."
+ },
+ "SB1R-QB": {
+  "parts": 5,
+  "nets": 1,
+  "pins": 2,
+  "drawn_check": true,
+  "drawn_mismatch": [],
+  "stray": 0,
+  "kicad_netlist_ok": true,
+  "erc_errors": 0,
+  "pdf": true,
+  "note": "SB1R-QB receive coil board: net QB_COIL on the two lead pads P1, P2 and three M3 holes. No discrete parts. Connectivity drawing."
+ }
+}

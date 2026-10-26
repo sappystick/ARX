@@ -1,0 +1,170 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-26T21:17:05+0000",
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "9.0.9",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/1a852660-8830-5202-9a60-e295060334c4",
+            "violations": [
+                {
+                    "description": "The current configuration does not include the footprint library 'SB1R'.",
+                    "items": [
+                        {
+                            "description": "Symbol H1 [H1]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.3048
+                            },
+                            "uuid": "5d78eb2c-310c-5579-a986-bd984590befb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol H1 [H1]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.3048
+                            },
+                            "uuid": "5d78eb2c-310c-5579-a986-bd984590befb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'SB1R'.",
+                    "items": [
+                        {
+                            "description": "Symbol H2 [H2]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.4064
+                            },
+                            "uuid": "58cc1c0b-b76a-534b-85f4-d51703587cf3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol H2 [H2]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.4064
+                            },
+                            "uuid": "58cc1c0b-b76a-534b-85f4-d51703587cf3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'SB1R'.",
+                    "items": [
+                        {
+                            "description": "Symbol H3 [H3]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.508
+                            },
+                            "uuid": "8a0210bb-a3cf-5bc3-9828-1a6513b81592"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol H3 [H3]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.508
+                            },
+                            "uuid": "8a0210bb-a3cf-5bc3-9828-1a6513b81592"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'SB1R'.",
+                    "items": [
+                        {
+                            "description": "Symbol P1 [P1]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.6096
+                            },
+                            "uuid": "764304d6-22b0-5582-a8be-383246700a1c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol P1 [P1]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.6096
+                            },
+                            "uuid": "764304d6-22b0-5582-a8be-383246700a1c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'SB1R'.",
+                    "items": [
+                        {
+                            "description": "Symbol P2 [P2]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.7112
+                            },
+                            "uuid": "449ad229-f699-5a24-9721-a8d8b4e0df24"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'PF233_auto'",
+                    "items": [
+                        {
+                            "description": "Symbol P2 [P2]",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 0.7112
+                            },
+                            "uuid": "449ad229-f699-5a24-9721-a8d8b4e0df24"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                }
+            ]
+        }
+    ],
+    "source": "PF233-SB1R-QB.kicad_sch"
+}

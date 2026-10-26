@@ -1,0 +1,48 @@
+{
+ "board": "HTA",
+ "file": "data/kicad/PF233-HTA.kicad_pcb",
+ "checks": {
+  "width_track": {
+   "n": 802,
+   "bad": 0,
+   "min": 0.5
+  },
+  "via_size_drill": {
+   "n": 3,
+   "bad": 0
+  },
+  "pth_drill": {
+   "bad": 0
+  },
+  "pth_annular": {
+   "bad": 0
+  },
+  "clearance": {
+   "bad": 0,
+   "min_gap_mm": null,
+   "examples": []
+  },
+  "hole_to_hole": {
+   "bad": 0,
+   "examples": []
+  },
+  "hole_to_copper": {
+   "bad": 0,
+   "examples": []
+  },
+  "edge": {
+   "bad": 0,
+   "examples": []
+  },
+  "connectivity": {
+   "nets": 1,
+   "split_nets": {},
+   "connections": 819
+  }
+ },
+ "errors": [],
+ "zones": 0,
+ "fails": {},
+ "n_fail": 0,
+ "zones_checked": true
+}

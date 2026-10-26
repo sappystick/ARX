@@ -160,6 +160,17 @@ chk("generated netlists carry the fixed design date (not the wall clock), so a r
 _e={b:rd(f"kit_v22/gerber_edge_{b}.json") for b in ("CB1D","LB1","PB1R","PM2","HB2","HTA")}
 if all(_e.values()): chk("Gerber copper read back from the files: nothing outside the outline (notch included) and >= 0.5 mm to the edge on every layer of CB1D, LB1, PB1R, PM2, HB2, HTA",all(v["ok"] for v in _e.values()),str({b:min(r["min_edge_gap_mm"] for r in v["sets"][list(v["sets"])[0]]["layers"].values() if r["min_edge_gap_mm"] is not None) for b,v in _e.items()}))
 else: skip("Gerber edge read-back")
+_idrc={b:(json.load(open(f"data/results/indep_drc/{b}.json")) if os.path.exists(f"data/results/indep_drc/{b}.json") else None) for b in ("TXJ1","SB1R-QA","SB1R-QB","HTA")}
+_ctl=json.load(open("data/results/indep_drc_controls.json")) if os.path.exists("data/results/indep_drc_controls.json") else None
+_bsc=json.load(open("data/results/board_sch/board_sch_check.json")) if os.path.exists("data/results/board_sch/board_sch_check.json") else None
+if all(_idrc.values()) and _ctl and _bsc:
+    chk("independent geometric DRC (src/pcb/indep_drc.py, not KiCad's engine) on the four boards the router does not touch: TXJ1, SB1R-QA, SB1R-QB, HTA: 0 fails (widths, via and ring, clearance with HV 1.0 mm, holes, edge, connectivity)",
+        all(v["n_fail"]==0 and v["zones_checked"] for v in _idrc.values()), str({b:v["fails"] or "none" for b,v in _idrc.items()}))
+    chk("independent DRC negative controls: the checker catches a 0.10 mm track, an HV spacing of 0.4 mm, a split net and a pad over the edge, and passes the untouched board",
+        _ctl["all_caught"], str([(c["control"][:30], c["caught"]) for c in _ctl["cases"]]))
+    chk("board schematics TXJ1, SB1R-QA, SB1R-QB: drawn nets equal the board's pad-to-net assignment, KiCad re-reads the netlist, ERC 0 errors, PDF exported",
+        all(v["drawn_check"] and v["kicad_netlist_ok"] and v["pdf"] and v["erc_errors"]==0 for v in _bsc.values()), str({b:(v["parts"],v["nets"],v["erc_errors"]) for b,v in _bsc.items()}))
+else: skip("independent DRC / board schematics (run the indep-drc step)")
 try: _pc=json.load(open("data/results/print_check.json"))
 except Exception: _pc=None
 KNOWN_OPEN={"ANALOG_TRAY_v5","BASE_PLATE_RX_CASSETTE_v3","BUSHING_IN_TUBE_A","CORE_CYLINDER_v5_integrated","HEEL_SADDLE_TOWER","HUB_CAP_HTA_v3_vault","NPM_N1_body_with_tunnel_v2","ROOF_PLATE_v5","TXJ1_CRADLE_v1","U1_TOP_HOUSING","U3_BOTTOM_HOUSING","U6_BATTERY_DOCK","U7_BATTERY_PACK_SHELL","U9_CAM_COLLAR","UMBILICAL_BRIDGE"}

@@ -1,0 +1,48 @@
+{
+ "board": "TXJ1",
+ "file": "data/kicad/TXJ1.kicad_pcb",
+ "checks": {
+  "width_track": {
+   "n": 2,
+   "bad": 0,
+   "min": 3.0
+  },
+  "via_size_drill": {
+   "n": 0,
+   "bad": 0
+  },
+  "pth_drill": {
+   "bad": 0
+  },
+  "pth_annular": {
+   "bad": 0
+  },
+  "clearance": {
+   "bad": 0,
+   "min_gap_mm": null,
+   "examples": []
+  },
+  "hole_to_hole": {
+   "bad": 0,
+   "examples": []
+  },
+  "hole_to_copper": {
+   "bad": 0,
+   "examples": []
+  },
+  "edge": {
+   "bad": 0,
+   "examples": []
+  },
+  "connectivity": {
+   "nets": 2,
+   "split_nets": {},
+   "connections": 48
+  }
+ },
+ "errors": [],
+ "zones": 0,
+ "fails": {},
+ "n_fail": 0,
+ "zones_checked": true
+}
