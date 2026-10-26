@@ -63,6 +63,9 @@ for base, key in DRU.items():                                    # rule files ar
         if not CHECK: open(p, "w").write(want); changed += 1
 for r in RESULTS: put(f"{W}/{r}", f"data/results/{os.path.basename(r)}")
 for f in glob.glob(f"{W}/kit_v22/SCH/*.kicad_sch"): put(f, f"data/kicad/sch/{os.path.basename(f)}")
+for f in glob.glob(f"{W}/kit_v22/SCHF/*"):
+    if f.endswith((".kicad_sch", ".pdf")): put(f, f"data/kicad/sch_functional/{os.path.basename(f)}")
+    elif f.endswith("_check.json"): put(f, f"data/results/{os.path.basename(f)}")
 for f in glob.glob(f"{W}/kit_v22/3dmodels/*"): put(f, f"data/kicad/3dmodels/{os.path.basename(f)}")        # VRML package models the KiCad boards link by ${KIPRJMOD}/3dmodels/ (src/pcb/models3d.py)
 print(f"publish_data: {len(stale)} {'stale' if CHECK else 'updated'} file(s)" + ("" if CHECK else f", {changed} written"))
 for s in stale[:12]: print("  ", s)

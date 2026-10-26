@@ -164,6 +164,9 @@ _m3=rd("kit_v22/models3d_check.json")
 if _m3:
     _bs=_m3["boards"]; chk("KiCad 3-D models: every component footprint of CB1D, LB1, PB1R, PM2, HB2 and SB1R-QA/QB links an existing VRML model (bare wire pads excepted), each model touches all its pads and stays within its library height + 0.5 mm",_m3["n_errors"]==0 and all(v["with_model"]==v["components"] for v in _bs.values()) and len(_bs)>=7,str({k:(v["with_model"],v["components"]) for k,v in _bs.items()}))
 else: skip("KiCad 3-D model links")
+_sf={b:rd(f"kit_v22/SCHF/PF233-{b}_functional_check.json") for b in ("PB1R","PM2","HB2","CB1D","LB1","AB1A","AB1B")}
+if all(_sf.values()): chk("functional schematics (7 boards): the KiCad netlist exported from each generated schematic equals the design netlist node by node, KiCad ERC reports 0 errors, PDF exported",all(v["n_errors"]==0 and v["pdf"] for v in _sf.values()),str({b:(v["parts"],v["n_errors"]) for b,v in _sf.items()}))
+else: skip("functional schematics")
 _m=open("src/mech/mech_v20.py").read()
 chk("NPM cable window in mech_v20.py is still x -26..-14 (the numbers pb1r_check.py measures PB1R's JL1 / JP / JC against)","plate(-34, 12.5, NZ / 2, 16.0, 3.0, NZ), plate(14, 12.5, NZ / 2, 56.0, 3.0, NZ)" in _m,"back-wall plates")
 d=rd("kit_v22/pb1r_check.json")
