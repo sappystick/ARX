@@ -63,12 +63,12 @@ sides = [plate(sx * 40.5, 24.0, NZ / 2, 3.0, 26.0, NZ) for sx in (-1, 1)]
 ends = [plate(0, 24.0, 1.5, 78.0, 26.0, 3.0), plate(0, 24.0, NZ - 1.5, 78.0, 26.0, 3.0)]
 tunnel = ring(rrect(23.0, 23.0, 5.0), rrect(17.8, 17.8, 3.4), 0, NZ)
 socket_lo = tube(19.8, 16.2, -22.0, 0.0); socket_hi = tube(19.8, 14.45, NZ, NZ + 22.0)             # lower fixed tube D32 / upper tube B D28.5 (socket ID 28.9)
-ledge = [plate(sx * 30.0, 32.2, NZ / 2, 6.0, 1.6, 60.0) for sx in (-1, 1)]                          # board rails: PB1R sits at y = 33..34.6, components face the back wall
+ledge = [plate(sx * 36.4, 32.2, NZ / 2, 4.8, 1.6, 60.0) for sx in (-1, 1)]                         # board rails at the board EDGES (x +-34.0..38.8, 1.0 mm land under the 70 mm board): PB1R sits at y = 33..34.6, components face the back wall; v2 (Step 4/5) was x +-27..33, under the part bodies
 fill = [rot(tube(6.0, 4.0, 0, 8), Mz2y, (x, 37.0, 40.0)) for x in (-25.0, 15.0)] + [rot(tube(3.0, 1.5, 0, 6), Mz2y, (x, 37.0, 76.0)) for x in (-25.0, 15.0)]
-emit("NPM_N1_body_with_tunnel", back + sides + ends + [tunnel, socket_lo, socket_hi] + ledge, "pocket 78 x 20 x 78 for PB1R, 12 mm cable window, straight ribbon tunnel and tube sockets D32.4 (lower fixed tube and upper OUTER tube, both D32)")
+emit("NPM_N1_body_with_tunnel_v2", back + sides + ends + [tunnel, socket_lo, socket_hi] + ledge, "pocket 78 x 20 x 78 for PB1R, 12 mm cable window, straight ribbon tunnel and tube sockets D32.4 (lower fixed tube and upper OUTER tube, both D32)")
 emit("NPM_N2_lid_with_fill_ports", [plate(0, 38.5, NZ / 2, 84.0, 3.0, NZ)] + [rot(tube(6.0, 4.0, 0, 6), Mz2y, (x, 40.0, 40.0)) for x in (-25.0, 15.0)] + [rot(tube(3.0, 1.5, 0, 5), Mz2y, (x, 40.0, 76.0)) for x in (-25.0, 15.0)],
      "lid with 2 x D8 fill ports (hot zone x -25, main zone x +15) and 2 x D3 vents at the far end; bond with epoxy, fill through the ports under vacuum")
-emit("NPM_N3_hot_zone_dam", [plate(-5.0, 24.0, NZ / 2, 2.0, 20.0, 76.0)] + [plate(-5.0, 24.0, 6.0 + 14.0 * k, 3.0, 20.0, 1.0) for k in range(0)], "vertical dam at x -5 separating the alumina-filled hot zone (FETs, clamp bank) from the syntactic main zone; leave 6 mm gaps top and bottom for the interface")
+emit("NPM_N3_hot_zone_dam_v2", [plate(-4.0, 23.5, NZ / 2, 2.0, 19.0, 76.0)], "vertical dam at x -5..-3 from the back wall (y 14) to the PB1R component face (y 33) separating the alumina-filled hot zone (FETs, clamp bank) from the syntactic main zone; no PB1R part body crosses the strip (pw_export KEEPOUT_X, pb1r_check NPM fit); v2 (Step 4/5): was x -6..-4 and 1 mm into the board, crossing 4 part bodies; leave 1 mm gaps top and bottom for the interface")
 # ================================================================ ELB: elbow, grip, trigger, joystick, cuff (shaft up the -z side, grip along +x, grip axis at z = +20)
 GZ = 20.0
 elb = [rot(tube(20.8, 16.7, -40.0, 8.0), [[math.cos(math.radians(43)),0,math.sin(math.radians(43))],[0,1,0],[-math.sin(math.radians(43)),0,math.cos(math.radians(43))]]), ring(rrect(54, 46, 10), rrect(48, 40, 7), -10.0, 52.0)]

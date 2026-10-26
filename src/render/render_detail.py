@@ -28,7 +28,7 @@ elif which=="joint":
     labels=[("tube A (CFRP) OD 33 / ID 30",ap(1050,47.0,0,-16.5),0),("tube B (CFRP) OD 28.5 / ID 26",ap(700,47.0,0,-14.25),0),("bushing in the mouth of A",ap(865,47.0,0,-15.0),0),("bushing on the end of B",ap(925,47.0,0,-14.8),0),("split lock collar (nylon M4)",ap(870,47.0,0,-22),0),("cassette: power chamber and signal chamber",ap(1200,47.0,0,0),0),("ribbon trolley (U-loop post)",ap(1114,47.0,0,0),0),("power ribbon (12-way)",ap(1000,47.0,0,9),0),("signal ribbon (12-way)",ap(1000,47.0,0,-9),0),("8-way umbilical ribbon",ap(600,47.0,0,0),0)]
     render(P,"kit_v19/SHAFT_JOINT_CUTAWAY.png",az=90,el=10,centre=ap(1085),scale=4.7,size=(2200,900),title="Telescoping joint and ribbon track: cut-away",caption="carbon tube B slides in tube A on two printed bushings; the split collar locks it; the cassette (two chambers) holds the trolley whose U-loop takes up the ribbon slack",labels=labels,SS=1,rolly=-47.0)
 elif which=="npm":
-    npm=stl("kit_v19/SPINE/NPM_N1_body_with_tunnel.stl"); dam=stl("kit_v19/SPINE/NPM_N3_hot_zone_dam.stl")
+    npm=stl("kit_v19/SPINE/NPM_N1_body_with_tunnel_v2.stl"); dam=stl("kit_v19/SPINE/NPM_N3_hot_zone_dam_v2.stl")
     pb=stl("kit_v6/PB1R/PF233-PB1R_board_with_components.stl"); V,F=pb; up=(V[F][:,:,2]>0.001).any(axis=1)
     pbT=lambda V: np.c_[V[:,0],34.6-(V[:,2]+1.6),V[:,1]+42.0]
     P=[PT(npm,(0.55,0.60,0.68),1.0,"NPM body"),PT(dam,(0.9,0.5,0.2),1.0,"dam"),PT((pbT(V),F[~up]),COL["pcb"],1.0,"PB1R board"),PT((pbT(V),F[up]),COL["ic"],1.0,"PB1R parts")]

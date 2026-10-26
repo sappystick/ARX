@@ -5,19 +5,19 @@
    "result": "PASS",
    "value": {
     "DRAIN1 JL1.1 -> Q1A.2": [
-     15.2,
+     14.2,
      1.5
     ],
     "DRAIN1 JL1.1 -> Q1B.2": [
-     32.7,
+     31.7,
      1.5
     ],
     "SRC1 Q1A.3 -> RS1S.1": [
-     26.8,
+     28.4,
      1.5
     ],
     "SRC1 Q1B.3 -> RS1S.1": [
-     14.6,
+     15.3,
      1.5
     ]
    },
@@ -27,27 +27,27 @@
   {
    "check": "PB1R pulse-path copper resistance (two FET branches in parallel) under 5 % of the 113 mohm loop budget (mohm)",
    "result": "PASS",
-   "value": 4.88,
+   "value": 4.93,
    "limit": 5.65,
    "note": "2 oz outer copper, widths as routed"
   },
   {
    "check": "stray-inductance spike at turn-off (L x di/dt, 20 A in 20 ns, gate-drive time assumed) leaves the 650 V FET margin: spike under 30 V (V)",
    "result": "PASS",
-   "value": 7.5,
+   "value": 7.6,
    "limit": 30.0,
-   "note": "stray 7.5 nH (strip over the hatched GND plane, x1.5); Vds peak 466 V at 29.4 V from tx_vbus.json",
+   "note": "stray 7.6 nH (strip over the hatched GND plane, x1.5); Vds peak 466 V at 29.4 V from tx_vbus.json",
    "extra": {
-    "R_mohm": 4.88,
-    "L_nH": 7.5
+    "R_mohm": 4.93,
+    "L_nH": 7.6
    }
   },
   {
    "check": "shunt ground pad: at least 4 GND vias within 3 mm (pulse 20 A peak, 1.8 A rms; 5 A per via peak at most)",
    "result": "PASS",
-   "value": 7,
+   "value": 5,
    "limit": ">= 4",
-   "note": "2.9 A peak and 0.20 A rms per via; via rating from memory, UNVERIFIED"
+   "note": "4.0 A peak and 0.29 A rms per via; via rating from memory, UNVERIFIED"
   },
   {
    "check": "each bulk capacitor ground pad has at least 2 GND vias within 3 mm",
@@ -69,16 +69,16 @@
   {
    "check": "shunt Kelvin: the ISENSE1 tap (RK1.1) reaches the shunt pad over a sense track, so the 20 A power copper between tap and pad is under 5 % of the shunt voltage",
    "result": "PASS",
-   "value": "sense path 5.3 mm of which 0.0 mm power copper, drop 0.0 mV = 0.0 % of 200 mV",
+   "value": "sense path 4.4 mm of which 0.0 mm power copper, drop 0.0 mV = 0.0 % of 200 mV",
    "limit": "< 5 %",
    "note": "RK1 100 ohm into the comparator: the tap carries almost no current"
   },
   {
    "check": "comparator ground reference: the GND-plane drop between the shunt's ground pad and U3 pin 4 (20 A pulse) is under 10 % of the 200 mV shunt signal (mV)",
    "result": "PASS",
-   "value": 15.5,
+   "value": 16.3,
    "limit": 20.0,
-   "note": "distance 9 mm, hatched 1 oz plane about 1.6 mohm/sq over a 20 mm effective width: a one-sided estimate, NOT a field solution"
+   "note": "distance 10 mm, hatched 1 oz plane about 1.6 mohm/sq over a 20 mm effective width: a one-sided estimate, NOT a field solution"
   },
   {
    "check": "parts on the flyback nets are 630 V or better (BOM text): exceptions are listed, not hidden",
@@ -177,12 +177,19 @@
    "check": "NPM cable window: JL1 (TX pair) and JP (power) leave the board within 10 mm of the 12 mm window (x -26..-14); JC umbilical run reported (mm)",
    "result": "PASS",
    "value": {
-    "JL1": 5.0,
-    "JP": 5.0,
+    "JL1": 4.0,
+    "JP": 4.0,
     "JC": 40.7
    },
    "limit": "<= 10 (JL1, JP)",
    "note": "lateral distance from the connector's pads to the window edge, in the 19 mm pocket between board and back wall"
+  },
+  {
+   "check": "NPM fit: no PB1R component body intersects the NPM body (walls, tunnel, sockets), the lid or the hot-zone dam v2, and none stands through the board face",
+   "result": "PASS",
+   "value": "0 intersections",
+   "limit": "0",
+   "note": "42 bodies tested against 3 meshes at 0.5 mm height steps; tallest part 10.5 mm; nearest body to the tunnel ring: see ASSUMPTIONS 33"
   },
   {
    "check": "bulk-capacitor cans (9 x aluminium): return less than 1e-3 of the nugget (as the hatched planes do); WARN = listed exception, owner decision (OPEN_ITEMS 34)",
@@ -194,28 +201,28 @@
  ],
  "pulse_path": {
   "DRAIN1 JL1.1 -> Q1A.2": {
-   "length_mm": 15.2,
+   "length_mm": 14.2,
    "min_width_mm": 1.5,
-   "R_mohm": 2.49,
-   "L_nH": 3.82
+   "R_mohm": 2.33,
+   "L_nH": 3.57
   },
   "DRAIN1 JL1.1 -> Q1B.2": {
-   "length_mm": 32.7,
+   "length_mm": 31.7,
    "min_width_mm": 1.5,
-   "R_mohm": 5.36,
-   "L_nH": 8.22
+   "R_mohm": 5.2,
+   "L_nH": 7.97
   },
   "SRC1 Q1A.3 -> RS1S.1": {
-   "length_mm": 26.8,
+   "length_mm": 28.4,
    "min_width_mm": 1.5,
-   "R_mohm": 4.39,
-   "L_nH": 6.73
+   "R_mohm": 4.65,
+   "L_nH": 7.14
   },
   "SRC1 Q1B.3 -> RS1S.1": {
-   "length_mm": 14.6,
+   "length_mm": 15.3,
    "min_width_mm": 1.5,
-   "R_mohm": 2.4,
-   "L_nH": 3.68
+   "R_mohm": 2.5,
+   "L_nH": 3.83
   }
  },
  "eddy": {

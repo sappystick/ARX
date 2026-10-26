@@ -174,5 +174,11 @@ if os.path.exists(_bd):
     _data=[f for f in __import__("glob").glob("data/bench/**/*",recursive=True) if os.path.isfile(f)]
     chk("bench procedure written, every item marked NOT RUN, and data/bench holds no files while U-BENCH is open (no bench claim without bench data)",len(_rows)>=35 and not _bad and (not _data or "U-BENCH" not in UNV),f"{len(_rows)} items, not NOT RUN: {_bad}, bench files {len(_data)}")
 else: chk("bench procedure present (docs/design/BENCH_FIRST_ARTICLE_TX.md)",False,"missing")
+d=rd("kit_v22/pb1r_check.json")
+if d:
+    _f=[c for c in d["checks"] if c["check"].startswith("NPM fit")]
+    chk("PB1R fits the neck module: no component body intersects the NPM body v2 (rails, walls, tunnel), the lid or the hot-zone dam v2 (11 bodies did before the Step 7 audit)",bool(_f) and _f[0]["result"]=="PASS",str(_f[0]["value"]) if _f else "missing")
+_sd=[n for n in ("NPM_N1_body_with_tunnel_v2","NPM_N3_hot_zone_dam_v2") if os.path.exists(f"stl/shaft_handle/{n}.stl")]
+chk("curated STLs carry the NPM v2 parts (body with edge rails, dam at x -5..-3) and the superseded ones are marked",len(_sd)==2 and os.path.exists("stl/shaft_handle/SUPERSEDED.txt"),str(_sd))
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

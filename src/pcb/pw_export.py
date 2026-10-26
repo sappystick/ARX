@@ -36,6 +36,10 @@ def bbox_of(ref, x, y, rot):
     return (min(min(xs), x - bw / 2), min(min(ys), y - bh / 2), max(max(xs), x + bw / 2), max(max(ys), y + bh / 2))
 _HVREFS = set(r for name, v in D.NETS.items() if name in HV for (r, pin) in v)
 def is_hv(ref): return ref in _HVREFS
+# NPM hot-zone dam (stl/shaft_handle NPM_N3_hot_zone_dam_v2): a 2.0 mm wall at board x -5.0..-3.0 stands between the back wall and the board face, so no PB1R part body may cross
+# the strip -5.2..-2.8 (0.2 mm margin each side); Step 5 found 4 bodies crossing the old dam (two cans, RS1S and one passive). Only PB1R sits in the NPM.
+KEEPOUT_X = [(-5.2, -2.8)] if os.environ.get("PW", "") == "R" else []
+EDGE_X = 1.2 if os.environ.get("PW", "") == "R" else 0.8      # PB1R: the NPM board rails (NPM_N1 v2) take the outer 1.0 mm of the left/right edges: no body within 1.2 mm of them
 def autoplace(fixed, anchors, rots=None):
     rots = rots or {}; placed = {}
     for ref, (x, y, rot) in fixed.items(): placed[ref] = (x, y, rot)
@@ -43,7 +47,8 @@ def autoplace(fixed, anchors, rots=None):
     boxes = {r: bbox_of(r, *placed[r]) for r in placed}
     def free(ref, x, y, rot):
         b = bbox_of(ref, x, y, rot)
-        if b[0] < -SIZE[0] / 2 + 0.8 or b[2] > SIZE[0] / 2 - 0.8 or b[1] < -SIZE[1] / 2 + 0.8 or b[3] > SIZE[1] / 2 - 0.8: return False
+        if b[0] < -SIZE[0] / 2 + EDGE_X or b[2] > SIZE[0] / 2 - EDGE_X or b[1] < -SIZE[1] / 2 + 0.8 or b[3] > SIZE[1] / 2 - 0.8: return False
+        if any(b[0] < k1 and b[2] > k0 for k0, k1 in KEEPOUT_X): return False
         for r2, b2 in boxes.items():
             m = 1.2 if (is_hv(ref) != is_hv(r2)) else 0.5
             if not (b[2] + m < b2[0] or b[0] - m > b2[2] or b[3] + m < b2[1] or b[1] - m > b2[3]): return False
@@ -67,15 +72,15 @@ if PW == "C":
                "RDM1": (23, -9), "RDM2": (23, -4), "RDM3": (23, 1), "CMON": (31, -11), "RBI": (31, -14.5), "RJX": (21, -26), "RJY": (21, -29), "CJX": (25, -26), "CJY": (25, -29), "RUS": (17, -33), "CUS": (21, -33)}
     PL = autoplace(fixed, anchors)
 elif PW == "R":
-    # RS1S / RK1 / CK1 / U3 are pinned where Step 3 tuned the Kelvin sense and the comparator ground reference (pb1r_check 3): the bank must flow around them
-    fixed = {"JP": (-31.0, 24.0, 0), "Q1A": (-14.0, -20.0, 180), "Q1B": (-14.0, -6.0, 180), "JL1": (-31.0, -20.0, 0), "JC": (28.0, 24.0, 0), "M12": (14.0, -27.0, 0),
-             "RS1S": (-3.0, 2.5, 0), "RK1": (-8.0, 7.0, 0), "CK1": (-4.0, 7.0, 0), "U3": (4.0, 10.0, 0)}
+    # RS1S / RK1 / CK1 / U3 are pinned for the Kelvin sense and the comparator ground reference (pb1r_check 3); Step 4/5 moved the cluster to the right of the NPM dam strip (KEEPOUT_X): RS1S +4.5 mm, RK1 and CK1 beside it so the Kelvin track stays short
+    fixed = {"JP": (-30.0, 24.0, 0), "Q1A": (-14.0, -20.0, 180), "Q1B": (-14.0, -6.0, 180), "JL1": (-30.0, -20.0, 0), "JC": (28.0, 24.0, 0), "M12": (14.0, -27.0, 0),
+             "RS1S": (1.5, 2.5, 0), "RK1": (-1.5, 6.8, 0), "CK1": (-1.5, 9.8, 0), "U3": (4.0, 10.0, 0)}
     anchors = {"U1": (3, -13), "CD7": (8, -9), "CE1": (8, -16), "RIN1": (3, -6), "DOC1": (-2, -6), "RGP1": (3, -19), "RGQ1A": (-5, -18), "RGQ1B": (-5, -8), "RS1S": (-3, 2), "RK1": (-8, 7), "CK1": (-4, 7),
                "U3": (4, 10), "CU3": (10, 10), "RPU1": (14, 17), "RF1": (18, 17), "RNTC": (0, -26), "DC1": (-30, -12), "CL1A": (-30, -3), "CL1B": (-30, 5), "RCL1": (-30, 14),
                "C12A": (24, -27), "C12B": (24, -31), "RUS": (28, 17)}
     # bulk bank CB1-CB9: a 10.3 mm can is 12.8 mm across its pads, so the grid is 13.3 mm along the pads and 10.8 mm across them: two rows of three along the top edge,
     # three turned 90 deg in the free block right of the gate driver; the VBUS decoupling CM1-CM4 sit between the top rows and the umbilical header JC
-    CANS = [(-20.5, 29.0, 0), (-7.2, 29.0, 0), (6.1, 29.0, 0), (-20.5, 18.2, 0), (-7.2, 18.2, 0), (6.1, 18.2, 0), (17.75, -15.35, 90), (29.05, -15.35, 90), (17.75, -2.05, 90)]
+    CANS = [(-20.5, 29.0, 0), (-7.2, 29.0, 0), (6.1, 29.0, 0), (-20.5, 18.2, 0), (-7.2, 18.2, 0), (6.1, 18.2, 0), (17.75, -15.35, 90), (28.2, -15.35, 90), (17.75, -2.05, 90)]
     for i, (x, y, r) in enumerate(CANS, 1): anchors[f"CB{i}"] = (x, y)
     for i, xy in enumerate([(15.5, 15.0), (20.5, 15.0), (15.5, 19.0), (20.5, 19.0)], 1): anchors[f"CM{i}"] = xy
     anchors.update({"RPU1": (29, 5), "RF1": (29, 9), "RUS": (28, 15)})

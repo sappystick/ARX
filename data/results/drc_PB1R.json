@@ -5,7 +5,7 @@
  "edge_samples": 0,
  "notch_samples": 0,
  "min_gap_by_layer": {
-  "F.Cu": 0.258,
+  "F.Cu": 0.316,
   "B.Cu": 0.25
  },
  "violations": [],

@@ -8,7 +8,7 @@ W = "work"; CHECK = "--check" in sys.argv; stale = []; changed = 0
 VERSIONS = {   # board -> (gerber folder in data/gerber, work gerber dir, work prefix, published prefix)
     "CB1D": ("CB1D_B3", "kit_v22/GERBER_CB1D_v2", "PF233-CB1D-v2", "PF233-CB1D-B3"),      # B3 (Step 5): 1.02 mm JA/JB pads, Bourns 1206 fuse land, merged via pair
     "LB1": ("LB1_v5", "kit_v22/GERBER_LB1_v2", "PF233-LB1-v2", "PF233-LB1-v5"),          # v5 (Step 5): GND via pair 0.30 mm apart merged (drill-to-drill floor)
-    "PB1R": ("PB1R_v2", "kit_v22/GERBER_PB1R", "PF233-PB1R", "PF233-PB1R-v2"),          # v2 (Step 5): bulk bank 9 x 10 mm hybrid cans, re-placed and re-routed
+    "PB1R": ("PB1R_v3", "kit_v22/GERBER_PB1R", "PF233-PB1R", "PF233-PB1R-v3"),          # v3 (Step 7 audit): parts clear of the NPM board rails and the hot-zone dam; v2 (Step 5) had 11 bodies crossing them
     "TXJ1": ("TXJ1_v2", "kit_v22/GERBER_TXJ1", "TXJ1-", "TXJ1-v2-"),
     "SB1R-QA": ("SB1R_QA_v2", "kit_v22/GERBER_SB1R_QA", "SB1R-QA-", "SB1R-QA-v2-"),
     "HTA": ("HTA_v2", "kit_v18/HTA", "PF233-HTA", "PF233-HTA-v2"),                    # v2 (Step 4): lead A reaches the outer via (the first set was an open coil)

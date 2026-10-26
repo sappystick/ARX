@@ -125,6 +125,45 @@ def lat(ref): a, b = span(ref); return max(WIN[0] - b, a - WIN[1], 0.0)
 offs = {r: round(lat(r), 1) for r in ("JL1", "JP", "JC")}
 C("NPM cable window: JL1 (TX pair) and JP (power) leave the board within 10 mm of the 12 mm window (x -26..-14); JC umbilical run reported (mm)", offs["JL1"] <= 10.0 and offs["JP"] <= 10.0, offs, "<= 10 (JL1, JP)",
   "lateral distance from the connector's pads to the window edge, in the 19 mm pocket between board and back wall")
+# ---- 8 NPM fit: every PB1R component body against the printed neck-module meshes (body with tunnel, lid, hot-zone dam v2). Board frame -> NPM frame as render_detail.py:
+# (x, y, z) -> (x, 34.6 - (z + 1.6), y + 42): the board stands at NPM y 33..34.6 with its components toward the back wall. Exact test: each body's footprint rectangle against the
+# mesh cross-section at every 0.5 mm of its height range (a body is a box, the NPM parts are closed meshes).
+import struct, glob
+from shapely.geometry import LineString, box as sbox
+from shapely.ops import unary_union, polygonize
+def _tris(p):
+    b = open(p, "rb").read(); k = struct.unpack("<I", b[80:84])[0]
+    return np.frombuffer(b, dtype=np.dtype([("n", "<3f4"), ("v", "<9f4"), ("a", "<u2")]), count=k, offset=84)["v"].reshape(-1, 3, 3).astype(float)
+def _xsec(T, zv):
+    d = T[:, :, 2] - (zv + 1.234e-4); m = (d.min(1) < 0) & (d.max(1) > 0); segs = []
+    for tri, dd in zip(T[m], d[m]):
+        q = [tri[i] + dd[i] / (dd[i] - dd[j]) * (tri[j] - tri[i]) for i, j in ((0, 1), (1, 2), (2, 0)) if (dd[i] < 0) != (dd[j] < 0)]
+        if len(q) == 2 and np.linalg.norm(q[0] - q[1]) > 1e-9: segs.append(LineString([tuple(q[0][:2]), tuple(q[1][:2])]))
+    if not segs: return None
+    faces = list(polygonize(unary_union(segs))); g = faces[0] if faces else None
+    for f in faces[1:]: g = g.symmetric_difference(f)
+    return g
+try:
+    PBT = _tris("kit_v6/PB1R/PF233-PB1R_board_with_components.stl"); NP = {n: _tris(f"kit_v19/SPINE/{n}.stl") for n in ("NPM_N1_body_with_tunnel_v2", "NPM_N2_lid_with_fill_ports", "NPM_N3_hot_zone_dam_v2")}
+except Exception as e: PBT = None; print("NPM fit skipped:", e)
+if PBT is not None:
+    nb = len(PBT) // 12; bodies = []
+    for i in range(1, nb):
+        t = PBT[i * 12:(i + 1) * 12].reshape(-1, 3); lo, hi = t.min(0), t.max(0)
+        bodies.append((i, lo[0], hi[0], 34.6 - (hi[2] + 1.6), 34.6 - (lo[2] + 1.6), lo[1] + 42.0, hi[1] + 42.0))
+    refs = {}; hits = {}
+    for n, T in NP.items():
+        zs = sorted({round(z, 1) for b in bodies for z in np.arange(b[5], b[6] + 0.01, 0.5)}); cache = {}
+        for (i, x0, x1, y0, y1, z0, z1) in bodies:
+            rect = sbox(x0, y0, x1, y1)
+            for z in np.arange(z0, z1 + 0.01, 0.5):
+                zk = round(float(z), 2)
+                if zk not in cache: cache[zk] = _xsec(T, zk)
+                g = cache[zk]
+                if g is not None and g.intersection(rect).area > 1e-3: hits.setdefault(n, set()).add(i); break
+    board_pen = [b[0] for b in bodies if b[4] > 33.0 + 0.02]                              # a body must not stand through the board face (y 33)
+    C("NPM fit: no PB1R component body intersects the NPM body (walls, tunnel, sockets), the lid or the hot-zone dam v2, and none stands through the board face", not hits and not board_pen,
+      {n: len(v) for n, v in hits.items()} or "0 intersections", "0", f"{len(bodies)} bodies tested against 3 meshes at 0.5 mm height steps; tallest part {max(b[4] - b[3] for b in bodies):.1f} mm; nearest body to the tunnel ring: see ASSUMPTIONS 33")
 # the Step 5 bulk bank is aluminium cans (9 x phi 10 x 10.2 mm hybrid): each wall is a closed loop around the can axis. Thin cylindrical sheet: L = mu0 pi r^2 / h,
 # R = 2 pi r / (sigma t h), tau = mu0 sigma r t / 2. The wall thickness is not in the Panasonic data: 1.0 mm is taken as a deliberate overestimate (ASSUMPTIONS 32)
 sig_al, r_can, h_can, t_can, n_can = 3.5e7, 5.0e-3, 10.2e-3, 1.0e-3, 9

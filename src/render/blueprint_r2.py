@@ -74,7 +74,7 @@ head = {os.path.basename(p)[:-4]: S(p) for p in glob.glob("stl/head/*.stl") if "
 formers = {k: S(f"work/kit_v15/LOW/FORMER_L{k}_petal_coil_former.stl") for k in range(1, 7)}
 off = lambda k: 3.2 + (6 - k) * 4.4                                  # assembly_z_offset (phifold_v15.py: ZRX + (6 - k) (PN + G), PN 3.9, G 0.5)
 yoke = {os.path.basename(p)[:-4]: S(p) for p in glob.glob("stl/yoke/*.stl")}
-npm = {n: S(f"stl/shaft_handle/{n}.stl") for n in ("NPM_N1_body_with_tunnel", "NPM_N2_lid_with_fill_ports", "NPM_N3_hot_zone_dam")}
+npm = {n: S(f"stl/shaft_handle/{n}.stl") for n in ("NPM_N1_body_with_tunnel_v2", "NPM_N2_lid_with_fill_ports", "NPM_N3_hot_zone_dam_v2")}
 pb = S("work/kit_v6/PB1R/PF233-PB1R_board_with_components.stl")
 UP = {n: S(f"stl/upper/{n}.stl") for n in ("U1_TOP_HOUSING", "U2_GRIP", "U3_BOTTOM_HOUSING", "U4_TRIGGER", "U5_ARMREST_CUP", "U6_BATTERY_DOCK", "U7_BATTERY_PACK_SHELL", "U8_CORD_ANCHOR", "U8_SEPTUM_extended", "U9_CAM_COLLAR")}
 rep = json.load(open("work/kit_v23/UPPER/upper_v21_report.json")); TA = rep["params"]["tube_A"]["x"]; TB = rep["params"]["tube_B"]["extended"]; ZT = rep["params"]["ZT"]
@@ -116,7 +116,7 @@ for i, (zv, ttl) in enumerate(((5.2, "z = 5.2: L6 former (litz petals)"), (24.0,
     ax.set_xlim(-190, 125); ax.set_ylim(-125, 125); ax.set_xlabel("x (mm)", fontsize=7)
 # ------------------------------------------------------------------ 5 neck module with PB1R (section through the can row, x = -7.2 on the board = NPM x)
 ax5 = panel(gs[1, 6:8], "5  Neck power module section x = -7: PB1R with the 9 hybrid cans", "PB1R stands in the pocket, components toward the back wall (mech_v20.py); the cans are 10.3 mm tall: pocket clearance below")
-for n, c in (("NPM_N1_body_with_tunnel", COL["npm"]), ("NPM_N2_lid_with_fill_ports", "#b9c2d2"), ("NPM_N3_hot_zone_dam", "#e08a2b")): draw(ax5, section(npm[n], 0, -7.0), c)
+for n, c in (("NPM_N1_body_with_tunnel_v2", COL["npm"]), ("NPM_N2_lid_with_fill_ports", "#b9c2d2"), ("NPM_N3_hot_zone_dam_v2", "#e08a2b")): draw(ax5, section(npm[n], 0, -7.0), c)
 P2 = pb.copy(); P2 = np.stack([P2[:, :, 0], 34.6 - (P2[:, :, 2] + 1.6), P2[:, :, 1] + 42.0], axis=2)      # board model -> NPM frame (as render_detail.py)
 for xv in (-7.0, -7.2, 6.1):
     g = section(P2, 0, xv); draw(ax5, g, COL["pb"] if xv == -7.0 else COL["can"], lw=0.25, alpha=0.9 if xv == -7.0 else 0.5)
@@ -150,7 +150,7 @@ def draw_system(ax1, ALPHA=47.0):
         T = formers[k].copy(); T[:, :, 2] += off(k); draw(ax1, section(HEEL(T), 1, 0.0), COL["former"][k - 1], lw=0.15)
     for n in ("HEEL_SADDLE_TOWER", "UMBILICAL_BRIDGE", "UMBILICAL_BRIDGE_LID"): draw(ax1, section(HEEL(yoke[n]), 1, 0.0), COL["yoke"] if n.startswith("HEEL") else COL["brdge"], lw=0.2)
     shaft_section(yoke["HINGE_ARM"], COL["yoke"]); envelope(16.0, 14.0, 400.0, COL["tubeG"]); shaft_section(tube(16.0, 14.5, 14.0, 400.0), COL["tubeG"], 0.8)
-    for n, c in (("NPM_N1_body_with_tunnel", COL["npm"]), ("NPM_N3_hot_zone_dam", "#e08a2b")):
+    for n, c in (("NPM_N1_body_with_tunnel_v2", COL["npm"]), ("NPM_N3_hot_zone_dam_v2", "#e08a2b")):
         T = npm[n].copy(); T[:, :, 2] += 400.0; shaft_section(T, c)
     Tpb = np.stack([pb[:, :, 0], 34.6 - (pb[:, :, 2] + 1.6), pb[:, :, 1] + 42.0 + 400.0], axis=2); shaft_section(Tpb, COL["pb"], 0.15)
     zB0, zB1, zA0, zA1 = D_HINGE - TB[1], D_HINGE - TB[0], D_HINGE - TA[1], D_HINGE - TA[0]

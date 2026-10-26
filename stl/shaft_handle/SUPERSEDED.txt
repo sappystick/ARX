@@ -1,0 +1,4 @@
+Superseded files in this folder (do not print):
+- NPM_N1_body_with_tunnel.stl -> NPM_N1_body_with_tunnel_v2.stl (2026-10-26): the board rails stood at x +-27..33, i.e. UNDER the connectors and capacitors of PB1R (JL1, JP, JC, clamp caps, resistor bank, a can: 11 bodies in the pb1r_check NPM fit). v2 moves the rails to the board edges (x +-34.0..38.8, 1.0 mm land under the 70 mm board); PB1R keeps its bodies 1.2 mm from the left/right edges.
+- NPM_N3_hot_zone_dam.stl -> NPM_N3_hot_zone_dam_v2.stl (2026-10-26): v1 stood at x -6..-4 and ran 1 mm into the PB1R board, crossing four component bodies (two hybrid cans, RS1S and one passive). v2 stands at x -5..-3 from the back wall to the board face (y 33); PB1R keeps its parts out of the strip.
+- ELB_E1..E5 and BAT_B1..B3 -> replaced by the upper assembly v1 (stl/upper U1..U9).

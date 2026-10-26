@@ -127,9 +127,9 @@ def build(cut):
     O_npm = P0 + S_NPM * D
     def npm(S, c, a=1.0, nm=""):
         add(place(S, O_npm, -E, -EY, D), c, a, None, nm)
-    for nme, col in (("NPM_N1_body_with_tunnel", C_PETG), ("NPM_N2_lid_with_fill_ports", (0.62, 0.70, 0.80)), ("NPM_N3_hot_zone_dam", (0.55, 0.55, 0.6))):
+    for nme, col in (("NPM_N1_body_with_tunnel_v2", C_PETG), ("NPM_N2_lid_with_fill_ports", (0.62, 0.70, 0.80)), ("NPM_N3_hot_zone_dam_v2", (0.55, 0.55, 0.6))):
         S = load_stl(f"kit_v6/SPINE/{nme}.stl"); S = place(S, O_npm, -E, -EY, D)
-        if cut and nme != "NPM_N3_hot_zone_dam": S = clip_y(S, -15.0)
+        if cut and nme != "NPM_N3_hot_zone_dam_v2": S = clip_y(S, -15.0)
         P.append(dict(V=S[0], F=S[1], c=col, a=1.0, name=nme))
     pb = load_stl("kit_v6/PB1R/PF233-PB1R_board_with_components.stl"); Vb = np.c_[pb[0][:, 0], 34.0 - pb[0][:, 2], 42.0 + pb[0][:, 1]]
     Sb = place((Vb, pb[1]), O_npm, -E, -EY, D); Sb = clip_y(Sb, -15.0) if cut else Sb; P.append(dict(V=Sb[0], F=Sb[1], c=C_PCB, a=1.0, name="PB1R"))
@@ -258,7 +258,7 @@ def final():
     render(Pd, "kit_v6/RENDER/05_DISSECTED_NPM.png", az=90, el=0, rolly=-35, centre=tuple(npm_pt(0, 25, 40)), scale=7.0, size=(1500, 1250), title="Dissected neck power module (shaft base)", caption="PB1R potted: alumina-filled hot zone (FETs, clamp bank) + syntactic remainder; section plane 15 mm off the axis shows the board",
            drop=("cassette", "trolley"), labels=[("PB1R TX power stage", npm_pt(0, 30, 42), 0), ("alumina-filled hot zone", npm_pt(-24, 26, 55), 0), ("syntactic main zone", npm_pt(20, 26, 30), 0), ("fill / vent ports (lid)", npm_pt(-25, 42, 40), 0),
                    ("fixed lower tube D32", sh_pt(S_NPM - 90), 0), ("upper outer tube D32", sh_pt(S_NPM + 125), 0), ("hot-zone dam", npm_pt(-5, 28, 40), 0)])
-    render(Pd, "kit_v6/RENDER/06_DISSECTED_TELESCOPE.png", az=90, el=0, rolly=55, centre=tuple(sh_pt(S_UP + 330)), scale=2.7, size=(1800, 760), layout="rows", drop=("NPM_N1_body_with_tunnel", "NPM_N2_lid_with_fill_ports", "NPM_N3_hot_zone_dam", "PB1R", "alumina hot zone", "syntactic main zone"),
+    render(Pd, "kit_v6/RENDER/06_DISSECTED_TELESCOPE.png", az=90, el=0, rolly=55, centre=tuple(sh_pt(S_UP + 330)), scale=2.7, size=(1800, 760), layout="rows", drop=("NPM_N1_body_with_tunnel_v2", "NPM_N2_lid_with_fill_ports", "NPM_N3_hot_zone_dam_v2", "PB1R", "alumina hot zone", "syntactic main zone"),
            title="Dissected telescoping section: two ribbon chambers on tracks", caption="each cassette has chamber A (power ribbon, upper) and chamber B (signal ribbon, lower) split by a foil septum; the U-loop trolley rides on guide ribs and travels at half the stroke",
            labels=[("D32 outer tube (fixed to the NPM)", sh_pt(S_UP + 60), 0), ("D28.5 inner tube (slides out 450 mm)", sh_pt(S_UP + 620), 0), ("cassette segment, 2 chambers + septum", sh_pt(S_UP + 330), 0), ("trolley + U-loop post", sh_pt(S_UP + 235), 0), ("power ribbon, chamber A", sh_pt(S_UP + 450), 0), ("signal ribbon, chamber B", sh_pt(S_UP + 140), 0)])
     render(Pd, "kit_v6/RENDER/07_DISSECTED_ELBOW_HANDLE.png", az=90, el=0, rolly=-35, centre=tuple(elb_pt(150, 0, 0)), scale=3.9, size=(1800, 1100), drop=far, title="Dissected elbow, grip and battery drawer", caption="PM1 + HB1 potted in the grip, supercap bridge in the elbow, battery drawer under the grip (counterweight behind the hand)",

@@ -23,9 +23,9 @@ def system(alpha=47.0,ze=1304.0,full_head=True,light=True):
     # ---- yoke: hinge arm (local), lower fixed tube, neck module + PB1R, telescoping tubes, joint hardware, cassette, ribbons
     arm=stlp("kit_v19/YOKE/HINGE_ARM.stl"); P.append(PT(A(arm,alpha),COL["petg"],1.0,"HINGE_ARM"))
     P.append(PT(A(tube_shell(16.0,14.5,14.0,400.0),alpha),COL["gfrp"],1.0,"lower fixed tube (GFRP)"))
-    npm=[stlp("kit_v19/SPINE/NPM_N1_body_with_tunnel.stl")]
+    npm=[stlp("kit_v19/SPINE/NPM_N1_body_with_tunnel_v2.stl")]
     for S in npm: P.append(PT(A(tr(S,(0,0,400.0)),alpha),(0.55,0.60,0.68),1.0,"NPM body"))
-    P.append(PT(A(tr(stlp("kit_v19/SPINE/NPM_N3_hot_zone_dam.stl"),(0,0,400.0)),alpha),(0.9,0.5,0.2),1.0,"NPM dam"))
+    P.append(PT(A(tr(stlp("kit_v19/SPINE/NPM_N3_hot_zone_dam_v2.stl"),(0,0,400.0)),alpha),(0.9,0.5,0.2),1.0,"NPM dam"))
     pb=stlp("legacy/PHIFOLD233_KIT_v6_ARCHITECTURE/PB1R/PF233-PB1R_board_with_components.stl"); V,F=pb; up=(V[F][:,:,2]>0.001).any(axis=1)
     def pbT(V): return np.c_[V[:,0],34.6-(V[:,2]+1.6),V[:,1]+42.0+400.0]
     P.append(PT(A((pbT(V),F[~up]),alpha),COL["pcb"],1.0,"PB1R board")); P.append(PT(A((pbT(V),F[up]),alpha),COL["ic"],1.0,"PB1R parts"))
