@@ -2,6 +2,7 @@
 """PM1 / PB1 export: hand-set placement + placement DRC (assembly gap, edge, HV clearance) -> KiCad PCB (placed, UNROUTED), custom DRC rules, BOM, pick&place, STL, preview.
 Routing of the power nets is intentionally left for a layout engineer (HV / high-current)."""
 import os, sys, json, math, csv
+import models3d as M3
 import numpy as np
 import pw_design as D
 import rodin_core_v4 as rc, golden_cone_head as g
@@ -133,6 +134,7 @@ for p in D.PARTS:
     L.append(f'    (property "Reference" "{ref}" (at 0 -2.5 0) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))')
     L.append(f'    (property "Value" "{p["value"]}" (at 0 2.5 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))')
     L.append(f'    (attr {"through_hole" if lib.get("tht") else "smd"})')
+    _m = M3.model_line(p["type"]); _m and L.append(_m)
     for n, px, py, w, h, shp in lib["pads"]:
         net = own.get((ref, str(n))); nid = NETID.get(net, 0) if net else 0
         if lib.get("tht"): L.append(f'    (pad "{n}" thru_hole {"circle" if shp == "circle" else "rect"} (at {px:.3f} {py:.3f}) (size {w} {h}) (drill {lib["drill"]}) (layers "*.Cu" "*.Mask") (net {nid} "{net or ""}"))')
@@ -161,7 +163,8 @@ def boxm(cx, cy, z0, lx, ly, lz):
     return V, (F if rc.signed_volume(V, F) > 0 else F[:, ::-1])
 parts = [boxm(0, 0, -0.8, W, H, 0.8)]
 for p in D.PARTS:
-    bw, bh, bz = D.LIB[p["type"]]["body"]; x0, y0, _ = PL[p["ref"]]; parts.append(boxm(x0, -y0, 0.0, bw, bh, bz))
+    x0, y0, rot = PL[p["ref"]]; pm = M3.placed_mesh(p["type"], D.LIB[p["type"]], x0, y0, rot)
+    if pm is not None: parts.append(pm)
 Vs, Fs = g.merge(parts); rc.write_stl(f"{OUT}/PF233-{NAME}_board_with_components.stl", Vs, Fs, NAME)
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 fig, ax = plt.subplots(figsize=(W / 8, H / 8 + 0.6)); ax.add_patch(plt.Circle((0, 0), W / 2, fc="#0b3d2e", ec="w")); ax.set_aspect("equal"); ax.set_xlim(-W / 2 - 2, W / 2 + 2); ax.set_ylim(H / 2 + 2, -H / 2 - 2)

@@ -76,6 +76,8 @@ STEPS = [
                   + ["python3 src/pcb/kicad_drc.py work/kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb work/kit_v22/kicad_drc_TXJ1.json TXJ1 | head -1"]
                   + ["python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-HTA.kicad_pcb work/kit_v22/kicad_drc_HTA.json HTA | head -1"]
                   + [f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD_SBQ/{b}.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("SB1R-QA", "SB1R-QB")]), "kicad"),
+    ("models3d", W + "mkdir -p kit_v22/3dmodels && python3 models3d.py kit_v22/3dmodels", ""),
+    ("models3d-check", W + "python3 models3d_check.py kit_v22/3dmodels kit_v22/models3d_check.json " + " ".join(f"kit_v22/KICAD/PF233-{b}_routed.kicad_pcb" for b in ("CB1D", "LB1", "PB1R", "PM2", "HB2")) + " kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb", ""),
     ("check-pb1r", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py > /dev/null && python3 pb1r_check.py", ""),
     ("formers-low", "test -f work/kit_v15/LOW/FORMER_L1_petal_coil_former.stl || (" + W + "python3 phifold_v15.py low)", ""),
     ("head-audit", W + "mkdir -p kit_v21 && python3 head_crosscheck.py && python3 fine_check.py && python3 head_drawings.py", ""),

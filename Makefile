@@ -183,6 +183,9 @@ pcb-hta:
 	cd $(W) && $(PY) hta_gerber.py > /dev/null && $(PY) hta_kicad.py && $(PY) gerber_edge_check.py kit_v22/gerber_edge_HTA.json kit_v18/HTA PF233-HTA
 
 # KiCad 9 DRC (zones filled, design rules from dru_gen.py, automatic negative control) on the routed boards: needs `kicad-cli` and the system python3 with pcbnew
+models3d:
+	cd $(W) && mkdir -p kit_v22/3dmodels && $(PY) models3d.py kit_v22/3dmodels
+
 kicad-drc: kicad-cb1d kicad-lb1 kicad-pb1r kicad-pm2 kicad-hb2 pcb-hta tx sbq-fast
 	for b in CB1D LB1; do $(PY) src/pcb/kicad_drc.py $(W)/kit_v22/KICAD/PF233-$${b}_routed.kicad_pcb $(W)/kit_v22/kicad_drc_$$b.json $$b | head -1; done
 	$(PY) src/pcb/kicad_drc.py $(W)/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb $(W)/kit_v22/kicad_drc_PB1R.json PB1R | head -1

@@ -2,6 +2,7 @@
 """PF233-AB1{A,B} exporter: independent DRC + connectivity check, KiCad .kicad_pcb, Gerbers, drills, STL, previews, BOM, pick&place.
 Run:  BOARD=A python3 afe_export.py   (needs out_board/AB1{BOARD}_layout.json from afe_layout.py)"""
 import sys, os, json, math, csv, time
+import models3d as M3
 import numpy as np
 sys.argv = ["x"]
 import afe_design as D
@@ -140,6 +141,7 @@ for p in D.PARTS:
     L.append(f'    (property "Reference" "{ref}" (at 0 -2.2 0) (layer "{sk}") (effects (font (size 0.7 0.7) (thickness 0.12))))')
     L.append(f'    (property "Value" "{p["value"]}" (at 0 2.2 0) (layer "{"F.Fab" if side == "F" else "B.Fab"}") (effects (font (size 0.7 0.7) (thickness 0.12))))')
     L.append(f'    (attr {"through_hole" if lib.get("tht") else "smd"})')
+    _m = M3.model_line(p["type"], rot_z=(rot if side == "F" else -rot)); _m and L.append(_m)
     for pd in [q for q in PADS if q["ref"] == ref]:
         net = NETID.get(pd["net"], 0) if pd["net"] else 0; nm = pd["net"] or ""
         lx, ly = pd["x"] - x0, pd["y"] - y0
