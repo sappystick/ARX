@@ -1,0 +1,13 @@
+{
+ "board": "LB1",
+ "parts": 81,
+ "errors": [],
+ "nets_compared": 70,
+ "erc": {
+  "warning:footprint_link_issues": 81,
+  "warning:lib_symbol_issues": 81
+ },
+ "erc_errors": 0,
+ "pdf": true,
+ "n_errors": 0
+}

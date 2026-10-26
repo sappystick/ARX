@@ -144,13 +144,12 @@ def _xsec(T, zv):
     for f in faces[1:]: g = g.symmetric_difference(f)
     return g
 try:
-    PBT = _tris("kit_v6/PB1R/PF233-PB1R_board_with_components.stl"); NP = {n: _tris(f"kit_v19/SPINE/{n}.stl") for n in ("NPM_N1_body_with_tunnel_v2", "NPM_N2_lid_with_fill_ports", "NPM_N3_hot_zone_dam_v2")}
+    PBT = True; NP = {n: _tris(f"kit_v19/SPINE/{n}.stl") for n in ("NPM_N1_body_with_tunnel_v2", "NPM_N2_lid_with_fill_ports", "NPM_N3_hot_zone_dam_v2")}
 except Exception as e: PBT = None; print("NPM fit skipped:", e)
 if PBT is not None:
-    nb = len(PBT) // 12; bodies = []
-    for i in range(1, nb):
-        t = PBT[i * 12:(i + 1) * 12].reshape(-1, 3); lo, hi = t.min(0), t.max(0)
-        bodies.append((i, lo[0], hi[0], 34.6 - (hi[2] + 1.6), 34.6 - (lo[2] + 1.6), lo[1] + 42.0, hi[1] + 42.0))
+    bodies = []
+    for i, bd in enumerate(json.load(open("kit_v6/PB1R/bodies.json")), 1):                  # per-part extents written by pw_export.py (real package models, not 12-triangle boxes)
+        lo, hi = bd["lo"], bd["hi"]; bodies.append((bd["ref"], lo[0], hi[0], 34.6 - (hi[2] + 1.6), 34.6 - (lo[2] + 1.6), lo[1] + 42.0, hi[1] + 42.0))
     refs = {}; hits = {}
     for n, T in NP.items():
         zs = sorted({round(z, 1) for b in bodies for z in np.arange(b[5], b[6] + 0.01, 0.5)}); cache = {}

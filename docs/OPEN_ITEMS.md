@@ -8,7 +8,7 @@
 6. **Simulation validation:** convergence, Monte Carlo on tolerances (offset, layer gap, etch width, self-capacitance), ground model, finite turn-off, non-spherical targets. Accept: stated uncertainty on every depth number.
 7. **TX stage:** C0G/film clamp part selection, RCL1 rating, hard-clamp alternatives, avalanche margin, EMI.
 8. **Mass reduction** (torque 2.88 -> under 2.2 kg m).
-9. **KiCad schematics: generated (2026-10-23)** for CB1D, LB1, AB1A, AB1B, PB1R, PM1, HB1 (`make sch`, round-trip checked). Remaining: open them in KiCad and run its ERC (with item 2); TXJ1, HTA and SB1R-QA/QB have no netlist yet.
+9. **KiCad schematics: functional set DONE (Step 7)** for CB1D, LB1, PB1R, PM2, HB2, AB1A, AB1B (`sch-func` pipeline step, src/pcb/sch_func.py + sch_blocks.py): blocks, real symbols, KiCad-exported netlist equals the design netlist, ERC 0 errors, PDFs in data/kicad/sch_functional. Remaining: a human review of the block grouping and the IC pin functions marked VERIFY; TXJ1, HTA and SB1R-QA/QB have no schematic (pads, coils and one resistor pair, generated from geometry). The older connectivity-only files in data/kicad/sch are superseded for reading.
 10. **Printing trials:** coupons, then cylinder (insert fit, rib supports), then formers.
 11. **Prototype the receive boards** (QA/QB) and measure leak, L, R, self-resonance, then re-tune sbq_tune radii.
 12. GitHub publication: done (github.com/sappystick/ARX).

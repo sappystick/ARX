@@ -1,0 +1,70 @@
+file,class,note,bytes,sha256
+stl/head/ANALOG_TRAY_v5.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),397684,6f49377bbcbe9d657035b57991ea4d28e63ad28ee88bd9ec66fb4f8f155e0880
+stl/head/BASE_PLATE_RX_CASSETTE_v3.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),1477684,b3c5585265ecd0ccd02409eb72463d3a5811c640d7e327be1a146b4fddb446aa
+stl/head/CORE_CYLINDER_v5_integrated.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),14807884,66dd53a07e64f06168fab8e2c85565e047355853983facf1ec6204483fc339ee
+stl/head/FERRITE_TILE_INNER_v3_reference.stl,REFERENCE,purchased part (MnZn ferrite tile) shown for fit; not printed,684,111a62c57b1c57ca72b1885d9a404c88ecdfd2ef2de39403239aae0ed43b8bb6
+stl/head/FERRITE_TILE_OUTER_v3_reference.stl,REFERENCE,purchased part (MnZn ferrite tile) shown for fit; not printed,684,ee81c4c5f29f2b17ae508db45592107dfd6576fdfc0d4dee5344dd929c38edbc
+stl/head/HEAD_SKIRT.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),1297684,91a904dcd26b267796aaea7cedc9bfd75abb86ab1b758a29cb2377c997a14d0a
+stl/head/HUB_CAP_HTA_v3_vault.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),2225484,4ca34e512738dd10473a5ad3a137ecdd8d192183cd469774347cf8f0bc47dc43
+stl/head/LOTUS_HOOD_CARRIER_v3_butted.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),329684,26c75ec911b2b8f8b547af2581fd73e878824e03da74d3d222734e269d75fe7d
+stl/head/ROOF_PLATE_v5.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),3717284,f7a29688a7576ad7b937be591ff034e5ea7f1fb77dfecd7a590573110cd07a28
+stl/head/SEPTUM_FRAME_v5.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),422484,2d39e93d582c119cdc18644061fdbdab5fa85b452b0c0be8c31ebeb432aede97
+stl/head/SPINE_COMB_v5.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),2484,2d2ee019d5158412bb8e9bdb74680d8aace09f9d0b69aeda075c36ae02eac548
+stl/head/TXJ1_CRADLE_v1.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),22284,9ac8f2e119742a84ac58366e881e70f88173c323469ffa57945be068f52adfc7
+stl/pins/PIN_interface1_n2_275.0deg.stl,PRINT,interface pin,38484,1b508db573d70d4f878bc8df3d571c78f3242d4a2aa557ce89545c42f47e7081
+stl/pins/PIN_interface1_n3_52.5deg.stl,PRINT,interface pin,38484,e8782c5cb7a8562640c9d94633764766366435cefff2af9c8c0e1a1dd213bb8d
+stl/pins/PIN_interface1_n4_190.0deg.stl,PRINT,interface pin,38484,d7f502fcc2ed27db88aea4739cb047a8c4dc90dde0cac5b598de1deab37edda0
+stl/pins/PIN_interface2_n5_327.5deg.stl,PRINT,interface pin,38484,5ed20d205ee8aae4347d8e854e2e88d5b67871fa019ffc61da208758aabb2442
+stl/pins/PIN_interface2_n6_105.0deg.stl,PRINT,interface pin,38484,6833a88e86f46fdb7cb07440c93f3225e7a4f1b152f6f237ffbabf23ca818bf4
+stl/pins/PIN_interface2_n7_242.6deg.stl,PRINT,interface pin,38484,0a76f467567d1b69ca4a1f71e0851901f24d93fec6a29d9de600b5ace0ef2948
+stl/pins/PIN_interface3_n15_262.6deg.stl,PRINT,interface pin,38484,d5c92e6a052106030e6784e63ca100f2e40b5344a10b50d1ee4a702e78e6d890
+stl/pins/PIN_interface3_n8_20.1deg.stl,PRINT,interface pin,38484,1a96adc613e340324e75a2a7971962f3e763cbd358ad83381189b27a6805c4a0
+stl/pins/PIN_interface3_n9_157.6deg.stl,PRINT,interface pin,38484,1b4e433694f19d2352a9bb32ab5a05fe2eb790a7a541247b0a23702b6ed0b8db
+stl/pins/PIN_interface4_n16_40.1deg.stl,PRINT,interface pin,38484,e572f53a98ef20381e8ff09bd615a1b00e43443d4bd7a3b5b8ebc990e91d4901
+stl/pins/PIN_interface4_n17_177.6deg.stl,PRINT,interface pin,38484,74a6305f634c752167254996fc092149fd411afe83fd6f3e4f9ba7e985360661
+stl/pins/PIN_interface4_n18_315.1deg.stl,PRINT,interface pin,38484,0f80aa361ee06c76088b7973398b9bd5b83f56e30ed3c768dea1604ba9dfff0d
+stl/pins/PIN_interface5_n19_92.7deg.stl,PRINT,interface pin,38484,e86ed87ee3c2261e8687b76522427a2123bd9079cea9bc4a452cfd854e0bd43c
+stl/pins/PIN_interface5_n20_230.2deg.stl,PRINT,interface pin,38484,60810112cca8da35e96afc7eaffca6f95ed0f1d375362e7c4ba87954cfac8ada
+stl/pins/PIN_interface5_n21_7.7deg.stl,PRINT,interface pin,38484,475ed468b252929dabdbca6a61f1592dcb5bea5f8ce2fe0ac09111c3f41c9d66
+stl/shaft_handle/BAT_B1_drawer_sleeve.stl,SUPERSEDED,replaced by the upper assembly v1 (U1-U9); do not print,14484,386e723a73dd22e7018611214feecc1702a07a5d9a7edf3046768d541d7bc0d3
+stl/shaft_handle/BAT_B2_end_cap_with_latch.stl,SUPERSEDED,replaced by the upper assembly v1 (U1-U9); do not print,19884,eec4fa61c9291461e76ee5d6d22be831022272c815a316b1168a0ba0269f96af
+stl/shaft_handle/BAT_B3_contact_plate.stl,SUPERSEDED,replaced by the upper assembly v1 (U1-U9); do not print,3084,719c8e2a67065a89d8897c088a4700a348dea7855c9979b1c046d811e3db3e07
+stl/shaft_handle/CAS_R1_cassette_segment_150.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),31284,da9816f08c0a011923f9d6138eceece24625212c029acc43bd270f5ec75b6eae
+stl/shaft_handle/CAS_R2_trolley.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),19884,87cc0322210f7eb2954710ff5fffcd04639b6d7e5d87d4ef8c3f7cab2d01a48e
+stl/shaft_handle/CAS_R3_end_anchor.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),1884,723842e1f6adf83f5c950bb44e719065e2bfcab5f151bc486dcf1b0b2dbc0032
+stl/shaft_handle/ELB_E1_elbow_and_grip.stl,SUPERSEDED,replaced by the upper assembly v1 (U1-U9); do not print,86484,07339723a0ebd63d687607be54df9ce878e3825cf0faf42baa6c9fbc470db3ba
+stl/shaft_handle/ELB_E2_grip_endcap.stl,SUPERSEDED,replaced by the upper assembly v1 (U1-U9); do not print,684,3970fd85113ba317ea613ef3ad0038366f2375f0a7de2fa604607a08575f2ca0
+stl/shaft_handle/ELB_E3_trigger.stl,SUPERSEDED,replaced by the upper assembly v1 (U1-U9); do not print,1284,f6228816806f6cfe1dd8e3073ba89ae76f55774d1fa31eee95ef41d323c0ddd7
+stl/shaft_handle/ELB_E4_joystick_boss.stl,SUPERSEDED,replaced by the upper assembly v1 (U1-U9); do not print,38484,6b044f1982f15f7853306a8814d5ba82fb2035744774abd3ea8be5b7a72eb406
+stl/shaft_handle/ELB_E5_forearm_cuff.stl,SUPERSEDED,replaced by the upper assembly v1 (U1-U9); do not print,19884,20c1c1d06e475b76ad3906db254db007fe5fc14e2dc88e02944d235d83abfa3f
+stl/shaft_handle/NPM_N1_body_with_tunnel.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),57684,31322ffc844a0f1fa2cd0a8bc30c598ed0a249982e88513a10772105c21edd5c
+stl/shaft_handle/NPM_N1_body_with_tunnel_v2.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),57684,8983d7073bc72e56f3f047d406cabba879e503e78a2e29cb181ff0934165fcf7
+stl/shaft_handle/NPM_N2_lid_with_fill_ports.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),77484,02df3440202d47bbe31fea4cbe97b7fa99fff601b3789effcb56762678fefb28
+stl/shaft_handle/NPM_N3_hot_zone_dam.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),684,22219c7b97f5e4a084f8b4e4b3d075c5d2ccd53d528b052a54069992b77536d5
+stl/shaft_handle/NPM_N3_hot_zone_dam_v2.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),684,9d7997a1c3f8c05b91fbfb3bd9bfd0e588997c12583eb2ffd42bc67860f196a5
+stl/shaft_handle/SUPERSEDED.txt,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),833,26e22b5740a1688a409cce55f30919ad2e2adea04e4d1be04d2c1f877fcc6e5e
+stl/upper/U1_TOP_HOUSING.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),93084,e9dd29367eaa41dfd1ea025567e87e34356a2da69f5c4c267cac40bcd7e81613
+stl/upper/U2_GRIP.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),29484,a73d5b44df3648866d258081596d72c34b6eb48038eed30cc936037eb30174d4
+stl/upper/U3_BOTTOM_HOUSING.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),59884,1b41f59e50fca7007bf619f5e704254906a930ed533bb3dac03dfbe3d4fd4966
+stl/upper/U4_TRIGGER.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),15284,7dbdae8586ed8b8a0a56a6cddb528e7cd9d59908f63a637792311f288c642413
+stl/upper/U5_ARMREST_CUP.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),55284,13a219ceaa4f6cd769e5f4d18d59f84ea556d69ba6dddfafd13fd47320d3e13d
+stl/upper/U6_BATTERY_DOCK.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),7884,f2a0283baa7f50cc376a23c89a65cc3a87da4e892685755e40a002decdab5145
+stl/upper/U7_BATTERY_PACK_SHELL.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),13284,85286f76837cb90d0b9fa5abc5ba4a2345cd70824a67f7a865db20f3c63757de
+stl/upper/U8_CORD_ANCHOR.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),68084,b1832f57315d15158c2383db97da4aa99aa0329700e1cd58e5851914af63b313
+stl/upper/U8_SEPTUM_extended.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),351084,2dd72e5907d6fe16605416fc730d5dbedb9ae470f9744a8e0ee681bfe30e6f50
+stl/upper/U9_CAM_COLLAR.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),51884,190d265f384d7c54be6bb2cc89a69314bb3eb96b02dd3ed3aa7b29513e349178
+stl/upper/UPPER_ASSEMBLY_collapsed.stl,REFERENCE,assembly of the printed upper parts + purchased tubes/pack envelopes; not a print file,821284,f34cfc5753b7d7d10f738fb436dca7eedae3829b204f7494be1ef92402642a38
+stl/upper/UPPER_ASSEMBLY_extended.stl,REFERENCE,assembly of the printed upper parts + purchased tubes/pack envelopes; not a print file,821284,9c411550b5dc46a374a68d74b43566bffc18f9461f78494de784ea8094f95bcb
+stl/yoke/BUSHING_IN_TUBE_A.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),96084,c9894177be28d158f9e2959382d92b038dc0198f0c20b471c2981098065de675
+stl/yoke/BUSHING_ON_TUBE_B.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),48084,abfb78d2cb68305bd038e58907bf3277836ec45c1e0e55219cf7cffb023ad88f
+stl/yoke/HEEL_SADDLE_TOWER.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),220284,f0a3ef611ce3d2d4f6eb518144fb3b8b40dafcb8c9b946932572912596a440f2
+stl/yoke/HINGE_ARM.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),121284,e89cca3aa2ccd5aea5a88412fa8e95fa99405c69aea5caebd3136ede47439c2b
+stl/yoke/TELESCOPE_LOCK_COLLAR.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),141084,fd613d3a086366c1c39c856b66d0f572e0504d25d993b58d94b4abb9faff1982
+stl/yoke/UMBILICAL_BRIDGE.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),1884,9e2ec9eae085cf6c01af5ef8fb19ba36dddff1049c43fed93c932e4e1bffd26b
+stl/yoke/UMBILICAL_BRIDGE_LID.stl,PRINT,printed part (mesh checks in check_v22 / upper_check / yoke_check),684,5c012741ed4905e3c386f9627d42e3219e45fe2b3dce7bada0a04b4f587dbcd6
+work/kit_v15/PRINT/FORMER_L1_petal_coil_former.stl,"PRINT (generated, not in git)","petal coil former, full resolution: make formers-print",68480084,0d2349b4760f97fde965924aef9a2e274f374c3ed24b298cfeca087748f953b0
+work/kit_v15/PRINT/FORMER_L2_petal_coil_former.stl,"PRINT (generated, not in git)","petal coil former, full resolution: make formers-print",66000084,a88c816734442bcfe3a44f275e64666d3d92306c96ff75eb152d72be85e17426
+work/kit_v15/PRINT/FORMER_L3_petal_coil_former.stl,"PRINT (generated, not in git)","petal coil former, full resolution: make formers-print",68120084,a8791928b0f48b872ad97e0263f94484d14f6125eacd885526b3673d86a589ce
+work/kit_v15/PRINT/FORMER_L4_petal_coil_former.stl,"PRINT (generated, not in git)","petal coil former, full resolution: make formers-print",70120084,b1823aab0d92e8fcf7a5e3c6b87dc07e98537ddca3089c1fbe8a2dcea45dbb71
+work/kit_v15/PRINT/FORMER_L5_petal_coil_former.stl,"PRINT (generated, not in git)","petal coil former, full resolution: make formers-print",72000084,9071a91649fb7ec252a3e043757ffd096b33eee9bba10e0fbe66e7ebce437a43
+work/kit_v15/PRINT/FORMER_L6_petal_coil_former.stl,"PRINT (generated, not in git)","petal coil former, full resolution: make formers-print",66280084,0e911af8f1c0c6dfe0da3274754b811274b31f2f6227725165daff9509d72e72

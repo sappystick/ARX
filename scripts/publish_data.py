@@ -61,6 +61,11 @@ for base, key in DRU.items():                                    # rule files ar
     if have != want:
         stale.append(p)
         if not CHECK: open(p, "w").write(want); changed += 1
+for base in DRU:                                                 # empty KiCad project next to each board: ${KIPRJMOD}/3dmodels/ (the package models) resolves only inside a project
+    p = f"data/kicad/{base}.kicad_pro"
+    if not os.path.exists(p) or open(p).read() != "{}\n":
+        stale.append(p)
+        if not CHECK: open(p, "w").write("{}\n"); changed += 1
 for r in RESULTS: put(f"{W}/{r}", f"data/results/{os.path.basename(r)}")
 for f in glob.glob(f"{W}/kit_v22/SCH/*.kicad_sch"): put(f, f"data/kicad/sch/{os.path.basename(f)}")
 for f in glob.glob(f"{W}/kit_v22/SCHF/*"):

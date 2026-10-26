@@ -15,7 +15,7 @@
  },
  {
   "check": "CB1D top parts vs LB1 underside z39.2",
-  "gap_mm": 0.4,
+  "gap_mm": 0.35,
   "required_mm": 0.2,
   "result": "PASS",
   "note": "tightest vertical gap in the head"

@@ -1,0 +1,118 @@
+{
+ "checks": [
+  {
+   "check": "trigger chain HS1.OUT -> RH1 -> JH.3 -> harness -> CB1D JTR.3 -> RT1 -> TRIG_IN -> U1.7 (+ RP1 pull-up, CQ1)",
+   "result": "PASS",
+   "value": "[True, True, True, True, True]",
+   "note": ""
+  },
+  {
+   "check": "trigger sensor type matches the input: digital-only pin 7 needs a digital (open-drain) Hall switch",
+   "result": "PASS",
+   "value": "HALL_SW",
+   "note": "a linear Hall (SS49E) rests near VCC/2, inside the undefined logic band"
+  },
+  {
+   "check": "trigger low level (switch on) at least 0.2 V under VIL 0.8 V",
+   "result": "PASS",
+   "value": 0.518,
+   "note": "Vsat 0.4 + divider 2000 / 49000 ohm"
+  },
+  {
+   "check": "trigger high level (switch off) at least 0.5 V over VIH 2.0 V",
+   "result": "PASS",
+   "value": 3.253,
+   "note": "1 uA leakage through 47000 ohm"
+  },
+  {
+   "check": "trigger node time constant 0.1-5 ms (debounce without lag)",
+   "result": "PASS",
+   "value": 0.47,
+   "note": "ms"
+  },
+  {
+   "check": "dial reaches an ADC pin (DIAL_IN on U1.32)",
+   "result": "PASS",
+   "value": "GP27/ADC1",
+   "note": ""
+  },
+  {
+   "check": "dial ladder levels at the ADC separated by >= 0.3 V (incl. the CB1D pull-up)",
+   "result": "PASS",
+   "value": {
+    "P1": 0.0,
+    "P2": 1.202,
+    "P3": 2.166,
+    "P4": 2.848,
+    "open": 3.3
+   },
+   "note": "min separation 0.45 V; firmware thresholds must use these levels, not the HB1-only ladder"
+  },
+  {
+   "check": "joystick removed: no JOY nets on HB2 and no JOY conductor in harness v3",
+   "result": "PASS",
+   "value": [],
+   "note": "CB1D JTR.5/.6 (JOY_X/JOY_Y) are left without a conductor until the CB1D revision"
+  },
+  {
+   "check": "trigger polarity: rest = TRIG low (magnet near, switch on), pressed = TRIG high (magnet >= 2 mm further away)",
+   "result": "PASS",
+   "value": 2.524,
+   "note": "firmware: enter boost on TRIG high only after TRIG was seen low since power-up (a broken TRIG conductor reads high)"
+  },
+  {
+   "check": "boost-mode stress rows (20 A / 400 Hz) all pass",
+   "result": "PASS",
+   "value": [
+    [
+     "IPB65R095C7",
+     58.3
+    ],
+    [
+     "TX coil litz",
+     50.4
+    ],
+    [
+     "Vault",
+     55.5
+    ],
+    [
+     "PB1R bulk capacitors 9 x 100 uF -20 %",
+     13.3
+    ],
+    [
+     "Power cord AWG20 pair (upper v1)",
+     90.8
+    ],
+    [
+     "Battery pack 7S1P Molicel P30B",
+     98.5
+    ]
+   ],
+   "note": ""
+  }
+ ],
+ "levels": {
+  "trig_low_V": 0.518,
+  "trig_high_V": 3.253,
+  "tau_ms": 0.47,
+  "dial_V": {
+   "P1": 0.0,
+   "P2": 1.202,
+   "P3": 2.166,
+   "P4": 2.848,
+   "open": 3.3
+  }
+ },
+ "assumptions": {
+  "VIL": 0.8,
+  "VIH": 2.0,
+  "Vsat": 0.4,
+  "leak_uA": 1.0,
+  "adc_pins": {
+   "31": "GP26/ADC0",
+   "32": "GP27/ADC1",
+   "34": "GP28/ADC2"
+  }
+ }
+}

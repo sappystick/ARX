@@ -1,0 +1,877 @@
+{
+ "ADS8860": {
+  "model": "PF233_ADS8860.wrl",
+  "fp": "Package_SO:MSOP-10_3x3mm_P0.5mm",
+  "bbox_lo": [
+   -2.72,
+   -1.5,
+   0.0
+  ],
+  "bbox_hi": [
+   2.72,
+   1.5,
+   1.12
+  ],
+  "envelope": [
+   3.0,
+   3.0,
+   1.1
+  ]
+ },
+ "BAV199": {
+  "model": "PF233_BAV199.wrl",
+  "fp": "Package_TO_SOT_SMD:SOT-23",
+  "bbox_lo": [
+   -1.45,
+   -1.1,
+   0.0
+  ],
+  "bbox_hi": [
+   1.45,
+   1.1,
+   1.1
+  ],
+  "envelope": [
+   2.9,
+   1.3,
+   1.1
+  ]
+ },
+ "C0402": {
+  "model": "PF233_C0402.wrl",
+  "fp": "Capacitor_SMD:C_0402_1005Metric",
+  "bbox_lo": [
+   -0.5,
+   -0.25,
+   0.0
+  ],
+  "bbox_hi": [
+   0.5,
+   0.25,
+   0.5
+  ],
+  "envelope": [
+   1.0,
+   0.5,
+   0.5
+  ]
+ },
+ "C0603": {
+  "model": "PF233_C0603.wrl",
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "bbox_lo": [
+   -0.8,
+   -0.4,
+   0.0
+  ],
+  "bbox_hi": [
+   0.8,
+   0.4,
+   0.8
+  ],
+  "envelope": [
+   1.6,
+   0.8,
+   0.8
+  ]
+ },
+ "C0805": {
+  "model": "PF233_C0805.wrl",
+  "fp": "Capacitor_SMD:C_0805_2012Metric",
+  "bbox_lo": [
+   -1.0,
+   -0.62,
+   0.0
+  ],
+  "bbox_hi": [
+   1.0,
+   0.62,
+   1.0
+  ],
+  "envelope": [
+   2.0,
+   1.25,
+   1.0
+  ]
+ },
+ "HDR1x6": {
+  "model": "PF233_HDR1x6.wrl",
+  "fp": "Connector_PinHeader_1.27mm:PinHeader_1x6_P1.27mm",
+  "bbox_lo": [
+   -1.38,
+   -4.56,
+   0.0
+  ],
+  "bbox_hi": [
+   1.38,
+   4.56,
+   4.0
+  ],
+  "envelope": [
+   2.77,
+   9.120000000000001,
+   4.0
+  ]
+ },
+ "HDR1x8": {
+  "model": "PF233_HDR1x8.wrl",
+  "fp": "Connector_PinHeader_1.27mm:PinHeader_1x8_P1.27mm",
+  "bbox_lo": [
+   -1.38,
+   -5.83,
+   0.0
+  ],
+  "bbox_hi": [
+   1.38,
+   5.83,
+   4.0
+  ],
+  "envelope": [
+   2.77,
+   11.66,
+   4.0
+  ]
+ },
+ "HDR2x6": {
+  "model": "PF233_HDR2x6.wrl",
+  "fp": "Connector:Pin_header_2x6_P2.54mm",
+  "bbox_lo": [
+   -3.29,
+   -8.37,
+   0.0
+  ],
+  "bbox_hi": [
+   3.29,
+   8.37,
+   9.0
+  ],
+  "envelope": [
+   6.58,
+   16.740000000000002,
+   9.0
+  ]
+ },
+ "OPA2211": {
+  "model": "PF233_OPA2211.wrl",
+  "fp": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+  "bbox_lo": [
+   -3.32,
+   -2.45,
+   0.0
+  ],
+  "bbox_hi": [
+   3.32,
+   2.45,
+   1.72
+  ],
+  "envelope": [
+   4.9,
+   3.9,
+   1.6
+  ]
+ },
+ "OPA2365": {
+  "model": "PF233_OPA2365.wrl",
+  "fp": "Package_SO:MSOP-8_3x3mm_P0.65mm",
+  "bbox_lo": [
+   -2.72,
+   -1.5,
+   0.0
+  ],
+  "bbox_hi": [
+   2.72,
+   1.5,
+   1.12
+  ],
+  "envelope": [
+   3.0,
+   3.0,
+   1.1
+  ]
+ },
+ "R0402": {
+  "model": "PF233_R0402.wrl",
+  "fp": "Resistor_SMD:R_0402_1005Metric",
+  "bbox_lo": [
+   -0.5,
+   -0.25,
+   0.0
+  ],
+  "bbox_hi": [
+   0.5,
+   0.25,
+   0.35
+  ],
+  "envelope": [
+   1.0,
+   0.5,
+   0.35
+  ]
+ },
+ "REF5041": {
+  "model": "PF233_REF5041.wrl",
+  "fp": "Package_SO:MSOP-8_3x3mm_P0.65mm",
+  "bbox_lo": [
+   -2.72,
+   -1.5,
+   0.0
+  ],
+  "bbox_hi": [
+   2.72,
+   1.5,
+   1.12
+  ],
+  "envelope": [
+   3.0,
+   3.0,
+   1.1
+  ]
+ },
+ "SW1G66": {
+  "model": "PF233_SW1G66.wrl",
+  "fp": "Package_TO_SOT_SMD:SOT-23-5",
+  "bbox_lo": [
+   -1.45,
+   -1.1,
+   0.0
+  ],
+  "bbox_hi": [
+   1.45,
+   1.1,
+   1.1
+  ],
+  "envelope": [
+   2.9,
+   1.6,
+   1.1
+  ]
+ },
+ "R0805": {
+  "model": "PF233_R0805.wrl",
+  "fp": "Resistor_SMD:R_0805_2012Metric",
+  "bbox_lo": [
+   -1.0,
+   -0.62,
+   0.0
+  ],
+  "bbox_hi": [
+   1.0,
+   0.62,
+   0.5
+  ],
+  "envelope": [
+   2.0,
+   1.25,
+   0.5
+  ]
+ },
+ "C1210": {
+  "model": "PF233_C1210.wrl",
+  "fp": "Capacitor_SMD:C_1210_3225Metric",
+  "bbox_lo": [
+   -1.6,
+   -1.25,
+   0.0
+  ],
+  "bbox_hi": [
+   1.6,
+   1.25,
+   2.0
+  ],
+  "envelope": [
+   3.2,
+   2.5,
+   2.0
+  ]
+ },
+ "CAN10": {
+  "model": "PF233_CAN10.wrl",
+  "fp": "Capacitor_SMD:CP_Elec_10x10",
+  "bbox_lo": [
+   -5.15,
+   -5.15,
+   0.0
+  ],
+  "bbox_hi": [
+   5.15,
+   5.15,
+   10.55
+  ],
+  "envelope": [
+   10.3,
+   10.3,
+   10.5
+  ]
+ },
+ "D2PAK": {
+  "model": "PF233_D2PAK.wrl",
+  "fp": "Package_TO_SOT_SMD:TO-263-3_TabPin2",
+  "bbox_lo": [
+   -7.2,
+   -4.6,
+   0.0
+  ],
+  "bbox_hi": [
+   10.0,
+   4.6,
+   4.4
+  ],
+  "envelope": [
+   10.2,
+   9.2,
+   4.6
+  ]
+ },
+ "DSMB": {
+  "model": "PF233_DSMB.wrl",
+  "fp": "Diode_SMD:D_SMB",
+  "bbox_lo": [
+   -2.3,
+   -1.8,
+   0.0
+  ],
+  "bbox_hi": [
+   2.3,
+   1.8,
+   2.43
+  ],
+  "envelope": [
+   4.6,
+   3.6,
+   2.4
+  ]
+ },
+ "DSMC": {
+  "model": "PF233_DSMC.wrl",
+  "fp": "Diode_SMD:D_SMC",
+  "bbox_lo": [
+   -3.55,
+   -3.05,
+   0.0
+  ],
+  "bbox_hi": [
+   3.55,
+   3.05,
+   2.43
+  ],
+  "envelope": [
+   7.1,
+   6.1,
+   2.4
+  ]
+ },
+ "DSOD": {
+  "model": "PF233_DSOD.wrl",
+  "fp": "Diode_SMD:D_SOD-123",
+  "bbox_lo": [
+   -1.35,
+   -0.8,
+   0.0
+  ],
+  "bbox_hi": [
+   1.35,
+   0.8,
+   1.13
+  ],
+  "envelope": [
+   2.7,
+   1.6,
+   1.1
+  ]
+ },
+ "FB1812": {
+  "model": "PF233_FB1812.wrl",
+  "fp": "Inductor_SMD:L_1812_4532Metric",
+  "bbox_lo": [
+   -2.25,
+   -1.6,
+   0.0
+  ],
+  "bbox_hi": [
+   2.25,
+   1.6,
+   2.5
+  ],
+  "envelope": [
+   4.5,
+   3.2,
+   2.5
+  ]
+ },
+ "FUSE1206B": {
+  "model": "PF233_FUSE1206B.wrl",
+  "fp": "Fuse:Fuse_1206_3216Metric",
+  "bbox_lo": [
+   -1.55,
+   -0.78,
+   0.0
+  ],
+  "bbox_hi": [
+   1.55,
+   0.78,
+   0.6
+  ],
+  "envelope": [
+   3.1,
+   1.55,
+   0.6
+  ]
+ },
+ "FUSE1812": {
+  "model": "PF233_FUSE1812.wrl",
+  "fp": "Fuse:Fuse_1812_4532Metric",
+  "bbox_lo": [
+   -2.25,
+   -1.6,
+   0.0
+  ],
+  "bbox_hi": [
+   2.25,
+   1.6,
+   1.8
+  ],
+  "envelope": [
+   4.5,
+   3.2,
+   1.8
+  ]
+ },
+ "HALL_SW": {
+  "model": "PF233_HALL_SW.wrl",
+  "fp": "Package_TO_SOT_THT:TO-92_Inline",
+  "bbox_lo": [
+   -2.0,
+   -0.8,
+   0.0
+  ],
+  "bbox_hi": [
+   2.0,
+   0.8,
+   4.5
+  ],
+  "envelope": [
+   4.0,
+   3.0,
+   4.5
+  ]
+ },
+ "HC4051": {
+  "model": "PF233_HC4051.wrl",
+  "fp": "Package_SO:SOIC-16_3.9x9.9mm_P1.27mm",
+  "bbox_lo": [
+   -3.32,
+   -4.95,
+   0.0
+  ],
+  "bbox_hi": [
+   3.32,
+   4.95,
+   1.72
+  ],
+  "envelope": [
+   9.9,
+   3.9,
+   1.6
+  ]
+ },
+ "HDR1x2": {
+  "model": "PF233_HDR1x2.wrl",
+  "fp": "Connector:Pin_header_1x2_P2.54mm",
+  "bbox_lo": [
+   -2.02,
+   -3.29,
+   0.0
+  ],
+  "bbox_hi": [
+   2.02,
+   3.29,
+   9.0
+  ],
+  "envelope": [
+   4.04,
+   6.58,
+   9.0
+  ]
+ },
+ "HDR1x3": {
+  "model": "PF233_HDR1x3.wrl",
+  "fp": "Connector:Pin_header_1x3_P2.54mm",
+  "bbox_lo": [
+   -2.02,
+   -4.56,
+   0.0
+  ],
+  "bbox_hi": [
+   2.02,
+   4.56,
+   9.0
+  ],
+  "envelope": [
+   4.04,
+   9.120000000000001,
+   9.0
+  ]
+ },
+ "HDR1x4": {
+  "model": "PF233_HDR1x4.wrl",
+  "fp": "Connector:Pin_header_1x4_P2.54mm",
+  "bbox_lo": [
+   -2.02,
+   -5.83,
+   0.0
+  ],
+  "bbox_hi": [
+   2.02,
+   5.83,
+   9.0
+  ],
+  "envelope": [
+   4.04,
+   11.66,
+   9.0
+  ]
+ },
+ "HDR1x5": {
+  "model": "PF233_HDR1x5.wrl",
+  "fp": "Connector:Pin_header_1x5_P2.54mm",
+  "bbox_lo": [
+   -2.02,
+   -7.1,
+   0.0
+  ],
+  "bbox_hi": [
+   2.02,
+   7.1,
+   9.0
+  ],
+  "envelope": [
+   4.04,
+   14.2,
+   9.0
+  ]
+ },
+ "HDR1x7": {
+  "model": "PF233_HDR1x7.wrl",
+  "fp": "Connector:Pin_header_1x7_P2.54mm",
+  "bbox_lo": [
+   -2.02,
+   -9.64,
+   0.0
+  ],
+  "bbox_hi": [
+   2.02,
+   9.64,
+   9.0
+  ],
+  "envelope": [
+   4.04,
+   19.28,
+   9.0
+  ]
+ },
+ "HDR2x4": {
+  "model": "PF233_HDR2x4.wrl",
+  "fp": "Connector:Pin_header_2x4_P2.54mm",
+  "bbox_lo": [
+   -3.29,
+   -5.83,
+   0.0
+  ],
+  "bbox_hi": [
+   3.29,
+   5.83,
+   9.0
+  ],
+  "envelope": [
+   6.58,
+   11.66,
+   9.0
+  ]
+ },
+ "HDR2x6S": {
+  "model": "PF233_HDR2x6S.wrl",
+  "fp": "Connector:Pin_header_1.27_2x6_P1.27mm",
+  "bbox_lo": [
+   -2.02,
+   -4.56,
+   0.0
+  ],
+  "bbox_hi": [
+   2.02,
+   4.56,
+   9.0
+  ],
+  "envelope": [
+   4.04,
+   9.120000000000001,
+   9.0
+  ]
+ },
+ "LED2020": {
+  "model": "PF233_LED2020.wrl",
+  "fp": "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm",
+  "bbox_lo": [
+   -1.6,
+   -1.4,
+   0.0
+  ],
+  "bbox_hi": [
+   1.6,
+   1.4,
+   0.8
+  ],
+  "envelope": [
+   3.2,
+   2.8,
+   0.8
+  ]
+ },
+ "LM393": {
+  "model": "PF233_LM393.wrl",
+  "fp": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+  "bbox_lo": [
+   -3.32,
+   -2.45,
+   0.0
+  ],
+  "bbox_hi": [
+   3.32,
+   2.45,
+   1.72
+  ],
+  "envelope": [
+   4.9,
+   3.9,
+   1.6
+  ]
+ },
+ "OKI3": {
+  "model": "PF233_OKI3.wrl",
+  "fp": "Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal",
+  "bbox_lo": [
+   -1.5,
+   -4.25,
+   0.0
+  ],
+  "bbox_hi": [
+   10.0,
+   4.25,
+   10.25
+  ],
+  "envelope": [
+   11.5,
+   8.5,
+   10.2
+  ]
+ },
+ "PICO": {
+  "model": "PF233_PICO.wrl",
+  "fp": "Module:RaspberryPi_Pico_Common_THT",
+  "bbox_lo": [
+   -10.5,
+   -26.0,
+   0.0
+  ],
+  "bbox_hi": [
+   10.5,
+   25.5,
+   6.3
+  ],
+  "envelope": [
+   21.0,
+   51.0,
+   8.0
+  ]
+ },
+ "PMOS_SO8": {
+  "model": "PF233_PMOS_SO8.wrl",
+  "fp": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+  "bbox_lo": [
+   -3.32,
+   -2.45,
+   0.0
+  ],
+  "bbox_hi": [
+   3.32,
+   2.45,
+   1.77
+  ],
+  "envelope": [
+   5.0,
+   6.0,
+   1.75
+  ]
+ },
+ "R0603": {
+  "model": "PF233_R0603.wrl",
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "bbox_lo": [
+   -0.8,
+   -0.4,
+   0.0
+  ],
+  "bbox_hi": [
+   0.8,
+   0.4,
+   0.5
+  ],
+  "envelope": [
+   1.6,
+   0.8,
+   0.5
+  ]
+ },
+ "R1206": {
+  "model": "PF233_R1206.wrl",
+  "fp": "Resistor_SMD:R_1206_3216Metric",
+  "bbox_lo": [
+   -1.6,
+   -0.8,
+   0.0
+  ],
+  "bbox_hi": [
+   1.6,
+   0.8,
+   0.6
+  ],
+  "envelope": [
+   3.2,
+   1.6,
+   0.6
+  ]
+ },
+ "R2512": {
+  "model": "PF233_R2512.wrl",
+  "fp": "Resistor_SMD:R_2512_6332Metric",
+  "bbox_lo": [
+   -3.15,
+   -1.6,
+   0.0
+  ],
+  "bbox_hi": [
+   3.15,
+   1.6,
+   0.7
+  ],
+  "envelope": [
+   6.3,
+   3.2,
+   0.7
+  ]
+ },
+ "SOT223": {
+  "model": "PF233_SOT223.wrl",
+  "fp": "Package_TO_SOT_SMD:SOT-223-3_TabPin2",
+  "bbox_lo": [
+   -4.0,
+   -2.55,
+   0.0
+  ],
+  "bbox_hi": [
+   4.7,
+   2.55,
+   1.6
+  ],
+  "envelope": [
+   6.5,
+   3.5,
+   1.7
+  ]
+ },
+ "SOT23-5": {
+  "model": "PF233_SOT23-5.wrl",
+  "fp": "Package_TO_SOT_SMD:SOT-23-5",
+  "bbox_lo": [
+   -1.5,
+   -1.1,
+   0.0
+  ],
+  "bbox_hi": [
+   1.5,
+   1.1,
+   1.1
+  ],
+  "envelope": [
+   3.0,
+   1.7,
+   1.1
+  ]
+ },
+ "TC4420": {
+  "model": "PF233_TC4420.wrl",
+  "fp": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+  "bbox_lo": [
+   -3.32,
+   -2.45,
+   0.0
+  ],
+  "bbox_hi": [
+   3.32,
+   2.45,
+   1.72
+  ],
+  "envelope": [
+   4.9,
+   3.9,
+   1.6
+  ]
+ },
+ "TERM2": {
+  "model": "PF233_TERM2.wrl",
+  "fp": "Connector:Terminal_block_1x2_P5.08mm",
+  "bbox_lo": [
+   -3.29,
+   -5.83,
+   0.0
+  ],
+  "bbox_hi": [
+   3.29,
+   5.83,
+   9.0
+  ],
+  "envelope": [
+   6.58,
+   11.66,
+   9.0
+  ]
+ },
+ "TERM4": {
+  "model": "PF233_TERM4.wrl",
+  "fp": "Connector:Terminal_block_1x4_P5.08mm",
+  "bbox_lo": [
+   -3.29,
+   -10.91,
+   0.0
+  ],
+  "bbox_hi": [
+   3.29,
+   10.91,
+   9.0
+  ],
+  "envelope": [
+   6.58,
+   21.82,
+   9.0
+  ]
+ },
+ "WIRE1x4": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
+ "WIRE2": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
+ "WIRE2S": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
+ "WIRE3": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
+ "WIRE4": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ }
+}

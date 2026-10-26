@@ -1,0 +1,313 @@
+{
+ "boards": {
+  "PF233-CB1D_routed.kicad_pcb": {
+   "components": 60,
+   "with_model": 60,
+   "missing": []
+  },
+  "PF233-LB1_routed.kicad_pcb": {
+   "components": 80,
+   "with_model": 80,
+   "missing": []
+  },
+  "PF233-PB1R_routed.kicad_pcb": {
+   "components": 41,
+   "with_model": 41,
+   "missing": []
+  },
+  "PF233-PM2_routed.kicad_pcb": {
+   "components": 13,
+   "with_model": 13,
+   "missing": []
+  },
+  "PF233-HB2_routed.kicad_pcb": {
+   "components": 10,
+   "with_model": 10,
+   "missing": []
+  },
+  "SB1R-QA.kicad_pcb": {
+   "components": 2,
+   "with_model": 2,
+   "missing": []
+  },
+  "SB1R-QB.kicad_pcb": {
+   "components": 0,
+   "with_model": 0,
+   "missing": []
+  }
+ },
+ "models": {
+  "ADS8860": {
+   "covers_pads": true,
+   "height": 1.12,
+   "envelope_h": 1.1,
+   "height_ok": true
+  },
+  "BAV199": {
+   "covers_pads": true,
+   "height": 1.1,
+   "envelope_h": 1.1,
+   "height_ok": true
+  },
+  "C0402": {
+   "covers_pads": true,
+   "height": 0.5,
+   "envelope_h": 0.5,
+   "height_ok": true
+  },
+  "C0603": {
+   "covers_pads": true,
+   "height": 0.8,
+   "envelope_h": 0.8,
+   "height_ok": true
+  },
+  "C0805": {
+   "covers_pads": true,
+   "height": 1.0,
+   "envelope_h": 1.0,
+   "height_ok": true
+  },
+  "C1210": {
+   "covers_pads": true,
+   "height": 2.0,
+   "envelope_h": 2.0,
+   "height_ok": true
+  },
+  "CAN10": {
+   "covers_pads": true,
+   "height": 10.55,
+   "envelope_h": 10.5,
+   "height_ok": true
+  },
+  "D2PAK": {
+   "covers_pads": true,
+   "height": 4.4,
+   "envelope_h": 4.6,
+   "height_ok": true
+  },
+  "DSMB": {
+   "covers_pads": true,
+   "height": 2.43,
+   "envelope_h": 2.4,
+   "height_ok": true
+  },
+  "DSMC": {
+   "covers_pads": true,
+   "height": 2.43,
+   "envelope_h": 2.4,
+   "height_ok": true
+  },
+  "DSOD": {
+   "covers_pads": true,
+   "height": 1.13,
+   "envelope_h": 1.1,
+   "height_ok": true
+  },
+  "FB1812": {
+   "covers_pads": true,
+   "height": 2.5,
+   "envelope_h": 2.5,
+   "height_ok": true
+  },
+  "FUSE1206B": {
+   "covers_pads": true,
+   "height": 0.6,
+   "envelope_h": 0.6,
+   "height_ok": true
+  },
+  "FUSE1812": {
+   "covers_pads": true,
+   "height": 1.8,
+   "envelope_h": 1.8,
+   "height_ok": true
+  },
+  "HALL_SW": {
+   "covers_pads": true,
+   "height": 4.5,
+   "envelope_h": 4.5,
+   "height_ok": true
+  },
+  "HC4051": {
+   "covers_pads": true,
+   "height": 1.72,
+   "envelope_h": 1.6,
+   "height_ok": true
+  },
+  "HDR1x2": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  },
+  "HDR1x3": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  },
+  "HDR1x4": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  },
+  "HDR1x5": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  },
+  "HDR1x6": {
+   "covers_pads": true,
+   "height": 4.0,
+   "envelope_h": 4.0,
+   "height_ok": true
+  },
+  "HDR1x7": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  },
+  "HDR1x8": {
+   "covers_pads": true,
+   "height": 4.0,
+   "envelope_h": 4.0,
+   "height_ok": true
+  },
+  "HDR2x4": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  },
+  "HDR2x6": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  },
+  "HDR2x6S": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  },
+  "LED2020": {
+   "covers_pads": true,
+   "height": 0.8,
+   "envelope_h": 0.8,
+   "height_ok": true
+  },
+  "LM393": {
+   "covers_pads": true,
+   "height": 1.72,
+   "envelope_h": 1.6,
+   "height_ok": true
+  },
+  "OKI3": {
+   "covers_pads": true,
+   "height": 10.25,
+   "envelope_h": 10.2,
+   "height_ok": true
+  },
+  "OPA2211": {
+   "covers_pads": true,
+   "height": 1.72,
+   "envelope_h": 1.6,
+   "height_ok": true
+  },
+  "OPA2365": {
+   "covers_pads": true,
+   "height": 1.12,
+   "envelope_h": 1.1,
+   "height_ok": true
+  },
+  "PICO": {
+   "covers_pads": true,
+   "height": 6.3,
+   "envelope_h": 8.0,
+   "height_ok": true
+  },
+  "PMOS_SO8": {
+   "covers_pads": true,
+   "height": 1.77,
+   "envelope_h": 1.75,
+   "height_ok": true
+  },
+  "R0402": {
+   "covers_pads": true,
+   "height": 0.35,
+   "envelope_h": 0.35,
+   "height_ok": true
+  },
+  "R0603": {
+   "covers_pads": true,
+   "height": 0.5,
+   "envelope_h": 0.5,
+   "height_ok": true
+  },
+  "R0805": {
+   "covers_pads": true,
+   "height": 0.5,
+   "envelope_h": 0.5,
+   "height_ok": true
+  },
+  "R1206": {
+   "covers_pads": true,
+   "height": 0.6,
+   "envelope_h": 0.6,
+   "height_ok": true
+  },
+  "R2512": {
+   "covers_pads": true,
+   "height": 0.7,
+   "envelope_h": 0.7,
+   "height_ok": true
+  },
+  "REF5041": {
+   "covers_pads": true,
+   "height": 1.12,
+   "envelope_h": 1.1,
+   "height_ok": true
+  },
+  "SOT223": {
+   "covers_pads": true,
+   "height": 1.6,
+   "envelope_h": 1.7,
+   "height_ok": true
+  },
+  "SOT23-5": {
+   "covers_pads": true,
+   "height": 1.1,
+   "envelope_h": 1.1,
+   "height_ok": true
+  },
+  "SW1G66": {
+   "covers_pads": true,
+   "height": 1.1,
+   "envelope_h": 1.1,
+   "height_ok": true
+  },
+  "TC4420": {
+   "covers_pads": true,
+   "height": 1.72,
+   "envelope_h": 1.6,
+   "height_ok": true
+  },
+  "TERM2": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  },
+  "TERM4": {
+   "covers_pads": true,
+   "height": 9.0,
+   "envelope_h": 9.0,
+   "height_ok": true
+  }
+ },
+ "errors": [],
+ "n_errors": 0
+}

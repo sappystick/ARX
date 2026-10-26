@@ -143,7 +143,7 @@ gerber-pb1r: kicad-pb1r
 	$(PY) src/pcb/kicad_gerber.py $(W)/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb PB1R $(W)/kit_v22/GERBER_PB1R PF233-PB1R
 	cd $(W) && $(PY) gerber_plane_check.py PB1R kit_v22/GERBER_PB1R PF233-PB1R DRAIN1,CLAMP1 In1:GND,In2:VBUS && $(PY) gerber_edge_check.py kit_v22/gerber_edge_PB1R.json kit_v22/GERBER_PB1R PF233-PB1R
 
-# inspection package: boards, schematics, STL classification, layered cut-away blueprint (deliverables/PHIFOLD233_PACKAGE_r2)
+# inspection package: boards, schematics, STL classification, layered cut-away blueprint (deliverables/PHIFOLD233_PACKAGE_r3)
 package:
 	python3 scripts/make_package.py
 

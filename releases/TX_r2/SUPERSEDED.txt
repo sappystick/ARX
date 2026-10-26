@@ -1,0 +1,1 @@
+TX_r2 is superseded by TX_r3: PB1R_v3 (re-placed against the neck module, fit-checked) and the NPM v2 parts. Do not send r2 to a fabricator.

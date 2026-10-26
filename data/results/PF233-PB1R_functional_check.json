@@ -1,0 +1,13 @@
+{
+ "board": "PB1R",
+ "parts": 42,
+ "errors": [],
+ "nets_compared": 17,
+ "erc": {
+  "warning:footprint_link_issues": 42,
+  "warning:lib_symbol_issues": 42
+ },
+ "erc_errors": 0,
+ "pdf": true,
+ "n_errors": 0
+}

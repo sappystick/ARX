@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Full-system layered cut-away blueprint (r2): every cut face is computed from the CURRENT generated meshes (stl/, the low-resolution formers, the generated PB1R board model),
+"""Full-system layered cut-away blueprint (r3): every cut face is computed from the CURRENT generated meshes (stl/, the low-resolution formers, the generated PB1R board model),
 not from the legacy renderer (whose inputs predate Step 5). Sections are exact mesh/plane intersections (even-odd filled), so what is drawn is what the STL contains.
 Panels: 1 whole detector at the 47 deg use pose (mid-plane cut), 2 head half-section, 3 head plan sections, 4 yoke/hinge, 5 neck module with PB1R, 6 upper assembly,
 7 layer map, 8 board gallery (KiCad 3-D renders) and the level schematic. Boards inside the vault (AB1A/B, CB1D, LB1, HTA board) are drawn as slabs at the z of DESIGN_STATE section 3
 (no board STL is placed in the vault by the generators); the SB1R-Q boards sit inside the base-plate recess. Nothing here is built or measured.
-usage (repo root, after make setup + formers-low): python3 src/render/blueprint_r2.py OUT_DIR"""
+usage (repo root, after make setup + formers-low): python3 src/render/blueprint_r3.py OUT_DIR"""
 import sys, os, struct, math, json, glob
 import numpy as np
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
@@ -195,7 +195,7 @@ axl.text(0, 1, "How to read this sheet\n\n"
  "- Panel 8 is KiCad's own 3-D render of the routed board files (copper, mask, pads; no component 3-D models exist).\n\n"
  "Status: MODELED design drawing, not a fabrication drawing. See 00_INDEX.md for what is verified, what is open and what must happen before anything is sent to print or to a PCB house.",
  va="top", ha="left", fontsize=10.5, color="#14213d", wrap=True, family="DejaVu Sans")
-fig.suptitle("PHI-FOLD 233  -  full structure and layered cut-away blueprint (r2): current meshes, boards and parts", fontsize=19, fontweight="bold", color="#14213d", x=0.015, ha="left", y=0.985)
+fig.suptitle("PHI-FOLD 233  -  full structure and layered cut-away blueprint (r3): current meshes, boards and parts", fontsize=19, fontweight="bold", color="#14213d", x=0.015, ha="left", y=0.985)
 fig.text(0.015, 0.006, "MODELED design drawing: sections computed from the generated STLs; board slabs at the DESIGN_STATE z ranges; nothing here is built or measured. Not a fabrication drawing: see 00_INDEX.md for the status of every file.", fontsize=9, color="#55607a")
-for ext, kw in (("png", dict(dpi=FIGDPI)), ("pdf", {})): fig.savefig(os.path.join(OUT, f"PHIFOLD233_FULL_SYSTEM_LAYERED_CUTAWAY_r2.{ext}"), **kw)
+for ext, kw in (("png", dict(dpi=FIGDPI)), ("pdf", {})): fig.savefig(os.path.join(OUT, f"PHIFOLD233_FULL_SYSTEM_LAYERED_CUTAWAY_r3.{ext}"), **kw)
 print("blueprint written to", OUT)

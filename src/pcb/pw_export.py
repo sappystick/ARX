@@ -172,11 +172,12 @@ def boxm(cx, cy, z0, lx, ly, lz):
     V = np.array([[a, b, z0 + c * lz] for a in x for b in y for c in (0, 1)]) + [cx, cy, 0]
     F = np.array([[0, 1, 3], [0, 3, 2], [4, 6, 7], [4, 7, 5], [0, 4, 5], [0, 5, 1], [2, 3, 7], [2, 7, 6], [0, 2, 6], [0, 6, 4], [1, 5, 7], [1, 7, 3]])
     return V, (F if rc.signed_volume(V, F) > 0 else F[:, ::-1])
-parts = [boxm(0, 0, -1.6, W, H, 1.6)]
+parts = [boxm(0, 0, -1.6, W, H, 1.6)]; BODIES = []
 for p in D.PARTS:
     x0, y0, rot = PL[p["ref"]]; pm = M3.placed_mesh(p["type"], D.LIB[p["type"]], x0, y0, rot)
-    if pm is not None: parts.append(pm)
+    if pm is not None: parts.append(pm); BODIES.append(dict(ref=p["ref"], lo=pm[0].min(0).round(3).tolist(), hi=pm[0].max(0).round(3).tolist()))
 Vs, Fs = g.merge(parts); rc.write_stl(f"{OUT}/PF233-{NAME}_board_with_components.stl", Vs, Fs, NAME)
+json.dump(BODIES, open(f"{OUT}/bodies.json", "w"))                                  # per-part body extents (board frame, mm) for the fit checks (pb1r_check.py)
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 fig, ax = plt.subplots(figsize=(W / 8, H / 8 + 0.6)); ax.add_patch(plt.Rectangle((-W / 2, -H / 2), W, H, fc="#0b3d2e", ec="w")); ax.set_aspect("equal"); ax.set_xlim(-W / 2 - 2, W / 2 + 2); ax.set_ylim(H / 2 + 2, -H / 2 - 2)
 for pd in PADS:
