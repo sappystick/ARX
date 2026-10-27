@@ -1,7 +1,7 @@
 {
  "counts": {
-  "PASS": 55,
-  "FAIL": 0,
+  "PASS": 66,
+  "FAIL": 1,
   "SKIP": 0,
   "UNVERIFIED": 8
  },
@@ -214,6 +214,58 @@
     "detail": "10 trigger-chain checks"
    }
   },
+  "AB1A": {
+   "route": {
+    "state": "PASS",
+    "detail": "544 tracks 53 vias, 0 open"
+   },
+   "indep": {
+    "state": "PASS",
+    "detail": "clearance min 0.1663 mm, zone-net exemption"
+   },
+   "kicad": {
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
+   },
+   "gerber": {
+    "state": "PASS",
+    "detail": "16 files, edge read-back OK"
+   },
+   "plane": {
+    "state": "PASS",
+    "detail": "planes and +3V3D island connected, read back from the Gerbers"
+   },
+   "cross": {
+    "state": "PASS",
+    "detail": "island 3.025 mm from the OPA2211, all zones hatched"
+   }
+  },
+  "AB1B": {
+   "route": {
+    "state": "PASS",
+    "detail": "435 tracks 40 vias, 0 open"
+   },
+   "indep": {
+    "state": "PASS",
+    "detail": "clearance min 0.17 mm, zone-net exemption"
+   },
+   "kicad": {
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
+   },
+   "gerber": {
+    "state": "PASS",
+    "detail": "16 files, edge read-back OK"
+   },
+   "plane": {
+    "state": "PASS",
+    "detail": "planes and +3V3D island connected, read back from the Gerbers"
+   },
+   "cross": {
+    "state": "PASS",
+    "detail": "island 3.025 mm from the OPA2211, all zones hatched"
+   }
+  },
   "HTA": {
    "route": {
     "state": "-",
@@ -283,8 +335,8 @@
    "detail": "12/12 controls behave as intended"
   },
   "tests/regress.py (strict: a missing result FAILs)": {
-   "state": "PASS",
-   "detail": "67 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
+   "state": "FAIL",
+   "detail": "82 PASS; FAILS 1 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {

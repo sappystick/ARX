@@ -12,6 +12,12 @@ def _geom(pr):
     if n == "Rectangle": return affinity.rotate(box(pr.x - pr.w / 2, pr.y - pr.h / 2, pr.x + pr.w / 2, pr.y + pr.h / 2), math.degrees(pr.rotation) if pr.rotation else 0)
     if n == "Line": return LineString([(pr.x1, pr.y1), (pr.x2, pr.y2)]).buffer(pr.width / 2, 8)
     if n == "ArcPoly": return Polygon(pr.outline).buffer(0)
+    if n == "Arc":                                                                    # a stroked arc (KiCad writes the circular Edge_Cuts of the AB1 discs as two arcs); cx, cy are the absolute centre
+        r = math.hypot(pr.x1 - pr.cx, pr.y1 - pr.cy); a1 = math.atan2(pr.y1 - pr.cy, pr.x1 - pr.cx); a2 = math.atan2(pr.y2 - pr.cy, pr.x2 - pr.cx)
+        d = (a2 - a1) % (2 * math.pi) if not pr.clockwise else -((a1 - a2) % (2 * math.pi))
+        if abs(d) < 1e-9: d = -2 * math.pi if pr.clockwise else 2 * math.pi
+        k = max(16, int(abs(d) / (2 * math.pi) * 180)); pts = [(pr.cx + r * math.cos(a1 + d * i / k), pr.cy + r * math.sin(a1 + d * i / k)) for i in range(k + 1)]
+        return LineString(pts).buffer(pr.width / 2, 8)
     return None
 def layer_geometry(path):
     g = GerberFile.open(path); cu = Polygon(); n = 0

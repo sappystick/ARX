@@ -11,7 +11,9 @@ W, EVROOT = arg("--work", "work"), arg("--evidence-root", ".")
 REG, OUT_JSON, OUT_MD = arg("--register", "docs/UNVERIFIED.md"), arg("--out-json", "data/results/SIGNOFF_STATUS.json"), arg("--out-md", "docs/STATUS.md")
 def rd(p):
     try: return json.load(open(os.path.join(W, p)))
-    except Exception: return None
+    except Exception:
+        try: return json.load(open(os.path.join("data", "results", os.path.basename(p))))     # published copy (clean clone)
+        except Exception: return None
 UNV = {}
 try:
     for m in re.finditer(r"^\|\s*(U-[A-Z0-9-]+)\s*\|\s*([^|]*)\|", open(REG).read(), re.M): UNV[m[1]] = m[2].strip()
@@ -60,6 +62,12 @@ for b in ("PM2", "HB2"):
                                cross=chk("kit_v23/power_dock_check.json", lambda d: (all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} dock-chain checks")))
     else: B[b] = dict(route=route(b), indep=indep(b), kicad=kicad(b, False), gerber=gerbers(f"kit_v22/GERBER_{b}", edge=f"kit_v22/gerber_edge_{b}.json"), plane=NA,
                       cross=chk("kit_v22/trigger_check.json", lambda d: (all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} trigger-chain checks")))
+for _b in ("A", "B"):                                                                # AD7389-4 receive boards with the +3V3D island on In4 (afe_layout.py BOARD_CFG7)
+    B[f"AB1{_b}"] = dict(route=chk(f"out_board/AB1{_b}_layout.json", lambda d: (not d["rep"]["unrouted"] and not d["rep"]["fanout_failed"] and not d["rep"]["placement_errors"], f"{d['rep']['tracks']} tracks {d['rep']['vias']} vias, 0 open")),
+                         indep=chk(f"kit_v22/indep_drc_AB1{_b}.json", lambda d: (d["n_fail"] == 0, f"clearance min {d['checks']['clearance']['min_gap_mm']} mm, zone-net exemption")), kicad=kicad(f"AB1{_b}", False),
+                         gerber=gerbers(f"kit_v22/GERBER_AB1{_b}", edge=f"kit_v22/gerber_edge_AB1{_b}.json"),
+                         plane=chk(f"kit_v22/gerber_ab1_AB1{_b}.json", lambda d: (d["pass"], "planes and +3V3D island connected, read back from the Gerbers")),
+                         cross=chk(f"kit_v22/ab1_island_check_AB1{_b}.json", lambda d: (d["pass"], f"island {d['island_to_opa2211_mm']} mm from the OPA2211, all zones hatched")))
 B["HTA"] = dict(route=NA, indep=NA, kicad=(("UNVERIFIED", "U-KICAD-HTA") if "U-KICAD-HTA" in UNV and rd("kit_v22/kicad_drc_HTA.json") is None else kicad("HTA", False)), gerber=gerbers("kit_v18/HTA", edge="kit_v22/gerber_edge_HTA.json") if os.path.isdir(f"{W}/kit_v18/HTA") else NA, plane=NA, cross=NA)
 SYS = {
     "cylinder v5 + parts + 47 geometry checks": chk("kit_v22/check_v22.json", lambda d: (len(d["checks"]) >= 47 and all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} checks")),
@@ -92,7 +100,7 @@ EV = {k: ev_state(k) for k in KNOWN_EVIDENCE}
 for k in UNV:                                                      # a registered ID nothing displays would be invisible: show it
     if k not in EV and not k.startswith(("U-ROUTE-", "U-KICAD-")): EV[k] = ("UNVERIFIED", UNV[k])
 # board rows: a registered board ID must belong to a board row, an unregistered missing result is a FAIL (see chk); the table shape is fixed
-EXPECTED_BOARDS = ["CB1D", "LB1", "PB1R", "TXJ1", "SB1R-QA", "SB1R-QB", "PM2", "HB2", "HTA"]
+EXPECTED_BOARDS = ["CB1D", "LB1", "PB1R", "TXJ1", "SB1R-QA", "SB1R-QB", "PM2", "HB2", "AB1A", "AB1B", "HTA"]
 assert list(B) == EXPECTED_BOARDS, f"board rows changed: {list(B)}"
 for b_, row in B.items(): assert set(row) == {"route", "indep", "kicad", "gerber", "plane", "cross"}, f"{b_}: check columns changed"
 for k in UNV:

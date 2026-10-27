@@ -158,7 +158,7 @@ for l, a, b, w, n in TR:
     L.append(f'  (segment (start {K(*a)}) (end {K(*b)}) (width {w:.3f}) (layer "{l}") (net {n}))')
 for x, y, n in VI: L.append(f'  (via (at {K(x, y)}) (size {VIA_D}) (drill {VIA_DR}) (layers "F.Cu" "B.Cu") (net {n}))')
 L.append(f'  (gr_circle (center {CX} {CY}) (end {CX + R_BRD} {CY}) (stroke (width 0.1) (type default)) (fill none) (layer "Edge.Cuts"))')
-pts = " ".join(f"(xy {CX + (R_BRD - 0.3) * math.cos(t):.3f} {CY + (R_BRD - 0.3) * math.sin(t):.3f})" for t in np.linspace(0, 2 * math.pi, 96, endpoint=False))
+pts = " ".join(f"(xy {CX + (R_BRD - 0.55) * math.cos(t):.3f} {CY + (R_BRD - 0.55) * math.sin(t):.3f})" for t in np.linspace(0, 2 * math.pi, 96, endpoint=False))
 _HATCH = "(fill yes (mode hatch) (hatch_thickness 0.3) (hatch_gap 1.5) (hatch_orientation 0) (hatch_smoothing_level 0) (hatch_smoothing_value 0.1) (hatch_border_algorithm hatch_thickness) (hatch_min_hole_area 0.3) (thermal_gap 0.25) (thermal_bridge_width 0.3))"   # eddy rule: planes are hatched, never solid (the earlier solid AB1 zones broke it, CORRECTIONS)
 for nm, lyr in PLANE.items():
     if nm == "+3V3D" and A.ISL is not None:

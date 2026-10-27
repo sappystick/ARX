@@ -4,7 +4,9 @@ import json, os, sys
 W="work"; res=[]
 def rd(p):
     try: return json.load(open(os.path.join(W,p)))
-    except Exception: return None
+    except Exception:
+        try: return json.load(open(os.path.join("data","results",os.path.basename(p))))        # clean clone: the published copy of the result (scripts/publish_data.py; --check lists stale ones)
+        except Exception: return None
 def chk(name,ok,detail=""): res.append(("PASS" if ok else "FAIL",name,detail))
 import re
 ALLOW="--allow-skip" in sys.argv                                      # partial runs while developing; never for sign-off
@@ -157,7 +159,7 @@ chk("PM2 / CB1D fuse land = Bourns SF-1206S recommended layout (gap 2.2, overall
 _net=os.path.join(W,"kit_v6/PB1R/PF233-PB1R.net")
 _nd=re.search(r'\(date "([0-9-]+)"\)',open(_net).read()).group(1) if os.path.exists(_net) else None
 chk("generated netlists carry the fixed design date (not the wall clock), so a regenerated netlist is byte-identical on any day",_nd=="2026-10-24" and "date.today()" not in open("src/pcb/pw_design.py").read(),str(_nd))
-_e={b:rd(f"kit_v22/gerber_edge_{b}.json") for b in ("CB1D","LB1","PB1R","PM2","HB2","HTA")}
+_e={b:rd(f"kit_v22/gerber_edge_{b}.json") for b in ("CB1D","LB1","PB1R","PM2","HB2","HTA","AB1A","AB1B")}
 if all(_e.values()): chk("Gerber copper read back from the files: nothing outside the outline (notch included) and >= 0.5 mm to the edge on every layer of CB1D, LB1, PB1R, PM2, HB2, HTA",all(v["ok"] for v in _e.values()),str({b:min(r["min_edge_gap_mm"] for r in v["sets"][list(v["sets"])[0]]["layers"].values() if r["min_edge_gap_mm"] is not None) for b,v in _e.items()}))
 else: skip("Gerber edge read-back")
 _idrc={b:(json.load(open(f"data/results/indep_drc/{b}.json")) if os.path.exists(f"data/results/indep_drc/{b}.json") else None) for b in ("TXJ1","SB1R-QA","SB1R-QB","HTA")}

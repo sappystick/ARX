@@ -2,7 +2,7 @@
 
 Everything here is MODELED or tool-checked; nothing is built or measured. PASS means the tool check passed, not that a board is ready for fabrication.
 
-**55 PASS, 0 FAIL, 0 SKIP, 8 UNVERIFIED**
+**66 PASS, 1 FAIL, 0 SKIP, 8 UNVERIFIED**
 
 ## Boards
 | board | route | indep. DRC | KiCad DRC | Gerber+drill | plane HV | cross-check |
@@ -15,6 +15,8 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 | SB1R-QB | - | - | PASS | PASS | - | PASS |
 | PM2 | PASS | PASS | PASS | PASS | - | PASS |
 | HB2 | PASS | PASS | PASS | PASS | - | PASS |
+| AB1A | PASS | PASS | PASS | PASS | PASS | PASS |
+| AB1B | PASS | PASS | PASS | PASS | PASS | PASS |
 | HTA | - | - | PASS | PASS | - | - |
 
 ## System checks
@@ -30,7 +32,7 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 | 0.2 mm fine check | PASS | board discs and bodies clear |
 | voxel interference (window, bridge, junction) | PASS | 28 pairs |
 | release-tx / sign-off controls (refusals, evidence rule, idempotence) | PASS | 12/12 controls behave as intended |
-| tests/regress.py (strict: a missing result FAILs) | PASS | 67 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0 |
+| tests/regress.py (strict: a missing result FAILs) | FAIL | 82 PASS; FAILS 1 SKIPS 0 UNVERIFIED 0 |
 
 ## Evidence still missing (docs/UNVERIFIED.md)
 | id | state | item |
