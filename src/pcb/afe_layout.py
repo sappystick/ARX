@@ -38,9 +38,15 @@ for k, y in ROWY.items():
     put(f"RG{k}", 2.2, y); put(f"RF{k}", 4.3, y - 1.2); put(f"CF{k}", 4.3, y + 1.2)
     put(f"RAAF{k}", 6.6, y); put(f"CAAF{k}", 8.9, y)
     _rots = [int(v) for v in os.environ.get("AFE_UAROTS", "").split(",") if v]                  # Step 12: per-ADC rotation, in row order (override only)
+    if D.ADC7: continue
     put(f"UA{k}", 10.6, y, (_rots[k - 1] if len(_rots) >= k else int(_AFE["uarot"] or 90)), _AFE["uaside"] or "B"); put(f"CRF{k}", 7.1, y, 0, "B")
     cx, cdy = float(_AFE["capx"] or 13.1), float(_AFE["capdy"] or 1.3)
     put(f"CAV{k}", cx, y - cdy, 0, _AFE["capside"] or "B"); put(f"CDV{k}", cx, y + cdy, 0, _AFE["capside"] or "B")
+if D.ADC7:                                                              # integration trial: one AD7389-4 on the back side, analog pins (7-13) facing the channel rows, digital pins toward J2
+    _ux, _uy = float(os.environ.get("AFE_UX", "11.0")), float(os.environ.get("AFE_UY", "0.0"))
+    put("UA1", _ux, _uy, 270, "B")
+    put("CVL", _ux + 2.0, _uy + 3.7, 0, "B"); put("CRG", _ux + 0.1, _uy + 3.7, 0, "B"); put("CVC", _ux - 1.8, _uy + 3.7, 0, "B")      # back side is mirrored: power pins 1-4 face +y, reference pins 15-17 face -y
+    put("CRC", _ux - 1.3, _uy - 3.7, 0, "B"); put("CRF", _ux + 0.9, _uy - 3.7, 0, "B")
 for _n in [n for n in os.environ.get("AFE_NUDGE", "").split(",") if n]:                          # Step 12: "REF:dx:dy,..." part nudges (search / recorded result)
     _r, _dx, _dy = _n.split(":"); _x, _y, _rot, _side = PLACE[_r]; PLACE[_r] = (_x + float(_dx), _y + float(_dy), _rot, _side)
 PLANE = {"GND": "In1.Cu", "+5VA": "In4.Cu"}
@@ -227,7 +233,7 @@ def ep_vias(pd):
         i, j = cell(pd["x"], pd["y"] + dy); stamp_via(i, j, net); register_plane(net, [], i, j); done += 1
     return done
 # ------------------------------------------------------------ escape stubs for fine-pitch IC pins
-STUB_TYPES = ("OPA2211", "OPA2365", "REF5041", "ADS8860", "SW1G66")
+STUB_TYPES = ("OPA2211", "OPA2365", "REF5041", "ADS8860", "AD7389", "SW1G66")
 STAGGER_TYPES = ("ADS8860",)                    # Step 12: fine-pitch rows with a staggered via fan-out (alternate pins drop a via at the stub tip; the pins between pass on the surface)
 def _row_groups():
     """pads of each staggered IC grouped by the side they leave: {(ref, dx, dy): [pad, ...] sorted along the row}"""
@@ -281,7 +287,7 @@ def run():
     rep["stubs"] = escape_stubs()
     # exposed-pad vias first
     for pd in PADS:
-        if pd["ref"] in ("U1", "U2", "U3") and pd["num"] == "9": ep_vias(pd)
+        if (pd["ref"] in ("U1", "U2", "U3") and pd["num"] == "9") or (pd["ref"] == "UA1" and pd["num"] == "25"): ep_vias(pd)
     fan = [pd for pd in PADS if pd["net"] in PLANE and not pd["tht"]]
     for pd in PADS:
         if pd["tht"] and pd["net"] in PLANE: register_plane(NETID[pd["net"]], pad_cells(pd))

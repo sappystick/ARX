@@ -70,3 +70,18 @@ Evidence file for the datasheet groups that replaced U-DS-PARTS (`scripts/signof
 |---|---|---|---|
 | PB1R JL1, 5.08 mm 2-way terminal block on DRAIN1 / VBUS | Phoenix Contact product page for MKDS 1,5/2-5,08 (1715721), URL not found by search; https://www.phoenixcontact.com/en-us/products/pcb-terminal-block-mkds-15-2-508-1715721 | HTTP 404 | distributor listings (not used) give 250 V (III/3), 400 V (III/2), 630 V (II/2): whether the 466 V flyback peak meets rule 6 depends on the category the manufacturer states |
 | PB1R RCL1, 5 kohm 10 W resistor bank under the lid | no part chosen | - | voltage rating unknown (BOM text has none) |
+
+## U-DS-AD7389: VERIFIED from the user-supplied datasheet (AD7389-4 Rev. 0, 1/2022, 31 pages)
+
+| Item | Datasheet value (page) | Used for |
+|---|---|---|
+| Channels / type | 4 fully differential, simultaneous sampling, 16 bit (p. 1) | one chip for AB1A (3 ch) and AB1B (2 ch) |
+| Throughput | 2 MSPS, tCYC >= 500 ns, tCONVERT 190 ns, tACQUIRE 310 ns (p. 3, 5) | >= the 1 MSPS of the ADS8860 |
+| Input range | AINx+ - AINx- = -VREF..+VREF (VREF 2.5 V); absolute input -0.1..VREF + 0.1 V; common mode 0.2..VREF - 0.2 V (p. 3) | VCM re-bias 2.048 V -> 1.25 V; usable single-ended swing 0..2.5 V |
+| Absolute maximum, analog input | -0.3 V..VREF + 0.3 V or VCC + 0.3 V; ESD diodes conduct up to 10 mA (p. 8, 14) | series RAAF 200 ohm limits the over-range current |
+| Input bandwidth | -3 dB 26.8 MHz, -0.1 dB 6.6 MHz; track capacitance 18 pF, hold 5 pF; R1 about 200 ohm, C2 15 pF (p. 4, 14) | the 360 kHz RC filter stays the limit |
+| Accuracy | SNR 90.5 dB typ (89 min), THD -106 dB, INL +-0.1 typ (2.5 max) LSB, channel isolation -126 dB (p. 3) | |
+| Reference | internal 2.5 V buffered, 2 ppm/C typ (10 max), 7 uV rms noise; REFOUT 1 uF; REFCAP 0.1 uF; "add a buffer when REFOUT is used for VCM" (p. 4, 9, 20) | REF5041 chain removed; VCM divider hangs on REFOUT through the OPA2365 half B |
+| Supplies | VCC 3.0..3.6 V, VLOGIC 1.65..3.6 V, 1 uF each; REGCAP 1 uF; IVCC 21 mA typ operational, IVLOGIC 3.7 mA, total 89 mW typ (p. 4, 9) | +3V3D rail; power budget not checked |
+| Interface | CS falling edge samples and converts; SPI; SDO bits (Configuration 2) 00 = 2-wire (default, reset 0x0): A and C on SDOA, B and D on SDOB, 32 SCLK; 4-wire needs a register write over SDI; one-cycle read latency; software reset recommended after power-up (p. 21, 22, 34) | readout: SDOA -> J2 SDO1, SDOB -> J2 SDO2 |
+| Package | 24-lead LFCSP 4 x 4 x 0.55 mm, pitch 0.50, pad 0.20..0.30 x 0.30..0.45, theta-JA 48.4 C/W (p. 8, 31) | land pattern; the EXPOSED PAD SIZE IS NOT IN THE DRAWING TEXT (2.0 mm placeholder, ASSUMPTIONS 35) |

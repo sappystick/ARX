@@ -40,6 +40,24 @@ LIB = {
     pads=[("1", -2.15, -0.975, 1.45, 0.4, "roundrect"), ("2", -2.15, -0.325, 1.45, 0.4, "roundrect"), ("3", -2.15, 0.325, 1.45, 0.4, "roundrect"), ("4", -2.15, 0.975, 1.45, 0.4, "roundrect"),
           ("5", 2.15, 0.975, 1.45, 0.4, "roundrect"), ("6", 2.15, 0.325, 1.45, 0.4, "roundrect"), ("7", 2.15, -0.325, 1.45, 0.4, "roundrect"), ("8", 2.15, -0.975, 1.45, 0.4, "roundrect")], body=(3.0, 3.0, 1.1)),
 }
+def _ad7389():
+    """AD7389-4 quad 16-bit simultaneous SAR ADC, 24-lead LFCSP 4x4 0.5 mm (CP-24-25). Pin map from the attached datasheet Rev. 0 (Table 8, Fig. 9); pad 0.25 x 0.40 mm, pitch 0.50
+    (Fig. 43: 0.20-0.30 wide, 0.30-0.45 long). EXPOSED PAD SIZE IS NOT IN THE DRAWING TEXT: 2.0 mm square is a PLACEHOLDER (ASSUMPTIONS row 35): land pattern not releasable."""
+    nm = {1: "GND", 2: "VLOGIC", 3: "REGCAP", 4: "VCC33", 5: "GND", 6: "AIND-", 7: "AIND+", 8: "AINC-", 9: "AINC+", 10: "AINB-", 11: "AINB+", 12: "AINA-", 13: "AINA+", 14: "GND",
+          15: "REFCAP", 16: "GND", 17: "REFOUT", 18: "CS", 19: "SDOA", 20: "SDOB", 21: "SDI", 22: "SCLK", 23: "SDOC", 24: "SDOD_ALERT"}
+    typ = {18: "input", 21: "input", 22: "input", 19: "output", 20: "output", 23: "no_connect", 24: "no_connect", 17: "power_out", 15: "passive", 3: "passive", 2: "power_in", 4: "power_in"}
+    pins = [(str(i), nm[i], typ.get(i, "power_in" if nm[i] == "GND" else "input")) for i in range(1, 25)] + [("25", "EP", "power_in")]
+    pads = []
+    for i in range(1, 25):                                                                    # pin 1 top-left corner of the top view, y down: left 1-6 (down), bottom 7-12 (left to right), right 13-18 (up), top 19-24 (right to left)
+        k = (i - 1) // 6; j = (i - 1) % 6; t = -1.25 + 0.5 * j
+        if k == 0: x, y, w, h = -1.8, t, 0.40, 0.25
+        elif k == 1: x, y, w, h = t, 1.8, 0.25, 0.40
+        elif k == 2: x, y, w, h = 1.8, -t, 0.40, 0.25
+        else: x, y, w, h = -t, -1.8, 0.25, 0.40
+        pads.append((str(i), x, y, w, h, "roundrect"))
+    pads.append(("25", 0.0, 0.0, 2.0, 2.0, "roundrect"))
+    return dict(desc="AD7389-4 quad 16-bit 2 MSPS simultaneous SAR ADC, internal 2.5 V reference, LFCSP-24 4x4 (EP size PLACEHOLDER)", fp="Package_CSP:LFCSP-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm", pins=pins, pads=pads, body=(4.0, 4.0, 0.55))
+LIB["AD7389"] = _ad7389()
 def ffc(n):
     pins = [(str(i + 1), str(i + 1), "passive") for i in range(n)] + [("MH1", "SHELL1", "passive"), ("MH2", "SHELL2", "passive")]
     pads = [(str(i + 1), (i - (n - 1) / 2) * 0.5, 0.0, 0.3, 1.3, "roundrect") for i in range(n)]
@@ -64,6 +82,7 @@ CFG = {"A": dict(ch=["GX", "GY", "X8"], opamp={"GX": ("U1", "A"), "GY": ("U1", "
                  j1=["GX+", "GY+", "X8+", "GX-", "GY-", "X8-", "SHLD", "SHLD"], j2=["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS", "SDO1", "SDO2", "SDO3", "BLANK", "GND", "GND"]),
        "B": dict(ch=["Y8", "MONO"], opamp={"Y8": ("U1", "A"), "MONO": ("U1", "B")}, opamps=["U1"], spare=None,
                  j1=["Y8+", "Y8-", "SHLD", "SHLD", "SHLD", "SHLD"], j2=["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS", "SDO1", "SDO2", "BLANK", "MONO_IN", "VCM_OUT", "GND"])}[BOARD]
+ADC7 = os.environ.get("AFE_ADC", "") == "AD7389"                           # integration trial: one AD7389-4 replaces the ADS8860s and the REF5041 chain (default unchanged)
 PARTS = []; NETS = {}
 def add(ref, typ, value, mpn="", **kw): PARTS.append(dict(ref=ref, type=typ, value=value, mpn=mpn, **kw))
 def net(name, *pins):
@@ -89,10 +108,11 @@ for k, ch in enumerate(CH, 1):
     add(f"CF{k}", "C0402", "22p", "C0G 50V", channel=ch)
     add(f"RAAF{k}", "R0402", "200", "thin-film 0.1%", channel=ch)
     add(f"CAAF{k}", "C0603", "2n2", "C0G 50V", channel=ch)
-    add(f"UA{k}", "ADS8860", "ADS8860", "TI ADS8860IDGSR", channel=ch)
-    add(f"CAV{k}", "C0402", "100n", "X7R 10V", channel=ch)
-    add(f"CDV{k}", "C0402", "100n", "X7R 10V", channel=ch)
-    add(f"CRF{k}", "C0805", "10u", "X7R/X5R 10V", channel=ch)
+    if not ADC7:
+        add(f"UA{k}", "ADS8860", "ADS8860", "TI ADS8860IDGSR", channel=ch)
+        add(f"CAV{k}", "C0402", "100n", "X7R 10V", channel=ch)
+        add(f"CDV{k}", "C0402", "100n", "X7R 10V", channel=ch)
+        add(f"CRF{k}", "C0805", "10u", "X7R/X5R 10V", channel=ch)
     if ch == "MONO": net(f"RAW_{ch}", ("J2", J2PIN["MONO_IN"]), (f"RS{k}", 1))
     else: net(f"RAW_{ch}", ("J1", J1PIN[ch + "+"]), (f"RS{k}", 1))
     net(f"IN_{ch}", (f"RS{k}", 2), (f"D{k}", 3), (f"SW{k}", 1), (ref_u, pin(3, 5)))
@@ -100,10 +120,14 @@ for k, ch in enumerate(CH, 1):
     net("VCM", (f"SW{k}", 2)); net("BLANK", (f"SW{k}", 4))
     net(f"FB_{ch}", (ref_u, pin(2, 6)), (f"RG{k}", 1), (f"RF{k}", 1), (f"CF{k}", 1)); net("VCM", (f"RG{k}", 2))
     net(f"OUT_{ch}", (ref_u, pin(1, 7)), (f"RF{k}", 2), (f"CF{k}", 2), (f"RAAF{k}", 1))
-    net(f"ADCIN_{ch}", (f"RAAF{k}", 2), (f"CAAF{k}", 1), (f"UA{k}", 3))
-    net("GND", (f"CAAF{k}", 2), (f"UA{k}", 4), (f"UA{k}", 5), (f"UA{k}", 10), (f"CAV{k}", 2), (f"CDV{k}", 2), (f"CRF{k}", 2))
-    net("VREF", (f"UA{k}", 1), (f"CRF{k}", 1)); net("+5VA", (f"UA{k}", 2), (f"CAV{k}", 1)); net("+3V3D", (f"UA{k}", 9), (f"CDV{k}", 1))
-    net("SCLK", (f"UA{k}", 8)); net("CS", (f"UA{k}", 6)); net(f"SDO{k}", (f"UA{k}", 7), ("J2", J2PIN[f"SDO{k}"]))
+    if ADC7:
+        _ip, _in = {"A": {1: (13, 12), 2: (11, 10), 3: (9, 8)}, "B": {1: (13, 12), 2: (11, 10)}}[BOARD][k]     # channel k -> ADC input pair (A=13/12, B=11/10, C=9/8, D=7/6); the part sits on the back side (mirrored), so A is the top pair and the rows follow in order
+        net(f"ADCIN_{ch}", (f"RAAF{k}", 2), (f"CAAF{k}", 1), ("UA1", _ip)); net("GND", (f"CAAF{k}", 2)); net("VCM", ("UA1", _in))
+    else:
+        net(f"ADCIN_{ch}", (f"RAAF{k}", 2), (f"CAAF{k}", 1), (f"UA{k}", 3))
+        net("GND", (f"CAAF{k}", 2), (f"UA{k}", 4), (f"UA{k}", 5), (f"UA{k}", 10), (f"CAV{k}", 2), (f"CDV{k}", 2), (f"CRF{k}", 2))
+        net("VREF", (f"UA{k}", 1), (f"CRF{k}", 1)); net("+5VA", (f"UA{k}", 2), (f"CAV{k}", 1)); net("+3V3D", (f"UA{k}", 9), (f"CDV{k}", 1))
+        net("SCLK", (f"UA{k}", 8)); net("CS", (f"UA{k}", 6)); net(f"SDO{k}", (f"UA{k}", 7), ("J2", J2PIN[f"SDO{k}"]))
     if ch != "MONO": net("VCM", ("J1", J1PIN[ch + "-"]))
 for n, ref in enumerate(CFG["opamps"], 1):
     add(ref, "OPA2211", "OPA2211", "TI OPA2211AIDR"); add(f"CO{n}", "C0402", "100n", "X7R 10V")
@@ -111,13 +135,23 @@ for n, ref in enumerate(CFG["opamps"], 1):
 if CFG["spare"]:
     ref = CFG["spare"][0]; net("VCM", (ref, 5)); net(f"SPARE_OUT_{ref}", (ref, 6), (ref, 7))
 add("CB1", "C0805", "10u", "X7R/X5R 10V"); net("+5VA", ("CB1", 1)); net("GND", ("CB1", 2))
-add("UR", "REF5041", "REF5041", "TI REF5041AIDGKR"); add("CRI", "C0603", "1u", "X7R 10V"); add("CRO", "C0603", "1u", "X7R 10V"); add("CRN", "C0603", "1u", "X7R 10V")
-net("+5VA", ("UR", 2), ("CRI", 1)); net("GND", ("UR", 4), ("CRI", 2), ("CRO", 2), ("CRN", 2))
-net("VREF_RAW", ("UR", 6), ("CRO", 1)); net("NR", ("UR", 5), ("CRN", 1))
+if ADC7:
+    add("UA1", "AD7389", "AD7389-4", "ADI AD7389-4BCPZ"); n_ch = len(CH)
+    for ref, val, nm_ in (("CVC", "1u", "VCC33"), ("CVL", "1u", "VLOGIC"), ("CRG", "1u", "REGCAP"), ("CRF", "1u", "REFOUT"), ("CRC", "100n", "REFCAP")): add(ref, "C0402", val, "X7R 10V")
+    net("+3V3D", ("UA1", 4), ("CVC", 1), ("UA1", 2), ("CVL", 1)); net("GND", ("UA1", 1), ("UA1", 5), ("UA1", 14), ("UA1", 16), ("UA1", 25), ("UA1", 21), ("CVC", 2), ("CVL", 2), ("CRG", 2), ("CRF", 2), ("CRC", 2))
+    net("REGCAP", ("UA1", 3), ("CRG", 1)); net("REFCAP", ("UA1", 15), ("CRC", 1)); net("VREF_RAW", ("UA1", 17), ("CRF", 1))
+    net("SCLK", ("UA1", 22)); net("CS", ("UA1", 18)); net("SDO1", ("UA1", 19), ("J2", J2PIN["SDO1"])); net("SDO2", ("UA1", 20), ("J2", J2PIN["SDO2"]))
+    net("VCM", ("UA1", 6), ("UA1", 7))                                              # unused AIND differential pair parked on VCM
+    if n_ch == 2: net("VCM", ("UA1", 8), ("UA1", 9))                                # AB1B: AINC parked too
+else:
+    add("UR", "REF5041", "REF5041", "TI REF5041AIDGKR"); add("CRI", "C0603", "1u", "X7R 10V"); add("CRO", "C0603", "1u", "X7R 10V"); add("CRN", "C0603", "1u", "X7R 10V")
+    net("+5VA", ("UR", 2), ("CRI", 1)); net("GND", ("UR", 4), ("CRI", 2), ("CRO", 2), ("CRN", 2))
+    net("VREF_RAW", ("UR", 6), ("CRO", 1)); net("NR", ("UR", 5), ("CRN", 1))
 add("UB", "OPA2365", "OPA2365", "TI OPA2365AIDGKR"); add("CBD", "C0402", "100n", "X7R 10V")
 net("+5VA", ("UB", 8), ("CBD", 1)); net("GND", ("UB", 4), ("CBD", 2))
 net("VREF_RAW", ("UB", 3)); net("VREF", ("UB", 2), ("UB", 1))
-add("RD1", "R0402", "10k", "thin-film 0.1%"); add("RD2", "R0402", "10k", "thin-film 0.1%"); add("CDF", "C0402", "100n", "X7R 10V"); add("CVM", "C0603", "1u", "X7R 10V")
+_RDV = "100k" if ADC7 else "10k"                                               # AD7389 variant: the divider hangs on REFOUT, so 100 k (12.5 uA); ASSUMPTIONS row 35
+add("RD1", "R0402", _RDV, "thin-film 0.1%"); add("RD2", "R0402", _RDV, "thin-film 0.1%"); add("CDF", "C0402", "100n", "X7R 10V"); add("CVM", "C0603", "1u", "X7R 10V")
 net("VREF_RAW", ("RD1", 1)); net("VCM_DIV", ("RD1", 2), ("RD2", 1), ("CDF", 1), ("UB", 5)); net("GND", ("RD2", 2), ("CDF", 2), ("CVM", 2))
 net("VCM", ("UB", 6), ("UB", 7), ("CVM", 1))
 if "VCM_OUT" in J2PIN: net("VCM", ("J2", J2PIN["VCM_OUT"]))
@@ -148,6 +182,7 @@ def erc():
             except KeyError: errs.append(f"net {n}: unknown pin {pr}")
     for p in PARTS:
         for num, name, typ in LIB[p["type"]]["pins"]:
+            if ADC7 and p["ref"] == "J2" and str(num) == str(J2PIN.get("SDO3")): continue                  # 2-wire readout: SDOA = channels A and C in series, SDOB = B; the SDO3 pin stays unused (deliberate)
             if (p["ref"], num) not in owner and typ != "no_connect": errs.append(f"unconnected pin {p['ref']}.{name}({num})")
     for n, pins in NETS.items():
         if len(pins) < 2 and n not in ("SPARE_OUT",): errs.append(f"net {n} has a single pin {pins}")
@@ -159,14 +194,18 @@ def erc():
         for num, name, typ in LIB[p["type"]]["pins"]:
             if name in sup and owner.get((p["ref"], num)) != sup[name]: errs.append(f"{p['ref']}.{name} on {owner.get((p['ref'], num))}, expected {sup[name]}")
     DEC = {}
-    for k in range(1, len(CH) + 1): DEC[f"SW{k}"] = [(f"CSW{k}", "+5VA")]; DEC[f"UA{k}"] = [(f"CAV{k}", "+5VA"), (f"CDV{k}", "+3V3D")]
+    for k in range(1, len(CH) + 1):
+        DEC[f"SW{k}"] = [(f"CSW{k}", "+5VA")]
+        if not ADC7: DEC[f"UA{k}"] = [(f"CAV{k}", "+5VA"), (f"CDV{k}", "+3V3D")]
+    if ADC7: DEC["UA1"] = [("CVC", "+3V3D"), ("CVL", "+3V3D")]
     for n, ref in enumerate(CFG["opamps"], 1): DEC[ref] = [(f"CO{n}", "+5VA")]
-    DEC["UR"] = [("CRI", "+5VA")]; DEC["UB"] = [("CBD", "+5VA")]
+    if not ADC7: DEC["UR"] = [("CRI", "+5VA")]
+    DEC["UB"] = [("CBD", "+5VA")]
     for ic, caps in DEC.items():
         for cref, supply in caps:
             if cref not in BYREF or owner.get((cref, "1")) != supply or owner.get((cref, "2")) != "GND": errs.append(f"decoupling {cref} for {ic} not between {supply} and GND")
     for p in PARTS:
-        if p["type"] in ("OPA2211", "ADS8860", "SW1G66", "OPA2365", "REF5041") and p["ref"] not in DEC: errs.append(f"{p['ref']} has no decoupling rule")
+        if p["type"] in ("OPA2211", "ADS8860", "AD7389", "SW1G66", "OPA2365", "REF5041") and p["ref"] not in DEC: errs.append(f"{p['ref']} has no decoupling rule")
     # gain / bias sanity
     g = 1 + 390 / 10
     warns.append(f"stage gain {g:.0f} (non-inverting, referenced to VCM)")
