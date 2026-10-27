@@ -24,6 +24,8 @@ BOARDS = {
     "HB2": dict(hv=[], hv_mm=1.0, power={"P3V3": 0.3}),
     "HTA": dict(hv=[], hv_mm=1.0, power={}),
     "TXJ1": dict(hv=["TX_A", "TX_B"], hv_mm=1.0, power={"TX_A": 3.0, "TX_B": 3.0}),
+    "AB1A": dict(hv=[], hv_mm=1.0, power={}),      # Step 12: receive analog boards (low voltage; +5VA / +3V3D / VCM only). Router designs to the floor itself (0.16 mm, via 0.60 / 0.30), see OPEN_ITEMS 38
+    "AB1B": dict(hv=[], hv_mm=1.0, power={}),
 }
 def rules(board):
     b = BOARDS[board]; q = lambda ns: " || ".join(f"A.NetName == '{n}'" for n in ns)

@@ -7,6 +7,7 @@ import afe_design as D
 
 R_BOARD = 20.0; EDGE_KEEP = 0.35
 TRACK = 0.15; CLEAR = 0.16; VIA_D = 0.6; VIA_DRILL = 0.3   # fab floor (src/pcb/dru_gen.py GEN): track 0.15, clearance 0.16 (router designs to the floor itself), via drill 0.30 + annular 0.15 = 0.60; was 0.127 / 0.1 / 0.45 / 0.2 (below every floor, CORRECTIONS)
+if os.environ.get("AFE_VIA"): VIA_D = float(os.environ["AFE_VIA"]); VIA_DRILL = float(os.environ["AFE_VDRILL"]); TRACK = float(os.environ.get("AFE_TRACK", TRACK))   # Step 12 search override (unset = unchanged)
 GRID = 0.1; N = int(2 * R_BOARD / GRID); OFF = R_BOARD
 BOARD = D.BOARD
 if BOARD == "A":
@@ -18,6 +19,11 @@ else:
     UPOS = {"U1": (0.5, 0.0)}; COPOS = {"CO1": (0.5, 3.4)}
     REF = dict(UR=(4.0, -13.0), CRI=(9.0, -13.0), CRO=(11.6, -13.0), CRN=(9.0, -11.0), UB=(4.0, 13.0), CBD=(9.0, 13.0), RD1=(11.0, 13.0), RD2=(11.0, 11.4), CDF=(9.0, 11.2), CVM=(13.4, 9.6), CB1=(-13.0, 0.0))
 # Step 10 search overrides (environment only; unset = the committed placement): row pitch, decoupling x and dy, UA rotation
+# Committed per-board routing configuration (Step 12). The AFE_* environment variables below still override it (search only).
+#   uarots: ADC rotation per row; nudges: part moves "REF:dx:dy"; pre: nets routed before every via and trace; stagger: unused
+BOARD_CFG = {"A": dict(uarots="", nudges="", pre=""), "B": dict(uarots="", nudges="", pre="")}
+for _k, _env in (("uarots", "AFE_UAROTS"), ("nudges", "AFE_NUDGE"), ("pre", "AFE_PRE")):
+    if BOARD_CFG[os.environ.get("BOARD", "A")][_k] and _env not in os.environ: os.environ[_env] = BOARD_CFG[os.environ.get("BOARD", "A")][_k]
 _AFE = dict(span=os.environ.get("AFE_SPAN"), capx=os.environ.get("AFE_CAPX"), capdy=os.environ.get("AFE_CAPDY"), uarot=os.environ.get("AFE_UAROT"), uaside=os.environ.get("AFE_UASIDE"), capside=os.environ.get("AFE_CAPSIDE"))
 if _AFE["span"] and BOARD == "A": ROWY = {1: -float(_AFE["span"]), 2: 0.0, 3: float(_AFE["span"])}
 if _AFE["span"] and BOARD == "B": ROWY = {1: -float(_AFE["span"]) / 2, 2: float(_AFE["span"]) / 2}
@@ -31,9 +37,12 @@ for k, y in ROWY.items():
     put(f"RS{k}", -13.0, y); put(f"D{k}", -10.2, y); put(f"SW{k}", -6.4, y); put(f"CSW{k}", -7.4, y + 2.4)
     put(f"RG{k}", 2.2, y); put(f"RF{k}", 4.3, y - 1.2); put(f"CF{k}", 4.3, y + 1.2)
     put(f"RAAF{k}", 6.6, y); put(f"CAAF{k}", 8.9, y)
-    put(f"UA{k}", 10.6, y, int(_AFE["uarot"] or 90), _AFE["uaside"] or "B"); put(f"CRF{k}", 7.1, y, 0, "B")
+    _rots = [int(v) for v in os.environ.get("AFE_UAROTS", "").split(",") if v]                  # Step 12: per-ADC rotation, in row order (override only)
+    put(f"UA{k}", 10.6, y, (_rots[k - 1] if len(_rots) >= k else int(_AFE["uarot"] or 90)), _AFE["uaside"] or "B"); put(f"CRF{k}", 7.1, y, 0, "B")
     cx, cdy = float(_AFE["capx"] or 13.1), float(_AFE["capdy"] or 1.3)
     put(f"CAV{k}", cx, y - cdy, 0, _AFE["capside"] or "B"); put(f"CDV{k}", cx, y + cdy, 0, _AFE["capside"] or "B")
+for _n in [n for n in os.environ.get("AFE_NUDGE", "").split(",") if n]:                          # Step 12: "REF:dx:dy,..." part nudges (search / recorded result)
+    _r, _dx, _dy = _n.split(":"); _x, _y, _rot, _side = PLACE[_r]; PLACE[_r] = (_x + float(_dx), _y + float(_dy), _rot, _side)
 PLANE = {"GND": "In1.Cu", "+5VA": "In4.Cu"}
 
 def rotp(x, y, a):
@@ -121,7 +130,7 @@ def via_ok_map(net):
     both = np.ones((N + 1, N + 1), bool)
     for L in range(NL): both &= passable(L, net)
     return ndimage.binary_erosion(both.astype(np.uint8), structure=np.ones((2 * VR + 1, 2 * VR + 1), bool), border_value=0)
-def astar(net, starts, targets, allow_via=True, window=None, via_cost=20.0, max_exp=600000):
+def astar(net, starts, targets, allow_via=True, window=None, via_cost=20.0, max_exp=int(os.environ.get("AFE_MAXEXP", 600000))):
     P = [passable(L, net) for L in range(NL)]
     VOK = via_ok_map(net) if allow_via else None
     tset = set(targets); open_ = []; gcost = {}; came = {}
@@ -217,28 +226,52 @@ def ep_vias(pd):
     return done
 # ------------------------------------------------------------ escape stubs for fine-pitch IC pins
 STUB_TYPES = ("OPA2211", "OPA2365", "REF5041", "ADS8860", "SW1G66")
+STAGGER_TYPES = ("ADS8860",)                    # Step 12: fine-pitch rows with a staggered via fan-out (alternate pins drop a via at the stub tip; the pins between pass on the surface)
+def _row_groups():
+    """pads of each staggered IC grouped by the side they leave: {(ref, dx, dy): [pad, ...] sorted along the row}"""
+    g = {}
+    for pd in PADS:
+        p = D.BYREF[pd["ref"]]
+        if p["type"] not in STAGGER_TYPES or pd.get("tht") or not pd["net"]: continue
+        px, py = PLACE[pd["ref"]][0], PLACE[pd["ref"]][1]
+        if abs(pd["x"] - px) >= abs(pd["y"] - py): dx, dy = (1 if pd["x"] > px else -1), 0
+        else: dx, dy = 0, (1 if pd["y"] > py else -1)
+        g.setdefault((pd["ref"], dx, dy), []).append(pd)
+    for k, v in g.items(): v.sort(key=lambda q: (q["y"] if k[1] else q["x"]))
+    return g
 def escape_stubs(length=0.8):
-    n_ok = 0
+    n_ok = 0; stag = {}
+    for (ref, dx, dy), row in _row_groups().items():
+        for idx, pd in enumerate(row): stag[(pd["ref"], pd["num"])] = (idx % 2 == 0, idx)       # even positions in the row take the via
     for pd in PADS:
         p = D.BYREF[pd["ref"]]
         if pd.get("tht"): continue
         is_conn = False
-        if not is_conn and (p["type"] not in STUB_TYPES or not pd["net"] or pd["net"] in PLANE): continue
+        if not is_conn and (p["type"] not in STUB_TYPES or not pd["net"]): continue
+        if pd["net"] in PLANE and not (os.environ.get("AFE_STAGGER") and (pd["ref"], pd["num"]) in stag): continue
         if not pd["net"] or pd["num"] in ("MH1", "MH2"): continue
         px, py = PLACE[pd["ref"]][0], PLACE[pd["ref"]][1]
         if is_conn: dx, dy = (-1, 0) if px > 0 else (1, 0)
         elif abs(pd["x"] - px) >= abs(pd["y"] - py): dx, dy = (1 if pd["x"] > px else -1), 0
         else: dx, dy = 0, (1 if pd["y"] > py else -1)
         net = NETID[pd["net"]]; L = LIDX[pd["layer"]]
+        via_pin = stag.get((pd["ref"], pd["num"]), (False, 0))[0] if os.environ.get("AFE_STAGGER") else False
+        slen = length if (via_pin or not os.environ.get("AFE_STAGGER") or (pd["ref"], pd["num"]) not in stag) else float(os.environ.get("AFE_PASSLEN", "1.8"))
         if dx: i0, j0 = cell(pd["x"] + dx * pd["w"] / 2, pd["y"])
         else: i0, j0 = cell(pd["x"], pd["y"] + dy * pd["h"] / 2)
-        steps = int(round(length / GRID)); Pm = passable(L, net); good = []
+        steps = int(round(slen / GRID)); Pm = passable(L, net); good = []
         for k in range(0, steps + 1):
             c = (L, i0 + dx * k, j0 + dy * k)
             if Pm[c[2], c[1]]: good.append(c)
             else: break
         if len(good) >= 2:
-            TRACKS.append((LAYERS[L], xy(good[0][1], good[0][2]), xy(good[-1][1], good[-1][2]), TRACK, net)); stamp_cells(good, net); STUB[(pd["ref"], pd["num"])] = good; n_ok += 1
+            TRACKS.append((LAYERS[L], xy(good[0][1], good[0][2]), xy(good[-1][1], good[-1][2]), TRACK, net)); stamp_cells(good, net)
+            if via_pin:                                                                   # via at the stub tip, on the plane or the net's inner layers
+                ti, tj = good[-1][1], good[-1][2]
+                if via_ok_map(net)[tj, ti]:
+                    stamp_via(ti, tj, net); good = good + [(L2, ti, tj) for L2 in range(NL) if L2 != L]
+                    if pd["net"] in PLANE: register_plane(net, [], ti, tj)
+            STUB[(pd["ref"], pd["num"])] = good; n_ok += 1
     return n_ok
 # ------------------------------------------------------------ main
 def run():
@@ -276,11 +309,23 @@ def run():
     done = set()
     def go(name):
         if name in nets and len(nets[name]) >= 2 and name not in done: done.add(name); route(name)
+    _seed = int(os.environ.get("AFE_SEED", "0"))
+    if _seed:                                                              # Step 12: randomised net order (search only; seed 0 = the committed order)
+        import random; _rng = random.Random(_seed)
+        for _l in (BUS, multi, rest): _rng.shuffle(_l)
+    for name in [n for n in os.environ.get("AFE_PRE", "").split(",") if n]: go(name)           # Step 12: nets routed before any via or trace (router order override; unset = unchanged)
     early = [pd for pd in fan if D.BYREF[pd["ref"]]["type"].startswith("C")]
     early.sort(key=lambda p: (round(p["y"] / 3.0), p["x"]))
     for pd in early:
         if not plane_connect(pd): bad_fan.append(f"{pd['ref']}.{pd['num']}")
     fan = [pd for pd in fan if pd not in early]
+    for name in [n for n in os.environ.get("AFE_MID", "").split(",") if n]: go(name)           # Step 12: bus nets routed after the capacitor vias, before ADCIN / SDO (override only)
+    if os.environ.get("AFE_FANFIRST"):                                                          # Step 12: every plane (power / ground) connection before any signal net
+        fan.sort(key=lambda p: (round(p["y"] / 3.0), p["x"]))
+        for pd in fan:
+            if not plane_connect(pd): bad_fan.append(f"{pd['ref']}.{pd['num']}")
+        fan = []
+    for name in [n for n in os.environ.get("AFE_POST", "").split(",") if n]: go(name)           # priority signal nets right after the plane connections
     for name in first + sorted([n for n in nets if n.startswith("SPARE")]): go(name)
     fan.sort(key=lambda p: (round(p["y"] / 3.0), p["x"]))
     for pd in fan:
