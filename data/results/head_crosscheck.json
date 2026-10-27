@@ -131,9 +131,9 @@
   {
    "section": "A layer stack",
    "check": "roof on hub top (gap)",
-   "value": "41.29999923706055",
+   "value": "41.27470016479492",
    "limit": "41.3",
-   "result": "PASS",
+   "result": "FAIL",
    "note": ""
   },
   {
@@ -341,7 +341,7 @@
   [
    "FORMER_L1",
    "HUB",
-   143.75
+   163.12
   ],
   [
    "FORMER_L2",
@@ -371,12 +371,12 @@
   [
    "BASEPLATE",
    "SB1R_QA",
-   5.5
+   6.75
   ],
   [
    "BASEPLATE",
    "SB1R_QB",
-   5.5
+   6.75
   ],
   [
    "CAP",
@@ -393,7 +393,7 @@
   {
    "a": "FORMER_L1",
    "b": "HUB",
-   "overlap_mm3": 143.75,
+   "overlap_mm3": 163.12,
    "core_mm3": 0.0
   },
   {
@@ -429,13 +429,13 @@
   {
    "a": "BASEPLATE",
    "b": "SB1R_QA",
-   "overlap_mm3": 5.5,
+   "overlap_mm3": 6.75,
    "core_mm3": 0.0
   },
   {
    "a": "BASEPLATE",
    "b": "SB1R_QB",
-   "overlap_mm3": 5.5,
+   "overlap_mm3": 6.75,
    "core_mm3": 0.0
   },
   {
@@ -453,7 +453,7 @@
  ],
  "interferences": [],
  "voxel_mm": 0.5,
- "fails": 0,
+ "fails": 1,
  "warns": 1,
  "z_ranges": {
   "FORMER_L1": [
@@ -481,16 +481,16 @@
    7.1
   ],
   "BASEPLATE": [
-   0.0,
-   3.2
+   -0.03,
+   3.22
   ],
   "HUB": [
-   3.2,
-   41.3
+   3.18,
+   41.33
   ],
   "TRAY": [
-   9.8,
-   12.2
+   9.78,
+   12.23
   ],
   "SEPTUM": [
    20.1,
@@ -501,8 +501,8 @@
    38.0
   ],
   "ROOF": [
-   41.3,
-   44.5
+   41.27,
+   44.52
   ],
   "CAP": [
    40.4,
@@ -517,12 +517,12 @@
    33.4
   ],
   "CRADLE": [
-   34.4,
-   39.6
+   34.38,
+   39.63
   ],
   "BRIDGE": [
-   33.7,
-   40.8
+   33.68,
+   40.83
   ],
   "BRIDGE_LID": [
    40.8,

@@ -51,7 +51,7 @@ def report(shells, V, F):
                 volume_mm3=round(float(np.einsum("ij,ij->i", V_[F[:, 0]], np.cross(V_[F[:, 1]], V_[F[:, 2]])).sum() / 6.0), 2), tris=int(len(F)))
 
 
-MARGIN = 0.025                                 # mm: touching bodies are dilated by this before the union so that pinch contacts (edge-to-edge) become small overlaps
+MARGIN = 0.005                                 # mm: touching bodies are dilated by this before the union so that pinch contacts (edge-to-edge) become small overlaps; 0.025 moved the roof 0.025 mm and broke the 0.01 mm layer-stack tolerance of head_crosscheck
 def position_bad_edges(F, V):
     """print_check's definition of closed on the STORED mesh: vertices rounded to 1e-4 mm (float32 STL), every undirected edge shared by exactly two faces"""
     V32 = np.asarray(V, np.float32).astype(float); Vr = np.round(V32, 4); U, inv = np.unique(Vr, axis=0, return_inverse=True); G = inv.reshape(-1)[np.asarray(F, np.int64)]
