@@ -54,7 +54,7 @@ with open(f"{R}/STL_CLASSIFICATION.csv", "w", newline="") as f:
 if not os.path.exists(f"{R}/renders/boards/CB1D_top.png"): print("board renders missing: run the kicad-cli render loop in the index first")
 os.makedirs(f"{R}/blueprint", exist_ok=True)
 for _f in glob.glob("deliverables/receive_cutaway/*"): shutil.copy(_f, f"{R}/blueprint/{os.path.basename(_f)}")             # receive-stage cut-away (AD7389-4 build)
-r = run(sys.executable, "src/render/blueprint_r3.py", f"{R}/blueprint"); print(r.stdout.strip(), r.stderr[-300:])
+r = run(sys.executable, "src/render/blueprint_r3.py", f"{R}/blueprint") if not os.environ.get("SKIP_BLUEPRINT") else None; print("blueprint:", (r.stdout.strip(), r.stderr[-300:]) if r else "skipped (SKIP_BLUEPRINT)")
 # ---------------------------------------------------------------- index
 S = json.load(open("data/results/SIGNOFF_STATUS.json")); UNV = re.findall(r"^\| (U-[A-Z0-9-]+) \| ([^|]*)\|", open("docs/UNVERIFIED.md").read(), re.M)
 cnt = {k: sum(1 for r_ in rows if r_[1].startswith(k)) for k in ("PRINT", "REFERENCE", "SUPERSEDED")}
