@@ -1,0 +1,16 @@
+{
+ "open_nets": {
+  "UA2.6": "CS",
+  "UA3.6": "CS",
+  "CDF.1": "VCM_DIV"
+ },
+ "need_track": 0.47,
+ "need_via": 0.8280000000000001,
+ "adc_pad": [
+  0.3,
+  1.45
+ ],
+ "adc_pitch": 0.5,
+ "tracks": 718,
+ "vias": 66
+}
