@@ -1,0 +1,19 @@
+Qty,Refs,Type,Value,MPN,Footprint
+1,UA1,AD7389,AD7389-4,ADI AD7389-4BCPZ,Package_CSP:LFCSP-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm
+2,"D1,D2",BAV199,BAV199,Nexperia BAV199,Package_TO_SOT_SMD:SOT-23
+6,"CSW1,CSW2,CO1,CRC,CBD,CDF",C0402,100n,X7R 10V,Capacitor_SMD:C_0402_1005Metric
+4,"CVC,CVL,CRG,CRF",C0402,1u,X7R 10V,Capacitor_SMD:C_0402_1005Metric
+2,"CF1,CF2",C0402,22p,C0G 50V,Capacitor_SMD:C_0402_1005Metric
+1,CVM,C0603,1u,X7R 10V,Capacitor_SMD:C_0603_1608Metric
+2,"CAAF1,CAAF2",C0603,2n2,C0G 50V,Capacitor_SMD:C_0603_1608Metric
+1,CB1,C0805,10u,X7R/X5R 10V,Capacitor_SMD:C_0805_2012Metric
+1,J1,HDR1x6,Antenna harness 6p solder pads 1.27mm,solder-in ribbon harness (36 AWG),Connector_PinHeader_1.27mm:PinHeader_1x6_P1.27mm
+1,J2,HDR2x6,Main-board 2x6 1.27mm header,Samtec FTSH/TMM-106-class 2x6 1.27mm,Connector_PinHeader_1.27mm:PinHeader_2x6_P1.27mm
+1,U1,OPA2211,OPA2211,TI OPA2211AIDR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
+1,UB,OPA2365,OPA2365,TI OPA2365AIDGKR,Package_SO:MSOP-8_3x3mm_P0.65mm
+2,"RG1,RG2",R0402,10,thin-film 0.1%,Resistor_SMD:R_0402_1005Metric
+2,"RS1,RS2",R0402,1000,thin-film 0.1% 0402,Resistor_SMD:R_0402_1005Metric
+2,"RD1,RD2",R0402,100k,thin-film 0.1%,Resistor_SMD:R_0402_1005Metric
+2,"RAAF1,RAAF2",R0402,200,thin-film 0.1%,Resistor_SMD:R_0402_1005Metric
+2,"RF1,RF2",R0402,390,thin-film 0.1%,Resistor_SMD:R_0402_1005Metric
+2,"SW1,SW2",SW1G66,74LVC1G66,TI SN74LVC1G66DBVR,Package_TO_SOT_SMD:SOT-23-5

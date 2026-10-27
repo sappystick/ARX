@@ -205,6 +205,15 @@ for _b in ("A","B"):                                                  # AB1A / A
         chk(f"AB1{_b} Gerber read-back (KiCad-written, hatched; gerber_geom): every GND, +5VA and island +3V3D via / pad is copper-connected to its hatch, the island is not joined to the +5VA pour (gap >= 0.16 mm), foreign vias in the island have antipads",_gb["pass"] and _gb["control"]["foreign_vias_not_connected"]==_gb["control"]["foreign_vias_in_island"],f"island copper {_i4.get('island_copper_mm2')} mm2, gap {_i4.get('pour_to_island_gap_mm')} mm, island vias {_i4.get('connected')}/{_i4.get('items')}")
     else: skip(f"AB1{_b} Gerber read-back")
     chk(f"AB1{_b} old Gerbers marked SUPERSEDED (solid planes)",os.path.exists("data/legacy/PHIFOLD233_FINAL_KIT_v3/"+("04_PCB_receiver_AB1A" if _b=="A" else "05_PCB_receiver_AB1B")+"/SUPERSEDED.txt"),"")
+if os.path.isdir("releases/RX_r1"):                                   # receive-board release (scripts/release_rx.py): blockers carried, manifest hashes verify, no fabrication-ready wording
+    import hashlib, csv as _csv
+    _rm=open("releases/RX_r1/RELEASE.md").read()+open("releases/RX_r1/BLOCKERS.md").read()
+    _bad=[]
+    for _r in _csv.reader(open("releases/RX_r1/MANIFEST.csv")):
+        if _r and len(_r)>2 and len(_r[2])==64 and (not os.path.exists(_r[0]) or hashlib.sha256(open(_r[0],"rb").read()).hexdigest()!=_r[2]): _bad.append(_r[0])
+    _nman=sum(1 for _ in open("releases/RX_r1/MANIFEST.csv"))-1
+    chk("release RX_r1: exposed-pad BLOCKER carried, manifest hashes verify, wording is not 'ready for fabrication'","BLOCKER 1" in _rm and "exposed pad" in _rm and not _bad and "ready for fabrication" not in _rm.replace("not ready for fabrication",""),f"{_nman} files hashed, {len(_bad)} mismatches")
+else: skip("release RX_r1")
 _m=open("src/mech/mech_v20.py").read()
 chk("NPM cable window in mech_v20.py is still x -26..-14 (the numbers pb1r_check.py measures PB1R's JL1 / JP / JC against)","plate(-34, 12.5, NZ / 2, 16.0, 3.0, NZ), plate(14, 12.5, NZ / 2, 56.0, 3.0, NZ)" in _m,"back-wall plates")
 d=rd("kit_v22/pb1r_check.json")

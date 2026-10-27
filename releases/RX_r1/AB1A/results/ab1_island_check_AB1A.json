@@ -1,0 +1,23 @@
+{
+ "board": "AB1A",
+ "adc": "AD7389",
+ "island": [
+  7.0,
+  12.6,
+  2.0,
+  3.6
+ ],
+ "opens": 0,
+ "shorts": 0,
+ "clearance_violations": 0,
+ "island_corner_radius_max_mm": 13.104,
+ "island_inside_board": true,
+ "island_to_antenna_inputs_mm": 20.31,
+ "island_to_opa2211_mm": 3.025,
+ "island_area_mm2": 8.96,
+ "plus5va_items_inside_island": [],
+ "plus5va_vias_inside_island": [],
+ "zones": 3,
+ "zones_hatched": 3,
+ "pass": true
+}
