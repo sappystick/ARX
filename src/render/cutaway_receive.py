@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Receive-stage cut-away and AB1A routing-block figure.
+"""Receive-stage cut-away and AB1A (AD7389-4 build, +3V3D island on In4) figure; updated 2026-10-27, the earlier version showed the ADS8860 build and its 3 open nets.
 Panels: 1 vault half-section (y = 0) from the CURRENT meshes with the level z-ranges of DESIGN_STATE section 3 and the measured gaps; 2 plan section at the AB1 level
 (core wall, board discs); 3 AB1A routed layout (pads, tracks per layer, vias, the open nets as air-wires); 4-6 the three open pads with the free gap measured in 8 directions
 against the foreign copper (needed: track passage 0.47 mm = 0.15 + 2 x 0.16; via passage 0.83 mm); 7 the blocker table. Everything is MODELED / tool-measured; nothing is built.
 usage (repo root, after make setup, with the AB1A layout written by afe_layout.py --route in work/):
-  cd work && AFE_UAROTS=90,270,90 AFE_NUDGE="D2:-0.5:0" BOARD=A python3 afe_layout.py --route && cd .. && python3 src/render/cutaway_receive.py OUT_DIR"""
+  cd work && BOARD=A python3 afe_layout.py --route && cd .. && python3 src/render/cutaway_receive.py OUT_DIR"""
 import sys, os, json, math, struct
 import numpy as np
-os.environ.setdefault("BOARD", "A"); os.environ.setdefault("AFE_UAROTS", "90,270,90"); os.environ.setdefault("AFE_NUDGE", "D2:-0.5:0")
+os.environ.setdefault("BOARD", "A")
 ROOT = os.getcwd(); OUT = sys.argv[1] if len(sys.argv) > 1 else "deliverables/receive_cutaway"; os.makedirs(OUT, exist_ok=True)
 sys.path.insert(0, os.path.join(ROOT, "work")); os.chdir(os.path.join(ROOT, "work"))
 import afe_layout as A
@@ -56,6 +56,7 @@ lay = json.load(open("out_board/AB1A_layout.json")); rep = lay["rep"]
 TR = [(l, tuple(a), tuple(b), w, n) for l, a, b, w, n in lay["TRACKS"]]; VI = [tuple(v) for v in lay["VIAS"]]
 NAMES = {v: k for k, v in A.NETID.items()}; byname = {f"{p['ref']}.{p['num']}": p for p in A.PADS}
 OPEN = [f.split(": ")[1] for f in rep["unrouted"]]; OPENNET = [f.split(": ")[0] for f in rep["unrouted"]]
+ZOOM = ["UA1.4", "UA1.2", "UA1.3"]                                    # the VCC / VLOGIC / REGCAP pins that were the last open pocket before the island
 LCOL = {"F.Cu": "#d33a2c", "In2.Cu": "#2e9c4a", "In3.Cu": "#d49a00", "B.Cu": "#2b63d8"}
 CLEAR, TRACK, VIA = A.CLEAR, A.TRACK, A.VIA_D
 NEED_TRACK = TRACK + 2 * CLEAR; NEED_VIA = VIA + 2 * CLEAR
@@ -66,7 +67,7 @@ def panel(rc, title, sub=""):
     ax = fig.add_subplot(rc); ax.set_aspect("equal"); ax.set_facecolor("white"); ax.grid(alpha=0.15, lw=0.4)
     ax.set_title(title, loc="left", fontsize=12, fontweight="bold", color="#14213d", pad=14); ax.text(0, 1.015, sub, transform=ax.transAxes, fontsize=7.5, color="#55607a", va="bottom")
     ax.tick_params(labelsize=6.5); return ax
-fig.suptitle("PHI-FOLD 233  receive stage cut-away: why AB1A / AB1B are hard to place and route  (MODELED, tool-measured, nothing built)", fontsize=17, fontweight="bold", color="#14213d", x=0.012, ha="left", y=0.985)
+fig.suptitle("PHI-FOLD 233  receive stage cut-away: AB1A / AB1B with the AD7389-4 and the +3V3D island  (MODELED, tool-checked, nothing built)", fontsize=17, fontweight="bold", color="#14213d", x=0.012, ha="left", y=0.985)
 
 # ------------------------------------------------------------------ 1 vault half-section
 ax1 = panel(gs[0, 0:3], "1  Vault half-section (y = 0), cut faces from the current meshes", "heel (178 deg) to the left; boards drawn as slabs at the DESIGN_STATE section 3 z-ranges; D40 AB1A/AB1B at x = -/+ 20.3")
@@ -87,7 +88,7 @@ dim(ax1, (-44, 9.8), (-44, 20.0), "L2 cell 10.2 mm\n(board 1.6 + parts above/bel
 dim(ax1, (47, 11.7), (47, 20.0), "8.3 mm free above AB1 (z 11.7 to 20.0)", off=(0, 0), fs=6.5, ha="center")
 dim(ax1, (47, 9.8), (47, 10.1), "0.3 shim", off=(5.5, -2.0), fs=6)
 lab(ax1, "AB1A (3 ch)", (-20, 10.9), (-60, 4)); lab(ax1, "AB1B (2 ch)", (20, 10.9), (28, 4)); lab(ax1, "J2 header 4.0 mm tall (AB1 <-> CB1D link)", (-5.5, 13.5), (-60, 16.5))
-lab(ax1, "ADS8860 x3 on the BACK side: 1.1 mm under the board", (-24, 9.5), (-60, 28)); lab(ax1, "septum + Cu cloth (D62 window)", (-30, 21), (-60, 33)); lab(ax1, "CB1D (D78), parts to 10.2 mm", (30, 27.8), (22, 33))
+lab(ax1, "AD7389-4 (one quad ADC, LFCSP 4 x 4 x 0.55) on the BACK side", (-24, 9.5), (-60, 28)); lab(ax1, "septum + Cu cloth (D62 window)", (-30, 21), (-60, 33)); lab(ax1, "CB1D (D78), parts to 10.2 mm", (30, 27.8), (22, 33))
 lab(ax1, "LB1 display", (30, 39.6), (22, 49)); lab(ax1, "HTA board in the cap", (0, 45.3), (-30, 52)); lab(ax1, "vault wall (CORE)", (-48, 22), (-62, 40))
 ax1.set_xlim(-65, 65); ax1.set_ylim(-3, 56); ax1.set_xlabel("x (mm)", fontsize=7); ax1.set_ylabel("z (mm)", fontsize=7)
 
@@ -105,7 +106,7 @@ dim(ax2, (-40.3, 30), (-0.3, 30), "D40", off=(0, 2.5), fs=7); dim(ax2, (0.3, 30)
 ax2.set_xlim(-60, 60); ax2.set_ylim(-60, 60); ax2.set_xlabel("x (mm)", fontsize=7)
 
 # ------------------------------------------------------------------ 3 AB1A routed layout
-ax3 = panel(gs[1, 0:2], "3  AB1A routed layout (best configuration A1): where it is open", "board frame, y down; tracks coloured by layer; planes In1 = GND and In4 = +5VA are not drawn; red dashed = unrouted pad pairs")
+ax3 = panel(gs[1, 0:2], "3  AB1A routed layout (AD7389-4 build): 0 open nets; the +3V3D island on In4 is the yellow box", "board frame, y down; tracks coloured by layer; planes In1 = GND and In4 = +5VA (hatched) are not drawn; island x 7.0 to 12.6, y 2.0 to 3.6 mm")
 ax3.add_patch(Circle((0, 0), 20.0, fc="#f3f8f4", ec="#0a3d24", lw=1.2, zorder=0))
 for l, a, b, w, n in TR: ax3.plot([a[0], b[0]], [a[1], b[1]], color=LCOL[l], lw=max(w * 4.5, 0.6), alpha=0.8 if l in ("F.Cu", "B.Cu") else 0.55, solid_capstyle="round", zorder=3 if l == "F.Cu" else 2)
 for x, y, n in VI: ax3.add_patch(Circle((x, y), VIA / 2, fc="#ddd", ec="#444", lw=0.3, zorder=4))
@@ -125,7 +126,9 @@ for name, net in zip(OPEN, OPENNET):
 for xs_, t in (((-19, 0), "front-side input chain (RS / D / SW / gain / RAAF)"), ):
     pass
 ax3.text(-19.5, 19.0, "layers: F red, In2 green, In3 amber, B blue", fontsize=7, color="#333")
-ax3.text(-19.5, 17.4, f"tracks {len(TR)}, vias {len(VI)}, unrouted {len(OPEN)}", fontsize=7, color="#e00000")
+ax3.text(-19.5, 17.4, f"tracks {len(TR)}, vias {len(VI)}, unrouted {len(OPEN)}", fontsize=7, color="#1a8f3c")
+if A.ISL is not None:
+    ax3.add_patch(Rectangle((A.ISL[0], A.ISL[2]), A.ISL[1] - A.ISL[0], A.ISL[3] - A.ISL[2], fc="#ffe680", ec="#b38600", lw=1.0, alpha=0.6, zorder=1)); ax3.text(A.ISL[0], A.ISL[3] + 0.9, "+3V3D island (In4, hatched)", fontsize=6.5, color="#7a5c00", zorder=10)
 dim(ax3, (-20, 21.5), (20, 21.5), "D40", fs=7)
 ax3.set_xlim(-22, 22); ax3.set_ylim(22.5, -22); ax3.set_xlabel("x (mm)", fontsize=7); ax3.set_ylabel("y (mm, down)", fontsize=7)
 
@@ -176,25 +179,25 @@ def zoom(rc, name, title):
     ax.set_xlim(cx - W, cx + W); ax.set_ylim(cy + W, cy - W)
     ax.text(cx - W + 0.15, cy + W - 0.2, f"need >= {NEED_TRACK:.2f} mm for a track, {NEED_VIA:.2f} mm for a via; yellow = track-centre keep-out", fontsize=6.5, color="#7a5c00", va="bottom")
     return ax
-zoom(gs[1, 2:4], OPEN[0], f"4  Open pad {OPEN[0]} ({OPENNET[0]})"); zoom(gs[1, 4:6], OPEN[1], f"5  Open pad {OPEN[1]} ({OPENNET[1]})")
-zoom(gs[2, 0:2], OPEN[2], f"6  Open pad {OPEN[2]} ({OPENNET[2]})")
+zoom(gs[1, 2:4], ZOOM[0], "4  VCC pin UA1.4: closed by the island (stub + via at the tip)"); zoom(gs[1, 4:6], ZOOM[1], "5  VLOGIC pin UA1.2: closed the same way")
+zoom(gs[2, 0:2], ZOOM[2], "6  REGCAP pin UA1.3 between them: the surface trace to CRG")
 
 # ------------------------------------------------------------------ 7 blockers table (text built from the measured numbers)
-ua = [p for p in A.PADS if p["ref"] == "UA2"]; uyx = sorted({round(p["y"], 2) for p in ua}); uxs = sorted({round(p["x"], 2) for p in ua})
-pw = min(p["w"] for p in ua); ph = min(p["h"] for p in ua)
+ua = [p for p in A.PADS if p["ref"] == "UA1" and p["num"] != "25"]; uyx = sorted({round(p["y"], 2) for p in ua}); uxs = sorted({round(p["x"], 2) for p in ua})
+pw = min(min(p["w"], p["h"]) for p in ua); ph = max(max(p["w"], p["h"]) for p in ua)
 pitch = min(math.hypot(a['x'] - b['x'], a['y'] - b['y']) for a in ua for b in ua if a is not b)
-axt = fig.add_subplot(gs[2, 2:6]); axt.axis("off"); axt.set_title("7  Why these pads cannot be reached, and every other open item", loc="left", fontsize=12, fontweight="bold", color="#14213d")
+axt = fig.add_subplot(gs[2, 2:6]); axt.axis("off"); axt.set_title("7  Receive-board status and every item still open", loc="left", fontsize=12, fontweight="bold", color="#14213d")
 rows = [
- ("AB1A routing", "OPEN: 3 nets (" + "; ".join(f"{n} {p}" for n, p in zip(OPENNET, OPEN)) + ")", "end pins of ADS8860 pin rows and 0402 pads in 0.5 to 1.0 mm pockets"),
- ("ADS8860 pin row", f"pad {pw:.2f} x {ph:.2f} mm, pitch {pitch:.2f} mm: pad gap {pitch - min(pw, ph):.2f}", f"a track needs {NEED_TRACK:.2f} mm, a via {NEED_VIA:.2f} mm: nothing passes between pins"),
+ ("AB1A routing", f"0 unrouted nets, {len(TR)} tracks, {len(VI)} vias (two identical runs); KiCad DRC 0 errors / 0 unconnected", "was 3 open nets with 3 x ADS8860; closed by one AD7389-4 and the +3V3D island"),
+ ("AD7389-4 pin row", f"pad {pw:.2f} x {ph:.2f} mm, pitch {pitch:.2f} mm: pad gap {pitch - min(pw, ph):.2f}", f"a track needs {NEED_TRACK:.2f} mm, a via {NEED_VIA:.2f} mm: pins 2 and 4 leave by a stub and a via into the island"),
+ ("+3V3D island (In4)", "x 7.0..12.6, y 2.0..3.6 mm, 8.96 mm2, hatched; Gerber read-back: island vias connected, 0.16 mm to the +5VA pour", "3.025 mm from the OPA2211 pads; no closed copper loop around the axis"),
  ("Fab floor (AB1 override)", f"clearance {CLEAR}, track {TRACK}, via {VIA} / drill {A.VIA_DRILL}", "TTM T-HDI Standard, AdvancedPCB A-TOL; U-FAB-DRC: some facilities list 0.216 ring"),
- ("Router", "greedy single pass A*, 0.1 mm grid, no rip-up", "earlier nets wall in later pads; the open set moves, it does not vanish (A1 <-> A2)"),
- ("Shared corridor", "3 ADCs at y pitch 10.0 mm, 2 pin rows each + decoupling + SPI + CS", "about 4.2 mm between adjacent ADC rows shared by two 5-pin rows"),
- ("J2 pad block", "2 x 6, 1.27 mm pitch, pads 1.10 mm (ring 0.225, gap 0.17)", "even column reachable only from outside; moving it is option (a): J2 to x = 17.5 mm with CB1D JA/JB"),
- ("AB1B", "routed, KiCad DRC 0 errors / 0 unconnected, 20 dangling-stub warnings", "TODO: independent DRC zone exemption, Gerbers, publish, sign-off row"),
- ("Datasheet pin maps", "ADS8860, SW1G66, REF5041 marked VERIFY in afe_design.py", "not checked against manufacturer datasheets"),
+ ("Router", "greedy single pass A*, 0.1 mm grid, no rip-up", "enough for this build; Options 2 (rip-up) and 3 (J2 move) were not needed"),
+ ("J2 pad block", "2 x 6, 1.27 mm pitch, pads 1.10 mm (ring 0.225, gap 0.17)", "J2.3 (+3V3D) reaches the island by one trace and a via; SDO3 unused (2-wire readout)"),
+ ("AB1B", "0 unrouted, KiCad DRC 0 errors / 0 unconnected, independent DRC 0 fails", "same chip and island; MONO input pad 3.085 mm from the island"),
+ ("Datasheet pin maps", "AD7389-4 read from the supplied datasheet; SW1G66, OPA2365, BAV199 marked VERIFY", "exposed pad size of the LFCSP is a PLACEHOLDER (drawing shows none, text says ground it)"),
  ("Mechanics", "CORE cylinder + 14 other STLs non-manifold; U8_SEPTUM_extended oversize", "vault +8 mm (option 2) and rim disc not implemented; no eddy / field model for an added board"),
- ("Unverified", "U-DS-TXDRIVE, OKI, PACK, BAV199, HVTERM, U-FAB-DRC, U-CAM-VIEW, U-BENCH", "datasheets / fabricator DRC / CAM viewer / bench are not done"),
+ ("Unverified", "SDI tied low, +3V3D rail budget (about 25 mA more), island hatch in a CAM viewer, fabricator DRC, bench", "U-DS-TXDRIVE, OKI, PACK, BAV199, HVTERM, U-FAB-DRC, U-CAM-VIEW, U-BENCH"),
 ]
 y = 0.97
 axt.text(0.0, y, "item", fontsize=9, fontweight="bold", transform=axt.transAxes); axt.text(0.14, y, "state / measured number", fontsize=9, fontweight="bold", transform=axt.transAxes); axt.text(0.60, y, "reason / next step", fontsize=9, fontweight="bold", transform=axt.transAxes)

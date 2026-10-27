@@ -87,7 +87,7 @@ import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 fig = plt.figure(figsize=(W_SHEET / 14, H_SHEET / 14)); ax = fig.add_axes([0, 0, 1, 1]); ax.set_xlim(0, W_SHEET); ax.set_ylim(H_SHEET, 0); ax.axis("off")
 NETCOL = {"GND": "#444", "+5VA": "#c0392b", "+3V3D": "#d35400", "VCM": "#8e44ad", "VREF": "#16a085", "VREF_RAW": "#16a085", "BLANK": "#2c3e50"}
 for r, ch in enumerate(D.CH, 1): ax.text(8, 50 + (r - 1) * ROW_H - 26, f"Channel {r}: {ch}   (input -> series R -> clamp + blanking switch -> x40 low-noise amp -> 400 kHz filter -> 16-bit ADC)", fontsize=11, weight="bold", color="#1a5276")
-ax.text(8, y0 - 26, "Shared: op-amps, reference chain (REF5041 + buffer + VCM divider), bulk decoupling, connectors", fontsize=11, weight="bold", color="#1a5276")
+ax.text(8, y0 - 26, "Shared: op-amps, AD7389-4 quad ADC with its internal 2.5 V reference, VCM divider and buffer, bulk decoupling, connectors", fontsize=11, weight="bold", color="#1a5276")
 ax.text(8, 12, f"PF233-{NAME}  {TITLE}  -  net-label schematic (every pin label = net name; same net name = connected)", fontsize=13, weight="bold")
 for p in D.PARTS:
     ref = p["ref"]; typ = p["type"]; X, Y = place[ref]; left, right, rows, w, h = geom(typ)
