@@ -1,0 +1,1 @@
+Superseded 2026-10-27 by the AD7389-4 build with the +3V3D island on In4 (docs/design/AB1_ROUTING_STATE.md, releases/RX_r1): this folder is the ADS8860 / REF5041 build, whose Gerber planes were written SOLID by afe_export.py (eddy rule 5 broken, CORRECTIONS) and whose AB1A routing was never complete (3 open nets). Do not send these files to a fabricator. Kept for provenance.

@@ -197,6 +197,12 @@ for _b in ("A","B"):                                                  # AB1A / A
         chk(f"AB1{_b} KiCad DRC (dru_gen AB1{_b} rules, zones filled): 0 errors, 0 unconnected",not _kd["errors"] and _kd["unconnected"]==0,str(_kd["warnings"]))
         chk(f"AB1{_b} independent DRC (zone-net exemption): 0 fails",_id["n_fail"]==0,f"clearance min {_id['checks']['clearance']['min_gap_mm']} mm")
     else: skip(f"AB1{_b} AD7389-4 build checks")
+    _gb=rd(f"kit_v22/gerber_ab1_AB1{_b}.json")
+    if _gb:
+        _i4=_gb["layers"].get("In4_island",{})
+        chk(f"AB1{_b} Gerber read-back (KiCad-written, hatched; gerber_geom): every GND, +5VA and island +3V3D via / pad is copper-connected to its hatch, the island is not joined to the +5VA pour (gap >= 0.16 mm), foreign vias in the island have antipads",_gb["pass"] and _gb["control"]["foreign_vias_not_connected"]==_gb["control"]["foreign_vias_in_island"],f"island copper {_i4.get('island_copper_mm2')} mm2, gap {_i4.get('pour_to_island_gap_mm')} mm, island vias {_i4.get('connected')}/{_i4.get('items')}")
+    else: skip(f"AB1{_b} Gerber read-back")
+    chk(f"AB1{_b} old Gerbers marked SUPERSEDED (solid planes)",os.path.exists("data/legacy/PHIFOLD233_FINAL_KIT_v3/"+("04_PCB_receiver_AB1A" if _b=="A" else "05_PCB_receiver_AB1B")+"/SUPERSEDED.txt"),"")
 _m=open("src/mech/mech_v20.py").read()
 chk("NPM cable window in mech_v20.py is still x -26..-14 (the numbers pb1r_check.py measures PB1R's JL1 / JP / JC against)","plate(-34, 12.5, NZ / 2, 16.0, 3.0, NZ), plate(14, 12.5, NZ / 2, 56.0, 3.0, NZ)" in _m,"back-wall plates")
 d=rd("kit_v22/pb1r_check.json")
