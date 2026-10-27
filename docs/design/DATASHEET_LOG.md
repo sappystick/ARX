@@ -85,3 +85,14 @@ Evidence file for the datasheet groups that replaced U-DS-PARTS (`scripts/signof
 | Supplies | VCC 3.0..3.6 V, VLOGIC 1.65..3.6 V, 1 uF each; REGCAP 1 uF; IVCC 21 mA typ operational, IVLOGIC 3.7 mA, total 89 mW typ (p. 4, 9) | +3V3D rail; power budget not checked |
 | Interface | CS falling edge samples and converts; SPI; SDO bits (Configuration 2) 00 = 2-wire (default, reset 0x0): A and C on SDOA, B and D on SDOB, 32 SCLK; 4-wire needs a register write over SDI; one-cycle read latency; software reset recommended after power-up (p. 21, 22, 34) | readout: SDOA -> J2 SDO1, SDOB -> J2 SDO2 |
 | Package | 24-lead LFCSP 4 x 4 x 0.55 mm, pitch 0.50, pad 0.20..0.30 x 0.30..0.45, theta-JA 48.4 C/W (p. 8, 31) | land pattern; the EXPOSED PAD SIZE IS NOT IN THE DRAWING TEXT (2.0 mm placeholder, ASSUMPTIONS 35) |
+
+## U-DS-AD4134: READ (user-supplied datasheet, AD4134 Rev. A) and judged NOT a fit for AB1; not used in any design
+
+| Item | Datasheet value | Why it matters |
+|---|---|---|
+| Type | 24-bit, 4-channel simultaneous continuous-time sigma-delta, ODR 0.01 to 1496 kSPS, bandwidth to 391.5 kHz, inherent anti-alias filter (p. 1, 4, 5) | could drop the 200 ohm / 2.2 nF filter; far more resolution than the AD7389-4 |
+| Input | differential +-VREF, VREF 4.096 V or 5 V external, VCM VREF / 2 to AVDD5 / 2, differential input resistance 6.25 kohm, 317 uA/V (p. 6) | analog levels match the present 4.096 V / 2.048 V front end |
+| Supplies | AVDD5 and DVDD5 4.5..5.5 V, AVDD1V8, DVDD1V8, CLKVDD and IOVDD 1.65..1.95 V, internal LDO from 2.6..5.5 V (p. 9) | needs 1.8 V rails and 1.8 V I/O: the Pico side is 3.3 V, so level shifting |
+| Power | 450 to 556 mW (high performance, 374 kSPS), 254 to 386 mW (low power); full power-down 1 mW (p. 10) | about 5 to 6 times the 89 mW of the AD7389-4, inside a sealed potted cell |
+| Clock and package | 48 MHz crystal or CMOS clock; 8 x 8 mm, 56-lead LFCSP, 0.75 mm tall (p. 1, 93) | more pins and area than the 4 x 4 mm AD7389-4 |
+| Latency | wideband FIR group delay 39.8 / ODR; sinc3 7 / ODR, sinc6 9.5 / ODR (p. 7) | matters for sampling a decay right after turn-off |
