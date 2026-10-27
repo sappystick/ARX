@@ -115,7 +115,9 @@ def stamp_cells(path, net):
                 if blk[L, b, a] == -1: blk[L, b, a] = net
                 elif blk[L, b, a] != net: blk[L, b, a] = -2
         core[L, j, i] = net
-VR = int(math.ceil((VIA_D / 2 + CLEAR + TRACK / 2) / GRID - 1e-9)); VDISK = disk(VR)      # Step 12: the track half-width was missing (0.135 mm gaps in KiCad DRC against the 0.16 floor)
+VIA_R = VIA_D / 2 + CLEAR + TRACK / 2                                                         # centre distance from a via to any other-net track centre
+VR = int(math.ceil(VIA_R / GRID - 1e-9))                                                       # bounding radius in cells (via-site erosion stays square and conservative)
+VDISK = disk(VR) if not os.environ.get("AFE_EXACTVIA") else np.array([(i, j) for i in range(-VR, VR + 1) for j in range(-VR, VR + 1) if math.hypot(i, j) * GRID < VIA_R - 1e-9])   # Step 12: AFE_EXACTVIA=1 = true-distance keep-out instead of the rounded-up disc (a 0.50 mm gap between two vias then admits one track: 0.50 >= 0.489); default unchanged
 def stamp_via(i, j, net):
     for L in range(NL):
         for di, dj in VDISK:

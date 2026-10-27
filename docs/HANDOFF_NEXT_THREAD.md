@@ -199,3 +199,6 @@ First message: confirm the recommended order 5 -> 4 -> 6 (datasheets and vendor 
 - `GRAPH STALE` in the output means two conflicting steps overlapped: `make pipeline-graph` (serial run that re-learns `data/pipeline/graph.json`), then `make signoff`. Adding a step to `STEPS` in `scripts/pipeline.py` also needs `make pipeline-graph`; the regress guards fail until the graph covers every step and every script the serial path runs.
 - Logs `work/.pipeline/logs/<step>.log`, times `work/.pipeline/timing.json`, cache `work/.pipeline/cache/` (wiped by `make clean`). Performance figures and limits: docs/PERFORMANCE.md.
 - Do not force BLAS/OpenMP thread counts in steps: the stiff-ODE solves change their last digit with the thread count. Steps with an internal pool read `ARX_INNER_JOBS`.
+
+## AB1 receive boards: paused mid-step (2026-10-27)
+Read docs/design/AB1_ROUTING_STATE.md first: exact state (AB1B routed + KiCad-clean; AB1A 3 open), the commands that reproduce it, the search tools in scripts/afe_search/, and the next options. Background searches die on container restarts: run short foreground sweeps.
