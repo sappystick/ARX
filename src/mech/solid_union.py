@@ -73,6 +73,7 @@ def merge_closed(shells, concat, margin=MARGIN):
     u = u.simplify(SIMPLIFY); mesh = u.to_mesh(); V, F = np.asarray(mesh.vert_properties, float)[:, :3], np.asarray(mesh.tri_verts, np.int64)
     snapped = None
     cands = [(q, o * q) for q in (1e-3, 1.5e-3, 2e-3, 3e-3) for o in (0.3, 0.5, 0.0, 0.1, 0.2, 0.4, 0.6, 0.7, 0.8, 0.9)]
+    cands += [(q, np.array([ox * q, oy * q, 0.53 * q])) for q in (1e-3, 1.2e-3, 1.5e-3, 2e-3, 2.5e-3) for ox in (0.0, 1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6) for oy in (0.0, 0.37, 0.71)]      # per-axis offsets: the CORE union (111k vertices) needs (q 1.5 um, off 0.17 q, 0, 0.53 q)
     best = None
     for q, off in cands:                                                   # vertices closer than the STL's float32 / 4-decimal resolution look like pinch edges to print_check: snap to a grid until none is left
         Vq = np.round((V - off) / q) * q + off; U_, inv = np.unique(Vq, axis=0, return_inverse=True); G = inv.reshape(-1)[F]; G = G[(G[:, 0] != G[:, 1]) & (G[:, 1] != G[:, 2]) & (G[:, 0] != G[:, 2])]
