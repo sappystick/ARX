@@ -1,11 +1,11 @@
 {
  "board": "AB1A",
- "parts": 56,
+ "parts": 46,
  "errors": [],
  "nets_compared": 30,
  "erc": {
-  "warning:footprint_link_issues": 56,
-  "warning:lib_symbol_issues": 56
+  "warning:footprint_link_issues": 46,
+  "warning:lib_symbol_issues": 46
  },
  "erc_errors": 0,
  "pdf": true,

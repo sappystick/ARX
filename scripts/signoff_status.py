@@ -11,9 +11,7 @@ W, EVROOT = arg("--work", "work"), arg("--evidence-root", ".")
 REG, OUT_JSON, OUT_MD = arg("--register", "docs/UNVERIFIED.md"), arg("--out-json", "data/results/SIGNOFF_STATUS.json"), arg("--out-md", "docs/STATUS.md")
 def rd(p):
     try: return json.load(open(os.path.join(W, p)))
-    except Exception:
-        try: return json.load(open(os.path.join("data", "results", os.path.basename(p))))     # published copy (clean clone)
-        except Exception: return None
+    except Exception: return None
 UNV = {}
 try:
     for m in re.finditer(r"^\|\s*(U-[A-Z0-9-]+)\s*\|\s*([^|]*)\|", open(REG).read(), re.M): UNV[m[1]] = m[2].strip()

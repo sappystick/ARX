@@ -34,13 +34,23 @@
    "components": 0,
    "with_model": 0,
    "missing": []
+  },
+  "PF233-AB1A.kicad_pcb": {
+   "components": 46,
+   "with_model": 46,
+   "missing": []
+  },
+  "PF233-AB1B.kicad_pcb": {
+   "components": 35,
+   "with_model": 35,
+   "missing": []
   }
  },
  "models": {
-  "ADS8860": {
+  "AD7389": {
    "covers_pads": true,
-   "height": 1.12,
-   "envelope_h": 1.1,
+   "height": 0.57,
+   "envelope_h": 0.55,
    "height_ok": true
   },
   "BAV199": {
@@ -263,12 +273,6 @@
    "covers_pads": true,
    "height": 0.7,
    "envelope_h": 0.7,
-   "height_ok": true
-  },
-  "REF5041": {
-   "covers_pads": true,
-   "height": 1.12,
-   "envelope_h": 1.1,
    "height_ok": true
   },
   "SOT223": {

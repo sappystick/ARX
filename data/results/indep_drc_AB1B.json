@@ -1,0 +1,60 @@
+{
+ "board": "AB1B",
+ "file": "work/kit_v3/PCB_AB1B/PF233-AB1B.kicad_pcb",
+ "checks": {
+  "width_track": {
+   "n": 556,
+   "bad": 0,
+   "min": 0.15
+  },
+  "via_size_drill": {
+   "n": 40,
+   "bad": 0
+  },
+  "pth_drill": {
+   "bad": 0
+  },
+  "pth_annular": {
+   "bad": 0
+  },
+  "clearance": {
+   "bad": 0,
+   "min_gap_mm": 0.17,
+   "examples": []
+  },
+  "hole_to_hole": {
+   "bad": 0,
+   "examples": []
+  },
+  "hole_to_copper": {
+   "bad": 0,
+   "examples": []
+  },
+  "edge": {
+   "bad": 0,
+   "examples": []
+  },
+  "connectivity": {
+   "nets": 24,
+   "split_nets": {},
+   "connections": 1230
+  }
+ },
+ "errors": [],
+ "zones": 3,
+ "zone_nets_joined": {
+  "GND": [
+   36
+  ],
+  "+5VA": [
+   14
+  ],
+  "+3V3D": [
+   4
+  ]
+ },
+ "fails": {},
+ "n_fail": 0,
+ "zones_checked": false,
+ "zone_clearance_checked": false
+}
