@@ -128,21 +128,21 @@
     }
    },
    {
-    "case": "combined: differential drive, RS 33, gain 100, OSR 8",
-    "gain": 100.0,
+    "case": "combined: differential drive, RS 33 ohm, rolling-average OSR 8 (gain stays 40)",
+    "gain": 40.0,
     "RS_ohm": 33.0,
     "adc_snr_db": 97.9,
     "swing_v": 2.5,
-    "EIN_nV_rtHz": 1.434,
-    "integrated_uV_rms": 0.86,
-    "max_input_mV_peak": 25.0,
-    "dynamic_range_dB": 86.3,
+    "EIN_nV_rtHz": 1.49,
+    "integrated_uV_rms": 0.894,
+    "max_input_mV_peak": 62.5,
+    "dynamic_range_dB": 93.9,
     "terms_nV_rtHz": {
      "coil": 0.415,
      "RS": 0.772,
      "amp": 1.1,
-     "feedback": 0.253,
-     "adc": 0.113
+     "feedback": 0.402,
+     "adc": 0.281
     }
    },
    {
@@ -522,6 +522,1017 @@
    "place": 0,
    "tracks": 520,
    "vias": 51
+  },
+  {
+   "B": "A",
+   "tier": "T0 committed (via 0.508/0.254, track 0.15, clear 0.16)",
+   "seed": 16,
+   "ok": true,
+   "unrouted": 0,
+   "place": 0,
+   "tracks": 513,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T0 committed (via 0.508/0.254, track 0.15, clear 0.16)",
+   "seed": 17,
+   "ok": false,
+   "unrouted": 2,
+   "place": 1,
+   "tracks": 527,
+   "vias": 51
+  },
+  {
+   "B": "A",
+   "tier": "T0 committed (via 0.508/0.254, track 0.15, clear 0.16)",
+   "seed": 18,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 563,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T0 committed (via 0.508/0.254, track 0.15, clear 0.16)",
+   "seed": 19,
+   "ok": false,
+   "unrouted": 0,
+   "place": 1,
+   "tracks": 541,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T0 committed (via 0.508/0.254, track 0.15, clear 0.16)",
+   "seed": 20,
+   "ok": true,
+   "unrouted": 0,
+   "place": 0,
+   "tracks": 525,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 0,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 470,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 1,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 479,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 2,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 452,
+   "vias": 55
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 3,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 475,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 4,
+   "ok": false,
+   "unrouted": 1,
+   "place": 2,
+   "tracks": 471,
+   "vias": 51
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 5,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 497,
+   "vias": 57
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 6,
+   "ok": false,
+   "unrouted": 2,
+   "place": 0,
+   "tracks": 447,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 7,
+   "ok": false,
+   "unrouted": 1,
+   "place": 1,
+   "tracks": 497,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 8,
+   "ok": false,
+   "unrouted": 1,
+   "place": 2,
+   "tracks": 455,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 9,
+   "ok": false,
+   "unrouted": 2,
+   "place": 0,
+   "tracks": 471,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 10,
+   "ok": false,
+   "unrouted": 1,
+   "place": 2,
+   "tracks": 483,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 11,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 520,
+   "vias": 56
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 12,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 490,
+   "vias": 57
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 13,
+   "ok": false,
+   "unrouted": 1,
+   "place": 1,
+   "tracks": 465,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 14,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 460,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 15,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 442,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 16,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 483,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 17,
+   "ok": false,
+   "unrouted": 1,
+   "place": 1,
+   "tracks": 485,
+   "vias": 55
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 18,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 464,
+   "vias": 56
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 19,
+   "ok": false,
+   "unrouted": 2,
+   "place": 1,
+   "tracks": 462,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T1 finer lines only (track 0.10, clear 0.10)",
+   "seed": 20,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 456,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 0,
+   "ok": true,
+   "unrouted": 0,
+   "place": 0,
+   "tracks": 527,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 1,
+   "ok": true,
+   "unrouted": 0,
+   "place": 0,
+   "tracks": 539,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 2,
+   "ok": false,
+   "unrouted": 0,
+   "place": 0,
+   "tracks": 520,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 3,
+   "ok": false,
+   "unrouted": 0,
+   "place": 0,
+   "tracks": 508,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 4,
+   "ok": false,
+   "unrouted": 1,
+   "place": 2,
+   "tracks": 505,
+   "vias": 51
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 5,
+   "ok": false,
+   "unrouted": 2,
+   "place": 0,
+   "tracks": 509,
+   "vias": 56
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 6,
+   "ok": false,
+   "unrouted": 3,
+   "place": 0,
+   "tracks": 481,
+   "vias": 50
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 7,
+   "ok": false,
+   "unrouted": 0,
+   "place": 1,
+   "tracks": 559,
+   "vias": 55
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 8,
+   "ok": false,
+   "unrouted": 0,
+   "place": 3,
+   "tracks": 521,
+   "vias": 56
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 9,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 519,
+   "vias": 56
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 10,
+   "ok": false,
+   "unrouted": 1,
+   "place": 2,
+   "tracks": 537,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 11,
+   "ok": false,
+   "unrouted": 3,
+   "place": 0,
+   "tracks": 523,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 12,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 507,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 13,
+   "ok": false,
+   "unrouted": 0,
+   "place": 1,
+   "tracks": 523,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 14,
+   "ok": true,
+   "unrouted": 0,
+   "place": 0,
+   "tracks": 528,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 15,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 503,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 16,
+   "ok": true,
+   "unrouted": 0,
+   "place": 0,
+   "tracks": 529,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 17,
+   "ok": false,
+   "unrouted": 2,
+   "place": 1,
+   "tracks": 522,
+   "vias": 51
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 18,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 547,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 19,
+   "ok": false,
+   "unrouted": 0,
+   "place": 1,
+   "tracks": 532,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T2 finer via only (via 0.40/0.20)",
+   "seed": 20,
+   "ok": true,
+   "unrouted": 0,
+   "place": 0,
+   "tracks": 508,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 0,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 464,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 1,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 465,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 2,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 451,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 3,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 461,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 4,
+   "ok": false,
+   "unrouted": 1,
+   "place": 2,
+   "tracks": 460,
+   "vias": 55
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 5,
+   "ok": false,
+   "unrouted": 2,
+   "place": 0,
+   "tracks": 441,
+   "vias": 58
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 6,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 458,
+   "vias": 52
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 7,
+   "ok": false,
+   "unrouted": 1,
+   "place": 1,
+   "tracks": 478,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 8,
+   "ok": false,
+   "unrouted": 1,
+   "place": 2,
+   "tracks": 461,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 9,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 425,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 10,
+   "ok": false,
+   "unrouted": 1,
+   "place": 2,
+   "tracks": 446,
+   "vias": 51
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 11,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 464,
+   "vias": 56
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 12,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 457,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 13,
+   "ok": false,
+   "unrouted": 1,
+   "place": 1,
+   "tracks": 454,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 14,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 443,
+   "vias": 55
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 15,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 436,
+   "vias": 51
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 16,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 470,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 17,
+   "ok": false,
+   "unrouted": 1,
+   "place": 1,
+   "tracks": 456,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 18,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 462,
+   "vias": 53
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 19,
+   "ok": false,
+   "unrouted": 2,
+   "place": 1,
+   "tracks": 436,
+   "vias": 57
+  },
+  {
+   "B": "A",
+   "tier": "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)",
+   "seed": 20,
+   "ok": false,
+   "unrouted": 1,
+   "place": 0,
+   "tracks": 456,
+   "vias": 54
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 0,
+   "ok": false,
+   "unrouted": 11,
+   "place": 0,
+   "tracks": 374,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 1,
+   "ok": false,
+   "unrouted": 11,
+   "place": 0,
+   "tracks": 375,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 2,
+   "ok": false,
+   "unrouted": 11,
+   "place": 2,
+   "tracks": 377,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 3,
+   "ok": false,
+   "unrouted": 11,
+   "place": 0,
+   "tracks": 368,
+   "vias": 48
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 4,
+   "ok": false,
+   "unrouted": 11,
+   "place": 2,
+   "tracks": 364,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 5,
+   "ok": false,
+   "unrouted": 11,
+   "place": 0,
+   "tracks": 380,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 6,
+   "ok": false,
+   "unrouted": 12,
+   "place": 0,
+   "tracks": 373,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 7,
+   "ok": false,
+   "unrouted": 10,
+   "place": 1,
+   "tracks": 392,
+   "vias": 46
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 8,
+   "ok": false,
+   "unrouted": 11,
+   "place": 3,
+   "tracks": 379,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 9,
+   "ok": false,
+   "unrouted": 11,
+   "place": 0,
+   "tracks": 381,
+   "vias": 48
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 10,
+   "ok": false,
+   "unrouted": 11,
+   "place": 2,
+   "tracks": 411,
+   "vias": 50
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 11,
+   "ok": false,
+   "unrouted": 11,
+   "place": 1,
+   "tracks": 391,
+   "vias": 47
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 12,
+   "ok": false,
+   "unrouted": 10,
+   "place": 0,
+   "tracks": 398,
+   "vias": 47
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 13,
+   "ok": false,
+   "unrouted": 11,
+   "place": 1,
+   "tracks": 370,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 14,
+   "ok": false,
+   "unrouted": 11,
+   "place": 0,
+   "tracks": 374,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 15,
+   "ok": false,
+   "unrouted": 12,
+   "place": 1,
+   "tracks": 395,
+   "vias": 43
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 16,
+   "ok": false,
+   "unrouted": 11,
+   "place": 0,
+   "tracks": 377,
+   "vias": 46
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 17,
+   "ok": false,
+   "unrouted": 12,
+   "place": 1,
+   "tracks": 387,
+   "vias": 43
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 18,
+   "ok": false,
+   "unrouted": 11,
+   "place": 0,
+   "tracks": 400,
+   "vias": 49
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 19,
+   "ok": false,
+   "unrouted": 11,
+   "place": 1,
+   "tracks": 371,
+   "vias": 48
+  },
+  {
+   "B": "A",
+   "tier": "T4 coarser than committed (track 0.18, clear 0.20)",
+   "seed": 20,
+   "ok": false,
+   "unrouted": 11,
+   "place": 0,
+   "tracks": 389,
+   "vias": 48
+  }
+ ],
+ "router": {
+  "board": "AB1A",
+  "perturbation": "seeded random 0.4 mm nudges of 6 of 41 movable parts on top of the committed layout",
+  "summary": {
+   "T0 committed (via 0.508/0.254, track 0.15, clear 0.16)": {
+    "runs": 20,
+    "success_pct": 20.0,
+    "mean_open_pads": 1.35,
+    "mean_vias": 52.2,
+    "mean_tracks": 534.0,
+    "committed_layout_ok": true
+   },
+   "T1 finer lines only (track 0.10, clear 0.10)": {
+    "runs": 20,
+    "success_pct": 0.0,
+    "mean_open_pads": 1.65,
+    "mean_vias": null,
+    "mean_tracks": null,
+    "committed_layout_ok": false
+   },
+   "T2 finer via only (via 0.40/0.20)": {
+    "runs": 20,
+    "success_pct": 20.0,
+    "mean_open_pads": 1.35,
+    "mean_vias": 53.0,
+    "mean_tracks": 526.0,
+    "committed_layout_ok": true
+   },
+   "T3 finer lines and via (0.10 / 0.10, via 0.40/0.20)": {
+    "runs": 20,
+    "success_pct": 0.0,
+    "mean_open_pads": 1.6,
+    "mean_vias": null,
+    "mean_tracks": null,
+    "committed_layout_ok": false
+   },
+   "T4 coarser than committed (track 0.18, clear 0.20)": {
+    "runs": 20,
+    "success_pct": 0.0,
+    "mean_open_pads": 11.8,
+    "mean_vias": null,
+    "mean_tracks": null,
+    "committed_layout_ok": false
+   }
+  },
+  "note": "success_pct is the share of perturbed placements the single-pass router completes with 0 open pads: a measure of how much slack the fab tier gives, not a prediction of yield"
+ },
+ "scenarios": [
+  {
+   "option": "S0 committed design",
+   "routing_success_pct": 20.0,
+   "fit": "AB1 D40 pair 80.6 mm in an 88.0 mm bore (3.7 mm per side)",
+   "noise_dR": 85.7,
+   "EIN": 1.92,
+   "cost": "none",
+   "risk": "exposed-pad land pattern, SDI wait, +3V3D rows open"
+  },
+  {
+   "option": "S1 board D44 (R_BOARD 22): no wall change",
+   "routing_success_pct": 20.0,
+   "fit": "two D44 need 88.6 mm: does NOT fit side by side in the 88.0 mm bore; one D44 board fits",
+   "noise_dR": 85.7,
+   "EIN": 1.92,
+   "cost": "re-place and re-route",
+   "risk": "the earlier advice of D44 without a wall change was wrong for two boards side by side (the bore is 88.0, not 92.7)"
+  },
+  {
+   "option": "S2 wall +1/8 inch (r 44.0 -> 47.2) with D46 boards",
+   "routing_success_pct": 20.0,
+   "fit": "bore 94.4 mm holds two D46 (92.6 mm); area +32%",
+   "noise_dR": 85.7,
+   "EIN": 1.92,
+   "cost": "hub_v22 AND the six formers (their inner bore sits at r 49.1-49.9, no free ring at z 3-29), parts, ribs, posts, LB1 / CB1D margins, regress; two full regenerations",
+   "risk": "the free ring outside the core is about 0 mm at the former levels (room): the earlier 10 mm was the winding start radius, not free space"
+  },
+  {
+   "option": "S3 finer fab tier (0.10 / 0.10, via 0.40) with the present router",
+   "routing_success_pct": 0.0,
+   "fit": "no change (router-limited: 0% is the grid, see router note)",
+   "noise_dR": 85.7,
+   "EIN": 1.92,
+   "cost": "fabricator surcharge; needs a vendor that lists the tier (U-FAB-DRC)",
+   "risk": "no routing gain with the single-pass router; needs a rip-up router first"
+  },
+  {
+   "option": "S4 six to eight layers",
+   "routing_success_pct": null,
+   "fit": "board 1.6 -> about 2.0 mm (8.3 mm free above AB1)",
+   "noise_dR": 85.7,
+   "EIN": 1.92,
+   "cost": "fab cost",
+   "risk": "measured: the routing layers are used at 0.3 to 3 percent, so this buys nothing for routing"
+  },
+  {
+   "option": "S5 front-end changes (differential drive, RS 33, OSR 8, gain stays 40)",
+   "routing_success_pct": 20.0,
+   "fit": "+2 parts per channel for the differential stage",
+   "noise_dR": 93.9,
+   "EIN": 1.49,
+   "cost": "design time, bench; RS needs the clamp-current check; OSR changes the pulse response",
+   "risk": "every performance number stays MODELED"
+  },
+  {
+   "option": "S6 J2 as a small board-to-board connector",
+   "routing_success_pct": null,
+   "fit": "frees about 3 mm x 12 mm at the edge",
+   "noise_dR": 85.7,
+   "EIN": 1.92,
+   "cost": "CB1D JA/JB, housing, harness (wiring_audit 53 links / 50 conductors)",
+   "risk": "largest knock-on of all options"
+  },
+  {
+   "option": "S7 combined: S2 + S5 + a rip-up router (S3 only if the fabricator needs it)",
+   "routing_success_pct": 20.0,
+   "fit": "area +32%, +6 to +20 dB range",
+   "noise_dR": 93.9,
+   "EIN": 1.49,
+   "cost": "one regeneration plus bench",
+   "risk": "moderate"
   }
  ]
 }

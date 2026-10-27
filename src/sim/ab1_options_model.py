@@ -117,7 +117,7 @@ def router(n=20):
                        mean_vias=round(float(np.mean([r["vias"] for r in ok])), 1) if ok else None, mean_tracks=round(float(np.mean([r["tracks"] for r in ok])), 0) if ok else None,
                        committed_layout_ok=[r["ok"] for r in rows if r["tier"] == t and r["seed"] == 0][0])
     save("router", dict(board="AB1A", perturbation="seeded random 0.4 mm nudges of 6 of 41 movable parts on top of the committed layout", summary=summ,
-                        note="success_pct is the share of perturbed placements the single-pass router completes with 0 open pads: a measure of how much slack the fab tier gives, not a prediction of yield")); return summ
+                        note="success_pct is the share of perturbed placements the single-pass router completes with 0 open pads. Reading it: (1) even at the committed rules only about 20% of 0.4 mm nudged layouts complete: the committed layout is a tuned, fragile solution; (2) via size alone changes nothing (T2 = T0); (3) the finer-line tiers read 0% because the router grid (0.1 mm) equals the finer track width and its stub rules were tuned at 0.15 / 0.16: that is a router limit, NOT a statement about what a fabricator tier could route; (4) the coarser tier fails (mean 11.8 open pads), so the committed floor is close to the minimum this router needs. The fix that raises robustness is a rip-up router, not a finer tier")); return summ
 
 # ------------------------------------------------------------------ noise
 K = 1.380649e-23; T = 300.0
@@ -154,11 +154,11 @@ def scenarios():
      dict(option="S0 committed design", routing_success_pct=get("T0").get("success_pct"), fit="AB1 D40 pair 80.6 mm in an 88.0 mm bore (3.7 mm per side)", noise_dR=base["dynamic_range_dB"], EIN=base["EIN_nV_rtHz"], cost="none", risk="exposed-pad land pattern, SDI wait, +3V3D rows open"),
      dict(option="S1 board D44 (R_BOARD 22): no wall change", routing_success_pct=get("T0").get("success_pct"), fit="two D44 need 88.6 mm: does NOT fit side by side in the 88.0 mm bore; one D44 board fits", noise_dR=base["dynamic_range_dB"], EIN=base["EIN_nV_rtHz"], cost="re-place and re-route", risk="the earlier advice of D44 without a wall change was wrong for two boards side by side (the bore is 88.0, not 92.7)"),
      dict(option="S2 wall +1/8 inch (r 44.0 -> 47.2) with D46 boards", routing_success_pct=get("T0").get("success_pct"), fit="bore 94.4 mm holds two D46 (92.6 mm); area +32%", noise_dR=base["dynamic_range_dB"], EIN=base["EIN_nV_rtHz"], cost="hub_v22 AND the six formers (their inner bore sits at r 49.1-49.9, no free ring at z 3-29), parts, ribs, posts, LB1 / CB1D margins, regress; two full regenerations", risk="the free ring outside the core is about 0 mm at the former levels (room): the earlier 10 mm was the winding start radius, not free space"),
-     dict(option="S3 finer fab tier (0.10 / 0.10, via 0.40)", routing_success_pct=get("T3").get("success_pct"), fit="no change", noise_dR=base["dynamic_range_dB"], EIN=base["EIN_nV_rtHz"], cost="fabricator surcharge; needs a vendor that lists the tier (U-FAB-DRC)", risk="fab yield and cost, not electrical"),
+     dict(option="S3 finer fab tier (0.10 / 0.10, via 0.40) with the present router", routing_success_pct=get("T3").get("success_pct"), fit="no change (router-limited: 0% is the grid, see router note)", noise_dR=base["dynamic_range_dB"], EIN=base["EIN_nV_rtHz"], cost="fabricator surcharge; needs a vendor that lists the tier (U-FAB-DRC)", risk="no routing gain with the single-pass router; needs a rip-up router first"),
      dict(option="S4 six to eight layers", routing_success_pct=None, fit="board 1.6 -> about 2.0 mm (8.3 mm free above AB1)", noise_dR=base["dynamic_range_dB"], EIN=base["EIN_nV_rtHz"], cost="fab cost", risk="measured: the routing layers are used at 0.3 to 3 percent, so this buys nothing for routing"),
      dict(option="S5 front-end changes (differential drive, RS 33, OSR 8, gain stays 40)", routing_success_pct=get("T0").get("success_pct"), fit="+2 parts per channel for the differential stage", noise_dR=best["dynamic_range_dB"], EIN=best["EIN_nV_rtHz"], cost="design time, bench; RS needs the clamp-current check; OSR changes the pulse response", risk="every performance number stays MODELED"),
      dict(option="S6 J2 as a small board-to-board connector", routing_success_pct=None, fit="frees about 3 mm x 12 mm at the edge", noise_dR=base["dynamic_range_dB"], EIN=base["EIN_nV_rtHz"], cost="CB1D JA/JB, housing, harness (wiring_audit 53 links / 50 conductors)", risk="largest knock-on of all options"),
-     dict(option="S7 combined: S2 + S5 (S3 only if the fabricator needs it)", routing_success_pct=get("T0").get("success_pct"), fit="area +32%, +6 to +20 dB range", noise_dR=best["dynamic_range_dB"], EIN=best["EIN_nV_rtHz"], cost="one regeneration plus bench", risk="moderate")]
+     dict(option="S7 combined: S2 + S5 + a rip-up router (S3 only if the fabricator needs it)", routing_success_pct=get("T0").get("success_pct"), fit="area +32%, +6 to +20 dB range", noise_dR=best["dynamic_range_dB"], EIN=best["EIN_nV_rtHz"], cost="one regeneration plus bench", risk="moderate")]
     save("scenarios", rows); return rows
 
 # ------------------------------------------------------------------ report (figure + document, generated from the JSON)
@@ -173,7 +173,7 @@ ADDS = [
  ("A more capable processor for the DSP (TI C2000, STM32H7, FPGA)", "the 5-channel 2 MSPS stream is 160 Mbit/s of raw data: the RP2350's PIO plus DMA can take the 2-wire streams, but the filtering and detection (OPEN_ITEMS 5, DSP in Python) have not been sized", "none", "decide after the DSP load is measured, not before")]
 def report():
     import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-    d = load(); fig = plt.figure(figsize=(22, 13), facecolor="#f4f6fa"); gs = fig.add_gridspec(2, 3, hspace=0.38, wspace=0.28, left=0.04, right=0.985, top=0.9, bottom=0.07)
+    d = load(); fig = plt.figure(figsize=(22, 13), facecolor="#f4f6fa"); gs = fig.add_gridspec(2, 3, hspace=0.38, wspace=0.28, left=0.14, right=0.985, top=0.9, bottom=0.07)
     fig.suptitle("Receive-stage options model: which rule changes and additions help (MODELED, tool-measured, nothing built)", fontsize=17, fontweight="bold", x=0.04, ha="left")
     ax = fig.add_subplot(gs[0, 0]); L = d["room"]["levels"]; zs = [r["z"] for r in L]
     ax.bar([str(z) for z in zs], [r["free_ring_mm"] if r["free_ring_mm"] is not None else 0 for r in L], color="#c0392b"); ax.axhline(0, color="k", lw=0.6)
@@ -186,7 +186,7 @@ def report():
     ax3 = fig.add_subplot(gs[0, 2]); S = d["router"]["summary"]; ks = list(S); ax3.barh([k[:2] for k in ks], [S[k]["success_pct"] for k in ks], color=["#1a8f3c" if S[k]["success_pct"] >= 90 else "#d49a00" if S[k]["success_pct"] >= 50 else "#c0392b" for k in ks])
     for i, k in enumerate(ks): ax3.text(2, i, k[3:60] + f"   committed layout ok: {S[k]['committed_layout_ok']}", va="center", fontsize=7)
     ax3.set_xlim(0, 100); ax3.invert_yaxis(); ax3.set_title("3  Router robustness: perturbed placements routed with 0 open pads (%)", loc="left", fontsize=11, fontweight="bold"); ax3.set_xlabel("success (%)")
-    ax4 = fig.add_subplot(gs[1, 0:2]); C = d["noise"]["cases"]; lab = [c["case"][:58] for c in C]; keys = ["coil", "RS", "amp", "feedback", "adc"]; col = ["#7f8aa0", "#d33a2c", "#2e9c4a", "#d49a00", "#2b63d8"]
+    ax4 = fig.add_subplot(gs[1, 0:2]); C = d["noise"]["cases"]; lab = [f"{i + 1}. " + c["case"].split(":")[0][:34] for i, c in enumerate(C)]; keys = ["coil", "RS", "amp", "feedback", "adc"]; col = ["#7f8aa0", "#d33a2c", "#2e9c4a", "#d49a00", "#2b63d8"]
     left = np.zeros(len(C))
     for k, cc in zip(keys, col):
         v = np.array([c["terms_nV_rtHz"][k] ** 2 for c in C]); ax4.barh(lab, v, left=left, color=cc, label=k); left += v
