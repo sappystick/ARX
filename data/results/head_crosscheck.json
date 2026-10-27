@@ -131,9 +131,9 @@
   {
    "section": "A layer stack",
    "check": "roof on hub top (gap)",
-   "value": "41.27470016479492",
+   "value": "41.2953987121582",
    "limit": "41.3",
-   "result": "FAIL",
+   "result": "PASS",
    "note": ""
   },
   {
@@ -179,7 +179,7 @@
   {
    "section": "B radial",
    "check": "cap outer r52 equals roof outer r52 (flush)",
-   "value": "52.0",
+   "value": "52.01",
    "limit": "52.0",
    "result": "PASS",
    "note": ""
@@ -341,7 +341,7 @@
   [
    "FORMER_L1",
    "HUB",
-   163.12
+   145.75
   ],
   [
    "FORMER_L2",
@@ -371,17 +371,17 @@
   [
    "BASEPLATE",
    "SB1R_QA",
-   6.75
+   5.5
   ],
   [
    "BASEPLATE",
    "SB1R_QB",
-   6.75
+   5.5
   ],
   [
    "CAP",
    "HTA",
-   3059.38
+   3061.0
   ],
   [
    "LB1",
@@ -393,7 +393,7 @@
   {
    "a": "FORMER_L1",
    "b": "HUB",
-   "overlap_mm3": 163.12,
+   "overlap_mm3": 145.75,
    "core_mm3": 0.0
   },
   {
@@ -429,19 +429,19 @@
   {
    "a": "BASEPLATE",
    "b": "SB1R_QA",
-   "overlap_mm3": 6.75,
+   "overlap_mm3": 5.5,
    "core_mm3": 0.0
   },
   {
    "a": "BASEPLATE",
    "b": "SB1R_QB",
-   "overlap_mm3": 6.75,
+   "overlap_mm3": 5.5,
    "core_mm3": 0.0
   },
   {
    "a": "CAP",
    "b": "HTA",
-   "overlap_mm3": 3059.38,
+   "overlap_mm3": 3061.0,
    "core_mm3": 0.0
   },
   {
@@ -453,7 +453,7 @@
  ],
  "interferences": [],
  "voxel_mm": 0.5,
- "fails": 1,
+ "fails": 0,
  "warns": 1,
  "z_ranges": {
   "FORMER_L1": [
@@ -481,16 +481,16 @@
    7.1
   ],
   "BASEPLATE": [
-   -0.03,
-   3.22
+   -0.0,
+   3.21
   ],
   "HUB": [
-   3.18,
-   41.33
+   3.19,
+   41.3
   ],
   "TRAY": [
-   9.78,
-   12.23
+   9.8,
+   12.21
   ],
   "SEPTUM": [
    20.1,
@@ -501,8 +501,8 @@
    38.0
   ],
   "ROOF": [
-   41.27,
-   44.52
+   41.3,
+   44.51
   ],
   "CAP": [
    40.4,
@@ -517,8 +517,8 @@
    33.4
   ],
   "CRADLE": [
-   34.38,
-   39.63
+   34.4,
+   39.61
   ],
   "BRIDGE": [
    33.7,

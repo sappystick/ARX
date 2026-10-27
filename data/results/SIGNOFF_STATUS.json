@@ -336,7 +336,7 @@
   },
   "tests/regress.py (strict: a missing result FAILs)": {
    "state": "PASS",
-   "detail": "83 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
+   "detail": "84 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {
