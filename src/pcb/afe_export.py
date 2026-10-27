@@ -107,6 +107,9 @@ def check():
     for i, it in enumerate(items):
         n = it["net"]
         if NAMES.get(n) in PLANE and (it["kind"] == "via" or it.get("tht")):
+            cx_, cy_ = it["shape"][1], it["shape"][2]
+            if A.ISL is not None and NAMES.get(n) == "+3V3D" and not A.in_isl(cx_, cy_, 0.1): continue            # outside the island the +3V3D pad is only joined by a routed trace
+            if A.ISL is not None and NAMES.get(n) == "+5VA" and A.ISL[0] - 0.2 < cx_ < A.ISL[1] + 0.2 and A.ISL[2] - 0.2 < cy_ < A.ISL[3] + 0.2: viol.append((it["label"], "+5VA item inside the +3V3D island", 0, "In4.Cu")); continue
             plane_node.setdefault(n, i); union(i, plane_node[n])
     opens = []
     for name, pins in D.NETS.items():
@@ -156,8 +159,13 @@ for l, a, b, w, n in TR:
 for x, y, n in VI: L.append(f'  (via (at {K(x, y)}) (size {VIA_D}) (drill {VIA_DR}) (layers "F.Cu" "B.Cu") (net {n}))')
 L.append(f'  (gr_circle (center {CX} {CY}) (end {CX + R_BRD} {CY}) (stroke (width 0.1) (type default)) (fill none) (layer "Edge.Cuts"))')
 pts = " ".join(f"(xy {CX + (R_BRD - 0.3) * math.cos(t):.3f} {CY + (R_BRD - 0.3) * math.sin(t):.3f})" for t in np.linspace(0, 2 * math.pi, 96, endpoint=False))
+_HATCH = "(fill yes (mode hatch) (hatch_thickness 0.3) (hatch_gap 1.5) (hatch_orientation 0) (hatch_smoothing_level 0) (hatch_smoothing_value 0.1) (hatch_border_algorithm hatch_thickness) (hatch_min_hole_area 0.3) (thermal_gap 0.25) (thermal_bridge_width 0.3))"   # eddy rule: planes are hatched, never solid (the earlier solid AB1 zones broke it, CORRECTIONS)
 for nm, lyr in PLANE.items():
-    L.append(f'  (zone (net {NETID[nm]}) (net_name "{nm}") (layer "{lyr}") (hatch edge 0.5) (connect_pads (clearance 0.2)) (min_thickness 0.2) (fill yes (thermal_gap 0.25) (thermal_bridge_width 0.3)) (polygon (pts {pts})))')
+    if nm == "+3V3D" and A.ISL is not None:
+        ipts = " ".join(f"(xy {CX + x:.3f} {CY + y:.3f})" for x, y in ((A.ISL[0], A.ISL[2]), (A.ISL[1], A.ISL[2]), (A.ISL[1], A.ISL[3]), (A.ISL[0], A.ISL[3])))
+        L.append(f'  (zone (net {NETID[nm]}) (net_name "{nm}") (layer "{lyr}") (priority 1) (hatch edge 0.5) (connect_pads (clearance {A.ZCLR})) (min_thickness 0.2) {_HATCH} (polygon (pts {ipts})))')
+    else:
+        L.append(f'  (zone (net {NETID[nm]}) (net_name "{nm}") (layer "{lyr}") (hatch edge 0.5) (connect_pads (clearance {A.ZCLR})) (min_thickness 0.2) {_HATCH} (polygon (pts {pts})))')
 L.append(")")
 open(f"{OUT}/PF233-AB1{B}.kicad_pcb", "w").write("\n".join(L))
 bal = sum(l.count("(") - l.count(")") for l in L); print("kicad_pcb paren balance:", bal)
@@ -211,7 +219,9 @@ def plane(name, netname):
         if NAMES.get(n) == netname: gb.flash(gb.aperture("C", VIA_D), x, y)
     gb.write(f"{OUT}/PF233-AB1{B}-{name}.gbr")
 copper("F_Cu", "F.Cu"); copper("In2_Cu", "In2.Cu"); copper("In3_Cu", "In3.Cu"); copper("B_Cu", "B.Cu")
-plane("In1_Cu_GND", "GND"); plane("In4_Cu_5VA", "+5VA")
+plane("In1_Cu_GND", "GND")
+if A.ISL is None: plane("In4_Cu_5VA", "+5VA")
+else: print("In4 carries the +3V3D island: the Gerber for this layer comes from kicad_gerber.py (hatched fill), not from this exporter")
 for side, rl in (("F", "F.Cu"), ("B", "B.Cu")):
     mk = Gerber(f"{side}_Mask"); ps = Gerber(f"{side}_Paste")
     for pd in PADS:

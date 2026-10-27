@@ -47,9 +47,17 @@ if D.ADC7:                                                              # integr
     put("UA1", _ux, _uy, 270, "B")
     put("CVL", _ux + 2.0, _uy + 3.7, 0, "B"); put("CRG", _ux + 0.1, _uy + 3.7, 0, "B"); put("CVC", _ux - 1.8, _uy + 3.7, 0, "B")      # back side is mirrored: power pins 1-4 face +y, reference pins 15-17 face -y
     put("CRC", _ux - 1.3, _uy - 3.7, 0, "B"); put("CRF", _ux + 0.9, _uy - 3.7, 0, "B")
+    for _c in [c for c in os.environ.get("AFE_CAPS", "").split(",") if c]:                          # search / recorded override: "REF:dx:dy:rot" relative to the chip
+        _r, _dx, _dy, _rot = _c.split(":"); put(_r, _ux + float(_dx), _uy + float(_dy), int(_rot), "B")
 for _n in [n for n in os.environ.get("AFE_NUDGE", "").split(",") if n]:                          # Step 12: "REF:dx:dy,..." part nudges (search / recorded result)
     _r, _dx, _dy = _n.split(":"); _x, _y, _rot, _side = PLACE[_r]; PLACE[_r] = (_x + float(_dx), _y + float(_dy), _rot, _side)
 PLANE = {"GND": "In1.Cu", "+5VA": "In4.Cu"}
+ISL = None                                                              # Option 1 (AD7389 variant): +3V3D island on In4 around the chip's VLOGIC / VCC pins: (x0, x1, y0, y1) in mm, board frame; pours are hatched
+if D.ADC7 and os.environ.get("AFE_ISLAND"):
+    _ux0, _uy0 = PLACE["UA1"][0], PLACE["UA1"][1]; _r = [float(v) for v in os.environ.get("AFE_ISLAND_REL", "-3.0:3.1:2.2:3.5").split(":")]
+    ISL = (_ux0 + _r[0], _ux0 + _r[1], _uy0 + _r[2], _uy0 + _r[3]); PLANE["+3V3D"] = "In4.Cu"
+ZCLR = 0.20                                                             # zone clearance written to the KiCad zones (dru_gen floor is 0.16)
+def in_isl(x, y, m=0.0): return ISL is not None and ISL[0] + m <= x <= ISL[1] - m and ISL[2] + m <= y <= ISL[3] - m
 
 def rotp(x, y, a):
     c, s = math.cos(math.radians(a)), math.sin(math.radians(a)); return x * c + y * s, -x * s + y * c
@@ -137,7 +145,12 @@ NB = [(1, 0, 1.0), (-1, 0, 1.0), (0, 1, 1.0), (0, -1, 1.0), (1, 1, 1.414), (1, -
 def via_ok_map(net):
     both = np.ones((N + 1, N + 1), bool)
     for L in range(NL): both &= passable(L, net)
-    return ndimage.binary_erosion(both.astype(np.uint8), structure=np.ones((2 * VR + 1, 2 * VR + 1), bool), border_value=0)
+    ok = ndimage.binary_erosion(both.astype(np.uint8), structure=np.ones((2 * VR + 1, 2 * VR + 1), bool), border_value=0).astype(bool)
+    if ISL is not None:
+        gx = xx * GRID - OFF; gy = yy * GRID - OFF
+        if net == NETID["+3V3D"]: ok &= (gx >= ISL[0] + VIA_D / 2 + 0.1) & (gx <= ISL[1] - VIA_D / 2 - 0.1) & (gy >= ISL[2] + VIA_D / 2 + 0.1) & (gy <= ISL[3] - VIA_D / 2 - 0.1)
+        elif net == NETID["+5VA"]: ok &= ~((gx > ISL[0] - VIA_D / 2 - ZCLR) & (gx < ISL[1] + VIA_D / 2 + ZCLR) & (gy > ISL[2] - VIA_D / 2 - ZCLR) & (gy < ISL[3] + VIA_D / 2 + ZCLR))
+    return ok
 def astar(net, starts, targets, allow_via=True, window=None, via_cost=20.0, max_exp=int(os.environ.get("AFE_MAXEXP", 600000))):
     P = [passable(L, net) for L in range(NL)]
     VOK = via_ok_map(net) if allow_via else None
@@ -256,7 +269,7 @@ def escape_stubs(length=float(os.environ.get("AFE_STUBLEN", "0.8"))):
         if pd.get("tht"): continue
         is_conn = False
         if not is_conn and (p["type"] not in STUB_TYPES or not pd["net"]): continue
-        _pst = pd["net"] in PLANE and pd["ref"] in os.environ.get("AFE_PLANESTUB", "").split(",") and pd["num"] != "25"          # ground pins of a fine-pitch IC: short stub with the plane via at its tip (keeps the ground fan-out out of the neighbouring pins' pockets)
+        _pst = pd["net"] in PLANE and pd["ref"] in os.environ.get("AFE_PLANESTUB", "").split(",") and pd["num"] != "25" and (not os.environ.get("AFE_PSNETS") or pd["net"] in os.environ["AFE_PSNETS"].split(","))          # ground pins of a fine-pitch IC: short stub with the plane via at its tip (keeps the ground fan-out out of the neighbouring pins' pockets)
         if pd["net"] in PLANE and not _pst and not (os.environ.get("AFE_STAGGER") and (pd["ref"], pd["num"]) in stag): continue
         if not pd["net"] or pd["num"] in ("MH1", "MH2"): continue
         px, py = PLACE[pd["ref"]][0], PLACE[pd["ref"]][1]
@@ -291,9 +304,9 @@ def run():
     # exposed-pad vias first
     for pd in PADS:
         if (pd["ref"] in ("U1", "U2", "U3") and pd["num"] == "9") or (pd["ref"] == "UA1" and pd["num"] == "25"): ep_vias(pd)
-    fan = [pd for pd in PADS if pd["net"] in PLANE and not pd["tht"]]
+    fan = [pd for pd in PADS if pd["net"] in PLANE and (not pd["tht"] or (pd["net"] == "+3V3D" and not in_isl(pd["x"], pd["y"])))]
     for pd in PADS:
-        if pd["tht"] and pd["net"] in PLANE: register_plane(NETID[pd["net"]], pad_cells(pd))
+        if pd["tht"] and pd["net"] in PLANE and not (pd["net"] == "+3V3D" and not in_isl(pd["x"], pd["y"])): register_plane(NETID[pd["net"]], pad_cells(pd))
     fan.sort(key=lambda p: (math.hypot(p["x"], p["y"])))
     nets = {}
     for pd in PADS:
