@@ -23,7 +23,13 @@ else:
 #   uarots: ADC rotation per row; nudges: part moves "REF:dx:dy"; pre: nets routed before every via and trace; stagger: unused
 BOARD_CFG = {"A": dict(uarots="", nudges="", pre=""), "B": dict(uarots="", nudges="", pre="FB_MONO")}      # B: RG2.1 sits in a pocket that VCM walls in unless FB_MONO is routed first (verified: 0 open)
 for _k, _env in (("uarots", "AFE_UAROTS"), ("nudges", "AFE_NUDGE"), ("pre", "AFE_PRE")):
-    if BOARD_CFG[os.environ.get("BOARD", "A")][_k] and _env not in os.environ: os.environ[_env] = BOARD_CFG[os.environ.get("BOARD", "A")][_k]
+    if BOARD_CFG[os.environ.get("BOARD", "A")][_k] and _env not in os.environ and not D.ADC7: os.environ[_env] = BOARD_CFG[os.environ.get("BOARD", "A")][_k]
+# Committed configuration of the AD7389-4 build (Option 1: +3V3D island on In4). Chip position, nudges, capacitor positions relative to the chip (REF:dx:dy:rot), island rectangle relative to the chip (x0:x1:y0:y1), short stubs with the plane via for the +3V3D pins.
+BOARD_CFG7 = {"A": dict(ux="9.5", uy="0.0", nudges="SW2:0.4:0", caps="CRG:-0.3:4.0:90,CVC:-1.8:5.0:0,CVL:2.0:5.0:0", island="1", island_rel="-3.0:3.1:2.0:3.6", planestub="UA1", psnets="+3V3D"),
+              "B": dict(ux="9.5", uy="0.0", nudges="RD2:0.4:0", caps="CRG:-0.3:4.0:90,CVC:-1.8:5.0:0,CVL:2.0:5.0:0", island="1", island_rel="-3.0:3.1:2.0:3.6", planestub="UA1", psnets="+3V3D")}
+if D.ADC7:
+    for _k, _env in (("ux", "AFE_UX"), ("uy", "AFE_UY"), ("nudges", "AFE_NUDGE"), ("caps", "AFE_CAPS"), ("island", "AFE_ISLAND"), ("island_rel", "AFE_ISLAND_REL"), ("planestub", "AFE_PLANESTUB"), ("psnets", "AFE_PSNETS")):
+        if _env not in os.environ: os.environ[_env] = BOARD_CFG7[os.environ.get("BOARD", "A")][_k]
 _AFE = dict(span=os.environ.get("AFE_SPAN"), capx=os.environ.get("AFE_CAPX"), capdy=os.environ.get("AFE_CAPDY"), uarot=os.environ.get("AFE_UAROT"), uaside=os.environ.get("AFE_UASIDE"), capside=os.environ.get("AFE_CAPSIDE"))
 if _AFE["span"] and BOARD == "A": ROWY = {1: -float(_AFE["span"]), 2: 0.0, 3: float(_AFE["span"])}
 if _AFE["span"] and BOARD == "B": ROWY = {1: -float(_AFE["span"]) / 2, 2: float(_AFE["span"]) / 2}

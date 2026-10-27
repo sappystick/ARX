@@ -82,7 +82,7 @@ CFG = {"A": dict(ch=["GX", "GY", "X8"], opamp={"GX": ("U1", "A"), "GY": ("U1", "
                  j1=["GX+", "GY+", "X8+", "GX-", "GY-", "X8-", "SHLD", "SHLD"], j2=["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS", "SDO1", "SDO2", "SDO3", "BLANK", "GND", "GND"]),
        "B": dict(ch=["Y8", "MONO"], opamp={"Y8": ("U1", "A"), "MONO": ("U1", "B")}, opamps=["U1"], spare=None,
                  j1=["Y8+", "Y8-", "SHLD", "SHLD", "SHLD", "SHLD"], j2=["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS", "SDO1", "SDO2", "BLANK", "MONO_IN", "VCM_OUT", "GND"])}[BOARD]
-ADC7 = os.environ.get("AFE_ADC", "") == "AD7389"                           # integration trial: one AD7389-4 replaces the ADS8860s and the REF5041 chain (default unchanged)
+ADC7 = os.environ.get("AFE_ADC", "AD7389") == "AD7389"                    # DEFAULT: one AD7389-4 replaces the three ADS8860s and the REF5041 chain (AFE_ADC=ADS8860 selects the old build)
 PARTS = []; NETS = {}
 def add(ref, typ, value, mpn="", **kw): PARTS.append(dict(ref=ref, type=typ, value=value, mpn=mpn, **kw))
 def net(name, *pins):
