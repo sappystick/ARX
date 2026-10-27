@@ -33,10 +33,24 @@ if _t:
             _seen.add((kind, p))
             _f.write(kind + " " + p + "\n")
 
+    def _src_of_pyc(p):
+        # an import served from a cached .pyc never opens the .py: record the source file, otherwise an edit to an imported module is invisible to the cache
+        try:
+            p = os.fsdecode(p)
+            d, f = os.path.split(p)
+            if f.endswith(".pyc") and os.path.basename(d) == "__pycache__":
+                return os.path.join(os.path.dirname(d), f.split(".")[0] + ".py")
+        except Exception:
+            pass
+        return None
+
     def _hook(ev, a):
         try:
             if ev == "open":
                 fl = a[2]
+                s = _src_of_pyc(a[0]) if not (isinstance(fl, int) and fl & _WR) else None
+                if s:
+                    _put("R", s)
                 _put("W" if isinstance(fl, int) and fl & _WR else "R", a[0])
             elif ev in ("os.rename", "os.replace"):
                 _put("W", a[0]); _put("W", a[1])

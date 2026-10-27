@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: package route-pm2 drc-pm2 kicad-pm2 gerber-pm2 route-hb2 drc-hb2 kicad-hb2 gerber-hb2 signoff-serial signoff-cold pipeline-plan pipeline-graph sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: state state-deep step touch-check rx-board package route-pm2 drc-pm2 kicad-pm2 gerber-pm2 route-hb2 drc-hb2 kicad-hb2 gerber-hb2 signoff-serial signoff-cold pipeline-plan pipeline-graph sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -12,6 +12,10 @@ help:
 	@echo "make formers-low     low-resolution formers (needed by audits/renders)"
 	@echo "make formers-print   full-resolution formers (about 70 MB each, slow)"
 	@echo "make upper           upper assembly v1 (S-stem, trigger, battery dock, twin-cavity shaft): STLs, checks, balance, figure"
+	@echo "make state           1-second resume dashboard (git, sign-off counts, open blockers); state-deep adds stale steps + publish check"
+	@echo "make step S=name     force ONE pipeline step (scripts/pipeline.py list) and show the tail of its log"
+	@echo "make rx-board        incremental re-run of only the AB1A/AB1B steps (layout, DRCs, Gerbers) + system audit"
+	@echo "make touch-check     what the last edit made stale (pipeline plan), nothing runs"
 	@echo "see docs/PROCESS.md for the engineering loop"
 
 setup:
@@ -255,3 +259,21 @@ manifest-stl:
 release-tx: manifest-stl
 	$(PY) scripts/release_tx.py $(or $(REV),r1)
 
+
+# ---- surgical loop (docs/PROCESS.md): small, cheap, cached; nothing here re-runs a step whose traced inputs are unchanged ----
+state:
+	@$(PY) scripts/state.py
+
+state-deep:
+	@$(PY) scripts/state.py --deep
+
+touch-check:
+	@$(PY) scripts/pipeline.py plan | grep '^RUN' || echo "nothing stale"
+
+# force exactly one step (S=pcb-ab1 etc.), log to work/.pipeline/logs/<S>.log
+step:
+	@test -n "$(S)" || { echo "usage: make step S=<name>  (names: python3 scripts/pipeline.py list)"; exit 2; }
+	$(PY) scripts/pipeline.py run --only $(S) --cold --no-setup --jobs 1; tail -n 8 work/.pipeline/logs/$(S).log
+
+rx-board:
+	$(PY) scripts/pipeline.py run --only pcb-ab1,ab1-checks,gerber-ab1,audit-system --no-setup --jobs 2

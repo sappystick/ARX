@@ -1,3 +1,5 @@
+> HISTORY: the first part of this file (AB1A "3 open") is SUPERSEDED by the "Update: AD7389-4 ... +3V3D island" section below and by docs/HANDOFF_NEXT_THREAD.md. Current state: AB1A and AB1B both routed, KiCad 0 errors / 0 unconnected.
+
 # AB1A / AB1B receive-board routing: state at the pause (2026-10-27)
 
 Everything here is MODELED / tool-checked. Nothing is built. Source of truth: `src/pcb/afe_layout.py` (placement + router), `src/pcb/afe_export.py` (KiCad + Gerbers), `src/pcb/dru_gen.py` (rules).
