@@ -6,7 +6,7 @@ from scipy import ndimage
 import afe_design as D
 
 R_BOARD = 20.0; EDGE_KEEP = 0.35
-TRACK = 0.15; CLEAR = 0.16; VIA_D = 0.6; VIA_DRILL = 0.3   # fab floor (src/pcb/dru_gen.py GEN): track 0.15, clearance 0.16 (router designs to the floor itself), via drill 0.30 + annular 0.15 = 0.60; was 0.127 / 0.1 / 0.45 / 0.2 (below every floor, CORRECTIONS)
+TRACK = 0.15; CLEAR = 0.16; VIA_D = 0.508; VIA_DRILL = 0.254   # Step 12: clearance and track at the sourced floor; via at the vendors' documented Standard (TTM [T-HDI] 10 mil drill, 0.127 ring; AdvancedPCB [A-TOL]), see dru_gen AB1A / AB1B
 if os.environ.get("AFE_VIA"): VIA_D = float(os.environ["AFE_VIA"]); VIA_DRILL = float(os.environ["AFE_VDRILL"]); TRACK = float(os.environ.get("AFE_TRACK", TRACK))   # Step 12 search override (unset = unchanged)
 GRID = 0.1; N = int(2 * R_BOARD / GRID); OFF = R_BOARD
 BOARD = D.BOARD
