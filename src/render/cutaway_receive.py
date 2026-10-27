@@ -94,13 +94,16 @@ ax1.set_xlim(-65, 65); ax1.set_ylim(-3, 56); ax1.set_xlabel("x (mm)", fontsize=7
 
 # ------------------------------------------------------------------ 2 plan at the AB1 level
 ax2 = panel(gs[0, 3:6], "2  Plan section at z = 11 (AB1 level): what the two D40 discs must fit inside", "ring = the core wall cut at z = 11; discs AB1A / AB1B at x = -/+ 20.3; the shared strip between them carries J2 and the BLANK / SPI links")
-V = HEEL(head["CORE_CYLINDER_v5_integrated"]).reshape(-1, 3); V = V[np.abs(V[:, 2] - 11.0) < 1.0]; rr = np.hypot(V[:, 0], V[:, 1])
-Rin, Rout = float(np.percentile(rr[rr < 60], 2)) if (rr < 60).any() else 48.0, float(rr[rr < 70].max()) if (rr < 70).any() else 50.0
-Rin = float(rr[rr > 30].min()); cxin = 0.0
+T_ = HEEL(head["CORE_CYLINDER_v5_integrated"]); d_ = T_[:, :, 2] - (11.0 + 1.234e-4); m_ = (d_.min(1) < 0) & (d_.max(1) > 0); P_ = []
+for tri_, dd_ in zip(T_[m_], d_[m_]):                                                   # points where the plane z = 11 cuts the triangle edges: the inner wall radius is the median of the per-10-degree minimum (the spine comb at 70-110 deg reaches r 37.2; the rest of the wall is at r 44.0)
+    for i_, j_ in ((0, 1), (1, 2), (2, 0)):
+        if (dd_[i_] < 0) != (dd_[j_] < 0): P_.append(tri_[i_] + dd_[i_] / (dd_[i_] - dd_[j_]) * (tri_[j_] - tri_[i_]))
+P_ = np.array(P_); rr_ = np.hypot(P_[:, 0], P_[:, 1]); aa_ = np.degrees(np.arctan2(P_[:, 1], P_[:, 0])) % 360; bb_ = np.floor(aa_ / 10).astype(int)
+Rin = float(np.median([rr_[bb_ == b].min() for b in range(36) if (bb_ == b).any()])); Rout = float(rr_[rr_ < 70].max()); cxin = 0.0
 ax2.add_patch(Circle((0, 0), Rout, fc=COL["core"], ec="#222", lw=0.4, zorder=1)); ax2.add_patch(Circle((0, 0), Rin, fc="white", ec="#222", lw=0.6, zorder=2))
 for cx, nm in ((-20.3, "AB1A"), (20.3, "AB1B")):
     ax2.add_patch(Circle((cx, 0), 20.0, fc="#1f7a4d", ec="#0a3d24", alpha=0.35, lw=0.8, zorder=5)); ax2.text(cx, 0, nm, ha="center", va="center", fontsize=12, color="#073b20", zorder=6, fontweight="bold")
-dim(ax2, (-Rin, -46), (Rin, -46), f"inner bore {2 * Rin:.1f} mm at z = 11 (measured from the mesh vertices)", off=(0, -3), fs=7)
+dim(ax2, (-Rin, -46), (Rin, -46), f"inner bore {2 * Rin:.1f} mm at z = 11 (wall at z = 11, median of the section; spine comb to r 37.2)", off=(0, -3), fs=7)
 dim(ax2, (-Rin, 24), (-40.3, 24), f"{Rin - 40.3:.1f}", off=(0, 2.5), fs=7); dim(ax2, (40.3, 24), (Rin, 24), f"{Rin - 40.3:.1f}", off=(0, 2.5), fs=7)
 dim(ax2, (-40.3, 30), (-0.3, 30), "D40", off=(0, 2.5), fs=7); dim(ax2, (0.3, 30), (40.3, 30), "D40", off=(0, 2.5), fs=7); dim(ax2, (-0.3, 36), (0.3, 36), "0.6 gap", off=(0, 3), fs=6.5)
 ax2.set_xlim(-60, 60); ax2.set_ylim(-60, 60); ax2.set_xlabel("x (mm)", fontsize=7)
