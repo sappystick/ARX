@@ -256,7 +256,8 @@ def escape_stubs(length=float(os.environ.get("AFE_STUBLEN", "0.8"))):
         if pd.get("tht"): continue
         is_conn = False
         if not is_conn and (p["type"] not in STUB_TYPES or not pd["net"]): continue
-        if pd["net"] in PLANE and not (os.environ.get("AFE_STAGGER") and (pd["ref"], pd["num"]) in stag): continue
+        _pst = pd["net"] in PLANE and pd["ref"] in os.environ.get("AFE_PLANESTUB", "").split(",") and pd["num"] != "25"          # ground pins of a fine-pitch IC: short stub with the plane via at its tip (keeps the ground fan-out out of the neighbouring pins' pockets)
+        if pd["net"] in PLANE and not _pst and not (os.environ.get("AFE_STAGGER") and (pd["ref"], pd["num"]) in stag): continue
         if not pd["net"] or pd["num"] in ("MH1", "MH2"): continue
         px, py = PLACE[pd["ref"]][0], PLACE[pd["ref"]][1]
         if is_conn: dx, dy = (-1, 0) if px > 0 else (1, 0)
@@ -264,7 +265,9 @@ def escape_stubs(length=float(os.environ.get("AFE_STUBLEN", "0.8"))):
         else: dx, dy = 0, (1 if pd["y"] > py else -1)
         net = NETID[pd["net"]]; L = LIDX[pd["layer"]]
         via_pin = stag.get((pd["ref"], pd["num"]), (False, 0))[0] if os.environ.get("AFE_STAGGER") else False
+        if _pst: via_pin = True
         slen = length if (via_pin or not os.environ.get("AFE_STAGGER") or (pd["ref"], pd["num"]) not in stag) else float(os.environ.get("AFE_PASSLEN", "1.8"))
+        if _pst: slen = float(os.environ.get("AFE_GNDLEN", "0.8"))
         if dx: i0, j0 = cell(pd["x"] + dx * pd["w"] / 2, pd["y"])
         else: i0, j0 = cell(pd["x"], pd["y"] + dy * pd["h"] / 2)
         steps = int(round(slen / GRID)); Pm = passable(L, net); good = []
