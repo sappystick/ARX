@@ -1,10 +1,10 @@
 {
  "summary": {
-  "files": 48,
-  "closed": 33,
-  "oriented": 48,
+  "files": 47,
+  "closed": 32,
+  "oriented": 47,
   "fits": 47,
-  "thin_wall_flags": 16,
+  "thin_wall_flags": 15,
   "notes": [
    "closed/oriented/fits: regress.py locks the known open list (15) and the known oversize part (1); any other open or oversize file FAILS. Wall estimates on open (non-manifold) shells are unreliable: rays pass through overlapping shells",
    "overhang: area fraction of faces more than 45 deg below horizontal above the first 0.3 mm, as stored (z up)",
@@ -750,27 +750,6 @@
    "draft_fraction_below_1deg": 0.851,
    "flags": [],
    "ok": true
-  },
-  {
-   "file": "stl/upper/U8_SEPTUM_extended.stl",
-   "faces": 7020,
-   "size_mm": [
-    446.0,
-    25.6,
-    25.6
-   ],
-   "volume_cm3": 30.89,
-   "closed": true,
-   "oriented": true,
-   "fits_build_cube": false,
-   "overhang_area_fraction": 0.063,
-   "wall_p10_mm": 0.83,
-   "draft_fraction_below_1deg": 0.977,
-   "flags": [
-    "larger than 250 mm build cube",
-    "thin wall estimate 0.83 mm (< 1.2 mm)"
-   ],
-   "ok": false
   },
   {
    "file": "stl/upper/U9_CAM_COLLAR.stl",

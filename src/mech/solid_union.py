@@ -72,8 +72,13 @@ def merge_closed(shells, concat, margin=MARGIN):
         u = d if u is None else u + d
     u = u.simplify(SIMPLIFY); mesh = u.to_mesh(); V, F = np.asarray(mesh.vert_properties, float)[:, :3], np.asarray(mesh.tri_verts, np.int64)
     snapped = None
-    for q, off in ((1e-3, 0.0003), (1e-3, 0.0005), (1.5e-3, 0.0), (2e-3, 0.0007), (1e-3, 0.0), (3e-3, 0.0)):         # vertices closer than the STL's float32 / 4-decimal resolution look like pinch edges to print_check: snap to a grid until none is left
+    cands = [(q, o * q) for q in (1e-3, 1.5e-3, 2e-3, 3e-3) for o in (0.3, 0.5, 0.0, 0.1, 0.2, 0.4, 0.6, 0.7, 0.8, 0.9)]
+    best = None
+    for q, off in cands:                                                   # vertices closer than the STL's float32 / 4-decimal resolution look like pinch edges to print_check: snap to a grid until none is left
         Vq = np.round((V - off) / q) * q + off; U_, inv = np.unique(Vq, axis=0, return_inverse=True); G = inv.reshape(-1)[F]; G = G[(G[:, 0] != G[:, 1]) & (G[:, 1] != G[:, 2]) & (G[:, 0] != G[:, 2])]
-        if position_bad_edges(G, U_) == 0: V, F, snapped = U_, G, (q, off); break
-    if snapped is None: raise ValueError("solid_union: no snap grid closes the union at the STL's stored resolution")
+        nb = position_bad_edges(G, U_)
+        if best is None or nb < best[0]: best = (nb, q, off)
+        if nb == 0: V, F, snapped = U_, G, (q, off); break
+    if snapped is None: np.savez("solid_union_failed.npz", V=V, F=F)
+    if snapped is None: raise ValueError(f"solid_union: no snap grid closes the union at the STL's stored resolution (best: {best[0]} open edges at grid {best[1]} offset {best[2]}); the union was saved to solid_union_failed.npz")
     return V, F, dict(snap_grid_mm=snapped[0], snap_offset_mm=snapped[1], method="dilated union", bodies=len(shells), margin=margin, volume_in_mm3=round(sum(vol(np.asarray(V_, float), np.asarray(F_, np.int64)) for V_, F_ in shells), 2), volume_out_mm3=round(vol(V, F), 2), open_edges_after=position_bad_edges(F, V))
