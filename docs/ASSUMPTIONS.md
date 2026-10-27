@@ -3,7 +3,7 @@
 |---|---|---|---|
 | 1 | Coil self-capacitance 250 pF, FET Coss node 500 pF total | sim_head1 (turn-off, first gate) | impedance analyzer on the wound coil; FET datasheet |
 | 2 | X7R 100 nF/630 V loses about 65 % at 630 V (model C0/(1+(V/462)^2)) | sim_head1 | manufacturer DC-bias curve |
-| 3 | RS3 is the X8 input series resistor; noise densities 4.2 / 1.7 nV/rtHz | depth tables | netlist (confirmed), noise measurement on AB1A |
+| 3 | Input series resistors (afe_design.py RS): GX/GY carry QUAD-A/QUAD-B at 100 ohm (input noise about 1.7 nV/rtHz, sbq_damp2 / ab1_options_model); X8, Y8 and MONO carry no signal in RX-Q (spare inputs tied to VCM, MONO held at VCM_OUT) and keep 1 kohm (limits fault current into the BAV199 clamp to about 1 mA per volt above the rails instead of 10 mA). The 4.2 nV/rtHz figure (RS3 = 1 kohm on the old figure-8 X8 channel) is legacy, used only in the sim_head1 baseline row | depth tables, noise model | netlist (confirmed), noise measurement on AB1A |
 | 4 | Gold sphere target, sigma 4.1e7 S/m, decay tau = mu0 sigma a^2/pi^2; step-off approximation | detection depth | add ground (mineralised soil + viscosity), finite turn-off, non-spherical targets |
 | 5 | Null residuals come from idealised circular-loop receive models, not the real SB1R-Q pattern | leak numbers | model the real pattern from the Gerber geometry; measure |
 | 6 | Thermal: PETG 0.2, potting 0.25-1.8, FR4 0.5, h 6-10 W/m2K | sim_head2 | thermocouples on a heated mock-up |

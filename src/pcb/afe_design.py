@@ -40,9 +40,13 @@ LIB = {
     pads=[("1", -2.15, -0.975, 1.45, 0.4, "roundrect"), ("2", -2.15, -0.325, 1.45, 0.4, "roundrect"), ("3", -2.15, 0.325, 1.45, 0.4, "roundrect"), ("4", -2.15, 0.975, 1.45, 0.4, "roundrect"),
           ("5", 2.15, 0.975, 1.45, 0.4, "roundrect"), ("6", 2.15, 0.325, 1.45, 0.4, "roundrect"), ("7", 2.15, -0.325, 1.45, 0.4, "roundrect"), ("8", 2.15, -0.975, 1.45, 0.4, "roundrect")], body=(3.0, 3.0, 1.1)),
 }
+EP_LAND = 0.60                                                                                # AD7389-4 exposed-pad land (Fig. 43 EP max 0.60 SQ); was a 2.0 mm PLACEHOLDER
 def _ad7389():
-    """AD7389-4 quad 16-bit simultaneous SAR ADC, 24-lead LFCSP 4x4 0.5 mm (CP-24-25). Pin map from the attached datasheet Rev. 0 (Table 8, Fig. 9); pad 0.25 x 0.40 mm, pitch 0.50
-    (Fig. 43: 0.20-0.30 wide, 0.30-0.45 long). EXPOSED PAD SIZE IS NOT IN THE DRAWING TEXT: 2.0 mm square is a PLACEHOLDER (ASSUMPTIONS row 35): land pattern not releasable."""
+    """AD7389-4 quad 16-bit simultaneous SAR ADC, 24-lead LFCSP 4x4 0.5 mm (CP-24-25). Pin map from the datasheet Rev. 0 (Table 8, Fig. 9). Land pattern from Fig. 43
+    (p. 31, PKG-005367, 01-30-2017-A; copy in data/seed/footprints/): terminals 0.25 x 0.40 mm nominal (b 0.20-0.30, L 0.30-0.45), pitch 0.50 BSC, flush with the 4.00 mm body
+    (no toe/heel extension: the drawing gives none); exposed pad 0.40-0.50-0.60 SQ with the pin-1 chamfer -> land 0.60 x 0.60 (the EP maximum, so the paddle is on copper at any
+    tolerance), one 0.508/0.254 via at its centre. ADI publishes no land pattern, paste or mask on this page: KiCad defaults (mask 0.05, paste 1:1). Table 6 (theta-JC 0.432 C/W
+    at the exposed pad) reads like a larger paddle, so afe_layout keeps foreign-net copper out of the body interior (ASSUMPTIONS 35)."""
     nm = {1: "GND", 2: "VLOGIC", 3: "REGCAP", 4: "VCC33", 5: "GND", 6: "AIND-", 7: "AIND+", 8: "AINC-", 9: "AINC+", 10: "AINB-", 11: "AINB+", 12: "AINA-", 13: "AINA+", 14: "GND",
           15: "REFCAP", 16: "GND", 17: "REFOUT", 18: "CS", 19: "SDOA", 20: "SDOB", 21: "SDI", 22: "SCLK", 23: "SDOC", 24: "SDOD_ALERT"}
     typ = {18: "input", 21: "input", 22: "input", 19: "output", 20: "output", 23: "no_connect", 24: "no_connect", 17: "power_out", 15: "passive", 3: "passive", 2: "power_in", 4: "power_in"}
@@ -55,8 +59,8 @@ def _ad7389():
         elif k == 2: x, y, w, h = 1.8, -t, 0.40, 0.25
         else: x, y, w, h = -t, -1.8, 0.25, 0.40
         pads.append((str(i), x, y, w, h, "roundrect"))
-    pads.append(("25", 0.0, 0.0, 2.0, 2.0, "roundrect"))
-    return dict(desc="AD7389-4 quad 16-bit 2 MSPS simultaneous SAR ADC, internal 2.5 V reference, LFCSP-24 4x4 (EP size PLACEHOLDER)", fp="Package_CSP:LFCSP-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm", pins=pins, pads=pads, body=(4.0, 4.0, 0.55))
+    pads.append(("25", 0.0, 0.0, EP_LAND, EP_LAND, "roundrect"))
+    return dict(desc="AD7389-4 quad 16-bit 2 MSPS simultaneous SAR ADC, internal 2.5 V reference, LFCSP-24 4x4 CP-24-25 (EP 0.50 SQ, land 0.60)", fp="Package_CSP:AD7389-4_CP-24-25_LFCSP-24-1EP_4x4mm_P0.5mm_EP0.6x0.6mm", pins=pins, pads=pads, body=(4.0, 4.0, 0.55))
 LIB["AD7389"] = _ad7389()
 def ffc(n):
     pins = [(str(i + 1), str(i + 1), "passive") for i in range(n)] + [("MH1", "SHELL1", "passive"), ("MH2", "SHELL2", "passive")]
