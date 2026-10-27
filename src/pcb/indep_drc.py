@@ -118,7 +118,8 @@ def run(board, path):
     res = dict(board=board, file=path, checks={}, errors=[], zones=len(kids(tree, "zone")))
     # width
     bad_w = [t for t in tracks if t["w"] < TRK - 1e-9]
-    bad_v = [v for v in vias if (v["size"] - v["drill"]) / 2 < VIA_ANN - 1e-9 or v["drill"] < VIA_DRILL - 1e-9]
+    _bd = dru_gen.BOARDS[board]; via_drill_min, via_ann_min = _bd.get("via_drill", VIA_DRILL), _bd.get("via_annular", VIA_ANN)           # AB1A / AB1B carry the vendors' documented Standard via (0.254 / 0.127) in dru_gen
+    bad_v = [v for v in vias if (v["size"] - v["drill"]) / 2 < via_ann_min - 1e-9 or v["drill"] < via_drill_min - 1e-9]
     bad_p = [h for h in holes if h["kind"] == "pad:thru_hole" and not h["npth"] and (h["drill"] < PTH_DRILL - 1e-9)]
     ann = [c for c in copper if c["kind"] == "pad:thru_hole" and c["ptype"] == "thru_hole" and c["drill"] and (c["w"] - c["drill"]) / 2 < PTH_ANN - 1e-9]
     res["checks"]["width_track"] = dict(n=len(tracks), bad=len(bad_w), min=min([t["w"] for t in tracks] or [0]))
@@ -156,6 +157,7 @@ def run(board, path):
         for j in cg.query(h["geom"].buffer(HOLE_CU + 0.05)):
             c = copper[j]
             if c["net"] == h["net"] and h["net"] != "": continue
+            if abs(c["at"][0] - h["at"][0]) < 1e-6 and abs(c["at"][1] - h["at"][1]) < 1e-6 and c["net"] == h["net"]: continue          # a hole and the copper of its own pad (also for a pad with no net)
             d = h["geom"].distance(c["geom"])
             if d + 1e-9 < HOLE_CU: hc.append(dict(kind=h["kind"], gap=round(d, 3), copper=c["kind"] + ":" + c["net"] + "@" + c["layer"], at=[round(x, 2) for x in h["at"]]))
     res["checks"]["hole_to_copper"] = dict(bad=len(hc), examples=hc[:6])
@@ -186,6 +188,14 @@ def run(board, path):
             by_hole.setdefault((round(c["at"][0], 4), round(c["at"][1], 4), c["net"]), []).append(i)
     for idx in by_hole.values():
         for k in idx[1:]: parent[f(k)] = f(idx[0])
+    zone_nets = {}                                           # zone-net exemption: a zone fill joins the vias and through-hole pads of its net that lie inside its polygon (the fill itself, its clearance and thermal spokes are KiCad's DRC)
+    for z in kids(tree, "zone"):
+        zn = one(z, "net_name"); pl = one(z, "polygon"); pts = one(pl, "pts") if pl else None
+        if not zn or not pts: continue
+        poly = Polygon([(float(q[1]), float(q[2])) for q in kids(pts, "xy")]); idx = [i for i, c in enumerate(copper) if c["net"] == zn[1] and (c["kind"] == "via" or (c["pad"] and c.get("ptype") == "thru_hole")) and poly.contains(Point(c["at"]))]
+        zone_nets.setdefault(zn[1], []).append(len(idx))
+        for k in idx[1:]: parent[f(k)] = f(idx[0])
+    res["zone_nets_joined"] = zone_nets
     per_net = {}
     for i, c in enumerate(copper):
         if c["net"] == "": continue
@@ -197,7 +207,7 @@ def run(board, path):
     fails.update({f"split:{n}": k - 1 for n, k in unconnected.items()})
     fails.update({f"error:{e[:40]}": 1 for e in res["errors"]})
     res["fails"] = fails; res["n_fail"] = sum(fails.values())
-    res["zones_checked"] = res["zones"] == 0
+    res["zones_checked"] = res["zones"] == 0; res["zone_clearance_checked"] = False             # fills are not modelled: KiCad DRC covers zone clearance
     return res
 
 if __name__ == "__main__":

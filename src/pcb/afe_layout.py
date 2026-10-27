@@ -25,7 +25,7 @@ BOARD_CFG = {"A": dict(uarots="", nudges="", pre=""), "B": dict(uarots="", nudge
 for _k, _env in (("uarots", "AFE_UAROTS"), ("nudges", "AFE_NUDGE"), ("pre", "AFE_PRE")):
     if BOARD_CFG[os.environ.get("BOARD", "A")][_k] and _env not in os.environ and not D.ADC7: os.environ[_env] = BOARD_CFG[os.environ.get("BOARD", "A")][_k]
 # Committed configuration of the AD7389-4 build (Option 1: +3V3D island on In4). Chip position, nudges, capacitor positions relative to the chip (REF:dx:dy:rot), island rectangle relative to the chip (x0:x1:y0:y1), short stubs with the plane via for the +3V3D pins.
-BOARD_CFG7 = {"A": dict(ux="9.5", uy="0.0", nudges="SW2:0.4:0", caps="CRG:0.1:4.0:90,CVC:-1.8:4.6:0,CVL:2.0:4.6:0", island="1", island_rel="-2.5:3.1:2.0:3.6", planestub="UA1", psnets="+3V3D"),
+BOARD_CFG7 = {"A": dict(ux="9.5", uy="0.0", nudges="SW2:0.4:0,CBD:-0.3:0", caps="CRG:0.1:4.0:90,CVC:-1.8:4.6:0,CVL:2.0:4.6:0", island="1", island_rel="-2.5:3.1:2.0:3.6", planestub="UA1", psnets="+3V3D"),
               "B": dict(ux="9.5", uy="0.0", nudges="RD2:0.4:0", caps="CRG:-0.3:4.0:90,CVC:-1.8:5.0:0,CVL:2.0:5.0:0", island="1", island_rel="-2.5:3.1:2.0:3.6", planestub="UA1", psnets="+3V3D")}   # island x 7.0 .. 12.6 mm: >= 3 mm from the OPA2211 pads
 if D.ADC7:
     for _k, _env in (("ux", "AFE_UX"), ("uy", "AFE_UY"), ("nudges", "AFE_NUDGE"), ("caps", "AFE_CAPS"), ("island", "AFE_ISLAND"), ("island_rel", "AFE_ISLAND_REL"), ("planestub", "AFE_PLANESTUB"), ("psnets", "AFE_PSNETS")):
@@ -92,6 +92,7 @@ def placement_check():
             gx = abs(a["x"] - b["x"]) - (a["w"] + b["w"]) / 2; gy = abs(a["y"] - b["y"]) - (a["h"] + b["h"]) / 2
             gap = math.hypot(max(gx, 0), max(gy, 0)) if (gx > 0 and gy > 0) else max(gx, gy)
             if gap < CLEAR and a["net"] != b["net"]: errs.append(f"clearance {gap:.2f}: {a['ref']}.{a['num']} - {b['ref']}.{b['num']}")
+            if a["net"] and a["net"] == b["net"] and 0 < gap < CLEAR and a["tht"] != b["tht"]: errs.append(f"same-net sliver {gap:.3f}: {a['ref']}.{a['num']} - {b['ref']}.{b['num']}")   # two pads of one net closer than the clearance floor but not touching: a copper sliver the fabricator would reject (found on CBD.2 / J2.11, 0.035 mm)
             if gx < 0 and gy < 0: errs.append(f"overlap: {a['ref']}.{a['num']} - {b['ref']}.{b['num']}")
     return errs
 # ------------------------------------------------------------ grid (4 routing layers: F.Cu, In2.Cu, In3.Cu, B.Cu; planes In1=GND, In4=+5VA)

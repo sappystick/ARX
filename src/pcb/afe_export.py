@@ -32,7 +32,7 @@ def snap_stubs(TR):
     return add
 TR += snap_stubs(TR)
 
-PLANE = {"GND": "In1.Cu", "+5VA": "In4.Cu"}; RL = ["F.Cu", "In2.Cu", "In3.Cu", "B.Cu"]
+PLANE = dict(A.PLANE); RL = ["F.Cu", "In2.Cu", "In3.Cu", "B.Cu"]
 VIA_D, VIA_DR = A.VIA_D, A.VIA_DRILL; R_BRD = A.R_BOARD
 CX, CY = 100.0, 100.0
 # ------------------------------------------------------------ items for DRC / connectivity
