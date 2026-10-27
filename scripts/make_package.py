@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Builds deliverables/PHIFOLD233_PACKAGE_r3: one folder to inspect every board, schematic, STL and the layered cut-away blueprint, with an index that states plainly what is
+"""Builds deliverables/PHIFOLD233_PACKAGE_r4: one folder to inspect every board, schematic, STL and the layered cut-away blueprint, with an index that states plainly what is
 verified, what is open and what is NOT ready. Nothing is hand-edited: KiCad files are copied from data/kicad, schematic PDFs and board renders are produced by kicad-cli, the
 blueprint by src/render/blueprint_r3.py, the STL table from stl/MANIFEST.csv (hashes) and docs/UNVERIFIED.md. Requires make setup + make formers-low (blueprint) and
 optionally make formers-print (the six print formers in work/kit_v15/PRINT, about 400 MB, not stored in git).
 usage (repo root): python3 scripts/make_package.py"""
 import os, sys, csv, json, glob, shutil, hashlib, subprocess, re, datetime
-R = "deliverables/PHIFOLD233_PACKAGE_r3"; os.makedirs(R, exist_ok=True)
+R = "deliverables/PHIFOLD233_PACKAGE_r4"; os.makedirs(R, exist_ok=True)
 for d in ("kicad", "kicad/3dmodels", "schematics", "renders/boards", "models3d", "blueprint", "gerbers"): os.makedirs(f"{R}/{d}", exist_ok=True)
 sha = lambda p: hashlib.sha256(open(p, "rb").read()).hexdigest()
 def run(*a, **k): return subprocess.run(a, capture_output=True, text=True, **k)
@@ -14,7 +14,9 @@ BOARDS = [("CB1D", "PF233-CB1D_routed", "CB1D-B controller, D78, 6 layers", "in 
           ("PB1R", "PF233-PB1R_routed", "PB1R TX stage, 70 x 70, 4 layers", "in the verified flow"), ("PM2", "PF233-PM2_routed", "PM2 battery dock, 28 x 70", "in the verified flow"),
           ("HB2", "PF233-HB2_routed", "HB2 grip board, 24 x 38", "in the verified flow"), ("TXJ1", "TXJ1", "TXJ1 junction, 2 layers", "in the verified flow"),
           ("SB1R-QA", "SB1R-QA", "SB1R-QA receive coil board, D228", "in the verified flow"), ("SB1R-QB", "SB1R-QB", "SB1R-QB receive coil board, D228", "in the verified flow"),
-          ("HTA", "PF233-HTA", "HTA timing-coil board, D90", "in the verified flow (v2: the first Gerbers were an open coil)")]
+          ("HTA", "PF233-HTA", "HTA timing-coil board, D90", "in the verified flow (v2: the first Gerbers were an open coil)"),
+          ("AB1A", "PF233-AB1A", "AB1A receive analog board, D40, 6 layers, AD7389-4 build with the +3V3D island", "routed, KiCad / independent DRC clean; BLOCKED by the exposed-pad land pattern (releases/RX_r1/BLOCKERS.md)"),
+          ("AB1B", "PF233-AB1B", "AB1B receive analog board, D40, 6 layers, AD7389-4 build", "routed, KiCad / independent DRC clean; BLOCKED by the exposed-pad land pattern (releases/RX_r1/BLOCKERS.md)")]
 for b, f, desc, st in BOARDS:
     for ext in (".kicad_pcb", ".kicad_dru", ".kicad_pro"):
         if os.path.exists(f"data/kicad/{f}{ext}"): shutil.copy(f"data/kicad/{f}{ext}", f"{R}/kicad/{f}{ext}")
@@ -30,7 +32,7 @@ for b, f, desc, st in BOARDS:
 for f in sorted(glob.glob("data/kicad/3dmodels/*.wrl")): pass
 # ---------------------------------------------------------------- Gerbers: pointers (the release package and the published sets)
 GERB = {"CB1D": "data/gerber/CB1D_B3", "LB1": "data/gerber/LB1_v5", "PB1R": "data/gerber/PB1R_v3", "PM2": "data/gerber/PM2", "HB2": "data/gerber/HB2", "TXJ1": "data/gerber/TXJ1_v2",
-        "SB1R-QA": "data/gerber/SB1R_QA_v2", "SB1R-QB": "data/gerber/SB1R_QB_v2", "HTA": "data/gerber/HTA_v2"}
+        "SB1R-QA": "data/gerber/SB1R_QA_v2", "SB1R-QB": "data/gerber/SB1R_QB_v2", "HTA": "data/gerber/HTA_v2", "AB1A": "data/gerber/AB1A_v1", "AB1B": "data/gerber/AB1B_v1"}
 # ---------------------------------------------------------------- STL classification
 man = {r["file"]: r for r in csv.DictReader(open("stl/MANIFEST.csv"))}
 def classify(p):
@@ -50,11 +52,13 @@ with open(f"{R}/STL_CLASSIFICATION.csv", "w", newline="") as f:
     w = csv.writer(f); w.writerow(["file", "class", "note", "bytes", "sha256"]); w.writerows(rows)
 # ---------------------------------------------------------------- blueprint
 if not os.path.exists(f"{R}/renders/boards/CB1D_top.png"): print("board renders missing: run the kicad-cli render loop in the index first")
+os.makedirs(f"{R}/blueprint", exist_ok=True)
+for _f in glob.glob("deliverables/receive_cutaway/*"): shutil.copy(_f, f"{R}/blueprint/{os.path.basename(_f)}")             # receive-stage cut-away (AD7389-4 build)
 r = run(sys.executable, "src/render/blueprint_r3.py", f"{R}/blueprint"); print(r.stdout.strip(), r.stderr[-300:])
 # ---------------------------------------------------------------- index
 S = json.load(open("data/results/SIGNOFF_STATUS.json")); UNV = re.findall(r"^\| (U-[A-Z0-9-]+) \| ([^|]*)\|", open("docs/UNVERIFIED.md").read(), re.M)
 cnt = {k: sum(1 for r_ in rows if r_[1].startswith(k)) for k in ("PRINT", "REFERENCE", "SUPERSEDED")}
-L = [f"# PHI-FOLD 233 inspection package r3 (generated {datetime.date.today()} by scripts/make_package.py)", "",
+L = [f"# PHI-FOLD 233 inspection package r4 (generated {datetime.date.today()} by scripts/make_package.py)", "",
  "## What this is, and what it is not", "",
  "Everything that exists for the transmit region and the head is collected here to look at: boards, schematics, STLs, and the layered cut-away blueprint. **It is not a set of files that are \"ready to print\" or \"ready to send to a PCB house\".** Nothing has been built or measured. The open items that stand between this package and a first article are listed under \"Not ready\" below; every one is stated in docs/UNVERIFIED.md and docs/OPEN_ITEMS.md as well.", "",
  f"Tool status of the design: sign-off {S['counts']['PASS']} PASS / {S['counts']['FAIL']} FAIL / {S['counts']['SKIP']} SKIP / {S['counts']['UNVERIFIED']} UNVERIFIED; strict regression passes (docs/STATUS.md).", "",
