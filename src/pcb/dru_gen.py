@@ -24,12 +24,15 @@ BOARDS = {
     "HB2": dict(hv=[], hv_mm=1.0, power={"P3V3": 0.3}),
     "HTA": dict(hv=[], hv_mm=1.0, power={}),
     "TXJ1": dict(hv=["TX_A", "TX_B"], hv_mm=1.0, power={"TX_A": 3.0, "TX_B": 3.0}),
-    "AB1A": dict(hv=[], hv_mm=1.0, power={}),      # Step 12: receive analog boards (low voltage; +5VA / +3V3D / VCM only). Router designs to the floor itself (0.16 mm, via 0.60 / 0.30), see OPEN_ITEMS 38
-    "AB1B": dict(hv=[], hv_mm=1.0, power={}),
+    # Step 12: receive analog boards (low voltage). Router designs to the floor itself for clearance (0.16 mm) and, only here, to the vendors' documented Standard via:
+    # drill 0.254 mm (TTM [T-HDI] H, through hole Standard, 10 mil) with a 0.127 mm ring (TTM [T-HDI] I, 10 mil pad over drill; AdvancedPCB [A-TOL] ring >= 0.005"): via 0.508 mm.
+    # The other boards keep the conservative 0.30 / 0.15 (0.60 mm). WATCH (docs/design/FAB_RULES_VERIFIED.md): three AdvancedPCB facilities list a 0.216 mm no-breakout ring: settle with U-FAB-DRC.
+    "AB1A": dict(hv=[], hv_mm=1.0, power={}, via_drill=0.254, via_annular=0.127),
+    "AB1B": dict(hv=[], hv_mm=1.0, power={}, via_drill=0.254, via_annular=0.127),
 }
 def rules(board):
     b = BOARDS[board]; q = lambda ns: " || ".join(f"A.NetName == '{n}'" for n in ns)
-    s = ["(version 1)", f'(rule "general {GEN["clearance"]} mm / {GEN["track"]} mm"', "  (severity error)", f'  (constraint clearance (min {GEN["clearance"]}mm))', f'  (constraint track_width (min {GEN["track"]}mm))', f'  (constraint hole_size (min {GEN["drill"]}mm))', f'  (constraint annular_width (min {GEN["annular"]}mm))', f'  (constraint edge_clearance (min {GEN["edge"]}mm))',
+    s = ["(version 1)", f'(rule "general {GEN["clearance"]} mm / {GEN["track"]} mm"', "  (severity error)", f'  (constraint clearance (min {GEN["clearance"]}mm))', f'  (constraint track_width (min {GEN["track"]}mm))', f'  (constraint hole_size (min {b.get("via_drill", GEN["drill"])}mm))', f'  (constraint annular_width (min {b.get("via_annular", GEN["annular"])}mm))', f'  (constraint edge_clearance (min {GEN["edge"]}mm))',
          f'  (constraint hole_clearance (min {GEN["hole_clearance"]}mm))', f'  (constraint hole_to_hole (min {GEN["hole_to_hole"]}mm)))',
          f'(rule "component PTH annular {GEN["pth_annular"]} mm, hole {GEN["pth_drill"]} mm"', "  (severity error)", "  (condition \"A.Pad_Type == 'Through-hole'\")", f'  (constraint annular_width (min {GEN["pth_annular"]}mm))', f'  (constraint hole_size (min {GEN["pth_drill"]}mm)))']
     for n, w in b["power"].items(): s += [f'(rule "power width {n}"', f'  (condition "A.NetName == \'{n}\'")', f'  (constraint track_width (min {w}mm)))']

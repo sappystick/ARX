@@ -21,7 +21,7 @@ else:
 # Step 10 search overrides (environment only; unset = the committed placement): row pitch, decoupling x and dy, UA rotation
 # Committed per-board routing configuration (Step 12). The AFE_* environment variables below still override it (search only).
 #   uarots: ADC rotation per row; nudges: part moves "REF:dx:dy"; pre: nets routed before every via and trace; stagger: unused
-BOARD_CFG = {"A": dict(uarots="", nudges="", pre=""), "B": dict(uarots="", nudges="", pre="")}
+BOARD_CFG = {"A": dict(uarots="", nudges="", pre=""), "B": dict(uarots="", nudges="", pre="FB_MONO")}      # B: RG2.1 sits in a pocket that VCM walls in unless FB_MONO is routed first (verified: 0 open)
 for _k, _env in (("uarots", "AFE_UAROTS"), ("nudges", "AFE_NUDGE"), ("pre", "AFE_PRE")):
     if BOARD_CFG[os.environ.get("BOARD", "A")][_k] and _env not in os.environ: os.environ[_env] = BOARD_CFG[os.environ.get("BOARD", "A")][_k]
 _AFE = dict(span=os.environ.get("AFE_SPAN"), capx=os.environ.get("AFE_CAPX"), capdy=os.environ.get("AFE_CAPDY"), uarot=os.environ.get("AFE_UAROT"), uaside=os.environ.get("AFE_UASIDE"), capside=os.environ.get("AFE_CAPSIDE"))
@@ -115,7 +115,7 @@ def stamp_cells(path, net):
                 if blk[L, b, a] == -1: blk[L, b, a] = net
                 elif blk[L, b, a] != net: blk[L, b, a] = -2
         core[L, j, i] = net
-VR = int(math.ceil((VIA_D / 2 + CLEAR) / GRID)); VDISK = disk(VR)
+VR = int(math.ceil((VIA_D / 2 + CLEAR + TRACK / 2) / GRID - 1e-9)); VDISK = disk(VR)      # Step 12: the track half-width was missing (0.135 mm gaps in KiCad DRC against the 0.16 floor)
 def stamp_via(i, j, net):
     for L in range(NL):
         for di, dj in VDISK:
@@ -305,7 +305,9 @@ def run():
     bad_fan = []
     first = sorted([n for n in nets if n.startswith("ADCIN_")]) + sorted([n for n in nets if n.startswith("SDO")])
     BUS = first + sorted([n for n in nets if n.startswith("SPARE")]) + sorted([n for n in nets if n.startswith("RAW_")]) + ["NR", "SCLK", "CS", "+3V3D", "BLANK", "VREF", "VCM", "VREF_RAW", "VCM_DIV"]
-    prio = json.load(open(f"prio_{BOARD}.json")) if os.path.exists(f"prio_{BOARD}.json") else {"nets": []}
+    # Step 12: the learned priority list is hidden state (git-ignored work/ file, rewritten on every run): a fresh clone would route in a different order.
+    # It is read and written only when AFE_PRIO=1 (the old manual workflow); the default flow is deterministic.
+    prio = json.load(open(f"prio_{BOARD}.json")) if (os.environ.get("AFE_PRIO") and os.path.exists(f"prio_{BOARD}.json")) else {"nets": []}
     done = set()
     def go(name):
         if name in nets and len(nets[name]) >= 2 and name not in done: done.add(name); route(name)
@@ -337,7 +339,7 @@ def run():
     for name in rest: go(name)
     newnets = list(dict.fromkeys([f.split(":")[0] for f in failed if f.split(":")[0] not in BUS]))
     prio["nets"] = list(dict.fromkeys(newnets + prio["nets"]))[:40]
-    json.dump(prio, open(f"prio_{BOARD}.json", "w"))
+    if os.environ.get("AFE_PRIO"): json.dump(prio, open(f"prio_{BOARD}.json", "w"))
     rep["unrouted"] = failed
     rep["via_in_pad"] = list(VIP); rep["tracks"] = len(TRACKS); rep["vias"] = len(VIAS); rep["time_s"] = round(time.time() - t0, 1)
     return rep
