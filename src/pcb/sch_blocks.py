@@ -4,8 +4,8 @@ sch_func.py fails if a ref is listed twice. Changing a block list never changes 
 DATE = "2026-10-26"
 TITLE = {"CB1D": "CB1D-B controller: Pico 2 W, supplies, handle cable, receive-board links, TX monitor", "LB1": "LB1 display: 66 x SK6812-MINI-E chain with 3V3 -> 5 V data buffer",
          "PB1R": "PB1R transmit stage: gate drive, two 650 V FETs, shunt, flyback clamp, overcurrent comparator, 12 V aux", "PM2": "PM2 battery dock: fuse, P-FET power switch with soft start, bulk, cord",
-         "HB2": "HB2 grip board: Hall trigger, 4-position dial divider, signal cord", "AB1A": "AB1A receive analog board: 3 channels (GX, GY, X8), blanking, gain, 16-bit ADC",
-         "AB1B": "AB1B receive analog board: 2 channels (Y8, MONO), blanking, gain, 16-bit ADC"}
+         "HB2": "HB2 grip board: Hall trigger, 4-position dial divider, signal cord", "AB1A": "AB1A receive analog board: 3 channels (GX, GY, X8), blanking, gain, 16-bit quad ADC (AD7389-4)",
+         "AB1B": "AB1B receive analog board: 2 channels (Y8, MONO), blanking, gain, 16-bit quad ADC (AD7389-4)"}
 def _by(PARTS, *prefixes): return [r for r in PARTS if r.startswith(prefixes)]
 def blocks(b, PARTS, PINNET):
     if b == "PB1R": return [
@@ -52,14 +52,19 @@ def blocks(b, PARTS, PINNET):
         dict(title="13  Display link", note=["JLB: +5V, LED_IN (from the Pico), GND, GND to LB1."], refs=["JLB"])]
     if b in ("AB1A", "AB1B"):
         chans = {"AB1A": [("GX", 1, "U1", "A"), ("GY", 2, "U1", "B"), ("X8", 3, "U2", "A")], "AB1B": [("Y8", 1, "U1", "A"), ("MONO", 2, "U1", "B")]}[b]
+        v7 = "CRC" in PARTS                                                        # AD7389-4 variant: one quad ADC replaces the ADS8860s and the REF5041 chain
         out = [dict(title="1  Connectors", note=["J1: antenna harness (raw coil signals RAW_*, and VCM returns).", "J2: main-board 2x6 header: +5VA, +3V3D, SPI (SCLK, CS, SDO*), BLANK" + (", VCM" if b == "AB1B" else "") + "."], refs=["J1", "J2"])]
         for name, i, amp, half in chans:
-            refs = [f"RS{i}", f"D{i}", f"SW{i}", f"CSW{i}", f"RG{i}", f"RF{i}", f"CF{i}", f"RAAF{i}", f"CAAF{i}", f"UA{i}", f"CAV{i}", f"CDV{i}", f"CRF{i}"]
+            refs = [f"RS{i}", f"D{i}", f"SW{i}", f"CSW{i}", f"RG{i}", f"RF{i}", f"CF{i}", f"RAAF{i}", f"CAAF{i}"] + ([] if v7 else [f"UA{i}", f"CAV{i}", f"CDV{i}", f"CRF{i}"])
             out.append(dict(title=f"{i + 1}  Channel {name}", note=[f"RAW_{name} -> RS{i} (series) -> D{i} (BAV199 clamp to +5VA / GND) -> SW{i} (74LVC1G66; BLANK opens the path) -> IN_{name} -> op-amp {amp} half {half}.",
-                f"Non-inverting gain stage: RG{i} to VCM, RF{i} || CF{i} feedback; OUT_{name} -> RAAF{i} / CAAF{i} anti-alias -> ADCIN_{name} -> UA{i} (ADS8860, 16-bit SAR; REF = VREF with CRF{i}).", f"SPI: SCLK / CS from the main board, SDO{i} back."], refs=refs))
+                f"Non-inverting gain stage: RG{i} to VCM, RF{i} || CF{i} feedback; OUT_{name} -> RAAF{i} / CAAF{i} anti-alias -> ADCIN_{name} -> " + (f"UA1 input pair {i} (AD7389-4, differential: AIN+ = ADCIN_{name}, AIN- = VCM)." if v7 else f"UA{i} (ADS8860, 16-bit SAR; REF = VREF with CRF{i})."), ("The shared AD7389-4 is in block " + str(len(chans) + 4) + "." if v7 else f"SPI: SCLK / CS from the main board, SDO{i} back.")], refs=refs))
         amps = ["U1", "CO1"] + (["U2", "CO2"] if b == "AB1A" else []) + ["CB1"]
         out.append(dict(title=f"{len(chans) + 2}  Gain-stage op-amps", note=["OPA2211 dual op-amps (each half = one channel) from +5VA, decoupled CO*; CB1 bulk."], refs=amps))
-        out.append(dict(title=f"{len(chans) + 3}  Reference and common-mode", note=["UR (REF5041) -> VREF_RAW (CRI / CRO / CRN) -> UB (OPA2365) buffers VREF for the ADCs; RD1 / RD2 / CDF divide VREF_RAW to VCM_DIV -> UB other half -> VCM (CVM)."],
+        if v7:
+            out.append(dict(title=f"{len(chans) + 3}  Reference and common-mode", note=["UA1 REFOUT (internal 2.5 V) -> VREF_RAW (CRF 1 uF); RD1 / RD2 (100 k) divide it to VCM_DIV (1.25 V) -> UB (OPA2365) half B -> VCM (CVM); UB half A is parked as a follower."], refs=["UB", "CBD", "RD1", "RD2", "CDF", "CVM"]))
+            out.append(dict(title=f"{len(chans) + 4}  Quad simultaneous ADC", note=["UA1 AD7389-4 (16-bit, 2 MSPS, four differential inputs, internal reference): inputs ADCIN_* with VCM; unused pairs are parked on VCM.", "VCC and VLOGIC from +3V3D (CVC, CVL 1 uF), REGCAP (CRG), REFCAP (CRC), REFOUT (CRF). 2-wire readout: SDOA (channels A then C) to J2 SDO1, SDOB to J2 SDO2; SDI tied to GND; CS starts a conversion."], refs=["UA1", "CVC", "CVL", "CRG", "CRC", "CRF"]))
+        else:
+            out.append(dict(title=f"{len(chans) + 3}  Reference and common-mode", note=["UR (REF5041) -> VREF_RAW (CRI / CRO / CRN) -> UB (OPA2365) buffers VREF for the ADCs; RD1 / RD2 / CDF divide VREF_RAW to VCM_DIV -> UB other half -> VCM (CVM)."],
                         refs=["UR", "CRI", "CRO", "CRN", "UB", "CBD", "RD1", "RD2", "CDF", "CVM"]))
         return out
     raise KeyError(b)

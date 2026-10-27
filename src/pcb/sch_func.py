@@ -33,7 +33,7 @@ SIDES = {"LED2020": dict(left=["4"], right=["2"], top=["1"], bottom=["3"]), "D2P
          "LM393": dict(left=["2", "3", "5", "6"], right=["1", "7"], top=["8"], bottom=["4"]), "TC4420": dict(left=["2", "3"], right=["6", "7"], top=["1", "8"], bottom=["4", "5"]),
          "HC4051": dict(left=["11", "10", "9", "6", "3"], right=["13", "14", "15", "12", "1", "5", "2", "4"], top=["16"], bottom=["8", "7"]),
          "HALL_SW": dict(left=["1"], right=["3"], bottom=["2"]), "SOT23-5": dict(left=["2", "1"], right=["4"], top=["5"], bottom=["3"]),
-         "SW1G66": dict(left=["1"], right=["2"], top=["5"], bottom=["3", "4"]), "ADS8860": dict(left=["3", "4", "1"], right=["7", "8", "6"], top=["2", "9"], bottom=["5", "10"]),
+         "SW1G66": dict(left=["1"], right=["2"], top=["5"], bottom=["3", "4"]), "AD7389": dict(left=["13", "12", "11", "10", "9", "8", "7", "6"], right=["22", "18", "19", "20", "21", "23", "24"], top=["4", "2", "3", "17", "15"], bottom=["1", "5", "14", "16", "25"]), "ADS8860": dict(left=["3", "4", "1"], right=["7", "8", "6"], top=["2", "9"], bottom=["5", "10"]),
          "OPA2211": dict(left=["3", "2", "5", "6"], right=["1", "7"], top=["8"], bottom=["4"]), "OPA2365": dict(left=["3", "2", "5", "6"], right=["1", "7"], top=["8"], bottom=["4"]),
          "REF5041": dict(left=["2", "5"], right=["6", "3"], top=["1", "7", "8"], bottom=["4"]), "BAV199": dict(left=["1"], right=["2"], bottom=["3"])}
 CONN = ("HDR", "TERM", "WIRE")

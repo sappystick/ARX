@@ -234,7 +234,7 @@ def ep_vias(pd):
     return done
 # ------------------------------------------------------------ escape stubs for fine-pitch IC pins
 STUB_TYPES = ("OPA2211", "OPA2365", "REF5041", "ADS8860", "AD7389", "SW1G66")
-STAGGER_TYPES = ("ADS8860",)                    # Step 12: fine-pitch rows with a staggered via fan-out (alternate pins drop a via at the stub tip; the pins between pass on the surface)
+STAGGER_TYPES = ("ADS8860", "AD7389")                    # Step 12: fine-pitch rows with a staggered via fan-out (alternate pins drop a via at the stub tip; the pins between pass on the surface)
 def _row_groups():
     """pads of each staggered IC grouped by the side they leave: {(ref, dx, dy): [pad, ...] sorted along the row}"""
     g = {}
@@ -247,10 +247,10 @@ def _row_groups():
         g.setdefault((pd["ref"], dx, dy), []).append(pd)
     for k, v in g.items(): v.sort(key=lambda q: (q["y"] if k[1] else q["x"]))
     return g
-def escape_stubs(length=0.8):
+def escape_stubs(length=float(os.environ.get("AFE_STUBLEN", "0.8"))):
     n_ok = 0; stag = {}
     for (ref, dx, dy), row in _row_groups().items():
-        for idx, pd in enumerate(row): stag[(pd["ref"], pd["num"])] = (idx % 2 == 0, idx)       # even positions in the row take the via
+        for idx, pd in enumerate(row): stag[(pd["ref"], pd["num"])] = (idx % 2 == int(os.environ.get("AFE_STAGPAR", "0")), idx)       # even positions in the row take the via
     for pd in PADS:
         p = D.BYREF[pd["ref"]]
         if pd.get("tht"): continue

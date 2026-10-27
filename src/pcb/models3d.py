@@ -68,6 +68,7 @@ def build(t, L):
     if t == "PMOS_SO8": return soic(L, 3.9, 4.9, 1.75)
     if t == "HC4051": return soic(L, 3.9, 9.9, 1.7)
     if t in ("OPA2365", "REF5041"): return [box(-1.5, 1.5, -1.5, 1.5, 0.1, bz, BLACK)] + gullwing(P, 1.5, 1.5) + [pin_dot(-1.0, -1.0, bz)]
+    if t == "AD7389": return [box(-2.0, 2.0, -2.0, 2.0, 0.035, bz, BLACK), pin_dot(-1.6, -1.6, bz)]            # LFCSP-24 4 x 4 x 0.55 body, no leads beyond the body (nominal)
     if t == "ADS8860": return [box(-1.5, 1.5, -1.5, 1.5, 0.1, bz, BLACK)] + gullwing(P, 1.5, 1.5) + [pin_dot(-1.0, -1.0, bz)]
     if t in ("BAV199", "SW1G66", "SOT23-5"): return sot(L, 1.6 if t != "SOT23-5" else 1.6, 2.9, 1.1) if False else [box(-bh / 2, bh / 2, -bw / 2, bw / 2, 0.05, bz, BLACK) if False else box(-bw / 2, bw / 2, -bh / 2, bh / 2, 0.05, bz, BLACK)] + gullwing(P, bw / 2, bh / 2)
     if t == "SOT223": return [box(-3.15 + 0.7, 3.15 - 0.7, -1.7, 1.7, 0.1, 1.6, PLASTIC)] + gullwing(P, 2.3, 1.7) + [box(2.0, 3.15 + 0.4, -1.6, 1.6, 0.0, 0.25, METAL)]
