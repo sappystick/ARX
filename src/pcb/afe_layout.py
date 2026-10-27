@@ -7,6 +7,7 @@ import afe_design as D
 
 R_BOARD = 20.0; EDGE_KEEP = 0.35
 TRACK = 0.15; CLEAR = 0.16; VIA_D = 0.508; VIA_DRILL = 0.254   # Step 12: clearance and track at the sourced floor; via at the vendors' documented Standard (TTM [T-HDI] 10 mil drill, 0.127 ring; AdvancedPCB [A-TOL]), see dru_gen AB1A / AB1B
+if os.environ.get("AFE_CLEAR"): CLEAR = float(os.environ["AFE_CLEAR"])                    # fab-tier study only (src/sim/ab1_options_model.py): the committed floor is 0.16
 if os.environ.get("AFE_VIA"): VIA_D = float(os.environ["AFE_VIA"]); VIA_DRILL = float(os.environ["AFE_VDRILL"]); TRACK = float(os.environ.get("AFE_TRACK", TRACK))   # Step 12 search override (unset = unchanged)
 GRID = 0.1; N = int(2 * R_BOARD / GRID); OFF = R_BOARD
 BOARD = D.BOARD
