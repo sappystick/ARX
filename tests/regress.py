@@ -188,6 +188,15 @@ else: skip("KiCad 3-D model links")
 _sf={b:rd(f"kit_v22/SCHF/PF233-{b}_functional_check.json") for b in ("PB1R","PM2","HB2","CB1D","LB1","AB1A","AB1B")}
 if all(_sf.values()): chk("functional schematics (7 boards): the KiCad netlist exported from each generated schematic equals the design netlist node by node, KiCad ERC reports 0 errors, PDF exported",all(v["n_errors"]==0 and v["pdf"] for v in _sf.values()),str({b:(v["parts"],v["n_errors"]) for b,v in _sf.items()}))
 else: skip("functional schematics")
+for _b in ("A","B"):                                                  # AB1A / AB1B, AD7389-4 build with the +3V3D island on In4 (afe_layout.py BOARD_CFG7, afe_export.py, kicad_drc.py, indep_drc.py, ab1_island_check.py)
+    _il=rd(f"kit_v22/ab1_island_check_AB1{_b}.json"); _kd=rd(f"kit_v22/kicad_drc_AB1{_b}.json"); _id=rd(f"kit_v22/indep_drc_AB1{_b}.json"); _lay=rd(f"out_board/AB1{_b}_layout.json")
+    if _il and _kd and _id and _lay:
+        _rp=_lay["rep"]
+        chk(f"AB1{_b} routing: 0 unrouted nets, 0 fan-out failures, 0 placement errors (incl. same-net slivers) with the committed BOARD_CFG7",not _rp["unrouted"] and not _rp["fanout_failed"] and not _rp["placement_errors"],f"tracks {_rp['tracks']} vias {_rp['vias']}")
+        chk(f"AB1{_b} island and zones: 0 opens, 0 shorts, island inside the board, >= 3 mm from the antenna inputs and the OPA2211 pads, no +5VA item inside it, every zone hatched",_il["pass"],f"island {_il['island']} area {_il['island_area_mm2']} mm2, to antenna {_il['island_to_antenna_inputs_mm']} mm, to OPA2211 {_il['island_to_opa2211_mm']} mm")
+        chk(f"AB1{_b} KiCad DRC (dru_gen AB1{_b} rules, zones filled): 0 errors, 0 unconnected",not _kd["errors"] and _kd["unconnected"]==0,str(_kd["warnings"]))
+        chk(f"AB1{_b} independent DRC (zone-net exemption): 0 fails",_id["n_fail"]==0,f"clearance min {_id['checks']['clearance']['min_gap_mm']} mm")
+    else: skip(f"AB1{_b} AD7389-4 build checks")
 _m=open("src/mech/mech_v20.py").read()
 chk("NPM cable window in mech_v20.py is still x -26..-14 (the numbers pb1r_check.py measures PB1R's JL1 / JP / JC against)","plate(-34, 12.5, NZ / 2, 16.0, 3.0, NZ), plate(14, 12.5, NZ / 2, 56.0, 3.0, NZ)" in _m,"back-wall plates")
 d=rd("kit_v22/pb1r_check.json")
