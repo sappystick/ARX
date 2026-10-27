@@ -46,3 +46,20 @@ Each remaining pad is the end pin of an ADC digital pin row (or a 0402 pad) insi
 
 - Do not edit the exported `.kicad_pcb`, Gerbers or STLs by hand. Do not loosen `dru_gen` to make a result pass.
 - Do not call AB1B fabrication-ready: KiCad's DRC is not the fabricator's (U-FAB-DRC), no CAM-viewer pass (U-CAM-VIEW), and the ADS8860 / SW1G66 / REF5041 pin maps are marked VERIFY in `afe_design.py` and not checked against datasheets.
+
+
+## Update: AD7389-4 build with a +3V3D island on In4 (tool-checked, modeled; nothing built)
+
+Cause that survived every search: the AD7389-4's VCC (pin 4) and VLOGIC (pin 2) are +3V3D at 0.5 mm pitch beside REGCAP (pin 3) and GND (pin 5); a surface trace could not leave that pocket, and each fix moved the failure to another pad (SCLK UA1.22, REGCAP CRG.1).
+Fix: +3V3D is a hatched copper island on In4 (x 7.0 to 12.6 mm, y 2.0 to 3.6 mm in the board frame, chip at (9.5, 0)), joined by a 0.8 mm stub and a via at the tip of pins 2 and 4, like the ground pins; +5VA vias are kept out of the island, +3V3D vias inside it; J2.3 reaches the island by one routed trace and a via. All AB1 zones are now hatched (CORRECTIONS).
+
+| Option | Open pads | KiCad DRC (9.0.9) | Independent DRC | Runtime / parts touched | Result |
+|---|---|---|---|---|---|
+| ADS8860 build (old) | AB1A 3 nets, AB1B 0 (before the AD7389 work) | AB1B 0 errors | - | - | superseded |
+| AD7389, plain routing (stub, stagger, ground stubs, net order, capacitor nudges) | 1 per board, moves to another pad | - | - | 6 to 25 s | closed, not adopted |
+| **Option 1: +3V3D island** | **AB1A 0, AB1B 0** (two identical runs each: AB1A 544 tracks 53 vias, AB1B 435 tracks 40 vias) | **0 errors, 0 unconnected** (AB1A 24 and AB1B 18 dangling-track warnings) | **0 fails** both | 8 s per board; afe_layout / afe_export / indep_drc / tests; no part changes | **adopted** |
+| Option 2: rip-up and reroute | not started | - | - | - | not needed |
+| Option 3: move J2 to x = 17.5 mm | not started | - | - | CB1D JA/JB, housing, harness | not needed |
+
+Committed configuration (BOARD_CFG7 in afe_layout.py): chip (9.5, 0.0) rotation 270 back side; AB1A nudges SW2:0.4:0, CBD:-0.3:0 and capacitors CRG (+0.1, 4.0) rot 90, CVC (-1.8, 4.6), CVL (+2.0, 4.6); AB1B nudge RD2:0.4:0 and capacitors CRG (-0.3, 4.0) rot 90, CVC (-1.8, 5.0), CVL (+2.0, 5.0). The island is 5.6 x 1.6 mm (8.96 mm2), 3.025 mm from the OPA2211 pads, 20.3 mm (AB1A) or 3.085 mm (AB1B, MONO input pad) from the antenna inputs.
+New risks: hatch connectivity of the island (KiCad filled zones report 0 unconnected, but the island is small: a fabricator CAM check is open); the island hatch gap stays 1.5 mm; exposed pad size of the LFCSP is a placeholder; SDI tied low; +3V3D rail budget (about 25 mA more) unchecked.
