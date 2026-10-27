@@ -42,7 +42,9 @@
  },
  "errors": [],
  "zones": 0,
+ "zone_nets_joined": {},
  "fails": {},
  "n_fail": 0,
- "zones_checked": true
+ "zones_checked": true,
+ "zone_clearance_checked": false
 }
