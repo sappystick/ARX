@@ -82,4 +82,4 @@ def merge_closed(shells, concat, margin=MARGIN):
         if nb == 0: V, F, snapped = U_, G, (q, off); break
     if snapped is None: np.savez("solid_union_failed.npz", V=V, F=F)
     if snapped is None: raise ValueError(f"solid_union: no snap grid closes the union at the STL's stored resolution (best: {best[0]} open edges at grid {best[1]} offset {best[2]}); the union was saved to solid_union_failed.npz")
-    return V, F, dict(snap_grid_mm=snapped[0], snap_offset_mm=snapped[1], method="dilated union", bodies=len(shells), margin=margin, volume_in_mm3=round(sum(vol(np.asarray(V_, float), np.asarray(F_, np.int64)) for V_, F_ in shells), 2), volume_out_mm3=round(vol(V, F), 2), open_edges_after=position_bad_edges(F, V))
+    return V, F, dict(snap_grid_mm=float(snapped[0]), snap_offset_mm=[round(float(x), 6) for x in np.atleast_1d(snapped[1])], method="dilated union", bodies=len(shells), margin=margin, volume_in_mm3=round(sum(vol(np.asarray(V_, float), np.asarray(F_, np.int64)) for V_, F_ in shells), 2), volume_out_mm3=round(vol(V, F), 2), open_edges_after=position_bad_edges(F, V))
