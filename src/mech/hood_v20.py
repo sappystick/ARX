@@ -5,7 +5,7 @@ Placement: spoke k at azimuth k x 360/13 deg (k = 0..12, head frame), inner tile
 Carrier: base ring r52.6-116.1 z29.4-30.4 + a stepped pocket frame per spoke (wall 1.2, clearance 0.15 per side) z30.4-33.4. Print flat (base ring on
 the bed, pockets up, no supports); tiles bonded into the pockets after printing."""
 import math, json, csv, numpy as np
-import rodin_core_v4 as rc, golden_cone_head as g
+import rodin_core_v4 as rc, golden_cone_head as g, solid_union as su
 from render_v6 import tri2d
 OUT = "kit_v18/PARTS"; rep = {}
 N, GAP, BUTT, TT, Z0, Z1, Z2 = 13, 1.7, 0.2, 2.5, 29.4, 30.4, 33.4
@@ -23,7 +23,7 @@ def extrude(poly, z0, z1):
     for i in range(m): j = (i + 1) % m; F += [[i, j, m + j], [i, m + j, m + i]] if ar > 0 else [[i, m + j, j], [i, m + i, m + j]]
     F = np.array(F); return (V, F if rc.signed_volume(V, F) > 0 else F[:, ::-1])
 def emit(name, shells, note):
-    bad = sum(rc.edge_manifold_check(F)[1] for V, F in shells); V, F = g.merge(shells); rc.write_stl(f"{OUT}/{name}.stl", V, F, name)
+    bad = sum(rc.edge_manifold_check(F)[1] for V, F in shells); V, F, _su = su.merge_closed(shells, g.merge(shells)); rc.write_stl(f"{OUT}/{name}.stl", V, F, name)
     rep[name] = dict(shells=len(shells), tris=int(len(F)), nonmanifold_edges=int(bad), bbox=[round(float(x), 2) for x in (*V.min(0), *V.max(0))], note=note)
 def sat_gap(A, B):
     best = -1e9

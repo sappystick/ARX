@@ -82,7 +82,7 @@ def to_head(V): c, s = math.cos(math.radians(178)), math.sin(math.radians(178));
 def write_stl(path, shells, name):
     Vs = []; Fs = []; off = 0
     for V, F in shells: Vs.append(to_head(V)); Fs.append(F + off); off += len(V)
-    V = np.vstack(Vs); F = np.vstack(Fs); T = V[F]; n = np.cross(T[:, 1] - T[:, 0], T[:, 2] - T[:, 0]); nn = n / (np.linalg.norm(n, axis=1)[:, None] + 1e-18)
+    import solid_union as su; V, F, _su = su.merge_closed([(V_, F_) for (V_, F_) in zip(Vs, [f_ for _, f_ in shells])], (np.vstack(Vs), np.vstack(Fs))); T = V[F]; n = np.cross(T[:, 1] - T[:, 0], T[:, 2] - T[:, 0]); nn = n / (np.linalg.norm(n, axis=1)[:, None] + 1e-18)
     with open(path, "wb") as f:
         f.write(name.encode().ljust(80)[:80]); f.write(struct.pack("<I", len(F)))
         for i in range(len(F)): f.write(struct.pack("<12fH", *nn[i], *T[i].reshape(-1), 0))

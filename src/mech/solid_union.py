@@ -49,3 +49,31 @@ def report(shells, V, F):
     V_ = np.asarray(V, float)
     return dict(bodies=len(shells), bad_edges_in=sum(bad_edges(Fi) for _, Fi in shells), bad_edges_out=bad_edges(F),
                 volume_mm3=round(float(np.einsum("ij,ij->i", V_[F[:, 0]], np.cross(V_[F[:, 1]], V_[F[:, 2]])).sum() / 6.0), 2), tris=int(len(F)))
+
+
+MARGIN = 0.025                                 # mm: touching bodies are dilated by this before the union so that pinch contacts (edge-to-edge) become small overlaps
+def position_bad_edges(F, V):
+    """print_check's definition of closed on the STORED mesh: vertices rounded to 1e-4 mm (float32 STL), every undirected edge shared by exactly two faces"""
+    V32 = np.asarray(V, np.float32).astype(float); Vr = np.round(V32, 4); U, inv = np.unique(Vr, axis=0, return_inverse=True); G = inv.reshape(-1)[np.asarray(F, np.int64)]
+    G = G[(G[:, 0] != G[:, 1]) & (G[:, 1] != G[:, 2]) & (G[:, 0] != G[:, 2])]
+    return bad_edges(G)
+def dilate(V, F, r=MARGIN):
+    m = M3.Manifold(M3.Mesh(vert_properties=np.asarray(V, np.float32), tri_verts=np.asarray(F, np.uint32)))
+    return m.minkowski_sum(M3.Manifold.sphere(r, 8))
+def merge_closed(shells, concat, margin=MARGIN):
+    """generators call this in place of golden_cone_head.merge(): if the plain concatenation already has no open edge (print_check's definition) it is returned unchanged;
+    otherwise the bodies are each dilated by `margin` mm and unioned (manifold3d) into ONE closed mesh. Returns (V, F, info) with info = dict(method, bodies, margin, volume_in_mm3, volume_out_mm3)."""
+    V0, F0 = concat; vol = lambda V, F: float(np.einsum("ij,ij->i", V[F[:, 0]], np.cross(V[F[:, 1]], V[F[:, 2]])).sum() / 6.0)
+    if position_bad_edges(F0, V0) == 0: return V0, F0, dict(method="concatenated", bodies=len(shells), margin=0.0)
+    u = None
+    for k, (V, F) in enumerate(shells):
+        d = dilate(V, F, margin)
+        if d.status() != M3.Error.NoError: raise ValueError(f"solid_union: dilation of shell {k} failed: {d.status()}")
+        u = d if u is None else u + d
+    u = u.simplify(SIMPLIFY); mesh = u.to_mesh(); V, F = np.asarray(mesh.vert_properties, float)[:, :3], np.asarray(mesh.tri_verts, np.int64)
+    snapped = None
+    for q, off in ((1e-3, 0.0003), (1e-3, 0.0005), (1.5e-3, 0.0), (2e-3, 0.0007), (1e-3, 0.0), (3e-3, 0.0)):         # vertices closer than the STL's float32 / 4-decimal resolution look like pinch edges to print_check: snap to a grid until none is left
+        Vq = np.round((V - off) / q) * q + off; U_, inv = np.unique(Vq, axis=0, return_inverse=True); G = inv.reshape(-1)[F]; G = G[(G[:, 0] != G[:, 1]) & (G[:, 1] != G[:, 2]) & (G[:, 0] != G[:, 2])]
+        if position_bad_edges(G, U_) == 0: V, F, snapped = U_, G, (q, off); break
+    if snapped is None: raise ValueError("solid_union: no snap grid closes the union at the STL's stored resolution")
+    return V, F, dict(snap_grid_mm=snapped[0], snap_offset_mm=snapped[1], method="dilated union", bodies=len(shells), margin=margin, volume_in_mm3=round(sum(vol(np.asarray(V_, float), np.asarray(F_, np.int64)) for V_, F_ in shells), 2), volume_out_mm3=round(vol(V, F), 2), open_edges_after=position_bad_edges(F, V))

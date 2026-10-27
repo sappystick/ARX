@@ -49,8 +49,8 @@ B+=[("material","MnZn ferrite tile inner",13,"27.0 x 26.2 x 2.5 mm, mur >= 2000 
  ("material","clear silicone",1,"a few cm3 over the LEDs","cup CD",""),
  ("material","M3 heat-set insert D4.0 x 5",3,"brass","hub bosses",""),("material","screw M3 x 8",3,"stainless","base plate to hub",""),
  ("material","acrylic or PETG lens disc (optional)",1,"D90 x 0.8, opal","cap top","")]
-for nm,p in (("AB1A","PHIFOLD233_FINAL_KIT_v3/04_PCB_receiver_AB1A/PF233-AB1A_BOM.csv"),("AB1B","PHIFOLD233_FINAL_KIT_v3/05_PCB_receiver_AB1B/PF233-AB1B_BOM.csv"),("PB1R","PHIFOLD233_KIT_v6_ARCHITECTURE/PB1R/PF233-PB1R_BOM.csv"),("PM1","PHIFOLD233_FINAL_KIT_v4/03_POWER_BOARD_PM1/PF233-PM1_BOM.csv"),("HB1","PHIFOLD233_KIT_v6_ARCHITECTURE/HB1/PF233-HB1_BOM.csv")):
-    for r in list(csv.reader(open("legacy/"+p)))[1:]: B.append(("pcb "+nm,r[1],r[0],f"{r[3]} {r[4]}"[:70],nm,r[5][:40]))
+for nm,p in (("AB1A","kit_v3/PCB_AB1A/PF233-AB1A_BOM.csv"),("AB1B","kit_v3/PCB_AB1B/PF233-AB1B_BOM.csv"),("PB1R","PHIFOLD233_KIT_v6_ARCHITECTURE/PB1R/PF233-PB1R_BOM.csv"),("PM1","PHIFOLD233_FINAL_KIT_v4/03_POWER_BOARD_PM1/PF233-PM1_BOM.csv"),("HB1","PHIFOLD233_KIT_v6_ARCHITECTURE/HB1/PF233-HB1_BOM.csv")):
+    for r in list(csv.reader(open(p if p.startswith("kit_v3/") else "legacy/"+p)))[1:]: B.append(("pcb "+nm,r[1],r[0],f"{r[3]} {r[4]}"[:70],nm,r[5][:40]))
 for nm,p in (("CB1D","kit_v18/CB1D/PF233-CB1D_BOM.csv"),("LB1","kit_v18/LB1/PF233-LB1_BOM.csv"),("HTA","kit_v18/HTA/PF233-HTA_BOM.csv")):
     for r in list(csv.reader(open(p)))[1:]: B.append(("pcb "+nm,r[1] if nm!="HTA" else r[1],r[0],(r[3]+" "+r[4])[:70] if nm!="HTA" else r[2]+" "+r[3],nm,(r[5] if nm!="HTA" else "")[:40]))
 csv.writer(open(f"{OUT}/BOM_MASTER.csv","w",newline="")).writerows(B)

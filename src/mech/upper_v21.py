@@ -21,7 +21,7 @@ Purchased parts are carried as envelopes in the report (cells, BMS, MT60 pair, c
 Dimensions of the D044-A itself are not published: they are scaled from photos and ergonomics and are ASSUMPTIONS (docs/ASSUMPTIONS.md 24-27)."""
 import math, json, os
 import numpy as np
-import rodin_core_v4 as rc, golden_cone_head as g
+import rodin_core_v4 as rc, golden_cone_head as g, solid_union as su
 from render_v6 import tri2d
 OUT = "kit_v23/UPPER"; os.makedirs(OUT, exist_ok=True); rep = dict(parts={}, envelopes={}, params={})
 
@@ -83,7 +83,7 @@ def twin_bore(R, x0, x1, z):
     V, F = g.plate_with_holes([(0.0, BORE_Y, BORE_R), (0.0, -BORE_Y, BORE_R)], R, x0, x1, n_out=160, n_hole=40, grid=1.6)
     return along_x((np.c_[V[:, 1], V[:, 0], V[:, 2]], F), 0.0, z)            # holes at y = +-BORE_Y
 def emit(name, shells, note, material, density):
-    bad = sum(rc.edge_manifold_check(F)[1] for V, F in shells); V, F = g.merge(shells); rc.write_stl(f"{OUT}/{name}.stl", V, F, name)
+    bad = sum(rc.edge_manifold_check(F)[1] for V, F in shells); V, F, _su = su.merge_closed(shells, g.merge(shells)); rc.write_stl(f"{OUT}/{name}.stl", V, F, name)
     vol = sum(rc.signed_volume(Vs, Fs) for Vs, Fs in shells) / 1000.0
     rep["parts"][name] = dict(shells=len(shells), triangles=int(len(F)), nonmanifold_edges=int(bad), bbox_mm=[round(float(x), 2) for x in (*V.min(0), *V.max(0))],
                               volume_cm3=round(vol, 2), material=material, mass_g=round(vol * density, 1), note=note)

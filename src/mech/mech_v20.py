@@ -7,7 +7,7 @@
 """
 import math, json, os
 import numpy as np
-import rodin_core_v4 as rc, golden_cone_head as g
+import rodin_core_v4 as rc, golden_cone_head as g, solid_union as su
 OUT = "kit_v19/SPINE"; os.makedirs(OUT, exist_ok=True); rep = {}
 def rrect(w, h, r, na=8):
     pts = []; cx, cy = w / 2 - r, h / 2 - r
@@ -40,7 +40,7 @@ Mz2x = [[0, 0, 1], [0, 1, 0], [-1, 0, 0]]                 # local (u,v,w) -> (x=
 Mz2y = [[1, 0, 0], [0, 0, 1], [0, -1, 0]]                 # extrusion axis z becomes y (y' = w, z' = -v)
 def emit(name, shells, note=""):
     bad = sum(rc.edge_manifold_check(F)[1] for V, F in shells)
-    V, F = g.merge(shells); rc.write_stl(f"{OUT}/{name}.stl", V, F, name)
+    V, F, _su = su.merge_closed(shells, g.merge(shells)); rc.write_stl(f"{OUT}/{name}.stl", V, F, name)
     rep[name] = dict(shells=len(shells), triangles=int(len(F)), nonmanifold_edges=int(bad), bbox_mm=[round(float(x), 1) for x in (*V.min(0), *V.max(0))], note=note); return V, F
 # ================================================================ CAS: dual-chamber ribbon cassette (fits the 26 mm bore of the 28.5 mm inner tube)
 CW, CIW, CIH, WALL, SEP = 17.4, 14.4, 7.0, 1.1, 1.2

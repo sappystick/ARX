@@ -1,5 +1,5 @@
 import math, json, numpy as np
-import rodin_core_v4 as rc, golden_cone_head as g
+import rodin_core_v4 as rc, golden_cone_head as g, solid_union as su
 from render_v6 import tri2d
 OUT="kit_v18/PARTS"; GOLD=137.50776405; rep={}
 def circ(r,m=360): t=np.linspace(0,2*np.pi,m,endpoint=False); return np.c_[r*np.cos(t),r*np.sin(t)]
@@ -17,7 +17,7 @@ def sector(r0,r1,a0,a1,z0,z1):
 def rectp(ang,r0,r1,half): c,s=math.cos(ang),math.sin(ang); return np.array([(x*c-y*s,x*s+y*c) for x,y in [(r0,-half),(r1,-half),(r1,half),(r0,half)]])
 def rect_c(cx,cy,ang,hr,ht): c,s=math.cos(ang),math.sin(ang); return np.array([(cx+x*c-y*s,cy+x*s+y*c) for x,y in [(hr,-ht),(hr,ht),(-hr,ht),(-hr,-ht)]])
 def emit(name,shells,note):
-    bad=sum(rc.edge_manifold_check(F)[1] for V,F in shells); V,F=g.merge(shells); rc.write_stl(f"{OUT}/{name}.stl",V,F,name); rep[name]=dict(shells=len(shells),tris=int(len(F)),nonmanifold_edges=int(bad),bbox=[round(float(x),2) for x in (*V.min(0),*V.max(0))],note=note)
+    bad=sum(rc.edge_manifold_check(F)[1] for V,F in shells); V, F, _su = su.merge_closed(shells, g.merge(shells)); rc.write_stl(f"{OUT}/{name}.stl",V,F,name); rep[name]=dict(shells=len(shells),tris=int(len(F)),nonmanifold_edges=int(bad),bbox=[round(float(x),2) for x in (*V.min(0),*V.max(0))],note=note)
 PX=[(12.5,12,15.0),(20.0,18,10.0),(26.5,24,7.5),(34.0,12,7.5)]; HR=0.85
 def hole_ints(r,cnt,ph): return sorted([(math.radians(ph+i*360/cnt)-HR/r,math.radians(ph+i*360/cnt)+HR/r) for i in range(cnt)])
 def band(r0,r1,forb,z0,z1):

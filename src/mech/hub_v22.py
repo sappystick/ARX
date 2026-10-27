@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """v12: central PCB cylinder with 18 lead ports + 3 M3 boss posts + roof vent ports, clamp flange with lock collar, fit coupons, verification."""
 import math, json, os, csv, hashlib, shutil, glob, struct, numpy as np
-import rodin_core_v4 as rc, golden_cone_head as g
+import rodin_core_v4 as rc, golden_cone_head as g, solid_union as su
 from render_v6 import tri2d
 OUT="kit_v22/SET"; D={"form":f"{OUT}/01_FORMERS","hub":f"{OUT}/02_CORE_PCB_CYLINDER","pins":f"{OUT}/03_PINS_AND_CLAMP","tray":f"{OUT}/04_RX_TRAY","cpn":f"{OUT}/05_TEST_COUPONS","data":f"{OUT}/06_DATA"}
 for d in D.values(): os.makedirs(d,exist_ok=True)
@@ -22,8 +22,8 @@ def sector(r0,r1,a0,a1,z0,z1):
 def rect(ang,r0,r1,half): c,s=math.cos(ang),math.sin(ang); return np.array([(x*c-y*s,x*s+y*c) for x,y in [(r0,-half),(r1,-half),(r1,half),(r0,half)]])
 rep={}
 def emit(path,name,shells,note=""):
-    bad=sum(rc.edge_manifold_check(F)[1] for V,F in shells); V,F=g.merge(shells); rc.write_stl(path,V,F,name)
-    rep[name]=dict(file=path,tris=int(len(F)),nonmanifold_edges=int(bad),bbox=[round(float(x),2) for x in (*V.min(0),*V.max(0))],note=note)
+    bad=sum(rc.edge_manifold_check(F)[1] for V,F in shells); V,F,info=su.merge_closed(shells,g.merge(shells)); rc.write_stl(path,V,F,name)
+    rep[name]=dict(file=path,tris=int(len(F)),nonmanifold_edges=int(bad),bbox=[round(float(x),2) for x in (*V.min(0),*V.max(0))],note=note,solid_union=info)
 v11=json.load(open("kit_v11/PRINT/report.json")); lane=v11["lane_map"]
 # ------------------------------------------------------------------ central PCB cylinder
 m=4320; angs=np.linspace(0,2*np.pi,m,endpoint=False); ro=np.full(m,HUB_R)
