@@ -37,6 +37,7 @@ def classify(p):
     n = os.path.basename(p)
     if n.startswith(("ELB_E", "BAT_B")): return "SUPERSEDED", "replaced by the upper assembly v1 (U1-U9); do not print"
     if "reference" in n: return "REFERENCE", "purchased part (MnZn ferrite tile) shown for fit; not printed"
+    if n in ("U8_SEPTUM_extended.stl", "U8_SEPTUM_collapsed.stl"): return "REFERENCE", "full-length septum (446 mm) for fit and interference; print U8_SEPTUM_extended_SEG_A / _B instead"
     if n.startswith("UPPER_ASSEMBLY"): return "REFERENCE", "assembly of the printed upper parts + purchased tubes/pack envelopes; not a print file"
     if p.startswith("stl/pins/"): return "PRINT", "interface pin"
     return "PRINT", "printed part (mesh checks in check_v22 / upper_check / yoke_check)"

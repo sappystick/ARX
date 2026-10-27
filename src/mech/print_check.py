@@ -29,7 +29,7 @@ def classify(p):
     """same classes as scripts/make_package.py, plus the SUPERSEDED.txt lists"""
     n = p.rsplit("/", 1)[-1]
     if n.startswith(("ELB_E", "BAT_B")) or "SUPERSEDED" in p or n in SUPER: return "SUPERSEDED"
-    if "reference" in n or n.startswith("UPPER_ASSEMBLY"): return "REFERENCE"
+    if "reference" in n or n.startswith("UPPER_ASSEMBLY") or n in ("U8_SEPTUM_extended.stl", "U8_SEPTUM_collapsed.stl"): return "REFERENCE"       # the full-length septum is a fit reference; the printable parts are U8_SEPTUM_extended_SEG_A / _B (each under 250 mm)
     return "PRINT"
 
 def read(p):

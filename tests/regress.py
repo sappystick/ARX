@@ -175,12 +175,12 @@ if all(_idrc.values()) and _ctl and _bsc:
 else: skip("independent DRC / board schematics (run the indep-drc step)")
 try: _pc=json.load(open("data/results/print_check.json"))
 except Exception: _pc=None
-KNOWN_OPEN={"ANALOG_TRAY_v5","BASE_PLATE_RX_CASSETTE_v3","BUSHING_IN_TUBE_A","CORE_CYLINDER_v5_integrated","HEEL_SADDLE_TOWER","HUB_CAP_HTA_v3_vault","NPM_N1_body_with_tunnel_v2","ROOF_PLATE_v5","TXJ1_CRADLE_v1","U1_TOP_HOUSING","U3_BOTTOM_HOUSING","U6_BATTERY_DOCK","U7_BATTERY_PACK_SHELL","U9_CAM_COLLAR","UMBILICAL_BRIDGE"}
-KNOWN_BIG={"U8_SEPTUM_extended"}
+KNOWN_OPEN=set()                                                      # Step 8 locked 15 non-manifold shells; closed by the closing union of src/mech/solid_union.py (0.005 mm dilation + snap): the list is now EMPTY and any open shell FAILS
+KNOWN_BIG=set()                                                       # U8_SEPTUM_extended (446 mm) is a REFERENCE; the printable parts are U8_SEPTUM_extended_SEG_A / _B
 if _pc:
     _nm=lambda p: p["file"].rsplit("/",1)[-1][:-4]
     _open={_nm(p) for p in _pc["parts"] if not p["closed"]}; _big={_nm(p) for p in _pc["parts"] if not p["fits_build_cube"]}
-    chk("print check: every PRINT STL is oriented (outward normals), and the only non-watertight / oversize STLs are the KNOWN list (Step 8: 15 non-manifold shells from concatenated overlapping bodies, 1 part larger than 250 mm); a new one FAILS",
+    chk("print check: every PRINT STL is oriented (outward normals), every PRINT STL is watertight (the 15 shells that were open are closed by the closing union) and fits a 250 mm cube (the 446 mm septum is a REFERENCE, printed as two segments); any open or oversize file FAILS",
         all(p["oriented"] for p in _pc["parts"]) and _open==KNOWN_OPEN and _big==KNOWN_BIG, f"open {len(_open)} (new {sorted(_open-KNOWN_OPEN)}, gone {sorted(KNOWN_OPEN-_open)}), big {sorted(_big)}")
 else: skip("print check (src/mech/print_check.py)")
 _m3=rd("kit_v22/models3d_check.json")

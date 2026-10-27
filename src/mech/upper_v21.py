@@ -214,6 +214,11 @@ for nm, (b0, b1) in (("extended", B_EXT), ("collapsed", B_COL)):
     emit(f"TUBE_B_CFRP_{nm}", [tube_x(TB[0] / 2, TB[1] / 2, b0, b1, ZT)], f"purchased CFRP OD{TB[0]}/ID{TB[1]} x {TBL}, {nm}", "CFRP", 1.55)
     RS = TB[1] / 2 - 0.2; spacers = [twin_bore(RS, b0 + 2.0 + SP_PITCH * k, b0 + 2.0 + SP_PITCH * k + SP_LEN, ZT) for k in range(int((TBL - 4.0 - SP_LEN) // SP_PITCH) + 1)]
     strip = box(b0 + 2.0, b1 - 2.0, -SEPT / 2, SEPT / 2, ZT - (RS - 0.3), ZT + (RS - 0.3))
+    if nm == "extended":                                                      # the full-length strip is 446 mm: it does not fit a 250 mm build volume. Print it as two segments cut between two spacers; the slit Cu-mesh laminate runs across the joint (the full-length STL stays as the fit / interference reference)
+        n_sp = len(spacers); m = n_sp // 2; x0s, x1s = b0 + 2.0, b1 - 2.0; cut = x0s + SP_PITCH * (m - 1) + SP_LEN + (SP_PITCH - SP_LEN) / 2
+        segA = [box(x0s, cut, -SEPT / 2, SEPT / 2, ZT - (RS - 0.3), ZT + (RS - 0.3))] + spacers[:m]; segB = [box(cut, x1s, -SEPT / 2, SEPT / 2, ZT - (RS - 0.3), ZT + (RS - 0.3))] + spacers[m:]
+        emit("U8_SEPTUM_extended_SEG_A", segA, f"printable segment A of the septum: x {x0s:.1f} to {cut:.1f} mm ({cut - x0s:.1f} mm), {m} spacers; joined to segment B by the laminated Cu-mesh shield", "PETG", 1.27)
+        emit("U8_SEPTUM_extended_SEG_B", segB, f"printable segment B of the septum: x {cut:.1f} to {x1s:.1f} mm ({x1s - cut:.1f} mm), {n_sp - m} spacers", "PETG", 1.27)
     emit(f"U8_SEPTUM_{nm}", [strip] + spacers, f"twin cavity in tube B: full-length septum strip {SEPT} mm (PETG with a slit Cu-mesh shield laminated, drain at PM2) "
          f"+ {len(spacers)} twin-bore spacers {SP_LEN} mm long every {SP_PITCH} mm (bores 2 x D{2*BORE_R} at y +-{BORE_Y}); each half-bore holds a D{2*(TB[1]/2-SEPT/2)/2:.1f} circle", "PETG", 1.27)
 emit("U8_CORD_ANCHOR", [twin_bore(TA[1] / 2 - 0.2, ANCH[0], ANCH[1], ZT)], "twin-bore cord anchor at the rear of tube A (start of the two cavities), cords clamped", "PETG", 1.27)
