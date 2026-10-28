@@ -318,5 +318,24 @@ try:
     _src=open("src/mech/solid_union.py").read()
     chk("solid_union: canonical-rebuild path stays OFF by default (study max deviation over 1 um; docs/PERFORMANCE.md)",'os.environ.get("SOLID_UNION_REBUILD", "0") == "1"' in _src and _mx>1.0 and len(_su)==15,f"{len(_su)} unions, rebuild max {_mx} um")
 except FileNotFoundError: chk("solid_union study evidence (data/results/studies/su_study.json)",False,"missing")
+# P1 manufacturing margin audit (src/pcb/fab_margin.py): every released board measured at or above every fabrication floor; margins are reported, not gated
+try:
+    _fm=json.load(open("data/results/fab_margin_audit.json"))["boards"]
+    chk("fab margin audit: all 11 released boards at or above every floor (copper gap, HV 1.0 mm, edge, drill-drill, drill-copper, via / PTH ring, track)",len(_fm)==11 and all(b["pass"] for b in _fm.values()),
+        "; ".join(f"{k} {b['min_margin_mm']} ({b['min_margin_of']})" for k,b in _fm.items()))
+except FileNotFoundError: chk("fab margin audit evidence (data/results/fab_margin_audit.json)",False,"missing")
+# P2 exact potting volumes (src/mech/potting_volumes.py): positive, inside their envelopes, lower <= upper bound, every zone with a fill port and a vent
+try:
+    _pv=json.load(open("data/results/potting_volumes.json")); _n=_pv["npm"]; _a=_pv["l4_absorber"]
+    _ok=all(0<_n[z]["free_cm3_lower"]<=_n[z]["free_cm3_upper_no_parts"]<_n["envelope_cm3"] and _n["fill_vent"][z]["fill"] and _n["fill_vent"][z]["vent"] for z in ("hot_zone","main_zone")) and 0<_a["free_cm3"]<_a["envelope_cm3"]
+    chk("potting volumes from exact mesh booleans: NPM hot / main zone and L4 absorber cell positive, bounded, filled and vented",_ok,f"NPM hot {_n['hot_zone']['free_cm3_lower']}-{_n['hot_zone']['free_cm3_upper_no_parts']} cm3, main {_n['main_zone']['free_cm3_lower']}-{_n['main_zone']['free_cm3_upper_no_parts']} cm3, L4 {_a['free_cm3']} cm3")
+except FileNotFoundError: chk("potting volume evidence (data/results/potting_volumes.json)",False,"missing")
+# P3 hood placement tolerance (src/sim/hood_tolerance.py): baseline reproduces the hood v3 gain, every sweep has a slope and a tolerance
+_ht=rd("kit_v23/hood_tolerance.json")
+if _ht:
+    _g=_ht["baseline_gain_pct"]; _sw=_ht["sweeps"]
+    chk("hood tolerance: baseline = hood v3 upper-bound gain (12.9-14.2 % at 200 mm) and a field slope / placement tolerance for each of 5 placement errors",12.9<=float(_g["200"])<=14.2 and len(_sw)==5 and all(v["tolerance_mm_for_0p5pct_at_200"] for v in _sw.values()),
+        "; ".join(f"{v['param']} {v['slope_pct_per_mm_at_200']} %/mm -> +-{v['tolerance_mm_for_0p5pct_at_200']} mm" for v in _sw.values()))
+else: skip("hood tolerance study (make step S=hood-tol)")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

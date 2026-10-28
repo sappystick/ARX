@@ -87,17 +87,20 @@ STEPS = [
     ("sch-func", W + "mkdir -p kit_v22/SCHF && PW=R python3 sch_func.py PB1R kit_v22/SCHF && PW=P python3 sch_func.py PM2 kit_v22/SCHF && PW=G python3 sch_func.py HB2 kit_v22/SCHF && PW=C DISC=1 python3 sch_func.py CB1D kit_v22/SCHF && PW=L python3 sch_func.py LB1 kit_v22/SCHF && BOARD=A python3 sch_func.py AB1A kit_v22/SCHF && BOARD=B python3 sch_func.py AB1B kit_v22/SCHF", "kicad"),
     ("cap-v18", W + "python3 cap_v18.py > /dev/null", ""),                        # HUB_CAP_HTA_v3_vault through the closing union (kit_v18/PARTS): was not a step, so a fresh work/ carried the open seed copy (108 bad edges) into head_crosscheck and curate
     ("mech-npm", W + "python3 mech_v20.py > /dev/null", ""),                       # neck module / elbow / battery drawer meshes (kit_v19/SPINE): pb1r_check NPM fit reads them; was not a step, so a fresh work/ skipped that check
+    ("hood-tol", W + "mkdir -p kit_v23 && python3 hood_tolerance.py > /dev/null", ""),      # P3 hood placement tolerance (axisymmetric, hood_axi.py): kit_v23/hood_tolerance.json
+    ("potting", "python3 src/mech/potting_volumes.py > /dev/null", ""),                 # P2 exact potting volumes (NPM zones, L4 absorber) from the meshes: data/results/potting_volumes.json
     ("check-pb1r", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py > /dev/null && python3 pb1r_check.py", ""),
     ("formers-low", "test -f work/kit_v15/LOW/FORMER_L1_petal_coil_former.stl || (" + W + "python3 phifold_v15.py low)", ""),
     ("head-audit", W + "mkdir -p kit_v21 && python3 head_crosscheck.py && python3 fine_check.py && python3 head_drawings.py", ""),
     ("publish", "python3 scripts/publish_data.py", ""),
+    ("fab-margin", "/usr/bin/python3 src/pcb/fab_margin.py > /dev/null 2>&1", ""),          # P1 margin audit of the published boards (data/kicad): data/results/fab_margin_audit.json
     ("controls", "python3 tests/release_signoff_controls.py", ""),
     ("status", "python3 scripts/signoff_status.py", ""),
     ("viewer", "test ! -f deliverables/PHIFOLD233_PACKAGE_r5/blueprint/cutaway_faces.json || python3 src/render/viewer_r2.py > /dev/null", ""),   # package r5 viewer.html: sign-off states, system model, owners (after status)
 ]
 NAMES = [s[0] for s in STEPS]
 IGNORE_READS = {"controls": {"data/results/SIGNOFF_STATUS.json", "docs/STATUS.md"}}   # the controls only use the previous table as a template; it is rewritten by the step after them (would re-run them forever)
-OPEN_ENDED = {"publish", "controls", "status", "viewer"}  # always run alone, last, in order (controls temporarily edit a work/ file)
+OPEN_ENDED = {"publish", "fab-margin", "controls", "status", "viewer"}  # always run alone, last, in order (controls temporarily edit a work/ file)
 
 
 def sha_file(p, cache={}):
