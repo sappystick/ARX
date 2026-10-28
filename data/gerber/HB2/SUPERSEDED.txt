@@ -1,0 +1,2 @@
+SUPERSEDED by HB2_B (2026-10-28): audio link pass-through JH.5 -> JAU; JH / JDIAL hardwired
+Kept for provenance only; do not fabricate from this folder. Released packages that contain it (TX_r5) stay as released.

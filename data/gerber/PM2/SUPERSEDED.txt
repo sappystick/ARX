@@ -1,0 +1,2 @@
+SUPERSEDED by PM2_B (2026-10-28): F2 0.5 A fused switched tap JAUP for the AU1 audio board
+Kept for provenance only; do not fabricate from this folder. Released packages that contain it (TX_r5) stay as released.

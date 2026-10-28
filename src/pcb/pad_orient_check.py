@@ -13,6 +13,7 @@ TOL = 0.005
 out = {}
 for name, (brd, pj) in BOARDS.items():
     if not (os.path.exists(brd) and os.path.exists(pj)): out[name] = dict(missing=True, ok=False); continue
+    open(brd, "rb").read()          # read through Python too: pcbnew's C++ loader is invisible to the pipeline tracer, which then missed this input (2026-10-28)
     b = pcbnew.LoadBoard(brd); model = {(p["ref"], p["num"]): p for p in json.load(open(pj))["pads"]}
     kp = {(f.GetReference(), pd.GetNumber()): pd for f in b.GetFootprints() for pd in f.Pads()}
     # the exporters shift the model frame to the sheet: take the offset from the mean over all pads (a constant translation)

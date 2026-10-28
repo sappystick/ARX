@@ -1,0 +1,2 @@
+SUPERSEDED by PB1R_v5 (2026-10-28): JL1 AWG12 solder holes replace the 5.08 mm terminal block (Phoenix MKDS 1,5 class: AWG 26-14, 250 V against AWG12 at 460 V); JP / JC hardwired
+Kept for provenance only; do not fabricate from this folder. Released packages that contain it (TX_r5) stay as released.

@@ -37,6 +37,25 @@ The sign-off pipeline traces every step, so unchanged work is skipped. The rule 
 - Never wait with `pgrep -f <pattern>` in a loop: the waiting shell's own command line contains the pattern, so the loop never ends. This is what kept three waiters alive for 15-30 min after their sign-offs had finished (2026-10-28); they used no CPU but looked like hour-long jobs. Never leave a `tail -F` watcher running after its run's SIGNOFF_RC line.
 - Normal costs: incremental `make signoff` 1 s to about 11 min, depending on what changed; `make signoff-cold` about 11 min on 4 cores; `make pipeline-graph` (serial, cold, re-learns which steps may overlap) about 43 min, and only after a step is added or its files change; adding one step needs only `pipeline.py run --only STEP --update-graph`.
 
+## Routing and checking tools (2026-10-28, defaults for every future run)
+- **Exact DRC**: `src/pcb/drc.py` measures clearance on exact shapes (shapely), no raster, no slack. A gap below the rule by more than 1 um is a violation.
+- **Fine-pitch boards** (pads with LIB `fine=True`): the router blocks cells by the exact distance to the pad shapes inside a 1.5 mm zone, takes only orthogonal steps there,
+  marks thin tracks by their centre line and necks them to 0.15 mm (fab minimum, dru_gen GEN track); route_fix.py writes the same neck-down and rebuilds pad escapes
+  along the pad axis. Boards with 0.5 mm-pitch rows route on a 0.125 mm grid (`route_run.py`, per board: AU1); every other board keeps 0.15 mm.
+- **Router run guards**: each full-route round checkpoints the best layout to `kit_v20/route_<B>.json`; no round starts after 600 s (step cap 900 s). The config-change
+  reset never deletes a layout: it moves it to `route_<B>_stale.json`.
+- **Local repair, not full re-runs**: when a few nets stay open, `REPAIR=1 python3 route_run.py <B>` (in work/) freezes the saved layout, rips up only the signal nets
+  with copper within 1.5 mm of the open nets' pads (shrinks the disc until <= 8 nets) and re-routes them in several orders (seconds, cap 240 s); it writes only when more
+  nets route, keeps `route_<B>_prerepair.json`, and the exact DRC decides. AU1's route step runs 4 deterministic rounds and then this repair automatically.
+- **Board-to-harness interface**: pipeline step `interface-check` (src/pcb/interface_check.py): every harness wire end vs its pad / terminal (fit, gauge range,
+  current density <= 10 A/mm2, pitch) and every screw terminal vs its net voltage. Terminals and connectors are read from each board's BOM type.
+- **Hardwired joints**: plug-on headers / terminal blocks are not used inside the enclosed system: use the `WIRE*` part types (footprints `Connector:Wire_pads*`,
+  no 3-D body), except the MT60 battery connector and the AB1 links. New wire-hole parts must keep the `Wire_pads` footprint family (the 3-D model check exempts it).
+- **Counted checks**: a check that guards against passing on nothing counts what it SHOULD have checked from the design (example: gerber_hv_check writes `expected`
+  = HV through-hole pads and vias x plane layers; the sign-off requires checked == expected), never a fixed number taken from an earlier route.
+- **New board or new per-board file read by a check**: after adding a board, run `python3 scripts/pipeline.py run --jobs 1 --cold --only <steps that read it> --update-graph`
+  so the graph learns the new inputs (pad-orient and models3d-check missed the AU1 files until traced; models3d.py builds models for the boards in its PW list: add the board there).
+
 ## Tracer note
 `scripts/tracehook` records imports served from `__pycache__` as reads of the source `.py` (fixed 2026-10-27: an edit to an imported module such as `solid_union.py` used to leave dependent steps cached; they needed `--cold --only`). Non-python programs other than `kicad-cli` arguments are still invisible: `make signoff-cold` before a release.
 

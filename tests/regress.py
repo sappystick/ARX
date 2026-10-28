@@ -361,6 +361,18 @@ d=rd("kit_v23/interface_check.json")
 if d: chk("interface: every harness wire end fits its pad or terminal, within the current rule, and every screw terminal is rated for its net voltage",d["fails"]==0 and d["ends_checked"]>=60 and all(t["result"]=="PASS" for t in d["terminals"]),
           f"{d['ends_checked']} ends, {d['fails']} FAIL, {len(d['terminals'])} terminal pins, {len(d['not_covered'])} ends off-board or without pads.json")
 else: skip("interface check")
+# process guards (2026-10-28): the routing / checking upgrades stay the defaults for every future run (docs/PROCESS.md "Routing and checking tools")
+_src = lambda f: open(f).read() if os.path.exists(f) else ""
+_pg = dict(exact_drc="shapely" in _src("src/pcb/drc.py") and "STRtree" in _src("src/pcb/drc.py"),
+           router_fine_zone="exact distance" in _src("src/pcb/router.py") and "orthogonal steps only" in _src("src/pcb/router.py") and "NECK=0.15" in _src("src/pcb/router.py"),
+           neckdown_and_escape="neck-down" in _src("src/pcb/route_fix.py") and "fine-pitch escape" in _src("src/pcb/route_fix.py"),
+           local_repair=os.path.exists("src/pcb/route_repair.py") and "route_repair.repair(board, mk, front, budget=200)" in _src("src/pcb/route_run.py"),
+           round_checkpoint_and_budget="_save(best)" in _src("src/pcb/route_run.py") and "time.time()-t0>600" in _src("src/pcb/route_run.py"),
+           reset_keeps_layout="os.replace(_f" in _src("src/pcb/route_run.py") and "os.remove(_f)" not in _src("src/pcb/route_run.py"),
+           interface_step='"interface-check"' in _src("scripts/pipeline.py"),
+           au1_models='"CRPGLHMTU"' in _src("src/pcb/models3d.py"),
+           pad_orient_traced=any(f.endswith("PF233-AU1_routed.kicad_pcb") for f in json.load(open("data/pipeline/graph.json"))["steps"].get("pad-orient", {}).get("R", [])) if os.path.exists("data/pipeline/graph.json") else False)
+chk("process guards: exact DRC, fine-pitch router, neck-down / escapes, local repair, round checkpoints, non-destructive reset, interface step, AU1 models, pad check traced", all(_pg.values()), ("missing: " + ", ".join(k for k, v in _pg.items() if not v)) if not all(_pg.values()) else "all 9 in place")
 # receive DSP reference (src/sim/dsp_ref.py): tau estimator at the Cramer-Rao bound, class / bearing at SNR 10, ground rejection with the held-ground ridge fit
 d=rd("kit_v23/dsp_ref.json")
 if d: _a=d["accuracy_vs_snr"]; chk("DSP reference: tau error within 1.5 x Cramer-Rao at SNR 30, class >= 80 % and bearing <= 5 deg at SNR 10, 0 false detections over varying ground, small gold over ground found",

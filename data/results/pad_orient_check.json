@@ -38,113 +38,11 @@
    "ok": true
   },
   "AU1": {
-   "pads_compared": 162,
-   "pads_missing": [
-    "CG1.1",
-    "CG1.2",
-    "CG2.1",
-    "CG2.2",
-    "RGA.1",
-    "RGA.2",
-    "RGF.1",
-    "RGF.2",
-    "RGL.1",
-    "RGL.2"
-   ],
-   "mismatches": 162,
-   "examples": [
-    {
-     "pad": "JPWR.1",
-     "model_wh": [
-      3.0,
-      3.0
-     ],
-     "kicad_wh": [
-      3.0,
-      3.0
-     ],
-     "dxy": [
-      -0.0988,
-      6.0741
-     ]
-    },
-    {
-     "pad": "JPWR.2",
-     "model_wh": [
-      3.0,
-      3.0
-     ],
-     "kicad_wh": [
-      3.0,
-      3.0
-     ],
-     "dxy": [
-      -0.0988,
-      6.0741
-     ]
-    },
-    {
-     "pad": "JLINK.1",
-     "model_wh": [
-      3.0,
-      3.0
-     ],
-     "kicad_wh": [
-      3.0,
-      3.0
-     ],
-     "dxy": [
-      -0.0988,
-      -5.9259
-     ]
-    },
-    {
-     "pad": "JLINK.2",
-     "model_wh": [
-      3.0,
-      3.0
-     ],
-     "kicad_wh": [
-      3.0,
-      3.0
-     ],
-     "dxy": [
-      -0.0988,
-      -5.9259
-     ]
-    },
-    {
-     "pad": "UB.1",
-     "model_wh": [
-      1.325,
-      0.6
-     ],
-     "kicad_wh": [
-      1.325,
-      0.6
-     ],
-     "dxy": [
-      -0.0983,
-      6.0741
-     ]
-    },
-    {
-     "pad": "UB.2",
-     "model_wh": [
-      1.325,
-      0.6
-     ],
-     "kicad_wh": [
-      1.325,
-      0.6
-     ],
-     "dxy": [
-      -0.0983,
-      6.0741
-     ]
-    }
-   ],
-   "ok": false
+   "pads_compared": 186,
+   "pads_missing": [],
+   "mismatches": 0,
+   "examples": [],
+   "ok": true
   }
  }
 }

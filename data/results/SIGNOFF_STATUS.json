@@ -1,6 +1,6 @@
 {
  "counts": {
-  "PASS": 74,
+  "PASS": 76,
   "FAIL": 0,
   "SKIP": 0,
   "UNVERIFIED": 4
@@ -355,6 +355,14 @@
   "voxel interference (window, bridge, junction)": {
    "state": "PASS",
    "detail": "28 pairs"
+  },
+  "release-tx / sign-off controls (refusals, evidence rule, idempotence)": {
+   "state": "PASS",
+   "detail": "12/12 controls behave as intended"
+  },
+  "tests/regress.py (strict: a missing result FAILs)": {
+   "state": "PASS",
+   "detail": "114 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {

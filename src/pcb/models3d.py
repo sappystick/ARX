@@ -100,7 +100,10 @@ def build(t, L):
     if t.startswith("WIRE"): return []                                                                  # bare solder pads for wires
     if t in ("VSSOP28", "HVSSOP8EP", "WQFN16EP", "SOT23-6BUCK", "SOT23-5LDO", "SRN4018"):              # AU1 packages: body box from LIB body (datasheet package size and max height)
         bw, bh, bz = L["body"]; col = (0.35, 0.35, 0.35) if t == "SRN4018" else BLACK
-        return [box(-bw / 2, bw / 2, -bh / 2, bh / 2, 0.0, bz, col)]
+        body = [box(-bw / 2, bw / 2, -bh / 2, bh / 2, 0.0, bz, col)]
+        if t in ("VSSOP28", "HVSSOP8EP", "SOT23-6BUCK", "SOT23-5LDO"):                              # leaded packages: gull-wing leads from the body edge to each pad (the body alone missed the HVSSOP pads)
+            body += gullwing([q for q in L["pads"] if abs(q[1]) > bw / 2 or abs(q[2]) > bh / 2], bw / 2, bh / 2)
+        return body
     raise KeyError(t)
 # --------------------------------------------------------------------------------------------------------- VRML
 def wrl(parts, name):

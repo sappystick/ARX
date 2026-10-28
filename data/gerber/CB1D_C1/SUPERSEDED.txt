@@ -1,0 +1,2 @@
+SUPERSEDED by CB1D_C2 (2026-10-28): AUD_LINK on JTR.5, hardwired joints (solder holes, no headers / terminal blocks), JCL AWG22 solder holes (the 5.08 mm terminal was rated 250 V on the 460 V COIL_B node); the yaw gyro moved to AU1
+Kept for provenance only; do not fabricate from this folder. Released packages that contain it (TX_r5) stay as released.

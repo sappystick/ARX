@@ -1,4 +1,4 @@
-# Handoff for the next thread (updated 2026-10-28: B1, B3-B9 closed, TX_r4 / RX_r3, package r5)
+# Handoff for the next thread (updated 2026-10-28 late: output modes / audio / gyro close-out; AU1, CB1D-C2, PB1R-v5, PM2-B, HB2-B signed off; package r6 HELD)
 
 Everything in this repo is **MODELED or tool-checked; nothing is built or measured**. Never write "proven", "ready for fabrication" or "will detect". Old handoff (step log, default-decision table, contingency matrix): `docs/HANDOFF_ARCHIVE_step7.md` sections 9-11; open it only when a situation there applies.
 
@@ -7,7 +7,7 @@ Everything in this repo is **MODELED or tool-checked; nothing is built or measur
 cd /home/user/ARX && scripts/bootstrap.sh | tail -1     # "environment OK" (also the SessionStart hook)
 make state                                              # git, sign-off counts, FAILs, open blockers (data/handoff/blockers.json)
 ```
-Expect: branch `claude/hopeful-bell-wms3xo`, clean tree, sign-off 71 PASS / 0 FAIL / 4 UNVERIFIED. If it differs, report the difference before doing anything. `make state-deep` (30 s) adds stale steps and the publish check; strict `python3 tests/regress.py` is run once at the END of a change, not at the start.
+Expect: branch `claude/hopeful-bell-wms3xo`, clean tree, sign-off 76 PASS / 0 FAIL / 4 UNVERIFIED, strict regress 114 PASS / 0 FAIL (incl. the process-guard row). If it differs, report the difference before doing anything. `make state-deep` (30 s) adds stale steps and the publish check; strict `python3 tests/regress.py` is run once at the END of a change, not at the start.
 Wrong branch / dirty tree / push rejected: archive section 10.
 
 ## 2. Standing rules (do not ask again)
@@ -19,6 +19,16 @@ Wrong branch / dirty tree / push rejected: archive section 10.
 - Do not start without the owner: system simulation, firmware beyond a Python model, audio, LED tuning, epoxy chambers, any printed-geometry change (the approved one is task "solid_union after release", section 4).
 
 ## 3. State (2026-10-28)
+**Close-out of the output-modes / audio / gyro work (late 2026-10-28)**: sign-off 76 PASS / 0 FAIL / 4 UNVERIFIED; strict regress 114 / 0 (process guards included); release controls 12 / 12; publish 0 stale.
+- AU1 audio board (new): 36 x 60 mm, 8 layers (5 signal), MSPM0G3507 + TPA2005D1 + TPA6132A2 + BMI270 yaw gyro (moved from CB1D); routed 38 / 38 on a 0.125 mm grid
+  (4 deterministic rounds + local repair, route_repair.py); exact DRC 0 / 0; au1_check 20 / 20; fits over PM2 in the bottom housing (1.8 mm side, 5.1 mm above PM2, 5.0 mm end margin).
+- CB1D-C2: AUD_LINK on JTR.5, gyro removed, all joints hardwired (solder holes), JCL AWG22 holes; 46 / 46, DRC 0 / 0. PB1R-v5: JL1 AWG12 solder holes (the 5.08 mm
+  terminal was 250 V / AWG 26-14 against 460 V / AWG12). PM2-B fused AU1 tap, HB2-B link pass-through. Superseded Gerber sets marked.
+- Tools: exact-geometry drc.py (no raster slack), router exact fine-pitch keep-out + 0.15 mm neck-down, per-board grid, local repair, routing checkpoints and 600 s round budget,
+  board-to-harness interface check (65 ends, 0 FAIL), non-destructive router reset (*_stale). Firmware host tests 40 / 10 / 13 with the yaw in the AU1 link reply.
+- Owner decisions open: package r6 (HELD until the owner says the integration work is done), potting map (zoned plan proposed, not built), the routing speed-ups
+  (incremental re-route, parallel rounds, C path search: proposed, owner to decide after this close-out), TX steering / split (DEFERRED).
+
 | Area | State |
 |---|---|
 | Sign-off (`docs/STATUS.md`, generated) | 71 PASS, 0 FAIL, 4 UNVERIFIED (U-DS-HVTERM, U-FAB-DRC, U-CAM-VIEW, U-BENCH); `make signoff-cold` 60/60 steps in 1196 s; strict regress 0 FAIL; `publish_data --check` 0 stale; pipeline graph 60 steps |
@@ -78,3 +88,4 @@ Resume Arx / PHI-FOLD 233. Run `make state` and read docs/HANDOFF_NEXT_THREAD.md
 | 2026-10-28 | Clickable cut-away viewer (package r5 viewer.html, `make viewer`); shared mesh_section.py (empty/partial sections fixed, blueprint + receive cut-away regenerated, NPM fit re-run on full sections); superseded NPM v1 STLs removed from stl_print; PURCHASED_PARTS board rows from the current BOMs | (this commit) | 96 PASS / 0 fail | 71/0/0/4 | CORRECTIONS: 4 rows |
 | 2026-10-28 | Viewer r2 (placement edit + live section/stack checks, system simulation from system_live.py with a JS twin, wiring runs), +5VA budget row, model-derived power (5.26 / 7.18 / 8.51 W), solid_union study (rebuild/batch rejected) | (this commit) | 99 PASS / 0 fail | 71/0/0/4 | CORRECTIONS 3 rows, OPEN_ITEMS 39 |
 | 2026-10-28 | Plan P1-P3/P5 (fab margin audit, potting volumes, hood tolerance, firmware timeline + pf233_timing.h); clocked LEDs: LB1-v6 = 66 x SK9822-EC20 fed in the idle slot, dark during sweeps (0 dropped pulses, modeled), chain-rotated LEDs route 136/136; CB1D-C1 (JLB.3 LED_CLK), harness v4; KiCad pad-angle exporter bug found and fixed (PB1R-v4 supersedes v3: CB7-CB9 pads), pad_orient_check | (this commit) | 105 PASS / 0 fail | 71/0/0/4 | CORRECTIONS 6 rows, OPEN_ITEMS 40 |
+| 2026-10-28 | Output modes / audio / gyro close-out: AU1 (8 layers, 38 / 38, gyro moved from CB1D, yaw in the link reply), CB1D-C2, PB1R-v5 (AWG12 solder holes), PM2-B, HB2-B; hardwired joints; interface check; exact DRC + router fine-pitch fixes + local repair; sign-off 76 / 0, regress 114 / 0; process guards in regress, PROCESS.md section |
