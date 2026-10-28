@@ -1,0 +1,4 @@
+Qty,Refs,Value / note,Footprint,Placed
+2,"P1,P2",bare pad / hole on the board (no part; leads soldered by hand),SB1R:LEAD_PAD,no
+3,"H1,H2,H3",bare pad / hole on the board (no part; leads soldered by hand),SB1R:MH_M3,no
+1,SB1R-QB,bare board SB1R-QB (Gerbers: data/gerber/SB1R_QB*),-,board

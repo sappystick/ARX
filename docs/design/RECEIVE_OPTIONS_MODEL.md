@@ -71,18 +71,3 @@ Assumptions: AD7389-4: SNR 90.5 dB typ, +-VREF = +-2.5 V differential, 2 MSPS, i
 | Temperature sensor near the converter | the reference drifts 2 ppm/C typ and the coil resistance with temperature; one reading per frame corrects both | datasheet p. 4: 2 ppm/C typ, 10 max | 1 small part; part not chosen |
 | A timing coprocessor (small CPLD / FPGA) in CB1D | only if the Pico 2 W's PIO cannot hold the blanking and sampling edges; the converter's aperture jitter is 20 ps (datasheet p. 4), far below what PIO granularity (a few ns) would add | datasheet p. 4 | NOT recommended now: no evidence the Pico limits timing |
 | A more capable processor for the DSP (TI C2000, STM32H7, FPGA) | the 5-channel 2 MSPS stream is 160 Mbit/s of raw data: the RP2350's PIO plus DMA can take the 2-wire streams, but the filtering and detection (OPEN_ITEMS 5, DSP in Python) have not been sized | none | decide after the DSP load is measured, not before |
-
-## B9 option: RS 100 -> 33 ohm and fully differential drive (2026-10-28, src/sim/ab1_drive_option.py -> data/results/studies/ab1_drive_option.json)
-MODELED. Ratings now from datasheets on disk: BAV199 (Nexperia v.3) IF 160 mA / IFRM 500 mA / IFSM 4 A at 1 us; 74LVC1G66 (TI SCES323R) ron 5.5 typ / 10 max ohm, IT +-50 mA.
-
-| Case | EIN nV/rtHz | max input mV peak | range dB |
-|---|---|---|---|
-| single-ended RS 100 (committed) | 1.931 | 31.25 | 85.6 |
-| single-ended RS 33 | 1.618 | 31.25 | 87.1 |
-| differential RS 100 | 1.931 | 62.5 | 91.6 |
-| differential RS 33 | 1.618 | 62.5 | 93.2 |
-
-Gated noise (sbq_damp2 network, Rd 680, Cself 100 pF): RS 100 1.726 / 1.736 nV/rtHz, RS 33 1.424 / 1.398 (6 / 20 us gates). First clean gate at the worst modeled leak: 7.48-7.57 us for every RS / ron / blank-release case (unchanged within 0.1 us).
-Clamp and switch: the coil EMF must exceed 13.04 V (RS 33) / 23.76 V (RS 100) to reach IF 160 mA, against 10.3 mV modeled; 50 mA through the closed blank switch needs 2.67 V (RS 33) / 6.02 V (RS 100); per volt of overload 23.0 vs 9.1 mA. Differential drive on AB1A: one more OPA2211 and 10 passives (25.7 mm2 of bodies on a 1257 mm2 board already at the routing floor).
-Decision: default unchanged (RS 100, single-ended). RS 33 alone is a value change (no layout change): EIN and gated noise drop by about 16-17 %, the first clean gate does not move, and in every modeled case the clamp never conducts. Its cost is fault robustness: 2.5x more clamp and switch current per volt of overload (hot-plug or ESD on the hand-soldered coil harness is not modeled). Differential drive adds 6 dB of input range at the same noise but needs one more OPA2211 and 10 passives on AB1A, whose routing has no slack. Neither clearly wins with the fault case unmodeled and no bench data: the default stays RS 100, single-ended; RS 33 is the first bench A/B (swap RS1/RS2 on AB1A).
-

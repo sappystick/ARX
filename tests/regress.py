@@ -274,5 +274,12 @@ try:
     chk("B9 router study: rip-up router passes the production gates on at least as many perturbed placements as the single-pass router, and the default stays single-pass",_st["ripup_wins"]>=_st["single_pass_wins"] and _st["valid_cases"]>=20,f"single {_st['single_pass_wins']}/{_st['valid_cases']}, rip-up {_st['ripup_wins']}/{_st['valid_cases']}")
     chk("B9 drive option modeled from datasheet ratings (BAV199, 74LVC1G66): the clamp never conducts in a modeled case at RS 33, the first clean gate does not move, the default is unchanged",_dv["verdict"]["default_changed"] is False and _dv["clamp"]["RS 33"]["overvoltage_for_IF_160mA_V"]>100*_dv["inputs"]["worst_modeled_leak_V"] and max(_dv["first_clean_gate_us_worst_leak"].values())-min(_dv["first_clean_gate_us_worst_leak"].values())<0.2,str(_dv["verdict"]["noise_gain_pct"])+" % EIN")
 except FileNotFoundError: chk("B9 study evidence on disk (data/results/studies)",False,"missing")
+# B8: TXJ1 / SB1R-QA / SB1R-QB BOM and pick-and-place regenerate from the KiCad boards exactly as committed (src/pcb/kicad_bom_pnp.py)
+import tempfile as _tf, filecmp as _fc
+_td=_tf.mkdtemp(); _ok=[]
+for _b in ("TXJ1","SB1R-QA","SB1R-QB"):
+    _r=_sp.run(["/usr/bin/python3","src/pcb/kicad_bom_pnp.py",f"data/kicad/{_b}.kicad_pcb",_b,_td],capture_output=True,text=True)
+    _ok.append(_r.returncode==0 and all(os.path.exists(f"docs/delivery/boards/{_b}_{k}.csv") and _fc.cmp(f"{_td}/{_b}_{k}.csv",f"docs/delivery/boards/{_b}_{k}.csv",shallow=False) for k in ("BOM","pickplace")))
+chk("B8 BOM + pick-and-place for TXJ1, SB1R-QA, SB1R-QB regenerate identically from data/kicad (y-up, board-centre origin)",all(_ok),str(_ok))
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

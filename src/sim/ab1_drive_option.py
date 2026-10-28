@@ -5,7 +5,7 @@ MODELED. Run in work/ (reuses sbq_damp2.first_clean / gate_noise and ab1_options
   74LVC1G66 (TI SCES323R, Sep 2025): ron 5.5 typ / 10 max ohm at VCC 4.5 V, IS 32 mA (DBV); ON-state switch current IT +-50 mA abs. max; switch I/O -0.5 .. VCC + 0.5 V
 Questions: (1) clamp and switch current at RS 33 vs 100 for an input above the rails; (2) first clean gate and gated noise (sbq_damp2 network) at RS 33 vs 100 and
 ron typ / max; (3) front-end noise and range, single-ended vs fully differential (ab1_options_model with the verified ron); (4) parts and area added by differential
-drive on AB1A. The default (RS 100, single-ended) changes only if the model clearly wins (rule stated in docs/design/RECEIVE_OPTIONS_MODEL.md)."""
+drive on AB1A. The default (RS 100, single-ended) changes only if the model clearly wins (owner rule; results in docs/design/RECEIVE_DRIVE_OPTION_B9.md)."""
 import json, sys, math
 RAIL, RC = 5.0, 10.4
 BAV = dict(IF=0.160, IFRM=0.500, IFSM_1us=4.0, VF_1mA=0.9, VF_50mA=1.1)

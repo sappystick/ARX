@@ -14,7 +14,7 @@ Steps marked NOT SPECIFIED have no source in the repository: they are listed so 
 | L0 | 0-3.2 | base plate v3 with SB1R-QA and SB1R-QB (two stacked 4-layer D228 boards) in the recess |
 | formers | 3.2-28.8 | six petal formers L1..L6 (pitch 4.4 mm) wound with litz and connected in parallel (54 uH); lead path through the lane ports (z 38-40) and the wall-top channel to the 178 deg window |
 | L1 | 3.2-9.0 | gallery: RX leads (4 twisted pairs), spine flex start (NOT SPECIFIED: rigid-flex spine), 3 M3 bosses |
-| L2 | 9.8-20.0 | analog cell: tray, then AB1A and AB1B (D40, x = -/+20.3 mm) with the 0.3 mm shim; J2 links to CB1D |
+| L2 | 9.8-20.0 | analog cell: tray, then AB1A and AB1B (D40, x = -/+20.3 mm) with the 0.3 mm shim; links to CB1D: B5 decision = two FFCs through the 90 deg spine duct (link_path_check.py); the current J2 / JA / JB 1.27 mm headers do not fit that path (connector move to the duct-side edges NOT DONE, B5) |
 | L3 | 20.0-21.9 | septum frame with the copper cloth (D62 window) |
 | L4 | 21.9-27.0 | absorber cell (carbonyl-iron silicone) |
 | L5 | 27.0-38.8 | CB1D controller (D78) in the rib slot, parts up to 10.2 mm |
@@ -30,10 +30,10 @@ Eddy rule while assembling: no solid copper plane, foil ring or closed metal loo
 4. Flyback nets (hundreds of volts): 1.0 mm clearance on boards, 630 V parts, no routing under the connector lanes.
 
 ## 3. Shaft and upper assembly (UPPER_ASSEMBLY_v1)
-S-stem with armrest cup, grip, index-finger boost trigger (HB2 grip board), top and bottom housings (PM2 under the bottom housing), quick-swap battery dock on T rails (7S1P Molicel P30B, MT60 with the interlock loop), twin-cavity telescoping shaft (tube A OD33 / tube B OD28.5, cam collar), cord anchor and extended septum (U8_SEPTUM_extended is oversize for a 250 mm build volume: print split, NOT SPECIFIED).
+S-stem with armrest cup, grip, index-finger boost trigger (HB2 grip board), top and bottom housings (PM2 under the bottom housing), quick-swap battery dock on T rails (7S1P Molicel P30B, MT60 with the interlock loop), twin-cavity telescoping shaft (tube A OD33 / tube B OD28.5, cam collar), cord anchor and extended septum (U8_SEPTUM_extended is oversize for a 250 mm build volume: print it as SEG_A + SEG_B with the 10 mm half-lap joint (B8, upper_check), bond the lap, laminate the slit Cu-mesh across it).
 
 ## 4. Fill, potting and closing
-Potting / epoxy sequence, cure times and the final bonding of the roof and cap: NOT SPECIFIED (materials research for the vault was requested but not completed).
+Order and keep-outs: docs/delivery/POTTING_SEQUENCE.md (B8). Resin products, cure times and the final bonding of the roof and cap: NOT SPECIFIED (no material datasheet on disk).
 
 ## 5. First bring-up
-Follow docs/design/BENCH_FIRST_ARTICLE_TX.md for the transmit stage. Receive chain bring-up (AD7389-4 readout, 2-wire mode: SDOA = channels A then C, SDOB = channel B; SDI tied low; +3V3D budget) is NOT SPECIFIED and needs a CB1D firmware change; every performance number stays MODELED until measured.
+Follow docs/design/BENCH_FIRST_ARTICLE_TX.md for the transmit stage. Receive chain bring-up: AD7389-4 2-wire readout as modeled in src/sim/ad7389_readout.py (SDOA = A then C, SDOB = B, SDI tied low = NOP per Table 17, no data before 5 ms, settled from 11 ms; tested against the netlists); the CB1D firmware itself does not exist yet; every performance number stays MODELED until measured.

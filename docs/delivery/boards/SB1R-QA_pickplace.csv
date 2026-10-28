@@ -1,0 +1,3 @@
+Ref,Val,Package,PosX_mm,PosY_mm,Rot,Side
+RD1,"680R 0.1% thin film 0805, non-magnetic terminations preferred (unverified)",Resistor_SMD:R_0805_2012Metric,0.0,33.0,180.0,top
+RD2,"680R 0.1% thin film 0805, non-magnetic terminations preferred (unverified)",Resistor_SMD:R_0805_2012Metric,-16.145,16.145,225.0,top

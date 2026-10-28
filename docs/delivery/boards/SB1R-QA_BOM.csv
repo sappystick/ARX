@@ -1,0 +1,6 @@
+Qty,Refs,Value / note,Footprint,Placed
+2,"RD1,RD2","680R 0.1% thin film 0805, non-magnetic terminations preferred (unverified)",Resistor_SMD:R_0805_2012Metric,yes
+2,"P1,P2",bare pad / hole on the board (no part; leads soldered by hand),SB1R:LEAD_PAD,no
+3,"H1,H2,H3",bare pad / hole on the board (no part; leads soldered by hand),SB1R:MH_M3,no
+2,"T1,T2",bare pad / hole on the board (no part; leads soldered by hand),SB1R:TRANSFER_PAD,no
+1,SB1R-QA,bare board SB1R-QA (Gerbers: data/gerber/SB1R_QA*),-,board

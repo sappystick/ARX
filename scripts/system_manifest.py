@@ -48,6 +48,9 @@ with open("docs/delivery/PURCHASED_PARTS.csv", "w", newline="") as f: w = csv.wr
 add("purchased", "purchased parts and printed-part list (BOM_MASTER.csv with the AB1 rows replaced by the AD7389-4 BOMs)", "docs/delivery/PURCHASED_PARTS.csv", f"{len(body)} rows; the AB1 rows of data/results/BOM_MASTER.csv list the superseded ADS8860 / REF5041 build")
 add("purchased", "shaft / yoke / upper-assembly bill of materials", "data/results/BOM_SHAFT_YOKE.csv")
 add("document", "assembly order", "docs/delivery/ASSEMBLY_ORDER.md")
+add("document", "potting sequence (B8: order, keep-outs; resins NOT SPECIFIED)", "docs/delivery/POTTING_SEQUENCE.md")
+for _b in ("TXJ1", "SB1R-QA", "SB1R-QB"):                                              # B8: boards with no design database, read from their KiCad boards (src/pcb/kicad_bom_pnp.py)
+    add("board", f"{_b} BOM", f"docs/delivery/boards/{_b}_BOM.csv"); add("board", f"{_b} pick-and-place (y-up)", f"docs/delivery/boards/{_b}_pickplace.csv")
 for k, f in (("bench procedure (transmit region)", "docs/design/BENCH_FIRST_ARTICLE_TX.md"), ("fabricator DRC evidence (U-FAB-DRC)", "data/results/fab_drc/"), ("CAM viewer evidence (U-CAM-VIEW)", "data/results/cam_view/"), ("bench data (U-BENCH)", "data/bench/")):
     rows.append(("document", k, f, "PRESENT" if os.path.exists(f) else "MISSING", 0, "", ""))
 with open("docs/delivery/SYSTEM_MANIFEST.csv", "w", newline="") as f: csv.writer(f).writerows(rows)
