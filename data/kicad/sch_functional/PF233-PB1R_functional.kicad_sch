@@ -656,7 +656,7 @@
   (text "M12 (OKI-78SR-12 class module, datasheet unverified, ASSUMPTIONS 29) makes AUX12 from VBUS for the driver and comparator." (exclude_from_sim no) (at 234.810 213.420 0) (effects (font (size 1.4 1.4)) (justify left top)) (uuid "2c787cd4-3fb7-56ae-8b81-c9baac5c38c8"))
   (symbol (lib_id "PF233F:BOX_OKI3") (at 257.810 229.870 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (uuid "5d7a1684-268c-5239-b37f-b60383166acb")
     (property "Reference" "M12" (at 257.810 225.200 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "12 V 1.5 A switching module" (at 257.810 245.110 0) (effects (font (size 1.0 1.0))))
+    (property "Value" "12 V 1.0 A switching module" (at 257.810 245.110 0) (effects (font (size 1.0 1.0))))
     (property "Footprint" "Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal" (at 257.810 229.870 0) (effects (font (size 1.27 1.27)) hide))
     (pin "1" (uuid "24b3d19d-bbfa-5813-a5ae-d7e5a9bf1829"))
     (pin "3" (uuid "d1bb0364-8735-58bc-ae20-d4b5eb3fe53a"))

@@ -663,7 +663,7 @@
   )
   (symbol (lib_id "PF233_auto:M12") (at 93.98 81.28 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (uuid "75eabd3c-90c4-5281-9c8b-ed356de6bf3f")
     (property "Reference" "M12" (at 93.98 78.74 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "12 V 1.5 A switching module" (at 93.98 87.63 0) (effects (font (size 1.0 1.0))))
+    (property "Value" "12 V 1.0 A switching module" (at 93.98 87.63 0) (effects (font (size 1.0 1.0))))
     (property "Footprint" "Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal" (at 93.98 81.28 0) (effects (font (size 1.27 1.27)) hide))
     (pin "1" (uuid "610803a0-4929-58b6-9954-914f00ea5d80"))
     (pin "2" (uuid "b06011d8-2780-546a-a457-dbf8194464ee"))

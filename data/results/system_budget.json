@@ -31,7 +31,7 @@
    "margin_pct": 58.3,
    "required_margin_pct": 30,
    "status": "PASS",
-   "note": "continuous rating at 25 C used as a conservative pulse reference (datasheet check needed)"
+   "note": "ID 24 A at TC 25 C, 15 A at TC 100 C, ID,pulse 100 A (Infineon IPB65R095C7 Rev. 2.0, DATASHEET_LOG)"
   },
   {
    "part": "ES3J clamp diode",
@@ -141,7 +141,7 @@
    "margin_pct": 18.3,
    "required_margin_pct": 20,
    "status": "WATCH",
-   "note": ""
+   "note": "36 V continuous absolute maximum (Murata MDC_OKI-78SR-W36.C05, DATASHEET_LOG)"
   },
   {
    "part": "TX coil litz",
@@ -207,7 +207,7 @@
    "margin_pct": 18.3,
    "required_margin_pct": 15,
    "status": "PASS",
-   "note": "Murata OKI-78SR-12/1.5-W36 class (UNVERIFIED, ASSUMPTIONS 29)"
+   "note": "Murata OKI-78SR-12/1.0-W36-C: 36 V continuous absolute maximum, Vin 15-36 V (MDC_OKI-78SR-W36.C05, DATASHEET_LOG)"
   },
   {
    "part": "PB1R 12 V module M12",
@@ -251,7 +251,7 @@
    "margin_pct": 98.5,
    "required_margin_pct": 50,
    "status": "PASS",
-   "note": "30 A continuous (datasheet value, unverified here)"
+   "note": "30 A continuous, 80 C cut-off (Molicel INR-18650-P30B PDS v1.0, DATASHEET_LOG)"
   },
   {
    "part": "LED rail (OKI-78SR 1.5 A)",
@@ -274,6 +274,105 @@
    "required_margin_pct": 30,
    "status": "PASS",
    "note": "requires the firmware cap"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "+3V3D output current: 2 x AD7389-4 operational max + RML bleed",
+   "value": 0.066,
+   "rating": 0.8,
+   "unit": "A",
+   "margin_pct": 91.7,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "0.8 A is the dropout specification point (DS1117 Note 4); 1 A rated"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "minimum load with both ADCs static (2 x 2.0 mA) + RML",
+   "value": 0.016,
+   "rating": 0.01,
+   "unit": "A",
+   "margin_pct": 62.2,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "10 mA max minimum load for regulation (DS1117 Note 5); RML alone (AB1 boards unplugged) 12.2 mA"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "minimum load with the AB1 boards unplugged (RML only)",
+   "value": 0.012,
+   "rating": 0.01,
+   "unit": "A",
+   "margin_pct": 22.2,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "the case the bleed exists for"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "dropout 1.3 V max vs the 5.0 - 3.3 = 1.7 V available (M5 nominal)",
+   "value": 1.3,
+   "rating": 1.7,
+   "unit": "V",
+   "margin_pct": 23.5,
+   "required_margin_pct": 15,
+   "status": "PASS",
+   "note": "DS1117 1.1 typ / 1.3 V max at 0.8 A; less at 66 mA"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "dissipation (5.0 - 3.3) x load + 5.0 x Iq 11 mA max",
+   "value": 0.168,
+   "rating": 1.2,
+   "unit": "W",
+   "margin_pct": 86.0,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "1.2 W SOT-223 guaranteed (DS1117 Note 2); theta-JA 90 C/W -> about 15 C rise"
+  },
+  {
+   "part": "AD7389-4 VCC (+3V3D)",
+   "stress": "AMS1117-3.3 output high limit 3.399 V vs VCC max 3.6 V",
+   "value": 3.399,
+   "rating": 3.6,
+   "unit": "V",
+   "margin_pct": 5.6,
+   "required_margin_pct": 3,
+   "status": "PASS",
+   "note": "DS1117 full-temperature 3.201-3.399 V at VIN 4.8 V; AD7389-4 VCC 3.0-3.6 V"
+  },
+  {
+   "part": "AD7389-4 VCC (+3V3D)",
+   "stress": "AMS1117-3.3 output low limit 3.201 V vs VCC min 3.0 V",
+   "value": 3.201,
+   "rating": 3.0,
+   "unit": "V",
+   "margin_pct": 6.7,
+   "required_margin_pct": 3,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "part": "RML 270 ohm 0603 (CB1D)",
+   "stress": "power 3.3^2 / 270",
+   "value": 0.04,
+   "rating": 0.1,
+   "unit": "W",
+   "margin_pct": 59.7,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "CRCW0603 e3 P70 0.10 W (Vishay 20035)"
+  },
+  {
+   "part": "+5V rail (CB1D M5, 1.5 A)",
+   "stress": "LED firmware cap 0.35 A + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq)",
+   "value": 0.577,
+   "rating": 1.5,
+   "unit": "A",
+   "margin_pct": 61.5,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": "M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate"
   },
   {
    "part": "TX lead channel",
@@ -299,7 +398,7 @@
   },
   {
    "part": "TC4420 gate driver (2 FETs)",
-   "stress": "gate charge per turn-off (2 x 45 nC, UNVERIFIED) at 12 V: peak current with 2.2 ohm gate resistors",
+   "stress": "gate charge per turn-off (2 x 45 nC, Infineon Rev. 2.0) at 12 V: peak current with 2.2 ohm gate resistors (TC4420 6 A peak, DS21419D)",
    "value": 3.75,
    "rating": 6.0,
    "unit": "A",

@@ -18,6 +18,7 @@ CV3,1u,C_0805_2012Metric,4.0,-3.0,0,top
 UL,AMS1117-3.3,SOT-223-3_TabPin2,2.0,-14.0,0,top
 CL1,22u 10V,C_1210_3225Metric,-2.0,-19.0,0,top
 CL2,100n,C_0603_1608Metric,-2.0,-21.5,0,top
+RML,270,R_0603_1608Metric,-3.0,-24.0,0,top
 UM,74HC4051,SOIC-16_3.9x9.9mm_P1.27mm,-3.0,-0.0,0,top
 CM1,100n,C_0603_1608Metric,4.5,4.0,0,top
 RMO,1k,R_0603_1608Metric,-10.0,4.0,0,top

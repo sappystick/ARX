@@ -1,8 +1,8 @@
 {
  "boards": {
   "PF233-CB1D_routed.kicad_pcb": {
-   "components": 60,
-   "with_model": 60,
+   "components": 61,
+   "with_model": 61,
    "missing": []
   },
   "PF233-LB1_routed.kicad_pcb": {

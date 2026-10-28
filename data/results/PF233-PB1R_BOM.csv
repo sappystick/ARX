@@ -11,7 +11,7 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,DOC1,DSOD,BAS16,,Diode_SMD:D_SOD-123
 1,JC,HDR2x4,Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND,2.54 mm header,Connector:Pin_header_2x4_P2.54mm
 1,U3,LM393,LM393,TI LM393DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
-1,M12,OKI3,12 V 1.5 A switching module,"Murata OKI-78SR-12/1.5-W36 class, Vin 15-36 V covers the 7S range 19.6-29.4 V (datasheet UNVERIFIED, ASSUMPTIONS 29)",Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal
+1,M12,OKI3,12 V 1.0 A switching module,"Murata OKI-78SR-12/1.0-W36-C, Vin 15-36 V covers the 7S range 19.6-29.4 V (MDC_OKI-78SR-W36.C05; the series has no 12 V 1.5 A model)",Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal
 2,"RGQ1A,RGQ1B",R0603,10,,Resistor_SMD:R_0603_1608Metric
 2,"RIN1,RK1",R0603,100,,Resistor_SMD:R_0603_1608Metric
 2,"RGP1,RPU1",R0603,10k,,Resistor_SMD:R_0603_1608Metric

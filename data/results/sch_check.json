@@ -1,13 +1,13 @@
 {
  "CB1D": {
   "board": "CB1D",
-  "parts": 61,
+  "parts": 62,
   "nets": 46,
-  "pins": 202,
+  "pins": 204,
   "paper": "A1",
   "check": {
    "nets": 46,
-   "nodes": 202,
+   "nodes": 204,
    "mismatched_nets": [],
    "stray_labels": 0,
    "ok": true

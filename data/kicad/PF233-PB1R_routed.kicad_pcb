@@ -360,7 +360,7 @@
   )
   (footprint "Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal" (layer "F.Cu") (at 114.0000 73.0000)
     (property "Reference" "M12" (at 0 -2.5 0) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
-    (property "Value" "12 V 1.5 A switching module" (at 0 2.5 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
+    (property "Value" "12 V 1.0 A switching module" (at 0 2.5 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
     (attr through_hole)
     (model "${KIPRJMOD}/3dmodels/PF233_OKI3.wrl" (offset (xyz 0 0 0)) (scale (xyz 0.3937 0.3937 0.3937)) (rotate (xyz 0 0 0)))
     (pad "1" thru_hole circle (at 0.000 -2.540) (size 1.8 1.8) (drill 1.0) (layers "*.Cu" "*.Mask") (net 19 "VBUS"))

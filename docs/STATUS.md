@@ -2,7 +2,7 @@
 
 Everything here is MODELED or tool-checked; nothing is built or measured. PASS means the tool check passed, not that a board is ready for fabrication.
 
-**67 PASS, 0 FAIL, 0 SKIP, 8 UNVERIFIED**
+**71 PASS, 0 FAIL, 0 SKIP, 4 UNVERIFIED**
 
 ## Boards
 | board | route | indep. DRC | KiCad DRC | Gerber+drill | plane HV | cross-check |
@@ -32,18 +32,18 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 | 0.2 mm fine check | PASS | board discs and bodies clear |
 | voxel interference (window, bridge, junction) | PASS | 28 pairs |
 | release-tx / sign-off controls (refusals, evidence rule, idempotence) | PASS | 12/12 controls behave as intended |
-| tests/regress.py (strict: a missing result FAILs) | PASS | 89 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0 |
+| tests/regress.py (strict: a missing result FAILs) | PASS | 92 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0 |
 
 ## Evidence still missing (docs/UNVERIFIED.md)
 | id | state | item |
 |---|---|---|
-| U-DS-TXDRIVE | UNVERIFIED | Infineon IPB65R095C7 (Rds(on) vs temperature, Qg, current rating) and Microchip TC4420 (pinout, drive current) |
+| U-DS-TXDRIVE | PASS | closed |
 | U-DS-PB1R | PASS | closed |
-| U-DS-OKI | UNVERIFIED | Murata OKI-78SR-12/1.5-W36 and -5/1.5-W36 (input range, pinout): murata.com answered 500 |
+| U-DS-OKI | PASS | closed |
 | U-DS-POWERPATH | PASS | closed |
-| U-DS-PACK | UNVERIFIED | Molicel P30B cell data (molicel.com 404) and the Amass MT60 body envelope (drawing not read; ratings verified) |
+| U-DS-PACK | PASS | closed |
 | U-DS-RXAMP | PASS | closed |
-| U-DS-BAV199 | UNVERIFIED | Nexperia BAV199 (leakage, capacitance, surge): page answered 403 |
+| U-DS-BAV199 | PASS | closed |
 | U-DS-HALL | PASS | closed |
 | U-DS-HVTERM | UNVERIFIED | PB1R JL1 (5.08 mm coil terminal block on DRAIN1, about 466 V) and the RCL1 lid resistor bank (5 k 10 W): no pa |
 | U-FAB-RULES | PASS | closed |

@@ -1,9 +1,9 @@
 {
  "counts": {
-  "PASS": 67,
+  "PASS": 71,
   "FAIL": 0,
   "SKIP": 0,
-  "UNVERIFIED": 8
+  "UNVERIFIED": 4
  },
  "boards": {
   "CB1D": {
@@ -336,37 +336,37 @@
   },
   "tests/regress.py (strict: a missing result FAILs)": {
    "state": "PASS",
-   "detail": "89 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
+   "detail": "92 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {
   "U-DS-TXDRIVE": {
-   "state": "UNVERIFIED",
-   "detail": "Infineon IPB65R095C7 (Rds(on) vs temperature, Qg, current rating) and Microchip TC4420 (pinout, drive current): both pages refused (202 / 403), DATASHEET_LOG"
+   "state": "PASS",
+   "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-TXDRIVE"
   },
   "U-DS-PB1R": {
    "state": "PASS",
    "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-PB1R"
   },
   "U-DS-OKI": {
-   "state": "UNVERIFIED",
-   "detail": "Murata OKI-78SR-12/1.5-W36 and -5/1.5-W36 (input range, pinout): murata.com answered 500"
+   "state": "PASS",
+   "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-OKI"
   },
   "U-DS-POWERPATH": {
    "state": "PASS",
    "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-POWERPATH"
   },
   "U-DS-PACK": {
-   "state": "UNVERIFIED",
-   "detail": "Molicel P30B cell data (molicel.com 404) and the Amass MT60 body envelope (drawing not read; ratings verified)"
+   "state": "PASS",
+   "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-PACK"
   },
   "U-DS-RXAMP": {
    "state": "PASS",
    "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-RXAMP"
   },
   "U-DS-BAV199": {
-   "state": "UNVERIFIED",
-   "detail": "Nexperia BAV199 (leakage, capacitance, surge): page answered 403"
+   "state": "PASS",
+   "detail": "evidence present: docs/design/DATASHEET_LOG.md#U-DS-BAV199"
   },
   "U-DS-HALL": {
    "state": "PASS",
@@ -398,10 +398,6 @@
   }
  },
  "unverified": {
-  "U-DS-TXDRIVE": "Infineon IPB65R095C7 (Rds(on) vs temperature, Qg, current rating) and Microchip TC4420 (pinout, drive current): both pages refused (202 / 403), DATASHEET_LOG",
-  "U-DS-OKI": "Murata OKI-78SR-12/1.5-W36 and -5/1.5-W36 (input range, pinout): murata.com answered 500",
-  "U-DS-PACK": "Molicel P30B cell data (molicel.com 404) and the Amass MT60 body envelope (drawing not read; ratings verified)",
-  "U-DS-BAV199": "Nexperia BAV199 (leakage, capacitance, surge): page answered 403",
   "U-DS-HVTERM": "PB1R JL1 (5.08 mm coil terminal block on DRAIN1, about 466 V) and the RCL1 lid resistor bank (5 k 10 W): no part with a manufacturer sheet read; Phoenix MKDS 1,5/2-5,08 is rated 250 / 400 / 630 V by overvoltage category in distributor listings only",
   "U-FAB-DRC": "Fabricator's own DRC/CAM review of every board",
   "U-CAM-VIEW": "Gerbers opened in a CAM viewer (visual check of the KiCad-written and gerber_out.py files)",

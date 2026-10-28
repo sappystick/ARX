@@ -23,7 +23,7 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,JPB,HDR2x4,to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND,2.54 mm header,Connector:Pin_header_2x4_P2.54mm
 1,JA,HDR2x6S,to AB1A J2,1.27 mm 2x6 header,Connector:Pin_header_1.27_2x6_P1.27mm
 1,JB,HDR2x6S,to AB1B J2,1.27 mm 2x6 header,Connector:Pin_header_1.27_2x6_P1.27mm
-1,M5,OKI3,5 V 1.5 A switching module,Murata OKI-78SR-5/1.5-W36 class (Vin 7-36 V),Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal
+1,M5,OKI3,5 V 1.5 A switching module,"Murata OKI-78SR-5/1.5-W36-C (Vin 7-36 V, MDC_OKI-78SR-W36.C05)",Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal
 1,U1,PICO,Pico 2 W,Raspberry Pi Pico 2 W (RP2350 + CYW43439),Module:RaspberryPi_Pico_Common_THT
 1,RJB10,R0603,0R,"FITTED: JB.10 (AB1B idle MONO input, RS2 into the MONO amplifier) to VCM_OUT; remove only to isolate the input, which then floats: not for service",Resistor_SMD:R_0603_1608Metric
 1,RJ5,R0603,0R DNP,option: fit to ground JTR.5 at the CB1D end (handle-end check: OPEN_ITEMS 25),Resistor_SMD:R_0603_1608Metric
@@ -36,6 +36,7 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 2,"RSH,RUS",R0603,1M,,Resistor_SMD:R_0603_1608Metric
 1,RMO,R0603,1k,,Resistor_SMD:R_0603_1608Metric
 2,"RT1,RD1",R0603,1k,series protection,Resistor_SMD:R_0603_1608Metric
+1,RML,R0603,270,"Vishay CRCW0603 270R 1% (P70 0.10 W, doc 20035)",Resistor_SMD:R_0603_1608Metric
 1,RP1,R0603,47k,pull-up (47k on TRIG: low level with the 2 kohm series path stays under VIL),Resistor_SMD:R_0603_1608Metric
 3,"RDM1,RDM2,RDM3",R2512,110R,damping chain 3 x 110 = 330 R (600 V),Resistor_SMD:R_2512_6332Metric
 1,UL,SOT223,AMS1117-3.3,3.3 V LDO for ADC I/O,Package_TO_SOT_SMD:SOT-223-3_TabPin2

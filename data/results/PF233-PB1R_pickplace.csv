@@ -38,6 +38,6 @@ RK1,100,R_0603_1608Metric,-1.5,-6.8,0,top
 CK1,100p,C_0603_1608Metric,-1.5,-9.8,0,top
 RPU1,10k,R_0603_1608Metric,29.0,-5.5,0,top
 RF1,1k,R_0603_1608Metric,29.0,-9.0,0,top
-M12,12 V 1.5 A switching module,Converter_DCDC_Murata_OKI-78SR_Horizontal,14.0,27.0,0,top
+M12,12 V 1.0 A switching module,Converter_DCDC_Murata_OKI-78SR_Horizontal,14.0,27.0,0,top
 C12A,22u 25V,C_1210_3225Metric,24.0,27.0,0,top
 C12B,100n,C_0603_1608Metric,24.0,31.0,0,top

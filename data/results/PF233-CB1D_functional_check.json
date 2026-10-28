@@ -1,11 +1,11 @@
 {
  "board": "CB1D",
- "parts": 61,
+ "parts": 62,
  "errors": [],
  "nets_compared": 46,
  "erc": {
-  "warning:footprint_link_issues": 61,
-  "warning:lib_symbol_issues": 61
+  "warning:footprint_link_issues": 62,
+  "warning:lib_symbol_issues": 62
  },
  "erc_errors": 0,
  "pdf": true,

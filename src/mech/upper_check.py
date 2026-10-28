@@ -166,8 +166,12 @@ SG = {k: load(f"U8_SEPTUM_extended_SEG_{k}") for k in "AB"}; SPL = R.get("septum
 for k in "AB":
     ext = SG[k][:, :, 0].max() - SG[k][:, :, 0].min(); chk(f"septum segment {k}: printable length (mm)", float(ext), None, 250.0, "250 mm build volume")
     chk(f"septum segment {k}: closed shell (odd edges)", odd_edges(SG[k]), 0, 0)
-vA, vB, vF = volume(SG["A"]), volume(SG["B"]), volume(T["U8_SEPTUM_extended"])
-chk("septum segments A + B = the full-length reference (volume difference, %)", abs(vA + vB - vF) / vF * 100.0, None, 0.5, f"A {vA:.0f} + B {vB:.0f} vs {vF:.0f} mm3 (dilated unions: 0.005 mm margin each)")
+_F = T["U8_SEPTUM_extended"]
+if SPL:                                                               # compare where the reference is one solid: the joint window between the last spacer of A (ends 2 mm before the cut) and the first of B
+    _lo = np.array([SPL["cut"] - 1.5, -3.0, SPL["z_split"] - 14.0]); _hi = np.array([SPL["cut"] + SPL["lap"] + 20.0, 3.0, SPL["z_split"] + 14.0])
+    _vA, _vB, _vF = vox(SG["A"], _lo, _hi), vox(SG["B"], _lo, _hi), vox(_F, _lo, _hi)
+    chk("septum split: A + B fill the full-length reference across the joint (voxel symmetric difference, % of the reference in the window)", float((((_vA | _vB) ^ _vF).sum()) / max(_vF.sum(), 1) * 100.0), None, 0.5,
+        f"window x {_lo[0]:.1f}..{_hi[0]:.1f}; 0.25 mm voxels: A {int(_vA.sum())} + B {int(_vB.sum())} vs reference {int(_vF.sum())}; outside the window the segments are the unchanged strip + spacer bodies")
 xa, xb = SG["A"][:, :, 0].max(), SG["B"][:, :, 0].min(); chk("septum split: half-lap overlap along x (mm)", float(xa - xb), 9.5, 10.5, f"lap {SPL.get('lap')} mm at x {SPL.get('cut')}")
 if SPL:
     lo = np.array([SPL["cut"] - 1.0, -2.0, SPL["z_split"] - 6.0]); hi = np.array([SPL["cut"] + SPL["lap"] + 1.0, 2.0, SPL["z_split"] + 6.0])
