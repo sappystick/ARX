@@ -1,0 +1,331 @@
+{
+ "status": "MODELED: effective-medium mixing, transmit model, thin-cylinder eddy decay; constituent values ASSUMED except the 3M iM30K data",
+ "constituents": {
+  "epoxy": {
+   "rho": [
+    1.1,
+    1.2
+   ],
+   "k": [
+    0.18,
+    0.22
+   ],
+   "er": [
+    3.5,
+    4.2
+   ],
+   "src": "ASSUMED class (unfilled casting epoxy)"
+  },
+  "im30k": {
+   "rho": [
+    0.57,
+    0.63
+   ],
+   "k": [
+    0.2,
+    0.2
+   ],
+   "er": [
+    1.2,
+    2.0
+   ],
+   "src": "3M product information (iM30K density, calculated k; series dielectric constant)"
+  },
+  "bn": {
+   "rho": [
+    2.1,
+    2.28
+   ],
+   "k": [
+    30.0,
+    60.0
+   ],
+   "er": [
+    3.9,
+    4.2
+   ],
+   "src": "ASSUMED class (hexagonal boron nitride powder)"
+  },
+  "alumina": {
+   "rho": [
+    3.8,
+    3.95
+   ],
+   "k": [
+    25.0,
+    35.0
+   ],
+   "er": [
+    9.0,
+    10.0
+   ],
+   "src": "ASSUMED class (alumina powder)"
+  },
+  "silica": {
+   "rho": [
+    2.2,
+    2.2
+   ],
+   "k": [
+    1.3,
+    1.4
+   ],
+   "er": [
+    3.8,
+    3.9
+   ],
+   "src": "ASSUMED class (fumed silica)"
+  }
+ },
+ "proposed_bn": {
+  "epoxy": 0.41,
+  "bubbles": 0.45,
+  "thermal": 0.125,
+  "thermal_powder": "bn",
+  "silica": 0.015,
+  "low": {
+   "k_W_mK": 0.313,
+   "er": 2.31,
+   "rho_g_cc": 1.003
+  },
+  "high": {
+   "k_W_mK": 0.346,
+   "er": 3.08,
+   "rho_g_cc": 1.093
+  }
+ },
+ "proposed_alumina": {
+  "epoxy": 0.41,
+  "bubbles": 0.45,
+  "thermal": 0.125,
+  "thermal_powder": "alumina",
+  "silica": 0.015,
+  "low": {
+   "k_W_mK": 0.312,
+   "er": 2.62,
+   "rho_g_cc": 1.216
+  },
+  "high": {
+   "k_W_mK": 0.344,
+   "er": 3.49,
+   "rho_g_cc": 1.302
+  }
+ },
+ "vol_pct_for_3_W_mK": {
+  "bn": 34,
+  "alumina": 37
+ },
+ "coil": [
+  {
+   "fill": "proposed matrix (low)",
+   "er": 2.31,
+   "phi": 0.3,
+   "t_quiet_us": 6.111,
+   "first_gate_us": 5.91,
+   "margin_us": -0.201
+  },
+  {
+   "fill": "proposed matrix (low)",
+   "er": 2.31,
+   "phi": 0.7,
+   "t_quiet_us": 6.831,
+   "first_gate_us": 5.91,
+   "margin_us": -0.921
+  },
+  {
+   "fill": "proposed matrix (high)",
+   "er": 3.08,
+   "phi": 0.3,
+   "t_quiet_us": 6.251,
+   "first_gate_us": 5.91,
+   "margin_us": -0.341
+  },
+  {
+   "fill": "proposed matrix (high)",
+   "er": 3.08,
+   "phi": 0.7,
+   "t_quiet_us": 7.241,
+   "first_gate_us": 5.91,
+   "margin_us": -1.331
+  },
+  {
+   "fill": "proposed with alumina (high)",
+   "er": 3.49,
+   "phi": 0.3,
+   "t_quiet_us": 6.361,
+   "first_gate_us": 5.91,
+   "margin_us": -0.451
+  },
+  {
+   "fill": "proposed with alumina (high)",
+   "er": 3.49,
+   "phi": 0.7,
+   "t_quiet_us": 7.411,
+   "first_gate_us": 5.91,
+   "margin_us": -1.501
+  }
+ ],
+ "first_gate_us": 5.91,
+ "paint": [
+  {
+   "coating": "silver-coated copper paint (ASSUMED 0.01-0.05 ohm/sq)",
+   "Rs_ohm_sq": 0.01,
+   "tau_us": 2.7646,
+   "left_at_first_gate": 0.118
+  },
+  {
+   "coating": "silver-coated copper paint (ASSUMED 0.01-0.05 ohm/sq)",
+   "Rs_ohm_sq": 0.05,
+   "tau_us": 0.5529,
+   "left_at_first_gate": 2.28e-05
+  },
+  {
+   "coating": "graphite paint (ASSUMED 10-100 ohm/sq)",
+   "Rs_ohm_sq": 10.0,
+   "tau_us": 0.0028,
+   "left_at_first_gate": 0.0
+  },
+  {
+   "coating": "graphite paint (ASSUMED 10-100 ohm/sq)",
+   "Rs_ohm_sq": 100.0,
+   "tau_us": 0.0003,
+   "left_at_first_gate": 0.0
+  }
+ ],
+ "heat": {
+  "scan": {
+   "P_clamp_W": 1.21,
+   "P_damp_head_W": 0.148,
+   "P_fet_W": 0.015
+  },
+  "boost": {
+   "P_clamp_W": 3.81,
+   "P_damp_head_W": 0.458,
+   "P_fet_W": 0.125
+  }
+ },
+ "phase_change": {
+  "neck_boost_W": 3.94,
+  "grams_for_10_min": [
+   11.8,
+   15.7
+  ],
+  "latent_J_g_ASSUMED": [
+   150.0,
+   200.0
+  ],
+  "note": "a phase-change additive only delays the rise; the steady heat still has to leave through the module wall"
+ },
+ "claims": [
+  {
+   "claim": "iM30K glass bubbles: real 3M product, 0.6 g/cc, high crush strength",
+   "verdict": "CONFIRMED",
+   "evidence": "3M table: 0.60 g/cc (0.57-0.63), 28,000 psi 90 % survival (data sheet Rev C: 27,000)"
+  },
+  {
+   "claim": "BN / alumina at 10-15 vol% gives > 3 W/mK",
+   "verdict": "NOT SUPPORTED",
+   "evidence": "Bruggeman with 45 % bubbles: 0.313-0.346 W/mK (BN), 0.312-0.344 (alumina); 3 W/mK needs about 34 vol% BN or 37 vol% alumina with no bubbles"
+  },
+  {
+   "claim": "the mix is invisible to the TX / RX coils (mu_r = 1)",
+   "verdict": "HALF TRUE",
+   "evidence": "magnetically yes; electrically no: er 2.31-3.08 raises the coil capacitance; injected through the windings the quiet time misses the first gate in every case (see coil)"
+  },
+  {
+   "claim": "shrinkage < 0.1 %, zero drift, 100 % moisture barrier",
+   "verdict": "UNVERIFIED / overstated",
+   "evidence": "no product data sheet; a rigid epoxy also loads the precision parts (AB1 offsets) and solder joints by CTE mismatch: the soft gel was chosen there for that reason"
+  },
+  {
+   "claim": "microballoons damp vibration and remove bump false targets",
+   "verdict": "PARTLY",
+   "evidence": "rigid potting stops winding / lead motion (the real microphonic source); glass bubbles in a rigid epoxy add little damping; bump signals from coil-to-ground motion are not removed by any potting"
+  },
+  {
+   "claim": "BN removes hot spots on the driver chips in the head",
+   "verdict": "DOES NOT APPLY",
+   "evidence": "the head has no driver: the FETs and clamp are in the neck module (boost about 3.9 W there); the head dissipates 0.67-1.38 W and peaks at 50.6 C at 40 C ambient (limit 80 C)"
+  },
+  {
+   "claim": "a single compound filling the whole head with conductive filler would ruin detection",
+   "verdict": "CONFIRMED",
+   "evidence": "eddy rule (CLAUDE.md 5): no conductive filler anywhere"
+  },
+  {
+   "claim": "paint the circuit cavity with grounded conductive shield paint",
+   "verdict": "ONLY IF SLIT",
+   "evidence": "a closed painted wall around the axis is a closed loop (eddy rule 5): see paint; graphite paint decays too fast to matter but shields little; a slit / comb pattern with one ground point keeps the electric shielding and breaks the loop"
+  }
+ ],
+ "zones": [
+  {
+   "zone": "TX coil windings (six formers)",
+   "epoxy_matrix": "NO",
+   "use": "none (thin SYN end beads only)",
+   "why": "every fill misses the first gate: proposed matrix margin -0.201 to -1.501 us"
+  },
+  {
+   "zone": "L2 analog cell",
+   "epoxy_matrix": "NO",
+   "use": "soft gel (GEL)",
+   "why": "a rigid epoxy loads the AB1 precision op-amps / ADC and the FFC joints by cure shrinkage and CTE mismatch (offset drift); the gel locks without stress"
+  },
+  {
+   "zone": "L1 gallery",
+   "epoxy_matrix": "YES (option)",
+   "use": "epoxy + glass bubbles (no thermal powder needed)",
+   "why": "only the RX leads are there: a rigid lock stops lead motion (microphonics); their capacitance change is to be measured (PT3)"
+  },
+  {
+   "zone": "L4 absorber cell",
+   "epoxy_matrix": "NO",
+   "use": "carbonyl-iron silicone (CI)",
+   "why": "magnetic absorber function; not a structural fill"
+  },
+  {
+   "zone": "NPM hot zone",
+   "epoxy_matrix": "ONLY AS A HIGH-BN VARIANT",
+   "use": "TC silicone, or epoxy with about 34 vol% BN and no bubbles (3 W/mK class)",
+   "why": "the clamp bank and FETs dissipate about 3.9 W at boost; the proposed 12.5 % BN mix models at 0.313-0.346 W/mK, too low for the hot zone"
+  },
+  {
+   "zone": "NPM main zone",
+   "epoxy_matrix": "YES",
+   "use": "the proposed mix (epoxy + 45 % iM30K + silica; BN optional)",
+   "why": "structural, waterproof, 1.09 g/cc vs 0.6-0.8 for syntactic silicone: about +25 g"
+  },
+  {
+   "zone": "U3 PM2 bay",
+   "epoxy_matrix": "YES",
+   "use": "the proposed mix",
+   "why": "locks PM2 and the power leads; about +11 g over syntactic silicone"
+  },
+  {
+   "zone": "U1 HB2 pocket",
+   "epoxy_matrix": "YES",
+   "use": "the proposed mix",
+   "why": "the Hall switch reads the magnet through the wall: non-magnetic fill, no change"
+  },
+  {
+   "zone": "CB1D / LB1 / SB1R / cap / AU1",
+   "epoxy_matrix": "NO",
+   "use": "conformal coat",
+   "why": "antenna, LED light, RX-coil capacitance, serviceable pads (potting map)"
+  },
+  {
+   "zone": "phase-change additive",
+   "epoxy_matrix": "NPM hot zone only, after PT5",
+   "use": "11.8-15.7 g microencapsulated PCM buffers 10 min of boost",
+   "why": "the head runs cool (peak 50.6 C at 40 C ambient): no head zone needs it; no NPM thermal model exists, so the bench decides"
+  },
+  {
+   "zone": "conductive shield paint",
+   "epoxy_matrix": "ONLY SLIT",
+   "use": "comb / slit pattern, one ground point, on the CB1D cavity only if a bench test shows pickup",
+   "why": "a closed painted wall around the axis is a closed eddy loop (rule 5); the copper-cloth septum already screens the analog cell"
+  }
+ ],
+ "single_matrix_coverage_cm3": 127.4,
+ "total_fill_cm3": 260.8
+}

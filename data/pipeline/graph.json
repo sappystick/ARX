@@ -2074,6 +2074,22 @@
 "data/results/potting_map.png"
 ]
 },
+"potting-matrix": {
+"L": [
+"scripts/tracehook",
+"src/sim"
+],
+"R": [
+"data/results/potting_map.json",
+"src/sim/potting_matrix_eval.py",
+"work/kit_v23/fw_timeline.json",
+"work/system_live.py",
+"work/tx_vbus_sweep.py"
+],
+"W": [
+"data/results/potting_matrix_eval.json"
+]
+},
 "print-check": {
 "L": [
 "src/mech",

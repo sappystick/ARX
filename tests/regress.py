@@ -403,6 +403,15 @@ try:
         len(_z)>=7 and all(z["cm3"][0]>0 for z in _z) and _pm["checks"]["eddy_rule_all_insulating"] and _wok and len(_pm["bench_tests"])>=8 and _pm["checks"]["vault_temperature_bound_C"]<80,
         f"head {_pm['totals']['head_cm3']} / neck {_pm['totals']['neck_cm3']} / upper {_pm['totals']['upper_cm3']} cm3; windings: {_w['compound']}; air margin {_w['results'][0]['margin_us']} us")
 except FileNotFoundError: chk("potting map evidence (data/results/potting_map.json)",False,"missing")
+# single-matrix potting evaluation (src/sim/potting_matrix_eval.py): the proposed epoxy / glass-bubble / BN mix is kept off the TX windings (every coil case misses
+# the first gate), its conductivity claim is tested by effective-medium mixing, and a conductive cavity paint is allowed only slit (eddy rule)
+try:
+    _me=json.load(open("data/results/potting_matrix_eval.json")); _zz={z["zone"]:z for z in _me["zones"]}
+    chk("single epoxy matrix: kept off the TX windings (all coil cases below the first gate), > 3 W/mK claim tested, paint only slit, zone fit listed",
+        all(r["margin_us"]<0 for r in _me["coil"]) and _zz["TX coil windings (six formers)"]["epoxy_matrix"]=="NO" and _zz["conductive shield paint"]["epoxy_matrix"]=="ONLY SLIT"
+        and _me["proposed_bn"]["high"]["k_W_mK"]<3.0 and len(_me["claims"])>=8,
+        f"mix {_me['proposed_bn']['low']['k_W_mK']}-{_me['proposed_bn']['high']['k_W_mK']} W/mK, er {_me['proposed_bn']['low']['er']}-{_me['proposed_bn']['high']['er']}; coverage {_me['single_matrix_coverage_cm3']} of {_me['total_fill_cm3']} cm3")
+except FileNotFoundError: chk("single-matrix evaluation evidence (data/results/potting_matrix_eval.json)",False,"missing")
 # P2 exact potting volumes (src/mech/potting_volumes.py): positive, inside their envelopes, lower <= upper bound, every zone with a fill port and a vent
 try:
     _pv=json.load(open("data/results/potting_volumes.json")); _n=_pv["npm"]; _a=_pv["l4_absorber"]
