@@ -59,3 +59,22 @@ Cache size after one v5 build: 69.4 MB.
 What the cache does NOT do: re-use the dilation of an unchanged body inside a changed body set (no byte-identical way was found with manifold3d's public API). A change to one body
 re-runs the union of the part it belongs to (CORE: 616 s of the 779 s build); every other part comes from the cache (the v5 build has 3 unions: CORE, ROOF, TRAY classes).
 The 49 print STLs are re-checked (closed, fit) by print-check in the final cold sign-off.
+
+## Solid-union study (2026-10-28): profile, batch union, canonical rebuild. Result: NO change to the default path
+Inputs: the exact bodies of all 15 closing unions the mesh generators run (SOLID_UNION_DUMP, one warm build), replayed by scripts/su_study.py; geometry compared with
+src/mech/mesh_compare.py (symmetric-difference volume, exact max vertex-to-surface distance). Evidence: data/results/studies/su_study.json.
+
+| Stage (all 15 unions, cold) | Time | Share |
+|---|---|---|
+| dilation (Minkowski sum with sphere(0.005, 8), per body) | 1132 s | 91 % |
+| grid snap search (CORE alone 83 s; already cached by the snap cache) | 89 s | 7 % |
+| boolean union + simplify | 14 s | 1 % |
+
+| Variant | Same STL bytes | Geometry vs the committed path | Verdict |
+|---|---|---|---|
+| batch union (Manifold.batch_boolean) | 4 of 15 | up to 95 um max, CORE does not close at the STL resolution | rejected: changes the solid, saves < 1 % |
+| canonical rebuild (every dilation through Mesh64 with its declared dtypes and tolerance, needed for a byte-identical per-body cache) | 0 of 15 | 4-199 um max (CORE 199 um), mean 0.0002-0.49 um; 4 unions not even reproducible run to run | rejected: not the ~1 um the switch required |
+
+The only lever left is the dilation itself (91 %); every way of reusing or parallelising it found so far has to pass the body through arrays, and that changes the union.
+The code path exists behind SOLID_UNION_REBUILD=1 (off) and `make su-proof` re-tests it on the v5 build (byte identity cached vs uncached, geometry vs the committed path)
+for a future manifold3d version. The committed path and its whole-union + snap cache are unchanged.

@@ -312,5 +312,11 @@ if os.path.exists("data/results/system_live.json"):
     _sl=json.load(open("data/results/system_live.json")); _sb=json.load(open("data/results/system_budget.json"))
     chk("system_budget power comes from the system model (no hard-coded watts)",isinstance(_sb.get("power",{}).get("model"),str) and "system_live" in _sb["power"]["model"],str({k:v for k,v in _sb.get("power",{}).items() if k!="model"}))
 else: skip("system model golden replay (make step S=system-live)")
+# solid_union study: the default stays the committed path (rebuild and batch both changed the solid by more than 1 um on the replayed unions)
+try:
+    _su=json.load(open("data/results/studies/su_study.json")); _mx=max((v.get("roundtrip_dev") or {}).get("max_vertex_to_surface_um",0) for v in _su.values())
+    _src=open("src/mech/solid_union.py").read()
+    chk("solid_union: canonical-rebuild path stays OFF by default (study max deviation over 1 um; docs/PERFORMANCE.md)",'os.environ.get("SOLID_UNION_REBUILD", "0") == "1"' in _src and _mx>1.0 and len(_su)==15,f"{len(_su)} unions, rebuild max {_mx} um")
+except FileNotFoundError: chk("solid_union study evidence (data/results/studies/su_study.json)",False,"missing")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

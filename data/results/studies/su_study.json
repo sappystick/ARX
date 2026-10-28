@@ -1,0 +1,428 @@
+{
+ "u000_cap_hood_v16.py.npz": {
+  "bodies": 12,
+  "tris_in": 29552,
+  "t_dilate": 104.2,
+  "t_union_seq": 1.43,
+  "t_snap": 0.95,
+  "snap_i": 2,
+  "hash_seq": "5744253b2c49e0b4",
+  "tris_out": 71898,
+  "t_union_batch": 1.3,
+  "hash_batch": "f06e12bca4d1bd4a",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 26.73707,
+   "area_mm2": 89176.2,
+   "mean_dev_um": 0.2998,
+   "max_vertex_to_surface_um": 94.52
+  },
+  "t_roundtrip": 0.23,
+  "hash_roundtrip": "3564ddce93f64489",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": false,
+  "roundtrip_dev": {
+   "symdiff_mm3": 44.06927,
+   "area_mm2": 89176.2,
+   "mean_dev_um": 0.4942,
+   "max_vertex_to_surface_um": 93.61
+  },
+  "tris_roundtrip": 108746
+ },
+ "u001_hub_v22.py.npz": {
+  "bodies": 223,
+  "tris_in": 296156,
+  "t_dilate": 792.36,
+  "t_union_seq": 8.28,
+  "t_snap": 83.22,
+  "snap_i": 79,
+  "hash_seq": "d43a064ecc4b760f",
+  "tris_out": 216916,
+  "t_union_batch": 10.34,
+  "hash_batch": null,
+  "batch_identical": false,
+  "t_roundtrip": 2.95,
+  "hash_roundtrip": "c00a77af33e3bbcf",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": false,
+  "roundtrip_dev": {
+   "symdiff_mm3": 19.8935,
+   "area_mm2": 49243.6,
+   "mean_dev_um": 0.404,
+   "max_vertex_to_surface_um": 199.1
+  },
+  "tris_roundtrip": 393966
+ },
+ "u002_parts_v22.py.npz": {
+  "bodies": 95,
+  "tris_in": 74344,
+  "t_dilate": 118.36,
+  "t_union_seq": 2.24,
+  "t_snap": 3.1,
+  "snap_i": 5,
+  "hash_seq": "e9f11c873143bce4",
+  "tris_out": 103490,
+  "t_union_batch": 2.13,
+  "hash_batch": "d27d516b516f891c",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 7.39451,
+   "area_mm2": 20308.9,
+   "mean_dev_um": 0.3641,
+   "max_vertex_to_surface_um": 57.0
+  },
+  "t_roundtrip": 0.9,
+  "hash_roundtrip": "60bf74ab0053148b",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 7.36271,
+   "area_mm2": 20308.9,
+   "mean_dev_um": 0.3625,
+   "max_vertex_to_surface_um": 65.44
+  },
+  "tris_roundtrip": 114516
+ },
+ "u003_parts_v22.py.npz": {
+  "bodies": 10,
+  "tris_in": 7952,
+  "t_dilate": 13.26,
+  "t_union_seq": 0.24,
+  "t_snap": 0.09,
+  "snap_i": 0,
+  "hash_seq": "897103f1fbef4313",
+  "tris_out": 15176,
+  "t_union_batch": 0.23,
+  "hash_batch": "684a1e57221c2867",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 0.0,
+   "area_mm2": 9803.7,
+   "mean_dev_um": 0.0,
+   "max_vertex_to_surface_um": 15.89
+  },
+  "t_roundtrip": 0.08,
+  "hash_roundtrip": "9618780e076c21eb",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.02856,
+   "area_mm2": 9803.7,
+   "mean_dev_um": 0.0029,
+   "max_vertex_to_surface_um": 15.89
+  },
+  "tris_roundtrip": 15866
+ },
+ "u004_tx_system.py.npz": {
+  "bodies": 9,
+  "tris_in": 444,
+  "t_dilate": 0.01,
+  "t_union_seq": 0.01,
+  "t_snap": 0.01,
+  "snap_i": 0,
+  "hash_seq": "9b0d07a4b8c474eb",
+  "tris_out": 990,
+  "t_union_batch": 0.02,
+  "hash_batch": "9b0d07a4b8c474eb",
+  "batch_identical": true,
+  "t_roundtrip": 0.03,
+  "hash_roundtrip": "d6edc4649dfe3f1f",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.00221,
+   "area_mm2": 1293.7,
+   "mean_dev_um": 0.0017,
+   "max_vertex_to_surface_um": 4.47
+  },
+  "tris_roundtrip": 1082
+ },
+ "u005_cap_v18.py.npz": {
+  "bodies": 80,
+  "tris_in": 44508,
+  "t_dilate": 89.57,
+  "t_union_seq": 1.11,
+  "t_snap": 1.79,
+  "snap_i": 5,
+  "hash_seq": "a62c817278cf935d",
+  "tris_out": 69160,
+  "t_union_batch": 1.13,
+  "hash_batch": "922dd1500786d57a",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 0.14672,
+   "area_mm2": 18519.0,
+   "mean_dev_um": 0.0079,
+   "max_vertex_to_surface_um": 49.3
+  },
+  "t_roundtrip": 0.55,
+  "hash_roundtrip": "ce54e07e67dda5f8",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": false,
+  "roundtrip_dev": {
+   "symdiff_mm3": 1.24129,
+   "area_mm2": 18519.0,
+   "mean_dev_um": 0.067,
+   "max_vertex_to_surface_um": 49.3
+  },
+  "tris_roundtrip": 86570
+ },
+ "u006_mech_v20.py.npz": {
+  "bodies": 11,
+  "tris_in": 1152,
+  "t_dilate": 1.43,
+  "t_union_seq": 0.03,
+  "t_snap": 0.02,
+  "snap_i": 0,
+  "hash_seq": "45526bf359941221",
+  "tris_out": 3596,
+  "t_union_batch": 0.03,
+  "hash_batch": "b3eb2ad02695aca3",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 0.01805,
+   "area_mm2": 51339.3,
+   "mean_dev_um": 0.0004,
+   "max_vertex_to_surface_um": 11.04
+  },
+  "t_roundtrip": 0.04,
+  "hash_roundtrip": "6dff0d9ff25c4bf7",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.20287,
+   "area_mm2": 51339.3,
+   "mean_dev_um": 0.004,
+   "max_vertex_to_surface_um": 7.07
+  },
+  "tris_roundtrip": 3640
+ },
+ "u007_mech_v20.py.npz": {
+  "bodies": 5,
+  "tris_in": 60,
+  "t_dilate": 0.0,
+  "t_union_seq": 0.0,
+  "t_snap": 0.0,
+  "snap_i": 0,
+  "hash_seq": "8cc55bfe3f85ae0f",
+  "tris_out": 212,
+  "t_union_batch": 0.0,
+  "hash_batch": "8cc55bfe3f85ae0f",
+  "batch_identical": true,
+  "t_roundtrip": 0.01,
+  "hash_roundtrip": "8cc55bfe3f85ae0f",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.0,
+   "area_mm2": 3386.7,
+   "mean_dev_um": 0.0,
+   "max_vertex_to_surface_um": 3.61
+  },
+  "tris_roundtrip": 212
+ },
+ "u008_upper_v21.py.npz": {
+  "bodies": 8,
+  "tris_in": 1860,
+  "t_dilate": 2.32,
+  "t_union_seq": 0.05,
+  "t_snap": 0.02,
+  "snap_i": 0,
+  "hash_seq": "f015536c496ebc59",
+  "tris_out": 5680,
+  "t_union_batch": 0.05,
+  "hash_batch": "5df8da4d1ed74ee7",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 0.16871,
+   "area_mm2": 66515.9,
+   "mean_dev_um": 0.0025,
+   "max_vertex_to_surface_um": 4.92
+  },
+  "t_roundtrip": 0.06,
+  "hash_roundtrip": "4968f7041f611cf5",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": false,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.47761,
+   "area_mm2": 66515.9,
+   "mean_dev_um": 0.0072,
+   "max_vertex_to_surface_um": 13.99
+  },
+  "tris_roundtrip": 5662
+ },
+ "u009_upper_v21.py.npz": {
+  "bodies": 4,
+  "tris_in": 1196,
+  "t_dilate": 1.49,
+  "t_union_seq": 0.07,
+  "t_snap": 0.03,
+  "snap_i": 0,
+  "hash_seq": "8dbb2b1761c39541",
+  "tris_out": 4028,
+  "t_union_batch": 0.05,
+  "hash_batch": "6ccd32048f5cf6a5",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 0.0,
+   "area_mm2": 73072.6,
+   "mean_dev_um": 0.0,
+   "max_vertex_to_surface_um": 44.2
+  },
+  "t_roundtrip": 0.03,
+  "hash_roundtrip": "6c0336acd737575e",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.8069,
+   "area_mm2": 73072.6,
+   "mean_dev_um": 0.011,
+   "max_vertex_to_surface_um": 44.2
+  },
+  "tris_roundtrip": 4106
+ },
+ "u010_upper_v21.py.npz": {
+  "bodies": 13,
+  "tris_in": 156,
+  "t_dilate": 0.01,
+  "t_union_seq": 0.01,
+  "t_snap": 0.0,
+  "snap_i": 0,
+  "hash_seq": "c43883256f7d77f7",
+  "tris_out": 680,
+  "t_union_batch": 0.01,
+  "hash_batch": "45d41559e5617bf1",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 0.0,
+   "area_mm2": 45401.6,
+   "mean_dev_um": 0.0,
+   "max_vertex_to_surface_um": 5.0
+  },
+  "t_roundtrip": 0.03,
+  "hash_roundtrip": "c43883256f7d77f7",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.0,
+   "area_mm2": 45401.6,
+   "mean_dev_um": 0.0,
+   "max_vertex_to_surface_um": 5.0
+  },
+  "tris_roundtrip": 680
+ },
+ "u011_upper_v21.py.npz": {
+  "bodies": 22,
+  "tris_in": 264,
+  "t_dilate": 0.01,
+  "t_union_seq": 0.02,
+  "t_snap": 0.0,
+  "snap_i": 0,
+  "hash_seq": "bfdf451a24ac907e",
+  "tris_out": 810,
+  "t_union_batch": 0.02,
+  "hash_batch": "98e241cf92f1a9a4",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 0.0,
+   "area_mm2": 97699.0,
+   "mean_dev_um": 0.0,
+   "max_vertex_to_surface_um": 7.07
+  },
+  "t_roundtrip": 0.05,
+  "hash_roundtrip": "bfdf451a24ac907e",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.0,
+   "area_mm2": 97699.0,
+   "mean_dev_um": 0.0,
+   "max_vertex_to_surface_um": 7.07
+  },
+  "tris_roundtrip": 810
+ },
+ "u012_upper_v21.py.npz": {
+  "bodies": 6,
+  "tris_in": 4696,
+  "t_dilate": 6.43,
+  "t_union_seq": 0.05,
+  "t_snap": 0.04,
+  "snap_i": 0,
+  "hash_seq": "418c768917ace23d",
+  "tris_out": 12104,
+  "t_union_batch": 0.04,
+  "hash_batch": "632de9e266d19c89",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 0.0,
+   "area_mm2": 18167.6,
+   "mean_dev_um": 0.0,
+   "max_vertex_to_surface_um": 7.32
+  },
+  "t_roundtrip": 0.06,
+  "hash_roundtrip": "ac432f4a8ef97174",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.02536,
+   "area_mm2": 18167.6,
+   "mean_dev_um": 0.0014,
+   "max_vertex_to_surface_um": 7.54
+  },
+  "tris_roundtrip": 12066
+ },
+ "u013_upper_v21.py.npz": {
+  "bodies": 4,
+  "tris_in": 2360,
+  "t_dilate": 3.06,
+  "t_union_seq": 0.03,
+  "t_snap": 0.02,
+  "snap_i": 0,
+  "hash_seq": "b6082369790ff142",
+  "tris_out": 6176,
+  "t_union_batch": 0.03,
+  "hash_batch": "b6082369790ff142",
+  "batch_identical": true,
+  "t_roundtrip": 0.04,
+  "hash_roundtrip": "6061dd745e13c8b9",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.00232,
+   "area_mm2": 13669.6,
+   "mean_dev_um": 0.0002,
+   "max_vertex_to_surface_um": 7.26
+  },
+  "tris_roundtrip": 6104
+ },
+ "u014_upper_v21.py.npz": {
+  "bodies": 3,
+  "tris_in": 1036,
+  "t_dilate": 1.46,
+  "t_union_seq": 0.02,
+  "t_snap": 0.01,
+  "snap_i": 0,
+  "hash_seq": "6e74f4ed55ceed18",
+  "tris_out": 2308,
+  "t_union_batch": 0.02,
+  "hash_batch": "df3ee3b1a5692dd1",
+  "batch_identical": false,
+  "batch_dev": {
+   "symdiff_mm3": 0.0,
+   "area_mm2": 8281.5,
+   "mean_dev_um": 0.0,
+   "max_vertex_to_surface_um": 4.12
+  },
+  "t_roundtrip": 0.02,
+  "hash_roundtrip": "bb620cd6d38f2cf2",
+  "roundtrip_closed": true,
+  "roundtrip_reproducible": true,
+  "roundtrip_dev": {
+   "symdiff_mm3": 0.09488,
+   "area_mm2": 8281.5,
+   "mean_dev_um": 0.0115,
+   "max_vertex_to_surface_um": 4.12
+  },
+  "tris_roundtrip": 2340
+ }
+}
