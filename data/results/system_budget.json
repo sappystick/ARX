@@ -222,11 +222,11 @@
   },
   {
    "part": "Power cord AWG20 pair (upper v1)",
-   "stress": "average current in boost (7.7 W / 19.6 V BMS cut-off / 0.85)",
-   "value": 0.462,
+   "stress": "average current in boost (8.64 W battery side at the 19.6 V BMS cut-off, system_live.py)",
+   "value": 0.441,
    "rating": 5.0,
    "unit": "A",
-   "margin_pct": 90.8,
+   "margin_pct": 91.2,
    "required_margin_pct": 50,
    "status": "PASS",
    "note": "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon"
@@ -245,7 +245,7 @@
   {
    "part": "Battery pack 7S1P Molicel P30B",
    "stress": "average current in boost",
-   "value": 0.462,
+   "value": 0.441,
    "rating": 30.0,
    "unit": "A",
    "margin_pct": 98.5,
@@ -364,15 +364,26 @@
    "note": "CRCW0603 e3 P70 0.10 W (Vishay 20035)"
   },
   {
+   "part": "+5VA (AB1A + AB1B analog, via CB1D FB2)",
+   "stress": "6 OPA2211 channels x 4.5 mA max + 4 OPA2365 amplifiers x 5 mA max (25 C)",
+   "value": 0.047,
+   "rating": 1.0,
+   "unit": "A",
+   "margin_pct": 95.3,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "FB2 bead 1 A; over temperature 56 mA (OPA2211 6 mA per channel)"
+  },
+  {
    "part": "+5V rail (CB1D M5, 1.5 A)",
-   "stress": "LED firmware cap 0.35 A + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq)",
-   "value": 0.577,
+   "stress": "LED firmware cap 0.35 A + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature)",
+   "value": 0.633,
    "rating": 1.5,
    "unit": "A",
-   "margin_pct": 61.5,
+   "margin_pct": 57.8,
    "required_margin_pct": 30,
    "status": "PASS",
-   "note": "M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate"
+   "note": "M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)"
   },
   {
    "part": "TX lead channel",
@@ -423,13 +434,21 @@
  "watch": 2,
  "power": {
   "scan 8 A / 800 Hz": {
-   "W": 4.7,
-   "hours": 16.1
+   "W": 5.26,
+   "hours": 14.4,
+   "at_V": 25.2
+  },
+  "mid 14 A / 600 Hz": {
+   "W": 7.18,
+   "hours": 10.5,
+   "at_V": 25.2
   },
   "boost 20 A / 400 Hz": {
-   "W": 7.7,
-   "hours": 9.8
+   "W": 8.51,
+   "hours": 8.9,
+   "at_V": 25.2
   },
-  "pack_Wh": 75.6
+  "pack_Wh": 75.6,
+  "model": "src/sim/system_live.py (MODELED; efficiency 0.85 and the 0.10 W M12 load ASSUMED)"
  }
 }
