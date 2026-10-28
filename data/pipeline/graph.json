@@ -919,6 +919,20 @@
 "R": [],
 "W": []
 },
+"fw-timeline": {
+"L": [],
+"R": [
+"work/fw_timeline.py",
+"work/kit_v22/sbq_damping2.json",
+"work/kit_v23/TX_ONTIME_LUT.csv",
+"work/kit_v23/system_live.json",
+"work/kit_v23/tx_vbus.json"
+],
+"W": [
+"work/kit_v23/fw_timeline.json",
+"work/kit_v23/pf233_timing.h"
+]
+},
 "gerber-ab1": {
 "L": [
 "scripts/tracehook",
@@ -1486,6 +1500,20 @@
 ],
 "W": [
 "work/kit_v22/models3d_check.json"
+]
+},
+"pad-orient": {
+"L": [],
+"R": [
+"work/kit_v18/CB1D/pads.json",
+"work/kit_v18/LB1/pads.json",
+"work/kit_v6/HB2/pads.json",
+"work/kit_v6/PB1R/pads.json",
+"work/kit_v6/PM2/pads.json",
+"work/pad_orient_check.py"
+],
+"W": [
+"work/kit_v22/pad_orient_check.json"
 ]
 },
 "pcb-ab1": {

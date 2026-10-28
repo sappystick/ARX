@@ -99,11 +99,11 @@
     "margin_mm": 1.1248
    },
    "hole_to_hole": {
-    "min_mm": 0.5485,
-    "margin_mm": 0.1385,
+    "min_mm": 0.6124,
+    "margin_mm": 0.2024,
     "at": [
-     73.05,
-     -93.45
+     76.35,
+     -96.3
     ]
    },
    "hole_to_copper": {
@@ -119,7 +119,7 @@
    "via_annular": {
     "min_mm": 0.15,
     "margin_mm": 0.0,
-    "n": 108
+    "n": 112
    },
    "pth_annular": {
     "min_mm": 0.185,
@@ -136,7 +136,7 @@
     "copper gap In4.Cu": 0.0774,
     "copper gap B.Cu": 0.0774,
     "edge": 1.1248,
-    "hole_to_hole": 0.1385,
+    "hole_to_hole": 0.2024,
     "hole_to_copper": 0.1304,
     "via_annular": 0.0,
     "pth_annular": 0.005
@@ -149,7 +149,7 @@
     "via_annular": 0.023,
     "pth_annular": 0.007,
     "edge": 1.2438,
-    "hole_to_hole": 0.1675,
+    "hole_to_hole": 0.2314,
     "hole_to_copper": 0.1364
    }
   },
@@ -175,39 +175,39 @@
    "hv_nets": [],
    "copper_min_by_layer": {
     "F.Cu": {
-     "gap_mm": 0.2765,
+     "gap_mm": 0.2357,
      "floor_mm": 0.16,
-     "margin_mm": 0.1165,
+     "margin_mm": 0.0757,
      "nets": [
       "GND",
-      "LD_D10"
+      "LED_CLK"
      ]
     },
     "In1.Cu": {
-     "gap_mm": 0.2765,
+     "gap_mm": 0.3493,
      "floor_mm": 0.16,
-     "margin_mm": 0.1165,
+     "margin_mm": 0.1893,
      "nets": [
-      "GND",
-      "LD_D10"
+      "+5V",
+      "LD_D0"
      ]
     },
     "In2.Cu": {
-     "gap_mm": 0.2765,
+     "gap_mm": 0.3493,
      "floor_mm": 0.16,
-     "margin_mm": 0.1165,
+     "margin_mm": 0.1893,
      "nets": [
-      "GND",
-      "LD_D10"
+      "+5V",
+      "LD_D0"
      ]
     },
     "B.Cu": {
-     "gap_mm": 0.2765,
+     "gap_mm": 0.3493,
      "floor_mm": 0.16,
-     "margin_mm": 0.1165,
+     "margin_mm": 0.1893,
      "nets": [
-      "LD_D10",
-      "GND"
+      "LD_D0",
+      "+5V"
      ]
     }
    },
@@ -216,32 +216,32 @@
    "near_count": 0,
    "hv_min": null,
    "edge": {
-    "min_mm": 1.1514,
+    "min_mm": 0.8514,
     "net": "+5V",
-    "margin_mm": 0.6514
+    "margin_mm": 0.3514
    },
    "hole_to_hole": {
-    "min_mm": 0.5746,
-    "margin_mm": 0.1646,
+    "min_mm": 0.6487,
+    "margin_mm": 0.2387,
     "at": [
-     103.65,
-     -112.5
+     106.05,
+     -99.9
     ]
    },
    "hole_to_copper": {
-    "min_mm": 0.4252,
-    "margin_mm": 0.1652,
+    "min_mm": 0.4929,
+    "margin_mm": 0.2329,
     "hole": "via",
-    "other_net": "LD_D12",
+    "other_net": "LD_D9",
     "at": [
-     112.5,
-     -103.65
+     103.05,
+     -110.55
     ]
    },
    "via_annular": {
     "min_mm": 0.15,
     "margin_mm": 0.0,
-    "n": 185
+    "n": 166
    },
    "pth_annular": {
     "min_mm": 0.4,
@@ -251,13 +251,13 @@
    },
    "track_min_mm": 0.2,
    "margins": {
-    "copper gap F.Cu": 0.1165,
-    "copper gap In1.Cu": 0.1165,
-    "copper gap In2.Cu": 0.1165,
-    "copper gap B.Cu": 0.1165,
-    "edge": 0.6514,
-    "hole_to_hole": 0.1646,
-    "hole_to_copper": 0.1652,
+    "copper gap F.Cu": 0.0757,
+    "copper gap In1.Cu": 0.1893,
+    "copper gap In2.Cu": 0.1893,
+    "copper gap B.Cu": 0.1893,
+    "edge": 0.3514,
+    "hole_to_hole": 0.2387,
+    "hole_to_copper": 0.2329,
     "via_annular": 0.0,
     "pth_annular": 0.22
    },
@@ -265,12 +265,12 @@
    "min_margin_of": "via_annular",
    "pass": true,
    "vendor_margins": {
-    "clearance": 0.1245,
+    "clearance": 0.0837,
     "via_annular": 0.023,
     "pth_annular": 0.222,
-    "edge": 0.7704,
-    "hole_to_hole": 0.1936,
-    "hole_to_copper": 0.1712
+    "edge": 0.4704,
+    "hole_to_hole": 0.2677,
+    "hole_to_copper": 0.2389
    }
   },
   "PB1R": {
@@ -1033,7 +1033,7 @@
      "margin_mm": 0.0134,
      "nets": [
       "GND",
-      "<nonet:33d70132-9569-43db-b836-8632dc2215b0>"
+      "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>"
      ]
     },
     "In2.Cu": {
@@ -1060,7 +1060,7 @@
      "margin_mm": 0.0134,
      "nets": [
       "GND",
-      "<nonet:33d70132-9569-43db-b836-8632dc2215b0>"
+      "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>"
      ]
     },
     "B.Cu": {
@@ -1103,7 +1103,7 @@
     {
      "layer": "F.Cu",
      "a": "BLANK",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1194,7 +1194,7 @@
     {
      "layer": "F.Cu",
      "a": "GND",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1311,7 +1311,7 @@
     {
      "layer": "F.Cu",
      "a": "SDO1",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1337,7 +1337,7 @@
     {
      "layer": "In1.Cu",
      "a": "GND",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1467,7 +1467,7 @@
     {
      "layer": "In1.Cu",
      "a": "BLANK",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1545,7 +1545,7 @@
     {
      "layer": "In1.Cu",
      "a": "SDO1",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1636,7 +1636,7 @@
     {
      "layer": "In2.Cu",
      "a": "GND",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1714,7 +1714,7 @@
     {
      "layer": "In2.Cu",
      "a": "BLANK",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1779,7 +1779,7 @@
     {
      "layer": "In2.Cu",
      "a": "SDO1",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1805,7 +1805,7 @@
     {
      "layer": "In3.Cu",
      "a": "BLANK",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -1844,7 +1844,7 @@
     {
      "layer": "In3.Cu",
      "a": "GND",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -2013,7 +2013,7 @@
     {
      "layer": "In3.Cu",
      "a": "SDO1",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -2039,7 +2039,7 @@
     {
      "layer": "In4.Cu",
      "a": "GND",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -2169,7 +2169,7 @@
     {
      "layer": "In4.Cu",
      "a": "BLANK",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -2247,7 +2247,7 @@
     {
      "layer": "In4.Cu",
      "a": "SDO1",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -2390,7 +2390,7 @@
     {
      "layer": "B.Cu",
      "a": "SDO1",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -2429,7 +2429,7 @@
     {
      "layer": "B.Cu",
      "a": "GND",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,
@@ -2468,7 +2468,7 @@
     {
      "layer": "B.Cu",
      "a": "BLANK",
-     "b": "<nonet:33d70132-9569-43db-b836-8632dc2215b0>",
+     "b": "<nonet:38b5cfd5-4c1b-4f8f-a5d5-51f0bc8b6cfa>",
      "gap_mm": 0.1734,
      "floor_mm": 0.16,
      "margin_mm": 0.0134,

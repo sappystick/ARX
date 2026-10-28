@@ -1,7 +1,7 @@
 {
  "counts": {
-  "PASS": 68,
-  "FAIL": 1,
+  "PASS": 71,
+  "FAIL": 0,
   "SKIP": 0,
   "UNVERIFIED": 4
  },
@@ -42,8 +42,8 @@
     "detail": "0 violations, 0 opens"
    },
    "kicad": {
-    "state": "FAIL",
-    "detail": "errors {'clearance': 150}, unconnected 2"
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
    },
    "gerber": {
     "state": "PASS",
@@ -329,6 +329,14 @@
   "voxel interference (window, bridge, junction)": {
    "state": "PASS",
    "detail": "28 pairs"
+  },
+  "release-tx / sign-off controls (refusals, evidence rule, idempotence)": {
+   "state": "PASS",
+   "detail": "12/12 controls behave as intended"
+  },
+  "tests/regress.py (strict: a missing result FAILs)": {
+   "state": "PASS",
+   "detail": "105 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {
