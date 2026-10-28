@@ -321,11 +321,11 @@ if PW == "C" and os.environ.get("DISC"):
     # BMI270 in I2C mode per its connection table: SDO -> GND (default address), CSB -> VDDIO; INT1 / INT2 / OCSB / OSDO not connected; 100 nF at VDDIO and VDD
     # dual source (owner 2026-10-28): the same land also takes the ST LSM6DSO (DS12140 Rev 3: same LGA-14 terminals and pin numbers); its mode-1 pins 2 / 3
     # (SDx / SCx) must go to VDDIO or GND, the BMI270's (ASDx / ASCx) to VDDIO or DNC, never GND: both are tied to VDDIO. Firmware tells them apart by the ID register.
-    # Pico pins 21 / 22 (GP16 / GP17, I2C0 SDA / SCL by the Pico pinout: ASSUMPTIONS 22, UNVERIFIED); 4k7 pull-ups to P3V3 for 400 kHz
+    # Pico pins 26 / 27 (GP20 / GP21, I2C0 SDA / SCL by the Pico pinout: ASSUMPTIONS 22, UNVERIFIED), next to the free band above the top header; 4k7 pull-ups for 400 kHz
     add("UG", "BMI270", "BMI270", "Bosch BMI270 IMU (yaw rate), I2C"); add("CG1", "C0603", "100n", "X7R, VDDIO"); add("CG2", "C0603", "100n", "X7R, VDD")
     add("RGA", "R0603", "4k7", "I2C SDA pull-up"); add("RGL", "R0603", "4k7", "I2C SCL pull-up")
     net("P3V3", ("UG", 5), ("UG", 8), ("UG", 12), ("UG", 2), ("UG", 3), ("CG1", 1), ("CG2", 1), ("RGA", 1), ("RGL", 1)); net("GND", ("UG", 1), ("UG", 6), ("UG", 7), ("CG1", 2), ("CG2", 2))
-    net("GYR_SDA", ("UG", 14), ("RGA", 2), ("U1", 21)); net("GYR_SCL", ("UG", 13), ("RGL", 2), ("U1", 22))
+    net("GYR_SDA", ("UG", 14), ("RGA", 2), ("U1", 26)); net("GYR_SCL", ("UG", 13), ("RGL", 2), ("U1", 27))
     for _pn, _nm in ((4, "INT1"), (9, "INT2"), (10, "OCSB"), (11, "OSDO")): net(f"UG_{_nm}_NC", ("UG", _pn))
 for k in NETS: NETS[k] = list(dict.fromkeys(NETS[k]))
 BYREF = {p["ref"]: p for p in PARTS}
