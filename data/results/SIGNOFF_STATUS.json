@@ -1,7 +1,7 @@
 {
  "counts": {
-  "PASS": 73,
-  "FAIL": 1,
+  "PASS": 74,
+  "FAIL": 0,
   "SKIP": 0,
   "UNVERIFIED": 4
  },
@@ -24,8 +24,8 @@
     "detail": "10 files, edge read-back OK"
    },
    "plane": {
-    "state": "FAIL",
-    "detail": "6 HV pad/via x plane checks"
+    "state": "PASS",
+    "detail": "6 HV pad/via x plane checks (2 pads, 1 vias)"
    },
    "cross": {
     "state": "PASS",

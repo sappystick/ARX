@@ -2,12 +2,12 @@
 
 Everything here is MODELED or tool-checked; nothing is built or measured. PASS means the tool check passed, not that a board is ready for fabrication.
 
-**73 PASS, 1 FAIL, 0 SKIP, 4 UNVERIFIED**
+**74 PASS, 0 FAIL, 0 SKIP, 4 UNVERIFIED**
 
 ## Boards
 | board | route | indep. DRC | KiCad DRC | Gerber+drill | plane HV | cross-check |
 |---|---|---|---|---|---|---|
-| CB1D | PASS | PASS | PASS | PASS | FAIL | PASS |
+| CB1D | PASS | PASS | PASS | PASS | PASS | PASS |
 | LB1 | PASS | PASS | PASS | PASS | - | PASS |
 | PB1R | PASS | PASS | PASS | PASS | PASS | PASS |
 | TXJ1 | - | - | PASS | PASS | - | PASS |

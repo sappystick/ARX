@@ -1,6 +1,10 @@
 {
  "board": "CB1D",
  "checked": 6,
+ "expected": 6,
+ "hv_tht_pads": 2,
+ "hv_vias": 1,
+ "plane_layers": 2,
  "failures": 0,
  "failing": []
 }
