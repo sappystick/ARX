@@ -33,3 +33,25 @@ Between serial and parallel cold runs only these files differ: `state_*.pkl` (ro
 - The cache trusts what the tracer sees. A tool that reads a file in a child process the tracer cannot see (non-python programs other than `kicad-cli` arguments) could hide an input. `make signoff-cold` before every release removes that risk.
 - 4 cores: more parallelism would not shorten the critical chain.
 - Not measured: a fresh clone (no router state, no `work/`).
+
+## Solid-union cache (2026-10-28, `src/mech/solid_union.py`)
+Content-hash cache in `work/.pipeline/solid_union_cache/` (git-ignored, invisible to the tracer, wiped by `make clean`; `SOLID_UNION_CACHE=off` runs the uncached path):
+each body's 0.005 mm dilation (Mesh64 with every field and the tolerance), each body set's final union (V, F, info) and the winning snap grid are keyed by a SHA-256 of exactly
+what the computation reads (float32 / uint32 bytes as handed to manifold3d, margin, sphere segments, manifold3d version, candidate list). The margin stays 0.005 mm and
+`solid_union_failed.npz` is still written on a failure.
+
+Found on the way: the uncached path was NOT byte-reproducible. manifold3d's parallel boolean returns the triangles of a union in a run-dependent order (same triangle set,
+same count, same volume: checked order-free on CORE_CYLINDER_v5_integrated.stl, 216 916 triangles, and ANALOG_TRAY_v5.stl). The union output now has a canonical face
+order (each face rotated to its smallest vertex index, faces sorted), so every run writes the same bytes; curated STLs built through the union change bytes once (geometry unchanged).
+
+v5 build (`hub_v22.py` + `parts_v22.py`, serial, 4-core container, scratch copies of the same work/ inputs; all 58 files the build writes byte-compared with the first uncached run):
+
+| Run | Wall time | Files that differ from uncached run 1 |
+|---|---|---|
+| uncached, run 1 | 778.5 s | - |
+| uncached, run 2 | 778.6 s | 0 of 58 |
+| cache cold (empty cache; fills it) | 794.1 s (+2 %) | 0 of 58 |
+| cache warm (nothing changed) | 113.6 s (6.9x faster) | 0 of 58 |
+| one body changed (DILONLY) | DILONLY_S | DILONLY_DIFF |
+
+Cache size after one v5 build: 69.4 MB.
