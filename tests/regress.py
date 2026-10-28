@@ -37,7 +37,7 @@ else: skip("quad bearing results")
 d=rd("kit_v22/parts_report.json")
 if d: chk("v5 parts closed meshes",all(v["nonmanifold_edges"]==0 for v in d.values()),str({k:v["nonmanifold_edges"] for k,v in d.items()}))
 d=rd("kit_v20/route_LB1.json")
-if d: st=d["stats"]; chk("LB1 routed 68/68 nets, no failures",st["nets_routed"]==st["nets_to_route"]==68 and not st["failures"],str(st))
+if d: st=d["stats"]; chk("LB1-v6 routed 136/136 nets (clocked chain: data + clock per LED), no failures",st["nets_routed"]==st["nets_to_route"]==136 and not st["failures"],str(st))
 else: skip("LB1 routing")
 d=rd("kit_v18/PARTS/hood_v3_report.json")
 if d: a=d["hood_v3_audit"]; chk("hood v3: 26 tiles butted 0.2 mm, spoke gap >= 1.7 mm, corner r <= 116.1, all generator checks pass",a["tiles"]==26 and a["min_tile_gap"]>=1.7 and a["outer_frame_corner_r"]<=116.1 and all(c["result"]=="PASS" for c in d["checks"]),str({k:a[k] for k in ("min_tile_gap","butt_joint","outer_frame_corner_r","mass_g","dims")}))
@@ -324,6 +324,11 @@ try:
     chk("fab margin audit: all 11 released boards at or above every floor (copper gap, HV 1.0 mm, edge, drill-drill, drill-copper, via / PTH ring, track)",len(_fm)==11 and all(b["pass"] for b in _fm.values()),
         "; ".join(f"{k} {b['min_margin_mm']} ({b['min_margin_of']})" for k,b in _fm.items()))
 except FileNotFoundError: chk("fab margin audit evidence (data/results/fab_margin_audit.json)",False,"missing")
+# LB1-v6 clocked LEDs (src/pcb/led_upgrade_check.py): SK9822-EC20 at the placed positions and chain rotations, pad gap and body gap floors, 0.3 mm under the roof
+try:
+    _lu=json.load(open("data/results/led_upgrade_check.json")); _f=_lu["fit"]["SK9822-EC20, as placed"]
+    chk("LB1-v6 LEDs: SK9822-EC20 fits as placed (pad gap >= 0.16, body gap >= 0.2, roof gap >= 0.3 mm)",_lu["chosen_ok"] and _f["ok"] and _lu["height"]["SK9822-EC20"]["gap_mm"]>=0.3,f"pad gap {_f['min_pad_gap_mm']} body gap {_f['min_body_gap_mm']} roof {_lu['height']['SK9822-EC20']['gap_mm']}")
+except (FileNotFoundError, KeyError): chk("LB1-v6 LED fit evidence (data/results/led_upgrade_check.json)",False,"missing")
 # P2 exact potting volumes (src/mech/potting_volumes.py): positive, inside their envelopes, lower <= upper bound, every zone with a fill port and a vent
 try:
     _pv=json.load(open("data/results/potting_volumes.json")); _n=_pv["npm"]; _a=_pv["l4_absorber"]

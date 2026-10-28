@@ -31,6 +31,9 @@ not fit LB1 or its vertical gaps. Per the owner's rule, the design feeds clocked
   LED_IN, GND, GND).
 - CB1D-C1: JLB.3 = LED_CLK from Pico pin 19 (a PIO pin; Pico 2 W pinout ASSUMPTIONS 22).
 - Harness v4: W037 GND on JLB.4, new W066 LED_CLK on JLB.3.
+- lb1_export.py: each LED is rotated (0 / 90 / 180 / 270) so the SDO -> SDI and CKO -> CKI hops to the next LED are shortest and never cross (exact Viterbi
+  over the 66-LED chain). With every LED at 0 deg the router left 10 clock nets open (126/136); rotated: 136/136 nets, 304 tracks, 168 vias (was 224), with the
+  same router rules (0.2 mm clearance, same planes). sch_blocks.py: the schematic chain wire is SDO (1) -> SDI (3); the clock runs by net label.
 - stack_check: LED height 0.65 mm (gap to the roof 0.65 mm, rule 0.3).
 - fw_timeline: SK9822 frame 64 + 32 x 66 = 2176 bit at 8 MHz = 272 us, placed after the last gate (449 us) in every period: 0 % pulses dropped, display
   refresh = PRF (400-800 Hz); generated header PF_LED_* constants.

@@ -60,7 +60,21 @@ def autoplace(fixed, anchors, rots=None):
         if not done: print("could not place", ref)
     return placed
 if PW == "L":
-    fixed = {p["ref"]: (p["xy"][0], p["xy"][1], 0) for p in D.PARTS if p["ref"].startswith("LD")}
+    # LB1-v6 clocked chain: each LED gets the 90-degree rotation that makes the SDO -> SDI and CKO -> CKI hops to the next LED shortest with the data and
+    # clock hops never crossing (exact Viterbi over 4 states per LED); with all LEDs at 0 deg ten clock nets did not route
+    def chain_rots(refs):
+        pd = {q[0]: (q[1], q[2]) for q in D.LIB["SK9822EC20"]["pads"]}; xy = {r: D.BYREF[r]["xy"] for r in refs}
+        def pp(r, rot, n): q = rotxy(*pd[n], rot); return (xy[r][0] + q[0], xy[r][1] + q[1])
+        def side(a, b, c): return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+        def cross(a, b, c, d): return side(a, b, c) * side(a, b, d) < 0 and side(c, d, a) * side(c, d, b) < 0
+        def hop(r1, q1, r2, q2):
+            a, b, c, d = pp(r1, q1, "1"), pp(r2, q2, "3"), pp(r1, q1, "6"), pp(r2, q2, "4")
+            return math.dist(a, b) + math.dist(c, d) + (20.0 if cross(a, b, c, d) else 0.0)
+        best = {q: (0.0, (q,)) for q in (0, 90, 180, 270)}
+        for r1, r2 in zip(refs, refs[1:]): best = {q2: min((c + hop(r1, q1, r2, q2), path + (q2,)) for q1, (c, path) in best.items()) for q2 in (0, 90, 180, 270)}
+        return dict(zip(refs, min(best.values())[1]))
+    _leds = sorted((p["ref"] for p in D.PARTS if p["ref"].startswith("LD")), key=lambda r: int(r[2:])); _rot = chain_rots(_leds)
+    fixed = {r: (D.BYREF[r]["xy"][0], D.BYREF[r]["xy"][1], _rot[r]) for r in _leds}
     anchors = {"U1": (0, 0), "RS": (4, 0), "U2": (0, 3), "RSC": (4, 3), "CB": (-4, 3), "JLB": (0, -4)}
     for k in range(1, 12): anchors[f"CL{k}"] = (-6 + k * 1.0, 6 - k * 0.8)
     PL = autoplace(fixed, anchors, {"JLB": 90})

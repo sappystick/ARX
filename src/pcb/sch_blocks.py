@@ -2,7 +2,7 @@
 of what the block does (taken from the netlist and the part values: no performance numbers), and the refs. Parts not listed fall into an automatic "Other parts" block, and
 sch_func.py fails if a ref is listed twice. Changing a block list never changes the netlist: the schematic is checked against it with KiCad."""
 DATE = "2026-10-26"
-TITLE = {"CB1D": "CB1D-B controller: Pico 2 W, supplies, handle cable, receive-board links, TX monitor", "LB1": "LB1 display: 66 x SK6812-MINI-E chain with 3V3 -> 5 V data buffer",
+TITLE = {"CB1D": "CB1D-C1 controller: Pico 2 W, supplies, handle cable, receive-board links, TX monitor", "LB1": "LB1-v6 display: 66 x SK9822-EC20 clocked chain with 3V3 -> 5 V data and clock buffers",
          "PB1R": "PB1R transmit stage: gate drive, two 650 V FETs, shunt, flyback clamp, overcurrent comparator, 12 V aux", "PM2": "PM2 battery dock: fuse, P-FET power switch with soft start, bulk, cord",
          "HB2": "HB2 grip board: Hall trigger, 4-position dial divider, signal cord", "AB1A": "AB1A receive analog board: 3 channels (GX, GY, X8), blanking, gain, 16-bit quad ADC (AD7389-4)",
          "AB1B": "AB1B receive analog board: 2 channels (Y8, MONO), blanking, gain, 16-bit quad ADC (AD7389-4)"}
@@ -31,8 +31,8 @@ def blocks(b, PARTS, PINNET):
         dict(title="2  Hall trigger", note=["HS1 (digital Hall switch, open drain): magnet near at rest -> TRIG low.", "RH1 1 k in series to the cord; CH1 100 nF decoupling."], refs=["HS1", "CH1", "RH1"]),
         dict(title="3  Dial (4-position rotary)", note=["RD0 10 k pull-up from P3V3 to DIAL (= JDIAL COM). Positions: P1 straight to GND; P2 / P3 / P4 through RD2 3k3 / RD3 10 k / RD4 33 k to GND, so each position gives a different divider level."], refs=["JDIAL", "RD0", "RD2", "RD3", "RD4"])]
     if b == "LB1": return [
-        dict(title="1  Data entry: 3V3 -> 5 V buffer", note=["JLB: +5V, LED_IN, GND, GND from CB1D. U1 (74AHCT1G125) buffers LED_IN to 5 V logic; RS 33 R series damping -> LD_D0."], refs=["JLB", "U1", "RS"]),
-        dict(title="2  SK6812-MINI-E chain, 66 pixels", note=["DOUT of each pixel goes straight to DIN of the next (wired); pins: 1 VDD (+5V), 2 DOUT, 3 GND, 4 DIN.", "LD66 DOUT is left open (LD_END_NC)."], refs=_by(PARTS, "LD"), link=("2", "4"), cols=11, width=2000),
+        dict(title="1  Data and clock entry: 3V3 -> 5 V buffers", note=["JLB: +5V, LED_IN, LED_CLK, GND from CB1D. U1 / U2 (74AHCT1G125) buffer LED_IN / LED_CLK to 5 V logic;", "RS / RSC 33 R series damping -> LD_D0 / LD_C0."], refs=["JLB", "U1", "RS", "U2", "RSC"]),
+        dict(title="2  SK9822-EC20 clocked chain, 66 pixels", note=["SDO of each pixel goes straight to SDI of the next (wired); CKO -> CKI of the next by net label (LD_Cn).", "Pins: 1 SDO, 2 GND, 3 SDI, 4 CKI, 5 VDD (+5V), 6 CKO. LD66 SDO / CKO are left open (LD_END_NC / LD_CEND_NC)."], refs=_by(PARTS, "LD"), link=("1", "3"), cols=11, width=2000),
         dict(title="3  Decoupling", note=["CL1 to CL11: 100 nF across +5V / GND; CB 10 uF bulk."], refs=_by(PARTS, "CL") + ["CB"])]
     if b == "CB1D": return [
         dict(title="1  Controller", note=["U1: Raspberry Pi Pico 2 W (RP2350 + CYW43439). Powered from +5V at VSYS; 3V3_OUT = P3V3.", "JDBG: RUN / GND reset pads (SWD pads are on the Pico underside). CP1 / CP2 decouple VSYS."], refs=["U1", "JDBG", "CP1", "CP2"]),
@@ -49,7 +49,7 @@ def blocks(b, PARTS, PINNET):
         dict(title="10  Link to PB1R", note=["JPB: 12V-side signals only: UMB_SHLD, TX1_IN, REF_I1, FAULT1_N, ISENSE1, NTC_SENSE, GND (same order as JC on PB1R).", "RUS / CUS bleed the umbilical shield."], refs=["JPB", "RUS", "CUS"]),
         dict(title="11  Coil monitor: damping chain", note=["JCL: coil leads COIL_B (drain side) / COIL_A (VBUS side). RDM1..3 (3 x 110 R, 600 V) form the damping chain DM1 / DM2 between them.", "High-voltage nets COIL_B / DM1 / DM2: 1.0 mm rule."], refs=["JCL", "RDM1", "RDM2", "RDM3"]),
         dict(title="12  HTA timing-coil input", note=["JHTA: HTA coil leads (twisted pair from the cap). RHTA 10 k series, CHTA 1 n, DHA1 / DHA2 clamp to P3V3 / GND -> HTA_IN (multiplexer input)."], refs=["JHTA", "RHTA", "CHTA", "DHA1", "DHA2"]),
-        dict(title="13  Display link", note=["JLB: +5V, LED_IN (from the Pico), GND, GND to LB1."], refs=["JLB"])]
+        dict(title="13  Display link", note=["JLB: +5V, LED_IN, LED_CLK (from the Pico), GND to LB1."], refs=["JLB"])]
     if b in ("AB1A", "AB1B"):
         chans = {"AB1A": [("GX", 1, "U1", "A"), ("GY", 2, "U1", "B"), ("X8", 3, "U2", "A")], "AB1B": [("Y8", 1, "U1", "A"), ("MONO", 2, "U1", "B")]}[b]
         v7 = "CRC" in PARTS                                                        # AD7389-4 variant: one quad ADC replaces the ADS8860s and the REF5041 chain

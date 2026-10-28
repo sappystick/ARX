@@ -95,13 +95,14 @@ STEPS = [
     ("head-audit", W + "mkdir -p kit_v21 && python3 head_crosscheck.py && python3 fine_check.py && python3 head_drawings.py", ""),
     ("publish", "python3 scripts/publish_data.py", ""),
     ("fab-margin", "/usr/bin/python3 src/pcb/fab_margin.py > /dev/null 2>&1", ""),          # P1 margin audit of the published boards (data/kicad): data/results/fab_margin_audit.json
+    ("led-fit", "python3 src/pcb/led_upgrade_check.py > /dev/null", ""),                  # LB1-v6 SK9822-EC20 fit at the published positions and chain rotations: data/results/led_upgrade_check.json
     ("controls", "python3 tests/release_signoff_controls.py", ""),
     ("status", "python3 scripts/signoff_status.py", ""),
     ("viewer", "test ! -f deliverables/PHIFOLD233_PACKAGE_r5/blueprint/cutaway_faces.json || python3 src/render/viewer_r2.py > /dev/null", ""),   # package r5 viewer.html: sign-off states, system model, owners (after status)
 ]
 NAMES = [s[0] for s in STEPS]
 IGNORE_READS = {"controls": {"data/results/SIGNOFF_STATUS.json", "docs/STATUS.md"}}   # the controls only use the previous table as a template; it is rewritten by the step after them (would re-run them forever)
-OPEN_ENDED = {"publish", "fab-margin", "controls", "status", "viewer"}  # always run alone, last, in order (controls temporarily edit a work/ file)
+OPEN_ENDED = {"publish", "fab-margin", "led-fit", "controls", "status", "viewer"}  # always run alone, last, in order (controls temporarily edit a work/ file)
 
 
 def sha_file(p, cache={}):
