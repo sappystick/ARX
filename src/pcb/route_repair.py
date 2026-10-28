@@ -211,8 +211,17 @@ def parallel_rounds(board, mk, front, write, n=4):
     orders = [list(front), list(front)[::-1]]
     for i in range(2, n): r = list(rest); random.Random(i).shuffle(r); orders.append(list(front) + r)
     mod = types.ModuleType("route_run_cfg"); mod.MK = mk; sys.modules["route_run_cfg"] = mod
-    with mp.get_context("fork").Pool(min(n, os.cpu_count() or 1)) as pool:
-        res = pool.map(_round, list(enumerate(orders)))
+    res = []; deadline = t0 + float(os.environ.get("ROUND_BUDGET_S", 600))                  # step cap 900 s: stop waiting at 600 s and keep the best finished round
+    pool = mp.get_context("fork").Pool(min(n, os.cpu_count() or 1))
+    try:
+        it = pool.imap_unordered(_round, list(enumerate(orders)))
+        while len(res) < len(orders):
+            left = deadline - time.time()
+            if left <= 0: print(f"{board} parallel rounds: 600 s budget reached with {len(res)} of {len(orders)} rounds finished", flush=True); break
+            try: res.append(it.next(timeout=left))
+            except mp.TimeoutError: continue
+    finally: pool.terminate(); pool.join()
+    if not res: raise RuntimeError(f"{board}: no routing round finished inside the budget")
     for i, st, *_ in sorted(res): print(f"{board} round {i} routed {st['nets_routed']} of {st['nets_to_route']} failures {len(st['failures'])}", flush=True)
     i, st, tr, vi, la, pl, Rr = min(res, key=lambda r: (len(r[1]["failures"]), r[0]))
     st = write_layout(board, dict(st, round=i), tr, vi, la, pl, Rr, PADS)
