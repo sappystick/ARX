@@ -7,7 +7,7 @@ Everything in this repo is **MODELED or tool-checked; nothing is built or measur
 cd /home/user/ARX && scripts/bootstrap.sh | tail -1     # "environment OK" (also the SessionStart hook)
 make state                                              # git, sign-off counts, FAILs, open blockers (data/handoff/blockers.json)
 ```
-Expect: branch `claude/hopeful-bell-wms3xo`, clean tree, sign-off 76 PASS / 0 FAIL / 4 UNVERIFIED, strict regress 114 PASS / 0 FAIL (incl. the process-guard row). If it differs, report the difference before doing anything. `make state-deep` (30 s) adds stale steps and the publish check; strict `python3 tests/regress.py` is run once at the END of a change, not at the start.
+Expect: branch `claude/hopeful-bell-wms3xo`, clean tree, sign-off 76 PASS / 0 FAIL / 4 UNVERIFIED, strict regress 115 PASS / 0 FAIL (incl. the process-guard and potting-map rows). If it differs, report the difference before doing anything. `make state-deep` (30 s) adds stale steps and the publish check; strict `python3 tests/regress.py` is run once at the END of a change, not at the start.
 Wrong branch / dirty tree / push rejected: archive section 10.
 
 ## 2. Standing rules (do not ask again)
@@ -19,15 +19,20 @@ Wrong branch / dirty tree / push rejected: archive section 10.
 - Do not start without the owner: system simulation, firmware beyond a Python model, audio, LED tuning, epoxy chambers, any printed-geometry change (the approved one is task "solid_union after release", section 4).
 
 ## 3. State (2026-10-28)
-**Close-out of the output-modes / audio / gyro work (late 2026-10-28)**: sign-off 76 PASS / 0 FAIL / 4 UNVERIFIED; strict regress 114 / 0 (process guards included); release controls 12 / 12; publish 0 stale.
+**Close-out of the output-modes / audio / gyro work (late 2026-10-28)**: sign-off 76 PASS / 0 FAIL / 4 UNVERIFIED; strict regress 115 / 0 (process guards included); release controls 12 / 12; publish 0 stale.
 - AU1 audio board (new): 36 x 60 mm, 8 layers (5 signal), MSPM0G3507 + TPA2005D1 + TPA6132A2 + BMI270 yaw gyro (moved from CB1D); routed 38 / 38 on a 0.125 mm grid
   (4 deterministic rounds + local repair, route_repair.py); exact DRC 0 / 0; au1_check 20 / 20; fits over PM2 in the bottom housing (1.8 mm side, 5.1 mm above PM2, 5.0 mm end margin).
 - CB1D-C2: AUD_LINK on JTR.5, gyro removed, all joints hardwired (solder holes), JCL AWG22 holes; 46 / 46, DRC 0 / 0. PB1R-v5: JL1 AWG12 solder holes (the 5.08 mm
   terminal was 250 V / AWG 26-14 against 460 V / AWG12). PM2-B fused AU1 tap, HB2-B link pass-through. Superseded Gerber sets marked.
 - Tools: exact-geometry drc.py (no raster slack), router exact fine-pitch keep-out + 0.15 mm neck-down, per-board grid, local repair, routing checkpoints and 600 s round budget,
   board-to-harness interface check (65 ends, 0 FAIL), non-destructive router reset (*_stale). Firmware host tests 40 / 10 / 13 with the yaw in the AU1 link reply.
-- Owner decisions open: package r6 (HELD until the owner says the integration work is done), potting map (zoned plan proposed, not built), the routing speed-ups
-  (incremental re-route, parallel rounds, C path search: proposed, owner to decide after this close-out), TX steering / split (DEFERRED).
+- Routing speed-ups (2026-10-28, defaults): incremental re-routing (only nets touching changed pads; bases kit_v20/route_<B>_base.json; one moved resistor
+  7.9 s on AU1 / 11.4 s on CB1D instead of 10 / 6 min; unchanged boards 1 s per route step), parallel AU1 rounds with a 600 s budget (full route 197 s instead of
+  about 650 s), local repair of open nets and failed plane stubs. `FULL=1` forces a full route. The pipeline controls step now writes a fresh board table first.
+- Potting map (docs/design/POTTING_MAP.md, data/results/potting_map.json / .png, step potting-map): 7 fill zones (head 116.0, neck 114.9, upper 29.9 cm3, exact
+  mesh volumes, lower bounds where parts are boxes), compound classes ASSUMED (ASSUMPTIONS 43); **no pour on the TX windings** (any fill pushes the quiet time past
+  the first gate in the model: air margin 0.35 us, lightest syntactic -0.04 us); bench tests PT1-PT8 list the data that replaces the assumptions.
+- Owner decisions open: package r6 (HELD until the owner says the integration work is done), the potting compound products (PT1), the C path search (not built), TX steering / split (DEFERRED).
 
 | Area | State |
 |---|---|
@@ -89,3 +94,4 @@ Resume Arx / PHI-FOLD 233. Run `make state` and read docs/HANDOFF_NEXT_THREAD.md
 | 2026-10-28 | Viewer r2 (placement edit + live section/stack checks, system simulation from system_live.py with a JS twin, wiring runs), +5VA budget row, model-derived power (5.26 / 7.18 / 8.51 W), solid_union study (rebuild/batch rejected) | (this commit) | 99 PASS / 0 fail | 71/0/0/4 | CORRECTIONS 3 rows, OPEN_ITEMS 39 |
 | 2026-10-28 | Plan P1-P3/P5 (fab margin audit, potting volumes, hood tolerance, firmware timeline + pf233_timing.h); clocked LEDs: LB1-v6 = 66 x SK9822-EC20 fed in the idle slot, dark during sweeps (0 dropped pulses, modeled), chain-rotated LEDs route 136/136; CB1D-C1 (JLB.3 LED_CLK), harness v4; KiCad pad-angle exporter bug found and fixed (PB1R-v4 supersedes v3: CB7-CB9 pads), pad_orient_check | (this commit) | 105 PASS / 0 fail | 71/0/0/4 | CORRECTIONS 6 rows, OPEN_ITEMS 40 |
 | 2026-10-28 | Output modes / audio / gyro close-out: AU1 (8 layers, 38 / 38, gyro moved from CB1D, yaw in the link reply), CB1D-C2, PB1R-v5 (AWG12 solder holes), PM2-B, HB2-B; hardwired joints; interface check; exact DRC + router fine-pitch fixes + local repair; sign-off 76 / 0, regress 114 / 0; process guards in regress, PROCESS.md section |
+| 2026-10-28 | Incremental re-routing + parallel rounds + plane-stub repair (defaults); potting map (7 zones, no winding pour, PT1-PT8); controls step writes a fresh table; sign-off 76 / 0, regress 115 / 0, controls 12 / 12 |

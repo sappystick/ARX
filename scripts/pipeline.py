@@ -113,7 +113,7 @@ STEPS = [
     ("publish", "python3 scripts/publish_data.py", ""),
     ("fab-margin", "/usr/bin/python3 src/pcb/fab_margin.py > /dev/null 2>&1", ""),          # P1 margin audit of the published boards (data/kicad): data/results/fab_margin_audit.json
     ("led-fit", "python3 src/pcb/led_upgrade_check.py > /dev/null", ""),                  # LB1-v6 SK9822-EC20 fit at the published positions and chain rotations: data/results/led_upgrade_check.json
-    ("controls", "python3 tests/release_signoff_controls.py", ""),
+    ("controls", "python3 scripts/signoff_status.py --no-regress --ignore-controls > /dev/null && python3 tests/release_signoff_controls.py", ""),   # fresh board table first: a stale regress / controls row from the previous run made the release refusals misfire (3 times, 2026-10-28)
     ("status", "python3 scripts/signoff_status.py", ""),
     ("viewer", "test ! -f deliverables/PHIFOLD233_PACKAGE_r5/blueprint/cutaway_faces.json || python3 src/render/viewer_r2.py > /dev/null", ""),   # package r5 viewer.html: sign-off states, system model, owners (after status)
 ]

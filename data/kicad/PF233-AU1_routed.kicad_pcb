@@ -1197,6 +1197,8 @@
   (segment (start 100.6250 105.5000) (end 100.1750 105.0000) (width 0.15) (layer "F.Cu") (net 4))
   (segment (start 100.1750 105.0000) (end 100.6250 105.5000) (width 0.15) (layer "F.Cu") (net 4))
   (segment (start 100.6250 105.5000) (end 100.1750 105.0000) (width 0.15) (layer "F.Cu") (net 4))
+  (segment (start 100.1750 105.0000) (end 100.6250 105.5000) (width 0.15) (layer "F.Cu") (net 4))
+  (segment (start 100.6250 105.5000) (end 100.1750 105.0000) (width 0.15) (layer "F.Cu") (net 4))
   (segment (start 97.6250 102.2500) (end 97.2500 102.2500) (width 0.15) (layer "F.Cu") (net 33))
   (segment (start 97.2500 102.2500) (end 97.2500 102.1250) (width 0.15) (layer "F.Cu") (net 33))
   (segment (start 97.2500 102.1250) (end 96.5000 102.1250) (width 0.15) (layer "F.Cu") (net 33))
