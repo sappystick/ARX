@@ -5,7 +5,7 @@
  "edge_samples": 0,
  "notch_samples": 0,
  "min_gap_by_layer": {
-  "F.Cu": 0.219,
+  "F.Cu": 0.2,
   "In2.Cu": 0.249,
   "In3.Cu": 0.249,
   "B.Cu": 0.249
@@ -13,9 +13,9 @@
  "violations": [],
  "opens": [
   [
-   "UG_VIO",
+   "GYR_SDA",
    "2",
-   "['UG.12']"
+   "['UG.14']"
   ]
  ]
 }

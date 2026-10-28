@@ -1,5 +1,7 @@
 import sys, json, time, os, hashlib
 from router import Router
+import router as _rt
+if sys.argv[1] in ("AU1", "CB1D"): _rt.GR = 0.125      # 0.5 mm-pitch MCU / gyro / headphone amp: a 0.125 mm grid puts every escape on its pin's centre line (2026-10-28)
 board=sys.argv[1]
 # a saved router state is only valid for the netlist/pads, router code and configuration it was made with (a stale state produced stale routes twice): key it to a hash of all three
 _pads={"LB1":"kit_v18/LB1/pads.json","PB1R":"kit_v6/PB1R/pads.json","PM2":"kit_v6/PM2/pads.json","HB2":"kit_v6/HB2/pads.json","AU1":"kit_v6/AU1/pads.json"}.get(board,"kit_v18/CB1D/pads.json")

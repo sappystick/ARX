@@ -1,7 +1,7 @@
 import json, math, heapq, time, os
 import numpy as np
 from scipy import ndimage as ndi
-GR=0.15
+GR=0.15     # routing grid (mm); route_run.py sets 0.125 for boards with 0.5 mm-pitch parts, so pin centre lines fall on grid lines (0.5 = 4 x 0.125)
 NECK=0.15   # track width inside the 1.5 mm fine-pitch zone (dru_gen GEN track 0.15, docs/design/FAB_RULES_VERIFIED.md); route_fix.py applies it to the exported copper
 def disk(r): y,x=np.ogrid[-r:r+1,-r:r+1]; return (x*x+y*y)<=r*r+0.5
 class Router:
@@ -20,7 +20,7 @@ class Router:
                 s.own[l][m]=nid
                 if p.get("fine"): s.finem[l]|=m
             cells=np.argwhere(m); s.padcells.append((nid,cells,list(lays)))
-        s.finez=ndi.binary_dilation(s.finem.any(axis=0),structure=disk(10)) if s.finem.any() else np.zeros((s.N,s.N),bool)   # 1.5 mm zone around fine-pitch pads
+        s.finez=ndi.binary_dilation(s.finem.any(axis=0),structure=disk(int(round(1.5/GR)))) if s.finem.any() else np.zeros((s.N,s.N),bool)   # 1.5 mm zone around fine-pitch pads
         # exact pad distances in the fine zone (2026-10-28): fine pads are rasterised to the cells whose centres lie inside them, so the true pad edge can sit up to half a
         # cell (0.075 mm) beyond the raster and a raster halo let tracks pass 0.05-0.15 mm from a pad (exact drc.py). For every cell of the zone and every pad within
         # 0.8 mm, keep the exact distance from the cell centre to the pad shape; masks() blocks a cell when that distance is under the clearance + half the width
