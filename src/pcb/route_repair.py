@@ -43,14 +43,19 @@ def repair(board, mk, front=(), win=None, budget=None):
     bynet = {}
     for k, p in enumerate(R0.pads):
         if p["net"]: bynet.setdefault(p["net"], []).append(k)
-    xs = [R0.pads[k]["x"] for n in failed for k in bynet[n]]; ys = [R0.pads[k]["y"] for n in failed for k in bynet[n]]
+    # window = discs around each pad of the failed nets (a bounding box of a long net covered half of AU1 and took 21 nets): the copper crowding its ends
+    fp = [(R0.pads[k]["x"], R0.pads[k]["y"]) for n in failed for k in bynet[n]]
     def near(t, w):
-        return any(min(xs) - w <= q[0] <= max(xs) + w and min(ys) - w <= q[1] <= max(ys) + w for q in t["pts"])
+        pts = t["pts"]; segs = list(zip(pts[:-1], pts[1:])) or [(pts[0], pts[0])]
+        def dseg(p, a, b):
+            ax, ay = a; bx, by = b; dx, dy = bx - ax, by - ay; L2 = dx * dx + dy * dy or 1e-12
+            u = max(0.0, min(1.0, ((p[0] - ax) * dx + (p[1] - ay) * dy) / L2)); return math.hypot(ax + u * dx - p[0], ay + u * dy - p[1])
+        return any(dseg(p, a, b) <= w for p in fp for a, b in segs)
     # nets to rip: the failed ones plus every signal net with copper inside the window around the failed nets' pads (shrink the window if it grabs too much)
-    for w in (win, win * 0.75, win * 0.5):
+    for w in (win, win * 0.75, win * 0.5, win * 0.35):
         rip = set(failed) | {t["net"] for t in L["tracks"] if t["net"] not in planes and near(t, w)}
         rip = {n for n in rip if n in bynet and len(bynet[n]) >= 2 and not n.endswith("_NC")}
-        if len(rip) <= 10: break
+        if len(rip) <= 8: break
     keep_t = [t for t in L["tracks"] if t["net"] not in rip]; keep_v = [v for v in L["vias"] if v[2] not in rip]
     others = sorted(rip - set(failed)); base = [n for n in front if n in rip] + [n for n in failed if n not in front] + []
     orders = []

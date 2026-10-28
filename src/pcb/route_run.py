@@ -36,7 +36,7 @@ elif board=="AU1":
         import route_repair; route_repair.repair(board, mk, front); sys.exit(0)                       # learned (2026-10-28 exact fine-zone keep-out): these two lost their only escape to later nets
     import random; t0=time.time()
     def _save(b_): json.dump(dict(stats=b_[2],tracks=b_[1].tracks,vias=b_[1].vias,layers=b_[1].layers,planes=b_[1].planes,R=b_[1].R),open(f"kit_v20/route_{board}.json","w"))
-    for rnd in range(12):
+    for rnd in range(4):                                          # 4 rounds (deterministic: round 3 is the one that reaches 37 / 38); local repair finishes the rest
         if rnd and time.time()-t0>600: print("AU1 time budget: no new round after 600 s (step cap 900 s)",flush=True); break
         R=mk(); R.fine_order="span"; R.stub_first=set(stubs)
         if rnd<6: R.priority=list(front)
@@ -48,6 +48,8 @@ elif board=="AU1":
         if nf==0: break
         front=[f[0] for f in st["failures"] if f[1]=="net" and f[0] not in front]+front; stubs|={f[2] for f in st["failures"] if f[1]=="stub"}
     R,st=best[1],best[2]; print(board,st,"length_mm",round(R.length()))
+    if best[0]:                                                   # open nets left: local repair of this layout (route_repair.py), capped so the step stays inside 900 s
+        import route_repair; st=route_repair.repair(board, mk, front, budget=200); sys.exit(0)
     json.dump(dict(stats=st,tracks=R.tracks,vias=R.vias,layers=R.layers,planes=R.planes,R=R.R),open(f"kit_v20/route_{board}.json","w")); sys.exit(0)
 elif board=="HB2":
     # 24 x 38 grip board: F/B signal layers, hatched GND (In1); trigger and dial signals only
