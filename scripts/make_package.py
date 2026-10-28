@@ -31,7 +31,7 @@ for b, f, desc, st in BOARDS:
     run("kicad-cli", "pcb", "export", "glb", "--subst-models", "--include-tracks", "--include-pads", "--include-zones", "-o", f"{R}/models3d/{b}_with_components.glb", pcb)
 for f in sorted(glob.glob("data/kicad/3dmodels/*.wrl")): pass
 # ---------------------------------------------------------------- Gerbers: pointers (the release package and the published sets)
-GERB = {"CB1D": "data/gerber/CB1D_C1", "LB1": "data/gerber/LB1_v6", "PB1R": "data/gerber/PB1R_v3", "PM2": "data/gerber/PM2", "HB2": "data/gerber/HB2", "TXJ1": "data/gerber/TXJ1_v2",
+GERB = {"CB1D": "data/gerber/CB1D_C1", "LB1": "data/gerber/LB1_v6", "PB1R": "data/gerber/PB1R_v4", "PM2": "data/gerber/PM2", "HB2": "data/gerber/HB2", "TXJ1": "data/gerber/TXJ1_v2",
         "SB1R-QA": "data/gerber/SB1R_QA_v2", "SB1R-QB": "data/gerber/SB1R_QB_v2", "HTA": "data/gerber/HTA_v2", "AB1A": "data/gerber/AB1A_v1", "AB1B": "data/gerber/AB1B_v1"}
 # ---------------------------------------------------------------- STL classification
 man = {r["file"]: r for r in csv.DictReader(open("stl/MANIFEST.csv"))}

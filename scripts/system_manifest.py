@@ -14,7 +14,7 @@ def add(cat, item, path, note=""):
 BOARDS = {   # board: (gerber dir, kicad file, bom, pick-and-place, schematic)
  "CB1D": ("data/gerber/CB1D_C1", "data/kicad/PF233-CB1D_routed.kicad_pcb", "data/results/PF233-CB1D_BOM.csv", "data/results/PF233-CB1D_pickplace.csv", "data/kicad/sch/PF233-CB1D.kicad_sch"),
  "LB1": ("data/gerber/LB1_v6", "data/kicad/PF233-LB1_routed.kicad_pcb", "data/results/PF233-LB1_BOM.csv", "data/results/PF233-LB1_pickplace.csv", "data/kicad/sch/PF233-LB1.kicad_sch"),
- "PB1R": ("data/gerber/PB1R_v3", "data/kicad/PF233-PB1R_routed.kicad_pcb", "data/results/PF233-PB1R_BOM.csv", "data/results/PF233-PB1R_pickplace.csv", "data/kicad/sch/PF233-PB1R.kicad_sch"),
+ "PB1R": ("data/gerber/PB1R_v4", "data/kicad/PF233-PB1R_routed.kicad_pcb", "data/results/PF233-PB1R_BOM.csv", "data/results/PF233-PB1R_pickplace.csv", "data/kicad/sch/PF233-PB1R.kicad_sch"),
  "PM2": ("data/gerber/PM2", "data/kicad/PF233-PM2_routed.kicad_pcb", "data/results/PF233-PM2_BOM.csv", "data/results/PF233-PM2_pickplace.csv", "data/kicad/sch/PF233-PM2.kicad_sch"),
  "HB2": ("data/gerber/HB2", "data/kicad/PF233-HB2_routed.kicad_pcb", "data/results/PF233-HB2_BOM.csv", "data/results/PF233-HB2_pickplace.csv", "data/kicad/sch/PF233-HB2.kicad_sch"),
  "TXJ1": ("data/gerber/TXJ1_v2", "data/kicad/TXJ1.kicad_pcb", "docs/delivery/boards/TXJ1_BOM.csv", "docs/delivery/boards/TXJ1_pickplace.csv", None),

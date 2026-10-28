@@ -148,8 +148,8 @@ for p in D.PARTS:
     _m = M3.model_line(p["type"]); _m and L.append(_m)
     for n, px, py, w, h, shp in lib["pads"]:
         net = own.get((ref, str(n))); nid = NETID.get(net, 0) if net else 0
-        if lib.get("tht"): L.append(f'    (pad "{n}" thru_hole {"circle" if shp == "circle" else "rect"} (at {px:.3f} {py:.3f}) (size {w} {h}) (drill {lib["drill"]}) (layers "*.Cu" "*.Mask") (net {nid} "{net or ""}"))')
-        else: L.append(f'    (pad "{n}" smd {"rect" if shp == "rect" else "roundrect"} (at {px:.3f} {py:.3f}) (size {w:.3f} {h:.3f}) (layers "F.Cu" "F.Paste" "F.Mask") (net {nid} "{net or ""}"))')
+        if lib.get("tht"): L.append(f'    (pad "{n}" thru_hole {"circle" if shp == "circle" else "rect"} (at {px:.3f} {py:.3f}{" " + str(rot) if rot else ""}) (size {w} {h}) (drill {lib["drill"]}) (layers "*.Cu" "*.Mask") (net {nid} "{net or ""}"))')
+        else: L.append(f'    (pad "{n}" smd {"rect" if shp == "rect" else "roundrect"} (at {px:.3f} {py:.3f}{" " + str(rot) if rot else ""}) (size {w:.3f} {h:.3f}) (layers "F.Cu" "F.Paste" "F.Mask") (net {nid} "{net or ""}"))')
     L.append("  )")
 L.append(f'  (gr_rect (start {CX - W / 2:.3f} {CY - H / 2:.3f}) (end {CX + W / 2:.3f} {CY + H / 2:.3f}) (stroke (width 0.1) (type default)) (fill none) (layer "Edge.Cuts"))')
 for nm, lyr in (("GND", "In1.Cu"), ("VBUS", "In2.Cu")):

@@ -1,0 +1,1 @@
+Superseded 2026-10-28 by LB1_v6: v5 drew the SK6812MINI-E (a reverse-mount LED, 1.78 mm, body through a board cutout) on small pads inside its outline with no cutout, so it could not take its part (CORRECTIONS); v6 is the clocked SK9822-EC20 chain (data + clock, U2 / RSC clock buffer, chain-rotated LEDs, 136/136 nets routed). Kept for provenance.

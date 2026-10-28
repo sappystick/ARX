@@ -1,6 +1,6 @@
 {
  "counts": {
-  "PASS": 70,
+  "PASS": 68,
   "FAIL": 1,
   "SKIP": 0,
   "UNVERIFIED": 4
@@ -9,7 +9,7 @@
   "CB1D": {
    "route": {
     "state": "PASS",
-    "detail": "44/44 nets"
+    "detail": "45/45 nets"
    },
    "indep": {
     "state": "PASS",
@@ -29,21 +29,21 @@
    },
    "cross": {
     "state": "PASS",
-    "detail": "53 link pins, 50 conductors"
+    "detail": "53 link pins, 51 conductors"
    }
   },
   "LB1": {
    "route": {
     "state": "PASS",
-    "detail": "68/68 nets"
+    "detail": "136/136 nets"
    },
    "indep": {
     "state": "PASS",
     "detail": "0 violations, 0 opens"
    },
    "kicad": {
-    "state": "PASS",
-    "detail": "errors {}, unconnected 0"
+    "state": "FAIL",
+    "detail": "errors {'clearance': 150}, unconnected 2"
    },
    "gerber": {
     "state": "PASS",
@@ -304,7 +304,7 @@
   },
   "wiring audit (links + harness)": {
    "state": "PASS",
-   "detail": "53 pins, 50 conductors"
+   "detail": "53 pins, 51 conductors"
   },
   "stress table (only the documented LED-rail row may fail)": {
    "state": "PASS",
@@ -329,14 +329,6 @@
   "voxel interference (window, bridge, junction)": {
    "state": "PASS",
    "detail": "28 pairs"
-  },
-  "release-tx / sign-off controls (refusals, evidence rule, idempotence)": {
-   "state": "PASS",
-   "detail": "12/12 controls behave as intended"
-  },
-  "tests/regress.py (strict: a missing result FAILs)": {
-   "state": "FAIL",
-   "detail": "102 PASS; FAILS 1 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {

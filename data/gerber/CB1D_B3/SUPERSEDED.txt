@@ -1,0 +1,1 @@
+Superseded 2026-10-28 by CB1D_C1: JLB.3 is now LED_CLK from Pico pin 19 for the clocked LB1-v6 display (was a second GND); harness v4 W066. Kept for provenance and because releases/TX_r4 shipped it.
