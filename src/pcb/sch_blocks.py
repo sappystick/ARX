@@ -2,11 +2,11 @@
 of what the block does (taken from the netlist and the part values: no performance numbers), and the refs. Parts not listed fall into an automatic "Other parts" block, and
 sch_func.py fails if a ref is listed twice. Changing a block list never changes the netlist: the schematic is checked against it with KiCad."""
 DATE = "2026-10-26"
-TITLE = {"CB1D": "CB1D-C2 controller: Pico 2 W, supplies, handle cable, receive-board links, TX monitor", "LB1": "LB1-v6 display: 66 x SK9822-EC20 clocked chain with 3V3 -> 5 V data and clock buffers",
+TITLE = {"CB1D": "CB1D-C2 controller: Pico 2 W, supplies, handle cable with the AU1 audio link, receive-board links, TX monitor", "LB1": "LB1-v6 display: 66 x SK9822-EC20 clocked chain with 3V3 -> 5 V data and clock buffers",
          "PB1R": "PB1R transmit stage: gate drive, two 650 V FETs, shunt, flyback clamp, overcurrent comparator, 12 V aux", "PM2": "PM2 battery dock: fuse, P-FET power switch with soft start, bulk, cord",
          "HB2": "HB2 grip board: Hall trigger, 4-position dial divider, signal cord", "AB1A": "AB1A receive analog board: 3 channels (GX, GY, X8), blanking, gain, 16-bit quad ADC (AD7389-4)",
          "AB1B": "AB1B receive analog board: 2 channels (Y8, MONO), blanking, gain, 16-bit quad ADC (AD7389-4)",
-         "AU1": "AU1 audio board: descriptor link, MSPM0G3507 voice synth, TPA2005D1 speaker amp, TPA6132A2 headphone amp, 3-position output selector"}
+         "AU1": "AU1 audio board: descriptor link, MSPM0G3507 voice synth, TPA2005D1 speaker amp, TPA6132A2 headphone amp, 3-position output selector, BMI270 yaw gyro"}
 def _by(PARTS, *prefixes): return [r for r in PARTS if r.startswith(prefixes)]
 def blocks(b, PARTS, PINNET):
     if b == "PB1R": return [
@@ -36,7 +36,8 @@ def blocks(b, PARTS, PINNET):
         dict(title="2  Controller", note=["UM MSPM0G3507: DAC (PA15) for the voice, PWM (PA14) for the right channel, UART0 for the link; JSWD SWD pads, TPRST reset pad, RBSL keeps PA18 (BSL invoke) low."], refs=["UM", "CVC", "CVD", "CVD2", "RNR", "CNR", "RBSL", "JSWD", "TPRST"]),
         dict(title="3  Descriptor link and output selector", note=["JLINK from HB2-B JAU: half-duplex, TX through RTX 1 k, entry RLK 100 R with BAS16 clamps.", "JSEL: 3-position selector to GND, pull-ups RS1-RS3 (AUDIO_ONLY / LED_ONLY / COMBINED)."], refs=["JLINK", "RLK", "RTX", "DLK1", "DLK2", "JSEL", "RS1", "RS2", "RS3"]),
         dict(title="4  Speaker amplifier", note=["US TPA2005D1, gain 2 x 150 k / RI = 2 V/V, input caps CI1 / CI2, SHUTDOWN pulled low (RSD) until the MCU enables it; JSPK 8 ohm speaker."], refs=["US", "CSV", "CSV2", "CI1", "CI2", "RI1", "RI2", "RSD", "JSPK"]),
-        dict(title="5  Headphone amplifier", note=["UH TPA6132A2 DirectPath, 0 dB (G0 high, G1 low), single-ended inputs; left = DAC, right = RC-filtered PWM (RPW / CPW).", "JHP: panel jack tip / ring / sleeve and plug-detect (RDT pull-up)."], refs=["UH", "CHL", "CHR", "CHV", "CHP", "CHF", "CHS", "RHE", "RPW", "CPW", "JHP", "RDT"])]
+        dict(title="5  Headphone amplifier", note=["UH TPA6132A2 DirectPath, 0 dB (G0 high, G1 low), single-ended inputs; left = DAC, right = RC-filtered PWM (RPW / CPW).", "JHP: panel jack tip / ring / sleeve and plug-detect (RDT pull-up)."], refs=["UH", "CHL", "CHR", "CHV", "CHP", "CHF", "CHS", "RHE", "RPW", "CPW", "JHP", "RDT"]),
+        dict(title="6  Yaw gyro (sweep direction, moved from CB1D)", note=["UG BMI270 (alternate: ST LSM6DSO, same land) on I2C0, UM pins 4 / 5 (PA0 SDA / PA1 SCL); alternate address (SDO high); UG_VIO = VDD, VDDIO, CSB, SDO, pins 2 / 3,", "fed from +3V3_AU by RGF 10 R with CG1 / CG2 100 nF; RGA / RGL 4k7 pull-ups. The yaw rate goes to the head in the link reply."], refs=["UG", "CG1", "CG2", "RGF", "RGA", "RGL"])]
     if b == "LB1": return [
         dict(title="1  Data and clock entry: 3V3 -> 5 V buffers", note=["JLB: +5V, LED_IN, LED_CLK, GND from CB1D. U1 / U2 (74AHCT1G125) buffer LED_IN / LED_CLK to 5 V logic;", "RS / RSC 33 R series damping -> LD_D0 / LD_C0."], refs=["JLB", "U1", "RS", "U2", "RSC"]),
         dict(title="2  SK9822-EC20 clocked chain, 66 pixels", note=["SDO of each pixel goes straight to SDI of the next (wired); CKO -> CKI of the next by net label (LD_Cn).", "Pins: 1 SDO, 2 GND, 3 SDI, 4 CKI, 5 VDD (+5V), 6 CKO. LD66 SDO / CKO are left open (LD_END_NC / LD_CEND_NC)."], refs=_by(PARTS, "LD"), link=("1", "3"), cols=11, width=2000),
@@ -56,8 +57,7 @@ def blocks(b, PARTS, PINNET):
         dict(title="10  Link to PB1R", note=["JPB: 12V-side signals only: UMB_SHLD, TX1_IN, REF_I1, FAULT1_N, ISENSE1, NTC_SENSE, GND (same order as JC on PB1R).", "RUS / CUS bleed the umbilical shield."], refs=["JPB", "RUS", "CUS"]),
         dict(title="11  Coil monitor: damping chain", note=["JCL: coil leads COIL_B (drain side) / COIL_A (VBUS side). RDM1..3 (3 x 110 R, 600 V) form the damping chain DM1 / DM2 between them.", "High-voltage nets COIL_B / DM1 / DM2: 1.0 mm rule."], refs=["JCL", "RDM1", "RDM2", "RDM3"]),
         dict(title="12  HTA timing-coil input", note=["JHTA: HTA coil leads (twisted pair from the cap). RHTA 10 k series, CHTA 1 n, DHA1 / DHA2 clamp to P3V3 / GND -> HTA_IN (multiplexer input)."], refs=["JHTA", "RHTA", "CHTA", "DHA1", "DHA2"]),
-        dict(title="13  Display link", note=["JLB: +5V, LED_IN, LED_CLK (from the Pico), GND to LB1."], refs=["JLB"]),
-        dict(title="14  Yaw gyro (sweep direction)", note=["UG BMI270 (alternate: ST LSM6DSO, same land) on I2C (Pico pins 26 / 27, alternate address: SDO high); UG_VIO = VDD, VDDIO, CSB, SDO, pins 2 / 3,", "fed from P3V3 by RGF 10 R with CG1 / CG2 100 nF; RGA / RGL 4k7 pull-ups. Read in the idle slot after the receive window."], refs=["UG", "CG1", "CG2", "RGF", "RGA", "RGL"])]
+        dict(title="13  Display link", note=["JLB: +5V, LED_IN, LED_CLK (from the Pico), GND to LB1."], refs=["JLB"])]
     if b in ("AB1A", "AB1B"):
         chans = {"AB1A": [("GX", 1, "U1", "A"), ("GY", 2, "U1", "B"), ("X8", 3, "U2", "A")], "AB1B": [("Y8", 1, "U1", "A"), ("MONO", 2, "U1", "B")]}[b]
         v7 = "CRC" in PARTS                                                        # AD7389-4 variant: one quad ADC replaces the ADS8860s and the REF5041 chain

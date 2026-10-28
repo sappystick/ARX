@@ -43,7 +43,7 @@ static int run_pass(int mode_sel, float x0, int *hits, int *cls_ok, int *centred
         float y = -250.0f + 500.0f * i / (24 * 30.0f);
         scene(x0, y, 0.08f, 18e-6f, 5.0f, 2e-3f, gA, gB); pf_head_pulse(&h, gA, gB);
         if (pf_head_frame_ready(&h, 24)) {
-            int hit = pf_head_process(&h, 40.0f, &d); pf_head_idle(&h, &d, 1);
+            int hit = pf_head_process(&h, h.yaw_dps, &d); pf_head_idle(&h, &d, 1);
             if (hit) { (*hits)++; *cls_ok += d.cls == 1; } *centred += d.centred; if (d.side_valid) *side = h.track.side;
             if (led_lit_px > *led_max) *led_max = led_lit_px;
             *spk |= amp_spk;
@@ -57,7 +57,7 @@ int main(void) {
     int hits, ok, cen, side, ledm, spk; float pf;
     /* 1 silent over target-free ground (amplitude 0) */
     { pf_head_t h; pf_head_init(&h, 0); pf_audio_init(&AU); selector = 2; float gA[9], gB[9]; pf_desc_t d; int fired = 0;
-      for (int i = 0; i < 24 * 264; i++) { scene(0, 0, 0, 18e-6f, 5.0f * (1 + 0.1f * sinf(i / 500.0f)), 2e-3f, gA, gB); pf_head_pulse(&h, gA, gB); if (pf_head_frame_ready(&h, 24)) { fired += pf_head_process(&h, 40, &d); pf_head_idle(&h, &d, 1); } }
+      for (int i = 0; i < 24 * 264; i++) { scene(0, 0, 0, 18e-6f, 5.0f * (1 + 0.1f * sinf(i / 500.0f)), 2e-3f, gA, gB); pf_head_pulse(&h, gA, gB); if (pf_head_frame_ready(&h, 24)) { fired += pf_head_process(&h, h.yaw_dps, &d); pf_head_idle(&h, &d, 1); } }
       printf("ground only: %d detections in 200 frames after the 64-frame acquisition\n", fired); CHECK(fired <= 2, "silent over ground, %d", fired); }
     /* 2 COMBINED: detect, class small gold, side, one centre event, voice pitch, LEDs dark during the sweep */
     run_pass(2, 30.0f, &hits, &ok, &cen, &side, &pf, &ledm, &spk);

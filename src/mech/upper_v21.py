@@ -139,8 +139,8 @@ rep["envelopes"]["trigger_magnet"] = MAG
 HB2_ENV = dict(x=[float(mag_c[0]) - 35.0, float(mag_c[0]) + 3.0], y=[-12.0, 12.0], z_board=[float(Pt[2]) + WALL + 1.0, float(Pt[2]) + WALL + 2.6], parts_height=4.5, hall_x=float(mag_c[0]))
 PM2_ENV = dict(x=[float(XB0 + ASOCK + 5.0), float(XB0 + ASOCK + 75.0)], y=[-14.0, 14.0], z_board=[float(ZB - HB_ / 2 + WALL + 2.0), float(ZB - HB_ / 2 + WALL + 3.6)], parts_height=10.8)
 # AU1 audio board (36 x 44, 2026-10-28) stacked over PM2 in the bottom housing: the armrest socket and the PM2 bay take the whole length, so it sits above PM2 on
-# standoffs (not modelled yet), 44 mm along x, board 5.1 mm over the PM2 parts; parts height 9.0 = the JSWD pin header (all other AU1 parts <= 2.0, bodies.json)
-AU1_ENV = dict(x=[float(XB0 + ASOCK + 15.0), float(XB0 + ASOCK + 59.0)], y=[-18.0, 18.0], z_board=[float(PM2_ENV["z_board"][1] + PM2_ENV["parts_height"] + 5.1), float(PM2_ENV["z_board"][1] + PM2_ENV["parts_height"] + 6.7)], parts_height=9.0)
+# standoffs (not modelled yet), 60 mm along x (36 x 60 since 2026-10-28), board 5.1 mm over the PM2 parts; parts height 9.0 = the JSWD pin header (all other AU1 parts <= 2.0, bodies.json)
+AU1_ENV = dict(x=[float(XB0 + ASOCK + 10.0), float(XB0 + ASOCK + 70.0)], y=[-18.0, 18.0], z_board=[float(PM2_ENV["z_board"][1] + PM2_ENV["parts_height"] + 5.1), float(PM2_ENV["z_board"][1] + PM2_ENV["parts_height"] + 6.7)], parts_height=9.0)
 rep["envelopes"].update(HB2_board=HB2_ENV, PM2_board=PM2_ENV, AU1_board=AU1_ENV)
 
 # ------------------------------------------------------------------ armrest tube positions and U5 armrest (at position 1)

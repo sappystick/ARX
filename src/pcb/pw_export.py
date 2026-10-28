@@ -7,7 +7,7 @@ import numpy as np
 import pw_design as D
 import rodin_core_v4 as rc, golden_cone_head as g
 PW = D.PW; NAME = {"M": "PM1", "T": "PB1", "C": "CB1", "R": "PB1R", "H": "HB1", "P": "PM2", "G": "HB2", "U": "AU1"}[PW]; OUT = f"kit_v6/{NAME}"; os.makedirs(OUT, exist_ok=True)
-SIZE = {"M": (28.0, 136.0), "T": (28.0, 224.0), "C": (70.0, 70.0), "R": (70.0, 70.0), "H": (24.0, 60.0), "P": (28.0, 70.0), "G": (24.0, 38.0), "U": (36.0, 44.0)}[PW]; CX, CY = 100.0, 100.0
+SIZE = {"M": (28.0, 136.0), "T": (28.0, 224.0), "C": (70.0, 70.0), "R": (70.0, 70.0), "H": (24.0, 60.0), "P": (28.0, 70.0), "G": (24.0, 38.0), "U": (36.0, 60.0)}[PW]; CX, CY = 100.0, 100.0
 HV = ({"DRAIN1", "CLAMP1"} if PW in ("R", "T") else ({"COIL_B", "DM1", "DM2"} if PW == "C" else set())); MV = {"DRAIN2", "CLAMP2"}
 PL = {}
 def put(ref, x, y, rot=0): PL[ref] = (x, y, rot)
@@ -95,7 +95,7 @@ elif PW == "P":
     anchors = {"F1": (6, -27), "Q1": (5, -16), "R1": (-4, -14), "DZ1": (-4, -9), "R2": (-4, -4), "R3": (-9, -4), "C1": (-9, 1), "DTVS": (5, -8), "CM1": (-5, 18), "RBL": (5, 14), "RSH": (-4, 24), "CSH": (-9, 24), "F2": (-5, 9), "JAUP": (-8, 18)}
     PL = autoplace(fixed, anchors)
 elif PW == "U":
-    # AU1 36 x 44 (pin plan in pw_design): power and buck along the top, MCU left of centre, speaker amp right of it (inputs facing the DAC), headphone amp
+    # AU1 (pin plan in pw_design; 36 x 60 since 2026-10-28, see below): power and buck along the top, MCU left of centre, speaker amp right of it (inputs facing the DAC), headphone amp
     # below it (inputs facing the MCU, outputs facing JHP on the right edge), selector pads on the left edge facing PA2-PA4, link pads bottom left
     fixed = {"JPWR": (-11.0, -19.5, 0), "JSWD": (15.5, -13.0, 0), "JLINK": (-11.0, 19.5, 0), "JSPK": (11.0, 19.5, 0), "JSEL": (-15.5, 4.0, 0), "JHP": (15.5, 5.0, 0),
              "UM": (-4.0, 1.0, 0), "US": (7.0, -1.0, 0), "UH": (7.0, 9.5, 0), "UB": (-4.0, -15.0, 0), "LB": (3.0, -15.0, 0), "UL": (-4.0, -9.0, 0),
@@ -109,6 +109,17 @@ elif PW == "U":
                "RLK": (-6, 14), "RTX": (-2, 14), "DLK1": (-6, 17), "DLK2": (-2, 17), "RS1": (-11, 1), "RS2": (-11, 4), "RS3": (-11, 7),
                "CSV": (11, -4), "CSV2": (12, -8), "CI2": (2, 4), "RI1": (3, -2), "RSD": (11, 3),
                "CHL": (2, 10), "CHR": (2, 13), "CHV": (11, 6), "CHP": (11, 13), "RHE": (4, 16), "RPW": (-0.5, 7.5), "CPW": (-0.5, 10), "RDT": (2.5, -3.5)}
+    # 36 x 60 (2026-10-28, owner: lengthen AU1): the power stage and the headphone / connector band move 6 mm out as rigid groups, opening 6 mm above and below
+    # the MCU row (where 2 nets stayed unrouted at 36 x 44); the yaw gyro (moved from CB1D) sits in the freed space left of the MCU's I2C pins 4 / 5,
+    # turned so its SDA / SCL pins (13 / 14) face them
+    UP = ("JPWR", "JSWD", "UB", "LB", "UL", "CBI", "CBI2", "CBB", "CBO", "RFT", "RFB", "CLI", "CLO", "CSV2")
+    DOWN = ("UH", "CHF", "CHS", "CHL", "CHR", "CHV", "CHP", "RHE", "RPW", "CPW", "RLK", "RTX", "DLK1", "DLK2", "JLINK", "JSPK")
+    for d_ in (fixed, anchors):
+        for k_ in d_:
+            dy = -6.0 if k_ in UP else (6.0 if k_ in DOWN else 0.0)
+            if dy: d_[k_] = (d_[k_][0], d_[k_][1] + dy) + tuple(d_[k_][2:])
+    fixed["UG"] = (-8.5, -5.0, 0)
+    anchors.update({"CG1": (-11.0, -4.5), "CG2": (-11.0, -6.5), "RGF": (-11.0, -8.5), "RGA": (-6.0, -7.5), "RGL": (-4.0, -7.5)})
     PL = autoplace(fixed, anchors)
 elif PW == "G":
     fixed = {"JH": (-7.0, -6.0, 0), "JDIAL": (6.0, -10.0, 0), "HS1": (0.0, 15.0, 0)}     # HS1 at the board end under the trigger magnet

@@ -394,9 +394,19 @@ if PW == "U":
     net("HP_L", ("UH", 16), ("JHP", 1)); net("HP_R", ("UH", 5), ("JHP", 2)); net("GND", ("JHP", 3)); net("HP_DET", ("JHP", 4), ("RDT", 2), ("UM", 28)); net("+3V3_AU", ("RDT", 1))
     # PA18 (pin 21) is the boot-loader invoke pin (SLASEX6C pin table: BSL_Invoke): held low by RBSL so a reset never enters the BSL
     add("RBSL", "R0603", "100k", "BSL invoke pull-down"); net("BSL_INV", ("UM", 21), ("RBSL", 1)); net("GND", ("RBSL", 2))
+    # ---- yaw gyro (moved from CB1D-C2, owner decision 2026-10-28): read by UM over I2C0 on PA0 / PA1 (DGS28 pins 4 / 5, SLASEX6C pin table: I2C0_SDA / I2C0_SCL,
+    # the two 5 V-tolerant open-drain pins); the yaw rate goes to the head in the link reply. BMI270 in I2C mode: CSB -> VDDIO; INT1 / INT2 / OCSB / OSDO not
+    # connected; 100 nF at VDDIO and VDD. Dual source: the same land takes the ST LSM6DSO (DS12140 Rev 3), whose mode-1 pins 2 / 3 must go to VDDIO or GND
+    # while the BMI270's must go to VDDIO or DNC (never GND): both tied to VDDIO. SDO high selects the alternate address (BMI270 0x69, LSM6DSO 0x6B).
+    add("UG", "BMI270", "BMI270", "Bosch BMI270 IMU (yaw rate), I2C"); add("CG1", "C0603", "100n", "X7R, VDDIO"); add("CG2", "C0603", "100n", "X7R, VDD")
+    add("RGA", "R0603", "4k7", "I2C SDA pull-up"); add("RGL", "R0603", "4k7", "I2C SCL pull-up"); add("RGF", "R0603", "10R", "gyro supply filter")
+    net("UG_VIO", ("UG", 1), ("UG", 2), ("UG", 3), ("UG", 5), ("UG", 8), ("UG", 12), ("CG1", 1), ("CG2", 1), ("RGF", 2)); net("+3V3_AU", ("RGF", 1), ("RGA", 1), ("RGL", 1))
+    net("GND", ("UG", 6), ("UG", 7), ("CG1", 2), ("CG2", 2))
+    net("GYR_SDA", ("UG", 14), ("RGA", 2), ("UM", 4)); net("GYR_SCL", ("UG", 13), ("RGL", 2), ("UM", 5))
+    for _pn, _nm in ((4, "INT1"), (9, "INT2"), (10, "OCSB"), (11, "OSDO")): net(f"UG_{_nm}_NC", ("UG", _pn))
     # pin plan (2026-10-28, matched to the AU1 layout): selector PA2-PA4 (9-11, left column, facing JSEL); speaker SHUTDOWN PA16 (19), headphone EN PA17 (20),
     # headphone detect PA25 (28, the end of the right column: one neighbour, a clear path along the top edge to JHP); link PA10 / PA11 (15 / 16, UART0), PWM PA14 (17, TIMG12_C0), DAC PA15 (18), SWD 22 / 23
-    for _pn in (1, 2, 4, 5, 12, 13, 14, 24, 25, 26, 27): net(f"UM_P{_pn}_NC", ("UM", _pn))
+    for _pn in (1, 2, 12, 13, 14, 24, 25, 26, 27): net(f"UM_P{_pn}_NC", ("UM", _pn))      # 4 / 5: gyro I2C
 if PW == "C" and os.environ.get("DISC"):
     # ---- CB1D additions: hub-top antenna (HTA) monitor input on spare mux channel Y4 (select line S2 from the spare Pico pin GP1)
     NETS["GND"] = [p for p in NETS["GND"] if p not in (("UM", "1"), ("UM", "9"))]
@@ -405,21 +415,8 @@ if PW == "C" and os.environ.get("DISC"):
     add("JLB", "WIRE1x4", "to LB1: +5V, LED_IN, LED_CLK, GND", "4 wires to the display board, soldered both ends"); net("+5V", ("JLB", 1)); net("LED_IN", ("JLB", 2), ("U1", 16)); net("LED_CLK", ("JLB", 3), ("U1", 19)); net("GND", ("JLB", 4))   # CB1D-C: LED clock from Pico pin 19 (PIO; Pico pinout ASSUMPTIONS 22)
     net("HTA_P", ("JHTA", 1), ("RHTA", 1)); net("GND", ("JHTA", 2)); net("HTA_IN", ("RHTA", 2), ("CHTA", 1), ("DHA1", 2), ("DHA2", 1), ("UM", 1))
     net("P3V3", ("DHA1", 1)); net("GND", ("CHTA", 2), ("DHA2", 2)); net("MUX_S2", ("UM", 9), ("U1", 2))
-    # ---- CB1D-C2 (owner approval 2026-10-28): yaw gyro for the sweep direction (left / right LED display, src/sim/sweep_track.py), read in the idle slot over I2C
-    # BMI270 in I2C mode per its connection table: SDO -> GND (default address), CSB -> VDDIO; INT1 / INT2 / OCSB / OSDO not connected; 100 nF at VDDIO and VDD
-    # dual source (owner 2026-10-28): the same land also takes the ST LSM6DSO (DS12140 Rev 3: same LGA-14 terminals and pin numbers); its mode-1 pins 2 / 3
-    # (SDx / SCx) must go to VDDIO or GND, the BMI270's (ASDx / ASCx) to VDDIO or DNC, never GND: both are tied to VDDIO. Firmware tells them apart by the ID register.
-    # Pico pins 26 / 27 (GP20 / GP21, I2C0 SDA / SCL by the Pico pinout: ASSUMPTIONS 22, UNVERIFIED), next to the free band above the top header; 4k7 pull-ups for 400 kHz
-    add("UG", "BMI270", "BMI270", "Bosch BMI270 IMU (yaw rate), I2C"); add("CG1", "C0603", "100n", "X7R, VDDIO"); add("CG2", "C0603", "100n", "X7R, VDD")
-    add("RGA", "R0603", "4k7", "I2C SDA pull-up"); add("RGL", "R0603", "4k7", "I2C SCL pull-up")
-    # UG_VIO: a local supply net (VDD, VDDIO, CSB, pins 2 / 3 and SDO) joined on the surface and fed from P3V3 through RGF 10 R (with CG1 / CG2 a supply filter):
-    # the corner pads of the 0.5 mm LGA cannot each take a plane via next to the I2C escapes (CB1D route 2026-10-28). SDO high selects the alternate I2C
-    # address (BMI270 0x69, LSM6DSO SA0 = 1 -> 0x6B), allowed by both datasheets
-    add("RGF", "R0603", "10R", "gyro supply filter")
-    net("UG_VIO", ("UG", 1), ("UG", 2), ("UG", 3), ("UG", 5), ("UG", 8), ("UG", 12), ("CG1", 1), ("CG2", 1), ("RGF", 2)); net("P3V3", ("RGF", 1), ("RGA", 1), ("RGL", 1))
-    net("GND", ("UG", 6), ("UG", 7), ("CG1", 2), ("CG2", 2))
-    net("GYR_SDA", ("UG", 14), ("RGA", 2), ("U1", 26)); net("GYR_SCL", ("UG", 13), ("RGL", 2), ("U1", 27))
-    for _pn, _nm in ((4, "INT1"), (9, "INT2"), (10, "OCSB"), (11, "OSDO")): net(f"UG_{_nm}_NC", ("UG", _pn))
+    # CB1D-C2: the yaw gyro moved to AU1 (owner decision 2026-10-28: yaw rate is the same anywhere on the rigid detector; AU1 sends it to the head in its link
+    # reply; the BMI270's 0.5 mm LGA no longer crowds the head board). Pico pins 26 / 27 are free again.
 for k in NETS: NETS[k] = list(dict.fromkeys(NETS[k]))
 BYREF = {p["ref"]: p for p in PARTS}
 def pin_info(ref, num):

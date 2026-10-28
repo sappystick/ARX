@@ -1,5 +1,5 @@
 /* Hardware abstraction for the PHI-FOLD 233 firmware. The target builds implement it on the Pico SDK (CB1D, RP2350: PIO for the gated ADC frames,
- * the SK9822 LED stream and the half-duplex link; I2C0 for the gyro) and on the TI MSPM0 SDK / DriverLib (AU1: UART0, DAC12, TIMG12 PWM, GPIO);
+ * the SK9822 LED stream and the half-duplex link) and on the TI MSPM0 SDK / DriverLib (AU1: UART0, DAC12, TIMG12 PWM, GPIO, I2C0 for the gyro);
  * neither SDK is installed in this repository's container, so only the host stubs (fw/tests/hal_host.c) are built and run here. Every call that touches
  * the coil, the receive chain or the cord is issued by the scheduler only in the slot fw_timeline.py / output_modes.py allow. */
 #pragma once
@@ -7,7 +7,7 @@
 /* ---- CB1D (head) ---- */
 void hal_tx_fire(uint32_t ton_ns);                                   /* TX1_IN high for ton, then off (PB1R) */
 void hal_adc_gates(float gA[9], float gB[9]);                        /* gate means of QUAD-A / QUAD-B for the pulse just fired (PIO + AD7389-4) */
-float hal_gyro_yaw_dps(void);                                        /* BMI270 / LSM6DSO z rate over I2C0 (address 0x69 / 0x6B: SDO high) */
+float hal_gyro_yaw_dps(void);                                        /* AU1 only: BMI270 / LSM6DSO z rate over I2C0 on PA0 / PA1 (address 0x69 / 0x6B: SDO high) */
 int hal_trigger(void);                                               /* TRIG_IN high = pressed (boost) */
 void hal_led_frame(const uint8_t *frame, int nbytes);                /* SK9822 frame on LED_IN / LED_CLK (PIO, 8 MHz) */
 void hal_link_send(const uint8_t *b, int n);                         /* AUD_LINK, 1 Mbaud, then release the line */

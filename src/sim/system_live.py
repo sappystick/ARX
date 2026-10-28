@@ -5,7 +5,7 @@ the model inputs the page needs and a grid of GOLDEN cases that tests/regress.py
 Sources (no new physics here):
   TX turn-off and on-time: tx_vbus_sweep.py pulse() / ton_loop() (same topology and values as sim_head1.py; ASSUMPTIONS 28)
   supply energy per pulse = V x Q drawn from the bulk bank during the ramp (dissipative clamp: none of it comes back)
-  rails: system_budget.py rows (+5V: LED firmware cap, logic estimate, AMS1117 input, +5VA analog from the TI OPA2211 / OPA2365 IQ maxima, BMI270 gyro)
+  rails: system_budget.py rows (+5V: LED firmware cap, logic estimate, AMS1117 input, +5VA analog from the TI OPA2211 / OPA2365 IQ maxima)
   AU1 audio board: its own buck from the pack (PM2-B F2): datasheet quiescent currents + an ASSUMED 0.10 W average speaker power (see AU1 below)
   converter efficiency 0.85 for both modules: the factor system_budget.py already uses for the cord current (ASSUMED, ASSUMPTIONS 38)
   M12 load other than the gate drive: not budgeted (ASSUMPTIONS 29), an input here, default 0.10 W (ASSUMED)
@@ -25,11 +25,11 @@ CAPS = {"design": dict(CL=100e-9, derate=False, label="1 x 100 nF C0G/film (desi
 PACK = dict(Wh=7 * 3.6 * 3.0, V_min=19.6, V_max=29.4)
 ETA = 0.85
 I5 = dict(led_cap=0.35, led_static=66 * 0.001, logic=0.15, ams_in=2 * (0.023 + 0.0041) + 3.3 / 270.0 + 0.011, analog_5va=6 * 0.006 + 4 * 0.005,
-          gyro=0.000685)                                                                   # system_budget.py terms (A); gyro: BMI270 685 uA typ, full ODR (Bosch BST-BMI270-DS000-08), on CB1D-C2
+          gyro=0.0)                                                                        # system_budget.py terms (A); the gyro moved to AU1 (2026-10-28): 0 on the head rail
 # AU1 audio board, battery side through PM2-B F2 (its own buck, so not on the +5V rail): amplifier and MCU quiescent currents at 5 V (the MCU's LDO passes its current through)
 # plus the average speaker power / class-D efficiency, all through the AU1 buck. TPA2005D1 IQ 3.4 mA typ at 5.5 V (SLOS369G), TPA6132A2 2.1 mA typ (SLOS597B),
 # MSPM0G3507 RUN 101 uA/MHz at 80 MHz (SLASEX6C, CoreMark); average speaker power 0.10 W and class-D efficiency 0.85 ASSUMED (ASSUMPTIONS 41); worst case: the 1.4 W rating
-AU1 = dict(iq_A=0.0034 + 0.0021 + 80 * 101e-6, p_audio_avg_W=0.10, p_audio_max_W=1.4, eta_amp=0.85)
+AU1 = dict(iq_A=0.0034 + 0.0021 + 80 * 101e-6 + 0.000685, p_audio_avg_W=0.10, p_audio_max_W=1.4, eta_amp=0.85)   # + BMI270 685 uA typ (Bosch BST-BMI270-DS000-08), on AU1 since 2026-10-28
 AU1["W"] = (5.0 * AU1["iq_A"] + AU1["p_audio_avg_W"] / AU1["eta_amp"]) / ETA
 AU1["W_max"] = (5.0 * AU1["iq_A"] + AU1["p_audio_max_W"] / AU1["eta_amp"]) / ETA
 QG, VG = 90e-9, 12.0                                                                       # 2 x 45 nC at 12 V (system_budget TC4420 row)

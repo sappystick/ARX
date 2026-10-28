@@ -1,6 +1,6 @@
 /* CB1D head firmware: per-period scheduler (pf233_timing.h, pf233_output.h) and the receive chain (pf_dsp). Portable over pf_hal.h.
  * One TX period: [housekeeping + TX on] -> [receive window: gates only, no other edge] -> idle slot: LED frame (mode rules), descriptor burst, AU1 reply,
- * gyro read. The averaging window (PF_OUT_N_AVG per PRF mode, 30 ms) turns pulses into one fit. MODELED: host-tested only. */
+ * (the gyro is on AU1: its yaw rate arrives in the AU1 reply). The averaging window (PF_OUT_N_AVG per PRF mode, 30 ms) turns pulses into one fit. MODELED: host-tested only. */
 #include <string.h>
 #include <math.h>
 #include "pf_hal.h"
@@ -46,5 +46,8 @@ void pf_head_idle(pf_head_t *h, const pf_desc_t *d, int in_sweep) {
     pf_led_t fr[PF_NLED]; int lit = (h->out_mode == 1) || (h->out_mode == 2 && !in_sweep);       /* AUDIO_ONLY: dark; LED_ONLY: lit; COMBINED: dark in a sweep */
     if (h->out_mode != 0 || h->led_was_lit) { pf_led_render(d, lit, fr); led_bytes(fr, buf, &n); hal_led_frame(buf, n); h->led_was_lit = lit; }
     uint8_t b[PF_DESC_BYTES]; pf_desc_pack(d, b); hal_link_send(b, PF_DESC_BYTES);
-    uint8_t r[2]; if (hal_link_reply(r, 2, 40) == 2 && pf_crc8(r, 1) == r[1] && (r[0] & 3) <= 2) h->out_mode = r[0] & 3;   /* selector from AU1 */
+    uint8_t r[4];                                                                                /* AU1 reply: selector, yaw (0.1 deg/s), CRC */
+    if (hal_link_reply(r, 4, 60) == 4 && pf_crc8(r, 3) == r[3] && (r[0] & 3) <= 2) {
+        h->out_mode = r[0] & 3; h->yaw_dps = 0.1f * (float)(int16_t)((uint16_t)r[1] | ((uint16_t)r[2] << 8)); h->yaw_ok = 1;   /* used by the next frame (one-frame latency) */
+    }
 }
