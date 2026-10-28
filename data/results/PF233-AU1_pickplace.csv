@@ -31,10 +31,10 @@ RS3,10k,R_0603_1608Metric,-11.0,-7.0,0,top
 US,TPA2005D1DGN,HVSSOP-8-1EP_3x3mm_P0.65mm,7.0,1.0,0,top
 CSV,1u,C_0603_1608Metric,11.0,4.0,0,top
 CSV2,10u 10V,C_1210_3225Metric,10.5,7.5,0,top
-CI1,1u,C_0603_1608Metric,2.0,-1.0,0,top
+CI1,1u,C_0603_1608Metric,2.0,-1.8,0,top
 CI2,1u,C_0603_1608Metric,1.5,-3.5,0,top
 RI1,150k,R_0603_1608Metric,2.0,2.0,0,top
-RI2,150k,R_0603_1608Metric,3.0,-7.0,0,top
+RI2,150k,R_0603_1608Metric,2.0,0.05,0,top
 RSD,100k,R_0603_1608Metric,11.0,-3.0,0,top
 JSPK,Speaker: SPK+ SPK- (8 ohm),SolderPad_2x_P5.08mm,11.0,-19.5,0,top
 UH,TPA6132A2RTE,WQFN-16-1EP_3x3mm_P0.5mm,7.0,-9.5,0,top

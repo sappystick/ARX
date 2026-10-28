@@ -4,7 +4,7 @@
  "kicad": "9.0.9",
  "zones_filled": true,
  "violations": 70,
- "unconnected": 2,
+ "unconnected": 1,
  "errors": {},
  "warnings": {},
  "lib_footprint_warnings": 70,

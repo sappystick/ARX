@@ -4,7 +4,7 @@
  "kicad": "9.0.9",
  "zones_filled": true,
  "violations": 52,
- "unconnected": 2,
+ "unconnected": 5,
  "errors": {
   "clearance": 1
  },
@@ -15,12 +15,12 @@
    "type": "clearance",
    "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.0569 mm)",
    "items": [
-    "Pad 6 [NRST_AU] of UM on F.Cu",
-    "Track [+3V3_AU] on F.Cu, length 1.3946 mm"
+    "Track [+3V3_AU] on F.Cu, length 1.3946 mm",
+    "Pad 6 [NRST_AU] of UM on F.Cu"
    ],
    "pos": {
-    "x": 93.8,
-    "y": 100.25
+    "x": 95.15,
+    "y": 100.4
    }
   }
  ]

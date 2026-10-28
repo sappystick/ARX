@@ -9,7 +9,7 @@
   "CB1D": {
    "route": {
     "state": "FAIL",
-    "detail": "49/49 nets"
+    "detail": "48/49 nets"
    },
    "indep": {
     "state": "FAIL",
@@ -17,7 +17,7 @@
    },
    "kicad": {
     "state": "FAIL",
-    "detail": "errors {}, unconnected 2, HV control live"
+    "detail": "errors {}, unconnected 1, HV control live"
    },
    "gerber": {
     "state": "PASS",
@@ -217,15 +217,15 @@
   "AU1": {
    "route": {
     "state": "FAIL",
-    "detail": "33/35 nets"
+    "detail": "32/35 nets"
    },
    "indep": {
     "state": "FAIL",
-    "detail": "2 violations, 2 opens"
+    "detail": "2 violations, 3 opens"
    },
    "kicad": {
     "state": "FAIL",
-    "detail": "errors {'clearance': 1}, unconnected 2"
+    "detail": "errors {'clearance': 1}, unconnected 5"
    },
    "gerber": {
     "state": "PASS",
