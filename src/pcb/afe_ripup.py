@@ -3,7 +3,8 @@
 only when called (studies, or a board the default leaves open).
 Round 0 is the single-pass router with blocker diagnosis (AFE_BLOCKERS=1). While a connection stays open, the next round starts from an empty board (everything
 ripped up) with:
-  - the failed nets routed first (AFE_PRE), so the nets that walled in their pocket (afe_layout.blockers) are routed after them and go around;
+  - the failed nets routed first among the signal nets, right after the plane connections (AFE_POST), so the nets that walled in their pocket (afe_layout.blockers) are routed after them and go around;
+  - escape stubs that wall a failed pad in are dropped (AFE_NOSTUB): those pads are routed directly by A*;
   - a history cost on the cells of the failed connections' cheapest paths (dilated by 2 cells), raised every round (+H0 x round) and paid by every net
     except the failed ones (AFE_HIST / AFE_HIST_EXEMPT): congestion is negotiated over the rounds instead of in one pass.
 A round is accepted when it has 0 unrouted connections and 0 failed plane fanouts; the board's normal flow (afe_export.py, DRC) is then run on that layout.
@@ -23,8 +24,8 @@ def run(env):
 
 def main():
     os.makedirs("out_board", exist_ok=True)
-    base_pre = [n for n in os.environ.get("AFE_PRE", "").split(",") if n]
-    rounds = []; pre = list(base_pre); H = None; env = {}; env_fan = False
+    base_pre = [n for n in os.environ.get("AFE_POST", "").split(",") if n]
+    rounds = []; pre = list(base_pre); H = None; env = {}; env_fan = False; nostub = []
     for k in range(ROUNDS + 1):
         r = run(env); opens = r["unrouted"]; fan = r["fanout_failed"]
         rounds.append(dict(round=k, pre=list(pre), unrouted=opens, fanout_failed=fan, blockers=r.get("blockers", {}), vias=r["vias"], tracks=r["tracks"], s=r["_s"]))
@@ -38,7 +39,9 @@ def main():
         for L, i, j in hot:
             H[L, max(j - DIL, 0):j + DIL + 1, max(i - DIL, 0):i + DIL + 1] += H0 * (k + 1)
         np.savez(HF, H=H)
-        env = dict(AFE_PRE=",".join(pre), AFE_HIST=HF, AFE_HIST_EXEMPT=",".join(failed_nets))
+        stubs = sorted({v[5:] for vs in r.get("blockers", {}).values() for v in vs if v.startswith("stub:")}); nostub = sorted(set(nostub) | set(stubs))
+        env = dict(AFE_POST=",".join(pre), AFE_HIST=HF, AFE_HIST_EXEMPT=",".join(failed_nets))          # failed nets right after the plane connections (AFE_PRE would put them before every via and wall the +3V3D island in)
+        if nostub: env["AFE_NOSTUB"] = ",".join(nostub)                       # escape stubs that walled a failed pad in: removed, the pad is routed directly
         if fan or env_fan: env["AFE_FANFIRST"] = "1"; env_fan = True           # a plane fanout failed: from now on every plane connection goes in before the signal nets (existing router order option)
     ok = not rounds[-1]["unrouted"] and not rounds[-1]["fanout_failed"]
     out = dict(board=f"AB1{B}", ok=ok, rounds=rounds, final_env=env, h0=H0, dilate_cells=DIL)

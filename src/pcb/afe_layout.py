@@ -288,6 +288,7 @@ def _row_groups():
         g.setdefault((pd["ref"], dx, dy), []).append(pd)
     for k, v in g.items(): v.sort(key=lambda q: (q["y"] if k[1] else q["x"]))
     return g
+NOSTUB = set(n for n in os.environ.get("AFE_NOSTUB", "").split(",") if n)        # B9: pads whose escape stub the rip-up router removed (unset = none)
 def escape_stubs(length=float(os.environ.get("AFE_STUBLEN", "0.8"))):
     n_ok = 0; stag = {}
     for (ref, dx, dy), row in _row_groups().items():
@@ -300,6 +301,7 @@ def escape_stubs(length=float(os.environ.get("AFE_STUBLEN", "0.8"))):
         _pst = pd["net"] in PLANE and pd["ref"] in os.environ.get("AFE_PLANESTUB", "").split(",") and pd["num"] != "25" and (not os.environ.get("AFE_PSNETS") or pd["net"] in os.environ["AFE_PSNETS"].split(","))          # ground pins of a fine-pitch IC: short stub with the plane via at its tip (keeps the ground fan-out out of the neighbouring pins' pockets)
         if pd["net"] in PLANE and not _pst and not (os.environ.get("AFE_STAGGER") and (pd["ref"], pd["num"]) in stag): continue
         if not pd["net"] or pd["num"] in ("MH1", "MH2"): continue
+        if f"{pd['ref']}.{pd['num']}" in NOSTUB: continue                                   # B9 rip-up: this pad's escape stub walled in a failed pad; the pad is routed directly this round
         px, py = PLACE[pd["ref"]][0], PLACE[pd["ref"]][1]
         if is_conn: dx, dy = (-1, 0) if px > 0 else (1, 0)
         elif abs(pd["x"] - px) >= abs(pd["y"] - py): dx, dy = (1 if pd["x"] > px else -1), 0
@@ -340,6 +342,7 @@ def blockers(failed, nets):
         if not tg: continue
         hard = [(~edge) & np.isin(PADCORE0[L], (-1, net)) & np.isin(PADBLK0[L], (-1, net)) for L in range(NL)]
         soft = [(core[L] >= 0) & (core[L] != net) | ((blk[L] != -1) & (blk[L] != net)) for L in range(NL)]
+        free = [hard[L] & ~soft[L] for L in range(NL)]
         tset = set(tg); g = {}; came = {}; op = []
         for s_ in starts: g[s_] = 0.0; heapq.heappush(op, (0.0, s_))
         n = 0; end = None
@@ -350,7 +353,8 @@ def blockers(failed, nets):
             for di, dj, c in NB:
                 a, b = i + di, j + dj
                 if not (0 <= a <= N and 0 <= b <= N) or not hard[L][b, a]: continue
-                g1 = g[cur] + c + (8.0 if soft[L][b, a] else 0.0)
+                if di and dj and not (free[L][j, a] and free[L][b, i]) and not (hard[L][j, a] and hard[L][b, i]): continue      # same corner rule as astar, on the hard grid
+                g1 = g[cur] + c + (8.0 if soft[L][b, a] else 0.0) + (8.0 if (di and dj and not (free[L][j, a] and free[L][b, i])) else 0.0)   # a squeeze through soft corners costs like crossing them
                 if g1 < g.get((L, a, b), 1e18): g[(L, a, b)] = g1; came[(L, a, b)] = cur; heapq.heappush(op, (g1, (L, a, b)))
             for L2 in range(NL):
                 if L2 != L and all(hard[k][j, i] for k in range(NL)):
@@ -359,10 +363,16 @@ def blockers(failed, nets):
         if end is None: out[f] = []; continue
         path = [end]
         while path[-1] in came: path.append(came[path[-1]])
-        vic = set()
-        for (L, i, j) in path:
-            for v in (core[L, j, i], blk[L, j, i]):
-                if v >= 0 and v != net and v in sig: vic.add(NETNAME[v])
+        vic = set(); stubcell = {c: k for k, cs in STUB.items() for c in cs}; padnet = {(p['ref'], p['num']): NETID.get(p['net']) for p in PADS}; stubnet = {k: padnet.get(k) for k in STUB}
+        for idx, (L, i, j) in enumerate(path):
+            near = [(L, i, j)] + ([(L, path[idx - 1][1], j), (L, i, path[idx - 1][2])] if idx else [])       # the two corner cells of a diagonal step
+            for (L2, a, b) in near:
+                for v in (core[L2, b, a], blk[L2, b, a]):
+                    if v >= 0 and v != net and v in sig: vic.add(NETNAME[v])
+                for di in range(-INFL, INFL + 1):                                                   # escape stubs whose clearance covers this cell
+                    for dj in range(-INFL, INFL + 1):
+                        k = stubcell.get((L2, a + di, b + dj))
+                        if k and stubnet.get(k) not in (None, net): vic.add(f"stub:{k[0]}.{k[1]}")
         out[f] = sorted(vic); hot += [[int(L), int(i), int(j)] for (L, i, j) in path]
     return out, hot
 # ------------------------------------------------------------ main
