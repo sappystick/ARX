@@ -10,7 +10,7 @@ for d in ("kicad", "kicad/3dmodels", "schematics", "renders/boards", "models3d",
 sha = lambda p: hashlib.sha256(open(p, "rb").read()).hexdigest()
 def run(*a, **k): return subprocess.run(a, capture_output=True, text=True, **k)
 # ---------------------------------------------------------------- KiCad boards (routed files + design rules) and schematics
-BOARDS = [("CB1D", "PF233-CB1D_routed", "CB1D-B controller, D78, 6 layers", "in the verified flow"), ("LB1", "PF233-LB1_routed", "LB1 display, D78, 4 layers", "in the verified flow"),
+BOARDS = [("CB1D", "PF233-CB1D_routed", "CB1D-C1 controller, D78, 6 layers (LED clock on JLB.3)", "in the verified flow"), ("LB1", "PF233-LB1_routed", "LB1-v6 display, D78, 4 layers, 66 x SK9822-EC20 clocked", "in the verified flow"),
           ("PB1R", "PF233-PB1R_routed", "PB1R TX stage, 70 x 70, 4 layers", "in the verified flow"), ("PM2", "PF233-PM2_routed", "PM2 battery dock, 28 x 70", "in the verified flow"),
           ("HB2", "PF233-HB2_routed", "HB2 grip board, 24 x 38", "in the verified flow"), ("TXJ1", "TXJ1", "TXJ1 junction, 2 layers", "in the verified flow"),
           ("SB1R-QA", "SB1R-QA", "SB1R-QA receive coil board, D228", "in the verified flow"), ("SB1R-QB", "SB1R-QB", "SB1R-QB receive coil board, D228", "in the verified flow"),
@@ -31,7 +31,7 @@ for b, f, desc, st in BOARDS:
     run("kicad-cli", "pcb", "export", "glb", "--subst-models", "--include-tracks", "--include-pads", "--include-zones", "-o", f"{R}/models3d/{b}_with_components.glb", pcb)
 for f in sorted(glob.glob("data/kicad/3dmodels/*.wrl")): pass
 # ---------------------------------------------------------------- Gerbers: pointers (the release package and the published sets)
-GERB = {"CB1D": "data/gerber/CB1D_B3", "LB1": "data/gerber/LB1_v5", "PB1R": "data/gerber/PB1R_v3", "PM2": "data/gerber/PM2", "HB2": "data/gerber/HB2", "TXJ1": "data/gerber/TXJ1_v2",
+GERB = {"CB1D": "data/gerber/CB1D_C1", "LB1": "data/gerber/LB1_v6", "PB1R": "data/gerber/PB1R_v3", "PM2": "data/gerber/PM2", "HB2": "data/gerber/HB2", "TXJ1": "data/gerber/TXJ1_v2",
         "SB1R-QA": "data/gerber/SB1R_QA_v2", "SB1R-QB": "data/gerber/SB1R_QB_v2", "HTA": "data/gerber/HTA_v2", "AB1A": "data/gerber/AB1A_v1", "AB1B": "data/gerber/AB1B_v1"}
 # ---------------------------------------------------------------- STL classification
 man = {r["file"]: r for r in csv.DictReader(open("stl/MANIFEST.csv"))}

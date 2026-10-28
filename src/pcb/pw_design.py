@@ -39,7 +39,10 @@ LIB = {
  "HDR1x3": tht(3, 2.54, 1, 1.8, 1.0, "Pin header"), "HDR1x5": tht(5, 2.54, 1, 1.8, 1.0, "Pin header"), "HDR2x6S": tht(6, 1.27, 2, 1.02, 0.65, "Pin header 1.27"), "HDR1x2": tht(2, 2.54, 1, 1.8, 1.0, "Pin header"),
  "HDR2x4": tht(4, 2.54, 2, 1.8, 1.0, "Pin header"), "HDR1x4": tht(4, 2.54, 1, 1.8, 1.0, "Pin header"), "WIRE1x4": dict(tht(4, 2.54, 1, 1.8, 1.0, "Wire pads"), body=(4.04, 11.66, 0.1)),
  "LED2020": dict(desc="RGB LED SK6812 MINI-E class 3.2x2.8 (VERIFY pinout and land pattern)", fp="LED_SMD:LED_SK6812MINI-E_3.2x2.8mm", pins=[("1", "VDD", "power_in"), ("2", "DOUT", "output"), ("3", "GND", "power_in"), ("4", "DIN", "input")], pads=[("1", -1.45, -0.85, 1.0, 0.7, "roundrect"), ("2", -1.45, 0.85, 1.0, 0.7, "roundrect"), ("3", 1.45, 0.85, 1.0, 0.7, "roundrect"), ("4", 1.45, -0.85, 1.0, 0.7, "roundrect")], body=(3.2, 2.8, 0.8)),
- "SOT23-5": dict(desc="74AHCT1G125 buffer SOT-23-5: 1 OE#, 2 A, 3 GND, 4 Y, 5 VCC (VERIFY)", fp="Package_TO_SOT_SMD:SOT-23-5", pins=[("1", "OE", "input"), ("2", "A", "input"), ("3", "GND", "power_in"), ("4", "Y", "output"), ("5", "VCC", "power_in")], pads=[("1", -1.1, -0.95, 1.0, 0.6, "roundrect"), ("2", -1.1, 0, 1.0, 0.6, "roundrect"), ("3", -1.1, 0.95, 1.0, 0.6, "roundrect"), ("4", 1.1, 0.95, 1.0, 0.6, "roundrect"), ("5", 1.1, -0.95, 1.0, 0.6, "roundrect")], body=(3.0, 1.7, 1.1)), "HDR2x6": tht(6, 2.54, 2, 1.8, 1.0, "Pin header"),
+ "SK9822EC20": dict(desc="RGB LED SK9822-EC20 clocked (OPSCO SK9822-EC20-000 Rev. A/0: 2.0 x 2.0 x 0.65 mm, top view 1 SDO / 2 GND / 3 SDI left, 6 CKO / 5 VDD / 4 CKI right; pads 0.76 x 0.46, column gap 0.6, row gap 0.4, read off the drawing)", fp="PF233:LED_SK9822-EC20_2.0x2.0mm",
+                    pins=[("1", "SDO", "output"), ("2", "GND", "power_in"), ("3", "SDI", "input"), ("4", "CKI", "input"), ("5", "VDD", "power_in"), ("6", "CKO", "output")],
+                    pads=[("1", -0.68, -0.86, 0.76, 0.46, "rect"), ("2", -0.68, 0.0, 0.76, 0.46, "rect"), ("3", -0.68, 0.86, 0.76, 0.46, "rect"), ("4", 0.68, 0.86, 0.76, 0.46, "rect"), ("5", 0.68, 0.0, 0.76, 0.46, "rect"), ("6", 0.68, -0.86, 0.76, 0.46, "rect")], body=(2.0, 2.0, 0.65)),
+"SOT23-5": dict(desc="74AHCT1G125 buffer SOT-23-5: 1 OE#, 2 A, 3 GND, 4 Y, 5 VCC (TI SCLS378P Table 4-1, verified 2026-10-28)", fp="Package_TO_SOT_SMD:SOT-23-5", pins=[("1", "OE", "input"), ("2", "A", "input"), ("3", "GND", "power_in"), ("4", "Y", "output"), ("5", "VCC", "power_in")], pads=[("1", -1.1, -0.95, 1.0, 0.6, "roundrect"), ("2", -1.1, 0, 1.0, 0.6, "roundrect"), ("3", -1.1, 0.95, 1.0, 0.6, "roundrect"), ("4", 1.1, 0.95, 1.0, 0.6, "roundrect"), ("5", 1.1, -0.95, 1.0, 0.6, "roundrect")], body=(3.0, 1.7, 1.1)), "HDR2x6": tht(6, 2.54, 2, 1.8, 1.0, "Pin header"),
  "D2PAK": dict(desc="MOSFET TO-263-3 (D2PAK) G-D-S, tab = drain (VERIFY land pattern)", fp="Package_TO_SOT_SMD:TO-263-3_TabPin2",
                pins=[("1", "G", "input"), ("2", "D", "passive"), ("3", "S", "passive")],
                pads=[("1", -6.8, -2.54, 3.0, 1.6, "roundrect"), ("3", -6.8, 2.54, 3.0, 1.6, "roundrect"), ("2", 2.4, 0, 9.4, 10.8, "rect")], body=(10.2, 9.2, 4.6)),
@@ -290,20 +293,24 @@ if PW == "L":
     import csv as _csv
     px = list(_csv.DictReader(open("kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv")))
     for i, r in enumerate(px, 1):
-        add(f"LD{i}", "LED2020", "SK6812 MINI-E RGB", "Worldsemi SK6812MINI-E class (verify)", xy=(float(r["x_mm"]), -float(r["y_mm"])), ring=int(r["ring"]), az=float(r["azimuth_deg"]))
-        net("+5V", (f"LD{i}", 1)); net("GND", (f"LD{i}", 3)); net(f"LD_D{i-1}", (f"LD{i}", 4))
-        net(f"LD_D{i}" if i < 66 else "LD_END_NC", (f"LD{i}", 2))
+        # LB1-v6 (2026-10-28, owner: clocked LEDs fed in the idle time, no dropped pulses): SK9822-EC20, data chain SDI -> SDO and clock chain CKI -> CKO.
+        # The SK6812MINI-E of v5 was a reverse-mount part on a footprint without its cutout (CORRECTIONS); the 2.0 mm LED sits on the same 66 positions.
+        add(f"LD{i}", "SK9822EC20", "SK9822-EC20 RGB", "OPSCO SK9822-EC20-000 (datasheet Rev. A/0 on disk)", xy=(float(r["x_mm"]), -float(r["y_mm"])), ring=int(r["ring"]), az=float(r["azimuth_deg"]))
+        net("+5V", (f"LD{i}", 5)); net("GND", (f"LD{i}", 2)); net(f"LD_D{i-1}", (f"LD{i}", 3)); net(f"LD_C{i-1}", (f"LD{i}", 4))
+        net(f"LD_D{i}" if i < 66 else "LD_END_NC", (f"LD{i}", 1)); net(f"LD_C{i}" if i < 66 else "LD_CEND_NC", (f"LD{i}", 6))
     for k in range(1, 12): add(f"CL{k}", "C0603", "100n", "X7R 10V"); net("+5V", (f"CL{k}", 1)); net("GND", (f"CL{k}", 2))
     add("CB", "C1210", "10u 16V", "X7R"); net("+5V", ("CB", 1)); net("GND", ("CB", 2))
     add("U1", "SOT23-5", "74AHCT1G125", "TI SN74AHCT1G125DBV (level shift 3V3 -> 5V data)"); net("+5V", ("U1", 5)); net("GND", ("U1", 3), ("U1", 1)); net("LED_IN", ("U1", 2)); net("LD_BUF", ("U1", 4), ("RS", 1))
     add("RS", "R0603", "33R", "series damping"); net("LD_D0", ("RS", 2))
-    add("JLB", "WIRE1x4", "to CB1D: +5V, LED_IN, GND, GND", "4 wire pads, no header (a header is 9 mm tall and hits the cap)"); net("+5V", ("JLB", 1)); net("LED_IN", ("JLB", 2)); net("GND", ("JLB", 3), ("JLB", 4))
+    add("U2", "SOT23-5", "74AHCT1G125", "TI SN74AHCT1G125DBV (level shift 3V3 -> 5V LED clock; SCLS378P: VIH 2.0 V, tpd 6 ns max at 5 V)"); net("+5V", ("U2", 5)); net("GND", ("U2", 3), ("U2", 1)); net("LED_CLK", ("U2", 2)); net("LC_BUF", ("U2", 4), ("RSC", 1))
+    add("RSC", "R0603", "33R", "series damping (clock)"); net("LD_C0", ("RSC", 2))
+    add("JLB", "WIRE1x4", "to CB1D: +5V, LED_IN, LED_CLK, GND", "4 wire pads, no header (a header is 9 mm tall and hits the cap)"); net("+5V", ("JLB", 1)); net("LED_IN", ("JLB", 2)); net("LED_CLK", ("JLB", 3)); net("GND", ("JLB", 4))
 if PW == "C" and os.environ.get("DISC"):
     # ---- CB1D additions: hub-top antenna (HTA) monitor input on spare mux channel Y4 (select line S2 from the spare Pico pin GP1)
     NETS["GND"] = [p for p in NETS["GND"] if p not in (("UM", "1"), ("UM", "9"))]
     add("JHTA", "WIRE2", "HTA coil leads (twisted pair from the cap)", "solder pads 5.08 mm"); add("RHTA", "R0603", "10k", "series protection"); add("CHTA", "C0603", "1n", "C0G")
     add("DHA1", "DSOD", "BAS16", "clamp to 3V3"); add("DHA2", "DSOD", "BAS16", "clamp to GND")
-    add("JLB", "HDR1x4", "to LB1: +5V, LED_IN, GND, GND", "4 wires to the display board"); net("+5V", ("JLB", 1)); net("LED_IN", ("JLB", 2), ("U1", 16)); net("GND", ("JLB", 3), ("JLB", 4))
+    add("JLB", "HDR1x4", "to LB1: +5V, LED_IN, LED_CLK, GND", "4 wires to the display board"); net("+5V", ("JLB", 1)); net("LED_IN", ("JLB", 2), ("U1", 16)); net("LED_CLK", ("JLB", 3), ("U1", 19)); net("GND", ("JLB", 4))   # CB1D-C: LED clock from Pico pin 19 (PIO; Pico pinout ASSUMPTIONS 22)
     net("HTA_P", ("JHTA", 1), ("RHTA", 1)); net("GND", ("JHTA", 2)); net("HTA_IN", ("RHTA", 2), ("CHTA", 1), ("DHA1", 2), ("DHA2", 1), ("UM", 1))
     net("P3V3", ("DHA1", 1)); net("GND", ("CHTA", 2), ("DHA2", 2)); net("MUX_S2", ("UM", 9), ("U1", 2))
 for k in NETS: NETS[k] = list(dict.fromkeys(NETS[k]))

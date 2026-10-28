@@ -143,3 +143,15 @@ Sources: TI SBOS377L "OPAx211 1.1-nV/rtHz Noise, Low Power, Precision Operationa
 | OPA2211 IQ per channel, IOUT = 0 | 3.6 mA typ, 4.5 mA max (25 C); 6 mA max over -40..125 C (POWER SUPPLY table) | system_budget +5VA row (6 channels on AB1A + AB1B); system_live rail term (over-temperature value) |
 | OPA2365 IQ per amplifier, IO = 0 | 4.6 mA typ, 5 mA max; 5 mA over -40..125 C | same (4 amplifiers) |
 | OPA2365 supply range | 2.2-5.5 V | +5VA at 5 V: inside |
+
+## LB1 LEDs and level shifter (LB1-v6 clocked upgrade): VERIFIED (2026-10-28)
+
+| Part | Source (saved unchanged in data/seed/datasheets/) | Values used |
+|---|---|---|
+| SK9822-EC20 (chosen) | OPSCO "SK9822-EC20-000" Rev. A/0, https://atta.szlcsc.com/upload/public/pdf/source/20260416/0E56B06F3E16E5AE4EC8758FD09E8E05.pdf (HTTP 200), OPSCO_SK9822-EC20-000_RevA0.pdf (sha256 4136b81ad70d0227...) | 2.0 x 2.0 x 0.65 mm; top view 1 SDO, 2 GND, 3 SDI (left), 6 CKO, 5 VDD, 4 CKI (right); pads 0.76 (drawn "0.7-6") x 0.46, column gap 0.6, row gap 0.4; max serial clock 15 MHz; PWM 1.2 kHz; IDD 1 mA static; 5 V, 18 mA version |
+| SK6812MINI-E (LB1-v5 part) | OPSCO SPC/SK6812MINI-E Rev. 02, https://cdn-shop.adafruit.com/product-files/4960/4960_SK6812MINI-E_REV02_EN.pdf, OPSCO_SK6812MINI-E_Rev02.pdf (164f1e44bdfb408b...) | 3.2 x 2.8 x 1.78 mm reverse mount (leads 0.84 below the top, body through a 3.2 x 2.8 cutout, pads 1.8 long outside); 800 kbit/s; PWM 1.2 kHz; pins 1 VDD, 2 DOUT, 3 GND, 4 DIN |
+| SK9822 5050 (evaluated) | OPSCO SPC/SK9822 Rev. 01, https://cdn-shop.adafruit.com/product-files/2343/SK9822_SHIJI.pdf, OPSCO_SK9822_Rev01.pdf (c87f7bb1fe86155e...) | 5.0 x 5.0 x 1.6 mm (text 5.5 x 5.0); 30 MHz; TCLKH / TCLKL > 30 ns; frame 64 + 32 N bit; PWM 1.2 kHz; pins 1 SDI, 2 CKI, 3 GND, 4 VCC, 5 CKO, 6 SDO |
+| SK6805-2427 (evaluated) | OPSCO SPC/SK6805-2427, Adafruit product 3484 datasheet, OPSCO_SK6805-2427.pdf (0bd417f5a15675fc...) | 2.4 x 2.7 x 1.1 mm top SMD, one-wire 800 kbit/s, PWM 1.2 kHz |
+| APA102C (evaluated) | iPixel / Shiji APA102C (scanned, 5 pages), https://cdn-shop.adafruit.com/datasheets/APA102.pdf, iPixel_APA102C.pdf (3ce93e9ab1cd8c38...) | 5 x 5 x 1.4 mm; FOSC 800-1200 kHz; frame 32 x 0 + N x 32 + 32 x 1; no maximum clock stated (512 kHz example) |
+| TLC5947 (evaluated, isolated option) | TI TLC5947, https://www.ti.com/lit/ds/symlink/tlc5947.pdf, TI_TLC5947.pdf (5212c127bb5e5230...) | 24 channels, 12-bit PWM, internal 4 MHz oscillator, BLANK input, HTSSOP-32 11.0 x 6.2 mm |
+| SN74AHCT1G125 (U1, new U2) | TI SCLS378P (Aug 1997, revised Mar 2024), https://www.ti.com/lit/ds/symlink/sn74ahct1g125.pdf, TI_SN74AHCT1G125_SCLS378P_2024-03.pdf (564b239f73ff629f...) | DBV pins 1 OE, 2 A, 3 GND, 4 Y, 5 VCC (Table 4-1); VIH 2 V, VIL 0.8 V (3.3 V -> 5 V translation); tpd 6 ns max at 5 V; +-8 mA |

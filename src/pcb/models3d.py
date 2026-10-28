@@ -92,6 +92,7 @@ def build(t, L):
         for (_, px, py, w, h, s) in P: parts += [cyl(px, py, 1.9, 7.5, 8.0, METAL), box(px - 0.3, px + 0.3, py - 1.6, py + 1.6, 8.0, 8.05, DARK)]
         return parts + [box(-bw / 2, -bw / 2 + 1.2, -bh / 2 + 0.3, bh / 2 - 0.3, 7.5, bz, GREEN)]
     if t == "OKI3": return [box(-1.5, 10.0, -4.25, 4.25, 0.0, 10.2, BLACK), box(-1.2, 9.7, -3.0, 3.0, 10.2, 10.25, WHITE)] + [box(-0.3, 0.3, py - 0.3, py + 0.3, 0.0, 1.0, METAL) for (_, px, py, w, h, s) in P]
+    if t == "SK9822EC20": return [box(-1.0, 1.0, -1.0, 1.0, 0.0, 0.5, WHITE), box(-0.8, 0.8, -0.8, 0.8, 0.5, 0.65, (0.95, 0.95, 0.7))]      # 2.0 x 2.0 x 0.65 (OPSCO Rev. A/0), bottom-terminated
     if t == "LED2020": return [box(-1.6, 1.6, -1.4, 1.4, 0.0, 0.6, WHITE), cyl(0, 0, 1.2, 0.6, 0.8, (0.95, 0.95, 0.7), 16)] + gullwing(P, 1.6, 1.4, METAL, 0.1, 0.2)[:0]
     if t == "PICO":                                                                                    # Raspberry Pi Pico 2 W: 21 x 51 mm green module on the 40 pins, USB-micro at -y end, RP2350 + CYW43439 can
         z0 = 2.5; return [box(-10.5, 10.5, -25.5, 25.5, z0, z0 + 1.0, GREEN), box(-4.0, 4.0, -26.0, -20.0, z0 + 1.0, z0 + 3.8, METAL), box(-3.5, 3.5, -8.0, -1.0, z0 + 1.0, z0 + 1.9, BLACK), box(2.0, 8.0, 6.0, 14.0, z0 + 1.0, z0 + 2.0, METAL), box(-6.0, -1.0, 8.0, 13.0, z0 + 1.0, z0 + 1.9, BLACK)] + [box(px - 0.3, px + 0.3, py - 0.3, py + 0.3, 0.0, z0 + 1.0, GOLD) for (_, px, py, w, h, s) in P]

@@ -40,7 +40,7 @@ for a,ca,b,cb,lvl in LINKS:
     for pin,c in cnt.items():
         if c!=1: errors.append(f"{a}.{ca}.{pin} mapped {c} times to {b}.{cb}")
 # harness master: every conductor end exists and carries the named signal
-H=list(csv.DictReader(open("harness/HARNESS_MASTER_v3.csv")))
+H=list(csv.DictReader(open("harness/HARNESS_MASTER_v4.csv")))
 tok=re.compile(r"\b([A-Z0-9]+)\.(J[A-Z0-9]*)\.(\d+(?:/\d+)?)")
 hrows=[]; hbad=0
 for r in H:

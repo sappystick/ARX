@@ -1,0 +1,1 @@
+- HARNESS_MASTER_v3.csv -> HARNESS_MASTER_v4.csv (2026-10-28): LB1-v6 clocked LEDs: JLB.3 carries LED_CLK (W066), GND on JLB.4 only (W037)

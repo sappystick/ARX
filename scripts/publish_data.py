@@ -6,8 +6,8 @@ usage: scripts/publish_data.py [--check]     --check lists stale files and exits
 import os, re, shutil, glob, subprocess, sys, json
 W = "work"; CHECK = "--check" in sys.argv; stale = []; changed = 0
 VERSIONS = {   # board -> (gerber folder in data/gerber, work gerber dir, work prefix, published prefix)
-    "CB1D": ("CB1D_B3", "kit_v22/GERBER_CB1D_v2", "PF233-CB1D-v2", "PF233-CB1D-B3"),      # B3 (Step 5): 1.02 mm JA/JB pads, Bourns 1206 fuse land, merged via pair
-    "LB1": ("LB1_v5", "kit_v22/GERBER_LB1_v2", "PF233-LB1-v2", "PF233-LB1-v5"),          # v5 (Step 5): GND via pair 0.30 mm apart merged (drill-to-drill floor)
+    "CB1D": ("CB1D_C1", "kit_v22/GERBER_CB1D_v2", "PF233-CB1D-v2", "PF233-CB1D-C1"),      # C1 (2026-10-28): JLB.3 = LED_CLK from Pico pin 19 (clocked LB1-v6); B3 (Step 5) SUPERSEDED: 1.02 mm JA/JB pads, Bourns 1206 fuse land
+    "LB1": ("LB1_v6", "kit_v22/GERBER_LB1_v2", "PF233-LB1-v2", "PF233-LB1-v6"),          # v6 (2026-10-28): 66 x SK9822-EC20 clocked chain + clock buffer U2 / RSC; v5 SUPERSEDED (SK6812MINI-E on a footprint without its cutout)
     "PB1R": ("PB1R_v3", "kit_v22/GERBER_PB1R", "PF233-PB1R", "PF233-PB1R-v3"),          # v3 (Step 7 audit): parts clear of the NPM board rails and the hot-zone dam; v2 (Step 5) had 11 bodies crossing them
     "TXJ1": ("TXJ1_v2", "kit_v22/GERBER_TXJ1", "TXJ1-", "TXJ1-v2-"),
     "SB1R-QA": ("SB1R_QA_v2", "kit_v22/GERBER_SB1R_QA", "SB1R-QA-", "SB1R-QA-v2-"),

@@ -61,7 +61,7 @@ def autoplace(fixed, anchors, rots=None):
     return placed
 if PW == "L":
     fixed = {p["ref"]: (p["xy"][0], p["xy"][1], 0) for p in D.PARTS if p["ref"].startswith("LD")}
-    anchors = {"U1": (0, 0), "RS": (4, 0), "CB": (-4, 3), "JLB": (0, -4)}
+    anchors = {"U1": (0, 0), "RS": (4, 0), "U2": (0, 3), "RSC": (4, 3), "CB": (-4, 3), "JLB": (0, -4)}
     for k in range(1, 12): anchors[f"CL{k}"] = (-6 + k * 1.0, 6 - k * 0.8)
     PL = autoplace(fixed, anchors, {"JLB": 90})
 elif PW == "C":

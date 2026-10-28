@@ -28,7 +28,7 @@ NETCOUNT = {n: len(p) for n, p in D.NETS.items()}
 KIND2 = {"R0402": "R", "R0603": "R", "R0805": "R", "R1206": "R", "R2512": "R", "C0402": "C", "C0603": "C", "C0805": "C", "C1210": "C", "CAN10": "CP", "FUSE1206B": "F", "FUSE1812": "F",
          "FB1812": "FB", "DSOD": "D", "DSMB": "D", "DSMC": "D"}
 # pin side maps for the box symbols: by pin number; anything not listed goes left/right by number
-SIDES = {"LED2020": dict(left=["4"], right=["2"], top=["1"], bottom=["3"]), "D2PAK": dict(left=["1"], top=["2"], bottom=["3"]), "PMOS_SO8": dict(left=["4"], top=["5", "6", "7", "8"], bottom=["1", "2", "3"]),
+SIDES = {"SK9822EC20": dict(left=["3", "4"], right=["1", "6"], top=["5"], bottom=["2"]), "LED2020": dict(left=["4"], right=["2"], top=["1"], bottom=["3"]), "D2PAK": dict(left=["1"], top=["2"], bottom=["3"]), "PMOS_SO8": dict(left=["4"], top=["5", "6", "7", "8"], bottom=["1", "2", "3"]),
          "OKI3": dict(left=["1"], right=["3"], bottom=["2"]), "SOT223": dict(left=["3"], right=["2"], bottom=["1"], top=["4"]),
          "LM393": dict(left=["2", "3", "5", "6"], right=["1", "7"], top=["8"], bottom=["4"]), "TC4420": dict(left=["2", "3"], right=["6", "7"], top=["1", "8"], bottom=["4", "5"]),
          "HC4051": dict(left=["11", "10", "9", "6", "3"], right=["13", "14", "15", "12", "1", "5", "2", "4"], top=["16"], bottom=["8", "7"]),

@@ -1,0 +1,91 @@
+{
+ "status": "MODELED feasibility on the current LB1 positions; LB1-v6 uses SK9822-EC20",
+ "fit": {
+  "SK9822 5050, pad columns radial": {
+   "min_pad_gap_mm": 0.033,
+   "pair": [
+    "LD13",
+    "LD31"
+   ],
+   "min_body_gap_mm": 0.346,
+   "body_pair": [
+    "LD1",
+    "LD12"
+   ],
+   "one_track_between": false,
+   "ok": false
+  },
+  "SK9822 5050, as placed (rot 0)": {
+   "min_pad_gap_mm": 0.0,
+   "pair": [
+    "LD10",
+    "LD11"
+   ],
+   "min_body_gap_mm": 0.0,
+   "body_pair": [
+    "LD33",
+    "LD34"
+   ],
+   "one_track_between": false,
+   "ok": false
+  },
+  "SK9822-EC20, pad columns radial": {
+   "min_pad_gap_mm": 3.816,
+   "pair": [
+    "LD3",
+    "LD4"
+   ],
+   "min_body_gap_mm": 4.021,
+   "body_pair": [
+    "LD1",
+    "LD12"
+   ],
+   "one_track_between": true,
+   "ok": true
+  },
+  "SK9822-EC20, as placed (rot 0)": {
+   "min_pad_gap_mm": 3.601,
+   "pair": [
+    "LD1",
+    "LD2"
+   ],
+   "min_body_gap_mm": 3.81,
+   "body_pair": [
+    "LD1",
+    "LD2"
+   ],
+   "one_track_between": true,
+   "ok": true
+  }
+ },
+ "best_orientation": "SK9822-EC20, pad columns radial",
+ "height": {
+  "SK9822 5050": {
+   "led_top_z": 41.6,
+   "roof_underside_z": 41.3,
+   "gap_mm": -0.3,
+   "rule_mm": 0.3,
+   "roof_pocket_depth_mm": 0.6
+  },
+  "SK9822-EC20": {
+   "led_top_z": 40.65,
+   "roof_underside_z": 41.3,
+   "gap_mm": 0.65,
+   "rule_mm": 0.3,
+   "roof_pocket_depth_mm": 0.0
+  }
+ },
+ "chosen": "SK9822-EC20",
+ "chosen_ok": true,
+ "rail": {
+  "static_A": 0.066,
+  "note": "66 x 1 mA static (SK9822 IDD); LED current itself stays under the firmware cap 0.35 A"
+ },
+ "mini_e_finding": {
+  "part_height_mm": 1.78,
+  "reverse_mount": true,
+  "lb1_pads_inside_body_outline": true,
+  "lb1_cutout": false,
+  "consequence": "the current LB1 footprint cannot take the SK6812MINI-E: either the LED or the footprint has to change regardless of the clocked upgrade"
+ }
+}

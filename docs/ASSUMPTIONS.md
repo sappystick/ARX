@@ -9,7 +9,7 @@
 | 6 | Thermal: PETG 0.2, potting 0.25-1.8, FR4 0.5, h 6-10 W/m2K | sim_head2 | thermocouples on a heated mock-up |
 | 7 | 24-turn quadrupole depth scaled by the model slope 0.22 | RX_PLATFORM_QUAD | run the target model with the 24-turn geometry |
 | 8 | Hood gain from the axisymmetric model (hood_axi.py, MnZn mu 2000, DC, no losses); the coupled-moment model of hood_study2.py does not converge (8 -> 3 mm cells: +5.3 -> +7.3 % at 200 mm, 2.5 mm cells +17 %) and the earlier boundary-element note (+7.5 %, full plate) has no geometry on record | hood tables | measure the axis field of the built head with and without the tiles (search coil or gaussmeter, DC or a slow ramp) |
-| 9 | LED pinout (SK6812-mini class), 74AHCT1G125 pinout, part heights, OKI module height 10.2 mm | LB1, CB1D | datasheets |
+| 9 | LED and buffer now datasheet-verified (LB1-v6: SK9822-EC20 OPSCO Rev. A/0, SN74AHCT1G125 TI SCLS378P; DATASHEET_LOG); still assumed: the SK9822-EC20 pad length 0.76 mm read off a drawn "0.7-6", the 8 MHz LED clock over 60 mm AWG30, OKI module height 10.2 mm | LB1, CB1D | printed footprint against a real part; scope on the first article |
 | 10 | Head mass 2.22 kg uses estimates for SB1R, potting, litz insulation | balance | weigh parts |
 | 11 | Saddle/hinge loads (30 N m) and epoxy strength | yoke | FEA + pull test |
 | 12 | Router results are grid-quantised (0.15 mm) with no independent DRC | CB1D/LB1 | import into KiCad or another CAM tool and run DRC |
