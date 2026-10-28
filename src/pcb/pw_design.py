@@ -44,7 +44,7 @@ LIB = {
                pins=[("1", "G", "input"), ("2", "D", "passive"), ("3", "S", "passive")],
                pads=[("1", -6.8, -2.54, 3.0, 1.6, "roundrect"), ("3", -6.8, 2.54, 3.0, 1.6, "roundrect"), ("2", 2.4, 0, 9.4, 10.8, "rect")], body=(10.2, 9.2, 4.6)),
  "CAPD": pair("Polymer tantalum D-case 7.3x4.3 (low profile)", "Capacitor_Tantalum_SMD:CP_EIA-7343-43_Kemet-X", 3.2, 2.4, 1.7, (7.3, 4.3, 4.3), ("+", "-")),
- "SOT223": dict(desc="LDO SOT-223 (AMS1117-3.3 class): 1 GND/ADJ, 2 VOUT, 3 VIN, tab VOUT (VERIFY)", fp="Package_TO_SOT_SMD:SOT-223-3_TabPin2",
+ "SOT223": dict(desc="LDO SOT-223 (AMS1117-3.3, Advanced Monolithic DS1117): 1 GND/ADJ, 2 VOUT, 3 VIN, tab VOUT (verified, DATASHEET_LOG)", fp="Package_TO_SOT_SMD:SOT-223-3_TabPin2",
                 pins=[("1", "GND", "power_in"), ("2", "VOUT", "power_out"), ("3", "VIN", "power_in"), ("4", "TAB", "power_out")],
                 pads=[("1", -3.15, -2.3, 2.0, 1.5, "roundrect"), ("2", -3.15, 0, 2.0, 1.5, "roundrect"), ("3", -3.15, 2.3, 2.0, 1.5, "roundrect"), ("4", 3.15, 0, 3.4, 3.4, "rect")], body=(6.5, 3.5, 1.7)),
  "OKI3": dict(desc="Murata OKI-78SR class SIP-3 switching regulator: 1 VIN, 2 GND, 3 VOUT (VERIFY)", fp="Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal",
@@ -172,12 +172,13 @@ if PW == "C":
     add("F1", "FUSE1206B", "5A slow 32V", "Bourns SF-1206S500-2 (5.00 A slow blow, 32 VDC, 50 A interrupting at 32 VDC)"); net("VBUS", ("F1", 2))
     add("DTV", "DSMC", "SMCJ30A", "TVS 30 V stand-off, VC 48.4 V (Vishay SMCJ30A): clamps under the 50 V parts"); net("VBUS", ("DTV", 1)); net("GND", ("DTV", 2))
     for n in (1, 2): add(f"CI{n}", "C1210", "10u 50V", "X7R"); net("VBUS", (f"CI{n}", 1)); net("GND", (f"CI{n}", 2))
-    add("M5", "OKI3", "5 V 1.5 A switching module", "Murata OKI-78SR-5/1.5-W36 class (Vin 7-36 V)"); net("VBUS", ("M5", 1)); net("GND", ("M5", 2)); net("+5V", ("M5", 3))
+    add("M5", "OKI3", "5 V 1.5 A switching module", "Murata OKI-78SR-5/1.5-W36-C (Vin 7-36 V, MDC_OKI-78SR-W36.C05)"); net("VBUS", ("M5", 1)); net("GND", ("M5", 2)); net("+5V", ("M5", 3))
     add("C5A", "C1210", "22u 16V", "X7R"); add("C5B", "C0603", "100n", "X7R"); net("+5V", ("C5A", 1), ("C5B", 1)); net("GND", ("C5A", 2), ("C5B", 2))
     add("FB2", "FB1812", "ferrite bead 1 A", "analog supply bead"); net("+5V", ("FB2", 1)); net("+5VA", ("FB2", 2), ("CV1", 1), ("CV2", 1), ("CV3", 1))
     add("CV1", "C1210", "10u 16V", "X7R"); add("CV2", "C0603", "100n", "X7R"); add("CV3", "C0805", "1u", "X7R"); net("GND", ("CV1", 2), ("CV2", 2), ("CV3", 2))
     add("UL", "SOT223", "AMS1117-3.3", "3.3 V LDO for ADC I/O"); net("+5V", ("UL", 3)); net("GND", ("UL", 1)); net("+3V3D", ("UL", 2), ("UL", 4), ("CL1", 1), ("CL2", 1))
     add("CL1", "C1210", "22u 10V", "X7R"); add("CL2", "C0603", "100n", "X7R"); net("GND", ("CL1", 2), ("CL2", 2))
+    add("RML", "R0603", "270", "Vishay CRCW0603 270R 1% (P70 0.10 W, doc 20035)"); net("+3V3D", ("RML", 1)); net("GND", ("RML", 2))   # B3: AMS1117 minimum load 10 mA max (DS1117 Note 5); 3.3 V / 270 = 12.2 mA, 40 mW: holds regulation with the AB1 boards unplugged or the ADCs static (2 x 2.0 mA)
     # analog mux for slow signals
     add("UM", "HC4051", "74HC4051", "Nexperia/TI 74HC4051D"); add("CM1", "C0603", "100n", "X7R")
     net("P3V3", ("UM", 16), ("CM1", 1)); net("GND", ("UM", 8), ("UM", 7), ("UM", 6), ("UM", 9), ("UM", 1), ("UM", 2), ("UM", 4), ("UM", 5), ("CM1", 2))
@@ -236,7 +237,7 @@ if PW == "R":
     add("JL1", "TERM2", "Coil outer band: DRAIN, VBUS", "5.08 mm terminal block"); net("DRAIN1", ("JL1", 1)); net("VBUS", ("JL1", 2))
     add("RK1", "R0603", "100", ""); add("CK1", "C0603", "100p", "C0G"); add("RPU1", "R0603", "10k", ""); add("RF1", "R0603", "1k", "")
     net("SRC1", ("RK1", 1)); net("ISENSE1", ("RK1", 2), ("CK1", 1), ("U3", 2)); net("GND", ("CK1", 2)); net("REF_I1", ("U3", 3)); net("OC1_OUT", ("U3", 1), ("RPU1", 1), ("RF1", 1)); net("AUX12", ("RPU1", 2)); net("FAULT1_N", ("RF1", 2))
-    add("M12", "OKI3", "12 V 1.5 A switching module", "Murata OKI-78SR-12/1.5-W36 class, Vin 15-36 V covers the 7S range 19.6-29.4 V (datasheet UNVERIFIED, ASSUMPTIONS 29)"); net("VBUS", ("M12", 1)); net("GND", ("M12", 2)); net("AUX12", ("M12", 3))
+    add("M12", "OKI3", "12 V 1.0 A switching module", "Murata OKI-78SR-12/1.0-W36-C, Vin 15-36 V covers the 7S range 19.6-29.4 V (MDC_OKI-78SR-W36.C05; the series has no 12 V 1.5 A model)"); net("VBUS", ("M12", 1)); net("GND", ("M12", 2)); net("AUX12", ("M12", 3))
     add("C12A", "C1210", "22u 25V", "X7R"); add("C12B", "C0603", "100n", "X7R"); net("AUX12", ("C12A", 1), ("C12B", 1)); net("GND", ("C12A", 2), ("C12B", 2))
 
 if PW == "H":

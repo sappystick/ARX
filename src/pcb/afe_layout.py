@@ -51,7 +51,7 @@ for k, y in ROWY.items():
     put(f"CAV{k}", cx, y - cdy, 0, _AFE["capside"] or "B"); put(f"CDV{k}", cx, y + cdy, 0, _AFE["capside"] or "B")
 if D.ADC7:                                                              # integration trial: one AD7389-4 on the back side, analog pins (7-13) facing the channel rows, digital pins toward J2
     _ux, _uy = float(os.environ.get("AFE_UX", "11.0")), float(os.environ.get("AFE_UY", "0.0"))
-    put("UA1", _ux, _uy, 270, "B")
+    put("UA1", _ux, _uy, int(os.environ.get("AFE_UA7ROT", "270")), os.environ.get("AFE_UA7SIDE", "B"))      # B9 study override (8 orientations: 4 rotations x 2 sides); unset = committed 270 / back
     put("CVL", _ux + 2.0, _uy + 3.7, 0, "B"); put("CRG", _ux + 0.1, _uy + 3.7, 0, "B"); put("CVC", _ux - 1.8, _uy + 3.7, 0, "B")      # back side is mirrored: power pins 1-4 face +y, reference pins 15-17 face -y
     put("CRC", _ux - 1.3, _uy - 3.7, 0, "B"); put("CRF", _ux + 0.9, _uy - 3.7, 0, "B")
     for _c in [c for c in os.environ.get("AFE_CAPS", "").split(",") if c]:                          # search / recorded override: "REF:dx:dy:rot" relative to the chip
@@ -81,7 +81,7 @@ owner = {}
 for n, pins in D.NETS.items():
     for pr in pins: owner[pr] = n
 for pd in PADS: pd["net"] = owner.get((pd["ref"], pd["num"]))
-NETNAMES = sorted(D.NETS); NETID = {n: i + 1 for i, n in enumerate(NETNAMES)}
+NETNAMES = sorted(D.NETS); NETID = {n: i + 1 for i, n in enumerate(NETNAMES)}; NETNAME = {v: k for k, v in NETID.items()}
 
 # ------------------------------------------------------------ placement sanity (pad-to-pad clearance, board edge)
 def placement_check():
@@ -122,6 +122,7 @@ def mark_core(pd):
     for L in layers_of(pd): core[L, y0:y1 + 1, x0:x1 + 1] = net; blk[L, y0:y1 + 1, x0:x1 + 1] = net
 for pd in PADS: stamp_pad(pd)
 for pd in PADS: mark_core(pd)
+PADCORE0, PADBLK0 = core.copy(), blk.copy()                                                  # B9: the pad-only grid (blocker diagnosis)
 HOLE_HOLE = 0.41                                                                             # dru_gen GEN hole_to_hole (edge-to-edge drill gap), enforced for every via, any net (B1 fix: two +3V3D vias sat 0.346 mm apart)
 nohole = np.zeros((N + 1, N + 1), bool)                                                      # True = no new via centre allowed (too close to an existing drill)
 def mark_hole(x, y, drill):
@@ -132,6 +133,9 @@ def mark_hole(x, y, drill):
             if 0 <= a <= N and 0 <= b <= N and math.hypot(a * GRID - OFF - x, b * GRID - OFF - y) < r - 1e-9: nohole[b, a] = True
 for pd in PADS:
     if pd["tht"] and pd.get("drill"): mark_hole(pd["x"], pd["y"], pd["drill"])
+PADCORE = None; PADBLK = None                                                               # B9: grid with pads, body keep-outs and pad clearances only (taken before stubs and routing)
+HIST = np.load(os.environ["AFE_HIST"])["H"] if os.environ.get("AFE_HIST") else None       # B9 rip-up router: history cost per cell (layers x N+1 x N+1), unset = None (single-pass router unchanged)
+HIST_EXEMPT = set(n for n in os.environ.get("AFE_HIST_EXEMPT", "").split(",") if n)        # nets that do not pay the history cost (the nets that failed last round)
 def passable(L, net):
     return (~edge) & ((core[L] == -1) | (core[L] == net)) & ((blk[L] == -1) | (blk[L] == net))
 STUB = {}
@@ -173,6 +177,7 @@ def astar(net, starts, targets, allow_via=True, window=None, via_cost=20.0, max_
     P = [passable(L, net) for L in range(NL)]
     VOK = via_ok_map(net) if allow_via else None
     tset = set(targets); open_ = []; gcost = {}; came = {}
+    Hn = HIST if (HIST is not None and NETNAME.get(net) not in HIST_EXEMPT) else None
     tl = np.array([(i, j) for (_, i, j) in targets]); bx0, bx1, by0, by1 = tl[:, 0].min(), tl[:, 0].max(), tl[:, 1].min(), tl[:, 1].max()
     def h(i, j): return float(max(bx0 - i, 0, i - bx1, by0 - j, 0, j - by1))
     for s_ in starts: gcost[s_] = 0.0; heapq.heappush(open_, (h(s_[1], s_[2]), s_))
@@ -192,7 +197,7 @@ def astar(net, starts, targets, allow_via=True, window=None, via_cost=20.0, max_
             if window and not (wx0 <= a <= wx1 and wy0 <= b <= wy1): continue
             if not P[L][b, a]: continue
             if di and dj and not (P[L][j, a] and P[L][b, i]): continue
-            nxt = (L, a, b); g1 = g0 + c
+            nxt = (L, a, b); g1 = g0 + c + (Hn[L, b, a] if Hn is not None else 0.0)
             if g1 < gcost.get(nxt, 1e18): gcost[nxt] = g1; came[nxt] = cur; heapq.heappush(open_, (g1 + h(a, b), nxt))
         if VOK is not None and VOK[j, i]:
             for L2 in range(NL):
@@ -320,6 +325,46 @@ def escape_stubs(length=float(os.environ.get("AFE_STUBLEN", "0.8"))):
                     if pd["net"] in PLANE: register_plane(net, [], ti, tj)
             STUB[(pd["ref"], pd["num"])] = good; n_ok += 1
     return n_ok
+# ------------------------------------------------------------ B9: who walls in a failed connection
+def blockers(failed, nets):
+    """for each failed 'NET: REF.PAD': the cheapest path from that pad to the rest of its net when other SIGNAL copper is passable at a penalty (pads, pad clearances,
+    plane-net copper and the board edge stay hard). The signal nets whose copper (core or clearance) that path crosses are the ones to rip up. Returns
+    ({failed: [nets]}, [[L, i, j], ...] cells of those paths) for afe_ripup.py."""
+    byname = {f"{p['ref']}.{p['num']}": p for p in PADS}; out = {}; hot = []
+    sig = {NETID[n] for n in nets}
+    for f in failed:
+        name, key = f.split(": "); pd = byname.get(key)
+        if pd is None: continue
+        net = NETID[name]; starts = pad_cells(pd)
+        tg = [c for q in nets[name] if q is not pd for c in pad_cells(q)]
+        if not tg: continue
+        hard = [(~edge) & np.isin(PADCORE0[L], (-1, net)) & np.isin(PADBLK0[L], (-1, net)) for L in range(NL)]
+        soft = [(core[L] >= 0) & (core[L] != net) | ((blk[L] != -1) & (blk[L] != net)) for L in range(NL)]
+        tset = set(tg); g = {}; came = {}; op = []
+        for s_ in starts: g[s_] = 0.0; heapq.heappush(op, (0.0, s_))
+        n = 0; end = None
+        while op and n < 400000:
+            _, cur = heapq.heappop(op); n += 1
+            if cur in tset: end = cur; break
+            L, i, j = cur
+            for di, dj, c in NB:
+                a, b = i + di, j + dj
+                if not (0 <= a <= N and 0 <= b <= N) or not hard[L][b, a]: continue
+                g1 = g[cur] + c + (8.0 if soft[L][b, a] else 0.0)
+                if g1 < g.get((L, a, b), 1e18): g[(L, a, b)] = g1; came[(L, a, b)] = cur; heapq.heappush(op, (g1, (L, a, b)))
+            for L2 in range(NL):
+                if L2 != L and all(hard[k][j, i] for k in range(NL)):
+                    g1 = g[cur] + 20.0
+                    if g1 < g.get((L2, i, j), 1e18): g[(L2, i, j)] = g1; came[(L2, i, j)] = cur; heapq.heappush(op, (g1, (L2, i, j)))
+        if end is None: out[f] = []; continue
+        path = [end]
+        while path[-1] in came: path.append(came[path[-1]])
+        vic = set()
+        for (L, i, j) in path:
+            for v in (core[L, j, i], blk[L, j, i]):
+                if v >= 0 and v != net and v in sig: vic.add(NETNAME[v])
+        out[f] = sorted(vic); hot += [[int(L), int(i), int(j)] for (L, i, j) in path]
+    return out, hot
 # ------------------------------------------------------------ main
 def run():
     t0 = time.time(); rep = {"placement_errors": placement_check()}
@@ -388,6 +433,7 @@ def run():
     prio["nets"] = list(dict.fromkeys(newnets + prio["nets"]))[:40]
     if os.environ.get("AFE_PRIO"): json.dump(prio, open(f"prio_{BOARD}.json", "w"))
     rep["unrouted"] = failed
+    if os.environ.get("AFE_BLOCKERS") and failed: rep["blockers"], rep["hot"] = blockers(failed, nets)
     rep["via_in_pad"] = list(VIP); rep["tracks"] = len(TRACKS); rep["vias"] = len(VIAS); rep["time_s"] = round(time.time() - t0, 1)
     return rep
 def diagnose(rep):

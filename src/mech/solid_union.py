@@ -51,6 +51,7 @@ def report(shells, V, F):
                 volume_mm3=round(float(np.einsum("ij,ij->i", V_[F[:, 0]], np.cross(V_[F[:, 1]], V_[F[:, 2]])).sum() / 6.0), 2), tris=int(len(F)))
 
 
+_CANDS_TAG = "q(1e-3,1.5e-3,2e-3,3e-3) x o(0.3,0.5,0,0.1,0.2,0.4,0.6,0.7,0.8,0.9); q(1e-3,1.2e-3,1.5e-3,2e-3,2.5e-3) x ox(0..5/6) x oy(0,0.37,0.71) x 0.53q"   # change with the cands list below
 MARGIN = 0.005                                 # mm: touching bodies are dilated by this before the union so that pinch contacts (edge-to-edge) become small overlaps; 0.025 moved the roof 0.025 mm and broke the 0.01 mm layer-stack tolerance of head_crosscheck
 def position_bad_edges(F, V):
     """print_check's definition of closed on the STORED mesh: vertices rounded to 1e-4 mm (float32 STL), every undirected edge shared by exactly two faces"""
@@ -60,14 +61,55 @@ def position_bad_edges(F, V):
 def dilate(V, F, r=MARGIN):
     m = M3.Manifold(M3.Mesh(vert_properties=np.asarray(V, np.float32), tri_verts=np.asarray(F, np.uint32)))
     return m.minkowski_sum(M3.Manifold.sphere(r, 8))
+# ---- content-hash cache (2026-10-28): an unchanged body is never dilated again, an unchanged body set is never unioned again, and the winning snap grid is remembered.
+# Keys hash exactly what each computation reads (float32 / uint32 bytes as handed to manifold3d, margin, sphere segments, manifold3d version, the snap candidate list).
+# Dilated bodies are stored as Mesh64 with every field and the tolerance, so the rebuilt Manifold is the same object the uncached path builds (proved byte-identical:
+# docs/PERFORMANCE.md). SOLID_UNION_CACHE=off (or "0") runs the uncached path; the directory is work/.pipeline/solid_union_cache (git-ignored, invisible to the tracer, wiped by make clean).
+import hashlib, os, json
+CACHE = os.environ.get("SOLID_UNION_CACHE", os.path.join(".pipeline", "solid_union_cache"))
+CACHE_ON = CACHE not in ("off", "0", "")
+STATS = dict(dilate_hit=0, dilate_miss=0, union_hit=0, union_miss=0, snap_hit=0, snap_miss=0)
+_VER = getattr(M3, "__version__", "") or "manifold3d"
+_M64 = ("vert_properties", "tri_verts", "merge_from_vert", "merge_to_vert", "run_index", "run_original_id", "run_transform", "run_flags", "face_id", "halfedge_tangent")
+def _key(*parts):
+    h = hashlib.sha256()
+    for p in parts: h.update(p if isinstance(p, bytes) else repr(p).encode()); h.update(b"|")
+    return h.hexdigest()
+def _mesh_key(tag, V, F, *extra):
+    V32 = np.ascontiguousarray(np.asarray(V, np.float32)); F32 = np.ascontiguousarray(np.asarray(F, np.uint32))
+    return _key(tag, _VER, V32.shape, F32.shape, V32.tobytes(), F32.tobytes(), *extra)
+def _path(k, kind): return os.path.join(CACHE, kind, k[:2], k + ".npz")
+def _save(path, **arrs):
+    os.makedirs(os.path.dirname(path), exist_ok=True); tmp = f"{path}.{os.getpid()}.tmp.npz"
+    np.savez(tmp, **arrs); os.replace(tmp, path)                       # atomic: parallel pipeline jobs may write the same key
+def _load(path):
+    try:
+        with np.load(path, allow_pickle=False) as z: return {k: z[k] for k in z.files}
+    except Exception: return None
+def dilate_cached(V, F, r=MARGIN):
+    if not CACHE_ON: return dilate(V, F, r)
+    p = _path(_mesh_key(b"dilate-v1", V, F, float(r), 8), "dilate"); z = _load(p)
+    if z is not None:
+        STATS["dilate_hit"] += 1
+        kw = {k: z[k] for k in _M64 if k in z and z[k].size}
+        return M3.Manifold(M3.Mesh64(tolerance=float(z["tolerance"]), **kw))
+    STATS["dilate_miss"] += 1; d = dilate(V, F, r)
+    if d.status() == M3.Error.NoError:
+        m = d.to_mesh64(); _save(p, tolerance=np.float64(d.get_tolerance()), **{k: np.asarray(getattr(m, k)) for k in _M64})
+    return d
 def merge_closed(shells, concat, margin=MARGIN):
     """generators call this in place of golden_cone_head.merge(): if the plain concatenation already has no open edge (print_check's definition) it is returned unchanged;
     otherwise the bodies are each dilated by `margin` mm and unioned (manifold3d) into ONE closed mesh. Returns (V, F, info) with info = dict(method, bodies, margin, volume_in_mm3, volume_out_mm3)."""
     V0, F0 = concat; vol = lambda V, F: float(np.einsum("ij,ij->i", V[F[:, 0]], np.cross(V[F[:, 1]], V[F[:, 2]])).sum() / 6.0)
     if position_bad_edges(F0, V0) == 0: return V0, F0, dict(method="concatenated", bodies=len(shells), margin=0.0)
+    ku = None
+    if CACHE_ON:                                                           # whole result: same bodies, same margin -> the stored (V, F, info)
+        ku = _key(b"union-v1", _VER, float(margin), SIMPLIFY, repr(_CANDS_TAG), *[_key(b"body64", np.ascontiguousarray(np.asarray(V, float)).tobytes(), np.ascontiguousarray(np.asarray(F, np.int64)).tobytes(), np.shape(V)) for V, F in shells]); z = _load(_path(ku, "union"))
+        if z is not None: STATS["union_hit"] += 1; return z["V"], z["F"], json.loads(str(z["info"]))
+        STATS["union_miss"] += 1
     u = None
     for k, (V, F) in enumerate(shells):
-        d = dilate(V, F, margin)
+        d = dilate_cached(V, F, margin)
         if d.status() != M3.Error.NoError: raise ValueError(f"solid_union: dilation of shell {k} failed: {d.status()}")
         u = d if u is None else u + d
     u = u.simplify(SIMPLIFY); mesh = u.to_mesh(); V, F = np.asarray(mesh.vert_properties, float)[:, :3], np.asarray(mesh.tri_verts, np.int64)
@@ -75,11 +117,23 @@ def merge_closed(shells, concat, margin=MARGIN):
     cands = [(q, o * q) for q in (1e-3, 1.5e-3, 2e-3, 3e-3) for o in (0.3, 0.5, 0.0, 0.1, 0.2, 0.4, 0.6, 0.7, 0.8, 0.9)]
     cands += [(q, np.array([ox * q, oy * q, 0.53 * q])) for q in (1e-3, 1.2e-3, 1.5e-3, 2e-3, 2.5e-3) for ox in (0.0, 1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6) for oy in (0.0, 0.37, 0.71)]      # per-axis offsets: the CORE union (111k vertices) needs (q 1.5 um, off 0.17 q, 0, 0.53 q)
     best = None
-    for q, off in cands:                                                   # vertices closer than the STL's float32 / 4-decimal resolution look like pinch edges to print_check: snap to a grid until none is left
+    ks = _key(b"snap-v1", np.ascontiguousarray(V).tobytes(), np.ascontiguousarray(F).tobytes(), repr(_CANDS_TAG)) if CACHE_ON else None
+    zs = _load(_path(ks, "snap")) if ks else None
+    if zs is not None:                                                     # the first closing candidate of this exact union; re-checked, else the full search runs
+        i = int(zs["i"]); q, off = cands[i]
+        Vq = np.round((V - off) / q) * q + off; U_, inv = np.unique(Vq, axis=0, return_inverse=True); G = inv.reshape(-1)[F]; G = G[(G[:, 0] != G[:, 1]) & (G[:, 1] != G[:, 2]) & (G[:, 0] != G[:, 2])]
+        if position_bad_edges(G, U_) == 0: STATS["snap_hit"] += 1; cands = [cands[i]]
+    if ks and zs is None: STATS["snap_miss"] += 1
+    for ci, (q, off) in enumerate(cands):                                                   # vertices closer than the STL's float32 / 4-decimal resolution look like pinch edges to print_check: snap to a grid until none is left
         Vq = np.round((V - off) / q) * q + off; U_, inv = np.unique(Vq, axis=0, return_inverse=True); G = inv.reshape(-1)[F]; G = G[(G[:, 0] != G[:, 1]) & (G[:, 1] != G[:, 2]) & (G[:, 0] != G[:, 2])]
         nb = position_bad_edges(G, U_)
         if best is None or nb < best[0]: best = (nb, q, off)
-        if nb == 0: V, F, snapped = U_, G, (q, off); break
+        if nb == 0:
+            V, F, snapped = U_, G, (q, off)
+            if ks and zs is None: _save(_path(ks, "snap"), i=np.int64(ci))
+            break
     if snapped is None: np.savez("solid_union_failed.npz", V=V, F=F)
     if snapped is None: raise ValueError(f"solid_union: no snap grid closes the union at the STL's stored resolution (best: {best[0]} open edges at grid {best[1]} offset {best[2]}); the union was saved to solid_union_failed.npz")
-    return V, F, dict(snap_grid_mm=float(snapped[0]), snap_offset_mm=[round(float(x), 6) for x in np.atleast_1d(snapped[1])], method="dilated union", bodies=len(shells), margin=margin, volume_in_mm3=round(sum(vol(np.asarray(V_, float), np.asarray(F_, np.int64)) for V_, F_ in shells), 2), volume_out_mm3=round(vol(V, F), 2), open_edges_after=position_bad_edges(F, V))
+    info = dict(snap_grid_mm=float(snapped[0]), snap_offset_mm=[round(float(x), 6) for x in np.atleast_1d(snapped[1])], method="dilated union", bodies=len(shells), margin=margin, volume_in_mm3=round(sum(vol(np.asarray(V_, float), np.asarray(F_, np.int64)) for V_, F_ in shells), 2), volume_out_mm3=round(vol(V, F), 2), open_edges_after=position_bad_edges(F, V))
+    if ku: _save(_path(ku, "union"), V=V, F=F, info=np.array(json.dumps(info)))
+    return V, F, info

@@ -22,11 +22,11 @@ CAAF2,2n2,C_0603_1608Metric,8.9,-5.5,0,top
 U1,OPA2211,SOIC-8_3.9x4.9mm_P1.27mm,0.5,-0.0,0,top
 CO1,100n,C_0402_1005Metric,0.5,-3.4,0,top
 CB1,10u,C_0805_2012Metric,-13.0,-0.0,0,top
-UA1,AD7389-4,LFCSP-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm,9.5,-0.0,270,bottom
+UA1,AD7389-4,CP-24-25_ADI_LFCSP-24-1EP_4x4mm_P0.5mm_EP0.61x0.61mm,9.5,-0.0,270,bottom
 CVC,1u,C_0402_1005Metric,7.7,-5.0,0,bottom
 CVL,1u,C_0402_1005Metric,11.5,-5.0,0,bottom
 CRG,1u,C_0402_1005Metric,9.2,-4.0,90,bottom
-CRF,1u,C_0402_1005Metric,10.4,3.7,0,bottom
+CRF,1u,C_0402_1005Metric,10.4,4.0,0,bottom
 CRC,100n,C_0402_1005Metric,8.2,3.7,0,bottom
 UB,OPA2365,MSOP-8_3x3mm_P0.65mm,4.0,-13.0,0,top
 CBD,100n,C_0402_1005Metric,9.0,-13.0,0,top

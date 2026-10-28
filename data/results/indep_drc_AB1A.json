@@ -8,7 +8,7 @@
    "min": 0.15
   },
   "via_size_drill": {
-   "n": 53,
+   "n": 51,
    "bad": 0
   },
   "pth_drill": {
@@ -37,20 +37,20 @@
   "connectivity": {
    "nets": 30,
    "split_nets": {},
-   "connections": 1571
+   "connections": 1570
   }
  },
  "errors": [],
  "zones": 3,
  "zone_nets_joined": {
   "GND": [
-   40
+   38
   ],
   "+5VA": [
    20
   ],
   "+3V3D": [
-   4
+   2
   ]
  },
  "fails": {},

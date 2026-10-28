@@ -38,6 +38,7 @@ MT60 = (20.0, 16.5, 8.6)                                                    # MT
 BMS = (60.0, 41.0, 5.4)                                                     # BMS envelope that the bay accepts (part to be chosen to fit)
 CORD_OD = 10.4; BORE_R = 5.6; BORE_Y = 6.4                                  # coiled-cord envelope, twin-bore radius and centre offset
 SEPT, SP_LEN, SP_PITCH = 1.4, 8.0, 75.0                                     # septum strip thickness, spacer length and pitch
+SPLIT_LAP = 10.0                                                              # B8: half-lap length of the septum split joint (segments A / B)
 LATCH_TRAVEL = 4.0
 ug = np.array([math.sin(math.radians(RAKE)), 0.0, math.cos(math.radians(RAKE))])     # grip axis (up, leaning forward)
 un = np.array([math.cos(math.radians(RAKE)), 0.0, -math.sin(math.radians(RAKE))])    # forward normal of the grip
@@ -216,9 +217,14 @@ for nm, (b0, b1) in (("extended", B_EXT), ("collapsed", B_COL)):
     strip = box(b0 + 2.0, b1 - 2.0, -SEPT / 2, SEPT / 2, ZT - (RS - 0.3), ZT + (RS - 0.3))
     if nm == "extended":                                                      # the full-length strip is 446 mm: it does not fit a 250 mm build volume. Print it as two segments cut between two spacers; the slit Cu-mesh laminate runs across the joint (the full-length STL stays as the fit / interference reference)
         n_sp = len(spacers); m = n_sp // 2 + 1; x0s, x1s = b0 + 2.0, b1 - 2.0; cut = x0s + SP_PITCH * (m - 1) + SP_LEN + 2.0; assert cut - x0s <= 250.0 and x1s - cut <= 250.0, (cut - x0s, x1s - cut)      # cut 2 mm after a spacer: both segments fit a 250 mm build volume
-        segA = [box(x0s, cut, -SEPT / 2, SEPT / 2, ZT - (RS - 0.3), ZT + (RS - 0.3))] + spacers[:m]; segB = [box(cut, x1s, -SEPT / 2, SEPT / 2, ZT - (RS - 0.3), ZT + (RS - 0.3))] + spacers[m:]
-        emit("U8_SEPTUM_extended_SEG_A", segA, f"printable segment A of the septum: x {x0s:.1f} to {cut:.1f} mm ({cut - x0s:.1f} mm), {m} spacers; joined to segment B by the laminated Cu-mesh shield", "PETG", 1.27)
-        emit("U8_SEPTUM_extended_SEG_B", segB, f"printable segment B of the septum: x {cut:.1f} to {x1s:.1f} mm ({x1s - cut:.1f} mm), {n_sp - m} spacers", "PETG", 1.27)
+        # B8 split joint: a half-lap in z over SPLIT_LAP mm (A keeps the upper half past the cut, B the lower half before it), so the segments register on each other and
+        # A + B is exactly the full-length strip; the lap stays clear of the next spacer (gap SP_PITCH - SP_LEN - 2 mm); the Cu-mesh laminate still runs across the joint
+        zl, zm, zh = ZT - (RS - 0.3), ZT, ZT + (RS - 0.3); assert SPLIT_LAP <= SP_PITCH - SP_LEN - 2.0 - 1.0 and cut + SPLIT_LAP - x0s <= 250.0
+        segA = [box(x0s, cut, -SEPT / 2, SEPT / 2, zl, zh), box(cut, cut + SPLIT_LAP, -SEPT / 2, SEPT / 2, zm, zh)] + spacers[:m]
+        segB = [box(cut, cut + SPLIT_LAP, -SEPT / 2, SEPT / 2, zl, zm), box(cut + SPLIT_LAP, x1s, -SEPT / 2, SEPT / 2, zl, zh)] + spacers[m:]
+        emit("U8_SEPTUM_extended_SEG_A", segA, f"printable segment A of the septum: x {x0s:.1f} to {cut + SPLIT_LAP:.1f} mm ({cut + SPLIT_LAP - x0s:.1f} mm), {m} spacers; half-lap joint x {cut:.1f}-{cut + SPLIT_LAP:.1f} (upper half), bonded, Cu-mesh shield laminated across", "PETG", 1.27)
+        emit("U8_SEPTUM_extended_SEG_B", segB, f"printable segment B of the septum: x {cut:.1f} to {x1s:.1f} mm ({x1s - cut:.1f} mm), {n_sp - m} spacers; half-lap joint lower half", "PETG", 1.27)
+        rep["septum_split"] = dict(cut=cut, lap=SPLIT_LAP, x0=x0s, x1=x1s, z_split=zm, seg_a_len=cut + SPLIT_LAP - x0s, seg_b_len=x1s - cut)
     emit(f"U8_SEPTUM_{nm}", [strip] + spacers, f"twin cavity in tube B: full-length septum strip {SEPT} mm (PETG with a slit Cu-mesh shield laminated, drain at PM2) "
          f"+ {len(spacers)} twin-bore spacers {SP_LEN} mm long every {SP_PITCH} mm (bores 2 x D{2*BORE_R} at y +-{BORE_Y}); each half-bore holds a D{2*(TB[1]/2-SEPT/2)/2:.1f} circle", "PETG", 1.27)
 emit("U8_CORD_ANCHOR", [twin_bore(TA[1] / 2 - 0.2, ANCH[0], ANCH[1], ZT)], "twin-bore cord anchor at the rear of tube A (start of the two cavities), cords clamped", "PETG", 1.27)

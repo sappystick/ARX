@@ -1,7 +1,7 @@
 {
  "AD7389": {
   "model": "PF233_AD7389.wrl",
-  "fp": "Package_CSP:LFCSP-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm",
+  "fp": "Package_CSP:CP-24-25_ADI_LFCSP-24-1EP_4x4mm_P0.5mm_EP0.61x0.61mm",
   "bbox_lo": [
    -2.0,
    -2.0,

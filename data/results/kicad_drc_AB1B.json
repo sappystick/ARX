@@ -3,11 +3,11 @@
  "board_key": "AB1B",
  "kicad": "9.0.9",
  "zones_filled": true,
- "violations": 53,
+ "violations": 54,
  "unconnected": 0,
  "errors": {},
  "warnings": {
-  "track_dangling": 18
+  "track_dangling": 19
  },
  "lib_footprint_warnings": 35,
  "examples": []

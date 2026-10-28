@@ -38,25 +38,25 @@ Evidence file for the datasheet groups that replaced U-DS-PARTS (`scripts/signof
 |---|---|---|---|
 | TI DRV5023BIQLPG (HB2 HS1) | TI SLIS151G, revised September 2016, https://www.ti.com/lit/ds/symlink/drv5023.pdf | LPG (TO-92) pins: 1 VCC, 2 GND, 3 OUT (open drain, "requires a resistor pullup"); VCC 2.5-38 V; supply current 2.7 mA typ, 3.5 mA max; rDS(on) 22 ohm typ (25 C) / 50 ohm max (125 C) at 3.3 V, 10 mA; off leakage 1 uA max; output delay 13 typ / 25 max us; BI: BOP 6 / 14.5 / 24 mT, BRP 3 / 6 / 9 mT (min / typ / max, -40 to 125 C). TO-92 is orderable only as AJ and BI (FA is SOT-23 only, package addendum). | Chosen over AJ and FA because its worst-case BOP max / BRP min ratio (24 / 3 = 8) is the easiest to meet with the >= 2 mm extra magnet travel. Pin order matches `HALL_SW`. Vsat = I x 50 ohm, far below the 0.4 V the trigger check assumes. OPEN (OPEN_ITEMS 32): the magnet must give >= 24 mT at rest and <= 3 mT pressed at the sensor; no magnet field model yet. |
 
-## U-DS-TXDRIVE: UNVERIFIED (main FET and gate driver)
+## U-DS-TXDRIVE: VERIFIED (main FET and gate driver; B7, 2026-10-28)
 
-| Part | URL tried | Reply | Kept as |
+| Part | Source (saved in data/seed/datasheets/) | Datasheet values | Used for |
 |---|---|---|---|
-| Infineon IPB65R095C7 (Q1A/B) | https://www.infineon.com/cms/en/product/power/mosfet/n-channel/500v-900v/ipb65r095c7/ (curl and headless browser) | HTTP 202, "Page Not Found" (bot challenge); no direct PDF link found by search | 650 V, 24 A, 95 mohm class, Qg 45 nC (ASSUMPTIONS 19): unverified |
-| Microchip TC4420 (U1) | https://ww1.microchip.com/downloads/en/DeviceDoc/20001419F.pdf (curl and browser) | HTTP 403 | 6 A driver, pinout in `LIB["TC4420"]`: unverified |
+| Infineon IPB65R095C7 (PB1R Q1A/B) | Infineon "Datasheet IPB65R095C7", Final Data Sheet Rev. 2.0, 2013-10-11, https://www.infineon.com/assets/row/public/documents/24/49/infineon-ipb65r095c7-datasheet-en.pdf (HTTP 200; the old dgdl and product-page URLs answered 404 / 202) -> Infineon_IPB65R095C7_Rev2.0_2013-10-11.pdf | V(BR)DSS 650 V min (VGS 0, ID 1 mA), VDS 700 V at Tj,max (product summary); RDS(on) 84 typ / 95 max mohm (VGS 10 V, 11.8 A, 25 C), 202 mohm typ at 150 C; ID 24 A (TC 25 C) / 15 A (TC 100 C), ID,pulse 100 A; EAS 118 mJ, EAR 0.59 mJ, IAS 8.4 A; VGS +-20 V static / +-30 V dynamic; V(GS)th 3 / 3.5 / 4 V; Qg 45 nC typ (Qgs 12, Qgd 15, VDD 400 V); Ciss 2140 pF, Coss 33 pF (400 V); RG 0.9 ohm; dv/dt 100 V/ns | system_budget Vds and current rows (the values carried as unverified match), tx_vbus_sweep Ron, gate-charge row |
+| Microchip TC4420 (PB1R U1, CB1D driver) | Microchip "TC4420/TC4429 6A High-Speed MOSFET Drivers" DS21419D (PDF 2012-12-13), https://ww1.microchip.com/downloads/en/DeviceDoc/21419D.pdf (HTTP 200; DS20001419H answered 403) -> Microchip_TC4420_DS21419D_2012.pdf | 6 A peak output; VDD 4.5-18 V operating, 20 V absolute; input -5 V .. VDD + 0.3 V; ROH 2.1 typ / 2.8 max ohm (10 mA, VDD 18 V); rise/fall 25 ns into 2500 pF; SOIC-8: 1 VDD, 2 INPUT, 3 NC, 4 GND, 5 GND, 6 OUTPUT, 7 OUTPUT, 8 VDD | pw_design TC4420 nets (AUX12 on 1/8, GND 4/5, NC 3, input 2): match; AUX12 12 V inside 4.5-18 V |
 
-## U-DS-OKI: UNVERIFIED (12 V and 5 V switching modules)
+## U-DS-OKI: VERIFIED from a manufacturer document on a third-party host (B7)
 
-| Part | URL tried | Reply | Kept as |
+| Part | Source | Datasheet values | Used for |
 |---|---|---|---|
-| Murata OKI-78SR-12/1.5-W36, OKI-78SR-5/1.5-W36 (M12, M5) | https://www.murata.com/products/productdata/8807029129246/oki-78sr.pdf, https://www.murata.com/products/productdata/8807037992990/oki-78sr.pdf (curl and browser) | HTTP 500 | Vin 15-36 V (12 V model), 7-36 V (5 V model), pinout 1 VIN / 2 GND / 3 VOUT: unverified. Copies exist on third-party sites (pdp8online.com, rgbautomatyka.pl), not used. |
+| Murata OKI-78SR-5/1.5-W36-C (M5 on CB1D) and the 12 V model (M12 on PB1R) | Murata Power Solutions "OKI-78SR Series" MDC_OKI-78SR-W36.C05 (20 pages, PDF modified 2017-12-01); murata.com answered HTTP 500 again (8807037992990, 8807028015134); copy from https://www.pdp8online.com/mfm/board/datasheets/oki-78sr.pdf -> Murata_OKI-78SR-W36_MDC_C05.pdf. Re-check against murata.com before ordering. | OKI-78SR-5/1.5-W36-C: 5 V, 1.5 A, 7.5 W, Vin 7-36 V, efficiency 89 / 90.5 %; 10.4 x 8.64 x 16.5 mm; pins 1 positive input, 2 common (ground), 3 positive output; input 36 V continuous absolute maximum; current limit inception 2.5 / 3.5 / 5.0 A. **The 12 V model in this sheet is OKI-78SR-12/1.0-W36-C: 12 V, 1.0 A (not 1.5 A), Vin 15-36 V** | M5 row; M12 renamed to the 1.0 A part (CORRECTIONS); pin maps match pw_design (VBUS 1, GND 2, out 3) |
 
-## U-DS-PACK: UNVERIFIED (cells and connector body)
+## U-DS-PACK: VERIFIED from manufacturer documents on third-party hosts (B7)
 
-| Part | URL tried | Reply | Kept as |
+| Part | Source | Datasheet values | Used for |
 |---|---|---|---|
-| Molicel INR-18650-P30B | https://www.molicel.com/wp-content/uploads/INR18650P30B-V2-80092.pdf | HTTP 404; the only PDF found is a copy on fsaeonline.com (not a manufacturer or distributor host), not used | 3.0 Ah, 3.6 V, 4.2 V charge, 30 A continuous, 18.6 x 65.3 mm (ASSUMPTIONS 27): unverified |
-| Amass MT60 body envelope | the Amass sheet above (ratings read) | the envelope is in the drawing image, not read | 20 x 16.5 x 8.6 mm (ASSUMPTIONS 25): unverified |
+| Molicel INR-18650-P30B | Molicel "Product Data Sheet, Model INR-18650-P30B", Version 1.0 (PDF modified 2024-09-06); molicel.com 404 earlier; copy from https://fsaeonline.com/content/INR-18650-P30B-80111.pdf -> Molicel_INR-18650-P30B_PDS_v1.0.pdf | capacity 3000 mAh typ (10.8 Wh) / 2900 mAh min; 3.6 V nominal, 4.2 V charge, 2.5 V discharge; charge 3 A standard / 9 A max (60 C cut-off); discharge 30 A continuous (80 C cut-off); AC 8 mohm (30 % SOC), DC 17 mohm (50 % SOC); 18.6 mm max diameter, 65.2 mm max height, 47 g max | power_dock_check runtime, system_budget pack row, U7 cell bay (65.3 mm assumed: 0.1 mm conservative) |
+| Amass MT60-M / MT60-F | Amass specification sheet V1.2 (MT60-F; MT60-M page), Changzhou Amass Electronics, copy from https://static.chipdip.ru/lib/502/DOC008502173.pdf -> Amass_MT60_spec_V1.2.pdf (drawing read from the rendered page) | contact resistance 0.45 mohm, DC 500 V, 30 A rated, 60 A momentary, 12 AWG, -20..120 C, UL94 V-0, 1000 cycles; **MT60-M body 27.50 long, 12.49 tall; MT60-F 26.70 long (8.70 cable end), 12.49 tall; mating face 12.00 x 12.50 (3 contacts)** | U6 pedestal / U7 front bay envelope: the assumed 20 x 16.5 x 8.6 mm was too small (CORRECTIONS, B7) |
 
 ## U-DS-BAV199: VERIFIED (receive input clamp; B7, 2026-10-28)
 
@@ -73,11 +73,22 @@ Source: Nexperia "BAV199 Low-leakage double diode", Product data sheet BAV199 v.
 | Capacitance | Cd 2 pF typ (VR 0 V, 1 MHz) | input capacitance |
 | Recovery | trr 0.8 us typ / 3 us max (IF = IR = 10 mA, IR(meas) 1 mA); VFRM 1.75 V max | clamp release after an overload |
 
-## U-DS-HVTERM: UNVERIFIED (flyback-net connector and clamp resistor bank)
+## 74LVC1G66 (AB1 SW1-SW3 blank switch): VERIFIED (B9, 2026-10-28)
+
+Source: TI "SN74LVC1G66 Single Bilateral Analog Switch", SCES323R (June 2001, revised September 2025), https://www.ti.com/lit/ds/symlink/sn74lvc1g66.pdf (HTTP 200) -> data/seed/datasheets/TI_SN74LVC1G66_SCES323R_2025-09.pdf
+
+| Item | Datasheet value | Used for |
+|---|---|---|
+| Pinout (SOT-23-5, DBV) | 1 A, 2 B (bidirectional), 3 GND, 4 C control (H = ON), 5 VCC | afe_design SW.1 IN, SW.2 VCM, SW.3 GND, SW.4 BLANK, SW.5 +5VA: match |
+| On-resistance | ron 5.5 typ / 10 max ohm at VCC 4.5 V, IS 32 mA; peak ron(p) 7.5 / 15 ohm (DBV) | sbq_damp2 (8 ohm assumed: inside), ab1_drive_option (5.5 / 10); ab1_options_model assumed 3 ohm (optimistic) |
+| Absolute maximum | VCC -0.5..6 V (DBV); switch I/O -0.5 .. VCC + 0.5 V; IIOK +-50 mA; ON-state switch current IT +-50 mA; continuous through VCC/GND +-100 mA | ab1_drive_option switch-current margin |
+| Leakage | IS(off) +-1 uA max (+-0.1 uA at 25 C), IS(on) +-1 uA max (5.5 V) | |
+
+## U-DS-HVTERM: UNVERIFIED (flyback-net connector and clamp resistor bank; retried in B7, 2026-10-28)
 
 | Part | URL tried | Reply | Kept as |
 |---|---|---|---|
-| PB1R JL1, 5.08 mm 2-way terminal block on DRAIN1 / VBUS | Phoenix Contact product page for MKDS 1,5/2-5,08 (1715721), URL not found by search; https://www.phoenixcontact.com/en-us/products/pcb-terminal-block-mkds-15-2-508-1715721 | HTTP 404 | distributor listings (not used) give 250 V (III/3), 400 V (III/2), 630 V (II/2): whether the 466 V flyback peak meets rule 6 depends on the category the manufacturer states |
+| PB1R JL1, 5.08 mm 2-way terminal block on DRAIN1 / VBUS | https://www.phoenixcontact.com/en-us/products/pcb-terminal-block-mkds-15-2-508-1715721 (404, Step 5); B7: WebSearch found Phoenix 7.62 mm-pitch blocks listed at 630 V (III/2) / 1000 V (II/2) (MKDS 5/2-7,62, GMKDS 3/x-7,62: distributor pages only); the one datasheet copy found (https://bpx.ie/dbdocument/104015/1731734.pdf) answered 403 | 404 / 403 | the 5.08 mm block's category rating is still unread; candidate for rule 6: a 7.62 mm-pitch Phoenix block (would change the PB1R footprint: not done) |
 | PB1R RCL1, 5 kohm 10 W resistor bank under the lid | no part chosen | - | voltage rating unknown (BOM text has none) |
 
 ## AMS1117-3.3 (CB1D UL, +3V3D for the AB1 ADCs): VERIFIED (B3, 2026-10-28)

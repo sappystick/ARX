@@ -219,7 +219,7 @@ if os.path.isdir("releases/RX_r2"):                                   # B1: the 
     _rm=open("releases/RX_r2/RELEASE.md").read()+open("releases/RX_r2/BLOCKERS.md").read()
     _bad=[_r[0] for _r in _csv.reader(open("releases/RX_r2/MANIFEST.csv")) if _r and len(_r)>2 and len(_r[2])==64 and (not os.path.exists(_r[0]) or hashlib.sha256(open(_r[0],"rb").read()).hexdigest()!=_r[2])]
     chk("release RX_r2: BLOCKER 1 (exposed pad) removed, RX_r1 marked SUPERSEDED, manifest hashes verify, wording is not 'ready for fabrication'","BLOCKER 1" not in _rm and "PLACEHOLDER" not in _rm and os.path.exists("releases/RX_r1/SUPERSEDED.txt") and not _bad and "ready for fabrication" not in _rm.replace("not ready for fabrication",""),f"{len(_bad)} mismatches")
-else: skip("release RX_r2")
+else: chk("release RX_r2 exists once RX_r1 is marked SUPERSEDED (no silent gap between revisions)",not os.path.exists("releases/RX_r1/SUPERSEDED.txt"),"RX_r2 not cut yet")
 _m=open("src/mech/mech_v20.py").read()
 chk("NPM cable window in mech_v20.py is still x -26..-14 (the numbers pb1r_check.py measures PB1R's JL1 / JP / JC against)","plate(-34, 12.5, NZ / 2, 16.0, 3.0, NZ), plate(14, 12.5, NZ / 2, 56.0, 3.0, NZ)" in _m,"back-wall plates")
 d=rd("kit_v22/pb1r_check.json")
@@ -260,5 +260,13 @@ chk("AB1 RS: GX/GY 100 ohm (= sbq_damp2 RS), X8/Y8/MONO 1 kohm (B4 decision, COR
 # B6: AD7389-4 2-wire readout model (CB1D firmware side), checked against the board netlists
 _r=_sp.run([sys.executable,"src/sim/ad7389_readout.py"],capture_output=True,text=True)
 chk("AD7389-4 readout model (B6): 2-wire SDOA = A then C, SDOB = B; channel mapping and SDO/SDI wiring read from afe_design; one-frame latency; no data before 5 ms, settled from 11 ms; SDI low writes nothing",_r.returncode==0,f"{_r.stdout.count('PASS')} pass, {_r.stdout.count('FAIL')} fail")
+# B5: physical JA/JB -> J2 link path on the meshes (src/mech/link_path_check.py, run in work/): straight up is blocked; the decided FFC concept passes every passage row
+if all(os.path.exists(os.path.join(W,f)) for f in ("kit_v22/SEPTUM_FRAME_v5.stl","kit_v22/SPINE_COMB_v5.stl","out_board/AB1A_layout.json","kit_v18/CB1D/PF233-CB1D_pickplace.csv")):
+    _lp=os.path.join(W,".link_path_check.json"); _r=_sp.run([sys.executable,os.path.abspath("src/mech/link_path_check.py"),os.path.abspath(_lp)],cwd=W,capture_output=True,text=True)
+    _d=json.load(open(_lp)) if _r.returncode==0 and os.path.exists(_lp) else {}
+    _dec=_d.get("decision",{}); _ffc=_d.get(_dec.get("choice",""),{})
+    _blk=[c for c in _ffc.get("checks",[]) if "straight vertical" in c["check"]]
+    chk("B5 link path (CB1D JA/JB -> AB1 J2): straight up blocked by the septum / cloth window, the FFC concept through the 90 deg spine duct passes every row on the meshes; the header + IDC ribbon concept does not",bool(_dec) and _ffc.get("n_fail",1)==0 and len(_blk)==2 and _dec.get("header_ribbon_fails",0)>0,f"FFC fails {_ffc.get('n_fail')}, ribbon fails {_dec.get('header_ribbon_fails')}")
+else: skip("B5 link path check (needs v5, parts, pcb-ab1, pcb-cb1d)")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

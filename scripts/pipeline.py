@@ -84,6 +84,7 @@ STEPS = [
     ("models3d", W + "mkdir -p kit_v22/3dmodels && python3 models3d.py kit_v22/3dmodels", ""),
     ("models3d-check", W + "python3 models3d_check.py kit_v22/3dmodels kit_v22/models3d_check.json " + " ".join(f"kit_v22/KICAD/PF233-{b}_routed.kicad_pcb" for b in ("CB1D", "LB1", "PB1R", "PM2", "HB2")) + " kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb kit_v3/PCB_AB1A/PF233-AB1A.kicad_pcb kit_v3/PCB_AB1B/PF233-AB1B.kicad_pcb", ""),
     ("sch-func", W + "mkdir -p kit_v22/SCHF && PW=R python3 sch_func.py PB1R kit_v22/SCHF && PW=P python3 sch_func.py PM2 kit_v22/SCHF && PW=G python3 sch_func.py HB2 kit_v22/SCHF && PW=C DISC=1 python3 sch_func.py CB1D kit_v22/SCHF && PW=L python3 sch_func.py LB1 kit_v22/SCHF && BOARD=A python3 sch_func.py AB1A kit_v22/SCHF && BOARD=B python3 sch_func.py AB1B kit_v22/SCHF", "kicad"),
+    ("mech-npm", W + "python3 mech_v20.py > /dev/null", ""),                       # neck module / elbow / battery drawer meshes (kit_v19/SPINE): pb1r_check NPM fit reads them; was not a step, so a fresh work/ skipped that check
     ("check-pb1r", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py > /dev/null && python3 pb1r_check.py", ""),
     ("formers-low", "test -f work/kit_v15/LOW/FORMER_L1_petal_coil_former.stl || (" + W + "python3 phifold_v15.py low)", ""),
     ("head-audit", W + "mkdir -p kit_v21 && python3 head_crosscheck.py && python3 fine_check.py && python3 head_drawings.py", ""),

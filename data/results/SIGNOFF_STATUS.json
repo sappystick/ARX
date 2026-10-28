@@ -1,7 +1,7 @@
 {
  "counts": {
-  "PASS": 67,
-  "FAIL": 0,
+  "PASS": 66,
+  "FAIL": 1,
   "SKIP": 0,
   "UNVERIFIED": 8
  },
@@ -81,7 +81,7 @@
    },
    "cross": {
     "state": "PASS",
-    "detail": "16 checks, 2 warn"
+    "detail": "15 checks, 2 warn"
    }
   },
   "TXJ1": {
@@ -217,7 +217,7 @@
   "AB1A": {
    "route": {
     "state": "PASS",
-    "detail": "544 tracks 53 vias, 0 open"
+    "detail": "541 tracks 51 vias, 0 open"
    },
    "indep": {
     "state": "PASS",
@@ -243,7 +243,7 @@
   "AB1B": {
    "route": {
     "state": "PASS",
-    "detail": "435 tracks 40 vias, 0 open"
+    "detail": "422 tracks 39 vias, 0 open"
    },
    "indep": {
     "state": "PASS",
@@ -335,8 +335,8 @@
    "detail": "12/12 controls behave as intended"
   },
   "tests/regress.py (strict: a missing result FAILs)": {
-   "state": "PASS",
-   "detail": "84 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
+   "state": "FAIL",
+   "detail": "86 PASS; FAILS 2 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {

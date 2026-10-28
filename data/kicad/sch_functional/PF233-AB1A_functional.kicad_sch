@@ -800,7 +800,7 @@
   (symbol (lib_id "PF233F:BOX_AD7389") (at 58.420 363.220 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (uuid "3444eccd-aa4b-5149-ad13-ab61887c81b1")
     (property "Reference" "UA1" (at 58.420 331.810 0) (effects (font (size 1.27 1.27))))
     (property "Value" "AD7389-4" (at 58.420 388.120 0) (effects (font (size 1.0 1.0))))
-    (property "Footprint" "Package_CSP:LFCSP-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm" (at 58.420 363.220 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Footprint" "Package_CSP:CP-24-25_ADI_LFCSP-24-1EP_4x4mm_P0.5mm_EP0.61x0.61mm" (at 58.420 363.220 0) (effects (font (size 1.27 1.27)) hide))
     (pin "13" (uuid "16da292d-939b-5540-b2b5-6e09bfb2f11e"))
     (pin "12" (uuid "3531223f-e6a1-5dfc-97a4-0ab22f66a998"))
     (pin "11" (uuid "e44f2f63-73b6-50e6-9885-1b9a8d46fb40"))

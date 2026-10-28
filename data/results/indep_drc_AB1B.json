@@ -3,12 +3,12 @@
  "file": "work/kit_v3/PCB_AB1B/PF233-AB1B.kicad_pcb",
  "checks": {
   "width_track": {
-   "n": 556,
+   "n": 545,
    "bad": 0,
    "min": 0.15
   },
   "via_size_drill": {
-   "n": 40,
+   "n": 39,
    "bad": 0
   },
   "pth_drill": {
@@ -37,14 +37,14 @@
   "connectivity": {
    "nets": 24,
    "split_nets": {},
-   "connections": 1230
+   "connections": 1214
   }
  },
  "errors": [],
  "zones": 3,
  "zone_nets_joined": {
   "GND": [
-   36
+   34
   ],
   "+5VA": [
    14

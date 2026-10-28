@@ -161,6 +161,17 @@ def vox(Tr, lo, hi):
             a0, b0 = max(a0, 0), min(b0, nz - 1)                                     # clamp both ends (an interval wholly outside the box must add nothing)
             if b0 >= a0: V[i, j, a0:b0 + 1] = True
     return V
+# ------------------------------------------------------------------ B8: septum split joint (half-lap), measured on the two printable segments against the full-length reference
+SG = {k: load(f"U8_SEPTUM_extended_SEG_{k}") for k in "AB"}; SPL = R.get("septum_split", {})
+for k in "AB":
+    ext = SG[k][:, :, 0].max() - SG[k][:, :, 0].min(); chk(f"septum segment {k}: printable length (mm)", float(ext), None, 250.0, "250 mm build volume")
+    chk(f"septum segment {k}: closed shell (odd edges)", odd_edges(SG[k]), 0, 0)
+vA, vB, vF = volume(SG["A"]), volume(SG["B"]), volume(T["U8_SEPTUM_extended"])
+chk("septum segments A + B = the full-length reference (volume difference, %)", abs(vA + vB - vF) / vF * 100.0, None, 0.5, f"A {vA:.0f} + B {vB:.0f} vs {vF:.0f} mm3 (dilated unions: 0.005 mm margin each)")
+xa, xb = SG["A"][:, :, 0].max(), SG["B"][:, :, 0].min(); chk("septum split: half-lap overlap along x (mm)", float(xa - xb), 9.5, 10.5, f"lap {SPL.get('lap')} mm at x {SPL.get('cut')}")
+if SPL:
+    lo = np.array([SPL["cut"] - 1.0, -2.0, SPL["z_split"] - 6.0]); hi = np.array([SPL["cut"] + SPL["lap"] + 1.0, 2.0, SPL["z_split"] + 6.0])
+    chk("septum split: segments A and B do not overlap in the joint (voxel mm3)", float((vox(SG["A"], lo, hi) & vox(SG["B"], lo, hi)).sum() * H ** 3), 0.0, 0.5, "0.25 mm voxels: the 0.005 mm dilation of both faces can share one voxel row")
 BONDED = {frozenset(("U2_GRIP", "U1_TOP_HOUSING")), frozenset(("U2_GRIP", "U3_BOTTOM_HOUSING"))}   # grip ends bonded 2 mm into the housing walls
 inter = []
 for cfg in ("extended", "collapsed"):

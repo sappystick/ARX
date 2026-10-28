@@ -1,5 +1,5 @@
 (export (version "E")
-  (design (source "PF233-AB1.net") (date "2026-10-27") (tool "afe_design.py"))
+  (design (source "PF233-AB1.net") (date "2026-10-28") (tool "afe_design.py"))
   (components
     (comp (ref "J1") (value "Antenna harness 6p solder pads 1.27mm") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x6_P1.27mm") (libsource (lib "PF233") (part "HDR1x6") (description "1x6 through-hole header/solder pads 1.27 mm, drill 0.65")) (property (name "MPN") (value "solder-in ribbon harness (36 AWG)")) (tstamps "00000639"))
     (comp (ref "J2") (value "Main-board 2x6 1.27mm header") (footprint "Connector_PinHeader_1.27mm:PinHeader_2x6_P1.27mm") (libsource (lib "PF233") (part "HDR2x6") (description "2x6 through-hole header/solder pads 1.27 mm, drill 0.65")) (property (name "MPN") (value "Samtec FTSH/TMM-106-class 2x6 1.27mm")) (tstamps "00000658"))
@@ -24,7 +24,7 @@
     (comp (ref "U1") (value "OPA2211") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm") (libsource (lib "PF233") (part "OPA2211") (description "OPA2211 dual low-noise op amp, SOIC-8")) (property (name "MPN") (value "TI OPA2211AIDR")) (tstamps "00000644"))
     (comp (ref "CO1") (value "100n") (footprint "Capacitor_SMD:C_0402_1005Metric") (libsource (lib "PF233") (part "C0402") (description "Capacitor 0402")) (property (name "MPN") (value "X7R 10V")) (tstamps "0000c1c5"))
     (comp (ref "CB1") (value "10u") (footprint "Capacitor_SMD:C_0805_2012Metric") (libsource (lib "PF233") (part "C0805") (description "Capacitor 0805")) (property (name "MPN") (value "X7R/X5R 10V")) (tstamps "0000c032"))
-    (comp (ref "UA1") (value "AD7389-4") (footprint "Package_CSP:LFCSP-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm") (libsource (lib "PF233") (part "AD7389") (description "AD7389-4 quad 16-bit 2 MSPS simultaneous SAR ADC, internal 2.5 V reference, LFCSP-24 4x4 (EP size PLACEHOLDER)")) (property (name "MPN") (value "ADI AD7389-4BCPZ")) (tstamps "0000c025"))
+    (comp (ref "UA1") (value "AD7389-4") (footprint "Package_CSP:CP-24-25_ADI_LFCSP-24-1EP_4x4mm_P0.5mm_EP0.61x0.61mm") (libsource (lib "PF233") (part "AD7389") (description "AD7389-4 quad 16-bit 2 MSPS simultaneous SAR ADC, internal 2.5 V reference, LFCSP-24 4x4 CP-24-25 (Ultra Librarian CP-24-25_ADI land, EP 0.61 SQ)")) (property (name "MPN") (value "ADI AD7389-4BCPZ")) (tstamps "0000c025"))
     (comp (ref "CVC") (value "1u") (footprint "Capacitor_SMD:C_0402_1005Metric") (libsource (lib "PF233") (part "C0402") (description "Capacitor 0402")) (property (name "MPN") (value "X7R 10V")) (tstamps "00010630"))
     (comp (ref "CVL") (value "1u") (footprint "Capacitor_SMD:C_0402_1005Metric") (libsource (lib "PF233") (part "C0402") (description "Capacitor 0402")) (property (name "MPN") (value "X7R 10V")) (tstamps "000127f9"))
     (comp (ref "CRG") (value "1u") (footprint "Capacitor_SMD:C_0402_1005Metric") (libsource (lib "PF233") (part "C0402") (description "Capacitor 0402")) (property (name "MPN") (value "X7R 10V")) (tstamps "000114b8"))
