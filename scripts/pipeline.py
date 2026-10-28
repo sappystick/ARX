@@ -14,10 +14,14 @@ usage: python3 scripts/pipeline.py run [--jobs N] [--cold] [--only STEP[,STEP]] 
        python3 scripts/pipeline.py plan          (what would run and why; runs nothing)
        python3 scripts/pipeline.py list
 Outputs: work/.pipeline/{cache,logs,timing.json}; exit 1 if any step fails or the graph is stale."""
-import os, sys, json, time, hashlib, subprocess, threading, shlex, shutil, platform
+import os, sys, json, time, hashlib, subprocess, threading, shlex, shutil, platform, signal, atexit
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PIPE = os.path.join(ROOT, "work", ".pipeline")
+# run guards (2026-10-28): the longest step takes about 9.5 min (sbq-fast 563 s, route-cb1d 420 s); a step that runs past STEP_TIMEOUT is hung, not slow:
+# its whole process group is killed and the step FAILs with rc 124. One run at a time (RUN_FILE holds pid, start, argv); scripts/wait_run.sh waits on that pid.
+STEP_TIMEOUT = int(os.environ.get("PIPELINE_STEP_TIMEOUT", "900"))
+RUN_FILE = os.path.join(PIPE, "run.json")
 GRAPH = os.path.join(ROOT, "data", "pipeline", "graph.json")
 HOOK = os.path.join(ROOT, "scripts", "tracehook")
 W, P = "cd work && ", "python3 "
@@ -206,7 +210,22 @@ def run_step(name, cmd, env_extra, envfp):
     env["PYTHONPATH"] = HOOK + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
     t0 = time.time()
     with open(os.path.join(PIPE, "logs", name + ".log"), "w") as lg:
-        r = subprocess.run(["/bin/sh", "-c", cmd], cwd=ROOT, env=env, stdout=lg, stderr=subprocess.STDOUT)
+        r = subprocess.Popen(["/bin/sh", "-c", cmd], cwd=ROOT, env=env, stdout=lg, stderr=subprocess.STDOUT, start_new_session=True)
+        try:
+            r.wait(timeout=STEP_TIMEOUT)
+        except subprocess.TimeoutExpired:
+            for sig in (signal.SIGTERM, signal.SIGKILL):
+                try:
+                    os.killpg(r.pid, sig)
+                except ProcessLookupError:
+                    break
+                try:
+                    r.wait(timeout=10)
+                    break
+                except subprocess.TimeoutExpired:
+                    pass
+            lg.write(f"\nTIMEOUT: step ran past {STEP_TIMEOUT} s (PIPELINE_STEP_TIMEOUT); process group killed\n")
+            r.returncode = 124
     dt = time.time() - t0
     reads, writes, lists = parse_trace(tf, t0)
     rec = dict(cmd=cmd, env=envfp, seconds=round(dt, 2), rc=r.returncode,
@@ -258,6 +277,21 @@ def build_deps(order, graph, selected):
     return deps
 
 
+def take_run_lock(argv):
+    """one pipeline run at a time: a second run on the same work/ would race on its files. A lock whose pid is gone is stale and is replaced."""
+    os.makedirs(PIPE, exist_ok=True)
+    try:
+        old = json.load(open(RUN_FILE))
+        os.kill(old["pid"], 0)
+        print(f"pipeline: another run is active (pid {old['pid']}, {round(time.time() - old['start'])} s, {' '.join(old['argv'])}); wait with scripts/wait_run.sh")
+        return False
+    except (OSError, ValueError, KeyError):
+        pass
+    json.dump(dict(pid=os.getpid(), start=time.time(), argv=argv, step_timeout_s=STEP_TIMEOUT), open(RUN_FILE, "w"))
+    atexit.register(lambda: os.path.exists(RUN_FILE) and json.load(open(RUN_FILE)).get("pid") == os.getpid() and os.remove(RUN_FILE))
+    return True
+
+
 def main():
     a = sys.argv[1:]
     cmd = a[0] if a else "run"
@@ -287,6 +321,8 @@ def main():
             r = "cold run requested" if cold else why_stale(n, cmds[n][0], envfp)
             print(f"{'RUN ' if r else 'SKIP'} {n:14s} {r or ''}")
         return 0
+    if not take_run_lock(a):
+        return 3
     if "--no-setup" not in a:
         s = subprocess.run(["make", "--no-print-directory", "setup"], cwd=ROOT, capture_output=True, text=True)
         if s.returncode:

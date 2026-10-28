@@ -30,6 +30,13 @@ The sign-off pipeline traces every step, so unchanged work is skipped. The rule 
 - **Status updates <= 5 lines, final report <= 15 lines.** Images and packages last, after every gate passes.
 - Safety: no `rm -rf` or glob deletes, no `pkill -f` (use `pgrep -x`/PID), never loosen a rule, clearance or tolerance to make a check pass; anything unconfirmed is UNVERIFIED.
 
+## Run guards (2026-10-28)
+- No pipeline step may run longer than 15 min (`PIPELINE_STEP_TIMEOUT`, default 900 s; the longest real step is sbq-fast at about 9.5 min, then route-cb1d 7 min, head-audit 5 min). Past it the step's whole process group is killed and the step FAILs with rc 124 and `TIMEOUT` in its log.
+- One run at a time: `work/.pipeline/run.json` holds pid, start and argv; a second run is refused (rc 3). `make pipeline-ps` shows the active run and its age.
+- Background runs: `make signoff-bg`, then `scripts/wait_run.sh 1800 work/.pipeline/signoff_bg.log` (waits on the pid, ends with the run, gives up at the limit with rc 124).
+- Never wait with `pgrep -f <pattern>` in a loop: the waiting shell's own command line contains the pattern, so the loop never ends. This is what kept three waiters alive for 15-30 min after their sign-offs had finished (2026-10-28); they used no CPU but looked like hour-long jobs. Never leave a `tail -F` watcher running after its run's SIGNOFF_RC line.
+- Normal costs: incremental `make signoff` 1 s to about 11 min, depending on what changed; `make signoff-cold` about 11 min on 4 cores; `make pipeline-graph` (serial, cold, re-learns which steps may overlap) about 43 min, and only after a step is added or its files change; adding one step needs only `pipeline.py run --only STEP --update-graph`.
+
 ## Tracer note
 `scripts/tracehook` records imports served from `__pycache__` as reads of the source `.py` (fixed 2026-10-27: an edit to an imported module such as `solid_union.py` used to leave dependent steps cached; they needed `--cold --only`). Non-python programs other than `kicad-cli` arguments are still invisible: `make signoff-cold` before a release.
 

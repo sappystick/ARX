@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: viewer su-proof state state-deep step touch-check rx-board package route-pm2 drc-pm2 kicad-pm2 gerber-pm2 route-hb2 drc-hb2 kicad-hb2 gerber-hb2 signoff-serial signoff-cold pipeline-plan pipeline-graph sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: pipeline-ps signoff-bg viewer su-proof state state-deep step touch-check rx-board package route-pm2 drc-pm2 kicad-pm2 gerber-pm2 route-hb2 drc-hb2 kicad-hb2 gerber-hb2 signoff-serial signoff-cold pipeline-plan pipeline-graph sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -240,6 +240,13 @@ signoff-cold:
 
 pipeline-plan:
 	@$(PY) scripts/pipeline.py plan
+
+# background sign-off with a pid file; wait with scripts/wait_run.sh (pid-based), inspect with `make pipeline-ps`
+signoff-bg:
+	@nohup $(PY) scripts/pipeline.py run --jobs $(or $(J),4) > work/.pipeline/signoff_bg.log 2>&1 & sleep 1; cat work/.pipeline/run.json; echo; echo "log: work/.pipeline/signoff_bg.log  wait: scripts/wait_run.sh 1800 work/.pipeline/signoff_bg.log"
+
+pipeline-ps:
+	@$(PY) -c "import json,time,os; r=json.load(open('work/.pipeline/run.json')); print('active run pid', r['pid'], 'for', round(time.time()-r['start']), 's, step timeout', r.get('step_timeout_s'), 's:', ' '.join(r['argv']))" 2>/dev/null || echo "no active pipeline run"
 
 # serial run that also re-learns data/pipeline/graph.json (which steps may overlap); needed only after a step is added or its files change
 pipeline-graph:
