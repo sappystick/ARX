@@ -179,7 +179,7 @@
   {
    "section": "B radial",
    "check": "cap outer r52 equals roof outer r52 (flush)",
-   "value": "52.0",
+   "value": "52.01",
    "limit": "52.0",
    "result": "PASS",
    "note": ""
@@ -381,7 +381,7 @@
   [
    "CAP",
    "HTA",
-   3059.38
+   3061.12
   ],
   [
    "LB1",
@@ -441,7 +441,7 @@
   {
    "a": "CAP",
    "b": "HTA",
-   "overlap_mm3": 3059.38,
+   "overlap_mm3": 3061.12,
    "core_mm3": 0.0
   },
   {
@@ -506,7 +506,7 @@
   ],
   "CAP": [
    40.4,
-   47.1
+   47.11
   ],
   "HOOD": [
    29.4,

@@ -4,7 +4,7 @@
   "closed": 49,
   "oriented": 49,
   "fits": 49,
-  "thin_wall_flags": 16,
+  "thin_wall_flags": 13,
   "notes": [
    "closed/oriented/fits: regress.py locks the known open list (15) and the known oversize part (1); any other open or oversize file FAILS. Wall estimates on open (non-manifold) shells are unreliable: rays pass through overlapping shells",
    "overhang: area fraction of faces more than 45 deg below horizontal above the first 0.3 mm, as stored (z up)",
@@ -35,7 +35,7 @@
   },
   {
    "file": "stl/head/BASE_PLATE_RX_CASSETTE_v3.stl",
-   "faces": 71762,
+   "faces": 71898,
    "size_mm": [
     233.01,
     233.01,
@@ -93,7 +93,7 @@
   },
   {
    "file": "stl/head/HUB_CAP_HTA_v3_vault.stl",
-   "faces": 68886,
+   "faces": 69160,
    "size_mm": [
     104.01,
     104.01,
@@ -548,7 +548,7 @@
    "oriented": true,
    "fits_build_cube": true,
    "overhang_area_fraction": 0.088,
-   "wall_p10_mm": 2.95,
+   "wall_p10_mm": 2.97,
    "draft_fraction_below_1deg": 1.0,
    "flags": [],
    "ok": true
@@ -683,17 +683,17 @@
   },
   {
    "file": "stl/upper/U6_BATTERY_DOCK.stl",
-   "faces": 672,
+   "faces": 680,
    "size_mm": [
-    202.51,
+    210.01,
     73.01,
-    33.81
+    35.76
    ],
-   "volume_cm3": 80.1,
+   "volume_cm3": 88.09,
    "closed": true,
    "oriented": true,
    "fits_build_cube": true,
-   "overhang_area_fraction": 0.369,
+   "overhang_area_fraction": 0.357,
    "wall_p10_mm": 3.01,
    "draft_fraction_below_1deg": 1.0,
    "flags": [],
@@ -707,7 +707,7 @@
     73.01,
     31.51
    ],
-   "volume_cm3": 108.54,
+   "volume_cm3": 108.52,
    "closed": true,
    "oriented": true,
    "fits_build_cube": true,
@@ -730,49 +730,45 @@
    "oriented": true,
    "fits_build_cube": true,
    "overhang_area_fraction": 0.144,
-   "wall_p10_mm": 2.92,
+   "wall_p10_mm": 2.93,
    "draft_fraction_below_1deg": 0.851,
    "flags": [],
    "ok": true
   },
   {
    "file": "stl/upper/U8_SEPTUM_extended_SEG_A.stl",
-   "faces": 4684,
+   "faces": 12104,
    "size_mm": [
-    235.0,
-    25.6,
-    25.6
+    245.01,
+    25.61,
+    25.61
    ],
-   "volume_cm3": 18.41,
+   "volume_cm3": 17.56,
    "closed": true,
    "oriented": true,
    "fits_build_cube": true,
-   "overhang_area_fraction": 0.068,
-   "wall_p10_mm": 0.82,
-   "draft_fraction_below_1deg": 0.972,
-   "flags": [
-    "thin wall estimate 0.82 mm (< 1.2 mm)"
-   ],
+   "overhang_area_fraction": 0.058,
+   "wall_p10_mm": 1.55,
+   "draft_fraction_below_1deg": 0.968,
+   "flags": [],
    "ok": true
   },
   {
    "file": "stl/upper/U8_SEPTUM_extended_SEG_B.stl",
-   "faces": 2348,
+   "faces": 6176,
    "size_mm": [
-    211.0,
-    25.6,
-    25.6
+    211.01,
+    25.61,
+    25.61
    ],
-   "volume_cm3": 12.48,
+   "volume_cm3": 11.81,
    "closed": true,
    "oriented": true,
    "fits_build_cube": true,
-   "overhang_area_fraction": 0.054,
-   "wall_p10_mm": 0.83,
-   "draft_fraction_below_1deg": 0.983,
-   "flags": [
-    "thin wall estimate 0.83 mm (< 1.2 mm)"
-   ],
+   "overhang_area_fraction": 0.038,
+   "wall_p10_mm": 1.4,
+   "draft_fraction_below_1deg": 0.981,
+   "flags": [],
    "ok": true
   },
   {
@@ -846,11 +842,9 @@
    "oriented": true,
    "fits_build_cube": true,
    "overhang_area_fraction": 0.017,
-   "wall_p10_mm": 0.61,
+   "wall_p10_mm": 3.61,
    "draft_fraction_below_1deg": 0.995,
-   "flags": [
-    "thin wall estimate 0.61 mm (< 1.2 mm)"
-   ],
+   "flags": [],
    "ok": true
   },
   {
