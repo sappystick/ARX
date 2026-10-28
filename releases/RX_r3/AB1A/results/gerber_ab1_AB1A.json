@@ -1,0 +1,41 @@
+{
+ "board": "AB1A",
+ "island": [
+  7.0,
+  12.6,
+  2.0,
+  3.6
+ ],
+ "layers": {
+  "In1": {
+   "net": "GND",
+   "items": 19,
+   "connected": 19,
+   "unconnected": [],
+   "n_primitives": 0
+  },
+  "In4": {
+   "net": "+5VA",
+   "items": 10,
+   "connected": 10,
+   "unconnected": [],
+   "n_primitives": 0
+  },
+  "In4_island": {
+   "net": "+3V3D",
+   "items": 1,
+   "connected": 1,
+   "unconnected": [],
+   "island_copper_mm2": 7.39,
+   "island_box_mm2": 8.96,
+   "pour_to_island_gap_mm": 0.161,
+   "island_joined_to_pour": false,
+   "plus5va_pour_mm2": 462.2
+  }
+ },
+ "control": {
+  "foreign_vias_in_island": 1,
+  "foreign_vias_not_connected": 1
+ },
+ "pass": true
+}

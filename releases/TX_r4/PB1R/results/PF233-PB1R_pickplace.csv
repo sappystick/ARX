@@ -1,0 +1,43 @@
+Ref,Val,Package,PosX_mm,PosY_mm,Rot,Side
+JP,Power in: VBUS VBUS GND GND,Terminal_block_1x4_P5.08mm,-30.0,-24.0,0,top
+CB1,100u 50V hybrid,CP_Elec_10x10,-19.5,-29.0,0,top
+CB2,100u 50V hybrid,CP_Elec_10x10,4.0,-29.0,0,top
+CB3,100u 50V hybrid,CP_Elec_10x10,4.5,-18.0,0,top
+CB4,100u 50V hybrid,CP_Elec_10x10,-19.5,-18.0,0,top
+CB5,100u 50V hybrid,CP_Elec_10x10,-12.5,-7.0,0,top
+CB6,100u 50V hybrid,CP_Elec_10x10,18.0,-12.0,0,top
+CB7,100u 50V hybrid,CP_Elec_10x10,18.0,15.5,90,top
+CB8,100u 50V hybrid,CP_Elec_10x10,28.5,2.0,90,top
+CB9,100u 50V hybrid,CP_Elec_10x10,17.5,1.5,90,top
+CM1,10u 50V,C_1210_3225Metric,16.5,-19.5,0,top
+CM2,10u 50V,C_1210_3225Metric,21.5,-19.5,0,top
+CM3,10u 50V,C_1210_3225Metric,16.5,-23.0,0,top
+CM4,10u 50V,C_1210_3225Metric,21.5,-23.0,0,top
+JC,Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND,Pin_header_2x4_P2.54mm,28.0,-24.0,0,top
+RUS,1M,R_0603_1608Metric,28.0,-15.0,0,top
+RNTC,10k NTC,R_0603_1608Metric,0.0,26.0,0,top
+U3,LM393,SOIC-8_3.9x4.9mm_P1.27mm,4.0,-10.0,0,top
+CU3,1u 25V,C_0805_2012Metric,9.5,-11.0,0,top
+U1,TC4420,SOIC-8_3.9x4.9mm_P1.27mm,3.0,13.0,0,top
+CD7,1u 25V,C_0805_2012Metric,8.0,9.0,0,top
+CE1,100n,C_0603_1608Metric,8.5,16.0,0,top
+RIN1,100,R_0603_1608Metric,3.5,6.0,0,top
+DOC1,BAS16,D_SOD-123,-0.5,6.0,0,top
+RGP1,10k,R_0603_1608Metric,3.0,19.0,0,top
+Q1A,650V SJ 95mR,TO-263-3_TabPin2,-14.0,20.0,180,top
+RGQ1A,10,R_0603_1608Metric,-1.5,18.0,0,top
+Q1B,650V SJ 95mR,TO-263-3_TabPin2,-14.0,6.0,180,top
+RGQ1B,10,R_0603_1608Metric,-1.5,8.0,0,top
+RS1S,10m 1W,R_2512_6332Metric,1.5,-2.5,0,top
+DC1,ES3J 600V 3A,D_SMC,-29.0,10.5,0,top
+CL1A,100n 630V,C_1210_3225Metric,-30.0,3.0,0,top
+CL1B,100n 630V,C_1210_3225Metric,-30.0,-5.0,0,top
+RCL1,external 5k 10W (lid bank),SolderPad_2x_P5.08mm,-29.0,-9.5,0,top
+JL1,"Coil outer band: DRAIN, VBUS",Terminal_block_1x2_P5.08mm,-30.0,20.0,0,top
+RK1,100,R_0603_1608Metric,-1.5,-6.8,0,top
+CK1,100p,C_0603_1608Metric,-1.5,-9.8,0,top
+RPU1,10k,R_0603_1608Metric,29.0,-5.5,0,top
+RF1,1k,R_0603_1608Metric,29.0,-9.0,0,top
+M12,12 V 1.0 A switching module,Converter_DCDC_Murata_OKI-78SR_Horizontal,14.0,27.0,0,top
+C12A,22u 25V,C_1210_3225Metric,24.0,27.0,0,top
+C12B,100n,C_0603_1608Metric,24.0,31.0,0,top

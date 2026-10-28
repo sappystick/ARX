@@ -1,0 +1,36 @@
+Ref,Val,Package,PosX_mm,PosY_mm,Rot,Side
+J1,Antenna harness 6p solder pads 1.27mm,PinHeader_1x6_P1.27mm,-16.4,-0.0,0,top
+J2,Main-board 2x6 1.27mm header,PinHeader_2x6_P1.27mm,15.6,-0.0,0,top
+RS1,1000,R_0402_1005Metric,-13.0,5.5,0,top
+D1,BAV199,SOT-23,-10.2,5.5,0,top
+SW1,74LVC1G66,SOT-23-5,-6.4,5.5,0,top
+CSW1,100n,C_0402_1005Metric,-7.4,3.1,0,top
+RG1,10,R_0402_1005Metric,2.2,5.5,0,top
+RF1,390,R_0402_1005Metric,4.3,6.7,0,top
+CF1,22p,C_0402_1005Metric,4.3,4.3,0,top
+RAAF1,200,R_0402_1005Metric,6.6,5.5,0,top
+CAAF1,2n2,C_0603_1608Metric,8.9,5.5,0,top
+RS2,1000,R_0402_1005Metric,-13.0,-5.5,0,top
+D2,BAV199,SOT-23,-10.2,-5.5,0,top
+SW2,74LVC1G66,SOT-23-5,-6.4,-5.5,0,top
+CSW2,100n,C_0402_1005Metric,-7.4,-7.9,0,top
+RG2,10,R_0402_1005Metric,2.2,-5.5,0,top
+RF2,390,R_0402_1005Metric,4.3,-4.3,0,top
+CF2,22p,C_0402_1005Metric,4.3,-6.7,0,top
+RAAF2,200,R_0402_1005Metric,6.6,-5.5,0,top
+CAAF2,2n2,C_0603_1608Metric,8.9,-5.5,0,top
+U1,OPA2211,SOIC-8_3.9x4.9mm_P1.27mm,0.5,-0.0,0,top
+CO1,100n,C_0402_1005Metric,0.5,-3.4,0,top
+CB1,10u,C_0805_2012Metric,-13.0,-0.0,0,top
+UA1,AD7389-4,CP-24-25_ADI_LFCSP-24-1EP_4x4mm_P0.5mm_EP0.61x0.61mm,9.5,-0.0,270,bottom
+CVC,1u,C_0402_1005Metric,7.7,-5.0,0,bottom
+CVL,1u,C_0402_1005Metric,11.5,-5.0,0,bottom
+CRG,1u,C_0402_1005Metric,9.2,-4.0,90,bottom
+CRF,1u,C_0402_1005Metric,10.4,4.0,0,bottom
+CRC,100n,C_0402_1005Metric,8.2,3.7,0,bottom
+UB,OPA2365,MSOP-8_3x3mm_P0.65mm,4.0,-13.0,0,top
+CBD,100n,C_0402_1005Metric,9.0,-13.0,0,top
+RD1,100k,R_0402_1005Metric,11.0,-13.0,0,top
+RD2,100k,R_0402_1005Metric,11.4,-11.4,0,top
+CDF,100n,C_0402_1005Metric,9.0,-11.2,0,top
+CVM,1u,C_0603_1608Metric,13.4,-9.6,0,top

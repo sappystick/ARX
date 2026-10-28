@@ -1,0 +1,2 @@
+SUPERSEDED by releases/RX_r3 (2026-10-28).
+Reason: BLOCKER 2 (SDI tied low / readout) and BLOCKER 3 (+3V3D budget) are closed (B6 readout model with datasheet Table 17; B3 AMS1117 rows with the RML bleed on CB1D). Kept unchanged for provenance; do not order from this folder.

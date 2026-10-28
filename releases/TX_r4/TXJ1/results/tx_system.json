@@ -1,0 +1,253 @@
+{
+ "leads": [
+  {
+   "layer": 1,
+   "lead": "A",
+   "port_deg": 6.0,
+   "side": "low",
+   "angular_distance_deg": 172.0,
+   "channel_arc_mm": 134.3,
+   "lead_length_mm": 162.3,
+   "R_mohm": 4.87
+  },
+  {
+   "layer": 1,
+   "lead": "B",
+   "port_deg": 11.0,
+   "side": "low",
+   "angular_distance_deg": 167.0,
+   "channel_arc_mm": 130.1,
+   "lead_length_mm": 158.1,
+   "R_mohm": 4.74
+  },
+  {
+   "layer": 2,
+   "lead": "A",
+   "port_deg": 143.51,
+   "side": "low",
+   "angular_distance_deg": 34.5,
+   "channel_arc_mm": 21.2,
+   "lead_length_mm": 49.2,
+   "R_mohm": 1.48
+  },
+  {
+   "layer": 2,
+   "lead": "B",
+   "port_deg": 148.51,
+   "side": "low",
+   "angular_distance_deg": 29.5,
+   "channel_arc_mm": 17.1,
+   "lead_length_mm": 45.1,
+   "R_mohm": 1.35
+  },
+  {
+   "layer": 3,
+   "lead": "A",
+   "port_deg": 281.02,
+   "side": "high",
+   "angular_distance_deg": 103.0,
+   "channel_arc_mm": 77.5,
+   "lead_length_mm": 105.5,
+   "R_mohm": 3.17
+  },
+  {
+   "layer": 3,
+   "lead": "B",
+   "port_deg": 286.02,
+   "side": "high",
+   "angular_distance_deg": 108.0,
+   "channel_arc_mm": 81.7,
+   "lead_length_mm": 109.7,
+   "R_mohm": 3.29
+  },
+  {
+   "layer": 4,
+   "lead": "A",
+   "port_deg": 58.52,
+   "side": "low",
+   "angular_distance_deg": 119.5,
+   "channel_arc_mm": 91.1,
+   "lead_length_mm": 119.1,
+   "R_mohm": 3.57
+  },
+  {
+   "layer": 4,
+   "lead": "B",
+   "port_deg": 63.52,
+   "side": "low",
+   "angular_distance_deg": 114.5,
+   "channel_arc_mm": 87.0,
+   "lead_length_mm": 115.0,
+   "R_mohm": 3.45
+  },
+  {
+   "layer": 5,
+   "lead": "A",
+   "port_deg": 196.03,
+   "side": "high",
+   "angular_distance_deg": 18.0,
+   "channel_arc_mm": 7.7,
+   "lead_length_mm": 35.7,
+   "R_mohm": 1.07
+  },
+  {
+   "layer": 5,
+   "lead": "B",
+   "port_deg": 201.03,
+   "side": "high",
+   "angular_distance_deg": 23.0,
+   "channel_arc_mm": 11.8,
+   "lead_length_mm": 39.8,
+   "R_mohm": 1.19
+  },
+  {
+   "layer": 6,
+   "lead": "A",
+   "port_deg": 333.54,
+   "side": "high",
+   "angular_distance_deg": 155.5,
+   "channel_arc_mm": 120.7,
+   "lead_length_mm": 148.7,
+   "R_mohm": 4.46
+  },
+  {
+   "layer": 6,
+   "lead": "B",
+   "port_deg": 338.54,
+   "side": "high",
+   "angular_distance_deg": 160.5,
+   "channel_arc_mm": 124.8,
+   "lead_length_mm": 152.8,
+   "R_mohm": 4.59
+  }
+ ],
+ "side_count": {
+  "low": 6,
+  "high": 6
+ },
+ "channel_area_mm2": 11.700000000000001,
+ "bundle_area_mm2": 6.79,
+ "current_share": {
+  "1": 0.9877,
+  "2": 1.0123,
+  "3": 0.999,
+  "4": 0.997,
+  "5": 1.0144,
+  "6": 0.9897
+ },
+ "lead_loop_uH": 0.123,
+ "checks": [
+  {
+   "check": "leads per side at the window (max)",
+   "value": 6.0,
+   "min": null,
+   "max": 6,
+   "result": "PASS",
+   "note": "{'low': 6, 'high': 6}"
+  },
+  {
+   "check": "channel cross-section / litz bundle area (fill ratio <= 0.7)",
+   "value": 0.58,
+   "min": null,
+   "max": 0.7,
+   "result": "PASS",
+   "note": "6.8 mm2 of 11.7 mm2"
+  },
+  {
+   "check": "bend radius available in the window fan-in (mm) vs 3 x OD",
+   "value": 4.0,
+   "min": 3.5999999999999996,
+   "max": null,
+   "result": "PASS",
+   "note": "quarter turn inside the 15 mm window, R 4 mm"
+  },
+  {
+   "check": "longest lead (mm)",
+   "value": 162.3,
+   "min": null,
+   "max": 200,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "DC current sharing spread between the 6 layers (max deviation from equal)",
+   "value": 0.014,
+   "min": null,
+   "max": 0.05,
+   "result": "PASS",
+   "note": "{1: 0.9877, 2: 1.0123, 3: 0.999, 4: 0.997, 5: 1.0144, 6: 0.9897}"
+  },
+  {
+   "check": "lead loop inductance (uH) vs 54 uH coil",
+   "value": 0.123,
+   "min": null,
+   "max": 0.54,
+   "result": "PASS",
+   "note": "under 1 percent"
+  },
+  {
+   "check": "TXJ1 lead pad gap along a row (mm)",
+   "value": 0.4,
+   "min": 0.3,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "TXJ1 bus A to bus B separation (mm, creepage across the board)",
+   "value": 3.0,
+   "min": 2.5,
+   "max": null,
+   "result": "PASS",
+   "note": "3.0 mm between bar edges; FR4 1.6 mm between layers at 460 V peak"
+  },
+  {
+   "check": "TXJ1 bar resistance, 2 oz (mohm)",
+   "value": 1.515,
+   "min": null,
+   "max": 5.0,
+   "result": "PASS",
+   "note": "20 A pulse: I2R is negligible at the duty cycle"
+  },
+  {
+   "check": "cradle width vs bridge interior (14.0 mm wide)",
+   "value": 0.4,
+   "min": 0.1,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "cradle starts outside the collar (x' >= 52.2)",
+   "value": 0.8,
+   "min": 0.5,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "cradle height below the bridge lid (interior top z40.8)",
+   "value": 1.2,
+   "min": 1.0,
+   "max": null,
+   "result": "PASS",
+   "note": "ribbons lie over the divider"
+  },
+  {
+   "check": "cradle floor on the bridge floor (z34.4)",
+   "value": 0.0,
+   "min": -0.01,
+   "max": 0.01,
+   "result": "PASS",
+   "note": ""
+  },
+  {
+   "check": "PCB (u -5..18) inside the seat (x' 53..78)",
+   "value": 0.0,
+   "min": 0.0,
+   "max": null,
+   "result": "PASS",
+   "note": ""
+  }
+ ]
+}

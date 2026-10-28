@@ -1,0 +1,12 @@
+{
+ "board": "PF233-PM2_routed.kicad_pcb",
+ "board_key": "PM2",
+ "kicad": "9.0.9",
+ "zones_filled": true,
+ "violations": 17,
+ "unconnected": 0,
+ "errors": {},
+ "warnings": {},
+ "lib_footprint_warnings": 17,
+ "examples": []
+}

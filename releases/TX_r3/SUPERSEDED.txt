@@ -1,0 +1,2 @@
+SUPERSEDED by releases/TX_r4 (2026-10-28).
+Reason: CB1D gained RML (270 ohm 0603 minimum-load bleed for the AMS1117-3.3, B3) and was re-routed; PB1R M12 is the OKI-78SR-12/1.0-W36-C (the series has no 12 V 1.5 A model, CORRECTIONS). Kept unchanged for provenance; do not order from this folder.
