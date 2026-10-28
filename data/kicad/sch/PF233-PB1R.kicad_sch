@@ -690,7 +690,7 @@
   )
   (symbol (lib_id "PF233_auto:RCL1") (at 93.98 119.38 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (uuid "1d6437fd-51ec-58ae-9a97-9fdda6abbb51")
     (property "Reference" "RCL1" (at 93.98 116.84 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "external 5k 10W (lid bank)" (at 93.98 123.19 0) (effects (font (size 1.0 1.0))))
+    (property "Value" "4 x Vishay PR03 1K24 1% 750V 3W in series, 4.96k, NPM hot zo" (at 93.98 123.19 0) (effects (font (size 1.0 1.0))))
     (property "Footprint" "Connector:SolderPad_2x_P5.08mm" (at 93.98 119.38 0) (effects (font (size 1.27 1.27)) hide))
     (pin "1" (uuid "d008ff20-3dfa-5246-bc5d-fd2649e6c097"))
     (pin "2" (uuid "79378735-33ec-5db4-8b7b-18aa7e06c0a1"))

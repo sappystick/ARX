@@ -311,7 +311,7 @@
   )
   (footprint "Connector:SolderPad_2x_P5.08mm" (layer "F.Cu") (at 71.0000 109.5000)
     (property "Reference" "RCL1" (at 0 -2.5 0) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
-    (property "Value" "external 5k 10W (lid bank)" (at 0 2.5 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
+    (property "Value" "4 x Vishay PR03 1K24 1% 750V 3W in series, 4.96k, NPM hot zone" (at 0 2.5 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
     (attr through_hole)
     (pad "1" thru_hole circle (at -2.540 0.000) (size 3.0 3.0) (drill 1.6) (layers "*.Cu" "*.Mask") (net 2 "CLAMP1"))
     (pad "2" thru_hole circle (at 2.540 0.000) (size 3.0 3.0) (drill 1.6) (layers "*.Cu" "*.Mask") (net 19 "VBUS"))

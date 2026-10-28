@@ -2878,6 +2878,25 @@
 "data/results/route_AU1.json"
 ]
 },
+"rcl1-fit": {
+"L": [
+"scripts/tracehook",
+"src/mech"
+],
+"R": [
+"src/mech/potting_volumes.py",
+"src/mech/rcl1_fit.py",
+"work/kit_v19/SPINE/NPM_N1_body_with_tunnel_v2.stl",
+"work/kit_v19/SPINE/NPM_N2_lid_with_fill_ports.stl",
+"work/kit_v19/SPINE/NPM_N3_hot_zone_dam_v2.stl",
+"work/kit_v6/PB1R/bodies.json",
+"work/system_live.py",
+"work/tx_vbus_sweep.py"
+],
+"W": [
+"data/results/rcl1_fit.json"
+]
+},
 "route-au1": {
 "L": [
 "scripts/tracehook"
