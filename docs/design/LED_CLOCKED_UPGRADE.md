@@ -36,8 +36,10 @@ not fit LB1 or its vertical gaps. Per the owner's rule, the design feeds clocked
   refresh = PRF (400-800 Hz); generated header PF_LED_* constants.
 
 ## Still open
-- The LED current PWM (1.2 kHz, every LED type considered) switches during gates: measure the receive noise with LEDs dark and lit on the first article
-  (U-BENCH). Firmware fallback with no hardware change: LEDs dark while sweeping, lit between sweeps.
+- LED policy (owner decision 2026-10-28): DARK DURING SWEEP. Entering a sweep the firmware sends one all-off frame (PWM duty 0/256), then no LED clock,
+  data or LED current until the sweep ends; between sweeps the LEDs are lit and refreshed in the idle slot. This removes the 1.2 kHz LED PWM from the
+  receive gates with no hardware change (fw_timeline.py, PF_LED_DARK_DURING_SWEEP). Still to measure on the first article: receive noise with LEDs dark
+  and lit (U-BENCH), to decide whether a ferrite sheet under LB1 or tighter LED current loops are worth adding later.
 - The 0.76 mm pad dimension and the land pattern want a check on a printed footprint against a real part.
 - Pico 2 W pin 19 as a PIO output and the 8 MHz LED clock over the 60 mm AWG30 lead: scope on the first article.
 - TX_r4 contains CB1D-B: a TX_r5 release is needed for CB1D-C1.

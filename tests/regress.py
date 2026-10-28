@@ -341,8 +341,8 @@ else: skip("hood tolerance study (make step S=hood-tol)")
 _ft=rd("kit_v23/fw_timeline.json")
 if _ft:
     _hdr=open("work/kit_v23/pf233_timing.h").read() if os.path.exists("work/kit_v23/pf233_timing.h") else open("data/results/pf233_timing.h").read()
-    _okh=f"#define PF_N_GATES {len(_ft['inputs']['gates_us'])}u" in _hdr and f"#define PF_FIRST_GATE_NS {round(_ft['inputs']['first_gate_us']*1000)}u" in _hdr
-    chk("firmware timeline: 3 modes fit their period with >= 10 % spare, LED stream only in a quiet slot, >= 3 ADC frames in the first gate, generated header matches the model",_ft["ok"] and _okh and _ft["inputs"]["sclk_min_hz_for_3_frames"]<_ft["inputs"]["adc_sclk_max_hz"],
+    _okh=f"#define PF_N_GATES {len(_ft['inputs']['gates_us'])}u" in _hdr and f"#define PF_FIRST_GATE_NS {round(_ft['inputs']['first_gate_us']*1000)}u" in _hdr and (_ft.get("led_policy")!="dark_during_sweep" or "#define PF_LED_DARK_DURING_SWEEP 1u" in _hdr)
+    chk("firmware timeline: 3 modes fit their period with >= 10 % spare, LED stream only in a quiet slot, LEDs dark during sweeps, >= 3 ADC frames in the first gate, generated header matches the model",_ft["ok"] and _okh and _ft["inputs"]["sclk_min_hz_for_3_frames"]<_ft["inputs"]["adc_sclk_max_hz"],
         "; ".join(f"{k} spare {v['spare_pct']} %, LED cost {v['led']['prf_cost_pct']} %" for k,v in _ft["modes"].items())+f"; SCLK >= {_ft['inputs']['sclk_min_hz_for_3_frames']/1e6:.1f} MHz")
 else: skip("firmware timeline (make step S=fw-timeline)")
 for r in res: print(*r)
