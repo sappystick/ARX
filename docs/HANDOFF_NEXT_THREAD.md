@@ -76,3 +76,4 @@ Resume Arx / PHI-FOLD 233. Run `make state` and read docs/HANDOFF_NEXT_THREAD.md
 | 2026-10-28 | signoff-cold, formers-print, TX_r4, RX_r3, package r5 | (this commit) | 0 fail | 71/0/0/4 | final delivery of this thread |
 
 | 2026-10-28 | Clickable cut-away viewer (package r5 viewer.html, `make viewer`); shared mesh_section.py (empty/partial sections fixed, blueprint + receive cut-away regenerated, NPM fit re-run on full sections); superseded NPM v1 STLs removed from stl_print; PURCHASED_PARTS board rows from the current BOMs | (this commit) | 96 PASS / 0 fail | 71/0/0/4 | CORRECTIONS: 4 rows |
+| 2026-10-28 | Viewer r2 (placement edit + live section/stack checks, system simulation from system_live.py with a JS twin, wiring runs), +5VA budget row, model-derived power (5.26 / 7.18 / 8.51 W), solid_union study (rebuild/batch rejected) | (this commit) | 99 PASS / 0 fail | 71/0/0/4 | CORRECTIONS 3 rows, OPEN_ITEMS 39 |

@@ -1,7 +1,7 @@
 {
  "counts": {
-  "PASS": 70,
-  "FAIL": 1,
+  "PASS": 71,
+  "FAIL": 0,
   "SKIP": 0,
   "UNVERIFIED": 4
  },
@@ -335,8 +335,8 @@
    "detail": "12/12 controls behave as intended"
   },
   "tests/regress.py (strict: a missing result FAILs)": {
-   "state": "FAIL",
-   "detail": "97 PASS; FAILS 1 SKIPS 0 UNVERIFIED 0"
+   "state": "PASS",
+   "detail": "99 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {
