@@ -170,7 +170,7 @@ elif PW == "T":
     for p, nm in jc.items(): net(nm, ("JC", p))
     add("RNTC", "R0603", "10k NTC", "NTC thermistor (on FET heat spreader)"); net("NTC_SENSE", ("RNTC", 1)); net("GND", ("RNTC", 2))
     add("U3", "LM393", "LM393", "TI LM393DR"); add("CU3", "C0805", "1u 25V", "X7R"); net("AUX12", ("U3", 8), ("CU3", 1)); net("GND", ("U3", 4), ("CU3", 2))
-    CHANNELS = [dict(n=1, Qs=["Q1A", "Q1B"], Dc="DC1", dtype="DSMC", dval="ES3J 600V 3A", vtype="C1210", cl=["CL1A", "CL1B"], clv="100n 630V", rs="RS1S", rsval="10m 3W", half="A", coil="JL1"),
+    CHANNELS = [dict(n=1, Qs=["Q1A", "Q1B"], Dc="DC1", dtype="DSMC", dval="US3M 1000V 3A", vtype="C1210", cl=["CL1A", "CL1B"], clv="100n 630V", rs="RS1S", rsval="10m 3W", half="A", coil="JL1"),
                  dict(n=2, Qs=["Q2A"], Dc="DC2", dtype="DSMB", dval="ES2D 200V 2A", vtype="C1210", cl=["CL2A"], clv="1u 100V", rs="RS2S", rsval="10m 3W", half="B", coil="JL2")]
     for c in CHANNELS:
         n = c["n"]; U = f"U{n}"
@@ -273,9 +273,9 @@ if PW == "R":
     for q in ("Q1A", "Q1B"):
         add(q, "D2PAK", "650V SJ 95mR", "IPB65R095C7 class (VERIFY)"); add(f"RG{q}", "R0603", "10", ""); net("G1", (f"RG{q}", 1)); net(f"GATE_{q}", (f"RG{q}", 2), (q, 1)); net("DRAIN1", (q, 2)); net("SRC1", (q, 3))
     add("RS1S", "R2512", "10m 1W", "Vishay WSL2512 10 mohm 1 % (1.0 W at 70 C; ordering code not checked); two-pad with the Kelvin sense track: the WSK2512 four-terminal sheet does not place its sense pads fully"); net("SRC1", ("RS1S", 1)); net("GND", ("RS1S", 2))
-    add("DC1", "DSMC", "ES3J 600V 3A", "ultrafast clamp diode (Good-Ark ES3J: 600 V, trr 35 ns); below the 630 V rule: WATCH, no verified >= 630 V ultrafast SMC part"); net("DRAIN1", ("DC1", 2)); net("CLAMP1", ("DC1", 1))
+    add("DC1", "DSMC", "US3M 1000V 3A", "ultrafast clamp diode (Diodes Inc. US3M, DS37228 Rev. 5: 1000 V, 3 A, trr 85 ns max), same SMC footprint; replaced ES3J 600 V (rule 6, 2026-10-28)"); net("DRAIN1", ("DC1", 2)); net("CLAMP1", ("DC1", 1))
     for cl in ("CL1A", "CL1B"): add(cl, "C1210", "100n 630V", "C0G/X7R HV"); net("CLAMP1", (cl, 1)); net("VBUS", (cl, 2))
-    add("RCL1", "WIRE2", "external 5k 10W (lid bank)", "resistor bank bonded under the lid"); net("CLAMP1", ("RCL1", 1)); net("VBUS", ("RCL1", 2))
+    add("RCL1", "WIRE2", "4 x Vishay PR03 1K24 1% 750V 3W in series, 4.96k, NPM hot zone", "clamp bank wired off-board, bodies potted in the NPM hot zone (rcl1_fit.py); was a 5k 10W lid bank with no part chosen (B7, 2026-10-28)"); net("CLAMP1", ("RCL1", 1)); net("VBUS", ("RCL1", 2))
     # PB1R-v5 (2026-10-28): JL1 = solder holes for the AWG12 TX pair (was a 5.08 mm terminal block: AWG 26-14 and 250 V against AWG12 at 460 V; CORRECTIONS)
     add("JL1", "WIRE2_AWG12", "Coil pair: DRAIN1, VBUS (AWG12 soldered)", "plated holes 2.6 mm, no terminal block on the flyback net"); net("DRAIN1", ("JL1", 1)); net("VBUS", ("JL1", 2))
     add("RK1", "R0603", "100", ""); add("CK1", "C0603", "100p", "C0G"); add("RPU1", "R0603", "10k", ""); add("RF1", "R0603", "1k", "")

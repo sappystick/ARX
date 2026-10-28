@@ -33,7 +33,7 @@ AU1 = dict(iq_A=0.0034 + 0.0021 + 80 * 101e-6 + 0.000685, p_audio_avg_W=0.10, p_
 AU1["W"] = (5.0 * AU1["iq_A"] + AU1["p_audio_avg_W"] / AU1["eta_amp"]) / ETA
 AU1["W_max"] = (5.0 * AU1["iq_A"] + AU1["p_audio_max_W"] / AU1["eta_amp"]) / ETA
 QG, VG = 90e-9, 12.0                                                                       # 2 x 45 nC at 12 V (system_budget TC4420 row)
-LIMITS = dict(Vds=650.0, clamp_rule=630.0, diode_VRRM=600.0, RCL_W=10.0, droop_pct=5.0, rail5_A=1.5, vault_C=80.0, cord_A=5.0)
+LIMITS = dict(Vds=650.0, clamp_rule=630.0, diode_VRRM=1000.0, RCL_W=10.0, droop_pct=5.0, rail5_A=1.5, vault_C=80.0, cord_A=5.0)
 RHO = 1.72e-8
 def awg_area_m2(n): d = 0.127e-3 * 92 ** ((36 - n) / 39); return math.pi / 4 * d * d
 

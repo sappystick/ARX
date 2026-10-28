@@ -19,7 +19,7 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,RF1,R0603,1k,,Resistor_SMD:R_0603_1608Metric
 1,RS1S,R2512,10m 1W,Vishay WSL2512 10 mohm 1 % (1.0 W at 70 C; ordering code not checked); two-pad with the Kelvin sense track: the WSK2512 four-terminal sheet does not place its sense pads fully,Resistor_SMD:R_2512_6332Metric
 1,U1,TC4420,TC4420,Microchip TC4420,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
-1,RCL1,WIRE2,external 5k 10W (lid bank),resistor bank bonded under the lid,Connector:SolderPad_2x_P5.08mm
+1,RCL1,WIRE2,"4 x Vishay PR03 1K24 1% 750V 3W in series, 4.96k, NPM hot zone","clamp bank wired off-board, bodies potted in the NPM hot zone (rcl1_fit.py); was a 5k 10W lid bank with no part chosen (B7, 2026-10-28)",Connector:SolderPad_2x_P5.08mm
 1,JL1,WIRE2_AWG12,"Coil pair: DRAIN1, VBUS (AWG12 soldered)","plated holes 2.6 mm, no terminal block on the flyback net",Connector:Wire_pads_AWG12_1x2_P5.08mm
 1,JC,WIRE2x4,Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND,umbilical soldered in (no header: potted module),Connector:Wire_pads_2x4_P2.54mm
 1,JP,WIRE4T,Power in: VBUS VBUS GND GND,"solder holes 1.7 mm, wires soldered (no terminal block: potted module)",Connector:Wire_pads_1x4_P5.08mm

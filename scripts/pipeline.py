@@ -107,6 +107,7 @@ STEPS = [
     ("hood-tol", W + "mkdir -p kit_v23 && python3 hood_tolerance.py > /dev/null", ""),      # P3 hood placement tolerance (axisymmetric, hood_axi.py): kit_v23/hood_tolerance.json
     ("potting", "python3 src/mech/potting_volumes.py > /dev/null", ""),
     ("potting-map", "python3 src/mech/potting_map.py > /dev/null", ""),
+    ("rcl1-fit", "python3 src/mech/rcl1_fit.py > /dev/null", ""),          # B7: RCL1 clamp bank (4 x Vishay PR03 1K24 in series): rating vs the transmit model, body fit in the NPM hot zone: data/results/rcl1_fit.json
     ("potting-matrix", "python3 src/sim/potting_matrix_eval.py > /dev/null", ""),   # owner's single epoxy matrix: claim verdicts, composite k / er / density, coil quiet time, paint eddy decay, PCM sizing, zone fit   # zoned potting map: fill per zone (exact volumes), compound classes, coil-fill quiet-time check, bench tests: data/results/potting_map.json + .png                 # P2 exact potting volumes (NPM zones, L4 absorber) from the meshes: data/results/potting_volumes.json
     ("check-pb1r", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py > /dev/null && python3 pb1r_check.py", ""),
     ("formers-low", "test -f work/kit_v15/LOW/FORMER_L1_petal_coil_former.stl || (" + W + "python3 phifold_v15.py low)", ""),

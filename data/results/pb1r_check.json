@@ -109,12 +109,12 @@
      650
     ],
     "RCL1": [
-     "external 5k 10W (lid bank)",
-     null
+     "4 x Vishay PR03 1K24 1% 750V 3W in series, 4.96k, NPM hot zone",
+     750
     ]
    },
    "limit": ">= 630 V",
-   "note": "below 630: ['DC1']; no voltage in the BOM text: ['JL1', 'RCL1']; stress: capacitor peak 435 V, Vds 462 V (UNVERIFIED ratings, Step 5)"
+   "note": "below 630: ['DC1']; no voltage in the BOM text: ['JL1']; stress: capacitor peak 435 V, Vds 462 V (UNVERIFIED ratings, Step 5)"
   },
   {
    "check": "PB1R JC (umbilical) pin names equal CB1D JPB pin names",

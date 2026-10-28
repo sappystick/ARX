@@ -412,6 +412,20 @@ try:
         and _me["proposed_bn"]["high"]["k_W_mK"]<3.0 and len(_me["claims"])>=8,
         f"mix {_me['proposed_bn']['low']['k_W_mK']}-{_me['proposed_bn']['high']['k_W_mK']} W/mK, er {_me['proposed_bn']['low']['er']}-{_me['proposed_bn']['high']['er']}; coverage {_me['single_matrix_coverage_cm3']} of {_me['total_fill_cm3']} cm3")
 except FileNotFoundError: chk("single-matrix evaluation evidence (data/results/potting_matrix_eval.json)",False,"missing")
+# rule 6 on the flyback nets (2026-10-28): every PB1R part on DRAIN1 / CLAMP1 that carries a voltage rating is >= 630 V (US3M replaced the 600 V ES3J; RCL1 = PR03 750 V)
+try:
+    _pc=[r for r in json.load(open("work/kit_v22/pb1r_check.json"))["checks"] if "630 V or better" in r["check"]][0]
+    _low={k:v for k,v in _pc["value"].items() if v[1] is not None and v[1]<630}
+    chk("flyback-net parts all >= 630 V (pb1r_check BOM text)", _pc["result"]=="PASS" and not _low and _pc["value"].get("DC1",[None,0])[1]>=1000, f"{ {k:v[1] for k,v in _pc['value'].items()} }")
+except (FileNotFoundError, IndexError, KeyError) as e: chk("flyback-net rating evidence (work/kit_v22/pb1r_check.json)",False,f"missing {e}")
+# RCL1 clamp bank (B7 close-out, 2026-10-28): a real part (4 x Vishay PR03 1K24, 750 V, 3 W) rated against the transmit model and fitted in the NPM hot zone on the meshes
+try:
+    _rc=json.load(open("data/results/rcl1_fit.json")); _rr=_rc["rating"]; _rf=_rc["fit"]
+    chk("RCL1 bank: each PR03 >= 630 V and <= 50 % of P70 at the worst modeled case, bank within 2 % of the modeled 5 kohm, 4 bodies in the NPM hot zone with 1 mm clearance",
+        _rc["ok"] and _rr["per_part"]["P_frac"]<=0.5 and _rc["part"]["Umax"]>=630 and _rr["per_part"]["V_peak"]<_rc["part"]["Umax"] and len(_rf["bodies"])==4 and _rf["clear_1mm"] and _rf["in_hot_zone"]
+        and os.path.exists("data/seed/datasheets/Vishay_PR01-02-03_28729_2025-07-08.pdf"),
+        f"{_rr['bank_R_ohm']:.0f} ohm ({_rr['dev_pct']} %), per part {_rr['per_part']['P_W']} W ({_rr['per_part']['P_frac']*100:.0f} % of P70), {_rr['per_part']['V_peak']} V peak of {_rc['part']['Umax']:.0f} V; {_rf['candidates']} free positions")
+except FileNotFoundError: chk("RCL1 bank evidence (data/results/rcl1_fit.json)",False,"missing")
 # owner-supplied products (2026-10-28): 832TC kept off the windings with its printed er, 841AR nickel paint kept out of the head (ferromagnetic), each zone fit listed
 try:
     _me=json.load(open("data/results/potting_matrix_eval.json")); _pf=_me["product_fit"]; _pr=_me["products"]
