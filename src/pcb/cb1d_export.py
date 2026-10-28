@@ -96,7 +96,7 @@ def pads_of(ref):
     lib = D.LIB[D.BYREF[ref]["type"]]; x0, y0, rot = PL[ref]; own = {}
     for k, v in D.NETS.items():
         for r, n in v: own[(r, n)] = k
-    return [dict(ref=ref, num=str(n), x=x0 + rotxy(px, py, rot)[0], y=y0 + rotxy(px, py, rot)[1], w=(h if rot % 180 == 90 else w), h=(w if rot % 180 == 90 else h), net=own.get((ref, str(n))), tht=bool(lib.get("tht")), drill=lib.get("drill", 0), shape=shp) for n, px, py, w, h, shp in lib["pads"]]
+    return [dict(ref=ref, num=str(n), x=x0 + rotxy(px, py, rot)[0], y=y0 + rotxy(px, py, rot)[1], w=(h if rot % 180 == 90 else w), h=(w if rot % 180 == 90 else h), net=own.get((ref, str(n))), tht=bool(lib.get("tht")), fine=bool(lib.get("fine")), drill=lib.get("drill", 0), shape=shp) for n, px, py, w, h, shp in lib["pads"]]
 PADS = [pd for p in D.PARTS if p["ref"] in PL for pd in pads_of(p["ref"])]
 HV = ({"DRAIN1", "CLAMP1"} if PW in ("R", "T") else ({"COIL_B", "DM1", "DM2"} if PW == "C" else set())); MV = {"DRAIN2", "CLAMP2"}
 def gap(a, b):

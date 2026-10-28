@@ -11,15 +11,19 @@ class Router:
         s.own=np.zeros((s.nl,s.N,s.N),np.int32); yy,xx=np.mgrid[0:s.N,0:s.N]; s.rad=np.hypot((xx*GR-s.off),(yy*GR-s.off))
         # distance of each cell to the board edge (positive inside): a circle of radius R for the discs, a W x H rectangle when pads.json carries "rect" (PB1R)
         s.edged=(np.minimum(d['rect'][0]/2-np.abs(xx*GR-s.off),d['rect'][1]/2-np.abs(yy*GR-s.off)) if d.get('rect') else s.R-s.rad)
-        s.padcells=[]; s.tracks=[]; s.vias=[]; s.fail=[]; s.unnet=1000
+        s.padcells=[]; s.tracks=[]; s.vias=[]; s.fail=[]; s.unnet=1000; s.finem=np.zeros((s.nl,s.N,s.N),bool)
         for k,p in enumerate(s.pads):
             nid=s.nid[p["net"]] if p["net"] else s.unnet+k
             m=s.rast(p); lays=range(s.nl) if p["tht"] else [0]
-            for l in lays: s.own[l][m]=nid
+            for l in lays:
+                s.own[l][m]=nid
+                if p.get("fine"): s.finem[l]|=m
             cells=np.argwhere(m); s.padcells.append((nid,cells,list(lays)))
         s.stats={}
     def rast(s,p):
         m=np.zeros((s.N,s.N),bool); r0,c0=s.cell(p["x"],p["y"]); hw=int(math.ceil(p["w"]/2/GR)); hh=int(math.ceil(p["h"]/2/GR))
+        if p.get("fine"):          # fine-pitch pads (LIB "fine": 0.5 mm LGA): only the cells whose centres lie in the pad (ceil inflates a 0.25 pad to 0.45 and closes the gaps);
+            hw=int(math.floor(p["w"]/2/GR+1e-9)); hh=int(math.floor(p["h"]/2/GR+1e-9))   # the true clearance is proved by drc.py and KiCad DRC on the exported copper
         if p["shape"]=="circle": rr=int(math.ceil(p["w"]/2/GR)); m[r0-rr:r0+rr+1,c0-rr:c0+rr+1]|=disk(rr)
         else: m[max(0,r0-hh):r0+hh+1,max(0,c0-hw):c0+hw+1]=True
         return m
@@ -32,7 +36,10 @@ class Router:
             o=s.own[l]; others=(o!=0)&(o!=nid); hvm=np.zeros_like(others)
             for h in s.hv:
                 if h in s.nid and s.nid[h]!=nid: hvm|=(o==s.nid[h])
-            rc=int(math.ceil((s.clr+hw)/GR)); b=ndi.binary_dilation(others,structure=disk(rc))
+            rc=int(math.ceil((s.clr+hw)/GR)); b=ndi.binary_dilation(others&~s.finem[l],structure=disk(rc))
+            # around fine-pitch pads the halo is the exact cell count: ceil((0.2+0.1)/0.15) is 3 in floating point (0.45 mm) and seals a 0.5 mm-pitch middle pad;
+            # every other copper keeps the old (conservative) halo, so boards without fine pads route exactly as before
+            if s.finem[l].any(): b|=ndi.binary_dilation(others&s.finem[l],structure=disk(int(math.ceil((s.clr+hw)/GR-1e-9))))
             rh=int(math.ceil(((s.hv_clr if (ishv or True) else s.clr)+hw)/GR))
             if ishv: b=ndi.binary_dilation(others,structure=disk(rh))
             else: b|=ndi.binary_dilation(hvm,structure=disk(rh))
@@ -144,6 +151,12 @@ class Router:
             if p["net"]: bynet.setdefault(p["net"],[]).append(k)
         def save():
             if state: pickle.dump(dict(own=s.own,tracks=s.tracks,vias=s.vias,fail=s.fail,done=s.done,stub_done=s.stub_done),open(state,"wb"))
+        # nets on fine-pitch pads go before the plane stubs: a stub from the neighbouring pad otherwise takes the only escape of a 0.5 mm-pitch middle pad
+        # (boards without fine pads: no such net, order unchanged)
+        for net in sorted({s.pads[k]["net"] for k in range(len(s.pads)) if s.pads[k].get("fine") and s.pads[k]["net"] and s.pads[k]["net"] not in s.planes and not s.pads[k]["net"].endswith("_NC")}):
+            if net in s.done or len(bynet[net]) < 2: continue
+            ok=s.route_net(net,bynet[net]); s.done.add(net)
+            if not ok: s.fail.append((net,"net",len(bynet[net])))
         for net in s.planes:
             if net in bynet:
                 for k in bynet[net]:
