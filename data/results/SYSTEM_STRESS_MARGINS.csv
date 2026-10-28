@@ -33,7 +33,7 @@ AD7389-4 VCC (+3V3D),AMS1117-3.3 output high limit 3.399 V vs VCC max 3.6 V,3.39
 AD7389-4 VCC (+3V3D),AMS1117-3.3 output low limit 3.201 V vs VCC min 3.0 V,3.201,3.0,V,6.7,3,PASS,
 RML 270 ohm 0603 (CB1D),power 3.3^2 / 270,0.04,0.1,W,59.7,50,PASS,CRCW0603 e3 P70 0.10 W (Vishay 20035)
 "+5VA (AB1A + AB1B analog, via CB1D FB2)",6 OPA2211 channels x 4.5 mA max + 4 OPA2365 amplifiers x 5 mA max (25 C),0.047,1.0,A,95.3,50,PASS,FB2 bead 1 A; over temperature 56 mA (OPA2211 6 mA per channel)
-"+5V rail (CB1D M5, 1.5 A)",LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature) + BMI270 gyro,0.7,1.5,A,53.3,30,PASS,M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)
+"+5V rail (CB1D M5, 1.5 A)",LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature) (gyro now on AU1),0.699,1.5,A,53.4,30,PASS,M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)
 TX lead channel,litz fill ratio,0.58,0.7,ratio,17.1,15,PASS,wall-top groove + roof channel
 TX layers,DC current sharing deviation,0.014,0.05,fraction,71.2,50,PASS,lead length differences
 TC4420 gate driver (2 FETs),"gate charge per turn-off (2 x 45 nC, Infineon Rev. 2.0) at 12 V: peak current with 2.2 ohm gate resistors (TC4420 6 A peak, DS21419D)",3.75,6.0,A,37.5,30,PASS,"turn-off in about 20 ns, negligible against the 3.8 us flyback; datasheet Qg and RG values must be confirmed"

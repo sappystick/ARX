@@ -1,45 +1,16 @@
 {
  "board": "AU1",
- "clearance_violations": 2,
- "open_nets": 3,
+ "clearance_violations": 0,
+ "open_nets": 0,
  "edge_samples": 0,
  "notch_samples": 0,
  "min_gap_by_layer": {
-  "F.Cu": 0.05,
-  "In2.Cu": 0.236,
-  "B.Cu": 0.236
+  "F.Cu": 0.2,
+  "In2.Cu": 0.298,
+  "In5.Cu": 0.351,
+  "In6.Cu": 0.329,
+  "B.Cu": 0.408
  },
- "violations": [
-  [
-   "('+5V_AU', 'SPK_P')",
-   "0.175",
-   "0.2",
-   "F.Cu",
-   "(8.9, 0.1)"
-  ],
-  [
-   "('GND', 'SPK_N')",
-   "0.05",
-   "0.2",
-   "F.Cu",
-   "(12.5, 8.2)"
-  ]
- ],
- "opens": [
-  [
-   "LINK_N",
-   "3",
-   "['UM.16']"
-  ],
-  [
-   "PWM_AU",
-   "2",
-   "['UM.17']"
-  ],
-  [
-   "HP_EN",
-   "3",
-   "['UM.20']"
-  ]
- ]
+ "violations": [],
+ "opens": []
 }

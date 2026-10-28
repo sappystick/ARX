@@ -3,25 +3,12 @@
  "board_key": "AU1",
  "kicad": "9.0.9",
  "zones_filled": true,
- "violations": 52,
- "unconnected": 5,
- "errors": {
-  "clearance": 1
+ "violations": 58,
+ "unconnected": 0,
+ "errors": {},
+ "warnings": {
+  "track_dangling": 1
  },
- "warnings": {},
- "lib_footprint_warnings": 51,
- "examples": [
-  {
-   "type": "clearance",
-   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.0500 mm)",
-   "items": [
-    "Track [SPK_N] on F.Cu, length 0.7500 mm",
-    "Pad 7 [GND] of US on F.Cu"
-   ],
-   "pos": {
-    "x": 109.85,
-    "y": 98.15
-   }
-  }
- ]
+ "lib_footprint_warnings": 57,
+ "examples": []
 }

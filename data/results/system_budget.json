@@ -376,11 +376,11 @@
   },
   {
    "part": "+5V rail (CB1D M5, 1.5 A)",
-   "stress": "LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature) + BMI270 gyro",
-   "value": 0.7,
+   "stress": "LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature) (gyro now on AU1)",
+   "value": 0.699,
    "rating": 1.5,
    "unit": "A",
-   "margin_pct": 53.3,
+   "margin_pct": 53.4,
    "required_margin_pct": 30,
    "status": "PASS",
    "note": "M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)"

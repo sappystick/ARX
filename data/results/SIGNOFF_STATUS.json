@@ -1,7 +1,7 @@
 {
  "counts": {
-  "PASS": 66,
-  "FAIL": 8,
+  "PASS": 69,
+  "FAIL": 5,
   "SKIP": 0,
   "UNVERIFIED": 4
  },
@@ -9,7 +9,7 @@
   "CB1D": {
    "route": {
     "state": "FAIL",
-    "detail": "48/49 nets"
+    "detail": "45/46 nets"
    },
    "indep": {
     "state": "FAIL",
@@ -216,20 +216,20 @@
   },
   "AU1": {
    "route": {
-    "state": "FAIL",
-    "detail": "32/35 nets"
+    "state": "PASS",
+    "detail": "38/38 nets"
    },
    "indep": {
-    "state": "FAIL",
-    "detail": "2 violations, 3 opens"
+    "state": "PASS",
+    "detail": "0 violations, 0 opens"
    },
    "kicad": {
-    "state": "FAIL",
-    "detail": "errors {'clearance': 1}, unconnected 5"
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0"
    },
    "gerber": {
     "state": "PASS",
-    "detail": "16 files, edge read-back OK"
+    "detail": "18 files, edge read-back OK"
    },
    "plane": {
     "state": "-",

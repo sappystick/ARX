@@ -1,11 +1,11 @@
 {
  "board": "AU1",
- "parts": 51,
+ "parts": 57,
  "errors": [],
- "nets_compared": 38,
+ "nets_compared": 41,
  "erc": {
-  "warning:footprint_link_issues": 51,
-  "warning:lib_symbol_issues": 51
+  "warning:footprint_link_issues": 57,
+  "warning:lib_symbol_issues": 57
  },
  "erc_errors": 0,
  "pdf": true,

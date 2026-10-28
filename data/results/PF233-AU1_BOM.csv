@@ -1,6 +1,9 @@
 Qty,Refs,Type,Value,MPN / note,Footprint
+1,UG,BMI270,BMI270,"Bosch BMI270 IMU (yaw rate), I2C",PF233:BMI270_LGA-14_2.5x3.0mm
 1,CVD2,C0603,100n,X7R VDD HF,Capacitor_SMD:C_0603_1608Metric
 1,CBB,C0603,100n,X7R boot,Capacitor_SMD:C_0603_1608Metric
+1,CG2,C0603,100n,"X7R, VDD",Capacitor_SMD:C_0603_1608Metric
+1,CG1,C0603,100n,"X7R, VDDIO",Capacitor_SMD:C_0603_1608Metric
 1,CBI2,C0603,100n 50V,X7R input HF,Capacitor_SMD:C_0603_1608Metric
 1,CNR,C0603,10n,NRST,Capacitor_SMD:C_0603_1608Metric
 1,CPW,C0603,10n,PWM filter,Capacitor_SMD:C_0603_1608Metric
@@ -25,6 +28,7 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,RBSL,R0603,100k,BSL invoke pull-down,Resistor_SMD:R_0603_1608Metric
 1,RHE,R0603,100k,EN pull-down,Resistor_SMD:R_0603_1608Metric
 1,RSD,R0603,100k,SHUTDOWN pull-down,Resistor_SMD:R_0603_1608Metric
+1,RGF,R0603,10R,gyro supply filter,Resistor_SMD:R_0603_1608Metric
 3,"RS1,RS2,RS3",R0603,10k,,Resistor_SMD:R_0603_1608Metric
 1,RDT,R0603,10k,jack detect pull-up,Resistor_SMD:R_0603_1608Metric
 2,"RI1,RI2",R0603,150k,RI,Resistor_SMD:R_0603_1608Metric
@@ -32,6 +36,8 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,RTX,R0603,1k,TX into the shared line,Resistor_SMD:R_0603_1608Metric
 1,RFB,R0603,22k1,FB bottom,Resistor_SMD:R_0603_1608Metric
 1,RNR,R0603,47k,NRST pull-up,Resistor_SMD:R_0603_1608Metric
+1,RGL,R0603,4k7,I2C SCL pull-up,Resistor_SMD:R_0603_1608Metric
+1,RGA,R0603,4k7,I2C SDA pull-up,Resistor_SMD:R_0603_1608Metric
 1,RFT,R0603,88k7,FB top,Resistor_SMD:R_0603_1608Metric
 1,UL,SOT23-5LDO,TLV75533,TI TLV75533PDBV 3.3 V 500 mA,Package_TO_SOT_SMD:SOT-23-5
 1,UB,SOT23-6BUCK,TPS560430,"TI TPS560430 4-36 V buck, 600 mA",Package_TO_SOT_SMD:SOT-23-6

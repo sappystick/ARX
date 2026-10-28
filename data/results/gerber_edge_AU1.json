@@ -15,7 +15,7 @@
     },
     "In1_Cu": {
      "outside_mm2": 0.0,
-     "min_edge_gap_mm": 0.501,
+     "min_edge_gap_mm": 0.5,
      "ok": true
     },
     "In2_Cu": {
@@ -25,12 +25,22 @@
     },
     "In3_Cu": {
      "outside_mm2": 0.0,
-     "min_edge_gap_mm": 0.501,
+     "min_edge_gap_mm": 0.5,
      "ok": true
     },
     "In4_Cu": {
      "outside_mm2": 0.0,
-     "min_edge_gap_mm": 0.501,
+     "min_edge_gap_mm": 0.5,
+     "ok": true
+    },
+    "In5_Cu": {
+     "outside_mm2": 0.0,
+     "min_edge_gap_mm": 1.0,
+     "ok": true
+    },
+    "In6_Cu": {
+     "outside_mm2": 0.0,
+     "min_edge_gap_mm": 1.0,
      "ok": true
     }
    },

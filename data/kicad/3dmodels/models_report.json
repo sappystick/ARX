@@ -246,25 +246,6 @@
    0.5
   ]
  },
- "BMI270": {
-  "model": "PF233_BMI270.wrl",
-  "fp": "PF233:BMI270_LGA-14_2.5x3.0mm",
-  "bbox_lo": [
-   -1.5,
-   -1.25,
-   0.0
-  ],
-  "bbox_hi": [
-   1.5,
-   1.25,
-   0.83
-  ],
-  "envelope": [
-   3.0,
-   2.5,
-   0.83
-  ]
- },
  "C1210": {
   "model": "PF233_C1210.wrl",
   "fp": "Capacitor_SMD:C_1210_3225Metric",

@@ -1,8 +1,8 @@
 {
  "boards": {
   "PF233-CB1D_routed.kicad_pcb": {
-   "components": 67,
-   "with_model": 62,
+   "components": 62,
+   "with_model": 57,
    "missing": [
     "JDBG",
     "JPW",
@@ -39,8 +39,8 @@
    ]
   },
   "PF233-AU1_routed.kicad_pcb": {
-   "components": 40,
-   "with_model": 38,
+   "components": 45,
+   "with_model": 43,
    "missing": [
     "UB",
     "UL"
@@ -78,12 +78,6 @@
    "covers_pads": true,
    "height": 1.1,
    "envelope_h": 1.1,
-   "height_ok": true
-  },
-  "BMI270": {
-   "covers_pads": true,
-   "height": 0.83,
-   "envelope_h": 0.83,
    "height_ok": true
   },
   "C0402": {

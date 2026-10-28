@@ -1,52 +1,58 @@
 Ref,Val,Package,PosX_mm,PosY_mm,Rot,Side
-JPWR,"Power from PM2 JAUP: VBUS_AU, GND",SolderPad_2x_P5.08mm,-11.0,19.5,0,top
-JLINK,"Link from HB2 JAU: AUD_LINK, GND",SolderPad_2x_P5.08mm,-11.0,-19.5,0,top
-UB,TPS560430,SOT-23-6,-4.0,15.0,0,top
-LB,22uH,L_Bourns_SRN4018,3.0,15.0,0,top
-CBI,2.2u 50V,C_1210_3225Metric,-10.0,14.0,0,top
-CBI2,100n 50V,C_0603_1608Metric,-10.0,11.0,0,top
-CBB,100n,C_0603_1608Metric,-4.0,11.5,0,top
-CBO,22u 10V,C_1210_3225Metric,9.0,14.0,0,top
-RFT,88k7,R_0603_1608Metric,0.0,11.0,0,top
-RFB,22k1,R_0603_1608Metric,3.0,11.0,0,top
-UL,TLV75533,SOT-23-5,-4.0,9.0,0,top
-CLI,1u,C_0603_1608Metric,-8.0,8.0,0,top
-CLO,1u,C_0603_1608Metric,0.0,8.0,0,top
+JPWR,"Power from PM2 JAUP: VBUS_AU, GND",SolderPad_2x_P5.08mm,-11.0,25.5,0,top
+JLINK,"Link from HB2 JAU: AUD_LINK, GND",SolderPad_2x_P5.08mm,-11.0,-25.5,0,top
+UB,TPS560430,SOT-23-6,-4.0,21.0,0,top
+LB,22uH,L_Bourns_SRN4018,3.0,21.0,0,top
+CBI,2.2u 50V,C_1210_3225Metric,-10.0,20.0,0,top
+CBI2,100n 50V,C_0603_1608Metric,-10.0,17.0,0,top
+CBB,100n,C_0603_1608Metric,-4.0,17.5,0,top
+CBO,22u 10V,C_1210_3225Metric,9.0,20.0,0,top
+RFT,88k7,R_0603_1608Metric,0.0,17.0,0,top
+RFB,22k1,R_0603_1608Metric,3.0,17.0,0,top
+UL,TLV75533,SOT-23-5,-4.0,15.0,0,top
+CLI,1u,C_0603_1608Metric,-8.0,14.0,0,top
+CLO,1u,C_0603_1608Metric,0.0,14.0,0,top
 UM,MSPM0G3507SDGS28,VSSOP-28_4.4x7.1mm_P0.5mm,-4.0,-1.0,0,top
 CVC,470n,C_0603_1608Metric,-9.0,2.0,0,top
 CVD,10u,C_0805_2012Metric,-9.5,-3.5,0,top
 CVD2,100n,C_0603_1608Metric,-7.5,-6.0,0,top
 RNR,47k,R_0603_1608Metric,-12.0,0.55,0,top
 CNR,10n,C_0603_1608Metric,-12.0,-1.3,180,top
-JSWD,SWD: 3V3 SWDIO SWCLK GND,Wire_pads_1x4_P2.54mm,15.5,13.0,0,top
+JSWD,SWD: 3V3 SWDIO SWCLK GND,Wire_pads_1x4_P2.54mm,15.5,19.0,0,top
 TPRST,NRST test pad,TestPad_1.5mm,-12.0,2.9,0,top
-RLK,100R,R_0603_1608Metric,-6.0,-14.0,0,top
-RTX,1k,R_0603_1608Metric,-2.0,-14.0,0,top
-DLK1,BAS16,D_SOD-123,-6.5,-16.0,0,top
-DLK2,BAS16,D_SOD-123,-2.0,-17.0,0,top
+RLK,100R,R_0603_1608Metric,-6.0,-20.0,0,top
+RTX,1k,R_0603_1608Metric,-2.0,-20.0,0,top
+DLK1,BAS16,D_SOD-123,-6.5,-22.0,0,top
+DLK2,BAS16,D_SOD-123,-2.0,-23.0,0,top
 JSEL,Output selector: COM P1 P2 P3,Wire_pads_1x4_P5.08mm,-15.5,-4.0,0,top
 RS1,10k,R_0603_1608Metric,-9.0,-1.0,0,top
 RS2,10k,R_0603_1608Metric,-10.5,-5.5,0,top
 RS3,10k,R_0603_1608Metric,-11.0,-7.0,0,top
 US,TPA2005D1DGN,HVSSOP-8-1EP_3x3mm_P0.65mm,7.0,1.0,0,top
 CSV,1u,C_0603_1608Metric,11.0,4.0,0,top
-CSV2,10u 10V,C_1210_3225Metric,10.5,7.5,0,top
+CSV2,10u 10V,C_1210_3225Metric,10.5,13.5,0,top
 CI1,1u,C_0603_1608Metric,2.0,-1.8,0,top
 CI2,1u,C_0603_1608Metric,1.5,-3.5,0,top
 RI1,150k,R_0603_1608Metric,2.0,2.0,0,top
 RI2,150k,R_0603_1608Metric,2.0,0.05,0,top
-RSD,100k,R_0603_1608Metric,11.0,-3.0,0,top
-JSPK,Speaker: SPK+ SPK- (8 ohm),SolderPad_2x_P5.08mm,11.0,-19.5,0,top
-UH,TPA6132A2RTE,WQFN-16-1EP_3x3mm_P0.5mm,7.0,-9.5,0,top
-CHL,1u,C_0603_1608Metric,2.0,-10.0,0,top
-CHR,1u,C_0603_1608Metric,2.0,-13.0,0,top
-CHV,2.2u,C_0603_1608Metric,11.0,-6.0,0,top
-CHP,2.2u,C_0603_1608Metric,11.0,-13.0,0,top
-CHF,1u,C_0603_1608Metric,10.2,-9.9,270,top
-CHS,1u,C_0603_1608Metric,8.05,-12.7,270,top
-RHE,100k,R_0603_1608Metric,4.0,-16.0,0,top
-RPW,1k,R_0603_1608Metric,1.0,-15.0,0,top
-CPW,10n,C_0603_1608Metric,0.0,-19.0,0,top
+RSD,100k,R_0603_1608Metric,5.5,4.0,0,top
+JSPK,Speaker: SPK+ SPK- (8 ohm),SolderPad_2x_P5.08mm,11.0,-25.5,0,top
+UH,TPA6132A2RTE,WQFN-16-1EP_3x3mm_P0.5mm,7.0,-15.5,0,top
+CHL,1u,C_0603_1608Metric,2.0,-16.0,0,top
+CHR,1u,C_0603_1608Metric,2.0,-19.0,0,top
+CHV,2.2u,C_0603_1608Metric,11.0,-12.0,0,top
+CHP,2.2u,C_0603_1608Metric,11.0,-19.0,0,top
+CHF,1u,C_0603_1608Metric,10.2,-15.9,270,top
+CHS,1u,C_0603_1608Metric,8.05,-18.7,270,top
+RHE,100k,R_0603_1608Metric,4.0,-22.0,0,top
+RPW,1k,R_0603_1608Metric,-0.5,-13.5,0,top
+CPW,10n,C_0603_1608Metric,-1.0,-15.5,0,top
 JHP,Headphone jack: TIP(L) RING(R) SLEEVE DET,Wire_pads_1x4_P5.08mm,15.5,-5.0,0,top
 RDT,10k,R_0603_1608Metric,2.5,3.5,0,top
 RBSL,100k,R_0603_1608Metric,1.0,-5.0,0,top
+UG,BMI270,BMI270_LGA-14_2.5x3.0mm,-8.5,5.0,180,top
+CG1,100n,C_0603_1608Metric,-12.5,7.0,0,top
+CG2,100n,C_0603_1608Metric,-12.0,10.0,0,top
+RGA,4k7,R_0603_1608Metric,-6.0,7.5,0,top
+RGL,4k7,R_0603_1608Metric,-3.0,7.5,0,top
+RGF,10R,R_0603_1608Metric,-11.0,8.5,0,top

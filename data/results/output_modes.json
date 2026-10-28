@@ -43,14 +43,9 @@
       "t1_us": 549.2
      },
      {
-      "what": "AU1 reply: selector state + status (half duplex)",
+      "what": "AU1 reply: selector state + yaw rate (half duplex)",
       "t0_us": 549.2,
-      "t1_us": 579.2
-     },
-     {
-      "what": "gyro I2C read (yaw rate)",
-      "t0_us": 579.2,
-      "t1_us": 696.7
+      "t1_us": 599.2
      }
     ],
     "LED_ONLY": [
@@ -65,14 +60,9 @@
       "t1_us": 821.2
      },
      {
-      "what": "AU1 reply: selector state + status (half duplex)",
+      "what": "AU1 reply: selector state + yaw rate (half duplex)",
       "t0_us": 821.2,
-      "t1_us": 851.2
-     },
-     {
-      "what": "gyro I2C read (yaw rate)",
-      "t0_us": 851.2,
-      "t1_us": 968.7
+      "t1_us": 871.2
      }
     ],
     "COMBINED": [
@@ -82,26 +72,21 @@
       "t1_us": 549.2
      },
      {
-      "what": "AU1 reply: selector state + status (half duplex)",
+      "what": "AU1 reply: selector state + yaw rate (half duplex)",
       "t0_us": 549.2,
-      "t1_us": 579.2
+      "t1_us": 599.2
      },
      {
       "what": "led frame (between sweeps only)",
-      "t0_us": 579.2,
-      "t1_us": 851.2
-     },
-     {
-      "what": "gyro I2C read (yaw rate)",
-      "t0_us": 851.2,
-      "t1_us": 968.7
+      "t0_us": 599.2,
+      "t1_us": 871.2
      }
     ]
    },
    "slot_margin_us": {
-    "AUDIO_ONLY": 395.6,
-    "LED_ONLY": 123.6,
-    "COMBINED": 123.6
+    "AUDIO_ONLY": 493.1,
+    "LED_ONLY": 221.1,
+    "COMBINED": 221.1
    },
    "ok": true
   },
@@ -119,14 +104,9 @@
       "t1_us": 549.2
      },
      {
-      "what": "AU1 reply: selector state + status (half duplex)",
+      "what": "AU1 reply: selector state + yaw rate (half duplex)",
       "t0_us": 549.2,
-      "t1_us": 579.2
-     },
-     {
-      "what": "gyro I2C read (yaw rate)",
-      "t0_us": 579.2,
-      "t1_us": 696.7
+      "t1_us": 599.2
      }
     ],
     "LED_ONLY": [
@@ -141,14 +121,9 @@
       "t1_us": 821.2
      },
      {
-      "what": "AU1 reply: selector state + status (half duplex)",
+      "what": "AU1 reply: selector state + yaw rate (half duplex)",
       "t0_us": 821.2,
-      "t1_us": 851.2
-     },
-     {
-      "what": "gyro I2C read (yaw rate)",
-      "t0_us": 851.2,
-      "t1_us": 968.7
+      "t1_us": 871.2
      }
     ],
     "COMBINED": [
@@ -158,26 +133,21 @@
       "t1_us": 549.2
      },
      {
-      "what": "AU1 reply: selector state + status (half duplex)",
+      "what": "AU1 reply: selector state + yaw rate (half duplex)",
       "t0_us": 549.2,
-      "t1_us": 579.2
+      "t1_us": 599.2
      },
      {
       "what": "led frame (between sweeps only)",
-      "t0_us": 579.2,
-      "t1_us": 851.2
-     },
-     {
-      "what": "gyro I2C read (yaw rate)",
-      "t0_us": 851.2,
-      "t1_us": 968.7
+      "t0_us": 599.2,
+      "t1_us": 871.2
      }
     ]
    },
    "slot_margin_us": {
-    "AUDIO_ONLY": 752.6,
-    "LED_ONLY": 480.6,
-    "COMBINED": 480.6
+    "AUDIO_ONLY": 850.1,
+    "LED_ONLY": 578.1,
+    "COMBINED": 578.1
    },
    "ok": true
   },
@@ -195,14 +165,9 @@
       "t1_us": 549.2
      },
      {
-      "what": "AU1 reply: selector state + status (half duplex)",
+      "what": "AU1 reply: selector state + yaw rate (half duplex)",
       "t0_us": 549.2,
-      "t1_us": 579.2
-     },
-     {
-      "what": "gyro I2C read (yaw rate)",
-      "t0_us": 579.2,
-      "t1_us": 696.7
+      "t1_us": 599.2
      }
     ],
     "LED_ONLY": [
@@ -217,14 +182,9 @@
       "t1_us": 821.2
      },
      {
-      "what": "AU1 reply: selector state + status (half duplex)",
+      "what": "AU1 reply: selector state + yaw rate (half duplex)",
       "t0_us": 821.2,
-      "t1_us": 851.2
-     },
-     {
-      "what": "gyro I2C read (yaw rate)",
-      "t0_us": 851.2,
-      "t1_us": 968.7
+      "t1_us": 871.2
      }
     ],
     "COMBINED": [
@@ -234,26 +194,21 @@
       "t1_us": 549.2
      },
      {
-      "what": "AU1 reply: selector state + status (half duplex)",
+      "what": "AU1 reply: selector state + yaw rate (half duplex)",
       "t0_us": 549.2,
-      "t1_us": 579.2
+      "t1_us": 599.2
      },
      {
       "what": "led frame (between sweeps only)",
-      "t0_us": 579.2,
-      "t1_us": 851.2
-     },
-     {
-      "what": "gyro I2C read (yaw rate)",
-      "t0_us": 851.2,
-      "t1_us": 968.7
+      "t0_us": 599.2,
+      "t1_us": 871.2
      }
     ]
    },
    "slot_margin_us": {
-    "AUDIO_ONLY": 1483.5,
-    "LED_ONLY": 1211.5,
-    "COMBINED": 1211.5
+    "AUDIO_ONLY": 1581.0,
+    "LED_ONLY": 1309.0,
+    "COMBINED": 1309.0
    },
    "ok": true
   }

@@ -5,7 +5,7 @@
       "Application": "Pcbnew",
       "Version": "9.0.9-9.0.9~ubuntu24.04.1"
     },
-    "CreationDate": "2026-10-28T15:40:25+00:00"
+    "CreationDate": "2026-10-28T19:00:19+00:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -15,9 +15,9 @@
     },
     "Size": {
       "X": 36.1,
-      "Y": 44.1
+      "Y": 60.1
     },
-    "LayerNumber": 6,
+    "LayerNumber": 8,
     "BoardThickness": 1.6,
     "Finish": "HASL lead-free"
   },
@@ -34,7 +34,7 @@
       "PadToPad": 0.16,
       "PadToTrack": 0.16,
       "TrackToTrack": 0.2,
-      "MinLineWidth": 0.2,
+      "MinLineWidth": 0.15,
       "TrackToRegion": 0.16,
       "RegionToRegion": 0.16
     }
@@ -66,8 +66,18 @@
       "FilePolarity": "Positive"
     },
     {
+      "Path": "b-In5_Cu.gbr",
+      "FileFunction": "Copper,L6,Inr",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "b-In6_Cu.gbr",
+      "FileFunction": "Copper,L7,Inr",
+      "FilePolarity": "Positive"
+    },
+    {
       "Path": "b-B_Cu.gbr",
-      "FileFunction": "Copper,L6,Bot",
+      "FileFunction": "Copper,L8,Bot",
       "FilePolarity": "Positive"
     },
     {
@@ -166,8 +176,28 @@
     {
       "Type": "Dielectric",
       "Material": "FR4",
-      "Name": "In4.Cu/B.Cu",
-      "Notes": "Type: dielectric layer 5 (from In4.Cu to B.Cu)"
+      "Name": "In4.Cu/In5.Cu",
+      "Notes": "Type: dielectric layer 5 (from In4.Cu to In5.Cu)"
+    },
+    {
+      "Type": "Copper",
+      "Name": "In5.Cu"
+    },
+    {
+      "Type": "Dielectric",
+      "Material": "FR4",
+      "Name": "In5.Cu/In6.Cu",
+      "Notes": "Type: dielectric layer 6 (from In5.Cu to In6.Cu)"
+    },
+    {
+      "Type": "Copper",
+      "Name": "In6.Cu"
+    },
+    {
+      "Type": "Dielectric",
+      "Material": "FR4",
+      "Name": "In6.Cu/B.Cu",
+      "Notes": "Type: dielectric layer 7 (from In6.Cu to B.Cu)"
     },
     {
       "Type": "Copper",

@@ -1,5 +1,5 @@
 {
- "status": "MODELED: noise-free coil model, straight sweep, point target; sweep direction from the CB1D-C2 BMI270 yaw gyro (in the design 2026-10-28, not built)",
+ "status": "MODELED: noise-free coil model, straight sweep, point target; sweep direction from the AU1 BMI270 yaw gyro (on CB1D-C2 until 2026-10-28; yaw is the same anywhere on the rigid detector; it reaches the head in the AU1 link reply, one frame late) (in the design 2026-10-28, not built)",
  "passes": [
   {
    "depth_mm": 100,
@@ -251,7 +251,7 @@
  },
  "pinpoint_noise_note": "per-sample SNR after the firmware averaging; samples every 5 mm of head travel; 5-sample (25 mm) smoothing",
  "gyro": {
-  "part": "BMI270 (CB1D-C2 UG)",
+  "part": "BMI270 (AU1 UG; via the link reply)",
   "offset_worst_dps": 1.1,
   "sweep_rate_dps": [
    14.3,
