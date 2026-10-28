@@ -192,6 +192,11 @@
 },
 "controls": {
 "L": [
+"data/gerber/CB1D_C1",
+"data/gerber/HB2",
+"data/gerber/PB1R_v3",
+"data/gerber/PM2",
+"data/gerber/TXJ1_v2",
 "docs",
 "docs/design",
 "scripts",
@@ -247,16 +252,16 @@
 "data/gerber/AB1B_v1/PF233-AB1B-v1-NPTH.drl",
 "data/gerber/AB1B_v1/PF233-AB1B-v1-PTH.drl",
 "data/gerber/AB1B_v1/PF233-AB1B-v1-job.gbrjob",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-B_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-B_Mask.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-Edge_Cuts.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-F_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-F_Mask.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-In1_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-In2_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-In3_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-In4_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-PTH.drl",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-B_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-B_Mask.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-Edge_Cuts.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-F_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-F_Mask.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-In1_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-In2_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-In3_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-In4_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-PTH.drl",
 "data/gerber/HB2/PF233-HB2-B_Cu.gbr",
 "data/gerber/HB2/PF233-HB2-B_Mask.gbr",
 "data/gerber/HB2/PF233-HB2-Edge_Cuts.gbr",
@@ -280,14 +285,14 @@
 "data/gerber/HTA_v2/PF233-HTA-v2-PTH.drl",
 "data/gerber/HTA_v2/PF233-HTA-v2_BOM.csv",
 "data/gerber/HTA_v2/PF233-HTA-v2_preview.png",
-"data/gerber/LB1_v5/PF233-LB1-v5-B_Cu.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-B_Mask.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-Edge_Cuts.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-F_Cu.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-F_Mask.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-In1_Cu.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-In2_Cu.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-PTH.drl",
+"data/gerber/LB1_v6/PF233-LB1-v6-B_Cu.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-B_Mask.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-Edge_Cuts.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-F_Cu.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-F_Mask.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-In1_Cu.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-In2_Cu.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-PTH.drl",
 "data/gerber/PB1R_v3/PF233-PB1R-v3-B_Cu.gbr",
 "data/gerber/PB1R_v3/PF233-PB1R-v3-B_Mask.gbr",
 "data/gerber/PB1R_v3/PF233-PB1R-v3-Edge_Cuts.gbr",
@@ -391,6 +396,7 @@
 "data/kicad/PF233-CB1D_routed.kicad_dru",
 "data/kicad/PF233-CB1D_routed.kicad_pcb",
 "data/kicad/PF233-CB1D_routed.kicad_pro",
+"data/kicad/PF233-HB2_placed.kicad_pcb",
 "data/kicad/PF233-HB2_routed.kicad_dru",
 "data/kicad/PF233-HB2_routed.kicad_pcb",
 "data/kicad/PF233-HB2_routed.kicad_pro",
@@ -404,6 +410,7 @@
 "data/kicad/PF233-PB1R_routed.kicad_dru",
 "data/kicad/PF233-PB1R_routed.kicad_pcb",
 "data/kicad/PF233-PB1R_routed.kicad_pro",
+"data/kicad/PF233-PM2_placed.kicad_pcb",
 "data/kicad/PF233-PM2_routed.kicad_dru",
 "data/kicad/PF233-PM2_routed.kicad_pcb",
 "data/kicad/PF233-PM2_routed.kicad_pro",
@@ -480,6 +487,7 @@
 "data/results/drc_PB1R.json",
 "data/results/drc_PM2.json",
 "data/results/fine_check.json",
+"data/results/fw_timeline.json",
 "data/results/gerber_ab1_AB1A.json",
 "data/results/gerber_ab1_AB1B.json",
 "data/results/gerber_edge_AB1A.json",
@@ -493,6 +501,7 @@
 "data/results/gerber_hv_CB1D.json",
 "data/results/gerber_plane_PB1R.json",
 "data/results/head_crosscheck.json",
+"data/results/hood_tolerance.json",
 "data/results/indep_drc_AB1A.json",
 "data/results/indep_drc_AB1B.json",
 "data/results/kicad_drc_AB1A.json",
@@ -508,6 +517,7 @@
 "data/results/kicad_drc_TXJ1.json",
 "data/results/models3d_check.json",
 "data/results/pb1r_check.json",
+"data/results/pf233_timing.h",
 "data/results/power_dock_check.json",
 "data/results/route_CB1D.json",
 "data/results/route_HB2.json",
@@ -523,8 +533,11 @@
 "data/results/tx_system.json",
 "data/results/tx_vbus.json",
 "data/results/wiring_audit.json",
+"docs/STATUS.md",
 "docs/UNVERIFIED.md",
 "docs/design/DATASHEET_LOG.md",
+"docs/design/FAB_RULES.md",
+"scripts/manifest.py",
 "scripts/publish_data.py",
 "scripts/release_tx.py",
 "scripts/signoff_status.py",
@@ -792,6 +805,9 @@
 "work/kit_v22/trigger_check.json",
 "work/kit_v22/tx_system.json",
 "work/kit_v23/TX_ONTIME_LUT.csv",
+"work/kit_v23/fw_timeline.json",
+"work/kit_v23/hood_tolerance.json",
+"work/kit_v23/pf233_timing.h",
 "work/kit_v23/power_dock_check.json",
 "work/kit_v23/system_live.json",
 "work/kit_v23/tx_vbus.json",
@@ -884,6 +900,18 @@
 ],
 "W": [
 "work/kit_v22/drc_PM2.json"
+]
+},
+"fab-margin": {
+"L": [
+"src/pcb"
+],
+"R": [
+"src/pcb/dru_gen.py",
+"src/pcb/fab_margin.py"
+],
+"W": [
+"data/results/fab_margin_audit.json"
 ]
 },
 "formers-low": {
@@ -1171,6 +1199,19 @@
 "work/kit_v18/PARTS/hood_v3_tile_cut_sheet.dxf",
 "work/kit_v22/HOOD_AXI.png",
 "work/kit_v22/hood_axi.json"
+]
+},
+"hood-tol": {
+"L": [
+"scripts/tracehook"
+],
+"R": [
+"work/hood_axi.py",
+"work/hood_tolerance.py",
+"work/kit_v15/LOW/paths.pkl"
+],
+"W": [
+"work/kit_v23/hood_tolerance.json"
 ]
 },
 "indep-drc": {
@@ -1673,6 +1714,23 @@
 "work/kit_v6/PM2/pads.json"
 ]
 },
+"potting": {
+"L": [
+"src/mech"
+],
+"R": [
+"src/mech/potting_volumes.py",
+"stl/head/SPINE_COMB_v5.stl",
+"work/kit_v19/SPINE/NPM_N1_body_with_tunnel_v2.stl",
+"work/kit_v19/SPINE/NPM_N2_lid_with_fill_ports.stl",
+"work/kit_v19/SPINE/NPM_N3_hot_zone_dam_v2.stl",
+"work/kit_v22/SET/02_CORE_PCB_CYLINDER/CORE_CYLINDER_v5_integrated.stl",
+"work/kit_v6/PB1R/bodies.json"
+],
+"W": [
+"data/results/potting_volumes.json"
+]
+},
 "print-check": {
 "L": [
 "src/mech",
@@ -1789,16 +1847,6 @@
 "data/gerber/AB1B_v1/PF233-AB1B-v1-NPTH.drl",
 "data/gerber/AB1B_v1/PF233-AB1B-v1-PTH.drl",
 "data/gerber/AB1B_v1/PF233-AB1B-v1-job.gbrjob",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-B_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-B_Mask.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-Edge_Cuts.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-F_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-F_Mask.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-In1_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-In2_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-In3_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-In4_Cu.gbr",
-"data/gerber/CB1D_B3/PF233-CB1D-B3-PTH.drl",
 "data/gerber/HB2/PF233-HB2-B_Cu.gbr",
 "data/gerber/HB2/PF233-HB2-B_Mask.gbr",
 "data/gerber/HB2/PF233-HB2-Edge_Cuts.gbr",
@@ -1822,14 +1870,6 @@
 "data/gerber/HTA_v2/PF233-HTA-v2-PTH.drl",
 "data/gerber/HTA_v2/PF233-HTA-v2_BOM.csv",
 "data/gerber/HTA_v2/PF233-HTA-v2_preview.png",
-"data/gerber/LB1_v5/PF233-LB1-v5-B_Cu.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-B_Mask.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-Edge_Cuts.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-F_Cu.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-F_Mask.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-In1_Cu.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-In2_Cu.gbr",
-"data/gerber/LB1_v5/PF233-LB1-v5-PTH.drl",
 "data/gerber/PB1R_v3/PF233-PB1R-v3-B_Cu.gbr",
 "data/gerber/PB1R_v3/PF233-PB1R-v3-B_Mask.gbr",
 "data/gerber/PB1R_v3/PF233-PB1R-v3-Edge_Cuts.gbr",
@@ -2022,6 +2062,7 @@
 "data/results/gerber_hv_CB1D.json",
 "data/results/gerber_plane_PB1R.json",
 "data/results/head_crosscheck.json",
+"data/results/hood_tolerance.json",
 "data/results/indep_drc_AB1A.json",
 "data/results/indep_drc_AB1B.json",
 "data/results/kicad_drc_AB1A.json",
@@ -2315,6 +2356,9 @@
 "work/kit_v22/tx_system.json",
 "work/kit_v22/wiring_audit.json",
 "work/kit_v23/TX_ONTIME_LUT.csv",
+"work/kit_v23/fw_timeline.json",
+"work/kit_v23/hood_tolerance.json",
+"work/kit_v23/pf233_timing.h",
 "work/kit_v23/power_dock_check.json",
 "work/kit_v23/system_live.json",
 "work/kit_v23/tx_vbus.json",
@@ -2340,6 +2384,24 @@
 "work/out_board/AB1B_layout.json"
 ],
 "W": [
+"data/gerber/CB1D_C1/PF233-CB1D-C1-B_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-B_Mask.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-Edge_Cuts.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-F_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-F_Mask.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-In1_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-In2_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-In3_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-In4_Cu.gbr",
+"data/gerber/CB1D_C1/PF233-CB1D-C1-PTH.drl",
+"data/gerber/LB1_v6/PF233-LB1-v6-B_Cu.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-B_Mask.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-Edge_Cuts.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-F_Cu.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-F_Mask.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-In1_Cu.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-In2_Cu.gbr",
+"data/gerber/LB1_v6/PF233-LB1-v6-PTH.drl",
 "data/kicad/sch_functional/PF233-AB1A_functional.pdf",
 "data/kicad/sch_functional/PF233-AB1B_functional.pdf",
 "data/kicad/sch_functional/PF233-CB1D_functional.pdf",
@@ -2351,7 +2413,9 @@
 "data/results/AB1B_layout.json",
 "data/results/PF233-AB1A_functional.pdf",
 "data/results/PF233-AB1B_check.json",
-"data/results/PF233-AB1B_functional.pdf"
+"data/results/PF233-AB1B_functional.pdf",
+"data/results/fw_timeline.json",
+"data/results/pf233_timing.h"
 ]
 },
 "route-cb1d": {
@@ -2621,10 +2685,12 @@
 "status": {
 "L": [
 "data/bench",
+"deliverables/PHIFOLD233_PACKAGE_r5/stl_print",
 "scripts",
 "src/mech",
 "src/pcb",
 "src/sim",
+"stl",
 "tests",
 "work/kit_v18/HTA",
 "work/kit_v22/GERBER_AB1A",
@@ -2644,15 +2710,22 @@
 "data/kicad/TXJ1.kicad_pcb",
 "data/pipeline/graph.json",
 "data/results/board_sch/board_sch_check.json",
+"data/results/fab_margin_audit.json",
+"data/results/formers_print_check.json",
 "data/results/indep_drc/HTA.json",
 "data/results/indep_drc/SB1R-QA.json",
 "data/results/indep_drc/SB1R-QB.json",
 "data/results/indep_drc/TXJ1.json",
 "data/results/indep_drc_controls.json",
+"data/results/potting_volumes.json",
 "data/results/print_check.json",
 "data/results/studies/ab1_drive_option.json",
 "data/results/studies/router_study_b9.json",
+"data/results/studies/su_study.json",
+"data/results/system_budget.json",
+"data/results/system_live.json",
 "data/seed/footprints/UltraLibrarian_AD7389-4BCPZ_CP-24-25_ADI.zip",
+"deliverables/PHIFOLD233_PACKAGE_r5/viewer.html",
 "docs/UNVERIFIED.md",
 "docs/delivery/boards/SB1R-QA_BOM.csv",
 "docs/delivery/boards/SB1R-QA_pickplace.csv",
@@ -2994,13 +3067,21 @@
 "scripts/signoff_status.py",
 "src/mech/link_path_check.py",
 "src/mech/mech_v20.py",
+"src/mech/mesh_section.py",
+"src/mech/solid_union.py",
 "src/pcb/afe_design.py",
 "src/pcb/dru_gen.py",
 "src/pcb/kicad_bom_pnp.py",
 "src/pcb/pw_design.py",
+"src/render/system_live.js",
 "src/sim/ad7389_readout.py",
 "src/sim/sbq_damp2.py",
+"stl/head/CORE_CYLINDER_v5_integrated.stl",
+"stl/head/LOTUS_HOOD_CARRIER_v3_butted.stl",
+"stl/shaft_handle/NPM_N1_body_with_tunnel_v2.stl",
+"stl/shaft_handle/SUPERSEDED.txt",
 "tests/regress.py",
+"tests/system_live_golden.js",
 "work/kit_v18/CB1D/PF233-CB1D_BOM.csv",
 "work/kit_v18/CB1D/PF233-CB1D_pickplace.csv",
 "work/kit_v18/PARTS/hood_v3_report.json",
@@ -3075,6 +3156,9 @@
 "work/kit_v22/trigger_check.json",
 "work/kit_v22/tx_system.json",
 "work/kit_v22/wiring_audit.json",
+"work/kit_v23/fw_timeline.json",
+"work/kit_v23/hood_tolerance.json",
+"work/kit_v23/pf233_timing.h",
 "work/kit_v23/power_dock_check.json",
 "work/kit_v23/tx_vbus.json",
 "work/kit_v23/upper_check.json",

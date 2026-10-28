@@ -1,0 +1,348 @@
+{
+ "status": "MODELED; SCLK, LED class timing and housekeeping ASSUMED",
+ "inputs": {
+  "t_zero_us": 3.7606267711285213,
+  "t_quiet_us": 5.5609268211368565,
+  "blank_release_us": 5.0,
+  "first_gate_us": 5.91,
+  "first_gate_case": "A aligned 0.01 mV, Cself 100 pF, blank release 5 us",
+  "gates_us": [
+   [
+    5.91,
+    9.56
+   ],
+   [
+    9.56,
+    15.47
+   ],
+   [
+    15.47,
+    25.03
+   ],
+   [
+    25.03,
+    40.5
+   ],
+   [
+    40.5,
+    65.54
+   ],
+   [
+    65.54,
+    106.04
+   ],
+   [
+    106.04,
+    171.57
+   ],
+   [
+    171.57,
+    277.6
+   ],
+   [
+    277.6,
+    449.15
+   ]
+  ],
+  "rx_end_us": 449.2,
+  "adc_frame_us": 0.84,
+  "led_stream_us": 2060.0,
+  "sclk_hz": 40000000.0,
+  "sclk_min_hz_for_3_frames": 27177144,
+  "adc_sclk_max_hz": 80000000.0
+ },
+ "modes": {
+  "scan": {
+   "I_A": 8.0,
+   "f_Hz": 800.0,
+   "period_us": 1250.0,
+   "ton_max_us": 22.74,
+   "busy_us": 481.9,
+   "free_us": 768.1,
+   "spare_pct": 61.4,
+   "fits": true,
+   "led": {
+    "strategy": "drop 2 pulse(s) every 27 periods; the LED stream runs in the gap",
+    "prf_cost_pct": 7.41,
+    "refresh_hz": 29.6,
+    "dropped": 2,
+    "every": 27
+   },
+   "adc_frames_in_shortest_gate": 4.3,
+   "adc_ok": true,
+   "schedule": [
+    {
+     "what": "housekeeping: VBUS / ISENSE / NTC, set ton from the LUT",
+     "t0_us": -32.74,
+     "t1_us": -22.74
+    },
+    {
+     "what": "TX on (ramp)",
+     "t0_us": -22.74,
+     "t1_us": 0.0
+    },
+    {
+     "what": "TX off: flyback to current zero",
+     "t0_us": 0.0,
+     "t1_us": 3.76
+    },
+    {
+     "what": "blank switch closed until release",
+     "t0_us": 0.0,
+     "t1_us": 5.0
+    },
+    {
+     "what": "ring-down to quiet",
+     "t0_us": 3.76,
+     "t1_us": 5.56
+    },
+    {
+     "what": "gate 1",
+     "t0_us": 5.91,
+     "t1_us": 9.56
+    },
+    {
+     "what": "gate 2",
+     "t0_us": 9.56,
+     "t1_us": 15.47
+    },
+    {
+     "what": "gate 3",
+     "t0_us": 15.47,
+     "t1_us": 25.03
+    },
+    {
+     "what": "gate 4",
+     "t0_us": 25.03,
+     "t1_us": 40.5
+    },
+    {
+     "what": "gate 5",
+     "t0_us": 40.5,
+     "t1_us": 65.54
+    },
+    {
+     "what": "gate 6",
+     "t0_us": 65.54,
+     "t1_us": 106.04
+    },
+    {
+     "what": "gate 7",
+     "t0_us": 106.04,
+     "t1_us": 171.57
+    },
+    {
+     "what": "gate 8",
+     "t0_us": 171.57,
+     "t1_us": 277.6
+    },
+    {
+     "what": "gate 9",
+     "t0_us": 277.6,
+     "t1_us": 449.15
+    },
+    {
+     "what": "free",
+     "t0_us": 449.15,
+     "t1_us": 1217.26
+    }
+   ],
+   "ok": true
+  },
+  "mid": {
+   "I_A": 14.0,
+   "f_Hz": 600.0,
+   "period_us": 1666.7,
+   "ton_max_us": 40.73,
+   "busy_us": 499.9,
+   "free_us": 1166.8,
+   "spare_pct": 70.0,
+   "fits": true,
+   "led": {
+    "strategy": "drop 1 pulse(s) every 20 periods; the LED stream runs in the gap",
+    "prf_cost_pct": 5.0,
+    "refresh_hz": 30.0,
+    "dropped": 1,
+    "every": 20
+   },
+   "adc_frames_in_shortest_gate": 4.3,
+   "adc_ok": true,
+   "schedule": [
+    {
+     "what": "housekeeping: VBUS / ISENSE / NTC, set ton from the LUT",
+     "t0_us": -50.73,
+     "t1_us": -40.73
+    },
+    {
+     "what": "TX on (ramp)",
+     "t0_us": -40.73,
+     "t1_us": 0.0
+    },
+    {
+     "what": "TX off: flyback to current zero",
+     "t0_us": 0.0,
+     "t1_us": 3.76
+    },
+    {
+     "what": "blank switch closed until release",
+     "t0_us": 0.0,
+     "t1_us": 5.0
+    },
+    {
+     "what": "ring-down to quiet",
+     "t0_us": 3.76,
+     "t1_us": 5.56
+    },
+    {
+     "what": "gate 1",
+     "t0_us": 5.91,
+     "t1_us": 9.56
+    },
+    {
+     "what": "gate 2",
+     "t0_us": 9.56,
+     "t1_us": 15.47
+    },
+    {
+     "what": "gate 3",
+     "t0_us": 15.47,
+     "t1_us": 25.03
+    },
+    {
+     "what": "gate 4",
+     "t0_us": 25.03,
+     "t1_us": 40.5
+    },
+    {
+     "what": "gate 5",
+     "t0_us": 40.5,
+     "t1_us": 65.54
+    },
+    {
+     "what": "gate 6",
+     "t0_us": 65.54,
+     "t1_us": 106.04
+    },
+    {
+     "what": "gate 7",
+     "t0_us": 106.04,
+     "t1_us": 171.57
+    },
+    {
+     "what": "gate 8",
+     "t0_us": 171.57,
+     "t1_us": 277.6
+    },
+    {
+     "what": "gate 9",
+     "t0_us": 277.6,
+     "t1_us": 449.15
+    },
+    {
+     "what": "free",
+     "t0_us": 449.15,
+     "t1_us": 1615.94
+    }
+   ],
+   "ok": true
+  },
+  "boost": {
+   "I_A": 20.0,
+   "f_Hz": 400.0,
+   "period_us": 2500.0,
+   "ton_max_us": 59.84,
+   "busy_us": 519.0,
+   "free_us": 1981.0,
+   "spare_pct": 79.2,
+   "fits": true,
+   "led": {
+    "strategy": "drop 1 pulse(s) every 13 periods; the LED stream runs in the gap",
+    "prf_cost_pct": 7.69,
+    "refresh_hz": 30.8,
+    "dropped": 1,
+    "every": 13
+   },
+   "adc_frames_in_shortest_gate": 4.3,
+   "adc_ok": true,
+   "schedule": [
+    {
+     "what": "housekeeping: VBUS / ISENSE / NTC, set ton from the LUT",
+     "t0_us": -69.84,
+     "t1_us": -59.84
+    },
+    {
+     "what": "TX on (ramp)",
+     "t0_us": -59.84,
+     "t1_us": 0.0
+    },
+    {
+     "what": "TX off: flyback to current zero",
+     "t0_us": 0.0,
+     "t1_us": 3.76
+    },
+    {
+     "what": "blank switch closed until release",
+     "t0_us": 0.0,
+     "t1_us": 5.0
+    },
+    {
+     "what": "ring-down to quiet",
+     "t0_us": 3.76,
+     "t1_us": 5.56
+    },
+    {
+     "what": "gate 1",
+     "t0_us": 5.91,
+     "t1_us": 9.56
+    },
+    {
+     "what": "gate 2",
+     "t0_us": 9.56,
+     "t1_us": 15.47
+    },
+    {
+     "what": "gate 3",
+     "t0_us": 15.47,
+     "t1_us": 25.03
+    },
+    {
+     "what": "gate 4",
+     "t0_us": 25.03,
+     "t1_us": 40.5
+    },
+    {
+     "what": "gate 5",
+     "t0_us": 40.5,
+     "t1_us": 65.54
+    },
+    {
+     "what": "gate 6",
+     "t0_us": 65.54,
+     "t1_us": 106.04
+    },
+    {
+     "what": "gate 7",
+     "t0_us": 106.04,
+     "t1_us": 171.57
+    },
+    {
+     "what": "gate 8",
+     "t0_us": 171.57,
+     "t1_us": 277.6
+    },
+    {
+     "what": "gate 9",
+     "t0_us": 277.6,
+     "t1_us": 449.15
+    },
+    {
+     "what": "free",
+     "t0_us": 449.15,
+     "t1_us": 2430.16
+    }
+   ],
+   "ok": true
+  }
+ },
+ "ok": true
+}
