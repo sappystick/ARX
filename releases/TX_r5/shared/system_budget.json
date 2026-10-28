@@ -1,0 +1,454 @@
+{
+ "rows": [
+  {
+   "part": "IPB65R095C7 (2 in parallel)",
+   "stress": "Vds peak, design case (one 100 nF C0G/film)",
+   "value": 462.368,
+   "rating": 650,
+   "unit": "V",
+   "margin_pct": 28.9,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "drain peak at turn-off; X7R as built is lower (379 V) but loses capacitance with bias"
+  },
+  {
+   "part": "IPB65R095C7",
+   "stress": "Vds peak, as-built 2 x X7R derated",
+   "value": 379.452,
+   "rating": 650,
+   "unit": "V",
+   "margin_pct": 41.6,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "part": "IPB65R095C7",
+   "stress": "drain current per FET at 20 A peak",
+   "value": 10.0,
+   "rating": 24,
+   "unit": "A",
+   "margin_pct": 58.3,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": "ID 24 A at TC 25 C, 15 A at TC 100 C, ID,pulse 100 A (Infineon IPB65R095C7 Rev. 2.0, DATASHEET_LOG)"
+  },
+  {
+   "part": "ES3J clamp diode",
+   "stress": "reverse voltage (capacitor peak)",
+   "value": 435.163,
+   "rating": 600,
+   "unit": "V",
+   "margin_pct": 27.5,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "VRRM 600 V (Good-Ark ES3x, DATASHEET_LOG); below the 630 V rule: no verified >= 630 V ultrafast SMC part (WATCH in DATASHEET_LOG)"
+  },
+  {
+   "part": "ES3J clamp diode",
+   "stress": "repetitive peak current",
+   "value": 19.877,
+   "rating": 100,
+   "unit": "A",
+   "margin_pct": 80.1,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "IFSM 100 A is non-repetitive 8.3 ms (Good-Ark ES3x): repetitive 4 us pulses at 400 Hz are not rated by the sheet"
+  },
+  {
+   "part": "CL1A/B clamp capacitor 630 V",
+   "stress": "voltage",
+   "value": 435.163,
+   "rating": 630,
+   "unit": "V",
+   "margin_pct": 30.9,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "C0G/film only; X7R loses 65 percent of capacitance at this bias"
+  },
+  {
+   "part": "RCL1 5 kohm 10 W",
+   "stress": "power",
+   "value": 3.815,
+   "rating": 10,
+   "unit": "W",
+   "margin_pct": 61.9,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": "x7r case 4.7 W"
+  },
+  {
+   "part": "3 x 110 ohm R2512 chain",
+   "stress": "voltage per resistor at flyback peak",
+   "value": 145.456,
+   "rating": 500,
+   "unit": "V",
+   "margin_pct": 70.9,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "Vishay CRCW2512 e3 Umax 500 V (document 20035, DATASHEET_LOG; was assumed 200 V); insulation against ambient 300 V for 1 min"
+  },
+  {
+   "part": "3 x 110 ohm R2512 chain",
+   "stress": "power per resistor",
+   "value": 0.153,
+   "rating": 1.0,
+   "unit": "W",
+   "margin_pct": 84.7,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "part": "TXJ1 bus A to B",
+   "stress": "creepage gap for 460 V peak",
+   "value": 460,
+   "rating": 552.0,
+   "unit": "V",
+   "margin_pct": 16.7,
+   "required_margin_pct": 0,
+   "status": "PASS",
+   "note": "3.0 mm edge gap vs about 2.5 mm needed (IEC 60664-1 style estimate, pollution 2); plus 1.6 mm FR4 between layers"
+  },
+  {
+   "part": "TX pair AWG12 600 V",
+   "stress": "voltage",
+   "value": 436.368,
+   "rating": 600,
+   "unit": "V",
+   "margin_pct": 27.3,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "part": "SMCJ30A TVS (PM2, CB1D)",
+   "stress": "VBUS maximum (7S full charge 29.4 V)",
+   "value": 29.4,
+   "rating": 30,
+   "unit": "V",
+   "margin_pct": 2.0,
+   "required_margin_pct": 5,
+   "status": "WATCH",
+   "note": "rated stand-off VWM (IR <= 1 uA at VWM, Vishay 88394); chosen over SMCJ33A because its 48.4 V clamp stays under the 50 V capacitors (SMCJ33A: 53.3 V)"
+  },
+  {
+   "part": "OKI-78SR-5 module",
+   "stress": "input voltage maximum",
+   "value": 29.4,
+   "rating": 36,
+   "unit": "V",
+   "margin_pct": 18.3,
+   "required_margin_pct": 20,
+   "status": "WATCH",
+   "note": "36 V continuous absolute maximum (Murata MDC_OKI-78SR-W36.C05, DATASHEET_LOG)"
+  },
+  {
+   "part": "TX coil litz",
+   "stress": "rms current at 20 A / 400 Hz (Ipk sqrt(D/3))",
+   "value": 1.488,
+   "rating": 3.0,
+   "unit": "A",
+   "margin_pct": 50.4,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": "about 3 A rms for 1.2 mm litz is conservative"
+  },
+  {
+   "part": "Vault",
+   "stress": "worst-case hot spot (boost + 0.5 W LEDs, 25 C ambient)",
+   "value": 35.6,
+   "rating": 80,
+   "unit": "C",
+   "margin_pct": 55.5,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": "PETG Tg about 80 C; FR4 85 C"
+  },
+  {
+   "part": "Vault",
+   "stress": "hot spot at 40 C ambient",
+   "value": 50.6,
+   "rating": 80,
+   "unit": "C",
+   "margin_pct": 36.8,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "part": "PB1R bulk capacitors 9 x 100 uF -20 %",
+   "stress": "voltage droop per 20 A pulse at 19.6 V (charge 612.1 uC, loop R and sag included; tx_vbus_sweep.py)",
+   "value": 0.85,
+   "rating": 0.9800000000000001,
+   "unit": "V",
+   "margin_pct": 13.3,
+   "required_margin_pct": 10,
+   "status": "PASS",
+   "note": "5 percent of VBUS allowed; the earlier row used 415 uC at 26 V and 900 uF nominal (CORRECTIONS)"
+  },
+  {
+   "part": "PB1R bulk capacitors CB1-CB9 (50 V)",
+   "stress": "voltage at the 7S full charge",
+   "value": 29.4,
+   "rating": 50.0,
+   "unit": "V",
+   "margin_pct": 41.2,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": "Panasonic EEHZC1H101P 50 V 100 uF (ZC technical data, DATASHEET_LOG); each part must supply >= 87 uF at 19.6 V (-20 %)"
+  },
+  {
+   "part": "PB1R 12 V module M12",
+   "stress": "input voltage maximum",
+   "value": 29.4,
+   "rating": 36,
+   "unit": "V",
+   "margin_pct": 18.3,
+   "required_margin_pct": 15,
+   "status": "PASS",
+   "note": "Murata OKI-78SR-12/1.0-W36-C: 36 V continuous absolute maximum, Vin 15-36 V (MDC_OKI-78SR-W36.C05, DATASHEET_LOG)"
+  },
+  {
+   "part": "PB1R 12 V module M12",
+   "stress": "pack voltage at the BMS cut-off vs the module minimum input (15 V)",
+   "value": 19.6,
+   "rating": 15.0,
+   "unit": "V",
+   "margin_pct": 30.7,
+   "required_margin_pct": 15,
+   "status": "PASS",
+   "note": "datasheet minimum input (UNVERIFIED, ASSUMPTIONS 29)"
+  },
+  {
+   "part": "Power cord AWG20 pair (upper v1)",
+   "stress": "average current in boost (9.03 W battery side at the 19.6 V BMS cut-off, system_live.py)",
+   "value": 0.461,
+   "rating": 5.0,
+   "unit": "A",
+   "margin_pct": 90.8,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon"
+  },
+  {
+   "part": "PM2 fuse F1 5 A slow",
+   "stress": "battery-side peak through F1 at the BMS cut-off (time-domain chain, power_dock_check.py)",
+   "value": 3.094,
+   "rating": 5.0,
+   "unit": "A",
+   "margin_pct": 38.1,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "slow-blow: carries the rated current continuously; peaks last about a millisecond"
+  },
+  {
+   "part": "Battery pack 7S1P Molicel P30B",
+   "stress": "average current in boost",
+   "value": 0.461,
+   "rating": 30.0,
+   "unit": "A",
+   "margin_pct": 98.5,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "30 A continuous, 80 C cut-off (Molicel INR-18650-P30B PDS v1.0, DATASHEET_LOG)"
+  },
+  {
+   "part": "LED rail (OKI-78SR 1.5 A)",
+   "stress": "66 LEDs at full white 60 mA each",
+   "value": 3.96,
+   "rating": 1.5,
+   "unit": "A",
+   "margin_pct": -164.0,
+   "required_margin_pct": 0,
+   "status": "FAIL",
+   "note": "FAILS unless the firmware caps the LED current: REQUIREMENT firmware limit 0.35 A total (about 1.75 W)"
+  },
+  {
+   "part": "LED rail with the firmware cap",
+   "stress": "capped LED current + Pico + ADC (0.35 + 0.15)",
+   "value": 0.5,
+   "rating": 1.5,
+   "unit": "A",
+   "margin_pct": 66.7,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": "requires the firmware cap"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "+3V3D output current: 2 x AD7389-4 operational max + RML bleed",
+   "value": 0.066,
+   "rating": 0.8,
+   "unit": "A",
+   "margin_pct": 91.7,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "0.8 A is the dropout specification point (DS1117 Note 4); 1 A rated"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "minimum load with both ADCs static (2 x 2.0 mA) + RML",
+   "value": 0.016,
+   "rating": 0.01,
+   "unit": "A",
+   "margin_pct": 62.2,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "10 mA max minimum load for regulation (DS1117 Note 5); RML alone (AB1 boards unplugged) 12.2 mA"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "minimum load with the AB1 boards unplugged (RML only)",
+   "value": 0.012,
+   "rating": 0.01,
+   "unit": "A",
+   "margin_pct": 22.2,
+   "required_margin_pct": 20,
+   "status": "PASS",
+   "note": "the case the bleed exists for"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "dropout 1.3 V max vs the 5.0 - 3.3 = 1.7 V available (M5 nominal)",
+   "value": 1.3,
+   "rating": 1.7,
+   "unit": "V",
+   "margin_pct": 23.5,
+   "required_margin_pct": 15,
+   "status": "PASS",
+   "note": "DS1117 1.1 typ / 1.3 V max at 0.8 A; less at 66 mA"
+  },
+  {
+   "part": "AMS1117-3.3 (CB1D UL)",
+   "stress": "dissipation (5.0 - 3.3) x load + 5.0 x Iq 11 mA max",
+   "value": 0.168,
+   "rating": 1.2,
+   "unit": "W",
+   "margin_pct": 86.0,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "1.2 W SOT-223 guaranteed (DS1117 Note 2); theta-JA 90 C/W -> about 15 C rise"
+  },
+  {
+   "part": "AD7389-4 VCC (+3V3D)",
+   "stress": "AMS1117-3.3 output high limit 3.399 V vs VCC max 3.6 V",
+   "value": 3.399,
+   "rating": 3.6,
+   "unit": "V",
+   "margin_pct": 5.6,
+   "required_margin_pct": 3,
+   "status": "PASS",
+   "note": "DS1117 full-temperature 3.201-3.399 V at VIN 4.8 V; AD7389-4 VCC 3.0-3.6 V"
+  },
+  {
+   "part": "AD7389-4 VCC (+3V3D)",
+   "stress": "AMS1117-3.3 output low limit 3.201 V vs VCC min 3.0 V",
+   "value": 3.201,
+   "rating": 3.0,
+   "unit": "V",
+   "margin_pct": 6.7,
+   "required_margin_pct": 3,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "part": "RML 270 ohm 0603 (CB1D)",
+   "stress": "power 3.3^2 / 270",
+   "value": 0.04,
+   "rating": 0.1,
+   "unit": "W",
+   "margin_pct": 59.7,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "CRCW0603 e3 P70 0.10 W (Vishay 20035)"
+  },
+  {
+   "part": "+5VA (AB1A + AB1B analog, via CB1D FB2)",
+   "stress": "6 OPA2211 channels x 4.5 mA max + 4 OPA2365 amplifiers x 5 mA max (25 C)",
+   "value": 0.047,
+   "rating": 1.0,
+   "unit": "A",
+   "margin_pct": 95.3,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "FB2 bead 1 A; over temperature 56 mA (OPA2211 6 mA per channel)"
+  },
+  {
+   "part": "+5V rail (CB1D M5, 1.5 A)",
+   "stress": "LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature)",
+   "value": 0.699,
+   "rating": 1.5,
+   "unit": "A",
+   "margin_pct": 53.4,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": "M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)"
+  },
+  {
+   "part": "TX lead channel",
+   "stress": "litz fill ratio",
+   "value": 0.58,
+   "rating": 0.7,
+   "unit": "ratio",
+   "margin_pct": 17.1,
+   "required_margin_pct": 15,
+   "status": "PASS",
+   "note": "wall-top groove + roof channel"
+  },
+  {
+   "part": "TX layers",
+   "stress": "DC current sharing deviation",
+   "value": 0.014,
+   "rating": 0.05,
+   "unit": "fraction",
+   "margin_pct": 71.2,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "lead length differences"
+  },
+  {
+   "part": "TC4420 gate driver (2 FETs)",
+   "stress": "gate charge per turn-off (2 x 45 nC, Infineon Rev. 2.0) at 12 V: peak current with 2.2 ohm gate resistors (TC4420 6 A peak, DS21419D)",
+   "value": 3.75,
+   "rating": 6.0,
+   "unit": "A",
+   "margin_pct": 37.5,
+   "required_margin_pct": 30,
+   "status": "PASS",
+   "note": "turn-off in about 20 ns, negligible against the 3.8 us flyback; datasheet Qg and RG values must be confirmed"
+  },
+  {
+   "part": "TC4420 gate driver",
+   "stress": "average drive power 90 nC x 12 V x 400 Hz",
+   "value": 0.432,
+   "rating": 200,
+   "unit": "mW",
+   "margin_pct": 99.8,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": ""
+  }
+ ],
+ "fails": 1,
+ "watch": 2,
+ "power": {
+  "scan 8 A / 800 Hz": {
+   "W": 5.65,
+   "hours": 13.4,
+   "at_V": 25.2
+  },
+  "mid 14 A / 600 Hz": {
+   "W": 7.57,
+   "hours": 10.0,
+   "at_V": 25.2
+  },
+  "boost 20 A / 400 Hz": {
+   "W": 8.89,
+   "hours": 8.5,
+   "at_V": 25.2
+  },
+  "pack_Wh": 75.6,
+  "model": "src/sim/system_live.py (MODELED; efficiency 0.85 and the 0.10 W M12 load ASSUMED)"
+ }
+}

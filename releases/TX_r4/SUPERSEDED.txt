@@ -1,0 +1,1 @@
+Superseded 2026-10-28 by TX_r5. TX_r4 carries PB1R-v3 Gerbers whose CB7-CB9 can pads are rotated 90 deg from the part (KiCad pad-angle exporter bug, CORRECTIONS 2026-10-28) and CB1D-B (JLB.3 = GND; the clocked LB1-v6 display needs LED_CLK there: CB1D-C1). Do not send TX_r4 to a fabricator. Kept as written for provenance.

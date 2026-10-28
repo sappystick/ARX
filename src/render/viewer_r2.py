@@ -9,7 +9,7 @@ usage (repo root, after make_package.py): python3 src/render/viewer_r2.py [PACKA
   default: PACKAGE_DIR/viewer.html with links relative to the package (open it from a checkout or the package folder);
   --web: links point at github.com/sappystick/ARX on BRANCH (for a hosted copy; the board renders are expected next to OUT.html under renders/boards/)."""
 import os, sys, csv, json, re, html, subprocess, datetime, glob
-PKG = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else "deliverables/PHIFOLD233_PACKAGE_r5"
+PKG = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else "deliverables/PHIFOLD233_PACKAGE_r6"
 WEB = sys.argv[sys.argv.index("--web") + 1] if "--web" in sys.argv else None
 OUT = sys.argv[sys.argv.index("--web") + 2] if WEB else os.path.join(PKG, "viewer.html")
 GH = "https://github.com/sappystick/ARX"

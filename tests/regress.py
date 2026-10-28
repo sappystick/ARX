@@ -220,6 +220,15 @@ if os.path.isdir("releases/RX_r2"):                                   # B1: the 
     _bad=[_r[0] for _r in _csv.reader(open("releases/RX_r2/MANIFEST.csv")) if _r and len(_r)>2 and len(_r[2])==64 and (not os.path.exists(_r[0]) or hashlib.sha256(open(_r[0],"rb").read()).hexdigest()!=_r[2])]
     chk("release RX_r2: BLOCKER 1 (exposed pad) removed, RX_r1 marked SUPERSEDED, manifest hashes verify, wording is not 'ready for fabrication'","BLOCKER 1" not in _rm and "PLACEHOLDER" not in _rm and os.path.exists("releases/RX_r1/SUPERSEDED.txt") and not _bad and "ready for fabrication" not in _rm.replace("not ready for fabrication",""),f"{len(_bad)} mismatches")
 else: chk("release RX_r2 exists once RX_r1 is marked SUPERSEDED (no silent gap between revisions)",not os.path.exists("releases/RX_r1/SUPERSEDED.txt"),"RX_r2 not cut yet")
+if os.path.isdir("releases/TX_r5"):                                   # 2026-10-28: TX_r5 = PB1R-v4 (CB7-CB9 pad angle) + CB1D-C1 (LED_CLK); TX_r4 stays as written and is marked SUPERSEDED
+    import hashlib, csv as _csv, glob as _g
+    _rm=open("releases/TX_r5/RELEASE.md").read(); _man=list(_csv.reader(open("releases/TX_r5/MANIFEST.csv")))
+    _bad=[_r[0] for _r in _man if _r and len(_r)>2 and len(_r[2])==64 and (not os.path.exists(_r[0]) or hashlib.sha256(open(_r[0],"rb").read()).hexdigest()!=_r[2])]
+    _po=json.load(open("releases/TX_r5/shared/pad_orient_check.json"))["boards"]
+    _ok=(not _bad and os.path.exists("releases/TX_r4/SUPERSEDED.txt") and _g.glob("releases/TX_r5/PB1R/gerber/PF233-PB1R-v4-*") and _g.glob("releases/TX_r5/CB1D/gerber/PF233-CB1D-C1-*")
+         and not _g.glob("releases/TX_r5/PB1R/gerber/*-v3-*") and all(_po[b]["ok"] for b in ("PB1R","CB1D","PM2","HB2")) and "ready for fabrication" not in _rm.replace("not ready for fabrication",""))
+    chk("release TX_r5: PB1R-v4 and CB1D-C1 Gerbers, KiCad pads = model on every TX board, TX_r4 marked SUPERSEDED, manifest hashes verify",bool(_ok),f"{len(_man)-1} files, {len(_bad)} hash mismatches")
+else: chk("release TX_r5 exists once TX_r4 is marked SUPERSEDED (no silent gap between revisions)",not os.path.exists("releases/TX_r4/SUPERSEDED.txt"),"TX_r5 not cut yet")
 _m=open("src/mech/mech_v20.py").read()
 chk("NPM cable window in mech_v20.py is still x -26..-14 (the numbers pb1r_check.py measures PB1R's JL1 / JP / JC against)","plate(-34, 12.5, NZ / 2, 16.0, 3.0, NZ), plate(14, 12.5, NZ / 2, 56.0, 3.0, NZ)" in _m,"back-wall plates")
 d=rd("kit_v22/pb1r_check.json")
@@ -294,7 +303,7 @@ for _f,_ax,_v in (("stl/head/CORE_CYLINDER_v5_integrated.stl",1,0.0),("stl/head/
     _sec.append((os.path.basename(_f),round(_a[0],2),_a[0]>1.0 and max(_a)-min(_a)<1e-6*max(_a)))
 chk("mesh sections non-empty and identical under vertex rotation / reversal (CORRECTIONS: empty or partial sections before mesh_section.py)",all(x[2] for x in _sec),str([x[:2] for x in _sec]))
 # package: no STL that its folder's SUPERSEDED.txt lists is shipped as a print file; the clickable viewer links only files that exist
-_PK="deliverables/PHIFOLD233_PACKAGE_r5"
+_PK="deliverables/PHIFOLD233_PACKAGE_r6"
 _sup=sorted({m for f in glob.glob("stl/*/SUPERSEDED.txt") for m in re.findall(r"^- (\S+\.stl) ->",open(f).read(),re.M)})
 _bad=[m for m in _sup if glob.glob(f"{_PK}/stl_print/*/{m}")]
 chk("package stl_print holds no STL listed in a SUPERSEDED.txt",bool(_sup) and not _bad,f"{len(_sup)} superseded, shipped: {_bad}")

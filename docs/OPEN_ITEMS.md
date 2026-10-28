@@ -47,4 +47,4 @@
 
 39. **HEAD_SKIRT has no current generator (2026-10-28, found by the viewer r2 ownership lookup)**: stl/head/HEAD_SKIRT.stl comes from src/archive/cups_v18.py, which no pipeline step runs; a head change does not reach the skirt. Move the skirt into a current generator (parts_v22 or hood_v20) with its fit check, or mark it a fixed legacy part. The pins (src/mech/pins_tray_v15.py) and the print formers (make formers-print) are also outside the traced pipeline.
 
-40. **TX_r5 release (2026-10-28)**: releases/TX_r4 carries CB1D-B and PB1R-v3, both superseded (CB1D-C1: JLB.3 LED_CLK for the clocked LB1-v6; PB1R-v4: CB7-CB9 pad orientation, CORRECTIONS 2026-10-28). Package with `make release-tx REV=r5` when the owner asks; do not send TX_r4's PB1R Gerbers to a fabricator.
+40. **DONE 2026-10-28: TX_r5 released** (PB1R-v4, CB1D-C1, TXJ1-v2, PM2, HB2; shared: fab margins, KiCad pad check, firmware timing header, system model, harness v4; 113 files, manifest hashes verified by tests/regress.py). TX_r4 marked SUPERSEDED (PB1R-v3 pad error, CB1D-B). Package r6 replaces r5 (same boards).

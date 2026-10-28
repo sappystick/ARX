@@ -1,0 +1,41 @@
+{
+ "status": "tool-checked: KiCad pad geometry vs the placement model",
+ "tol_mm": 0.005,
+ "boards": {
+  "LB1": {
+   "pads_compared": 438,
+   "pads_missing": [],
+   "mismatches": 0,
+   "examples": [],
+   "ok": true
+  },
+  "CB1D": {
+   "pads_compared": 214,
+   "pads_missing": [],
+   "mismatches": 0,
+   "examples": [],
+   "ok": true
+  },
+  "PB1R": {
+   "pads_compared": 107,
+   "pads_missing": [],
+   "mismatches": 0,
+   "examples": [],
+   "ok": true
+  },
+  "PM2": {
+   "pads_compared": 43,
+   "pads_missing": [],
+   "mismatches": 0,
+   "examples": [],
+   "ok": true
+  },
+  "HB2": {
+   "pads_compared": 29,
+   "pads_missing": [],
+   "mismatches": 0,
+   "examples": [],
+   "ok": true
+  }
+ }
+}

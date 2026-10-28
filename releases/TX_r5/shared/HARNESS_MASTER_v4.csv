@@ -1,0 +1,52 @@
+id,signal,from (board.connector.pin),medium,spec,length_m,to (board.connector.pin),shield / isolation,test
+W001,VBUS,PM2.JP.1,power coiled cord conductor 1,"AWG20 silicone, coiled (OD <= 10.4 mm), power cavity",1.75,NPM splice -> PB1R.JP.1/2 and CB1D.JPW.1/2,power cavity of the twin septum; cord braid + septum Cu mesh drained at PM2.JS only,"T01,T02"
+W002,GND,PM2.JP.3,power coiled cord conductor 2,"AWG20 silicone, coiled, power cavity",1.75,NPM splice -> PB1R.JP.3/4 and CB1D.JPW.3/4,as W001,"T01,T02"
+W003,SHIELD,PM2.JS.1,power-cord braid,tinned Cu braid of the coiled cord,1.75,open at the NPM end (single-point drain),no closed loop,T03
+W004,SHIELD,PM2.JS.2,septum Cu-mesh strip,slit Cu mesh laminated in the septum strip and spacers,1.75,open at the NPM end (single-point drain),slit lengthwise: no closed loop around the axis (eddy rule),T03
+W013,TRIG,HB2.JH.3,signal coiled cord core 1,"AWG28 silicone, 5-core shielded coiled cord (OD <= 10.4 mm), signal cavity",1.75,CB1D.JTR.3,signal cavity; cord braid drained at HB2 (RSHH),T04
+W016,DIAL,HB2.JH.4,signal coiled cord core 2,"AWG28, signal cavity",1.75,CB1D.JTR.4,as W013,T04
+W018,GND,HB2.JH.2,signal coiled cord core 3,"AWG28, signal cavity",1.75,CB1D.JTR.2,as W013,T04
+W020,SHIELD,HB2.JH.7,signal coiled cord braid,tinned Cu braid,1.75,CB1D.JTR.7,"drain at HB2 (0R), 1M // 1n at CB1D",T04
+W021,P3V3,HB2.JH.1,signal coiled cord core 4,"AWG28, signal cavity",1.75,CB1D.JTR.1,as W013,T04
+W025,UMB_SHLD,PB1R.JC.1,8-way ribbon pin 1,AWG28 silicone,0.8,CB1D.JPB.1,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W026,GND,PB1R.JC.2,8-way ribbon pin 2,AWG28 silicone,0.8,CB1D.JPB.2,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W027,TX1_IN,PB1R.JC.3,8-way ribbon pin 3,AWG28 silicone,0.8,CB1D.JPB.3,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W028,REF_I1,PB1R.JC.4,8-way ribbon pin 4,AWG28 silicone,0.8,CB1D.JPB.4,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W029,FAULT1_N,PB1R.JC.5,8-way ribbon pin 5,AWG28 silicone,0.8,CB1D.JPB.5,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W030,ISENSE1,PB1R.JC.6,8-way ribbon pin 6,AWG28 silicone,0.8,CB1D.JPB.6,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W031,NTC_SENSE,PB1R.JC.7,8-way ribbon pin 7,AWG28 silicone,0.8,CB1D.JPB.7,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W032,GND,PB1R.JC.8,8-way ribbon pin 8,AWG28 silicone,0.8,CB1D.JPB.8,"own foil sleeve, drain to UMB_SHLD","T01,T04"
+W033,"COIL_B (DRAIN1, 460 V flyback)",PB1R.JL1.1,"TX pair, conductor 1","AWG12 silicone, 600 V, twisted, foil + drain",0.8,TXJ1.B12 (bus B) -> TXJ1 pads B1-B6; tap TXJ1.TAPB -> CB1D.JCL.1,HV: 1 kV hipot to everything else,"T05,T06"
+W034,COIL_A (VBUS side),PB1R.JL1.2,"TX pair, conductor 2","AWG12 silicone, 600 V, twisted, foil + drain",0.8,TXJ1.A12 (bus A) -> TXJ1 pads A1-A6; tap TXJ1.TAPA -> CB1D.JCL.2,HV: 1 kV hipot,"T05,T06"
+W035,LED_IN,CB1D.JLB.2,4 wires,AWG30,0.06,LB1.JLB.2,"inside the vault (flat wire pads on LB1, no header)",T08
+W036,+5V,CB1D.JLB.1,4 wires,AWG30,0.06,LB1.JLB.1,"inside the vault (flat wire pads on LB1, no header)",T08
+W037,GND,CB1D.JLB.4,4 wires,AWG30,0.06,LB1.JLB.4,"inside the vault (flat wire pads on LB1, no header)",T08
+W066,LED_CLK,CB1D.JLB.3,4 wires,AWG30,0.06,LB1.JLB.3,"inside the vault (flat wire pads on LB1, no header); SK9822 clock, driven only in the idle slot after the last gate (fw_timeline)",T08
+W038,HTA_P (pad A) / GND (pad B),"antenna board pads A, B",twisted pair,AWG30,0.13,CB1D.JHTA.1 / .2,"twisted, drain to the cap strap gap",T07
+W039,RAW_GX (QUAD-A +),SB1R-QA.P1,twisted pair with W040,"AWG36, rises through the 12 mm floor slot",0.06,AB1A.J1.1,drain to the star ground at the lid,T09
+W040,VCM (QUAD-A -),SB1R-QA.P2,twisted pair with W039,AWG36,0.06,AB1A.J1.4,drain to the star ground at the lid,T09
+W041,RAW_GY (QUAD-B +),SB1R-QB.P1,twisted pair with W042,"AWG36, rises through the 12 mm floor slot",0.06,AB1A.J1.2,drain to the star ground at the lid,T09
+W042,VCM (QUAD-B -),SB1R-QB.P2,twisted pair with W041,AWG36,0.06,AB1A.J1.5,drain to the star ground at the lid,T09
+W043,RAW_X8 tied to VCM (spare input terminated),AB1A.J1.3,jumper on the J1 connector,AWG30,0.01,AB1A.J1.6,-,T09
+W044,damping 680 ohm across QUAD-A,SB1R-QA.P1,resistor RD1 on the QA top across P1/P2,0805 680 ohm 1 percent (PR #3),0.01,SB1R-QA.P2,fit before first test (docs/OPEN_ITEMS.md item 1),T09
+W045,damping 680 ohm across QUAD-B,SB1R-QB.P1,resistor RD2 on the QA top across the QB transfer pads,0805 680 ohm 1 percent (PR #3),0.01,SB1R-QB.P2,fit before first test,T09
+W046,TX layer 1 lead A,former L1 lane port (track +6 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.16,TXJ1.A1,none (HV: 1 kV hipot to everything else),T05
+W047,TX layer 1 lead B,former L1 lane port (track +11 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.16,TXJ1.B1,none (HV: 1 kV hipot to everything else),T05
+W048,TX layer 2 lead A,former L2 lane port (track +6 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.08,TXJ1.A2,none (HV: 1 kV hipot to everything else),T05
+W049,TX layer 2 lead B,former L2 lane port (track +11 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.08,TXJ1.B2,none (HV: 1 kV hipot to everything else),T05
+W050,TX layer 3 lead A,former L3 lane port (track +6 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.08,TXJ1.A3,none (HV: 1 kV hipot to everything else),T05
+W051,TX layer 3 lead B,former L3 lane port (track +11 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.08,TXJ1.B3,none (HV: 1 kV hipot to everything else),T05
+W052,TX layer 4 lead A,former L4 lane port (track +6 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.08,TXJ1.A4,none (HV: 1 kV hipot to everything else),T05
+W053,TX layer 4 lead B,former L4 lane port (track +11 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.08,TXJ1.B4,none (HV: 1 kV hipot to everything else),T05
+W054,TX layer 5 lead A,former L5 lane port (track +6 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.08,TXJ1.A5,none (HV: 1 kV hipot to everything else),T05
+W055,TX layer 5 lead B,former L5 lane port (track +11 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.08,TXJ1.B5,none (HV: 1 kV hipot to everything else),T05
+W056,TX layer 6 lead A,former L6 lane port (track +6 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.16,TXJ1.A6,none (HV: 1 kV hipot to everything else),T05
+W057,TX layer 6 lead B,former L6 lane port (track +11 deg),litz in the wall-top channel,"litz 1.2 mm, 600 V varnish",0.16,TXJ1.B6,none (HV: 1 kV hipot to everything else),T05
+W058,COIL_B / COIL_A (taps),TXJ1 taps / CB1D.JCL,AWG22 pair,AWG22 silicone 600 V,0.04,CB1D.JCL.1 / .2,HV,"T05,T06"
+W059,RAW_Y8 tied to VCM (spare input terminated),AB1B.J1.1,jumper on the J1 connector,AWG30,0.01,AB1B.J1.2,-,T09
+W060,BAT_P,MT60-M pin 1 (dock pedestal),lead,AWG16 silicone,0.08,PM2.J1.1,potted at the pedestal,T05
+W061,GND,MT60-M pin 2 (dock pedestal),lead,AWG16 silicone,0.08,PM2.J1.2,potted at the pedestal,T05
+W062,ILK,MT60-M pin 3 (dock pedestal),lead,AWG24 silicone,0.08,PM2.J1.3,potted at the pedestal,T05
+W063,SW_A,power switch pole 1 (top housing),"button pair, grip rear channel",AWG28 silicone,0.20,PM2.J3.1,rear grip channel (septum to the power pair),T06
+W064,ILK,power switch pole 2 (top housing),"button pair, grip rear channel",AWG28 silicone,0.20,PM2.J3.2,as W063,T06
+W065,pack interlock loop,battery pack MT60-F pin 3 to pin 2 (pack GND),jumper inside the pack,AWG24 silicone,0.02,inside the pack shell,potted,T05
