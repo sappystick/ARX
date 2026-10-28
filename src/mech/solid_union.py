@@ -97,6 +97,10 @@ def dilate_cached(V, F, r=MARGIN):
     if d.status() == M3.Error.NoError:
         m = d.to_mesh64(); _save(p, tolerance=np.float64(d.get_tolerance()), **{k: np.asarray(getattr(m, k)) for k in _M64})
     return d
+def canonical_faces(F):
+    """same triangles, deterministic order: each face rotated so its smallest vertex index is first (orientation kept), then the faces sorted"""
+    F = np.asarray(F, np.int64); k = np.argmin(F, axis=1); idx = (k[:, None] + np.arange(3)[None, :]) % 3; R = np.take_along_axis(F, idx, axis=1)
+    return R[np.lexsort((R[:, 2], R[:, 1], R[:, 0]))]
 def merge_closed(shells, concat, margin=MARGIN):
     """generators call this in place of golden_cone_head.merge(): if the plain concatenation already has no open edge (print_check's definition) it is returned unchanged;
     otherwise the bodies are each dilated by `margin` mm and unioned (manifold3d) into ONE closed mesh. Returns (V, F, info) with info = dict(method, bodies, margin, volume_in_mm3, volume_out_mm3)."""
@@ -104,7 +108,7 @@ def merge_closed(shells, concat, margin=MARGIN):
     if position_bad_edges(F0, V0) == 0: return V0, F0, dict(method="concatenated", bodies=len(shells), margin=0.0)
     ku = None
     if CACHE_ON:                                                           # whole result: same bodies, same margin -> the stored (V, F, info)
-        ku = _key(b"union-v1", _VER, float(margin), SIMPLIFY, repr(_CANDS_TAG), *[_key(b"body64", np.ascontiguousarray(np.asarray(V, float)).tobytes(), np.ascontiguousarray(np.asarray(F, np.int64)).tobytes(), np.shape(V)) for V, F in shells]); z = _load(_path(ku, "union"))
+        ku = _key(b"union-v2", _VER, float(margin), SIMPLIFY, repr(_CANDS_TAG), *[_key(b"body64", np.ascontiguousarray(np.asarray(V, float)).tobytes(), np.ascontiguousarray(np.asarray(F, np.int64)).tobytes(), np.shape(V)) for V, F in shells]); z = _load(_path(ku, "union"))
         if z is not None: STATS["union_hit"] += 1; return z["V"], z["F"], json.loads(str(z["info"]))
         STATS["union_miss"] += 1
     u = None
@@ -134,6 +138,7 @@ def merge_closed(shells, concat, margin=MARGIN):
             break
     if snapped is None: np.savez("solid_union_failed.npz", V=V, F=F)
     if snapped is None: raise ValueError(f"solid_union: no snap grid closes the union at the STL's stored resolution (best: {best[0]} open edges at grid {best[1]} offset {best[2]}); the union was saved to solid_union_failed.npz")
+    F = canonical_faces(F)                                                 # manifold3d's parallel boolean returns the triangles in a run-dependent order (same set): fix the order so every run, cached or not, writes the same bytes
     info = dict(snap_grid_mm=float(snapped[0]), snap_offset_mm=[round(float(x), 6) for x in np.atleast_1d(snapped[1])], method="dilated union", bodies=len(shells), margin=margin, volume_in_mm3=round(sum(vol(np.asarray(V_, float), np.asarray(F_, np.int64)) for V_, F_ in shells), 2), volume_out_mm3=round(vol(V, F), 2), open_edges_after=position_bad_edges(F, V))
     if ku: _save(_path(ku, "union"), V=V, F=F, info=np.array(json.dumps(info)))
     return V, F, info
