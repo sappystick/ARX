@@ -23,7 +23,7 @@ def section(T, axis, val):
     return _ms.section(T, axis, val)
 MIR = [False]
 flipx = lambda a: np.asarray(a) * np.array([-1.0, 1.0]) if MIR[0] else np.asarray(a)
-REC = {} if os.environ.get("BLUEPRINT_RECORD") else None              # viewer_r1.py: cut faces by part tag, per axes (the drawing is unchanged)
+REC = {} if os.environ.get("BLUEPRINT_RECORD") else None              # viewer_r2.py: cut faces by part tag, per axes (the drawing is unchanged)
 def _rec(ax, tag, rings, fc):
     if REC is not None and tag: REC.setdefault(id(ax), []).append(dict(tag=tag, fc=fc, rings=[np.round(np.asarray(r, float), 2).tolist() for r in rings]))
 def draw(ax, g, fc, ec="#222", lw=0.4, alpha=1.0, z=2, tag=None):
@@ -195,6 +195,6 @@ fig.suptitle("PHI-FOLD 233  -  full structure and layered cut-away blueprint (r3
 fig.text(0.015, 0.006, "MODELED design drawing: sections computed from the generated STLs; board slabs at the DESIGN_STATE z ranges; nothing here is built or measured. Not a fabrication drawing: see 00_INDEX.md for the status of every file.", fontsize=9, color="#55607a")
 for ext, kw in (("png", dict(dpi=FIGDPI)), ("pdf", {})): fig.savefig(os.path.join(OUT, f"PHIFOLD233_FULL_SYSTEM_LAYERED_CUTAWAY_r3.{ext}"), **kw)
 print("blueprint written to", OUT)
-if REC is not None:                                                    # viewer_r1.py input: the tagged cut faces of panel 1 (whole detector) and panel 2 (head half-section), drawing coordinates in mm
+if REC is not None:                                                    # viewer_r2.py input: the tagged cut faces of panel 1 (whole detector) and panel 2 (head half-section), drawing coordinates in mm
     json.dump(dict(system=dict(faces=REC.get(id(ax1), []), xlim=list(ax1.get_xlim()), ylim=list(ax1.get_ylim())), head=dict(faces=REC.get(id(ax2), []), xlim=list(ax2.get_xlim()), ylim=list(ax2.get_ylim()))),
               open(os.environ["BLUEPRINT_RECORD"], "w"))

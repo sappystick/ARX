@@ -42,6 +42,7 @@ STEPS = [
     ("pcb-pb1r", W + "PW=R python3 pw_design.py && PW=R python3 pw_export.py", ""),
     ("pcb-cb1d", W + "PW=C DISC=1 python3 pw_design.py && PW=C DISC=1 python3 cb1d_export.py", ""),
     ("tx-vbus", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py", ""),
+    ("system-live", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py > /dev/null && python3 system_live.py", ""),     # viewer r2 system model + golden cases (src/sim/system_live.py)
     ("pcb-pm2", W + "PW=P python3 pw_design.py && PW=P python3 pw_export.py && python3 power_dock_check.py", ""),
     ("upper", W + "python3 shaft_calc_v20.py > /dev/null && python3 upper_v21.py && python3 upper_check.py && python3 upper_figure.py", ""),
     ("sim-head2", W + "python3 sim_head2.py > /dev/null", ""),
@@ -92,10 +93,11 @@ STEPS = [
     ("publish", "python3 scripts/publish_data.py", ""),
     ("controls", "python3 tests/release_signoff_controls.py", ""),
     ("status", "python3 scripts/signoff_status.py", ""),
+    ("viewer", "test ! -f deliverables/PHIFOLD233_PACKAGE_r5/blueprint/cutaway_faces.json || python3 src/render/viewer_r2.py > /dev/null", ""),   # package r5 viewer.html: sign-off states, system model, owners (after status)
 ]
 NAMES = [s[0] for s in STEPS]
 IGNORE_READS = {"controls": {"data/results/SIGNOFF_STATUS.json", "docs/STATUS.md"}}   # the controls only use the previous table as a template; it is rewritten by the step after them (would re-run them forever)
-OPEN_ENDED = {"publish", "controls", "status"}  # always run alone, last, in order (controls temporarily edit a work/ file)
+OPEN_ENDED = {"publish", "controls", "status", "viewer"}  # always run alone, last, in order (controls temporarily edit a work/ file)
 
 
 def sha_file(p, cache={}):

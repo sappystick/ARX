@@ -1,0 +1,525 @@
+<title>PHI-FOLD 233 Cut-away</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a drafting sheet. Cut drawing + part card on top, then the live system model, the wiring runs, the part index and the package documents. */
+:root {
+  --paper: #eef1ef; --sheet: #f8faf8; --ink: #1c2a36; --muted: #5a6a74; --rule: #cbd4d2; --copper: #a9512a; --copper-soft: #f1dccf;
+  --edge: rgba(28, 42, 54, .55); --pass: #2f7d4f; --pass-bg: #dcefe2; --fail: #b3302a; --fail-bg: #f6dcda; --unv: #8a6a12; --unv-bg: #f4ead0; --none-bg: #e3e8e7;
+  --hv: #c0392b; --plot1: #1f5f8b; --plot2: #a9512a; --plot3: #2f7d4f; --grid: rgba(28, 42, 54, .12);
+  --f-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #121a1f; --sheet: #182228; --ink: #dfe7e9; --muted: #93a3aa; --rule: #2c3a41; --copper: #e08a5c; --copper-soft: #3b2a22;
+  --edge: rgba(223, 231, 233, .45); --pass: #6cc790; --pass-bg: #1d3528; --fail: #f08a82; --fail-bg: #3d2120; --unv: #e3c46d; --unv-bg: #3a3220; --none-bg: #232f35;
+  --hv: #f08a82; --plot1: #7cb8e0; --plot2: #e08a5c; --plot3: #6cc790; --grid: rgba(223, 231, 233, .12); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #121a1f; --sheet: #182228; --ink: #dfe7e9; --muted: #93a3aa; --rule: #2c3a41; --copper: #e08a5c; --copper-soft: #3b2a22;
+  --edge: rgba(223, 231, 233, .45); --pass: #6cc790; --pass-bg: #1d3528; --fail: #f08a82; --fail-bg: #3d2120; --unv: #e3c46d; --unv-bg: #3a3220; --none-bg: #232f35;
+  --hv: #f08a82; --plot1: #7cb8e0; --plot2: #e08a5c; --plot3: #6cc790; --grid: rgba(223, 231, 233, .12); color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--paper); color: var(--ink); font: 14px/1.5 var(--f-body); margin: 0 }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper) }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 40px; max-width: 1480px; margin: 0 auto; display: grid; gap: 24px }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; border-bottom: 2px solid var(--ink); padding-bottom: 10px }
+h1 { font: 600 30px/1.1 var(--f-display); letter-spacing: .02em; margin: 0; text-wrap: balance }
+h1 small { font-weight: 500; color: var(--muted); font-size: 20px; margin-left: 8px }
+.stamp { font: 500 12px/1.4 var(--f-mono); color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px }
+.stamp b { color: var(--copper); font-weight: 500 }
+nav.jump { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--ink); display: flex; flex-wrap: wrap; gap: 0; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))) }
+nav.jump a { color: var(--sheet); text-decoration: none; font: 600 14px var(--f-display); letter-spacing: .06em; text-transform: uppercase; padding: 9px 16px }
+nav.jump a:hover, nav.jump a:focus-visible { background: var(--copper); outline: none }
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 20px; align-items: start }
+@media (max-width: 980px) { .main { grid-template-columns: minmax(0, 1fr) } }
+.stage { background: var(--sheet); border: 1px solid var(--rule); min-width: 0; display: grid }
+.tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--rule); align-items: stretch }
+.tabs button[role=tab] { font: 600 15px var(--f-display); letter-spacing: .04em; text-transform: uppercase; background: none; border: 0; border-right: 1px solid var(--rule); color: var(--muted); padding: 10px 16px; cursor: pointer }
+.tabs button[aria-selected="true"] { color: var(--ink); box-shadow: inset 0 -3px 0 var(--copper) }
+.tabs .tools { margin-left: auto; display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 8px; align-items: center }
+.tools button, .btn { font: 500 13px var(--f-mono); border: 1px solid var(--rule); background: var(--paper); color: var(--ink); min-width: 32px; height: 30px; cursor: pointer; padding: 0 8px }
+.btn.on, .tools button.on { background: var(--copper); color: var(--sheet); border-color: var(--copper) }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px }
+.cap { font: 12px/1.4 var(--f-mono); color: var(--muted); padding: 8px 14px; border-bottom: 1px solid var(--rule) }
+.svgbox { position: relative; height: min(64vh, 640px); min-height: 260px; touch-action: none; cursor: grab;
+  background-image: linear-gradient(var(--rule) 1px, transparent 1px), linear-gradient(90deg, var(--rule) 1px, transparent 1px); background-size: 40px 40px; background-position: -1px -1px }
+.svgbox.drag { cursor: grabbing } .svgbox.editing { cursor: move }
+svg { width: 100%; height: 100%; display: block }
+svg path.f { stroke: var(--edge); stroke-width: .6; vector-effect: non-scaling-stroke; cursor: pointer; transition: opacity .12s }
+svg.has-sel path.f { opacity: .42 }
+svg.has-sel path.f.sel, svg path.f.hl { opacity: 1 }
+svg path.f.sel { stroke: var(--copper); stroke-width: 2 }
+svg path.f.hl { stroke: var(--ink); stroke-width: 1.6 }
+svg path.f.moved { stroke-dasharray: 4 2 }
+svg path.f.bad { stroke: var(--fail); stroke-width: 2.4; opacity: 1 }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--sheet); font: 500 12px var(--f-mono); padding: 3px 7px; white-space: nowrap; transform: translate(12px, -28px) }
+.legend { font: 12px var(--f-mono); color: var(--muted); padding: 8px 14px; border-top: 1px solid var(--rule) }
+.card { background: var(--sheet); border: 1px solid var(--rule); border-top: 4px solid var(--copper); padding: 16px 18px; display: grid; gap: 14px; min-width: 0 }
+@media (min-width: 981px) { .card { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 48px); max-height: calc(100vh - 60px); overflow: auto } }
+.eyebrow { font: 500 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
+.card h2 { font: 600 26px/1.1 var(--f-display); margin: 2px 0 0; overflow-wrap: anywhere }
+.pills { display: flex; flex-wrap: wrap; gap: 6px }
+.pill { font: 500 11px/1 var(--f-mono); padding: 5px 7px; background: var(--none-bg); color: var(--ink); letter-spacing: .03em; white-space: nowrap }
+.pill.cut { background: var(--copper-soft); color: var(--copper) }
+.pill.PASS, .pill.ok { background: var(--pass-bg); color: var(--pass) } .pill.FAIL, .pill.bad { background: var(--fail-bg); color: var(--fail) } .pill.UNVERIFIED, .pill.warn { background: var(--unv-bg); color: var(--unv) }
+.note { font-size: 13px; color: var(--muted); border-left: 2px solid var(--rule); padding-left: 10px; margin: 0 }
+dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; margin: 0; font-size: 13px }
+dt { color: var(--muted) } dd { margin: 0; overflow-wrap: anywhere } dd.mono { font-family: var(--f-mono); font-size: 12px }
+.checks { display: grid; grid-template-columns: max-content max-content minmax(0, 1fr); gap: 4px 10px; font-size: 12px; align-items: center }
+.checks > span:nth-child(3n+1) { font-family: var(--f-mono); color: var(--muted) }
+.thumbs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+.thumbs figure { margin: 0; background: var(--paper); border: 1px solid var(--rule) } .thumbs img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain }
+.thumbs figcaption { font: 11px var(--f-mono); color: var(--muted); padding: 2px 6px }
+h3 { font: 600 15px var(--f-display); letter-spacing: .06em; text-transform: uppercase; margin: 0 0 6px; color: var(--ink) }
+ul.files { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px }
+ul.files li a { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 10px; padding: 5px 6px; color: var(--ink); text-decoration: none; border-bottom: 1px dotted var(--rule); font-size: 13px }
+ul.files li a:hover { background: var(--copper-soft) }
+ul.files .fmt { font: 500 11px/1.8 var(--f-mono); color: var(--copper); text-transform: uppercase; letter-spacing: .03em }
+ul.files .nm { overflow-wrap: anywhere }
+.rel { display: flex; flex-wrap: wrap; gap: 6px }
+.chip { font: 500 12px var(--f-mono); border: 1px solid var(--rule); background: var(--paper); color: var(--ink); padding: 4px 8px; cursor: pointer; text-align: left }
+.chip:hover { border-color: var(--copper) }
+.chip.on { background: var(--ink); color: var(--sheet); border-color: var(--ink) }
+.chip i { font-style: normal; color: var(--copper); margin-left: 4px }
+.chip.on i { color: var(--copper-soft) }
+.place { border: 1px dashed var(--copper); padding: 10px 12px; display: grid; gap: 8px }
+.place .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font: 12px var(--f-mono) }
+.place input[type=number] { width: 84px; font: 13px var(--f-mono); padding: 4px 6px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink) }
+.res { display: grid; gap: 4px; font-size: 12px }
+.res div { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px; align-items: baseline }
+section.band { display: grid; gap: 14px }
+.bandhead { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; justify-content: space-between; border-bottom: 2px solid var(--ink); padding-bottom: 6px }
+.bandhead h2 { font: 600 24px var(--f-display); margin: 0; letter-spacing: .02em }
+.simgrid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start }
+@media (max-width: 900px) { .simgrid { grid-template-columns: minmax(0, 1fr) } }
+form.ctl { background: var(--sheet); border: 1px solid var(--rule); padding: 14px 16px; display: grid; gap: 12px; margin: 0 }
+form.ctl label { display: grid; gap: 4px; font-size: 13px }
+form.ctl label span { display: flex; justify-content: space-between; gap: 8px }
+form.ctl output, form.ctl b { font: 500 12px var(--f-mono); color: var(--copper) }
+form.ctl input[type=range] { width: 100%; accent-color: var(--copper) }
+form.ctl select { font: 13px var(--f-body); padding: 5px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink) }
+.seg { display: flex; flex-wrap: wrap; gap: 0 } .seg label { display: block } .seg input { position: absolute; opacity: 0 }
+.seg span { display: block; font: 500 12px var(--f-mono); border: 1px solid var(--rule); padding: 6px 10px; cursor: pointer; background: var(--paper) }
+.seg input:checked + span { background: var(--ink); color: var(--sheet); border-color: var(--ink) }
+.seg input:focus-visible + span { outline: 2px solid var(--copper) }
+.out { display: grid; gap: 14px; min-width: 0 }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px }
+.kpi { background: var(--sheet); border: 1px solid var(--rule); padding: 10px 12px; display: grid; gap: 2px }
+.kpi b { font: 600 26px/1.1 var(--f-display); font-variant-numeric: tabular-nums } .kpi span { font: 11px var(--f-mono); color: var(--muted) }
+.kpi.bad { border-color: var(--fail) } .kpi.warn { border-color: var(--unv) }
+.panel { background: var(--sheet); border: 1px solid var(--rule); padding: 12px 14px; min-width: 0 }
+canvas.plot { width: 100%; height: 240px; display: block }
+.tbl { overflow-x: auto } table { border-collapse: collapse; width: 100%; font-size: 12px; font-variant-numeric: tabular-nums }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--rule); white-space: nowrap } th { font: 500 11px var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .04em }
+td.num { text-align: right; font-family: var(--f-mono) } tr.hv td:first-child { box-shadow: inset 3px 0 0 var(--hv) } tr.dim { opacity: .35 }
+.bars { display: grid; gap: 6px; font-size: 12px }
+.bar { display: grid; grid-template-columns: 120px minmax(0, 1fr) 70px; gap: 8px; align-items: center }
+.bar i { display: block; height: 12px; background: var(--copper) } .bar .num { text-align: right; font-family: var(--f-mono) }
+.wiresvg { width: 100%; height: auto; display: block; min-width: 760px }
+.wiresvg .node rect { fill: var(--paper); stroke: var(--ink); stroke-width: 1.2 } .wiresvg .node text { fill: var(--ink); font: 600 13px var(--f-display); letter-spacing: .04em }
+.wiresvg .node.sel rect { fill: var(--copper-soft); stroke: var(--copper) }
+.wiresvg .edge { fill: none; stroke: var(--muted); cursor: pointer } .wiresvg .edge.hv { stroke: var(--hv) } .wiresvg .edge.pw { stroke: var(--copper) } .wiresvg .edge.on { stroke: var(--ink) }
+.wiresvg .flow { fill: none; stroke: var(--sheet); stroke-dasharray: 2 10; pointer-events: none; opacity: 0 }
+.animate .wiresvg .flow { opacity: .9; animation: run var(--dur, 2s) linear infinite }
+@keyframes run { to { stroke-dashoffset: -24 } }
+@media (prefers-reduced-motion: reduce) { .animate .wiresvg .flow { animation: none; opacity: .6 } svg path.f { transition: none } }
+.wiresvg .elabel { fill: var(--muted); font: 11px var(--f-mono); paint-order: stroke; stroke: var(--sheet); stroke-width: 4px; stroke-linejoin: round }
+.wiresvg .edge.link { stroke-dasharray: 6 4 }
+textarea#cr { width: 100%; min-height: 140px; font: 12px var(--f-mono); background: var(--paper); color: var(--ink); border: 1px solid var(--rule); padding: 8px }
+.index { display: grid; gap: 14px }
+.ihead { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--ink); padding-bottom: 6px }
+.ihead h2 { font: 600 24px var(--f-display); margin: 0; letter-spacing: .02em }
+.ihead input { font: 14px var(--f-body); padding: 7px 10px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); width: min(320px, 100%) }
+.groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px 24px }
+.grp h3 { border-bottom: 1px solid var(--rule); padding-bottom: 4px; display: flex; justify-content: space-between }
+.grp h3 span { font: 500 11px var(--f-mono); color: var(--muted); letter-spacing: 0 }
+.grp .rel { margin-top: 8px }
+.docs { border-top: 2px solid var(--ink); padding-top: 12px; display: grid; gap: 8px }
+.docs ul.files { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); column-gap: 24px }
+.foot { font-size: 12px; color: var(--muted); max-width: 90ch; margin: 0 }
+</style>
+<!--BODY-->
+<div class="wrap">
+  <header>
+    <h1>PHI-FOLD 233 <small>interactive cut-away, package r5</small></h1>
+    <div class="stamp"><span>MODELED design: nothing built, printed or measured</span><span>sign-off <b id="st"></b></span><span id="gen"></span><span id="selftest">model self-check: running</span></div>
+  </header>
+  <nav class="jump" aria-label="Sections"><a href="#cut">Cut-away</a><a href="#sim">System simulation</a><a href="#wiring">Wiring runs</a><a href="#parts">Parts and boards</a><a href="#docs">Documents</a></nav>
+  <div class="main" id="cut">
+    <section class="stage" aria-label="Cut-away drawing">
+      <div class="tabs" role="tablist">
+        <button role="tab" id="tab-head" aria-selected="true" data-p="head">Head half-section</button>
+        <button role="tab" id="tab-system" aria-selected="false" data-p="system">Whole detector, 47 deg</button>
+        <div class="tools"><button id="edit" title="Move the selected part and check it live" aria-pressed="false">edit placement</button><button id="zin" title="Zoom in" aria-label="Zoom in">+</button><button id="zout" title="Zoom out" aria-label="Zoom out">&minus;</button><button id="zfit" title="Zoom to the selected part">fit part</button><button id="zall" title="Show the whole cut">all</button></div>
+      </div>
+      <div class="cap" id="cap"></div>
+      <div class="svgbox" id="box"><svg id="svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"><g id="g"></g></svg><div class="tip" id="tip" hidden></div></div>
+      <div class="legend" id="legend">Click a cut face to open its files. Drag to pan, scroll or pinch to zoom. Boards inside the vault are drawn as slabs at their design z; parts with no face in these two cuts are in the index below.</div>
+    </section>
+    <aside class="card" id="card" aria-live="polite"></aside>
+  </div>
+  <section class="band" id="changes" hidden>
+    <div class="bandhead"><h2>Placement changes</h2><span class="eyebrow" id="crsum"></span></div>
+    <p class="note">These offsets exist only in this page. To make one real, change the generator named for the part, then run <code>make signoff</code>: the 3-D checks there (check_v22, head_crosscheck, stack_check, interference_audit) decide, not this section check.</p>
+    <textarea id="cr" readonly aria-label="Change request JSON"></textarea>
+    <div class="rel"><button class="btn" id="copycr">Copy change request</button><button class="btn" id="resetall">Reset all placements</button></div>
+  </section>
+  <section class="band" id="sim" aria-label="System simulation">
+    <div class="bandhead"><h2>System simulation</h2><span class="eyebrow">MODELED &middot; same equations as src/sim/system_live.py</span></div>
+    <div class="simgrid">
+      <form class="ctl" id="ctl" autocomplete="off">
+        <label for="V"><span>Pack voltage <output id="Vo"></output></span><input type="range" id="V" min="19.6" max="29.4" step="0.1" value="25.2"></label>
+        <div><div class="eyebrow">Operating point</div><div class="seg" id="mode"></div></div>
+        <label for="clamp"><span>Clamp capacitor</span><select id="clamp"></select></label>
+        <label for="Ls"><span>Coil inductance <output id="Lso"></output></span><input type="range" id="Ls" min="-10" max="10" step="1" value="0"></label>
+        <label for="Rs"><span>Loop resistance <output id="Rso"></output></span><input type="range" id="Rs" min="0.8" max="1.5" step="0.05" value="1"></label>
+        <label for="led"><span>LED current <output id="ledo"></output></span><input type="range" id="led" min="0" max="1500" step="10" value="350"></label>
+        <label for="m12"><span>M12 other load (ASSUMED) <output id="m12o"></output></span><input type="range" id="m12" min="0" max="2" step="0.05" value="0.1"></label>
+        <label for="amb"><span>Ambient <output id="ambo"></output></span><input type="range" id="amb" min="0" max="50" step="1" value="25"></label>
+        <p class="note" id="busy">Computing the turn-off takes about a quarter of a second after each change.</p>
+      </form>
+      <div class="out">
+        <div class="kpis" id="kpis"></div>
+        <div class="panel"><h3>Pulse: coil current and drain voltage</h3><canvas class="plot" id="pw" aria-label="Pulse waveform plot"></canvas><p class="note" id="pwcap"></p></div>
+        <div class="panel"><h3>Checks at this operating point</h3><div class="tbl"><table id="ck"></table></div></div>
+        <div class="kpis" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))">
+          <div class="panel"><h3>Battery power by consumer</h3><div class="bars" id="bars"></div></div>
+          <div class="panel"><h3>Projected discharge</h3><canvas class="plot" id="dc" style="height:180px" aria-label="Discharge projection plot"></canvas><div class="eyebrow">open-circuit voltage taken linear in energy (ASSUMED: no P30B discharge curve in the repo)</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="band" id="wiring" aria-label="Wiring runs">
+    <div class="bandhead"><h2>Wiring runs</h2><span class="eyebrow">HARNESS_MASTER_v3 &middot; currents from the simulation above</span></div>
+    <div class="rel"><button class="btn" id="anim" aria-pressed="false">animate current</button><span class="note" id="wsel">Click a run to list its conductors. Line width follows the current; red runs carry the flyback; dashed runs are board links (FFC), not harness rows; "8×" = 8 signal conductors.</span></div>
+    <div class="panel tbl" id="wdiag"></div>
+    <div class="panel tbl"><table id="wt"></table></div>
+  </section>
+  <section class="index" id="parts" aria-label="All parts and boards">
+    <div class="ihead"><div><h2>Every part and board</h2><div class="eyebrow">&#9679; has a face in the drawing</div></div><input id="q" type="search" placeholder="Filter: name, group, format" aria-label="Filter parts"></div>
+    <div class="groups" id="groups"></div>
+  </section>
+  <section class="docs" id="docs"><h3>Package documents</h3><ul class="files" id="doclist"></ul>
+    <p class="foot">Every link goes to a file the pipeline generated (scripts/make_package.py, src/render/viewer_r2.py); none is hand-edited. Cut faces are the exact mesh/plane sections of the current STLs, the same faces as the layered blueprint. Board check states come from the sign-off table. The simulation runs src/render/system_live.js, checked against the Python reference on every regression run and again in this page on load. Not a fabrication drawing: read the package index for what is verified and what is still open.</p></section>
+</div>
+<script>
+/*SIMJS*/
+</script>
+<script>
+const D = /*DATA*/null;
+const SL = window.SystemLive, M = D.sim;
+const byId = Object.fromEntries(D.items.map(i => [i.id, i]));
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmt = (v, d = 1) => (v == null || !isFinite(v)) ? "–" : Number(v).toFixed(d);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const PN = { head: "head half-section", system: "whole detector" };
+const CAP = { head: "Head half-section at y = 0. x in mm, heel (178 deg) to the left; z up from the underside of the base plate.",
+              system: "Whole detector, extended, shaft at 47 deg: mid-plane cut of the head, yoke, tubes, neck module and upper assembly. x and z in mm." };
+$("st").textContent = D.meta.status; $("gen").textContent = "generated " + D.meta.generated + (D.meta.commit ? " at " + D.meta.commit : "");
+let panel = "head", sel = null, vb = null, home = null, editing = false;
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+let OFF = store.get("pf233-offsets-" + D.meta.commit, { head: {}, system: {} });
+const svg = $("svg"), g = $("g"), box = $("box"), tip = $("tip");
+function setVB(v) { vb = v; svg.setAttribute("viewBox", v.join(" ")); }
+function off(id, pn = panel) { return OFF[pn][id] || [0, 0]; }
+function draw() {
+  const P = D.panels[panel];
+  g.innerHTML = P.faces.map(f => `<path class="f" data-id="${f.id}" data-also="${f.also.join(" ")}" fill="${f.fc}" fill-rule="evenodd" d="${f.d}"/>`).join("");
+  const [x0, x1] = P.xlim, [y0, y1] = P.ylim; home = [x0, -y1, x1 - x0, y1 - y0];
+  box.style.height = Math.round(Math.max(260, Math.min(innerHeight * .68, 680, box.clientWidth * (y1 - y0) / (x1 - x0) * 1.15))) + "px"; setVB(home.slice());
+  $("cap").textContent = CAP[panel];
+  document.querySelectorAll(".tabs [role=tab]").forEach(b => b.setAttribute("aria-selected", b.dataset.p === panel));
+  applyOffsets(); mark();
+}
+function applyOffsets() {
+  for (const p of g.children) { const [dx, dz] = off(p.dataset.id); p.setAttribute("transform", dx || dz ? `translate(${dx},${-dz})` : ""); p.classList.toggle("moved", !!(dx || dz)); }
+}
+function owns(p, id) { return p.dataset.id === id || p.dataset.also.split(" ").includes(id); }
+function mark() {
+  svg.classList.toggle("has-sel", !!sel && [...g.children].some(p => owns(p, sel)));
+  for (const p of g.children) p.classList.toggle("sel", !!sel && owns(p, sel));
+  document.querySelectorAll(".groups .chip").forEach(c => c.classList.toggle("on", c.dataset.id === sel));
+}
+function fileList(fs) {
+  return fs.map(f => `<li><a href="${esc(f.href)}" target="_blank" rel="noopener"><span class="fmt">${esc(f.fmt)}</span><span class="nm">${esc(f.label)}</span></a></li>`).join("");
+}
+// ---------------------------------------------------------------- placement checks: section geometry rasterised around the moved part
+const RULE = D.rules.min_gap_mm;
+const baseCache = {};
+function facesOf(id, pn = panel) { return D.panels[pn].faces.filter(f => f.id === id || f.also.includes(id)); }
+function bboxOf(faces) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const f of faces) for (const m of f.d.matchAll(/(-?[\d.e]+),(-?[\d.e]+)/g)) { const x = +m[1], y = +m[2]; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  return [x0, y0, x1, y1];
+}
+const PATHS = {};
+function path2d(f) { return PATHS[f.d] || (PATHS[f.d] = new Path2D(f.d)); }
+function raster(id, dx, dz, pn) {
+  const mine = facesOf(id, pn); if (!mine.length) return null;
+  const bb = bboxOf(mine), pad = 3 + RULE, X0 = bb[0] + Math.min(dx, 0) - pad, Y0 = bb[1] + Math.min(-dz, 0) - pad, X1 = bb[2] + Math.max(dx, 0) + pad, Y1 = bb[3] + Math.max(-dz, 0) + pad;
+  const res = Math.max((X1 - X0) / 900, (Y1 - Y0) / 900, 0.02), W = Math.ceil((X1 - X0) / res), H = Math.ceil((Y1 - Y0) / res);
+  const mk = () => { const c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d", { willReadFrequently: true }); x.setTransform(1 / res, 0, 0, 1 / res, -X0 / res, -Y0 / res); return x; };
+  const A = mk(), B = mk();
+  A.save(); A.translate(dx, -dz); for (const f of mine) A.fill(path2d(f), "evenodd"); A.restore();
+  B.save(); B.translate(dx, -dz); B.lineWidth = 2 * RULE; B.lineJoin = "round"; for (const f of mine) { B.fill(path2d(f), "evenodd"); B.stroke(path2d(f)); } B.restore();
+  const a = A.getImageData(0, 0, W, H).data, b = B.getImageData(0, 0, W, H).data;
+  const others = {};
+  for (const f of D.panels[pn].faces) {
+    if (f.id === id || f.also.includes(id)) continue;
+    const fb = bboxOf([f]), [ox, oz] = off(f.id, pn);
+    if (fb[2] + ox < X0 || fb[0] + ox > X1 || fb[3] - oz < Y0 || fb[1] - oz > Y1) continue;
+    (others[f.id] = others[f.id] || []).push(f);
+  }
+  const out = {};
+  for (const [oid, fs] of Object.entries(others)) {
+    const C = mk(), [ox, oz] = off(oid, pn); C.translate(ox, -oz); for (const f of fs) C.fill(path2d(f), "evenodd");
+    const c = C.getImageData(0, 0, W, H).data; let ov = 0, near = 0;
+    for (let k = 3; k < c.length; k += 4) if (c[k] > 127) { if (a[k] > 127) ov++; else if (b[k] > 127) near++; }
+    if (ov || near) out[oid] = { overlap_mm2: ov * res * res, near_px: near, res };
+  }
+  return { res, out };
+}
+function checkPart(id, pn = panel) {
+  const k = pn + ":" + id; if (!(k in baseCache)) baseCache[k] = raster(id, 0, 0, pn);
+  const [dx, dz] = off(id, pn), base = baseCache[k], now = raster(id, dx, dz, pn); if (!now || !base) return null;
+  const rows = [], tol = 3 * now.res * now.res;
+  for (const oid of new Set([...Object.keys(now.out), ...Object.keys(base.out)])) {
+    const n = now.out[oid] || { overlap_mm2: 0, near_px: 0 }, b = base.out[oid] || { overlap_mm2: 0, near_px: 0 };
+    let state = "ok", why = "";
+    if (n.overlap_mm2 > b.overlap_mm2 + tol) { state = "bad"; why = `overlaps ${fmt(n.overlap_mm2, 2)} mm² in the section (design ${fmt(b.overlap_mm2, 2)})`; }
+    else if (n.near_px > 0 && b.near_px === 0 && b.overlap_mm2 === 0) { state = "warn"; why = `closer than ${RULE} mm (was clear)`; }
+    else if (n.overlap_mm2 > 0 || n.near_px > 0) { why = "in contact by design, unchanged"; }
+    else continue;
+    rows.push({ oid, state, why });
+  }
+  for (const r of D.stack) {                                                  // vertical stack rows with real component heights (stack_check.json)
+    if (!r.lower || (r.lower !== id && r.upper !== id)) continue;
+    const gap = r.gap_mm - off(r.lower, "head")[1] + off(r.upper, "head")[1];
+    rows.push({ oid: null, state: gap >= r.required_mm ? "ok" : "bad", why: `${r.check}: ${fmt(gap, 2)} mm (needs ${r.required_mm})` });
+  }
+  return { res: now.res, rows };
+}
+function placeBox(it) {
+  if (!editing || !it.in_cut.includes(panel)) return "";
+  const [dx, dz] = off(it.id), c = checkPart(it.id); const bad = c && c.rows.some(r => r.state === "bad"), warn = c && c.rows.some(r => r.state === "warn");
+  for (const p of g.children) p.classList.toggle("bad", owns(p, it.id) && bad);
+  const verdict = !dx && !dz ? `<span class="pill">design position</span>` : bad ? `<span class="pill bad">conflict</span>` : warn ? `<span class="pill warn">tight</span>` : `<span class="pill ok">compatible in this section</span>`;
+  return `<div class="place"><h3>Placement (${PN[panel]})</h3>
+    <div class="row"><label for="dx">dx mm</label><input type="number" id="dx" step="0.1" value="${dx}"><label for="dz">dz mm</label><input type="number" id="dz" step="0.1" value="${dz}"></div>
+    <div class="row"><button class="btn" data-n="-1,0">&larr;</button><button class="btn" data-n="1,0">&rarr;</button><button class="btn" data-n="0,1">&uarr;</button><button class="btn" data-n="0,-1">&darr;</button>
+      <select id="step" aria-label="Nudge step"><option value="0.1">0.1 mm</option><option value="1" selected>1 mm</option><option value="10">10 mm</option></select><button class="btn" id="resetp">reset</button></div>
+    <div class="pills">${verdict}<span class="pill">raster ${fmt(c ? c.res : 0, 2)} mm</span></div>
+    <div class="res">${c ? c.rows.map(r => `<div><span class="pill ${r.state}">${r.state === "bad" ? "conflict" : r.state === "warn" ? "tight" : "ok"}</span><span>${r.oid ? esc(byId[r.oid].name) + ": " : ""}${esc(r.why)}</span></div>`).join("") || `<div><span class="pill ok">clear</span><span>no neighbour within ${RULE} mm</span></div>` : ""}</div>
+    <p class="note">Checked against the other cut faces of this section and the stack_check rows; a 2-D section check cannot see the rest of the part. Drag the part in the drawing or use the arrows.</p></div>`;
+}
+function card(it) {
+  const c = $("card");
+  if (!it) { c.innerHTML = `<div><div class="eyebrow">No part selected</div><h2>Pick a part</h2></div><p class="note">Click a face in the drawing or a name in the index.</p>`; return; }
+  const cuts = it.in_cut.length ? it.in_cut.map(p => `<span class="pill cut">in ${PN[p]}</span>`).join("") : `<span class="pill">not in these cuts</span>`;
+  const facts = it.facts.filter(f => f[1]).map(f => `<dt>${esc(f[0])}</dt><dd class="${f[0] === "SHA-256" ? "mono" : ""}" ${f[2] ? `title="${esc(f[2])}"` : ""}>${esc(f[1])}</dd>`).join("")
+    + (it.owner ? `<dt>Generated by</dt><dd class="mono">${it.owner.step ? "step " + esc(it.owner.step) + ": " : ""}${esc(it.owner.scripts.join(", "))}${it.owner.note ? `<br><span class="pill ${/ARCHIVED/.test(it.owner.note) ? "warn" : ""}">${esc(it.owner.note)}</span>` : ""}</dd>` : "");
+  const checks = (it.checks || []).map(([k, s, d]) => `<span>${esc(k)}</span><span class="pill ${s === "-" ? "" : esc(s)}">${esc(s === "-" ? "n/a" : s)}</span><span>${esc(d)}</span>`).join("");
+  const thumbs = (it.thumbs || []).map(t => `<figure><img src="${esc(t)}" alt="${esc(it.name)} KiCad 3-D render, ${t.includes("_top") ? "top" : "bottom"}" loading="lazy"><figcaption>${t.includes("_top") ? "top" : "bottom"}</figcaption></figure>`).join("");
+  const rel = it.related.filter(r => byId[r]).map(r => `<button class="chip" data-go="${r}">${esc(byId[r].name)}</button>`).join("");
+  c.innerHTML = `<div><div class="eyebrow">${esc(it.group)} &middot; ${esc(it.kind)}</div><h2>${esc(it.name)}</h2></div>
+    <div class="pills">${cuts}</div>${placeBox(it)}
+    ${it.note ? `<p class="note">${esc(it.note)}</p>` : ""}
+    ${facts ? `<dl>${facts}</dl>` : ""}
+    ${checks ? `<div><h3>Sign-off checks</h3><div class="checks">${checks}</div></div>` : ""}
+    ${thumbs ? `<div class="thumbs">${thumbs}</div>` : ""}
+    <div><h3>Files (${it.files.length})</h3>${it.files.length ? `<ul class="files">${fileList(it.files)}</ul>` : `<p class="note">No file in this package.</p>`}</div>
+    ${rel ? `<div><h3>Related</h3><div class="rel">${rel}</div></div>` : ""}`;
+  const dxI = $("dx"), dzI = $("dz");
+  if (dxI) { const set = () => move(it.id, +dxI.value || 0, +dzI.value || 0); dxI.onchange = set; dzI.onchange = set;
+    c.querySelectorAll("[data-n]").forEach(b => b.onclick = () => { const s = +$("step").value, [a, z] = b.dataset.n.split(",").map(Number), [x0, z0] = off(it.id); move(it.id, +(x0 + a * s).toFixed(3), +(z0 + z * s).toFixed(3)); });
+    $("resetp").onclick = () => move(it.id, 0, 0); }
+}
+let cardT = null;
+function move(id, dx, dz, quick) {
+  if (dx || dz) OFF[panel][id] = [dx, dz]; else delete OFF[panel][id];
+  store.set("pf233-offsets-" + D.meta.commit, OFF); applyOffsets(); renderCR();
+  clearTimeout(cardT); cardT = setTimeout(() => { const st = $("step") ? $("step").value : null; card(byId[id]); if (st && $("step")) $("step").value = st; }, quick ? 120 : 0);
+}
+function renderCR() {
+  const ch = [];
+  for (const pn of ["head", "system"]) for (const [id, [dx, dz]] of Object.entries(OFF[pn])) {
+    const it = byId[id], c = pn === panel ? checkPart(id, pn) : null;
+    ch.push({ part: it.name, panel: pn, dx_mm: dx, dz_mm: dz, generator: it.owner || null, section_check: c ? (c.rows.some(r => r.state === "bad") ? "conflict" : c.rows.some(r => r.state === "warn") ? "tight" : "compatible") : "not checked in this view",
+              findings: c ? c.rows.filter(r => r.state !== "ok").map(r => (r.oid ? byId[r.oid].name + ": " : "") + r.why) : [] });
+  }
+  $("changes").hidden = !ch.length;
+  $("crsum").textContent = ch.length + " part" + (ch.length === 1 ? "" : "s") + " moved";
+  $("cr").value = JSON.stringify({ kind: "PHI-FOLD 233 placement change request (viewer r2, MODELED)", base_commit: D.meta.commit, created: new Date().toISOString().slice(0, 10),
+    frame: "mm; x as drawn, z up from the base-plate underside (head) or drawing z (whole detector)", changes: ch,
+    next_step: "edit the generator script(s) listed, then make signoff; the 3-D checks decide" }, null, 1);
+}
+$("copycr").onclick = () => { const t = $("cr"); const done = () => { $("copycr").textContent = "Copied"; setTimeout(() => $("copycr").textContent = "Copy change request", 1500); };
+  try { navigator.clipboard.writeText(t.value).then(done, () => { t.select(); }); } catch (e) { t.select(); } };
+$("resetall").onclick = () => { OFF = { head: {}, system: {} }; store.set("pf233-offsets-" + D.meta.commit, OFF); applyOffsets(); renderCR(); card(byId[sel]); for (const p of g.children) p.classList.remove("bad"); };
+$("edit").onclick = () => { editing = !editing; $("edit").classList.toggle("on", editing); $("edit").setAttribute("aria-pressed", editing); box.classList.toggle("editing", editing);
+  $("legend").textContent = editing ? "Edit placement: select a part, then drag it or use the arrows in its card. Every move is checked against the other cut faces and the stack rows." : "Click a cut face to open its files. Drag to pan, scroll or pinch to zoom. Boards inside the vault are drawn as slabs at their design z; parts with no face in these two cuts are in the index below.";
+  card(byId[sel]); if (!editing) for (const p of g.children) p.classList.remove("bad"); };
+function select(id, opts = {}) {
+  sel = byId[id] ? id : null; const it = byId[sel];
+  if (it && it.in_cut.length && !it.in_cut.includes(panel)) { panel = it.in_cut[0]; draw(); }
+  card(it); mark();
+  if (opts.fit) fit();
+  if (opts.hash !== false) { try { history.replaceState(null, "", sel ? "#p-" + sel : location.pathname); } catch (e) {} }
+}
+function fit() {
+  const ps = [...g.children].filter(p => sel && owns(p, sel)); if (!ps.length) { setVB(home.slice()); return; }
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const p of ps) { const b = p.getBBox(), [dx, dz] = off(p.dataset.id); x0 = Math.min(x0, b.x + dx); y0 = Math.min(y0, b.y - dz); x1 = Math.max(x1, b.x + b.width + dx); y1 = Math.max(y1, b.y + b.height - dz); }
+  const m = Math.max(x1 - x0, y1 - y0) * .25 + 4; setVB([x0 - m, y0 - m, x1 - x0 + 2 * m, y1 - y0 + 2 * m]);
+}
+function zoom(k, cx, cy) { const [x, y, w, h] = vb; cx ??= x + w / 2; cy ??= y + h / 2; setVB([cx - (cx - x) * k, cy - (cy - y) * k, w * k, h * k]); }
+function toSvg(e) { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
+box.addEventListener("wheel", e => { e.preventDefault(); const q = toSvg(e); zoom(e.deltaY > 0 ? 1.15 : 1 / 1.15, q.x, q.y); }, { passive: false });
+const pts = new Map(); let drag = null, moved = false, pinch = null, dragPart = null;
+box.addEventListener("pointerdown", e => { pts.set(e.pointerId, e); box.setPointerCapture(e.pointerId); moved = false;
+  const p = e.target.closest && e.target.closest("path.f");
+  if (pts.size === 1 && editing && sel && p && owns(p, sel)) { const q = toSvg(e), [dx, dz] = off(sel); dragPart = { q, dx, dz }; drag = null; return; }
+  if (pts.size === 1) drag = { x: e.clientX, y: e.clientY, vb: vb.slice() };
+  if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), vb: vb.slice() }; drag = null; dragPart = null; } });
+box.addEventListener("pointermove", e => {
+  if (pts.has(e.pointerId)) pts.set(e.pointerId, e);
+  if (dragPart) { const q = toSvg(e), s = vb[2] > 400 ? 1 : 0.1; const nx = Math.round((dragPart.dx + q.x - dragPart.q.x) / s) * s, nz = Math.round((dragPart.dz - (q.y - dragPart.q.y)) / s) * s;
+    if (Math.abs(q.x - dragPart.q.x) + Math.abs(q.y - dragPart.q.y) > 0) moved = true; OFF[panel][sel] = [+nx.toFixed(2), +nz.toFixed(2)]; applyOffsets(); return; }
+  if (pinch && pts.size === 2) { const [a, b] = [...pts.values()]; const d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); if (d > 0) { setVB(pinch.vb.slice()); zoom(pinch.d / d); } moved = true; return; }
+  if (drag) { const k = Math.max(vb[2] / box.clientWidth, vb[3] / box.clientHeight); const dx = (e.clientX - drag.x) * k, dy = (e.clientY - drag.y) * k;
+    if (Math.abs(e.clientX - drag.x) + Math.abs(e.clientY - drag.y) > 4) { moved = true; box.classList.add("drag"); }
+    if (moved) setVB([drag.vb[0] - dx, drag.vb[1] - dy, drag.vb[2], drag.vb[3]]); return; }
+  const p = e.target.closest && e.target.closest("path.f");
+  for (const q of g.querySelectorAll(".hl")) q.classList.remove("hl");
+  if (p) { for (const q of g.children) if (q.dataset.id === p.dataset.id) q.classList.add("hl");
+    const r = box.getBoundingClientRect(); tip.hidden = false; tip.textContent = byId[p.dataset.id].name; tip.style.left = (e.clientX - r.left) + "px"; tip.style.top = (e.clientY - r.top) + "px"; }
+  else tip.hidden = true;
+});
+function up(e) { pts.delete(e.pointerId); if (pts.size < 2) pinch = null;
+  if (dragPart) { const [dx, dz] = off(sel); dragPart = null; if (moved) move(sel, dx, dz); return; }
+  if (!pts.size) { box.classList.remove("drag");
+    if (drag && !moved && e.type === "pointerup") { const el = document.elementFromPoint(e.clientX, e.clientY); const p = el && el.closest && el.closest("path.f"); select(p ? p.dataset.id : null); }
+    drag = null; } }
+box.addEventListener("pointerup", up); box.addEventListener("pointercancel", up);
+box.addEventListener("pointerleave", () => { tip.hidden = true; for (const q of g.querySelectorAll(".hl")) q.classList.remove("hl"); });
+box.addEventListener("dblclick", () => setVB(home.slice()));
+$("zin").onclick = () => zoom(1 / 1.4); $("zout").onclick = () => zoom(1.4); $("zall").onclick = () => setVB(home.slice()); $("zfit").onclick = fit;
+document.querySelectorAll(".tabs [role=tab]").forEach(b => b.onclick = () => { panel = b.dataset.p; draw(); card(byId[sel]); });
+document.addEventListener("click", e => { const c = e.target.closest && e.target.closest("[data-go]"); if (!c) return; select(c.dataset.go, { fit: true });
+  if (c.closest(".groups")) $("cut").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }); });
+function groups(q) {
+  q = (q || "").toLowerCase().trim();
+  const hit = it => !q || [it.name, it.group, it.kind, ...it.files.map(f => f.fmt + " " + f.label)].join(" ").toLowerCase().includes(q);
+  $("groups").innerHTML = D.groups.map(gn => { const its = D.items.filter(i => i.group === gn && hit(i)); if (!its.length) return "";
+    return `<div class="grp"><h3>${esc(gn)}<span>${its.length} item${its.length > 1 ? "s" : ""}</span></h3><div class="rel">${its.map(i =>
+      `<button class="chip" data-go="${i.id}" data-id="${i.id}" title="${i.files.length} file(s)${i.in_cut.length ? ", in the cut" : ", not in these cuts"}">${esc(i.name)}${i.in_cut.length ? "<i>&#9679;</i>" : ""}</button>`).join("")}</div></div>`; }).join("")
+    || `<p class="note">Nothing matches "${esc(q)}". Clear the filter to see all ${D.items.length} items.</p>`;
+  mark();
+}
+$("q").addEventListener("input", e => groups(e.target.value));
+$("doclist").innerHTML = fileList(D.docs);
+groups("");
+// ---------------------------------------------------------------- system simulation
+const MODEN = { scan: "scan", mid: "mid", boost: "boost" };
+$("mode").innerHTML = Object.entries(M.modes).map(([k, m], i) => `<label><input type="radio" name="mode" id="m-${k}" value="${k}" ${k === "boost" ? "checked" : ""}><span>${MODEN[k] || k} ${m.I} A / ${m.f} Hz</span></label>`).join("");
+$("clamp").innerHTML = Object.entries(M.caps).map(([k, c]) => `<option value="${k}">${esc(c.label)}</option>`).join("");
+const S = () => ({ V: +$("V").value, mode: document.querySelector("input[name=mode]:checked").value, cap: $("clamp").value, Ls: 1 + +$("Ls").value / 100, Rs: +$("Rs").value,
+                   led: +$("led").value / 1000, m12: +$("m12").value, amb: +$("amb").value });
+let simT = null, last = null;
+function labels(s) { $("Vo").textContent = fmt(s.V, 1) + " V"; $("Lso").textContent = (s.Ls >= 1 ? "+" : "") + fmt((s.Ls - 1) * 100, 0) + " %  (" + fmt(M.tx.L * s.Ls * 1e6, 1) + " µH)";
+  $("Rso").textContent = "x" + fmt(s.Rs, 2) + "  (" + fmt(M.tx.R_loop * s.Rs * 1e3, 0) + " mΩ)"; $("ledo").textContent = fmt(s.led * 1000, 0) + " mA" + (s.led > M.i5.led_cap + 1e-9 ? " (over the firmware cap)" : "");
+  $("m12o").textContent = fmt(s.m12, 2) + " W"; $("ambo").textContent = fmt(s.amb, 0) + " °C"; }
+function runSim() {
+  const s = S(); labels(s); $("busy").textContent = "Computing…";
+  clearTimeout(simT); simT = setTimeout(() => {
+    const t0 = performance.now(), tx = SL.txPoint(M, s.V, s.mode, s.cap, s.Ls, s.Rs, true), pw = SL.power(M, s.V, s.mode, tx.P_tx_W, s.led, s.m12);
+    const vaultW = tx.P_damp_W + M.thermal.rest_W + 5.0 * s.led * M.thermal.led_heat_per_W;   // sim_thermal inventory (system_live.py thermal note)
+    const ck = SL.checks(M, tx, pw, s.amb, s.led, vaultW), dc = SL.discharge(M, s.mode, s.Ls, s.Rs, s.led, s.m12), ramp = SL.rampWave(M, s.V, s.mode, s.Ls, s.Rs);
+    last = { s, tx, pw, ck, dc, ramp, vaultW }; renderSim(); renderWires(); $("busy").textContent = `Computed in ${fmt(performance.now() - t0, 0)} ms. Move any control to recompute.`;
+  }, 120);
+}
+function kpi(label, val, unit, cls = "") { return `<div class="kpi ${cls}"><span>${esc(label)}</span><b>${val}<small style="font-size:14px"> ${unit}</small></b></div>`; }
+function renderSim() {
+  const { s, tx, pw, ck, dc } = last, row = w => ck.rows.find(r => r.what === w);
+  const vds = row("FET Vds peak");
+  $("kpis").innerHTML = kpi("on-time to " + M.modes[s.mode].I + " A", fmt(tx.ton_us, 1), "µs") + kpi("drain peak, margin " + fmt(vds.margin_pct, 0) + " %", fmt(tx.Vds_peak, 0), "V", vds.margin_pct < 20 ? "bad" : "")
+    + kpi("current zero / quiet", fmt(tx.t_zero_us, 2) + " / " + fmt(tx.t_quiet_us, 2), "µs") + kpi("battery power", fmt(pw.P_total_W, 2), "W") + kpi("runtime at this point / full discharge", fmt(pw.hours, 1) + " / " + fmt(dc.hours, 1), "h")
+    + kpi("vault hot spot (" + fmt(last.vaultW, 2) + " W in the vault)", fmt(ck.T_vault, 1), "°C", ck.T_vault > M.limits.vault_C ? "bad" : "");
+  $("ck").innerHTML = `<thead><tr><th>Check</th><th>Value</th><th>Limit</th><th>Margin</th><th>State</th><th>Basis</th></tr></thead><tbody>` + ck.rows.map(r =>
+    `<tr><td>${esc(r.what)}</td><td class="num">${fmt(r.value, r.unit === "A" ? 3 : 1)} ${r.unit}</td><td class="num">${r.limit} ${r.unit}</td><td class="num">${fmt(r.margin_pct, 0)} %</td><td><span class="pill ${r.need ? "ok" : "bad"}">${r.need ? "pass" : "fail"}</span></td><td>${esc(r.note)}</td></tr>`).join("") + `</tbody>`;
+  const parts = [["TX pulses (V Q f)", tx.P_tx_W], ["+5V rail / 0.85", pw.P5_W], ["+12V gate + M12 load / 0.85", pw.P12_W]], mx = Math.max(...parts.map(p => p[1]));
+  $("bars").innerHTML = parts.map(([n, v]) => `<div class="bar"><span>${esc(n)}</span><i style="width:${v / mx * 100}%"></i><span class="num">${fmt(v, 2)} W</span></div>`).join("")
+    + `<p class="note">${fmt(pw.I_batt_A, 3)} A from the pack at ${fmt(s.V, 1)} V; +5V rail ${fmt(pw.I5_A, 3)} A of 1.5 A.</p>`;
+  plotPulse(); plotDischarge();
+}
+function axes(cv, xr, yr, ylab, xlab, yr2, ylab2) {
+  const dpr = devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; const x = cv.getContext("2d"); x.scale(dpr, dpr);
+  const L = 52, R = yr2 ? 52 : 14, T = 10, B = 30, X = v => L + (v - xr[0]) / (xr[1] - xr[0]) * (W - L - R), Y = v => T + (1 - (v - yr[0]) / (yr[1] - yr[0])) * (H - T - B), Y2 = yr2 ? (v => T + (1 - (v - yr2[0]) / (yr2[1] - yr2[0])) * (H - T - B)) : null;
+  x.font = "11px " + css("--f-mono"); x.fillStyle = css("--muted"); x.strokeStyle = css("--grid"); x.lineWidth = 1;
+  const ticks = (a, b, n) => { const st = Math.pow(10, Math.floor(Math.log10((b - a) / n))), m = [1, 2, 5, 10].find(k => (b - a) / (st * k) <= n) * st, o = []; for (let v = Math.ceil(a / m) * m; v <= b + 1e-9; v += m) o.push(+v.toFixed(6)); return o; };
+  for (const v of ticks(xr[0], xr[1], 8)) { x.beginPath(); x.moveTo(X(v), T); x.lineTo(X(v), H - B); x.stroke(); x.fillText(v, X(v) - 8, H - B + 14); }
+  for (const v of ticks(yr[0], yr[1], 5)) { x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(W - R, Y(v)); x.stroke(); x.fillText(v, 4, Y(v) + 4); }
+  if (yr2) for (const v of ticks(yr2[0], yr2[1], 5)) x.fillText(v, W - R + 6, Y2(v) + 4);
+  x.fillText(xlab, W - R - x.measureText(xlab).width, H - 2); x.fillText(ylab, L + 4, T + 10); if (ylab2) x.fillText(ylab2, W - R - x.measureText(ylab2).width - 4, T + 10);
+  return { x, X, Y, Y2 };
+}
+function line(c, pts, Y, col, w = 2) { c.x.strokeStyle = col; c.x.lineWidth = w; c.x.beginPath(); pts.forEach(([a, b], k) => k ? c.x.lineTo(c.X(a), Y(b)) : c.x.moveTo(c.X(a), Y(b))); c.x.stroke(); }
+function plotPulse() {
+  const { tx, ramp, s } = last, ton = tx.ton_us, I = M.modes[s.mode].I, tEnd = Math.min(60, Math.max(14, tx.t_quiet_us * 2.2));
+  const cur = ramp.map(([t, i]) => [t - ton, i]).concat(tx.wave.filter(w => w[0] <= tEnd).map(([t, i]) => [t, i]));
+  const v = ramp.map(([t, , vb]) => [t - ton, 0]).concat(tx.wave.filter(w => w[0] <= tEnd).map(([t, , vd]) => [t, vd]));
+  const vmax = Math.max(650, tx.Vds_peak) * 1.05, c = axes($("pw"), [-ton, tEnd], [-I * 0.1, I * 1.15], "coil current (A)", "µs from turn-off", [-vmax * 0.1, vmax], "drain (V)");
+  c.x.setLineDash([5, 4]); line(c, [[-ton, 650], [tEnd, 650]], c.Y2, css("--fail"), 1); c.x.setLineDash([]);
+  line(c, v, c.Y2, css("--plot2"), 1.6); line(c, cur, c.Y, css("--plot1"), 2);
+  $("pwcap").textContent = `blue: coil current (left axis), copper: FET drain voltage incl. VBUS (right axis), dashed: 650 V rating. Ramp ${fmt(ton, 1)} µs, droop ${fmt(tx.droop_pct, 2)} % of VBUS, clamp ${fmt(tx.vc_peak, 0)} V.`;
+}
+function plotDischarge() {
+  const { dc } = last, c = axes($("dc"), [0, Math.ceil(dc.hours)], [19, 30], "pack V", "hours");
+  line(c, dc.pts.map(p => [p[0], p[1]]), c.Y, css("--plot3"), 2);
+}
+$("ctl").addEventListener("input", runSim); $("ctl").addEventListener("submit", e => e.preventDefault());
+// ---------------------------------------------------------------- wiring runs
+const NODES = { PACK: [40, 60, "Pack 7S1P"], SWITCH: [40, 170, "Switch U1"], PM2: [220, 110, "PM2 dock"], PB1R: [420, 110, "PB1R / NPM"], TXJ1: [620, 60, "TXJ1"], FORMERS: [820, 60, "Formers L1-L6"],
+                CB1D: [620, 230, "CB1D"], HB2: [420, 300, "HB2 grip"], LB1: [820, 170, "LB1"], HTA: [820, 270, "HTA"], AB1A: [620, 380, "AB1A"], AB1B: [820, 380, "AB1B"], "SB1R-QA": [420, 420, "SB1R-QA"], "SB1R-QB": [420, 500, "SB1R-QB"] };
+let wFilter = null;
+function renderWires() {
+  if (!last) return; const W = SL.wiring(M, last.tx, last.pw, last.s.mode), groups = {};
+  for (const w of W) { if (w.a === w.b || !NODES[w.a] || !NODES[w.b]) continue; const k = [w.a, w.b].join(">"); (groups[k] = groups[k] || []).push(w); }
+  const Imax = Math.max(...W.map(w => w.I_A || 0), 1);
+  let s = `<svg class="wiresvg" viewBox="0 0 960 560" role="img" aria-label="Wiring runs between boards">`;
+  for (const [k, ws] of Object.entries(groups)) {
+    const [a, b] = k.split(">"), [x1, y1] = NODES[a], [x2, y2] = NODES[b], I = Math.max(...ws.map(w => w.I_A || 0)), hv = ws.some(w => w.hv), pw = I > 0.01;
+    const sw = 1.5 + 9 * Math.sqrt(I / Imax), mx = (x1 + x2) / 2 + 60, my = (y1 + y2) / 2, d = `M${x1 + 60},${y1 + 18} C${mx},${y1 + 18} ${mx},${y2 + 18} ${x2 + 60},${y2 + 18}`;
+    s += `<path class="edge ${hv ? "hv" : pw ? "pw" : ""} ${wFilter === k ? "on" : ""}" data-k="${k}" d="${d}" stroke-width="${sw.toFixed(1)}"><title>${esc(ws.map(w => w.id + " " + w.signal).join("\n"))}</title></path>`;
+    if (pw) s += `<path class="flow" d="${d}" stroke-width="${Math.max(1.2, sw / 3).toFixed(1)}" style="--dur:${(1.2 / Math.max(I / Imax, 0.05)).toFixed(2)}s"/>`;
+    const lx = (x1 + x2) / 2 + 60, ly = (y1 + y2) / 2 + 18;
+    s += `<text class="elabel" x="${lx}" y="${ly - 6}" text-anchor="middle">${pw ? fmt(I, I < 1 ? 2 : 1) + " A" : ws.length + "×"}</text>`;
+  }
+  for (const l of M.links || []) {                                            // board links that are not harness rows
+    const [x1, y1] = NODES[l.a], [x2, y2] = NODES[l.b], d = `M${x1 + 60},${y1 + 36} C${x1 + 60},${(y1 + y2) / 2 + 30} ${x2 + 60},${(y1 + y2) / 2} ${x2 + 60},${y2}`;
+    s += `<path class="edge link" d="${d}" stroke-width="2"><title>${esc(l.id + " " + l.signal + ": " + l.note)}</title></path><text class="elabel" x="${(x1 + x2) / 2 + 60}" y="${(y1 + y2) / 2 + 40}" text-anchor="middle">FFC · ${fmt(l.I_A * 1000, 0)} mA</text>`;
+  }
+  for (const [n, [x, y, lab]] of Object.entries(NODES)) s += `<g class="node ${wFilter && wFilter.split(">").includes(n) ? "sel" : ""}"><rect x="${x}" y="${y}" width="120" height="36"/><text x="${x + 10}" y="${y + 23}">${esc(lab)}</text></g>`;
+  $("wdiag").innerHTML = s + `</svg>`;
+  $("wdiag").querySelectorAll(".edge").forEach(e => e.onclick = () => { wFilter = wFilter === e.dataset.k ? null : e.dataset.k; renderWires(); });
+  $("wsel").textContent = wFilter ? `Showing ${wFilter.replace(">", " to ")}. Click the run again to show all.` : "Click a run to list its conductors. Line width follows the current; red runs carry the flyback; dashed runs are board links (FFC), not harness rows; \"8×\" = 8 signal conductors.";
+  const rows = W.filter(w => !wFilter || [w.a, w.b].join(">") === wFilter);
+  $("wt").innerHTML = `<thead><tr><th>Id</th><th>Signal</th><th>From</th><th>To</th><th>Medium</th><th>Length</th><th>R</th><th>Current</th><th>Drop</th><th>Loss</th></tr></thead><tbody>` + rows.map(w =>
+    `<tr class="${w.hv ? "hv" : ""}"><td>${esc(w.id)}</td><td>${esc(w.signal)}</td><td>${esc(w.frm.slice(0, 34))}</td><td>${esc(w.to.slice(0, 34))}</td><td>${esc(w.spec.slice(0, 30))}</td><td class="num">${fmt(w.length_m * 1000, 0)} mm</td>
+     <td class="num">${w.R_ohm == null ? "–" : fmt(w.R_ohm * 1e3, 1) + " mΩ"}</td><td class="num">${w.I_A ? fmt(w.I_A, 3) + " A " + w.kind + (w.I_peak_A > w.I_A * 1.01 ? ", " + fmt(w.I_peak_A, 1) + " A peak" : "") : "signal"}</td>
+     <td class="num">${w.drop_mV == null || !w.I_A ? "–" : fmt(w.drop_mV, 1) + " mV"}</td><td class="num">${w.loss_mW == null || !w.I_A ? "–" : fmt(w.loss_mW, 1) + " mW"}</td></tr>`).join("") + `</tbody>`;
+}
+$("anim").onclick = () => { const on = document.body.classList.toggle("animate"); $("anim").classList.toggle("on", on); $("anim").setAttribute("aria-pressed", on); };
+// ---------------------------------------------------------------- self-check of the in-page model against the Python reference cases
+setTimeout(() => { let worst = 0;
+  for (const gc of M.golden) { const tx = SL.txPoint(M, gc.V, gc.mode, gc.cap, gc.L_scale, gc.R_scale), pw = SL.power(M, gc.V, gc.mode, tx.P_tx_W);
+    for (const k of ["ton_us", "Vds_peak", "P_RCL_W", "P_total_W"]) worst = Math.max(worst, Math.abs(((k === "P_total_W" ? pw : tx)[k] - gc[k]) / gc[k]) * 100); }
+  $("selftest").textContent = `model self-check: ${M.golden.length} reference cases, max deviation ${fmt(worst, 2)} %`; }, 400);
+function fromHash() { const h = location.hash.replace(/^#p-/, ""); if (h && byId[h]) select(h, { fit: true, hash: false }); }
+draw(); renderCR(); runSim();
+if (location.hash.startsWith("#p-") && byId[location.hash.slice(3)]) fromHash(); else select("cb1d", { hash: false });
+window.addEventListener("hashchange", fromHash);
+</script>

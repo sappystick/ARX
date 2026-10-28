@@ -133,3 +133,13 @@ Source: Advanced Monolithic Systems "AMS1117 1A Low Dropout Voltage Regulator" (
 | Power | 450 to 556 mW (high performance, 374 kSPS), 254 to 386 mW (low power); full power-down 1 mW (p. 10) | about 5 to 6 times the 89 mW of the AD7389-4, inside a sealed potted cell |
 | Clock and package | 48 MHz crystal or CMOS clock; 8 x 8 mm, 56-lead LFCSP, 0.75 mm tall (p. 1, 93) | more pins and area than the 4 x 4 mm AD7389-4 |
 | Latency | wideband FIR group delay 39.8 / ODR; sinc3 7 / ODR, sinc6 9.5 / ODR (p. 7) | matters for sampling a decay right after turn-off |
+
+## OPA2211 / OPA2365 supply current (AB1 +5VA load, viewer r2 system model): VERIFIED (2026-10-28)
+
+Sources: TI SBOS377L "OPAx211 1.1-nV/rtHz Noise, Low Power, Precision Operational Amplifier" (October 2006, revised January 2020), https://www.ti.com/lit/ds/symlink/opa211.pdf (HTTP 200), saved unchanged as data/seed/datasheets/TI_OPA211_SBOS377L_2020-01.pdf (sha256 2415597a36a2108b...); TI SBOS365G "OPAx365 50-MHz, Zero-Crossover, Low-Distortion, High CMRR, RRI/O, Single-Supply Operational Amplifier" (May 2006, revised May 2023), https://www.ti.com/lit/ds/symlink/opa2365.pdf (HTTP 200), saved as data/seed/datasheets/TI_OPA2365_SBOS365G_2023-05.pdf (sha256 9a87d0790f4b118c...).
+
+| Item | Datasheet value | Used for |
+|---|---|---|
+| OPA2211 IQ per channel, IOUT = 0 | 3.6 mA typ, 4.5 mA max (25 C); 6 mA max over -40..125 C (POWER SUPPLY table) | system_budget +5VA row (6 channels on AB1A + AB1B); system_live rail term (over-temperature value) |
+| OPA2365 IQ per amplifier, IO = 0 | 4.6 mA typ, 5 mA max; 5 mA over -40..125 C | same (4 amplifiers) |
+| OPA2365 supply range | 2.2-5.5 V | +5VA at 5 V: inside |

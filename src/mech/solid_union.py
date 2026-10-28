@@ -65,7 +65,7 @@ def dilate(V, F, r=MARGIN):
 # exists but is OFF (not byte-identical, see DILATE_CACHE).
 # Keys hash exactly what each computation reads (float32 / uint32 bytes as handed to manifold3d, margin, sphere segments, manifold3d version, the snap candidate list).
 # Proved byte-identical to the uncached path for the whole-union and snap caches (docs/PERFORMANCE.md). SOLID_UNION_CACHE=off (or "0") runs the uncached path; the directory is work/.pipeline/solid_union_cache (git-ignored, invisible to the tracer, wiped by make clean).
-import hashlib, os, json
+import hashlib, os, json, sys
 CACHE = os.environ.get("SOLID_UNION_CACHE", os.path.join(".pipeline", "solid_union_cache"))
 CACHE_ON = CACHE not in ("off", "0", "")
 STATS = dict(dilate_hit=0, dilate_miss=0, union_hit=0, union_miss=0, snap_hit=0, snap_miss=0)
@@ -86,6 +86,27 @@ def _load(path):
     try:
         with np.load(path, allow_pickle=False) as z: return {k: z[k] for k in z.files}
     except Exception: return None
+# ---- canonical rebuild (2026-10-28, viewer/su study): every dilated body is converted to a Mesh64 with its declared field dtypes and its tolerance, and the union is
+# built from Manifolds rebuilt from those arrays, cached or not. A cache hit then restores exactly the arrays the uncached path builds from, so the two paths are the same
+# computation (byte-identical by construction); the earlier experiment rebuilt with int64 fields and no constructor tolerance and was not. Switch: SOLID_UNION_REBUILD
+# (default decided by scripts/su_proof.py, docs/PERFORMANCE.md).
+M64_DT = dict(vert_properties=np.float64, tri_verts=np.uint64, merge_from_vert=np.uint64, merge_to_vert=np.uint64, run_index=np.uint64, run_original_id=np.uint32,
+              run_transform=np.float64, run_flags=np.uint8, face_id=np.uint64, halfedge_tangent=np.float64)
+REBUILD = os.environ.get("SOLID_UNION_REBUILD", "0") == "1"
+def to_arrays(d):
+    m = d.to_mesh64(); return {k: np.ascontiguousarray(np.asarray(getattr(m, k)).astype(t)) for k, t in M64_DT.items()}, float(d.get_tolerance())
+def from_arrays(arrs, tol):
+    return M3.Manifold(M3.Mesh64(tolerance=tol, **{k: v for k, v in arrs.items() if v.size})).set_tolerance(tol)
+def dilate_rebuilt(V, F, r=MARGIN):
+    """dilation in canonical (rebuilt) form; with the cache on, the arrays are stored per body and reused when the body is unchanged"""
+    p = _path(_mesh_key(b"dilate-v2", V, F, float(r), 8), "dilate") if CACHE_ON else None; z = _load(p) if p else None
+    if z is not None:
+        STATS["dilate_hit"] += 1; return from_arrays({k: z[k] for k in M64_DT}, float(z["tolerance"]))
+    STATS["dilate_miss"] += 1; d = dilate(V, F, r)
+    if d.status() != M3.Error.NoError: return d
+    arrs, tol = to_arrays(d)
+    if p: _save(p, tolerance=np.float64(tol), **arrs)
+    return from_arrays(arrs, tol)
 DILATE_CACHE = os.environ.get("SOLID_UNION_DILATE_CACHE") == "1"         # EXPERIMENTAL, off: a Manifold rebuilt from a cached Mesh64 (every field, IDs, set_tolerance) does not union + simplify like the
                                                                           # in-memory one (ROOF_PLATE 104536 vs 134436 triangles, CORE 216916 vs 398556), so it is NOT byte-identical: never use it for a release
 def dilate_cached(V, F, r=MARGIN):
@@ -108,14 +129,17 @@ def merge_closed(shells, concat, margin=MARGIN):
     otherwise the bodies are each dilated by `margin` mm and unioned (manifold3d) into ONE closed mesh. Returns (V, F, info) with info = dict(method, bodies, margin, volume_in_mm3, volume_out_mm3)."""
     V0, F0 = concat; vol = lambda V, F: float(np.einsum("ij,ij->i", V[F[:, 0]], np.cross(V[F[:, 1]], V[F[:, 2]])).sum() / 6.0)
     if position_bad_edges(F0, V0) == 0: return V0, F0, dict(method="concatenated", bodies=len(shells), margin=0.0)
+    if os.environ.get("SOLID_UNION_DUMP"):                                 # studies only (scripts/su_proof.py): the exact bodies of this union, numbered in call order
+        d_ = os.environ["SOLID_UNION_DUMP"]; os.makedirs(d_, exist_ok=True); n_ = len([f for f in os.listdir(d_) if f.endswith(".npz")])
+        np.savez(os.path.join(d_, f"u{n_:03d}_{os.path.basename(sys.argv[0])}.npz"), margin=np.float64(margin), n=np.int64(len(shells)), **{f"V{k}": np.asarray(V, float) for k, (V, _) in enumerate(shells)}, **{f"F{k}": np.asarray(F, np.int64) for k, (_, F) in enumerate(shells)})
     ku = None
     if CACHE_ON:                                                           # whole result: same bodies, same margin -> the stored (V, F, info)
-        ku = _key(b"union-v2", _VER, float(margin), SIMPLIFY, repr(_CANDS_TAG), *[_key(b"body64", np.ascontiguousarray(np.asarray(V, float)).tobytes(), np.ascontiguousarray(np.asarray(F, np.int64)).tobytes(), np.shape(V)) for V, F in shells]); z = _load(_path(ku, "union"))
+        ku = _key(b"union-v3-rebuild" if REBUILD else b"union-v2", _VER, float(margin), SIMPLIFY, repr(_CANDS_TAG), *[_key(b"body64", np.ascontiguousarray(np.asarray(V, float)).tobytes(), np.ascontiguousarray(np.asarray(F, np.int64)).tobytes(), np.shape(V)) for V, F in shells]); z = _load(_path(ku, "union"))
         if z is not None: STATS["union_hit"] += 1; return z["V"], z["F"], json.loads(str(z["info"]))
         STATS["union_miss"] += 1
     u = None
     for k, (V, F) in enumerate(shells):
-        d = dilate_cached(V, F, margin)
+        d = dilate_rebuilt(V, F, margin) if REBUILD else dilate_cached(V, F, margin)
         if d.status() != M3.Error.NoError: raise ValueError(f"solid_union: dilation of shell {k} failed: {d.status()}")
         u = d if u is None else u + d
     u = u.simplify(SIMPLIFY); mesh = u.to_mesh(); V, F = np.asarray(mesh.vert_properties, float)[:, :3], np.asarray(mesh.tri_verts, np.int64)

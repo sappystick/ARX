@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: state state-deep step touch-check rx-board package route-pm2 drc-pm2 kicad-pm2 gerber-pm2 route-hb2 drc-hb2 kicad-hb2 gerber-hb2 signoff-serial signoff-cold pipeline-plan pipeline-graph sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: viewer su-proof state state-deep step touch-check rx-board package route-pm2 drc-pm2 kicad-pm2 gerber-pm2 route-hb2 drc-hb2 kicad-hb2 gerber-hb2 signoff-serial signoff-cold pipeline-plan pipeline-graph sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -153,7 +153,11 @@ package:
 
 # clickable cut-away (deliverables/PHIFOLD233_PACKAGE_r5/viewer.html), from the package's recorded cut faces
 viewer:
-	python3 src/render/viewer_r1.py
+	python3 src/render/viewer_r2.py
+
+# solid_union canonical rebuild path: byte identity cached vs uncached and geometry vs the committed path, v5 build (about 50 min; data/results/studies/su_proof.json)
+su-proof:
+	python3 scripts/su_proof.py
 
 # PM2 and HB2 (rectangular upper-assembly boards, Step 4): same flow as PB1R without the HV carve-out
 route-pm2: pcb-pm2

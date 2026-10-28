@@ -303,6 +303,14 @@ if os.path.exists(f"{_PK}/viewer.html"):
     _hr=[f["href"] for i in _D["items"] for f in i["files"]]+[f["href"] for f in _D["docs"]]+[t for i in _D["items"] for t in i.get("thumbs",[])]
     _miss=[h for h in _hr if not os.path.exists(os.path.join(_PK,h))]; _incut={i["id"] for i in _D["items"] if i["in_cut"]}
     chk("cut-away viewer: every file link resolves, every board has KiCad + Gerber links, every cut face belongs to an item",not _miss and all(any(f["fmt"]=="Gerber + drill" for f in i["files"]) and any(f["fmt"]=="KiCad board" for f in i["files"]) for i in _D["items"] if i["kind"]=="board") and all(f["id"] in _incut for P in _D["panels"].values() for f in P["faces"]),f"{len(_hr)} links, {len(_miss)} missing, {len(_D['items'])} items")
-else: skip("cut-away viewer (python3 src/render/viewer_r1.py after make_package.py)")
+else: skip("cut-away viewer (python3 src/render/viewer_r2.py after make_package.py)")
+# viewer r2 system model: the JavaScript twin reproduces every Python golden case (src/sim/system_live.py) within 0.5 % (1 % for the current-zero time, read on a 10 ns grid)
+if os.path.exists("data/results/system_live.json"):
+    _r=_sp.run(["node","tests/system_live_golden.js",os.path.abspath("src/render/system_live.js"),os.path.abspath("data/results/system_live.json")],capture_output=True,text=True)
+    _w=json.loads(_r.stdout.strip().splitlines()[-1])["worst_pct"] if _r.returncode==0 and _r.stdout.strip() else None
+    chk("system model: JavaScript (viewer) = Python reference on every golden case (21 cases: 3 pack voltages x 3 modes x 2 clamp cases + 3 L/R sweeps)",bool(_w) and all(v<=(1.0 if k=="t_zero_us" else 0.5) for k,v in _w.items()),str(_w) if _w else (_r.stderr[-300:] or "node failed"))
+    _sl=json.load(open("data/results/system_live.json")); _sb=json.load(open("data/results/system_budget.json"))
+    chk("system_budget power comes from the system model (no hard-coded watts)",isinstance(_sb.get("power",{}).get("model"),str) and "system_live" in _sb["power"]["model"],str({k:v for k,v in _sb.get("power",{}).items() if k!="model"}))
+else: skip("system model golden replay (make step S=system-live)")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

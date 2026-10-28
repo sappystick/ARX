@@ -110,7 +110,7 @@ L = [f"# PHI-FOLD 233 prototype review package r5 (generated {datetime.date.toda
  "| `manufacturing/<board>/` | Gerber + drill zip (KiCad-written), BOM, pick-and-place (y-up), netlist where one exists, layer PDFs, bare-board STEP | Gerber RS-274X / Excellon, CSV, PDF, STEP |",
  "| `models3d/`, `renders/boards/` | each board with parts (GLB) and KiCad 3-D renders | glTF binary, PNG |",
  "| `blueprint/` | layered cut-away of the whole system; `cutaway_faces.json` = its cut faces by part | PDF, PNG, JSON |",
- "| `viewer.html` | clickable cut-away: click a part (or pick it in the index) for its STL, KiCad, Gerber, BOM, pick-and-place, STEP, GLB and release files | HTML (open in a browser) |", "",
+ "| `viewer.html` | interactive cut-away: click a part for its STL, KiCad, Gerber, BOM, pick-and-place, STEP, GLB and release files; move a part and see it checked against the section and stack_check; system simulation (TX pulse, power, runtime, rails, vault temperature) and wiring runs from src/sim/system_live.py (MODELED) | HTML (open in a browser) |", "",
  "Not available: STEP / native CAD of the PRINTED parts. The generators build meshes (Python -> STL), there is no solid-modelling kernel in the repo, so STL is the master format for printing; a STEP would be a mesh wrapped in STEP, not a feature model. Board STEP files contain the bare board (the component models are VRML).", "",
  "## 2. Boards", "", "| Board | Manufacturing files present | Status |", "|---|---|---|"]
 for b, desc, got in mfg:
@@ -124,5 +124,5 @@ L += [f"- **{i}** (UNVERIFIED): {d.strip()}" for i, d in UNV]
 L += [f"- **{b['id']}**: {b['what']}" for b in BL]
 L += ["", "## 6. How this was made", "", "`make signoff-cold` then `python3 scripts/make_package.py` (needs KiCad 9, `make formers-low`; `make formers-print` for the six print formers).", ""]
 open(f"{R}/00_INDEX.md", "w").write("\n".join(L))
-r = run(sys.executable, "src/render/viewer_r1.py", R); print(r.stdout.strip() or r.stderr[-500:])            # clickable cut-away (viewer.html): every part -> its files; reads the index and the recorded cut faces
+r = run(sys.executable, "src/render/viewer_r2.py", R); print(r.stdout.strip() or r.stderr[-500:])            # clickable cut-away (viewer.html): every part -> its files; reads the index and the recorded cut faces
 print("package:", R, "|", len(rows), "STL rows |", sum(len(g) for _, _, g in mfg), "manufacturing items |", len(os.listdir(f"{R}/schematics")), "schematic files")
