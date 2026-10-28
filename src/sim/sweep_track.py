@@ -7,7 +7,7 @@ Findings checked here:
 (1) a pass rotates the axis continuously through 180 deg (LED marker moves around and across the ring without jumps, except the 180 deg flip of a target
     passing exactly under the centre, which the display shows on the centre ring);
 (2) the quad pair alone cannot tell which side of the sweep line a target is on: rotating the whole scene (target and motion) by 180 deg gives identical A, B
-    at every instant (mod-180 bearing). With the sweep direction known (a yaw gyro: proposal, not in the design), the rotation sense of the axis gives the side:
+    at every instant (mod-180 bearing). With the sweep direction known (the CB1D-C2 BMI270 yaw gyro), the rotation sense of the axis gives the side:
     the target moves at -vx relative to the head, so dphi/dt = +y vx / rho^2;
 (3) pinpoint: the quad response is ZERO directly under the centre (null between two peaks); the centre estimate = the RSS minimum between the two peaks;
 (4) trigger boost: 20 A vs 8 A scan -> dipole moment 7.96 vs 3.19 A m^2 (sim_head1 moment), signal x 2.5 (+8 dB) at the same depth, MODELED.
@@ -37,7 +37,7 @@ def pinpoint(rss, smooth=1):
     if r[i2] < 0.25 * r[i1]: return i1
     a, b = sorted((i1, i2)); return a + int(np.argmin(r[a:b + 1]))
 if __name__ == "__main__":
-    out = dict(status="MODELED: noise-free coil model, straight sweep, point target; yaw gyro is a PROPOSAL (not in the design)", passes=[], checks={})
+    out = dict(status="MODELED: noise-free coil model, straight sweep, point target; sweep direction from the CB1D-C2 BMI270 yaw gyro (in the design 2026-10-28, not built)", passes=[], checks={})
     side_ok = True; mirror_identical = True; cont_ok = True; pin_err = []; mirror_max = 0.0
     for depth in (0.10, 0.20):
         for y0 in (-0.06, -0.03, 0.0, 0.03, 0.06):
@@ -67,12 +67,16 @@ if __name__ == "__main__":
                     e.append(abs(XS[pinpoint(np.hypot(An, Bn), smooth=5)]) * 1e3)
                 noisy[f"depth {int(depth * 1e3)} mm, offset {int(y0 * 1e3)} mm, SNR {snr}"] = dict(p50_mm=round(float(np.percentile(e, 50)), 1), p95_mm=round(float(np.percentile(e, 95)), 1))
     out["pinpoint_noise"] = noisy; out["pinpoint_noise_note"] = "per-sample SNR after the firmware averaging; samples every 5 mm of head travel; 5-sample (25 mm) smoothing"
+    # sweep direction from the CB1D-C2 yaw gyro (BMI270, DATASHEET_LOG): zero-rate offset +-0.5 dps at 25 C, +-0.015 dps/K -> +-1.1 dps worst over 0-65 C (40 K);
+    # a swing of 0.3-1.5 m/s at the head on a 1.2 m radius (ASSUMED) is 14-72 dps, so the sign of the yaw rate is known with >= 12x margin before any filtering
+    off = 0.5 + 0.015 * 40; rates = [math.degrees(v / 1.2) for v in (0.3, 1.5)]
+    out["gyro"] = dict(part="BMI270 (CB1D-C2 UG)", offset_worst_dps=off, sweep_rate_dps=[round(r, 1) for r in rates], sign_margin=round(rates[0] / off, 1))
     moment = dict(scan_8A=3.19, boost_20A=7.96)
     cont_ok, mirror_identical, side_ok = bool(cont_ok), bool(mirror_identical), bool(side_ok); pin_err = [float(e) for e in pin_err]
     out["checks"] = dict(axis_continuous_and_turns=cont_ok, mirror_scene_identical_without_direction=mirror_identical, mirror_max_rel_diff=round(mirror_max, 6), side_resolved_with_sweep_direction=side_ok,
                          centre_null=bool(all(p["rss_centre_over_peak"] < 1e-3 for p in out["passes"] if p["offset_mm"] == 0)),
                          pinpoint_err_max_mm=max(pin_err), pinpoint_within_10mm=bool(max(pin_err) <= 10.0),
-                         pinpoint_noisy_median_le_15mm=bool(all(v['p50_mm'] <= 15 for v in noisy.values())), boost_signal_ratio=round(moment["boost_20A"] / moment["scan_8A"], 2), boost_gain_dB=round(20 * math.log10(moment["boost_20A"] / moment["scan_8A"]), 1))
+                         pinpoint_noisy_median_le_15mm=bool(all(v['p50_mm'] <= 15 for v in noisy.values())), gyro_sign_margin_ge_5=bool(out['gyro']['sign_margin'] >= 5), boost_signal_ratio=round(moment["boost_20A"] / moment["scan_8A"], 2), boost_gain_dB=round(20 * math.log10(moment["boost_20A"] / moment["scan_8A"]), 1))
     out["ok"] = all(v for v in out["checks"].values() if isinstance(v, bool))
     json.dump(out, open("kit_v23/sweep_track.json", "w"), indent=1)
     import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt

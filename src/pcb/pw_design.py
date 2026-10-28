@@ -42,6 +42,10 @@ LIB = {
  "SK9822EC20": dict(desc="RGB LED SK9822-EC20 clocked (OPSCO SK9822-EC20-000 Rev. A/0: 2.0 x 2.0 x 0.65 mm, top view 1 SDO / 2 GND / 3 SDI left, 6 CKO / 5 VDD / 4 CKI right; pads 0.76 x 0.46, column gap 0.6, row gap 0.4, read off the drawing)", fp="PF233:LED_SK9822-EC20_2.0x2.0mm",
                     pins=[("1", "SDO", "output"), ("2", "GND", "power_in"), ("3", "SDI", "input"), ("4", "CKI", "input"), ("5", "VDD", "power_in"), ("6", "CKO", "output")],
                     pads=[("1", -0.68, -0.86, 0.76, 0.46, "rect"), ("2", -0.68, 0.0, 0.76, 0.46, "rect"), ("3", -0.68, 0.86, 0.76, 0.46, "rect"), ("4", 0.68, 0.86, 0.76, 0.46, "rect"), ("5", 0.68, 0.0, 0.76, 0.46, "rect"), ("6", 0.68, -0.86, 0.76, 0.46, "rect")], body=(2.0, 2.0, 0.65)),
+"BMI270": dict(desc="IMU BMI270 LGA-14 2.5 x 3.0 x 0.83 mm (Bosch BST-BMI270-DS000-08 rev 1.6, s.7 pinout, s.8.3 landing pattern read off the drawing; VERIFIED 2026-10-28)", fp="PF233:BMI270_LGA-14_2.5x3.0mm",
+                pins=[("1", "SDO", "bidirectional"), ("2", "ASDX", "bidirectional"), ("3", "ASCX", "bidirectional"), ("4", "INT1", "bidirectional"), ("5", "VDDIO", "power_in"), ("6", "GNDIO", "power_in"), ("7", "GND", "power_in"),
+                      ("8", "VDD", "power_in"), ("9", "INT2", "bidirectional"), ("10", "OCSB", "input"), ("11", "OSDO", "output"), ("12", "CSB", "input"), ("13", "SCX", "input"), ("14", "SDX", "bidirectional")],
+                pads=[("1", -1.1625, -0.75, 0.475, 0.25, "rect"), ("2", -1.1625, -0.25, 0.475, 0.25, "rect"), ("3", -1.1625, 0.25, 0.475, 0.25, "rect"), ("4", -1.1625, 0.75, 0.475, 0.25, "rect"), ("5", -0.5, 0.9125, 0.25, 0.475, "rect"), ("6", 0.0, 0.9125, 0.25, 0.475, "rect"), ("7", 0.5, 0.9125, 0.25, 0.475, "rect"), ("8", 1.1625, 0.75, 0.475, 0.25, "rect"), ("9", 1.1625, 0.25, 0.475, 0.25, "rect"), ("10", 1.1625, -0.25, 0.475, 0.25, "rect"), ("11", 1.1625, -0.75, 0.475, 0.25, "rect"), ("12", 0.5, -0.9125, 0.25, 0.475, "rect"), ("13", 0.0, -0.9125, 0.25, 0.475, "rect"), ("14", -0.5, -0.9125, 0.25, 0.475, "rect")], body=(3.0, 2.5, 0.83)),
 "SOT23-5": dict(desc="74AHCT1G125 buffer SOT-23-5: 1 OE#, 2 A, 3 GND, 4 Y, 5 VCC (TI SCLS378P Table 4-1, verified 2026-10-28)", fp="Package_TO_SOT_SMD:SOT-23-5", pins=[("1", "OE", "input"), ("2", "A", "input"), ("3", "GND", "power_in"), ("4", "Y", "output"), ("5", "VCC", "power_in")], pads=[("1", -1.1, -0.95, 1.0, 0.6, "roundrect"), ("2", -1.1, 0, 1.0, 0.6, "roundrect"), ("3", -1.1, 0.95, 1.0, 0.6, "roundrect"), ("4", 1.1, 0.95, 1.0, 0.6, "roundrect"), ("5", 1.1, -0.95, 1.0, 0.6, "roundrect")], body=(3.0, 1.7, 1.1)), "HDR2x6": tht(6, 2.54, 2, 1.8, 1.0, "Pin header"),
  "D2PAK": dict(desc="MOSFET TO-263-3 (D2PAK) G-D-S, tab = drain (VERIFY land pattern)", fp="Package_TO_SOT_SMD:TO-263-3_TabPin2",
                pins=[("1", "G", "input"), ("2", "D", "passive"), ("3", "S", "passive")],
@@ -313,6 +317,14 @@ if PW == "C" and os.environ.get("DISC"):
     add("JLB", "HDR1x4", "to LB1: +5V, LED_IN, LED_CLK, GND", "4 wires to the display board"); net("+5V", ("JLB", 1)); net("LED_IN", ("JLB", 2), ("U1", 16)); net("LED_CLK", ("JLB", 3), ("U1", 19)); net("GND", ("JLB", 4))   # CB1D-C: LED clock from Pico pin 19 (PIO; Pico pinout ASSUMPTIONS 22)
     net("HTA_P", ("JHTA", 1), ("RHTA", 1)); net("GND", ("JHTA", 2)); net("HTA_IN", ("RHTA", 2), ("CHTA", 1), ("DHA1", 2), ("DHA2", 1), ("UM", 1))
     net("P3V3", ("DHA1", 1)); net("GND", ("CHTA", 2), ("DHA2", 2)); net("MUX_S2", ("UM", 9), ("U1", 2))
+    # ---- CB1D-C2 (owner approval 2026-10-28): yaw gyro for the sweep direction (left / right LED display, src/sim/sweep_track.py), read in the idle slot over I2C
+    # BMI270 in I2C mode per its connection table: SDO -> GND (default address), CSB -> VDDIO; INT1 / INT2 / OCSB / OSDO / ASDx / ASCx not connected; 100 nF at VDDIO and VDD
+    # Pico pins 21 / 22 (GP16 / GP17, I2C0 SDA / SCL by the Pico pinout: ASSUMPTIONS 22, UNVERIFIED); 4k7 pull-ups to P3V3 for 400 kHz
+    add("UG", "BMI270", "BMI270", "Bosch BMI270 IMU (yaw rate), I2C"); add("CG1", "C0603", "100n", "X7R, VDDIO"); add("CG2", "C0603", "100n", "X7R, VDD")
+    add("RGA", "R0603", "4k7", "I2C SDA pull-up"); add("RGL", "R0603", "4k7", "I2C SCL pull-up")
+    net("P3V3", ("UG", 5), ("UG", 8), ("UG", 12), ("CG1", 1), ("CG2", 1), ("RGA", 1), ("RGL", 1)); net("GND", ("UG", 1), ("UG", 6), ("UG", 7), ("CG1", 2), ("CG2", 2))
+    net("GYR_SDA", ("UG", 14), ("RGA", 2), ("U1", 21)); net("GYR_SCL", ("UG", 13), ("RGL", 2), ("U1", 22))
+    for _pn, _nm in ((2, "ASDX"), (3, "ASCX"), (4, "INT1"), (9, "INT2"), (10, "OCSB"), (11, "OSDO")): net(f"UG_{_nm}_NC", ("UG", _pn))
 for k in NETS: NETS[k] = list(dict.fromkeys(NETS[k]))
 BYREF = {p["ref"]: p for p in PARTS}
 def pin_info(ref, num):

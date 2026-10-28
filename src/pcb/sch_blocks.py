@@ -2,7 +2,7 @@
 of what the block does (taken from the netlist and the part values: no performance numbers), and the refs. Parts not listed fall into an automatic "Other parts" block, and
 sch_func.py fails if a ref is listed twice. Changing a block list never changes the netlist: the schematic is checked against it with KiCad."""
 DATE = "2026-10-26"
-TITLE = {"CB1D": "CB1D-C1 controller: Pico 2 W, supplies, handle cable, receive-board links, TX monitor", "LB1": "LB1-v6 display: 66 x SK9822-EC20 clocked chain with 3V3 -> 5 V data and clock buffers",
+TITLE = {"CB1D": "CB1D-C2 controller: Pico 2 W, supplies, handle cable, receive-board links, TX monitor", "LB1": "LB1-v6 display: 66 x SK9822-EC20 clocked chain with 3V3 -> 5 V data and clock buffers",
          "PB1R": "PB1R transmit stage: gate drive, two 650 V FETs, shunt, flyback clamp, overcurrent comparator, 12 V aux", "PM2": "PM2 battery dock: fuse, P-FET power switch with soft start, bulk, cord",
          "HB2": "HB2 grip board: Hall trigger, 4-position dial divider, signal cord", "AB1A": "AB1A receive analog board: 3 channels (GX, GY, X8), blanking, gain, 16-bit quad ADC (AD7389-4)",
          "AB1B": "AB1B receive analog board: 2 channels (Y8, MONO), blanking, gain, 16-bit quad ADC (AD7389-4)"}
@@ -49,7 +49,8 @@ def blocks(b, PARTS, PINNET):
         dict(title="10  Link to PB1R", note=["JPB: 12V-side signals only: UMB_SHLD, TX1_IN, REF_I1, FAULT1_N, ISENSE1, NTC_SENSE, GND (same order as JC on PB1R).", "RUS / CUS bleed the umbilical shield."], refs=["JPB", "RUS", "CUS"]),
         dict(title="11  Coil monitor: damping chain", note=["JCL: coil leads COIL_B (drain side) / COIL_A (VBUS side). RDM1..3 (3 x 110 R, 600 V) form the damping chain DM1 / DM2 between them.", "High-voltage nets COIL_B / DM1 / DM2: 1.0 mm rule."], refs=["JCL", "RDM1", "RDM2", "RDM3"]),
         dict(title="12  HTA timing-coil input", note=["JHTA: HTA coil leads (twisted pair from the cap). RHTA 10 k series, CHTA 1 n, DHA1 / DHA2 clamp to P3V3 / GND -> HTA_IN (multiplexer input)."], refs=["JHTA", "RHTA", "CHTA", "DHA1", "DHA2"]),
-        dict(title="13  Display link", note=["JLB: +5V, LED_IN, LED_CLK (from the Pico), GND to LB1."], refs=["JLB"])]
+        dict(title="13  Display link", note=["JLB: +5V, LED_IN, LED_CLK (from the Pico), GND to LB1."], refs=["JLB"]),
+        dict(title="14  Yaw gyro (sweep direction)", note=["UG BMI270 on I2C (Pico pins 21 / 22): SDO to GND (default address), CSB to P3V3; CG1 / CG2 100 nF at VDDIO / VDD;", "RGA / RGL 4k7 pull-ups. Read in the idle slot after the receive window."], refs=["UG", "CG1", "CG2", "RGA", "RGL"])]
     if b in ("AB1A", "AB1B"):
         chans = {"AB1A": [("GX", 1, "U1", "A"), ("GY", 2, "U1", "B"), ("X8", 3, "U2", "A")], "AB1B": [("Y8", 1, "U1", "A"), ("MONO", 2, "U1", "B")]}[b]
         v7 = "CRC" in PARTS                                                        # AD7389-4 variant: one quad ADC replaces the ADS8860s and the REF5041 chain

@@ -38,10 +38,12 @@ def bbox_of(ref, x, y, rot):
 _HVREFS = set(r for name, v in D.NETS.items() if name in HV for (r, pin) in v)
 def is_hv(ref): return ref in _HVREFS
 R_RIB = 37.2                                              # inner radius of the cylinder ribs (head_crosscheck.py rib_polys)
+REL = {}   # satellite -> (parent, dx, dy): anchored to where the parent was actually placed (decoupling capacitors at their IC's supply pins)
 def autoplace(fixed, anchors, rots=None):
     rots = rots or {}; placed = {}
     for ref, (x, y, rot) in fixed.items(): placed[ref] = (x, y, rot)
     order = sorted([p["ref"] for p in D.PARTS if p["ref"] not in fixed], key=lambda r: -((lambda b: (b[2] - b[0]) * (b[3] - b[1]))(bbox_of(r, 0, 0, 0))))
+    order = [r for r in order if r not in REL]; [order.insert(order.index(par) + 1 + k, sat) for par in dict.fromkeys(v[0] for v in REL.values()) if par in order for k, sat in enumerate(s for s, v in REL.items() if v[0] == par)]
     boxes = {r: bbox_of(r, *placed[r]) for r in placed}
     def free(ref, x, y, rot):
         b = bbox_of(ref, x, y, rot)
@@ -52,6 +54,7 @@ def autoplace(fixed, anchors, rots=None):
         return True
     for ref in order:
         ax, ay = anchors.get(ref, (0.0, 0.0)); rot = rots.get(ref, 0); done = False
+        if ref in REL and REL[ref][0] in placed: ax, ay = placed[REL[ref][0]][0] + REL[ref][1], placed[REL[ref][0]][1] + REL[ref][2]
         for rad in np.arange(0, 80, 0.5):
             n = max(1, int(rad * 6))
             for k in range(n):
@@ -63,13 +66,15 @@ def autoplace(fixed, anchors, rots=None):
 if PW == "C":
     fixed = {"U1": (0.0, -16.0, 90)}
     S = 0.82
-    anchors = {"JPW": (13, 29), "JTR": (-13, 30), "JA": (-33, -2), "JB": (-33, 8), "JPB": (-26, 18), "JCL": (33, 6), "JHTA": (33, -14), "JLB": (-33, -20), "M5": (12, 6), "UL": (2, 14), "UM": (-3, -2), "F1": (22, 24), "DTV": (21, 20), "CI1": (14, 24), "CI2": (14, 20), "C5A": (4, 6), "C5B": (4, 10),
+    anchors = {"JPW": (13, 29), "JTR": (-13, 30), "JA": (-33, -2), "JB": (-33, 8), "JPB": (-26, 18), "JCL": (33, 6), "JHTA": (33, -14), "JLB": (-33, -20), "UG": (28, -16), "M5": (12, 6), "UL": (2, 14), "UM": (-3, -2), "F1": (22, 24), "DTV": (21, 20), "CI1": (14, 24), "CI2": (14, 20), "C5A": (4, 6), "C5B": (4, 10),
                "FB2": (5, 0), "CV1": (9, 0), "CV2": (9, 3), "CV3": (5, 3), "CL1": (-2, 17), "CL2": (-2, 21), "RML": (-2, 24), "CP1": (-12, -2), "CP2": (-12, -5), "CM1": (2, -3), "RMO": (-7, -3), "CMO": (-7, 0),
                "RR1": (-14, 4), "RR2": (-14, 8), "CR1": (-17, 6), "CR2": (-17, 10), "RV1": (22, 12), "RV2": (22, 15), "CV4": (25, 14), "RSH": (26, -3), "CSH": (22, -3), "RT1": (24, -8), "RD1": (24, -11),
                "DH1": (20, -8), "DL1": (20, -11), "CQ1": (18, -14), "RP1": (22, -14), "DH2": (14, -8), "DL2": (14, -11), "CQ2": (16, -14), "RP2": (12, -14), "JDBG": (-12, 20),
                "RJB10": (4, 27), "RJ5": (-8, 24), "RJ6": (-8, 21), "RDM1": (28, -2), "RDM2": (28, 3), "RDM3": (28, 8), "CMON": (30, -12), "RBI": (30, -9), "RJX": (21, -17), "RJY": (21, -20), "CJX": (25, -17), "CJY": (25, -20), "RUS": (17, -22), "CUS": (21, -22),
                "RHTA": (30, -18), "CHTA": (27, -21), "DHA1": (24, -24), "DHA2": (20, -26)}
     rots = {"JA": 0, "JB": 0, "JPW": 90, "JTR": 90, "JPB": 0, "JCL": 0, "JHTA": 0, "JLB": 0}
+    # gyro cluster (CB1D-C2): 100 nF below VDDIO (pin 5) and VDD (pin 8), pull-ups above toward the Pico I2C pins 21 / 22
+    REL.update({"CG1": ("UG", -1.0, 2.4), "CG2": ("UG", 2.2, 2.4), "RGA": ("UG", -1.0, -2.6), "RGL": ("UG", 2.2, -2.6)})
     PL = autoplace(fixed, anchors, rots)
 elif PW == "R":
     fixed = {"JP": (-31.0, 24.0, 0), "Q1A": (-14.0, -20.0, 180), "Q1B": (-14.0, -6.0, 180), "JL1": (31.0, -20.0, 0), "JC": (28.0, 24.0, 0), "M12": (14.0, -27.0, 0)}

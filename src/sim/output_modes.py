@@ -29,6 +29,7 @@ N_LED = len(PIX); I_CODE31_MA = 18.0; I_STATIC_MA = 1.0; I_CAP_A = 0.35         
 LED_CLK_HZ = 8e6; LED_FRAME_US = (64 + 32 * N_LED) / LED_CLK_HZ * 1e6
 UART_BAUD = 1_000_000; LINK_BYTES = 10; UART_US = LINK_BYTES * 10 / UART_BAUD * 1e6     # start + 8 data + stop; bytes: sync, seq, mode, class, tau, snr, depth, bearing(2), crc
 HK_US, SPARE = 10.0, 0.10                                                                # as fw_timeline.py
+I2C_HZ = 400e3; GYRO_BITS = 9 * 5 + 2; GYRO_US = GYRO_BITS / I2C_HZ * 1e6                    # CB1D-C2 BMI270 yaw read: addr+W, reg, restart addr+R, 2 data bytes (+ start / stop) at 400 kHz
 WINDOW_MS = 30.0                                                                         # averaging window per mode (ASSUMPTIONS 39): trade against depth gain (ENHANCEMENT_REVIEW s.2)
 SYNTH_MS = 2.0                                                                           # handle synth buffer (64 samples at 32 kHz), ASSUMED
 THRESH = 4.0; SNR_FULL = 1000.0; FWD = 358.0; FS = 22050
@@ -85,7 +86,7 @@ TARGETS = [dict(name="gold_3g_deep", cls="small gold or pull-tab zone", tau_us=1
            dict(name="below_threshold", cls="medium gold", tau_us=95, snr=3.2, depth=2, bearing=45)]
 if __name__ == "__main__":
     out = dict(status="MODELED: firmware renderers in Python; grayscale-255 edge-free drive UNVERIFIED; latency excludes Bluetooth (UNVERIFIED)", constants=dict(
-        led_frame_us=round(LED_FRAME_US, 1), uart_baud=UART_BAUD, link_bytes=LINK_BYTES, uart_us=UART_US, window_ms=WINDOW_MS, synth_ms=SYNTH_MS, i_code31_mA=I_CODE31_MA, i_cap_A=I_CAP_A,
+        led_frame_us=round(LED_FRAME_US, 1), gyro_i2c_us=round(GYRO_US, 1), uart_baud=UART_BAUD, link_bytes=LINK_BYTES, uart_us=UART_US, window_ms=WINDOW_MS, synth_ms=SYNTH_MS, i_code31_mA=I_CODE31_MA, i_cap_A=I_CAP_A,
         threshold_sigma=THRESH), modes={}, prf={}, targets=[], checks={})
     rx_end = TL["inputs"]["rx_end_us"]; slots_ok = True
     for pm, m in TL["modes"].items():
@@ -96,7 +97,8 @@ if __name__ == "__main__":
             t = rx_end
             if mode == "LED_ONLY": sched[mode].append(("led frame", t, t + LED_FRAME_US)); t += LED_FRAME_US
             sched[mode].append(("descriptor UART", t, t + UART_US)); t += UART_US
-            if mode == "COMBINED": sched[mode].append(("led frame (between sweeps only)", rx_end + UART_US, rx_end + UART_US + LED_FRAME_US))
+            if mode == "COMBINED": sched[mode].append(("led frame (between sweeps only)", t, t + LED_FRAME_US)); t += LED_FRAME_US
+            sched[mode].append(("gyro I2C read (yaw rate)", t, t + GYRO_US)); t += GYRO_US
         ends = {mode: max(b for _, a, b in s) for mode, s in sched.items()}
         ok = all(e <= slot_end and min(a for _, a, _ in s) >= rx_end for (mode, s), e in zip(sched.items(), ends.values()))
         slots_ok &= ok
