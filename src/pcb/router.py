@@ -20,6 +20,26 @@ class Router:
                 if p.get("fine"): s.finem[l]|=m
             cells=np.argwhere(m); s.padcells.append((nid,cells,list(lays)))
         s.finez=ndi.binary_dilation(s.finem.any(axis=0),structure=disk(10)) if s.finem.any() else np.zeros((s.N,s.N),bool)   # 1.5 mm zone around fine-pitch pads
+        # exact pad distances in the fine zone (2026-10-28): fine pads are rasterised to the cells whose centres lie inside them, so the true pad edge can sit up to half a
+        # cell (0.075 mm) beyond the raster and a raster halo let tracks pass 0.05-0.15 mm from a pad (exact drc.py). For every cell of the zone and every pad within
+        # 0.8 mm, keep the exact distance from the cell centre to the pad shape; masks() blocks a cell when that distance is under the clearance + half the width
+        s.padown=[np.zeros((s.N,s.N),np.int32) for _ in range(s.nl)]
+        for k,p in enumerate(s.pads):
+            nid=s.nid[p["net"]] if p["net"] else s.unnet+k
+            for l in (range(s.nl) if p["tht"] else [0]): s.padown[l][s.rast(p)&(s.padown[l]==0)]=nid
+        s.fpd=[]
+        if s.finez.any():
+            zr,zc=np.nonzero(s.finez); zx=zc*GR-s.off; zy=zr*GR-s.off
+            for l in range(s.nl):
+                R_,C_,I_,D_=[],[],[],[]
+                for k,p in enumerate(s.pads):
+                    if not (p["tht"] or l==0): continue
+                    nid=s.nid[p["net"]] if p["net"] else s.unnet+k
+                    if p["shape"]=="circle": d=np.hypot(zx-p["x"],zy-p["y"])-p["w"]/2
+                    else: d=np.hypot(np.maximum(np.abs(zx-p["x"])-p["w"]/2,0),np.maximum(np.abs(zy-p["y"])-p["h"]/2,0))
+                    sel=d<0.8
+                    if sel.any(): R_.append(zr[sel]); C_.append(zc[sel]); I_.append(np.full(int(sel.sum()),nid)); D_.append(np.maximum(d[sel],0))
+                s.fpd.append(tuple(np.concatenate(v) if v else np.zeros(0) for v in (R_,C_,I_,D_)))
         s.stats={}
     def rast(s,p):
         m=np.zeros((s.N,s.N),bool); r0,c0=s.cell(p["x"],p["y"]); hw=int(math.ceil(p["w"]/2/GR)); hh=int(math.ceil(p["h"]/2/GR))
@@ -40,14 +60,21 @@ class Router:
             rc=int(math.ceil((s.clr+hw)/GR)); b=ndi.binary_dilation(others&~s.finez,structure=disk(rc))
             # in the zone around fine-pitch pads (finez: 1.5 mm) the halo of all copper is the exact cell count: ceil((0.2+0.1)/0.15) is 3 in floating point
             # (0.45 mm) and seals a 0.5 mm-pitch middle pad and its neighbours' stubs; elsewhere the old (conservative) halo, so boards without fine pads route as before
-            if s.finez.any(): b|=ndi.binary_dilation(others&s.finez,structure=disk(int(math.ceil((s.clr+hw)/GR-1e-9))))
+            if s.finez.any():
+                trk=others&s.finez&(s.padown[l]==0)                  # tracks / vias in the zone: their raster already over-covers them (disk of one cell around a 0.1 mm half-width)
+                b|=ndi.binary_dilation(trk,structure=disk(int(math.ceil((s.clr+hw)/GR-1e-9))))
+                R_,C_,I_,D_=s.fpd[l]; sel=(I_!=nid)&(D_<s.clr+hw-1e-9)  # pads: exact distance from the cell centre to the pad shape
+                if len(R_): b[R_[sel].astype(int),C_[sel].astype(int)]=True
             rh=int(math.ceil(((s.hv_clr if (ishv or True) else s.clr)+hw)/GR))
             if ishv: b=ndi.binary_dilation(others,structure=disk(rh))
             else: b|=ndi.binary_dilation(hvm,structure=disk(rh))
             b|=(s.edged<s.edge+hw)
             blk.append(b)
             rv=int(math.ceil((s.clr+s.via_pad/2)/GR)); vb=ndi.binary_dilation(others&~s.finez,structure=disk(rv)) if not ishv else ndi.binary_dilation(others,structure=disk(int(math.ceil((s.hv_clr+s.via_pad/2)/GR))))
-            if not ishv and s.finez.any(): vb|=ndi.binary_dilation(others&s.finez,structure=disk(int(math.ceil((s.clr+s.via_pad/2)/GR-1e-9))))
+            if not ishv and s.finez.any():
+                vb|=ndi.binary_dilation(others&s.finez&(s.padown[l]==0),structure=disk(int(math.ceil((s.clr+s.via_pad/2)/GR-1e-9))))
+                R_,C_,I_,D_=s.fpd[l]; sel=(I_!=nid)&(D_<s.clr+s.via_pad/2-1e-9)
+                if len(R_): vb[R_[sel].astype(int),C_[sel].astype(int)]=True
             if not ishv and len(hvm.nonzero()[0]): vb|=ndi.binary_dilation(hvm,structure=disk(int(math.ceil((s.hv_clr+s.via_pad/2)/GR))))
             viablk|=vb
         viablk|=(s.edged<s.edge+s.via_pad/2)

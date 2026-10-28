@@ -8,6 +8,15 @@ Steps marked NOT SPECIFIED have no source in the repository: they are listed so 
 2. Order the boards: transmit region from releases/TX_r2 (PB1R, CB1D, TXJ1, PM2, HB2); LB1, HTA and SB1R-QA / SB1R-QB from data/gerber; AB1A / AB1B from releases/RX_r2 (exposed-pad land closed, B1: Ultra Librarian CP-24-25_ADI land, filled and plated-over via in the EP) ONLY AFTER the remaining receive blockers in releases/RX_r2/BLOCKERS.md are closed. Fabricator DRC and a CAM-viewer pass are open (U-FAB-DRC, U-CAM-VIEW).
 3. Purchased parts: docs/delivery/PURCHASED_PARTS.csv (the AB1 rows are the AD7389-4 build) and data/results/BOM_SHAFT_YOKE.csv. Datasheets that were refused are listed in docs/UNVERIFIED.md.
 
+## 0b. Hardwired joints (owner decision 2026-10-28: no plug-on joint inside the enclosed, partly potted system)
+Every board-to-wire joint is soldered through a plated hole; no header, socket or screw terminal is fitted (CB1D JPW / JPB / JTR / JLB / JCL / JDBG, PB1R JP / JC / JL1,
+HB2 JH / JDIAL, AU1 all pads, PM2 all pads, LB1 JLB). Kept pluggable on purpose: the MT60 battery connector (battery swap) and the two AB1 links (CB1D JA / JB, OPEN_ITEMS 3).
+1. Stranded, tinned wire only (no solid core); strip so the insulation stops 0.5-1 mm above the pad; solder through, fillet on the far side, no wicking past the insulation.
+2. Strain relief within 10 mm of every joint: a silicone staking bead over the wire and board edge, or a lacing tie through the board, so the wire never flexes at the solder edge.
+3. Coil pair (PB1R JL1, AWG12, 460 V node): degrease after soldering; the joint and its 1.0 mm keep-out are wetted void-free by the NPM pour (POTTING_SEQUENCE step 1).
+4. Programming pads (AU1 JSWD, CB1D JDBG) stay bare and unpotted: program with a clip-on probe before staking.
+5. Continuity of every joint against the netlist before staking, and again after cure (POTTING_SEQUENCE rule 4).
+
 ## 1. Head, bottom up (hub frame, z up; heel at 178 deg)
 | Level | z (mm) | Step |
 |---|---|---|

@@ -53,4 +53,38 @@ for v in r["vias"]:
         r["tracks"].append(dict(net=v[2], layer=layer, width=w, pts=[list(v[:2]), list(near[:2])])); added += 1
     merged += 1
 r["vias"] = kept
+# fine-pitch escape (2026-10-28): the 0.15 mm grid does not line up with 0.5 / 0.65 mm pin rows, so a track that reaches a fine pad from the grid arrives up to 0.075 mm
+# off the pad's centre line and its stub cuts the corner of the neighbouring pad (exact DRC: 0.003-0.15 mm against the 0.2 mm rule on CB1D UG and AU1 UM / US / UH).
+# Rebuild each such end: pad centre -> straight out along the pad's long axis to ESC beyond the pad end -> first track vertex beyond that line. Kept only when the
+# rebuilt track clears all other-net copper on its layer by >= the 0.2 mm rule (exact shapes) and is no worse than before; otherwise the track is left as it was.
+from shapely.geometry import LineString, Point, box as _box
+from shapely.strtree import STRtree
+def _pg(p): return Point(p["x"], p["y"]).buffer(p["w"] / 2, 32) if p.get("shape") == "circle" else _box(p["x"] - p["w"] / 2, p["y"] - p["h"] / 2, p["x"] + p["w"] / 2, p["y"] + p["h"] / 2)
+def _tg(t): return LineString(t["pts"]).buffer(t["width"] / 2, 16) if len(t["pts"]) > 1 else Point(t["pts"][0]).buffer(t["width"] / 2, 16)
+def _clear(t, others):
+    g = _tg(t); return min((g.distance(o) for o in others), default=9.0)
+fine = [p for p in P if p.get("fine") and p.get("net") and not p["tht"]]; esc = 0
+for ti, tr in enumerate(r["tracks"]):
+    if tr["layer"] != "F.Cu" or len(tr["pts"]) < 2: continue
+    for end in (0, -1):
+        pts = tr["pts"] if end == 0 else tr["pts"][::-1]
+        pad = next((p for p in fine if p["net"] == tr["net"] and abs(pts[0][0] - p["x"]) <= p["w"] / 2 + 1e-6 and abs(pts[0][1] - p["y"]) <= p["h"] / 2 + 1e-6), None)
+        if pad is None: continue
+        others = [_pg(p) for p in P if p.get("net") != tr["net"] and (p["tht"] or True)] + [_tg(t) for k, t in enumerate(r["tracks"]) if t["layer"] == "F.Cu" and t["net"] != tr["net"]] + \
+                 [Point(v[0], v[1]).buffer(0.3, 32) for v in r["vias"] if v[2] != tr["net"]]
+        others = [o for o in others if o.distance(Point(pad["x"], pad["y"])) < 3.0]
+        before = _clear(tr, others)
+        if before >= 0.2 - 1e-3: continue
+        ax = 0 if pad["w"] >= pad["h"] else 1; L = max(pad["w"], pad["h"]); c = [pad["x"], pad["y"]]
+        far = next((q for q in pts[1:] if abs(q[ax] - c[ax]) > 1e-6), pts[-1]); d = 1.0 if far[ax] > c[ax] else -1.0
+        best = None
+        for e in (0.25, 0.35, 0.5, 0.7):
+            E = list(c); E[ax] = c[ax] + d * (L / 2 + e)
+            k = next((i for i, q in enumerate(pts) if d * (q[ax] - c[ax]) >= L / 2 + e - 1e-6), None)
+            if k is None: continue
+            new = [c, E] + [list(q) for q in pts[k:]]
+            cand = dict(tr, pts=new if end == 0 else new[::-1]); cl = _clear(cand, others)
+            if cl >= 0.2 - 1e-3 and cl > before: best = cand; break
+        if best: r["tracks"][ti] = tr = best; esc += 1
+print(board, "fine-pitch escapes rebuilt:", esc)
 json.dump(r, open(rj, "w")); print(board, "stubs added:", added, "duplicate vias removed:", dup, "close same-net vias merged:", merged)

@@ -26,25 +26,35 @@ def pad_samples(p):
             for y in np.arange(-h / 2, h / 2 + 1e-9, STEP): s.append((p["x"] + x, p["y"] + y))
     return s or [(p["x"], p["y"])]
 viol = []; minrow = {}; opens = []; allx = []
+# clearance: exact shapes (2026-10-28). The earlier point raster (0.1 mm dots of radius 0.05 placed up to the pad edge) grew every pad by 0.05 mm per side, so two
+# 0.5 mm-pitch pads at the 0.2 mm rule read 0.1 mm, and a 0.06 mm slack hid real gaps of 0.14-0.2 mm; now pads are their rectangles / circles, tracks their
+# round-capped buffers, vias 0.6 mm discs, and a gap below the rule by more than 1 um is a violation (stricter than before, never looser).
+from shapely.geometry import LineString, Point, box as _box
+from shapely.strtree import STRtree
+def pad_geom(p):
+    if p.get("shape") == "circle": return Point(p["x"], p["y"]).buffer(p["w"] / 2, 32)
+    return _box(p["x"] - p["w"] / 2, p["y"] - p["h"] / 2, p["x"] + p["w"] / 2, p["y"] + p["h"] / 2)
 for lay in routing:
-    X = []; rad = []; net = []; kind = []
+    G = []; net = []; X = []
     for tr in r["tracks"]:
         if tr["layer"] != lay: continue
-        sm = seg_samples(tr["pts"]); X += sm; rad += [tr["width"] / 2] * len(sm); net += [tr["net"]] * len(sm); kind += ["trk"] * len(sm)
-    for v in r["vias"]: X.append((v[0], v[1])); rad.append(0.3); net.append(v[2]); kind.append("via")
+        G.append(LineString(tr["pts"]).buffer(tr["width"] / 2, 16) if len(tr["pts"]) > 1 else Point(tr["pts"][0]).buffer(tr["width"] / 2, 16)); net.append(tr["net"]); X += seg_samples(tr["pts"])
+    for v in r["vias"]: G.append(Point(v[0], v[1]).buffer(0.3, 32)); net.append(v[2]); X.append((v[0], v[1]))
     for p in P:
-        if p["tht"] or lay == "F.Cu":
-            sm = pad_samples(p); X += sm; rad += [STEP / 2] * len(sm); net += [p["net"]] * len(sm); kind += ["pad"] * len(sm)
-    X = np.array(X); rad = np.array(rad); T = cKDTree(X); worst = {}
-    for a, b in T.query_pairs(1.6 + 0.2):
-        if net[a] == net[b]: continue
-        gap = float(np.linalg.norm(X[a] - X[b]) - rad[a] - rad[b]); req = 1.0 if (net[a] in HV or net[b] in HV) else 0.2
-        key = (net[a], net[b]) if net[a] < net[b] else (net[b], net[a])
-        if gap < req - 0.06 and (key not in worst or gap < worst[key][0]): worst[key] = (gap, req, lay, tuple(np.round(X[a], 1)))
+        if p["tht"] or lay == "F.Cu": G.append(pad_geom(p)); net.append(p["net"]); X += pad_samples(p)
+    T = STRtree(G); worst = {}; gmin = None
+    for i, g in enumerate(G):
+        for j in T.query(g, predicate="dwithin", distance=1.0 + 0.01):
+            j = int(j)
+            if j <= i or net[i] == net[j]: continue
+            gap = float(g.distance(G[j])); gmin = gap if gmin is None or gap < gmin else gmin
+            req = 1.0 if (net[i] in HV or net[j] in HV) else 0.2
+            key = (net[i], net[j]) if net[i] < net[j] else (net[j], net[i])
+            if gap < req - 1e-3 and (key not in worst or gap < worst[key][0]):
+                c = g.centroid if gap > 0 else g.intersection(G[j]).centroid
+                worst[key] = (gap, req, lay, (round(c.x, 1), round(c.y, 1)))
     for k, v in worst.items(): viol.append((k, round(v[0], 3), v[1], v[2], v[3]))
-    allx.append(X)
-    gaps = [np.linalg.norm(X[a] - X[b]) - rad[a] - rad[b] for a, b in T.query_pairs(0.9) if net[a] != net[b]]
-    minrow[lay] = round(min(gaps), 3) if gaps else None
+    allx.append(np.array(X)); minrow[lay] = round(gmin, 3) if gmin is not None else None
 # connectivity (union-find over tracks, vias, pads)
 nodes = []; par = {}
 def f(x):

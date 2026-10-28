@@ -2,12 +2,12 @@
 
 Everything here is MODELED or tool-checked; nothing is built or measured. PASS means the tool check passed, not that a board is ready for fabrication.
 
-**65 PASS, 4 FAIL, 0 SKIP, 4 UNVERIFIED**
+**69 PASS, 5 FAIL, 0 SKIP, 4 UNVERIFIED**
 
 ## Boards
 | board | route | indep. DRC | KiCad DRC | Gerber+drill | plane HV | cross-check |
 |---|---|---|---|---|---|---|
-| CB1D | FAIL | FAIL | FAIL | PASS | PASS | PASS |
+| CB1D | PASS | FAIL | FAIL | PASS | PASS | PASS |
 | LB1 | PASS | PASS | PASS | PASS | - | PASS |
 | PB1R | PASS | PASS | PASS | PASS | PASS | PASS |
 | TXJ1 | - | - | PASS | PASS | - | PASS |
@@ -15,6 +15,7 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 | SB1R-QB | - | - | PASS | PASS | - | PASS |
 | PM2 | PASS | PASS | PASS | PASS | - | PASS |
 | HB2 | PASS | PASS | PASS | PASS | - | PASS |
+| AU1 | PASS | FAIL | FAIL | PASS | - | PASS |
 | AB1A | PASS | PASS | PASS | PASS | PASS | PASS |
 | AB1B | PASS | PASS | PASS | PASS | PASS | PASS |
 | HTA | - | - | PASS | PASS | - | - |
@@ -24,7 +25,7 @@ Everything here is MODELED or tool-checked; nothing is built or measured. PASS m
 |---|---|---|
 | cylinder v5 + parts + 47 geometry checks | PASS | 47 checks |
 | KiCad schematics (9 boards, nets rebuilt = netlists) | PASS | 9 boards |
-| wiring audit (links + harness) | PASS | 53 pins, 51 conductors |
+| wiring audit (links + harness) | PASS | 57 pins, 66 conductors |
 | stress table (only the documented LED-rail row may fail) | PASS | 1 fail (LED rail, by design), 2 watch |
 | TX stage over 19.6-29.4 V (reproduces sim_head1 at 26 V) | PASS | Vds 456-466 V, ton table |
 | PM2 dock chain (time-domain) | PASS | 13 checks |

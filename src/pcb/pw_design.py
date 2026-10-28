@@ -110,6 +110,11 @@ LIB["SS49E"] = dict(desc="SS49E linear Hall sensor (TO-92 style)", fp="Package_T
 LIB["HALL_SW"] = dict(LIB["SS49E"], desc="digital Hall switch TI DRV5023 TO-92 (LPG): 1 VCC, 2 GND, 3 OUT open-drain (SLIS151G pin table)", pins=[("1", "VCC", "power_in"), ("2", "GND", "power_in"), ("3", "OUT", "open_collector")],
                      pads=[("1", -1.27, 0, 1.02, 1.02, "circle"), ("2", 0, 0, 1.02, 1.02, "circle"), ("3", 1.27, 0, 1.02, 1.02, "circle")])   # 1.02 pad on the 0.65 drill: 0.185 ring >= 0.18 (FAB_RULES_VERIFIED)
 if "HDR1x5" not in LIB: LIB["HDR1x5"] = tht(5, 2.54, 1, 1.8, 1.0, "Pin header")
+# hardwired links (owner decision 2026-10-28: the system is enclosed and partly potted; no plug-on joint that can loosen): the wire versions keep the header /
+# terminal pad geometry exactly (same positions, pads, drills, pitch: no re-route) and fit no connector body; wires are soldered through and staked (ASSEMBLY_ORDER)
+for _h in ("HDR1x2", "HDR1x4", "HDR1x5", "HDR1x7", "HDR2x4", "TERM4"):
+    _w = "WIRE" + _h[3:] if _h.startswith("HDR") else "WIRE4T"
+    if _w not in LIB: LIB[_w] = dict(LIB[_h], desc=LIB[_h]["desc"].replace("Pin header", "Wire holes").replace("Terminal block", "Wire holes"), body=(LIB[_h]["body"][0], LIB[_h]["body"][1], 0.1))
 # upper assembly v1 (PM2 / HB2): wire pads for panel parts and the cords, and an SO-8 P-channel MOSFET. SO-8 pinout 1-3 S, 4 G, 5-8 D is the common P-FET
 # arrangement but VERIFY against the chosen part (docs/ASSUMPTIONS.md 26)
 LIB["WIRE3"] = dict(tht(3, 5.08, 1, 3.0, 1.7, "Wire pads"), body=(4.04, 14.7, 0.1))
@@ -196,10 +201,10 @@ if PW == "C":
             24: "MUX_S0", 25: "MUX_S1", 31: "MUX_OUT", 32: "DIAL_IN", 34: "VBUS_SENSE", 36: "P3V3", 39: "+5V", 30: "RUN"}
     for p, nm in pico.items(): net(nm, ("U1", p))
     net("GND", ("U1", 3), ("U1", 8), ("U1", 13), ("U1", 18), ("U1", 23), ("U1", 28), ("U1", 33), ("U1", 38))
-    add("JDBG", "HDR1x2", "RUN / GND (reset, SWD pads on Pico underside)", "2.54 mm header"); net("RUN", ("JDBG", 1)); net("GND", ("JDBG", 2))
+    add("JDBG", "WIRE1x2", "RUN / GND (reset, SWD pads on Pico underside)", "probe pads, no header fitted"); net("RUN", ("JDBG", 1)); net("GND", ("JDBG", 2))
     add("CP1", "C0805", "10u 10V", "X7R"); add("CP2", "C0603", "100n", "X7R"); net("+5V", ("CP1", 1), ("CP2", 1)); net("GND", ("CP1", 2), ("CP2", 2))
     # power input
-    add("JPW", "TERM4", "Power in: VBUS VBUS GND GND (from shaft)", "5.08 mm terminal block"); net("VBUS_IN", ("JPW", 1), ("JPW", 2), ("F1", 1)); net("GND", ("JPW", 3), ("JPW", 4))
+    add("JPW", "WIRE4T", "Power in: VBUS VBUS GND GND (from shaft)", "solder holes 1.7 mm, wires soldered (no terminal block)"); net("VBUS_IN", ("JPW", 1), ("JPW", 2), ("F1", 1)); net("GND", ("JPW", 3), ("JPW", 4))
     add("F1", "FUSE1206B", "5A slow 32V", "Bourns SF-1206S500-2 (5.00 A slow blow, 32 VDC, 50 A interrupting at 32 VDC)"); net("VBUS", ("F1", 2))
     add("DTV", "DSMC", "SMCJ30A", "TVS 30 V stand-off, VC 48.4 V (Vishay SMCJ30A): clamps under the 50 V parts"); net("VBUS", ("DTV", 1)); net("GND", ("DTV", 2))
     for n in (1, 2): add(f"CI{n}", "C1210", "10u 50V", "X7R"); net("VBUS", (f"CI{n}", 1)); net("GND", (f"CI{n}", 2))
@@ -221,7 +226,7 @@ if PW == "C":
     add("RV1", "R0603", "100k", "0.1%"); add("RV2", "R0603", "10k", "0.1%"); add("CV4", "C0603", "100n", "X7R")
     net("VBUS", ("RV1", 1)); net("VBUS_SENSE", ("RV2", 1), ("RV1", 2), ("CV4", 1)); net("GND", ("RV2", 2), ("CV4", 2))
     # handle: trigger + dial (the only things that leave the head besides power)
-    add("JTR", "HDR1x7", "Handle: +3V3 GND TRIG DIAL AUD_LINK - SHLD", "shielded 6-core + drain (the only signal cable leaving the head)"); net("P3V3", ("JTR", 1)); net("GND", ("JTR", 2)); net("TRIG_EXT", ("JTR", 3), ("RT1", 1)); net("DIAL_EXT", ("JTR", 4), ("RD1", 1)); net("SHIELD", ("JTR", 7), ("RSH", 1), ("CSH", 1)); net("AUD_LINK", ("JTR", 5), ("RAU", 1), ("DAU1", 2), ("DAU2", 1)); net("JTR6_OPT", ("JTR", 6), ("RJ6", 1)); net("GND", ("RJ6", 2))
+    add("JTR", "WIRE1x7", "Handle: +3V3 GND TRIG DIAL AUD_LINK - SHLD", "signal cord soldered in (no header; the only signal cable leaving the head)"); net("P3V3", ("JTR", 1)); net("GND", ("JTR", 2)); net("TRIG_EXT", ("JTR", 3), ("RT1", 1)); net("DIAL_EXT", ("JTR", 4), ("RD1", 1)); net("SHIELD", ("JTR", 7), ("RSH", 1), ("CSH", 1)); net("AUD_LINK", ("JTR", 5), ("RAU", 1), ("DAU1", 2), ("DAU2", 1)); net("JTR6_OPT", ("JTR", 6), ("RJ6", 1)); net("GND", ("RJ6", 2))
     # CB1D-C2 (2026-10-28, output modes): JTR.5 = AUD_LINK, the half-duplex 1 Mbaud descriptor link to the AU1 audio board on the spare signal-cord core 5,
     # driven in the idle slot only (PIO on Pico pin 20, GP15: ASSUMPTIONS 22, UNVERIFIED); 100 R series and BAS16 clamps at the cord entry (as the HTA input); RJ5 removed
     add("RAU", "R0603", "100R", "link series / cord damping"); add("DAU1", "DSOD", "BAS16", "clamp to 3V3"); add("DAU2", "DSOD", "BAS16", "clamp to GND")
@@ -237,7 +242,7 @@ if PW == "C":
     for ref, sd in (("JA", ["SDOA1", "SDOA2", "SDOA3"]), ("JB", ["SDOB1", "SDOB2"])):
         names = ["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS"] + sd + (["BLANK", "GND", "GND"] if ref == "JA" else ["BLANK", "JB10_VCM", "VCM_OUT", "GND"])
         for i, nm in enumerate(names, 1): net(nm, (ref, i))
-    add("JPB", "HDR2x4", "to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND", "2.54 mm header")
+    add("JPB", "WIRE2x4", "to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND", "umbilical soldered in (no header)")
     for i, nm in enumerate(["UMB_SHLD", "GND", "TX1_IN", "REF_I1", "FAULT1_N", "ISENSE1", "NTC_SENSE", "GND"], 1): net(nm, ("JPB", i))
     add("RUS", "R0603", "1M", ""); add("CUS", "C0603", "1n 100V", "C0G"); net("UMB_SHLD", ("RUS", 1), ("CUS", 1)); net("GND", ("RUS", 2), ("CUS", 2))
     # coil interface at the HEAD end of the coil leads: critical damping (3 x 110 R = 330 R, 600 V) and the AC-coupled MONO receive tap to AB1B
@@ -248,13 +253,13 @@ if PW == "C":
     # CB1D-B: the AC-coupled MONO tap (CMON 100 nF / 630 V, RBI) is removed: a 460 V node on a 1.27 mm header could not meet the 1.0 mm HV rule (KiCad DRC), and the mono/disc channel is not used with RX-Q
 if PW == "R":
     # ------------------------------------------------------------------ PB1R: single-channel TX power stage for the head vault (70 x 70)
-    add("JP", "TERM4", "Power in: VBUS VBUS GND GND", "5.08 mm terminal block 10 A"); net("VBUS", ("JP", 1), ("JP", 2)); net("GND", ("JP", 3), ("JP", 4))
+    add("JP", "WIRE4T", "Power in: VBUS VBUS GND GND", "solder holes 1.7 mm, wires soldered (no terminal block: potted module)"); net("VBUS", ("JP", 1), ("JP", 2)); net("GND", ("JP", 3), ("JP", 4))
     # bulk bank (Step 5b): the 150 uF / 50 V polymer Ta in 7343-43 was not found (KEMET T521 50 V tops at 33 uF in the X case); 9 x Panasonic EEHZC1H101P hybrid
     # polymer-Al 100 uF 50 V (ZC technical data: 10.0 x 10.2 mm, ESR <= 28 mohm at 100 kHz, 1.6 A rms) keep the bank at 900 uF nominal / 720 uF at -20 %, above the 625 uF
     # tx_vbus_sweep.py needs for 5 % droop at 19.6 V. CD7 is the gate-driver decoupling, so the bank is CB1-CB9 (docs/design/DATASHEET_LOG.md)
     for n in range(1, 10): add(f"CB{n}", "CAN10", "100u 50V hybrid", "Panasonic EEHZC1H101P (ZC, 10x10.2, 28 mohm, 1.6 A rms)"); net("VBUS", (f"CB{n}", 1)); net("GND", (f"CB{n}", 2))
     for n in range(1, 5): add(f"CM{n}", "C1210", "10u 50V", "X7R"); net("VBUS", (f"CM{n}", 1)); net("GND", (f"CM{n}", 2))
-    add("JC", "HDR2x4", "Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND", "2.54 mm header")
+    add("JC", "WIRE2x4", "Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND", "umbilical soldered in (no header: potted module)")
     for i, nm in enumerate(["UMB_SHLD", "GND", "TX1_IN", "REF_I1", "FAULT1_N", "ISENSE1", "NTC_SENSE", "GND"], 1): net(nm, ("JC", i))
     add("RUS", "R0603", "1M", ""); net("UMB_SHLD", ("RUS", 1)); net("GND", ("RUS", 2))
     add("RNTC", "R0603", "10k NTC", "NTC on the FET spreader"); net("NTC_SENSE", ("RNTC", 1)); net("GND", ("RNTC", 2))
@@ -319,7 +324,7 @@ if PW == "P":
 if PW == "G":
     # ------------------------------------------------------------------ HB2 (upper assembly v1): grip board in the top housing; trigger Hall switch and dial; no joystick
     # JH keeps the CB1D JTR pinout; pins 5/6 (the old joystick) have no conductor in the 5-core signal cord
-    add("JH", "HDR1x7", "Signal cord to the head: +3V3 GND TRIG DIAL - - SHLD", "coiled cord 5-core AWG28 shielded")
+    add("JH", "WIRE1x7", "Signal cord to the head: +3V3 GND TRIG DIAL - - SHLD", "coiled cord 5-core AWG28 shielded, soldered in")
     for p_, nm in ((1, "P3V3"), (2, "GND"), (3, "TRIG"), (4, "DIAL"), (5, "AUD_LINK"), (6, "JH6_NC"), (7, "SHIELD")): net(nm, ("JH", p_))
     # HB2-B (2026-10-28, output modes): JH.5 = AUD_LINK on the spare signal-cord core 5 (half-duplex 1 Mbaud descriptor link, head <-> AU1 audio board),
     # passed straight to JAU, the 0.2 m lead in the grip rear channel to AU1 (battery side); the 3-position output selector sits on AU1, not in the dial ladder
@@ -327,7 +332,7 @@ if PW == "G":
     add("HS1", "HALL_SW", "DRV5023BIQLPG", "TI DRV5023BI TO-92: 1 VCC / 2 GND / 3 OUT open-drain, 2.5-38 V, BOP 6-24 mT, BRP 3-9 mT; magnet near at rest -> TRIG low, pressed -> TRIG high")
     add("CH1", "C0603", "100n", ""); add("RH1", "R0603", "1k", "")
     net("P3V3", ("HS1", 1), ("CH1", 1)); net("GND", ("HS1", 2), ("CH1", 2)); net("HALL_OUT", ("HS1", 3), ("RH1", 1)); net("TRIG", ("RH1", 2))
-    add("JDIAL", "HDR1x5", "Dial: COM P1 P2 P3 P4 (4-pos rotary, top housing)", "4-position rotary switch"); add("RD0", "R0603", "10k", ""); add("RD2", "R0603", "3k3", ""); add("RD3", "R0603", "10k", ""); add("RD4", "R0603", "33k", "")
+    add("JDIAL", "WIRE1x5", "Dial: COM P1 P2 P3 P4 (4-pos rotary, top housing)", "4-position rotary switch, leads soldered in"); add("RD0", "R0603", "10k", ""); add("RD2", "R0603", "3k3", ""); add("RD3", "R0603", "10k", ""); add("RD4", "R0603", "33k", "")
     net("P3V3", ("RD0", 1)); net("DIAL", ("RD0", 2), ("JDIAL", 1)); net("GND", ("JDIAL", 2)); net("DP2", ("JDIAL", 3), ("RD2", 1)); net("DP3", ("JDIAL", 4), ("RD3", 1)); net("DP4", ("JDIAL", 5), ("RD4", 1)); net("GND", ("RD2", 2), ("RD3", 2), ("RD4", 2))
     add("RSHH", "R0603", "0R", "signal-cord shield to GND at the handle"); net("SHIELD", ("RSHH", 1)); net("GND", ("RSHH", 2))
 if PW == "L":
@@ -366,7 +371,7 @@ if PW == "U":
     add("CVC", "C0603", "470n", "X7R VCORE"); add("CVD", "C0805", "10u", "X7R VDD"); add("CVD2", "C0603", "100n", "X7R VDD HF"); add("RNR", "R0603", "47k", "NRST pull-up"); add("CNR", "C0603", "10n", "NRST")
     net("+3V3_AU", ("UM", 7), ("CVD", 1), ("CVD2", 1), ("RNR", 1)); net("GND", ("UM", 8), ("CVC", 2), ("CVD", 2), ("CVD2", 2), ("CNR", 2)); net("VCORE_AU", ("UM", 3), ("CVC", 1)); net("NRST_AU", ("UM", 6), ("RNR", 2), ("CNR", 1))
     # SWD header without NRST (MSPM0 SWD works without it); reset reaches a probe on the TPRST test pad beside the pin (the long NRST run to the header did not route)
-    add("JSWD", "HDR1x4", "SWD: 3V3 SWDIO SWCLK GND", "programming pads"); net("+3V3_AU", ("JSWD", 1)); net("SWDIO_AU", ("JSWD", 2), ("UM", 22)); net("SWCLK_AU", ("JSWD", 3), ("UM", 23)); net("GND", ("JSWD", 4))
+    add("JSWD", "WIRE1x4", "SWD: 3V3 SWDIO SWCLK GND", "programming pads, no header fitted (clip-on probe)"); net("+3V3_AU", ("JSWD", 1)); net("SWDIO_AU", ("JSWD", 2), ("UM", 22)); net("SWCLK_AU", ("JSWD", 3), ("UM", 23)); net("GND", ("JSWD", 4))
     add("TPRST", "WIRE1", "NRST test pad", "connect-under-reset probe"); net("NRST_AU", ("TPRST", 1))
     add("RLK", "R0603", "100R", "link entry"); add("RTX", "R0603", "1k", "TX into the shared line"); add("DLK1", "DSOD", "BAS16", "clamp to 3V3"); add("DLK2", "DSOD", "BAS16", "clamp to GND")
     net("AUD_LINK", ("RLK", 1), ("DLK1", 2), ("DLK2", 1)); net("LINK_N", ("RLK", 2), ("UM", 16), ("RTX", 2)); net("LINK_TX", ("RTX", 1), ("UM", 15)); net("+3V3_AU", ("DLK1", 1)); net("GND", ("DLK2", 2))
@@ -397,7 +402,7 @@ if PW == "C" and os.environ.get("DISC"):
     NETS["GND"] = [p for p in NETS["GND"] if p not in (("UM", "1"), ("UM", "9"))]
     add("JHTA", "WIRE2", "HTA coil leads (twisted pair from the cap)", "solder pads 5.08 mm"); add("RHTA", "R0603", "10k", "series protection"); add("CHTA", "C0603", "1n", "C0G")
     add("DHA1", "DSOD", "BAS16", "clamp to 3V3"); add("DHA2", "DSOD", "BAS16", "clamp to GND")
-    add("JLB", "HDR1x4", "to LB1: +5V, LED_IN, LED_CLK, GND", "4 wires to the display board"); net("+5V", ("JLB", 1)); net("LED_IN", ("JLB", 2), ("U1", 16)); net("LED_CLK", ("JLB", 3), ("U1", 19)); net("GND", ("JLB", 4))   # CB1D-C: LED clock from Pico pin 19 (PIO; Pico pinout ASSUMPTIONS 22)
+    add("JLB", "WIRE1x4", "to LB1: +5V, LED_IN, LED_CLK, GND", "4 wires to the display board, soldered both ends"); net("+5V", ("JLB", 1)); net("LED_IN", ("JLB", 2), ("U1", 16)); net("LED_CLK", ("JLB", 3), ("U1", 19)); net("GND", ("JLB", 4))   # CB1D-C: LED clock from Pico pin 19 (PIO; Pico pinout ASSUMPTIONS 22)
     net("HTA_P", ("JHTA", 1), ("RHTA", 1)); net("GND", ("JHTA", 2)); net("HTA_IN", ("RHTA", 2), ("CHTA", 1), ("DHA1", 2), ("DHA2", 1), ("UM", 1))
     net("P3V3", ("DHA1", 1)); net("GND", ("CHTA", 2), ("DHA2", 2)); net("MUX_S2", ("UM", 9), ("U1", 2))
     # ---- CB1D-C2 (owner approval 2026-10-28): yaw gyro for the sweep direction (left / right LED display, src/sim/sweep_track.py), read in the idle slot over I2C
