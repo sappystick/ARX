@@ -3221,6 +3221,21 @@
 "work/.link_path_check.json"
 ]
 },
+"sweep-track": {
+"L": [
+"scripts/tracehook"
+],
+"R": [
+"work/kit_v15/LOW/paths.pkl",
+"work/sim_head1.py",
+"work/sim_quadbearing.py",
+"work/sweep_track.py"
+],
+"W": [
+"work/kit_v23/sweep_track.json",
+"work/kit_v23/sweep_track.png"
+]
+},
 "system-live": {
 "L": [
 "scripts/tracehook"

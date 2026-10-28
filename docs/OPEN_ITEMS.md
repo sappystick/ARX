@@ -51,3 +51,4 @@
 
 41. **Output modes and audio (2026-10-28, PLAN, owner approval pending)**: docs/design/OUTPUT_MODES_PLAN.md: audio only / LED only / combined, firmware renderers first, wired audio on the spare signal-cord core 5, selector in the existing dial ladder, Bluetooth tried firmware-first.
 42. **Radio policy for the Pico 2 W CYW43439 in the head (2026-10-28)**: no rule yet for Wi-Fi / Bluetooth activity next to the receive coils; decide (off, idle-slot only, or bench-tested) before any wireless feature.
+43. **Sweep direction for the left / right display (2026-10-28)**: the quad pair gives the bearing axis only (src/sim/sweep_track.py); a yaw gyro (CB1D or handle board, idle-slot reads) resolves the side. Decide with the output-modes hardware step (OUTPUT_MODES_PLAN.md).

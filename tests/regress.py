@@ -339,6 +339,12 @@ if d: chk("output modes (AUDIO_ONLY / LED_ONLY / COMBINED): LED and link bursts 
           d["ok"] and set(d["prf"])=={"scan","mid","boost"} and all(len(p["schedule"])==3 for p in d["prf"].values()),
           f"worst LED {d['checks']['worst_led_A']} A (uncapped {d['constants']['worst_uncapped_A']}), latency {[p['latency_ms'] for p in d['prf'].values()]} ms")
 else: skip("output modes model")
+# sweep tracking and pinpoint (src/sim/sweep_track.py): axis turns continuously over a pass, centre null, side needs the sweep direction, pinpoint under noise
+d=rd("kit_v23/sweep_track.json")
+if d: _c=d["checks"]; chk("sweep track: axis turns continuously, centre null, mod-180 ambiguity confirmed and resolved with the sweep direction, pinpoint median <= 15 mm at SNR 10",
+          d["ok"] and _c["mirror_scene_identical_without_direction"] and _c["side_resolved_with_sweep_direction"] and _c["centre_null"],
+          f"boost x{_c['boost_signal_ratio']} ({_c['boost_gain_dB']} dB); noisy p95 {max(v['p95_mm'] for v in d['pinpoint_noise'].values())} mm")
+else: skip("sweep tracking model")
 # KiCad pad geometry = placement model, pad by pad (src/pcb/pad_orient_check.py): the KiCad pad angle is absolute; a missing angle left rotated pads unrotated
 d=rd("kit_v22/pad_orient_check.json")
 if d: _b=d["boards"]; chk("KiCad pads = placement model on LB1, CB1D, PB1R, PM2, HB2 (centre and size within 0.005 mm)",len(_b)==5 and all(v["ok"] for v in _b.values()),"; ".join(f"{k} {v.get('pads_compared')} pads {v.get('mismatches')} off" for k,v in _b.items()))

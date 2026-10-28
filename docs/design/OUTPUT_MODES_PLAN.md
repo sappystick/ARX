@@ -59,3 +59,17 @@ Releases: TX_r6 after CB1D / HB2 / PM2 change; the whole-system package stays he
 - Silent below 4 sigma (no sound, no lit LED); five classes with distinct colours and voices (iron 110 Hz, foil chirp, small gold about 600 Hz,
   medium gold about 400 Hz, large gold / coin bell 230-310 Hz). Pitch falls with tau per ENHANCEMENT_REVIEW s.7 (the archived audio_dsp.py rose with tau).
 - WAV previews: work/kit_v23/OUT_AUDIO/*.wav (generated, not published).
+
+## Sweep tracking, pinpoint and trigger (owner idea 2026-10-28; src/sim/sweep_track.py, MODELED)
+- Tracking: over a pass the quad axis bearing turns continuously through 146-166 deg (largest step 9.5 deg per 5 mm of travel), so the LED marker travels from
+  one side, across the ring, to the other; a target passing exactly under the centre gives the centre null and is shown on the centre ring.
+- Pinpoint: the quad pair reads ZERO directly under the centre with a peak on each side (+-80 mm at 100 mm depth, +-110 mm at 200 mm): "peak - null - peak".
+  Centre estimate under receive noise (200 passes): median 0-10 mm, 95th percentile 5-20 mm at SNR 10-30 (5 mm sampling). Display: when the null between
+  two peaks is found, the centre ring lights in the class colour; then the user holds the trigger.
+- Trigger over the centred target: boost 20 A / 400 Hz against scan 8 A / 800 Hz: dipole moment 7.96 vs 3.19 A m^2, signal x 2.5 (+7.9 dB) at the same
+  depth, and a longer period for averaging. There is ONE transmit coil (six petals in parallel) and no field steering: "multi-directional" comes from the two
+  quadrupoles already receiving in all directions, not from a steered transmit field.
+- LIMIT found: the quad pair gives the bearing AXIS only (mod 180 deg). Turning the whole scene by 180 deg (target and motion) gives the same A, B at every
+  instant (difference 7e-5 of peak, from the golden-angle petals). Left vs right of the sweep line therefore needs the sweep direction. Proposal: a small
+  yaw-rate gyro (MEMS, no magnetometer: the TX field would saturate it) on CB1D or the handle board, read in the idle slot; with it the side is resolved in
+  every modeled pass. Without it the display can show the axis (two opposite pixels) and the centre, not the side.
