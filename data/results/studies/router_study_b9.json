@@ -1,0 +1,621 @@
+{
+ "rows": [
+  {
+   "board": "AB1A",
+   "case": "orient 0/B",
+   "single": {
+    "unrouted": 12,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 9,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1A",
+   "case": "orient 90/B",
+   "single": {
+    "unrouted": 7,
+    "fanout_failed": 2,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 10,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1A",
+   "case": "orient 180/B",
+   "single": {
+    "unrouted": 6,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 6,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1A",
+   "case": "orient 270/B",
+   "single": {
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   },
+   "ripup": {
+    "rounds": 0,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1A",
+   "case": "orient 0/F",
+   "invalid_placement": [
+    "clearance -0.20: RAAF2.2 - UA1.3",
+    "overlap: RAAF2.2 - UA1.3",
+    "clearance -0.20: RAAF2.2 - UA1.4"
+   ]
+  },
+  {
+   "board": "AB1A",
+   "case": "orient 90/F",
+   "invalid_placement": [
+    "clearance -0.20: RAAF2.2 - UA1.21",
+    "overlap: RAAF2.2 - UA1.21",
+    "clearance -0.20: RAAF2.2 - UA1.22"
+   ]
+  },
+  {
+   "board": "AB1A",
+   "case": "orient 180/F",
+   "invalid_placement": [
+    "clearance -0.20: RAAF2.2 - UA1.15",
+    "overlap: RAAF2.2 - UA1.15",
+    "clearance -0.20: RAAF2.2 - UA1.16"
+   ]
+  },
+  {
+   "board": "AB1A",
+   "case": "orient 270/F",
+   "invalid_placement": [
+    "clearance -0.20: RAAF2.2 - UA1.9",
+    "overlap: RAAF2.2 - UA1.9",
+    "clearance -0.20: RAAF2.2 - UA1.10"
+   ]
+  },
+  {
+   "board": "AB1A",
+   "case": "nudge 0: RD2:0:0.3 RS2:-0.3:0 D1:0:0.3 RD1:-0.3:0",
+   "single": {
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   },
+   "ripup": {
+    "rounds": 0,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1A",
+   "case": "nudge 1: D3:-0.3:0 RF2:-0.3:0 RS1:0:-0.3 RG3:0:0.3",
+   "single": {
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   },
+   "ripup": {
+    "rounds": 0,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1A",
+   "case": "nudge 2: CAAF1:0:0.3 SW3:0.3:0 RD2:-0.3:0 CRC:-0.3:0",
+   "single": {
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   },
+   "ripup": {
+    "rounds": 0,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1A",
+   "case": "nudge 3: CBD:0:0.3 RF1:0:-0.3 RG3:0.3:0 SW3:0:-0.3",
+   "single": {
+    "unrouted": 1,
+    "fanout_failed": 1,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 0,
+    "fanout_failed": 1,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1A",
+   "case": "nudge 4: RF1:0:0.3 SW2:0:0.3 RG2:0.3:0 RAAF2:0:0.3",
+   "single": {
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   },
+   "ripup": {
+    "rounds": 0,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1A",
+   "case": "nudge 5: CF3:0:0.3 D3:0:-0.3 CAAF2:0.3:0 RS3:0:-0.3",
+   "single": {
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   },
+   "ripup": {
+    "rounds": 0,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "orient 0/B",
+   "single": {
+    "unrouted": 4,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 10,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "orient 90/B",
+   "single": {
+    "unrouted": 5,
+    "fanout_failed": 3,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 9,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "orient 180/B",
+   "single": {
+    "unrouted": 5,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 5,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "orient 270/B",
+   "single": {
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   },
+   "ripup": {
+    "rounds": 0,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "orient 0/F",
+   "single": {
+    "unrouted": 10,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 7,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "orient 90/F",
+   "single": {
+    "unrouted": 2,
+    "fanout_failed": 1,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 9,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "orient 180/F",
+   "single": {
+    "unrouted": 8,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 5,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "orient 270/F",
+   "single": {
+    "unrouted": 2,
+    "fanout_failed": 2,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 6,
+    "unrouted": 13,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "nudge 0: RS1:0:0.3 CRF:-0.3:0 RD2:0.3:0 CAAF1:0.3:0",
+   "single": {
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   },
+   "ripup": {
+    "rounds": 0,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "nudge 1: RG2:-0.3:0 SW2:0.3:0 RF2:0:-0.3 SW1:0:-0.3",
+   "single": {
+    "unrouted": 2,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 3,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "nudge 2: RG1:0:0.3 RAAF1:-0.3:0 RF1:0:-0.3 CAAF1:0:-0.3",
+   "single": {
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   },
+   "ripup": {
+    "rounds": 0,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "nudge 3: SW1:0.3:0 RD2:-0.3:0 D1:-0.3:0 RS1:0.3:0",
+   "single": {
+    "unrouted": 1,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 4,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  },
+  {
+   "board": "AB1B",
+   "case": "nudge 4: CBD:0.3:0 RAAF2:0.3:0 RAAF1:-0.3:0 CAAF2:0:-0.3",
+   "invalid_placement": [
+    "clearance 0.14: CBD.2 - RD1.1"
+   ]
+  },
+  {
+   "board": "AB1B",
+   "case": "nudge 5: D2:0:-0.3 RG1:0.3:0 CRC:-0.3:0 RS1:0.3:0",
+   "single": {
+    "unrouted": 1,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": false,
+     "why": "open"
+    }
+   },
+   "ripup": {
+    "rounds": 3,
+    "unrouted": 0,
+    "fanout_failed": 0,
+    "gates": {
+     "ok": true,
+     "kicad_errors": {},
+     "unconnected": 0,
+     "indep_fails": 0,
+     "island": true
+    }
+   }
+  }
+ ],
+ "summary": {
+  "AB1A": {
+   "valid_cases": 10,
+   "invalid_placement": 4,
+   "single_pass_wins": 6,
+   "ripup_wins": 6,
+   "single_pass_rate": 0.6,
+   "ripup_rate": 0.6
+  },
+  "AB1B": {
+   "valid_cases": 13,
+   "invalid_placement": 1,
+   "single_pass_wins": 3,
+   "ripup_wins": 6,
+   "single_pass_rate": 0.231,
+   "ripup_rate": 0.462
+  },
+  "both": {
+   "valid_cases": 23,
+   "invalid_placement": 5,
+   "single_pass_wins": 9,
+   "ripup_wins": 12,
+   "single_pass_rate": 0.391,
+   "ripup_rate": 0.522
+  }
+ },
+ "wall_s": 4598.6,
+ "note": "STUDY: production files overwritten; run make rx-board after"
+}

@@ -268,5 +268,11 @@ if all(os.path.exists(os.path.join(W,f)) for f in ("kit_v22/SEPTUM_FRAME_v5.stl"
     _blk=[c for c in _ffc.get("checks",[]) if "straight vertical" in c["check"]]
     chk("B5 link path (CB1D JA/JB -> AB1 J2): straight up blocked by the septum / cloth window, the FFC concept through the 90 deg spine duct passes every row on the meshes; the header + IDC ribbon concept does not",bool(_dec) and _ffc.get("n_fail",1)==0 and len(_blk)==2 and _dec.get("header_ribbon_fails",0)>0,f"FFC fails {_ffc.get('n_fail')}, ribbon fails {_dec.get('header_ribbon_fails')}")
 else: skip("B5 link path check (needs v5, parts, pcb-ab1, pcb-cb1d)")
+# B9: rip-up router study and the RS 33 / differential option (static evidence in data/results/studies)
+try:
+    _st=json.load(open("data/results/studies/router_study_b9.json"))["summary"]["both"]; _dv=json.load(open("data/results/studies/ab1_drive_option.json"))
+    chk("B9 router study: rip-up router passes the production gates on at least as many perturbed placements as the single-pass router, and the default stays single-pass",_st["ripup_wins"]>=_st["single_pass_wins"] and _st["valid_cases"]>=20,f"single {_st['single_pass_wins']}/{_st['valid_cases']}, rip-up {_st['ripup_wins']}/{_st['valid_cases']}")
+    chk("B9 drive option modeled from datasheet ratings (BAV199, 74LVC1G66): the clamp never conducts in a modeled case at RS 33, the first clean gate does not move, the default is unchanged",_dv["verdict"]["default_changed"] is False and _dv["clamp"]["RS 33"]["overvoltage_for_IF_160mA_V"]>100*_dv["inputs"]["worst_modeled_leak_V"] and max(_dv["first_clean_gate_us_worst_leak"].values())-min(_dv["first_clean_gate_us_worst_leak"].values())<0.2,str(_dv["verdict"]["noise_gain_pct"])+" % EIN")
+except FileNotFoundError: chk("B9 study evidence on disk (data/results/studies)",False,"missing")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

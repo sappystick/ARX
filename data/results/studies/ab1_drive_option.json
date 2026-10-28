@@ -1,0 +1,99 @@
+{
+ "inputs": {
+  "worst_modeled_leak_V": 0.01034421140233218,
+  "lobes_only_diagnostic_V": 0.2107892371680498
+ },
+ "clamp": {
+  "RS 100": {
+   "overvoltage_for_IF_160mA_V": 23.76,
+   "overvoltage_for_IFRM_500mA_V": 61.45,
+   "surge_for_IFSM_4A_1us_V": 447.9,
+   "blank_switch_IT_50mA_at_V": 6.02,
+   "clamp_mA_per_V_above_clamp": 9.1
+  },
+  "RS 33": {
+   "overvoltage_for_IF_160mA_V": 13.04,
+   "overvoltage_for_IFRM_500mA_V": 27.95,
+   "surge_for_IFSM_4A_1us_V": 179.8,
+   "blank_switch_IT_50mA_at_V": 2.67,
+   "clamp_mA_per_V_above_clamp": 23.0
+  }
+ },
+ "first_clean_gate_us_worst_leak": {
+  "RS 100, ron 5.5, blank release 0 us": 7.48,
+  "RS 100, ron 5.5, blank release 5 us": 7.54,
+  "RS 100, ron 10.0, blank release 0 us": 7.48,
+  "RS 100, ron 10.0, blank release 5 us": 7.54,
+  "RS 33, ron 5.5, blank release 0 us": 7.48,
+  "RS 33, ron 5.5, blank release 5 us": 7.57,
+  "RS 33, ron 10.0, blank release 0 us": 7.48,
+  "RS 33, ron 10.0, blank release 5 us": 7.56
+ },
+ "gated_noise_nV_rtHz": {
+  "RS 100": {
+   "gate 6 us": 1.726,
+   "gate 20 us": 1.736
+  },
+  "RS 33": {
+   "gate 6 us": 1.424,
+   "gate 20 us": 1.398
+  }
+ },
+ "front_end": {
+  "single-ended RS 100 (committed)": {
+   "EIN_nV_rtHz": 1.931,
+   "max_input_mV_peak": 31.25,
+   "dynamic_range_dB": 85.6
+  },
+  "single-ended RS 33": {
+   "EIN_nV_rtHz": 1.618,
+   "max_input_mV_peak": 31.25,
+   "dynamic_range_dB": 87.1
+  },
+  "differential RS 100": {
+   "EIN_nV_rtHz": 1.931,
+   "max_input_mV_peak": 62.5,
+   "dynamic_range_dB": 91.6
+  },
+  "differential RS 33": {
+   "EIN_nV_rtHz": 1.618,
+   "max_input_mV_peak": 62.5,
+   "dynamic_range_dB": 93.2
+  }
+ },
+ "differential_parts_AB1A": {
+  "parts": [
+   {
+    "type": "OPA2211",
+    "n": 1,
+    "note": "second half of U2 (spare today) + one new OPA2211 for the second channel"
+   },
+   {
+    "type": "R0402",
+    "n": 6,
+    "note": "RG/RF of each inverting stage + RAAF of the minus path"
+   },
+   {
+    "type": "C0402",
+    "n": 2,
+    "note": "CF of each stage"
+   },
+   {
+    "type": "C0603",
+    "n": 2,
+    "note": "CAAF of the minus path"
+   }
+  ],
+  "body_area_mm2": 25.7,
+  "board_area_mm2": 1256.6,
+  "note": "bodies only; the AB1A routing is already at the fab floor (B1 needed a placement nudge): a re-route is required and not attempted here"
+ },
+ "verdict": {
+  "noise_gain_pct": 16.2,
+  "range_gain_dB": 7.6,
+  "worst_leak_vs_clamp_threshold": "10.34 mV modeled vs 13.04 V to reach IF 160 mA at RS 33: the clamp does not conduct in any modeled case",
+  "blank_switch_margin": "RS 33: 50 mA through the closed switch needs 2.67 V of EMF (RS 100: 6.02 V)",
+  "default_changed": false,
+  "why": "RS 33 alone is a value change (no layout change): EIN and gated noise drop by about 16-17 %, the first clean gate does not move, and in every modeled case the clamp never conducts. Its cost is fault robustness: 2.5x more clamp and switch current per volt of overload (hot-plug or ESD on the hand-soldered coil harness is not modeled). Differential drive adds 6 dB of input range at the same noise but needs one more OPA2211 and 10 passives on AB1A, whose routing has no slack. Neither clearly wins with the fault case unmodeled and no bench data: the default stays RS 100, single-ended; RS 33 is the first bench A/B (swap RS1/RS2 on AB1A)."
+ }
+}

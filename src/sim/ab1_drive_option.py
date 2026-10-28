@@ -59,7 +59,7 @@ def main(out):
         default_changed=False,
         why=("RS 33 alone is a value change (no layout change): EIN and gated noise drop by about 16-17 %, the first clean gate does not move, and in every modeled case the clamp never "
              "conducts. Its cost is fault robustness: 2.5x more clamp and switch current per volt of overload (hot-plug or ESD on the hand-soldered coil harness is not modeled). "
-             "Differential drive adds 6 dB of input range at the same noise but needs one more OPA2211 and 12 passives on AB1A, whose routing has no slack. "
+             "Differential drive adds 6 dB of input range at the same noise but needs one more OPA2211 and 10 passives on AB1A, whose routing has no slack. "
              "Neither clearly wins with the fault case unmodeled and no bench data: the default stays RS 100, single-ended; RS 33 is the first bench A/B (swap RS1/RS2 on AB1A)."))
     json.dump(res, open(out, "w"), indent=1); print(json.dumps(res["verdict"], indent=1)); print(json.dumps(res["front_end"], indent=1)); print(json.dumps(fc, indent=1))
 
