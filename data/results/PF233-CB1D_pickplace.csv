@@ -13,14 +13,14 @@ C5A,22u 16V,C_1210_3225Metric,3.5,-7.0,0,top
 C5B,100n,C_0603_1608Metric,4.0,-9.5,0,top
 FB2,ferrite bead 1 A,L_1812_4532Metric,6.5,1.0,0,top
 CV1,10u 16V,C_1210_3225Metric,13.5,1.0,0,top
-CV2,100n,C_0603_1608Metric,7.5,4.0,0,top
+CV2,100n,C_0603_1608Metric,6.0,4.0,0,top
 CV3,1u,C_0805_2012Metric,4.0,-3.0,0,top
 UL,AMS1117-3.3,SOT-223-3_TabPin2,2.0,-14.0,0,top
 CL1,22u 10V,C_1210_3225Metric,-2.0,-19.0,0,top
 CL2,100n,C_0603_1608Metric,-2.0,-21.5,0,top
 RML,270,R_0603_1608Metric,-3.0,-24.0,0,top
 UM,74HC4051,SOIC-16_3.9x9.9mm_P1.27mm,-3.0,-0.0,0,top
-CM1,100n,C_0603_1608Metric,4.5,4.0,0,top
+CM1,100n,C_0603_1608Metric,-1.0,-6.0,0,top
 RMO,1k,R_0603_1608Metric,-10.0,4.0,0,top
 CMO,1n,C_0603_1608Metric,-10.0,-1.0,0,top
 RR1,10k,R_0603_1608Metric,-14.0,-4.0,0,top
@@ -36,28 +36,33 @@ RJ6,0R DNP,R_0603_1608Metric,-8.0,-21.0,0,top
 RJB10,0R,R_0603_1608Metric,5.0,-31.0,0,top
 RSH,1M,R_0603_1608Metric,27.5,6.5,0,top
 CSH,1n 100V,C_0603_1608Metric,24.5,4.0,0,top
-RT1,1k,R_0603_1608Metric,28.0,12.5,0,top
+RT1,1k,R_0603_1608Metric,31.5,15.5,0,top
 DH1,BAS16,D_SOD-123,21.0,4.0,0,top
 DL1,BAS16,D_SOD-123,16.0,4.0,0,top
-CQ1,10n,C_0603_1608Metric,30.5,14.0,0,top
-RP1,47k,R_0603_1608Metric,27.5,14.0,0,top
-RD1,1k,R_0603_1608Metric,28.0,15.5,0,top
+CQ1,10n,C_0603_1608Metric,12.0,29.0,0,top
+RP1,47k,R_0603_1608Metric,28.0,22.0,0,top
+RD1,1k,R_0603_1608Metric,12.0,4.5,0,top
 DH2,BAS16,D_SOD-123,19.0,1.5,0,top
 DL2,BAS16,D_SOD-123,23.5,1.5,0,top
-CQ2,10n,C_0603_1608Metric,12.0,27.5,0,top
-RP2,10k,R_0603_1608Metric,11.0,4.5,0,top
+CQ2,10n,C_0603_1608Metric,8.0,27.5,0,top
+RP2,10k,R_0603_1608Metric,9.0,4.5,0,top
 JA,to AB1A J2,Pin_header_1.27_2x6_P1.27mm,-33.0,2.0,0,top
 JB,to AB1B J2,Pin_header_1.27_2x6_P1.27mm,-32.5,-8.0,0,top
 JPB,to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND,Pin_header_2x4_P2.54mm,-25.5,-17.0,0,top
-RUS,1M,R_0603_1608Metric,16.0,27.5,0,top
-CUS,1n 100V,C_0603_1608Metric,27.5,22.0,0,top
+RUS,1M,R_0603_1608Metric,11.5,27.5,0,top
+CUS,1n 100V,C_0603_1608Metric,17.5,30.5,0,top
 JCL,"Coil leads from the neck module: COIL_B (drain side), COIL_A (VBUS side)",Terminal_block_1x2_P5.08mm,31.5,-5.5,0,top
 RDM1,110R,R_2512_6332Metric,31.0,3.0,0,top
 RDM2,110R,R_2512_6332Metric,23.5,-3.5,0,top
 RDM3,110R,R_2512_6332Metric,23.5,-8.5,0,top
 JHTA,HTA coil leads (twisted pair from the cap),SolderPad_2x_P5.08mm,30.5,9.5,0,top
-RHTA,10k,R_0603_1608Metric,30.0,18.0,0,top
-CHTA,1n,C_0603_1608Metric,31.0,16.5,0,top
-DHA1,BAS16,D_SOD-123,28.0,20.0,0,top
-DHA2,BAS16,D_SOD-123,20.0,28.0,0,top
+RHTA,10k,R_0603_1608Metric,32.5,6.5,0,top
+CHTA,1n,C_0603_1608Metric,14.5,30.5,0,top
+DHA1,BAS16,D_SOD-123,20.5,28.0,0,top
+DHA2,BAS16,D_SOD-123,16.0,28.5,0,top
 JLB,"to LB1: +5V, LED_IN, LED_CLK, GND",Pin_header_1x4_P2.54mm,-28.5,14.5,0,top
+UG,BMI270,BMI270_LGA-14_2.5x3.0mm,28.0,16.0,0,top
+CG1,100n,C_0603_1608Metric,27.5,13.5,0,top
+CG2,100n,C_0603_1608Metric,30.5,13.5,0,top
+RGA,4k7,R_0603_1608Metric,27.5,18.5,0,top
+RGL,4k7,R_0603_1608Metric,29.0,20.5,0,top

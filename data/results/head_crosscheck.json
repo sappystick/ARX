@@ -187,7 +187,7 @@
   {
    "section": "B radial",
    "check": "CB1D: every component body clear of the 8 ribs, 8 insert posts and the 2 spine walls (exact polygon test)",
-   "value": "61 bodies, 0 conflicts",
+   "value": "65 bodies, 0 conflicts",
    "limit": "0",
    "result": "PASS",
    "note": ""
@@ -301,7 +301,7 @@
    "check": "LB1 and CB1D independent DRC: 0 violations, 0 opens",
    "value": "0/0",
    "limit": "0/0",
-   "result": "PASS",
+   "result": "FAIL",
    "note": ""
   },
   {
@@ -442,7 +442,7 @@
  ],
  "interferences": [],
  "voxel_mm": 0.5,
- "fails": 0,
+ "fails": 1,
  "warns": 1,
  "z_ranges": {
   "FORMER_L1": [

@@ -66,15 +66,16 @@ def autoplace(fixed, anchors, rots=None):
 if PW == "C":
     fixed = {"U1": (0.0, -16.0, 90)}
     S = 0.82
-    anchors = {"JPW": (13, 29), "JTR": (-13, 30), "JA": (-33, -2), "JB": (-33, 8), "JPB": (-26, 18), "JCL": (33, 6), "JHTA": (33, -14), "JLB": (-33, -20), "UG": (28, -16), "M5": (12, 6), "UL": (2, 14), "UM": (-3, -2), "F1": (22, 24), "DTV": (21, 20), "CI1": (14, 24), "CI2": (14, 20), "C5A": (4, 6), "C5B": (4, 10),
+    anchors = {"JPW": (13, 29), "JTR": (-13, 30), "JA": (-33, -2), "JB": (-33, 8), "JPB": (-26, 18), "JCL": (33, 6), "JHTA": (33, -14), "JLB": (-33, -20), "UG": (28, -16), "RGA": (32, -12), "RGL": (32, -9), "M5": (12, 6), "UL": (2, 14), "UM": (-3, -2), "F1": (22, 24), "DTV": (21, 20), "CI1": (14, 24), "CI2": (14, 20), "C5A": (4, 6), "C5B": (4, 10),
                "FB2": (5, 0), "CV1": (9, 0), "CV2": (9, 3), "CV3": (5, 3), "CL1": (-2, 17), "CL2": (-2, 21), "RML": (-2, 24), "CP1": (-12, -2), "CP2": (-12, -5), "CM1": (2, -3), "RMO": (-7, -3), "CMO": (-7, 0),
                "RR1": (-14, 4), "RR2": (-14, 8), "CR1": (-17, 6), "CR2": (-17, 10), "RV1": (22, 12), "RV2": (22, 15), "CV4": (25, 14), "RSH": (26, -3), "CSH": (22, -3), "RT1": (24, -8), "RD1": (24, -11),
                "DH1": (20, -8), "DL1": (20, -11), "CQ1": (18, -14), "RP1": (22, -14), "DH2": (14, -8), "DL2": (14, -11), "CQ2": (16, -14), "RP2": (12, -14), "JDBG": (-12, 20),
                "RJB10": (4, 27), "RJ5": (-8, 24), "RJ6": (-8, 21), "RDM1": (28, -2), "RDM2": (28, 3), "RDM3": (28, 8), "CMON": (30, -12), "RBI": (30, -9), "RJX": (21, -17), "RJY": (21, -20), "CJX": (25, -17), "CJY": (25, -20), "RUS": (17, -22), "CUS": (21, -22),
                "RHTA": (30, -18), "CHTA": (27, -21), "DHA1": (24, -24), "DHA2": (20, -26)}
     rots = {"JA": 0, "JB": 0, "JPW": 90, "JTR": 90, "JPB": 0, "JCL": 0, "JHTA": 0, "JLB": 0}
-    # gyro cluster (CB1D-C2): 100 nF below VDDIO (pin 5) and VDD (pin 8), pull-ups above toward the Pico I2C pins 21 / 22
-    REL.update({"CG1": ("UG", -1.0, 2.4), "CG2": ("UG", 2.2, 2.4), "RGA": ("UG", -1.0, -2.6), "RGL": ("UG", 2.2, -2.6)})
+    # gyro cluster (CB1D-C2): 100 nF below VDDIO (pin 5) and VDD (pin 8); pull-ups away from the package, so the top row (pins 12-14: CSB, SCL, SDA) escapes
+    # straight toward the Pico I2C pins 21 / 22 (pull-ups above the package boxed those pins in: 44/47 routed, 2026-10-28)
+    REL.update({"CG1": ("UG", -1.0, 2.4), "CG2": ("UG", 2.2, 2.4)})       # the pull-ups (RGA, RGL) may sit anywhere on SDA / SCL: free anchors right of the gyro
     PL = autoplace(fixed, anchors, rots)
 elif PW == "R":
     fixed = {"JP": (-31.0, 24.0, 0), "Q1A": (-14.0, -20.0, 180), "Q1B": (-14.0, -6.0, 180), "JL1": (31.0, -20.0, 0), "JC": (28.0, 24.0, 0), "M12": (14.0, -27.0, 0)}

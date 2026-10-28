@@ -1,23 +1,23 @@
 {
  "counts": {
-  "PASS": 71,
-  "FAIL": 0,
+  "PASS": 65,
+  "FAIL": 4,
   "SKIP": 0,
   "UNVERIFIED": 4
  },
  "boards": {
   "CB1D": {
    "route": {
-    "state": "PASS",
-    "detail": "45/45 nets"
+    "state": "FAIL",
+    "detail": "44/47 nets"
    },
    "indep": {
-    "state": "PASS",
-    "detail": "0 violations, 0 opens"
+    "state": "FAIL",
+    "detail": "0 violations, 4 opens"
    },
    "kicad": {
-    "state": "PASS",
-    "detail": "errors {}, unconnected 0, HV control live"
+    "state": "FAIL",
+    "detail": "errors {}, unconnected 4, HV control live"
    },
    "gerber": {
     "state": "PASS",
@@ -319,7 +319,7 @@
    "detail": "13 checks"
   },
   "full head cross-check (26 solids, 3D interference)": {
-   "state": "PASS",
+   "state": "FAIL",
    "detail": "42 checks, 1 warnings"
   },
   "0.2 mm fine check": {
@@ -329,14 +329,6 @@
   "voxel interference (window, bridge, junction)": {
    "state": "PASS",
    "detail": "28 pairs"
-  },
-  "release-tx / sign-off controls (refusals, evidence rule, idempotence)": {
-   "state": "PASS",
-   "detail": "12/12 controls behave as intended"
-  },
-  "tests/regress.py (strict: a missing result FAILs)": {
-   "state": "PASS",
-   "detail": "109 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {

@@ -1,5 +1,8 @@
 Qty,Refs,Type,Value,MPN / note,Footprint
+1,UG,BMI270,BMI270,"Bosch BMI270 IMU (yaw rate), I2C",PF233:BMI270_LGA-14_2.5x3.0mm
 6,"CP2,C5B,CV2,CL2,CM1,CV4",C0603,100n,X7R,Capacitor_SMD:C_0603_1608Metric
+1,CG2,C0603,100n,"X7R, VDD",Capacitor_SMD:C_0603_1608Metric
+1,CG1,C0603,100n,"X7R, VDDIO",Capacitor_SMD:C_0603_1608Metric
 2,"CQ1,CQ2",C0603,10n,X7R,Capacitor_SMD:C_0603_1608Metric
 2,"CMO,CHTA",C0603,1n,C0G,Capacitor_SMD:C_0603_1608Metric
 2,"CSH,CUS",C0603,1n 100V,C0G,Capacitor_SMD:C_0603_1608Metric
@@ -38,6 +41,8 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 2,"RT1,RD1",R0603,1k,series protection,Resistor_SMD:R_0603_1608Metric
 1,RML,R0603,270,"Vishay CRCW0603 270R 1% (P70 0.10 W, doc 20035)",Resistor_SMD:R_0603_1608Metric
 1,RP1,R0603,47k,pull-up (47k on TRIG: low level with the 2 kohm series path stays under VIL),Resistor_SMD:R_0603_1608Metric
+1,RGL,R0603,4k7,I2C SCL pull-up,Resistor_SMD:R_0603_1608Metric
+1,RGA,R0603,4k7,I2C SDA pull-up,Resistor_SMD:R_0603_1608Metric
 3,"RDM1,RDM2,RDM3",R2512,110R,damping chain 3 x 110 = 330 R (600 V),Resistor_SMD:R_2512_6332Metric
 1,UL,SOT223,AMS1117-3.3,3.3 V LDO for ADC I/O,Package_TO_SOT_SMD:SOT-223-3_TabPin2
 1,JCL,TERM2,"Coil leads from the neck module: COIL_B (drain side), COIL_A (VBUS side)","5.08 mm terminal block, silicone AWG12 leads",Connector:Terminal_block_1x2_P5.08mm

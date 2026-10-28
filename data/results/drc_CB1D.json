@@ -1,15 +1,36 @@
 {
  "board": "CB1D",
  "clearance_violations": 0,
- "open_nets": 0,
+ "open_nets": 4,
  "edge_samples": 0,
  "notch_samples": 0,
  "min_gap_by_layer": {
-  "F.Cu": 0.205,
+  "F.Cu": 0.177,
   "In2.Cu": 0.205,
   "In3.Cu": 0.205,
   "B.Cu": 0.205
  },
  "violations": [],
- "opens": []
+ "opens": [
+  [
+   "P3V3",
+   "2",
+   "['UG.12']"
+  ],
+  [
+   "GYR_SDA",
+   "2",
+   "['UG.14']"
+  ],
+  [
+   "GYR_SCL",
+   "2",
+   "['UG.13']"
+  ],
+  [
+   "DIAL_EXT",
+   "2",
+   "['JTR.4']"
+  ]
+ ]
 }
