@@ -3,10 +3,10 @@
  "board_key": "PM2",
  "kicad": "9.0.9",
  "zones_filled": true,
- "violations": 17,
+ "violations": 19,
  "unconnected": 0,
  "errors": {},
  "warnings": {},
- "lib_footprint_warnings": 17,
+ "lib_footprint_warnings": 19,
  "examples": []
 }

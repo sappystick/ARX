@@ -1,0 +1,19 @@
+{
+ "status": "MODELED: host build (gcc -std=c99 -Wall -Wextra -Werror), not run on target hardware",
+ "tests": {
+  "test_dsp (C vs Python reference)": {
+   "checks": 40,
+   "fails": 0
+  },
+  "test_voice (AU1 voice)": {
+   "checks": 10,
+   "fails": 0
+  },
+  "test_system (head <-> link <-> AU1, sweep over ground)": {
+   "checks": 13,
+   "fails": 0
+  }
+ },
+ "ok": true,
+ "total_checks": 63
+}

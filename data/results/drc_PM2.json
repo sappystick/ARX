@@ -6,7 +6,7 @@
  "notch_samples": 0,
  "min_gap_by_layer": {
   "F.Cu": 0.284,
-  "B.Cu": 0.451
+  "B.Cu": 0.338
  },
  "violations": [],
  "opens": []

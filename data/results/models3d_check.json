@@ -1,8 +1,8 @@
 {
  "boards": {
   "PF233-CB1D_routed.kicad_pcb": {
-   "components": 65,
-   "with_model": 65,
+   "components": 68,
+   "with_model": 68,
    "missing": []
   },
   "PF233-LB1_routed.kicad_pcb": {
@@ -16,14 +16,22 @@
    "missing": []
   },
   "PF233-PM2_routed.kicad_pcb": {
-   "components": 13,
-   "with_model": 13,
+   "components": 14,
+   "with_model": 14,
    "missing": []
   },
   "PF233-HB2_routed.kicad_pcb": {
    "components": 10,
    "with_model": 10,
    "missing": []
+  },
+  "PF233-AU1_routed.kicad_pcb": {
+   "components": 41,
+   "with_model": 39,
+   "missing": [
+    "UB",
+    "UL"
+   ]
   },
   "SB1R-QA.kicad_pcb": {
    "components": 2,

@@ -68,7 +68,16 @@
   "led_static": 0.066,
   "logic": 0.15,
   "ams_in": 0.07742222222222221,
-  "analog_5va": 0.05600000000000001
+  "analog_5va": 0.05600000000000001,
+  "gyro": 0.000685
+ },
+ "au1": {
+  "iq_A": 0.01358,
+  "p_audio_avg_W": 0.1,
+  "p_audio_max_W": 1.4,
+  "eta_amp": 0.85,
+  "W": 0.2182906574394464,
+  "W_max": 2.017598615916955
  },
  "gate": {
   "Qg": 9e-08,
@@ -831,6 +840,216 @@
    "R_src": "AWG24 copper",
    "load": null,
    "hv": false
+  },
+  {
+   "a": "HB2",
+   "b": "CB1D",
+   "id": "W067",
+   "signal": "AUD_LINK",
+   "frm": "HB2.JH.5",
+   "to": "CB1D.JTR.5",
+   "spec": "AWG28, signal cavity (the spare core of the 5-core cord)",
+   "length_m": 1.75,
+   "R_ohm": 0.3717171748735705,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "HB2",
+   "b": "OTHER",
+   "id": "W068",
+   "signal": "AUD_LINK",
+   "frm": "HB2.JAU.1",
+   "to": "AU1.JLINK.1",
+   "spec": "AWG28 silicone pair",
+   "length_m": 0.2,
+   "R_ohm": 0.04248196284269377,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "HB2",
+   "b": "OTHER",
+   "id": "W069",
+   "signal": "GND",
+   "frm": "HB2.JAU.2",
+   "to": "AU1.JLINK.2",
+   "spec": "AWG28 silicone pair",
+   "length_m": 0.2,
+   "R_ohm": 0.04248196284269377,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "PM2",
+   "b": "OTHER",
+   "id": "W070",
+   "signal": "VBUS_AU",
+   "frm": "PM2.JAUP.1",
+   "to": "AU1.JPWR.1",
+   "spec": "AWG24 silicone pair",
+   "length_m": 0.15,
+   "R_ohm": 0.012601944594085089,
+   "R_src": "AWG24 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "PM2",
+   "b": "OTHER",
+   "id": "W071",
+   "signal": "GND",
+   "frm": "PM2.JAUP.2",
+   "to": "AU1.JPWR.2",
+   "spec": "AWG24 silicone pair",
+   "length_m": 0.15,
+   "R_ohm": 0.012601944594085089,
+   "R_src": "AWG24 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W072",
+   "signal": "SPK_P",
+   "frm": "AU1.JSPK.1",
+   "to": "speaker +",
+   "spec": "AWG26 pair",
+   "length_m": 0.08,
+   "R_ohm": 0.010686867624560368,
+   "R_src": "AWG26 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W073",
+   "signal": "SPK_N",
+   "frm": "AU1.JSPK.2",
+   "to": "speaker -",
+   "spec": "AWG26 pair",
+   "length_m": 0.08,
+   "R_ohm": 0.010686867624560368,
+   "R_src": "AWG26 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W074",
+   "signal": "HP_L",
+   "frm": "AU1.JHP.1",
+   "to": "headphone jack tip",
+   "spec": "AWG28",
+   "length_m": 0.06,
+   "R_ohm": 0.01274458885280813,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W075",
+   "signal": "HP_R",
+   "frm": "AU1.JHP.2",
+   "to": "headphone jack ring",
+   "spec": "AWG28",
+   "length_m": 0.06,
+   "R_ohm": 0.01274458885280813,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W076",
+   "signal": "GND",
+   "frm": "AU1.JHP.3",
+   "to": "headphone jack sleeve",
+   "spec": "AWG28",
+   "length_m": 0.06,
+   "R_ohm": 0.01274458885280813,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W077",
+   "signal": "HP_DET",
+   "frm": "AU1.JHP.4",
+   "to": "headphone jack plug-detect switch",
+   "spec": "AWG28",
+   "length_m": 0.06,
+   "R_ohm": 0.01274458885280813,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W078",
+   "signal": "GND",
+   "frm": "AU1.JSEL.1",
+   "to": "output selector common",
+   "spec": "AWG28",
+   "length_m": 0.06,
+   "R_ohm": 0.01274458885280813,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W079",
+   "signal": "SEL1",
+   "frm": "AU1.JSEL.2",
+   "to": "output selector position 1 (AUDIO_ONLY)",
+   "spec": "AWG28",
+   "length_m": 0.06,
+   "R_ohm": 0.01274458885280813,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W080",
+   "signal": "SEL2",
+   "frm": "AU1.JSEL.3",
+   "to": "output selector position 2 (LED_ONLY)",
+   "spec": "AWG28",
+   "length_m": 0.06,
+   "R_ohm": 0.01274458885280813,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
+  },
+  {
+   "a": "OTHER",
+   "b": "OTHER",
+   "id": "W081",
+   "signal": "SEL3",
+   "frm": "AU1.JSEL.4",
+   "to": "output selector position 3 (COMBINED)",
+   "spec": "AWG28",
+   "length_m": 0.06,
+   "R_ohm": 0.01274458885280813,
+   "R_src": "AWG28 copper",
+   "load": null,
+   "hv": false
   }
  ],
  "golden": [
@@ -853,12 +1072,13 @@
    "P_damp_W": 0.1478,
    "i_diode_pk": 7.9051,
    "i_rms": 0.6213,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1187,
-   "P_total_W": 5.6642,
-   "I_batt_A": 0.289,
-   "hours": 13.3471
+   "P_AU1_W": 0.2183,
+   "P_total_W": 5.8865,
+   "I_batt_A": 0.3003,
+   "hours": 12.843
   },
   {
    "V": 19.6,
@@ -879,12 +1099,13 @@
    "P_damp_W": 0.1152,
    "i_diode_pk": 7.8505,
    "i_rms": 0.6213,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1187,
-   "P_total_W": 5.6642,
-   "I_batt_A": 0.289,
-   "hours": 13.3471
+   "P_AU1_W": 0.2183,
+   "P_total_W": 5.8865,
+   "I_batt_A": 0.3003,
+   "hours": 12.843
   },
   {
    "V": 19.6,
@@ -905,12 +1126,13 @@
    "P_damp_W": 0.3374,
    "i_diode_pk": 13.8822,
    "i_rms": 1.2602,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1184,
-   "P_total_W": 7.6269,
-   "I_batt_A": 0.3891,
-   "hours": 9.9123
+   "P_AU1_W": 0.2183,
+   "P_total_W": 7.8492,
+   "I_batt_A": 0.4005,
+   "hours": 9.6315
   },
   {
    "V": 19.6,
@@ -931,12 +1153,13 @@
    "P_damp_W": 0.2616,
    "i_diode_pk": 13.81,
    "i_rms": 1.2602,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1184,
-   "P_total_W": 7.6269,
-   "I_batt_A": 0.3891,
-   "hours": 9.9123
+   "P_AU1_W": 0.2183,
+   "P_total_W": 7.8492,
+   "I_batt_A": 0.4005,
+   "hours": 9.6315
   },
   {
    "V": 19.6,
@@ -957,12 +1180,13 @@
    "P_damp_W": 0.4583,
    "i_diode_pk": 19.8766,
    "i_rms": 1.7814,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1182,
-   "P_total_W": 9.0309,
-   "I_batt_A": 0.4608,
-   "hours": 8.3712
+   "P_AU1_W": 0.2183,
+   "P_total_W": 9.2533,
+   "I_batt_A": 0.4721,
+   "hours": 8.1701
   },
   {
    "V": 19.6,
@@ -983,12 +1207,13 @@
    "P_damp_W": 0.3611,
    "i_diode_pk": 19.8446,
    "i_rms": 1.7814,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1182,
-   "P_total_W": 9.0309,
-   "I_batt_A": 0.4608,
-   "hours": 8.3712
+   "P_AU1_W": 0.2183,
+   "P_total_W": 9.2533,
+   "I_batt_A": 0.4721,
+   "hours": 8.1701
   },
   {
    "V": 24.5,
@@ -1009,12 +1234,13 @@
    "P_damp_W": 0.1478,
    "i_diode_pk": 7.9055,
    "i_rms": 0.5541,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1187,
-   "P_total_W": 5.6533,
-   "I_batt_A": 0.2307,
-   "hours": 13.3727
+   "P_AU1_W": 0.2183,
+   "P_total_W": 5.8756,
+   "I_batt_A": 0.2398,
+   "hours": 12.8667
   },
   {
    "V": 24.5,
@@ -1035,12 +1261,13 @@
    "P_damp_W": 0.1151,
    "i_diode_pk": 7.8511,
    "i_rms": 0.5541,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1187,
-   "P_total_W": 5.6533,
-   "I_batt_A": 0.2307,
-   "hours": 13.3727
+   "P_AU1_W": 0.2183,
+   "P_total_W": 5.8756,
+   "I_batt_A": 0.2398,
+   "hours": 12.8667
   },
   {
    "V": 24.5,
@@ -1061,12 +1288,13 @@
    "P_damp_W": 0.3374,
    "i_diode_pk": 13.8829,
    "i_rms": 1.1208,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1184,
-   "P_total_W": 7.5742,
-   "I_batt_A": 0.3092,
-   "hours": 9.9812
+   "P_AU1_W": 0.2183,
+   "P_total_W": 7.7966,
+   "I_batt_A": 0.3182,
+   "hours": 9.6966
   },
   {
    "V": 24.5,
@@ -1087,12 +1315,13 @@
    "P_damp_W": 0.2615,
    "i_diode_pk": 13.8113,
    "i_rms": 1.1208,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1184,
-   "P_total_W": 7.5742,
-   "I_batt_A": 0.3092,
-   "hours": 9.9812
+   "P_AU1_W": 0.2183,
+   "P_total_W": 7.7966,
+   "I_batt_A": 0.3182,
+   "hours": 9.6966
   },
   {
    "V": 24.5,
@@ -1113,12 +1342,13 @@
    "P_damp_W": 0.4583,
    "i_diode_pk": 19.8769,
    "i_rms": 1.5783,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1182,
-   "P_total_W": 8.9062,
-   "I_batt_A": 0.3635,
-   "hours": 8.4885
+   "P_AU1_W": 0.2183,
+   "P_total_W": 9.1285,
+   "I_batt_A": 0.3726,
+   "hours": 8.2817
   },
   {
    "V": 24.5,
@@ -1139,12 +1369,13 @@
    "P_damp_W": 0.361,
    "i_diode_pk": 19.8459,
    "i_rms": 1.5783,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1182,
-   "P_total_W": 8.9062,
-   "I_batt_A": 0.3635,
-   "hours": 8.4885
+   "P_AU1_W": 0.2183,
+   "P_total_W": 9.1285,
+   "I_batt_A": 0.3726,
+   "hours": 8.2817
   },
   {
    "V": 29.4,
@@ -1165,12 +1396,13 @@
    "P_damp_W": 0.1478,
    "i_diode_pk": 7.9058,
    "i_rms": 0.5049,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1187,
-   "P_total_W": 5.6464,
-   "I_batt_A": 0.1921,
-   "hours": 13.3891
+   "P_AU1_W": 0.2183,
+   "P_total_W": 5.8687,
+   "I_batt_A": 0.1996,
+   "hours": 12.8819
   },
   {
    "V": 29.4,
@@ -1191,12 +1423,13 @@
    "P_damp_W": 0.1151,
    "i_diode_pk": 7.8515,
    "i_rms": 0.5049,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1187,
-   "P_total_W": 5.6464,
-   "I_batt_A": 0.1921,
-   "hours": 13.3891
+   "P_AU1_W": 0.2183,
+   "P_total_W": 5.8687,
+   "I_batt_A": 0.1996,
+   "hours": 12.8819
   },
   {
    "V": 29.4,
@@ -1217,12 +1450,13 @@
    "P_damp_W": 0.3374,
    "i_diode_pk": 13.8833,
    "i_rms": 1.0195,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1184,
-   "P_total_W": 7.5419,
-   "I_batt_A": 0.2565,
-   "hours": 10.024
+   "P_AU1_W": 0.2183,
+   "P_total_W": 7.7642,
+   "I_batt_A": 0.2641,
+   "hours": 9.737
   },
   {
    "V": 29.4,
@@ -1243,12 +1477,13 @@
    "P_damp_W": 0.2613,
    "i_diode_pk": 13.8121,
    "i_rms": 1.0195,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1184,
-   "P_total_W": 7.5419,
-   "I_batt_A": 0.2565,
-   "hours": 10.024
+   "P_AU1_W": 0.2183,
+   "P_total_W": 7.7642,
+   "I_batt_A": 0.2641,
+   "hours": 9.737
   },
   {
    "V": 29.4,
@@ -1269,12 +1504,13 @@
    "P_damp_W": 0.4583,
    "i_diode_pk": 19.877,
    "i_rms": 1.4325,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1182,
-   "P_total_W": 8.8327,
-   "I_batt_A": 0.3004,
-   "hours": 8.5591
+   "P_AU1_W": 0.2183,
+   "P_total_W": 9.055,
+   "I_batt_A": 0.308,
+   "hours": 8.3489
   },
   {
    "V": 29.4,
@@ -1295,12 +1531,13 @@
    "P_damp_W": 0.361,
    "i_diode_pk": 19.8466,
    "i_rms": 1.4325,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1182,
-   "P_total_W": 8.8327,
-   "I_batt_A": 0.3004,
-   "hours": 8.5591
+   "P_AU1_W": 0.2183,
+   "P_total_W": 9.055,
+   "I_batt_A": 0.308,
+   "hours": 8.3489
   },
   {
    "V": 24.5,
@@ -1321,12 +1558,13 @@
    "P_damp_W": 0.4917,
    "i_diode_pk": 19.8766,
    "i_rms": 1.6177,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1182,
-   "P_total_W": 9.1436,
-   "I_batt_A": 0.3732,
-   "hours": 8.2681
+   "P_AU1_W": 0.2183,
+   "P_total_W": 9.3659,
+   "I_batt_A": 0.3823,
+   "hours": 8.0718
   },
   {
    "V": 24.5,
@@ -1347,12 +1585,13 @@
    "P_damp_W": 0.4256,
    "i_diode_pk": 19.8771,
    "i_rms": 1.548,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1182,
-   "P_total_W": 8.747,
-   "I_batt_A": 0.357,
-   "hours": 8.643
+   "P_AU1_W": 0.2183,
+   "P_total_W": 8.9693,
+   "I_batt_A": 0.3661,
+   "hours": 8.4288
   },
   {
    "V": 19.6,
@@ -1373,12 +1612,13 @@
    "P_damp_W": 0.3611,
    "i_diode_pk": 19.8445,
    "i_rms": 1.7967,
-   "I5_A": 0.6994,
-   "P5_W": 4.1142,
+   "I5_A": 0.7001,
+   "P5_W": 4.1183,
    "P12_W": 0.1182,
-   "P_total_W": 9.1417,
-   "I_batt_A": 0.4664,
-   "hours": 8.2698
+   "P_AU1_W": 0.2183,
+   "P_total_W": 9.364,
+   "I_batt_A": 0.4778,
+   "hours": 8.0735
   }
  ],
  "check_vs_sweep": [
@@ -1416,7 +1656,7 @@
   "system_budget.py rail terms",
   "TI SBOS377L / SBOS365G IQ",
   "sim_thermal.json (linear fit)",
-  "HARNESS_MASTER_v4.csv",
+  "HARNESS_MASTER_v5.csv",
   "tx_system.json"
  ]
 }

@@ -3,10 +3,10 @@
  "board_key": "HB2",
  "kicad": "9.0.9",
  "zones_filled": true,
- "violations": 10,
+ "violations": 11,
  "unconnected": 0,
  "errors": {},
  "warnings": {},
- "lib_footprint_warnings": 10,
+ "lib_footprint_warnings": 11,
  "examples": []
 }

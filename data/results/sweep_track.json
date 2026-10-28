@@ -1,5 +1,5 @@
 {
- "status": "MODELED: noise-free coil model, straight sweep, point target; yaw gyro is a PROPOSAL (not in the design)",
+ "status": "MODELED: noise-free coil model, straight sweep, point target; sweep direction from the CB1D-C2 BMI270 yaw gyro (in the design 2026-10-28, not built)",
  "passes": [
   {
    "depth_mm": 100,
@@ -211,6 +211,7 @@
   "pinpoint_err_max_mm": 2.220446049250313e-13,
   "pinpoint_within_10mm": true,
   "pinpoint_noisy_median_le_15mm": true,
+  "gyro_sign_margin_ge_5": true,
   "boost_signal_ratio": 2.5,
   "boost_gain_dB": 7.9
  },
@@ -249,5 +250,14 @@
   }
  },
  "pinpoint_noise_note": "per-sample SNR after the firmware averaging; samples every 5 mm of head travel; 5-sample (25 mm) smoothing",
+ "gyro": {
+  "part": "BMI270 (CB1D-C2 UG)",
+  "offset_worst_dps": 1.1,
+  "sweep_rate_dps": [
+   14.3,
+   71.6
+  ],
+  "sign_margin": 13.0
+ },
  "ok": true
 }

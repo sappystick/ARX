@@ -1,0 +1,47 @@
+Qty,Refs,Type,Value,MPN / note,Footprint
+1,CVD2,C0603,100n,X7R VDD HF,Capacitor_SMD:C_0603_1608Metric
+1,CBB,C0603,100n,X7R boot,Capacitor_SMD:C_0603_1608Metric
+1,CBI2,C0603,100n 50V,X7R input HF,Capacitor_SMD:C_0603_1608Metric
+1,CNR,C0603,10n,NRST,Capacitor_SMD:C_0603_1608Metric
+1,CPW,C0603,10n,PWM filter,Capacitor_SMD:C_0603_1608Metric
+1,CHS,C0603,1u,HPVSS,Capacitor_SMD:C_0603_1608Metric
+2,"CLI,CLO",C0603,1u,X7R,Capacitor_SMD:C_0603_1608Metric
+1,CSV,C0603,1u,X7R VDD,Capacitor_SMD:C_0603_1608Metric
+1,CHF,C0603,1u,flying,Capacitor_SMD:C_0603_1608Metric
+2,"CI1,CI2",C0603,1u,input,Capacitor_SMD:C_0603_1608Metric
+1,CHL,C0603,1u,input L,Capacitor_SMD:C_0603_1608Metric
+1,CHR,C0603,1u,input R,Capacitor_SMD:C_0603_1608Metric
+1,CHP,C0603,2.2u,HPVDD,Capacitor_SMD:C_0603_1608Metric
+1,CHV,C0603,2.2u,VDD,Capacitor_SMD:C_0603_1608Metric
+1,CVC,C0603,470n,X7R VCORE,Capacitor_SMD:C_0603_1608Metric
+1,CVD,C0805,10u,X7R VDD,Capacitor_SMD:C_0805_2012Metric
+1,CSV2,C1210,10u 10V,X7R VDD bulk,Capacitor_SMD:C_1210_3225Metric
+1,CBI,C1210,2.2u 50V,X7R input,Capacitor_SMD:C_1210_3225Metric
+1,CBO,C1210,22u 10V,X7R output,Capacitor_SMD:C_1210_3225Metric
+1,DLK1,DSOD,BAS16,clamp to 3V3,Diode_SMD:D_SOD-123
+1,DLK2,DSOD,BAS16,clamp to GND,Diode_SMD:D_SOD-123
+1,JSWD,HDR1x4,SWD: 3V3 SWDIO SWCLK GND,programming pads,Connector:Pin_header_1x4_P2.54mm
+1,US,HVSSOP8EP,TPA2005D1DGN,TI TPA2005D1 1.4 W class-D,PF233:HVSSOP-8-1EP_3x3mm_P0.65mm
+1,RLK,R0603,100R,link entry,Resistor_SMD:R_0603_1608Metric
+1,RBSL,R0603,100k,BSL invoke pull-down,Resistor_SMD:R_0603_1608Metric
+1,RHE,R0603,100k,EN pull-down,Resistor_SMD:R_0603_1608Metric
+1,RSD,R0603,100k,SHUTDOWN pull-down,Resistor_SMD:R_0603_1608Metric
+3,"RS1,RS2,RS3",R0603,10k,,Resistor_SMD:R_0603_1608Metric
+1,RDT,R0603,10k,jack detect pull-up,Resistor_SMD:R_0603_1608Metric
+2,"RI1,RI2",R0603,150k,RI,Resistor_SMD:R_0603_1608Metric
+1,RPW,R0603,1k,PWM filter,Resistor_SMD:R_0603_1608Metric
+1,RTX,R0603,1k,TX into the shared line,Resistor_SMD:R_0603_1608Metric
+1,RFB,R0603,22k1,FB bottom,Resistor_SMD:R_0603_1608Metric
+1,RNR,R0603,47k,NRST pull-up,Resistor_SMD:R_0603_1608Metric
+1,RFT,R0603,88k7,FB top,Resistor_SMD:R_0603_1608Metric
+1,UL,SOT23-5LDO,TLV75533,TI TLV75533PDBV 3.3 V 500 mA,Package_TO_SOT_SMD:SOT-23-5
+1,UB,SOT23-6BUCK,TPS560430,"TI TPS560430 4-36 V buck, 600 mA",Package_TO_SOT_SMD:SOT-23-6
+1,LB,SRN4018,22uH,Bourns SRN4018-220M,PF233:L_Bourns_SRN4018
+1,UM,VSSOP28,MSPM0G3507SDGS28,"TI MSPM0G3507 Cortex-M0+ 80 MHz, 12-bit DAC",PF233:VSSOP-28_4.4x7.1mm_P0.5mm
+1,TPRST,WIRE1,NRST test pad,connect-under-reset probe,PF233:TestPad_1.5mm
+1,JLINK,WIRE2,"Link from HB2 JAU: AUD_LINK, GND",AWG28 pair,Connector:SolderPad_2x_P5.08mm
+1,JPWR,WIRE2,"Power from PM2 JAUP: VBUS_AU, GND",AWG24 pair,Connector:SolderPad_2x_P5.08mm
+1,JSPK,WIRE2,Speaker: SPK+ SPK- (8 ohm),speaker leads,Connector:SolderPad_2x_P5.08mm
+1,JHP,WIRE4,Headphone jack: TIP(L) RING(R) SLEEVE DET,panel 3.5 mm jack with tip (plug-detect) switch: Same Sky SJ-3524-SMT,Connector:Wire_pads_1x4_P5.08mm
+1,JSEL,WIRE4,Output selector: COM P1 P2 P3,"3-position rotary, battery side",Connector:Wire_pads_1x4_P5.08mm
+1,UH,WQFN16EP,TPA6132A2RTE,TI TPA6132A2 DirectPath headphone amp,PF233:WQFN-16-1EP_3x3mm_P0.5mm

@@ -1,11 +1,12 @@
 Ref,Val,Package,PosX_mm,PosY_mm,Rot,Side
 JH,Signal cord to the head: +3V3 GND TRIG DIAL - - SHLD,Pin_header_1x7_P2.54mm,-7.0,6.0,0,top
+JAU,"Lead to AU1: AUD_LINK, GND",SolderPad_2x_P5.08mm,-5.0,-6.0,0,top
 HS1,DRV5023BIQLPG,TO-92_Inline,0.0,-15.0,0,top
 CH1,100n,C_0603_1608Metric,-6.0,-14.0,0,top
 RH1,1k,R_0603_1608Metric,6.0,-14.0,0,top
 JDIAL,"Dial: COM P1 P2 P3 P4 (4-pos rotary, top housing)",Pin_header_1x5_P2.54mm,6.0,10.0,0,top
 RD0,10k,R_0603_1608Metric,2.0,-2.0,0,top
 RD2,3k3,R_0603_1608Metric,6.0,-2.0,0,top
-RD3,10k,R_0603_1608Metric,-2.0,-7.0,0,top
+RD3,10k,R_0603_1608Metric,-2.0,-9.0,0,top
 RD4,33k,R_0603_1608Metric,6.0,-7.0,0,top
 RSHH,0R,R_0603_1608Metric,-8.0,-10.0,0,top

@@ -10,113 +10,11 @@
    "ok": true
   },
   "CB1D": {
-   "pads_compared": 214,
-   "pads_missing": [
-    "CG1.1",
-    "CG1.2",
-    "CG2.1",
-    "CG2.2",
-    "RGA.1",
-    "RGA.2",
-    "RGL.1",
-    "RGL.2",
-    "UG.1",
-    "UG.10"
-   ],
-   "mismatches": 214,
-   "examples": [
-    {
-     "pad": "U1.1",
-     "model_wh": [
-      1.7,
-      1.7
-     ],
-     "kicad_wh": [
-      1.7,
-      1.7
-     ],
-     "dxy": [
-      -0.7804,
-      -0.229
-     ]
-    },
-    {
-     "pad": "U1.2",
-     "model_wh": [
-      1.7,
-      1.7
-     ],
-     "kicad_wh": [
-      1.7,
-      1.7
-     ],
-     "dxy": [
-      -0.7804,
-      -0.229
-     ]
-    },
-    {
-     "pad": "U1.3",
-     "model_wh": [
-      1.7,
-      1.7
-     ],
-     "kicad_wh": [
-      1.7,
-      1.7
-     ],
-     "dxy": [
-      -0.7804,
-      -0.229
-     ]
-    },
-    {
-     "pad": "U1.4",
-     "model_wh": [
-      1.7,
-      1.7
-     ],
-     "kicad_wh": [
-      1.7,
-      1.7
-     ],
-     "dxy": [
-      -0.7804,
-      -0.229
-     ]
-    },
-    {
-     "pad": "U1.5",
-     "model_wh": [
-      1.7,
-      1.7
-     ],
-     "kicad_wh": [
-      1.7,
-      1.7
-     ],
-     "dxy": [
-      -0.7804,
-      -0.229
-     ]
-    },
-    {
-     "pad": "U1.6",
-     "model_wh": [
-      1.7,
-      1.7
-     ],
-     "kicad_wh": [
-      1.7,
-      1.7
-     ],
-     "dxy": [
-      -0.7804,
-      -0.229
-     ]
-    }
-   ],
-   "ok": false
+   "pads_compared": 242,
+   "pads_missing": [],
+   "mismatches": 0,
+   "examples": [],
+   "ok": true
   },
   "PB1R": {
    "pads_compared": 107,
@@ -126,14 +24,21 @@
    "ok": true
   },
   "PM2": {
-   "pads_compared": 43,
+   "pads_compared": 47,
    "pads_missing": [],
    "mismatches": 0,
    "examples": [],
    "ok": true
   },
   "HB2": {
-   "pads_compared": 29,
+   "pads_compared": 31,
+   "pads_missing": [],
+   "mismatches": 0,
+   "examples": [],
+   "ok": true
+  },
+  "AU1": {
+   "pads_compared": 162,
    "pads_missing": [],
    "mismatches": 0,
    "examples": [],

@@ -11,5 +11,5 @@ typedef enum { PF_OUT_AUDIO_ONLY = 0, PF_OUT_LED_ONLY = 1, PF_OUT_COMBINED = 2 }
 #define PF_OUT_WINDOW_MS 30u
 #define PF_OUT_FWD_DEG 358u
 typedef struct { uint8_t r, g, b; uint8_t voice; uint16_t fixed_hz; } pf_class_out_t;  /* voice: 0 iron, 1 chirp, 2 gold, 3 bell; fixed_hz 0 = pitch from tau */
-static const pf_class_out_t PF_CLASS_OUT[] = {{ 1u, 0u, 0u, 0u, 110u }, { 1u, 0u, 1u, 1u, 0u }, { 1u, 1u, 0u, 2u, 0u }, { 0u, 1u, 0u, 2u, 0u }, { 0u, 1u, 1u, 3u, 0u } };
+static const pf_class_out_t PF_CLASS_OUT[] = {{ 1u, 0u, 1u, 1u, 0u }, { 1u, 1u, 0u, 2u, 0u }, { 0u, 1u, 0u, 2u, 0u }, { 0u, 1u, 1u, 3u, 0u }, { 1u, 0u, 0u, 0u, 110u } };
 static const uint8_t PF_OUT_N_AVG[] = {24u, 18u, 12u };  /* scan, mid, boost */

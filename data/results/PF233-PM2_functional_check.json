@@ -1,11 +1,11 @@
 {
  "board": "PM2",
- "parts": 17,
+ "parts": 19,
  "errors": [],
- "nets_compared": 9,
+ "nets_compared": 10,
  "erc": {
-  "warning:footprint_link_issues": 17,
-  "warning:lib_symbol_issues": 17
+  "warning:footprint_link_issues": 19,
+  "warning:lib_symbol_issues": 19
  },
  "erc_errors": 0,
  "pdf": true,

@@ -1,0 +1,112 @@
+{
+ "board": "PF233-AU1_routed.kicad_pcb",
+ "board_key": "AU1",
+ "kicad": "9.0.9",
+ "zones_filled": true,
+ "violations": 61,
+ "unconnected": 0,
+ "errors": {
+  "solder_mask_bridge": 2,
+  "clearance": 8
+ },
+ "warnings": {},
+ "lib_footprint_warnings": 51,
+ "examples": [
+  {
+   "type": "solder_mask_bridge",
+   "desc": "Front solder mask aperture bridges items with different nets",
+   "items": [
+    "Track [DAC_AU] on F.Cu, length 1.3463 mm",
+    "Pad 17 [PWM_AU] of UM on F.Cu"
+   ],
+   "pos": {
+    "x": 99.5,
+    "y": 103.1
+   }
+  },
+  {
+   "type": "solder_mask_bridge",
+   "desc": "Front solder mask aperture bridges items with different nets",
+   "items": [
+    "Track [NRST_AU] on F.Cu, length 1.4230 mm",
+    "Pad 5 [UM_P5_NC] of UM on F.Cu"
+   ],
+   "pos": {
+    "x": 92.45,
+    "y": 99.8
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1500 mm)",
+   "items": [
+    "Track [SEL2] on F.Cu, length 0.3000 mm",
+    "Pad 11 [SEL3] of UM on F.Cu"
+   ],
+   "pos": {
+    "x": 93.2,
+    "y": 102.35
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.0569 mm)",
+   "items": [
+    "Track [GND] on F.Cu, length 1.3946 mm",
+    "Pad 9 [SEL1] of UM on F.Cu"
+   ],
+   "pos": {
+    "x": 95.15,
+    "y": 101.6
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1000 mm)",
+   "items": [
+    "Pad 8 [SPK_N] of US on F.Cu",
+    "Track [GND] on F.Cu, length 0.6000 mm"
+   ],
+   "pos": {
+    "x": 109.2,
+    "y": 98.025
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1000 mm)",
+   "items": [
+    "Pad 8 [SPK_N] of US on F.Cu",
+    "Track [GND] on F.Cu, length 0.5942 mm"
+   ],
+   "pos": {
+    "x": 109.2,
+    "y": 98.025
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1500 mm)",
+   "items": [
+    "Track [LINK_N] on F.Cu, length 0.3000 mm",
+    "Pad 15 [LINK_TX] of UM on F.Cu"
+   ],
+   "pos": {
+    "x": 98.75,
+    "y": 103.85
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1500 mm)",
+   "items": [
+    "Pad 22 [SWDIO_AU] of UM on F.Cu",
+    "Track [BSL_INV] on F.Cu, length 0.3000 mm"
+   ],
+   "pos": {
+    "x": 98.2,
+    "y": 100.75
+   }
+  }
+ ]
+}

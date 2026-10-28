@@ -1,36 +1,58 @@
 {
  "board": "CB1D",
- "clearance_violations": 0,
- "open_nets": 4,
+ "clearance_violations": 6,
+ "open_nets": 0,
  "edge_samples": 0,
  "notch_samples": 0,
  "min_gap_by_layer": {
-  "F.Cu": 0.177,
+  "F.Cu": 0.052,
   "In2.Cu": 0.205,
   "In3.Cu": 0.205,
   "B.Cu": 0.205
  },
- "violations": [],
- "opens": [
+ "violations": [
   [
-   "P3V3",
-   "2",
-   "['UG.12']"
+   "('GYR_SCL', 'GYR_SDA')",
+   "0.103",
+   "0.2",
+   "F.Cu",
+   "(np.float64(7.2), np.float64(-29.2))"
   ],
   [
-   "GYR_SDA",
-   "2",
-   "['UG.14']"
+   "('GND', 'UG_VIO')",
+   "0.052",
+   "0.2",
+   "F.Cu",
+   "(np.float64(6.2), np.float64(-31.2))"
   ],
   [
-   "GYR_SCL",
-   "2",
-   "['UG.13']"
+   "('GYR_SCL', 'UG_VIO')",
+   "0.098",
+   "0.2",
+   "F.Cu",
+   "(np.float64(6.7), np.float64(-30.0))"
   ],
   [
-   "DIAL_EXT",
-   "2",
-   "['JTR.4']"
+   "('UG_INT2_NC', 'UG_VIO')",
+   "0.086",
+   "0.2",
+   "F.Cu",
+   "(np.float64(6.2), np.float64(-31.0))"
+  ],
+  [
+   "('UG_INT1_NC', 'UG_VIO')",
+   "0.135",
+   "0.2",
+   "F.Cu",
+   "(np.float64(7.7), np.float64(-31.0))"
+  ],
+  [
+   "('GYR_SDA', 'UG_VIO')",
+   "0.135",
+   "0.2",
+   "F.Cu",
+   "(np.float64(7.7), np.float64(-29.5))"
   ]
- ]
+ ],
+ "opens": []
 }

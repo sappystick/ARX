@@ -1,23 +1,23 @@
 {
  "counts": {
-  "PASS": 65,
-  "FAIL": 4,
+  "PASS": 69,
+  "FAIL": 5,
   "SKIP": 0,
   "UNVERIFIED": 4
  },
  "boards": {
   "CB1D": {
    "route": {
-    "state": "FAIL",
-    "detail": "44/47 nets"
+    "state": "PASS",
+    "detail": "49/49 nets"
    },
    "indep": {
     "state": "FAIL",
-    "detail": "0 violations, 4 opens"
+    "detail": "6 violations, 0 opens"
    },
    "kicad": {
     "state": "FAIL",
-    "detail": "errors {}, unconnected 4, HV control live"
+    "detail": "errors {'clearance': 12}, unconnected 0, HV control live"
    },
    "gerber": {
     "state": "PASS",
@@ -29,7 +29,7 @@
    },
    "cross": {
     "state": "PASS",
-    "detail": "53 link pins, 51 conductors"
+    "detail": "57 link pins, 66 conductors"
    }
   },
   "LB1": {
@@ -165,7 +165,7 @@
   "PM2": {
    "route": {
     "state": "PASS",
-    "detail": "7/7 nets"
+    "detail": "8/8 nets"
    },
    "indep": {
     "state": "PASS",
@@ -191,7 +191,7 @@
   "HB2": {
    "route": {
     "state": "PASS",
-    "detail": "8/8 nets"
+    "detail": "9/9 nets"
    },
    "indep": {
     "state": "PASS",
@@ -212,6 +212,32 @@
    "cross": {
     "state": "PASS",
     "detail": "10 trigger-chain checks"
+   }
+  },
+  "AU1": {
+   "route": {
+    "state": "PASS",
+    "detail": "35/35 nets"
+   },
+   "indep": {
+    "state": "FAIL",
+    "detail": "27 violations, 0 opens"
+   },
+   "kicad": {
+    "state": "FAIL",
+    "detail": "errors {'solder_mask_bridge': 2, 'clearance': 8}, unconnected 0"
+   },
+   "gerber": {
+    "state": "PASS",
+    "detail": "16 files, edge read-back OK"
+   },
+   "plane": {
+    "state": "-",
+    "detail": ""
+   },
+   "cross": {
+    "state": "PASS",
+    "detail": "20 audio-board checks"
    }
   },
   "AB1A": {
@@ -304,7 +330,7 @@
   },
   "wiring audit (links + harness)": {
    "state": "PASS",
-   "detail": "53 pins, 51 conductors"
+   "detail": "57 pins, 66 conductors"
   },
   "stress table (only the documented LED-rail row may fail)": {
    "state": "PASS",

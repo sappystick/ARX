@@ -10,8 +10,10 @@ R3,1k,R_0603_1608Metric,-9.0,4.0,0,top
 C1,220n 50V,C_0805_2012Metric,-9.0,-1.0,0,top
 DTVS,SMCJ30A,D_SMC,5.0,8.0,0,top
 CB1,100u 50V hybrid,CP_Elec_10x10,6.0,-4.0,0,top
-CM1,10u 50V,C_1210_3225Metric,-5.0,-18.0,0,top
+CM1,10u 50V,C_1210_3225Metric,-1.0,-18.0,0,top
 RBL,100k,R_1206_3216Metric,5.0,-13.5,0,top
+F2,0.5A slow 32V,Fuse_1206_3216Metric,-4.5,-9.0,0,top
+JAUP,"Power to AU1: VBUS_AU, GND",SolderPad_2x_P5.08mm,-8.0,-18.0,0,top
 JP,Power cord: VBUS VBUS GND GND,Wire_pads_1x4_P5.08mm,7.0,-25.0,0,top
 JS,"Shields: power-cord braid, septum Cu mesh",Wire_pads_1x2_P2.54mm,-8.0,-30.0,0,top
 RSH,1M,R_0603_1608Metric,-4.0,-24.0,0,top

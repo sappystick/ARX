@@ -1,11 +1,11 @@
 {
  "board": "HB2",
- "parts": 10,
+ "parts": 11,
  "errors": [],
- "nets_compared": 9,
+ "nets_compared": 10,
  "erc": {
-  "warning:footprint_link_issues": 10,
-  "warning:lib_symbol_issues": 10
+  "warning:footprint_link_issues": 11,
+  "warning:lib_symbol_issues": 11
  },
  "erc_errors": 0,
  "pdf": true,

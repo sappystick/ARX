@@ -1,13 +1,13 @@
 {
  "CB1D": {
   "board": "CB1D",
-  "parts": 67,
+  "parts": 70,
   "nets": 55,
-  "pins": 229,
+  "pins": 236,
   "paper": "A1",
   "check": {
    "nets": 55,
-   "nodes": 229,
+   "nodes": 236,
    "mismatched_nets": [],
    "stray_labels": 0,
    "ok": true
@@ -99,13 +99,13 @@
  },
  "HB2": {
   "board": "HB2",
-  "parts": 10,
+  "parts": 11,
   "nets": 11,
-  "pins": 29,
+  "pins": 31,
   "paper": "A1",
   "check": {
    "nets": 11,
-   "nodes": 29,
+   "nodes": 31,
    "mismatched_nets": [],
    "stray_labels": 0,
    "ok": true
@@ -113,13 +113,13 @@
  },
  "PM2": {
   "board": "PM2",
-  "parts": 17,
-  "nets": 9,
-  "pins": 43,
+  "parts": 19,
+  "nets": 10,
+  "pins": 47,
   "paper": "A1",
   "check": {
-   "nets": 9,
-   "nodes": 43,
+   "nets": 10,
+   "nodes": 47,
    "mismatched_nets": [],
    "stray_labels": 0,
    "ok": true

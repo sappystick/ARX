@@ -5,12 +5,12 @@
    "layers": {
     "B_Cu": {
      "outside_mm2": 0.0,
-     "min_edge_gap_mm": 2.122,
+     "min_edge_gap_mm": 2.226,
      "ok": true
     },
     "F_Cu": {
      "outside_mm2": 0.0,
-     "min_edge_gap_mm": 2.122,
+     "min_edge_gap_mm": 1.629,
      "ok": true
     },
     "In1_Cu": {
@@ -20,12 +20,12 @@
     },
     "In2_Cu": {
      "outside_mm2": 0.0,
-     "min_edge_gap_mm": 2.122,
+     "min_edge_gap_mm": 2.226,
      "ok": true
     },
     "In3_Cu": {
      "outside_mm2": 0.0,
-     "min_edge_gap_mm": 2.122,
+     "min_edge_gap_mm": 2.226,
      "ok": true
     },
     "In4_Cu": {

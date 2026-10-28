@@ -1,0 +1,139 @@
+{
+ "status": "MODELED (datasheet values, no bench data)",
+ "checks": [
+  {
+   "check": "buck output from the divider: 5 V +-3 % (VREF 1.0 V, SLVSE22B Eq. 7)",
+   "result": "PASS",
+   "value": 5.014,
+   "note": "RFT 88700 / RFB 22100"
+  },
+  {
+   "check": "buck input range covers the 7S pack (19.6-29.4 V) inside 4-36 V",
+   "result": "PASS",
+   "value": [
+    19.599999999999998,
+    29.400000000000002
+   ],
+   "note": ""
+  },
+  {
+   "check": "inductor peak current at 29.4 V in under Isat 0.95 A (SRN4018-220M) with 30 % margin",
+   "result": "PASS",
+   "value": 0.463,
+   "note": "I5 0.377 A, ripple 0.171 A pp"
+  },
+  {
+   "check": "buck load under its 600 mA rating",
+   "result": "PASS",
+   "value": 0.377,
+   "note": ""
+  },
+  {
+   "check": "LDO input above 3.3 V + max dropout 0.238 V (500 mA, SBVS320D)",
+   "result": "PASS",
+   "value": 1.55,
+   "note": "worst buck low at -3 %"
+  },
+  {
+   "check": "speaker amp RI >= 15 k (gain <= 20 V/V row, SLOS369G)",
+   "result": "PASS",
+   "value": 150000.0,
+   "note": ""
+  },
+  {
+   "check": "speaker amp BTL peak at DAC full scale inside the 5 V supply",
+   "result": "PASS",
+   "value": 3.3,
+   "note": "gain 2.00 V/V"
+  },
+  {
+   "check": "speaker amp supply 2.5-5.5 V",
+   "result": "PASS",
+   "value": "+5V_AU",
+   "note": ""
+  },
+  {
+   "check": "speaker amp thermal pad to GND",
+   "result": "PASS",
+   "value": "US.9",
+   "note": ""
+  },
+  {
+   "check": "headphone amp VDD in 2.3-5.5 V (3.3 V rail)",
+   "result": "PASS",
+   "value": "+3V3_AU",
+   "note": ""
+  },
+  {
+   "check": "headphone gain 0 dB: G0 high, G1 low (SLOS597B Table 1)",
+   "result": "PASS",
+   "value": "G0 3V3, G1 GND",
+   "note": ""
+  },
+  {
+   "check": "headphone single-ended inputs: INL+ / INR+ grounded, 1 uF input caps",
+   "result": "PASS",
+   "value": "SLOS597B Fig. 27",
+   "note": ""
+  },
+  {
+   "check": "headphone charge pump: flying 1 uF, HPVSS 1 uF, HPVDD 2.2 uF",
+   "result": "PASS",
+   "value": [
+    "1u",
+    "1u",
+    "2.2u"
+   ],
+   "note": ""
+  },
+  {
+   "check": "MCU VDD on 3.3 V with 10 uF (CVDD, SLASEX6C)",
+   "result": "PASS",
+   "value": "10u",
+   "note": ""
+  },
+  {
+   "check": "MCU VCORE 470 nF",
+   "result": "PASS",
+   "value": "470n",
+   "note": ""
+  },
+  {
+   "check": "MCU NRST pulled up (device does not start otherwise)",
+   "result": "PASS",
+   "value": "47k",
+   "note": ""
+  },
+  {
+   "check": "DAC output (PA15, pin 18 of DGS28) drives both amplifiers",
+   "result": "PASS",
+   "value": "DAC_AU",
+   "note": ""
+  },
+  {
+   "check": "link: UART0 TX (PA10, 15) through 1 k and RX (PA11, 16) on the same node, 100 R and clamps at the entry",
+   "result": "PASS",
+   "value": "half duplex",
+   "note": ""
+  },
+  {
+   "check": "AU1 worst input current under half the 0.5 A fuse (PM2-B F2)",
+   "result": "PASS",
+   "value": 0.113,
+   "note": "buck efficiency 85 % ASSUMED"
+  },
+  {
+   "check": "every AU1 wire pad has a harness wire (HARNESS_MASTER_v5)",
+   "result": "PASS",
+   "value": 14,
+   "note": ""
+  }
+ ],
+ "operating": {
+  "buck_V": 5.014,
+  "i5_A": 0.377,
+  "ipk_A": 0.463,
+  "iin_A": 0.113,
+  "spk_gain": 2.0
+ }
+}

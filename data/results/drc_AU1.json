@@ -1,0 +1,204 @@
+{
+ "board": "AU1",
+ "clearance_violations": 27,
+ "open_nets": 0,
+ "edge_samples": 0,
+ "notch_samples": 0,
+ "min_gap_by_layer": {
+  "F.Cu": -0.046,
+  "In2.Cu": 0.236,
+  "B.Cu": 0.236
+ },
+ "violations": [
+  [
+   "('BSL_INV', 'SWDIO_AU')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-1.7), np.float64(1.1))"
+  ],
+  [
+   "('SWCLK_AU', 'UM_P24_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-2.1), np.float64(0.1))"
+  ],
+  [
+   "('SWCLK_AU', 'SWDIO_AU')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-1.9), np.float64(0.6))"
+  ],
+  [
+   "('UM_P25_NC', 'UM_P26_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-2.5), np.float64(-0.9))"
+  ],
+  [
+   "('UM_P24_NC', 'UM_P25_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-2.3), np.float64(-0.4))"
+  ],
+  [
+   "('UM_P26_NC', 'UM_P27_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-1.4), np.float64(-1.4))"
+  ],
+  [
+   "('HP_DET', 'UM_P27_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-1.6), np.float64(-1.9))"
+  ],
+  [
+   "('+3V3_AU', 'NRST_AU')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-5.5), np.float64(0.4))"
+  ],
+  [
+   "('GND', 'SEL1')",
+   "0.02",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-5.5), np.float64(1.4))"
+  ],
+  [
+   "('+3V3_AU', 'GND')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-5.7), np.float64(0.9))"
+  ],
+  [
+   "('SEL2', 'SEL3')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-6.3), np.float64(2.4))"
+  ],
+  [
+   "('SEL1', 'SEL2')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-6.1), np.float64(1.9))"
+  ],
+  [
+   "('SEL3', 'UM_P12_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-6.5), np.float64(2.9))"
+  ],
+  [
+   "('NRST_AU', 'UM_P5_NC')",
+   "-0.046",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-7.0), np.float64(-0.0))"
+  ],
+  [
+   "('UM_P1_NC', 'UM_P2_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-5.8), np.float64(-2.1))"
+  ],
+  [
+   "('UM_P2_NC', 'VCORE_AU')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-6.0), np.float64(-1.6))"
+  ],
+  [
+   "('UM_P13_NC', 'UM_P14_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-6.9), np.float64(3.9))"
+  ],
+  [
+   "('UM_P12_NC', 'UM_P13_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-6.7), np.float64(3.4))"
+  ],
+  [
+   "('DAC_AU', 'PWM_AU')",
+   "0.013",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-1.1), np.float64(2.9))"
+  ],
+  [
+   "('LINK_N', 'LINK_TX')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-1.4), np.float64(4.1))"
+  ],
+  [
+   "('LINK_N', 'PWM_AU')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-1.8), np.float64(3.6))"
+  ],
+  [
+   "('DAC_AU', 'SPK_SD')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-2.2), np.float64(2.6))"
+  ],
+  [
+   "('HP_EN', 'SPK_SD')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-2.4), np.float64(2.1))"
+  ],
+  [
+   "('BSL_INV', 'HP_EN')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-2.4), np.float64(1.6))"
+  ],
+  [
+   "('UM_P4_NC', 'VCORE_AU')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-6.0), np.float64(-1.1))"
+  ],
+  [
+   "('UM_P4_NC', 'UM_P5_NC')",
+   "0.1",
+   "0.2",
+   "F.Cu",
+   "(np.float64(-6.2), np.float64(-0.6))"
+  ],
+  [
+   "('GND', 'SPK_N')",
+   "0.105",
+   "0.2",
+   "F.Cu",
+   "(np.float64(8.6), np.float64(-1.6))"
+  ]
+ ],
+ "opens": []
+}

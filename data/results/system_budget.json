@@ -222,11 +222,11 @@
   },
   {
    "part": "Power cord AWG20 pair (upper v1)",
-   "stress": "average current in boost (9.03 W battery side at the 19.6 V BMS cut-off, system_live.py)",
-   "value": 0.461,
+   "stress": "average current in boost (9.25 W battery side at the 19.6 V BMS cut-off, system_live.py)",
+   "value": 0.472,
    "rating": 5.0,
    "unit": "A",
-   "margin_pct": 90.8,
+   "margin_pct": 90.6,
    "required_margin_pct": 50,
    "status": "PASS",
    "note": "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon"
@@ -245,10 +245,10 @@
   {
    "part": "Battery pack 7S1P Molicel P30B",
    "stress": "average current in boost",
-   "value": 0.461,
+   "value": 0.472,
    "rating": 30.0,
    "unit": "A",
-   "margin_pct": 98.5,
+   "margin_pct": 98.4,
    "required_margin_pct": 50,
    "status": "PASS",
    "note": "30 A continuous, 80 C cut-off (Molicel INR-18650-P30B PDS v1.0, DATASHEET_LOG)"
@@ -376,11 +376,11 @@
   },
   {
    "part": "+5V rail (CB1D M5, 1.5 A)",
-   "stress": "LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature)",
-   "value": 0.699,
+   "stress": "LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature) + BMI270 gyro",
+   "value": 0.7,
    "rating": 1.5,
    "unit": "A",
-   "margin_pct": 53.4,
+   "margin_pct": 53.3,
    "required_margin_pct": 30,
    "status": "PASS",
    "note": "M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)"
@@ -428,24 +428,35 @@
    "required_margin_pct": 50,
    "status": "PASS",
    "note": ""
+  },
+  {
+   "part": "PM2-B F2 SF-1206S050-2 (AU1 feed)",
+   "stress": "AU1 worst input current at 19.6 V: speaker at its 1.4 W rating (SLOS369G) + quiescent, / 0.85 buck",
+   "value": 0.103,
+   "rating": 0.5,
+   "unit": "A",
+   "margin_pct": 79.4,
+   "required_margin_pct": 50,
+   "status": "PASS",
+   "note": "0.5 A rated slow-blow chip fuse (Bourns SF-1206S); class-D and buck efficiency 0.85 ASSUMED"
   }
  ],
  "fails": 1,
  "watch": 2,
  "power": {
   "scan 8 A / 800 Hz": {
-   "W": 5.65,
-   "hours": 13.4,
+   "W": 5.87,
+   "hours": 12.9,
    "at_V": 25.2
   },
   "mid 14 A / 600 Hz": {
-   "W": 7.57,
-   "hours": 10.0,
+   "W": 7.79,
+   "hours": 9.7,
    "at_V": 25.2
   },
   "boost 20 A / 400 Hz": {
-   "W": 8.89,
-   "hours": 8.5,
+   "W": 9.12,
+   "hours": 8.3,
    "at_V": 25.2
   },
   "pack_Wh": 75.6,

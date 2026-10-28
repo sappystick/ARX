@@ -8,3 +8,4 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,RH1,R0603,1k,,Resistor_SMD:R_0603_1608Metric
 1,RD4,R0603,33k,,Resistor_SMD:R_0603_1608Metric
 1,RD2,R0603,3k3,,Resistor_SMD:R_0603_1608Metric
+1,JAU,WIRE2,"Lead to AU1: AUD_LINK, GND","AWG28 pair, grip rear channel",Connector:SolderPad_2x_P5.08mm
