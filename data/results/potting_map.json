@@ -342,6 +342,13 @@
    "data": "every net continuity (netlist), plane HV keep-outs untouched, ring-down / leak bench items",
    "how": "POTTING_SEQUENCE rule 4",
    "pass_": "identical to before the pour"
+  },
+  {
+   "id": "PT9",
+   "what": "nickel shield paint (MG 841AR) near the coil",
+   "data": "RX decay with a painted, slit PETG coupon (25 and 50 um) at the head face vs a bare coupon; then at the neck-module position",
+   "how": "coupon taped at the vault and at the NPM wall, ring-down / leak bench items",
+   "pass_": "no change in the RX window beyond the bare-coupon noise; otherwise no paint at that position"
   }
  ],
  "coat_only": [

@@ -129,6 +129,8 @@ def main(outp):
      dict(id="PT6", what="high voltage in the NPM fill", data="hipot DRAIN1 / CLAMP1 to everything at 1 kV (harness test T05/T06), partial discharge if available", how="after cure, before closing", pass_="no breakdown; leakage logged"),
      dict(id="PT7", what="voids and adhesion", data="X-ray or a cut sacrificial sample per compound; adhesion to PETG / FR4 / silicone wire", how="sample pours with the production degassing", pass_="no void at an HV node or a lead exit; no delamination after 10 thermal cycles"),
      dict(id="PT8", what="continuity and function after cure", data="every net continuity (netlist), plane HV keep-outs untouched, ring-down / leak bench items", how="POTTING_SEQUENCE rule 4", pass_="identical to before the pour"),
+     dict(id="PT9", what="nickel shield paint (MG 841AR) near the coil", data="RX decay with a painted, slit PETG coupon (25 and 50 um) at the head face vs a bare coupon; then at the neck-module position",
+          how="coupon taped at the vault and at the NPM wall, ring-down / leak bench items", pass_="no change in the RX window beyond the bare-coupon noise; otherwise no paint at that position"),
     ]
     out = dict(status="MODELED: volumes exact where meshes exist (lower bounds where parts are boxes); compound properties ASSUMED class ranges (no product chosen)",
                compounds=C, zones=Z, windings=wind, bench_tests=tests, coat_only=coat, keep_out=keepout, l2_detail=l2, l1_detail=l1, upper_detail=up,

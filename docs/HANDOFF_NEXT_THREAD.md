@@ -7,7 +7,7 @@ Everything in this repo is **MODELED or tool-checked; nothing is built or measur
 cd /home/user/ARX && scripts/bootstrap.sh | tail -1     # "environment OK" (also the SessionStart hook)
 make state                                              # git, sign-off counts, FAILs, open blockers (data/handoff/blockers.json)
 ```
-Expect: branch `claude/hopeful-bell-wms3xo`, clean tree, sign-off 76 PASS / 0 FAIL / 4 UNVERIFIED, strict regress 115 PASS / 0 FAIL (incl. the process-guard and potting-map rows). If it differs, report the difference before doing anything. `make state-deep` (30 s) adds stale steps and the publish check; strict `python3 tests/regress.py` is run once at the END of a change, not at the start.
+Expect: branch `claude/hopeful-bell-wms3xo`, clean tree, sign-off 76 PASS / 0 FAIL / 4 UNVERIFIED, strict regress 117 PASS / 0 FAIL (incl. the process-guard, potting-map, single-matrix and owner-product rows). If it differs, report the difference before doing anything. `make state-deep` (30 s) adds stale steps and the publish check; strict `python3 tests/regress.py` is run once at the END of a change, not at the start.
 Wrong branch / dirty tree / push rejected: archive section 10.
 
 ## 2. Standing rules (do not ask again)
@@ -31,7 +31,10 @@ Wrong branch / dirty tree / push rejected: archive section 10.
   about 650 s), local repair of open nets and failed plane stubs. `FULL=1` forces a full route. The pipeline controls step now writes a fresh board table first.
 - Potting map (docs/design/POTTING_MAP.md, data/results/potting_map.json / .png, step potting-map): 7 fill zones (head 116.0, neck 114.9, upper 29.9 cm3, exact
   mesh volumes, lower bounds where parts are boxes), compound classes ASSUMED (ASSUMPTIONS 43); **no pour on the TX windings** (any fill pushes the quiet time past
-  the first gate in the model: air margin 0.35 us, lightest syntactic -0.04 us); bench tests PT1-PT8 list the data that replaces the assumptions.
+  the first gate in the model: air margin 0.35 us, lightest syntactic -0.04 us); bench tests PT1-PT9 list the data that replaces the assumptions.
+- Owner-supplied products (2026-10-28, DATASHEET_LOG, POTTING_MAP.md last section, product_fit in potting_matrix_eval.json): 3M iM30K = filler for the NPM main / U3 / U1 / L1 fills;
+  MG 832TC epoxy (0.7 W/mK, er 3.7, Tg 50 C) = NPM hot-zone candidate and, with iM30K after a trial mix, the NPM main / U3 / U1 fill; never on the windings, L2 or L1;
+  MG 841AR nickel paint = ferromagnetic (mu_r >= 100): never in the head; option on the neck-module wall, slit, after PT9.
 - Owner decisions open: package r6 (HELD until the owner says the integration work is done), the potting compound products (PT1), the C path search (not built), TX steering / split (DEFERRED).
 
 | Area | State |
@@ -94,4 +97,5 @@ Resume Arx / PHI-FOLD 233. Run `make state` and read docs/HANDOFF_NEXT_THREAD.md
 | 2026-10-28 | Viewer r2 (placement edit + live section/stack checks, system simulation from system_live.py with a JS twin, wiring runs), +5VA budget row, model-derived power (5.26 / 7.18 / 8.51 W), solid_union study (rebuild/batch rejected) | (this commit) | 99 PASS / 0 fail | 71/0/0/4 | CORRECTIONS 3 rows, OPEN_ITEMS 39 |
 | 2026-10-28 | Plan P1-P3/P5 (fab margin audit, potting volumes, hood tolerance, firmware timeline + pf233_timing.h); clocked LEDs: LB1-v6 = 66 x SK9822-EC20 fed in the idle slot, dark during sweeps (0 dropped pulses, modeled), chain-rotated LEDs route 136/136; CB1D-C1 (JLB.3 LED_CLK), harness v4; KiCad pad-angle exporter bug found and fixed (PB1R-v4 supersedes v3: CB7-CB9 pads), pad_orient_check | (this commit) | 105 PASS / 0 fail | 71/0/0/4 | CORRECTIONS 6 rows, OPEN_ITEMS 40 |
 | 2026-10-28 | Output modes / audio / gyro close-out: AU1 (8 layers, 38 / 38, gyro moved from CB1D, yaw in the link reply), CB1D-C2, PB1R-v5 (AWG12 solder holes), PM2-B, HB2-B; hardwired joints; interface check; exact DRC + router fine-pitch fixes + local repair; sign-off 76 / 0, regress 114 / 0; process guards in regress, PROCESS.md section |
+| 2026-10-28 | Owner datasheets (iM30K, 832TC, 841AR x2) read and saved; product fit per zone in potting_matrix_eval (832TC off windings, 841AR out of the head: ferromagnetic); PT9; regress 117 / 0 |
 | 2026-10-28 | Incremental re-routing + parallel rounds + plane-stub repair (defaults); potting map (7 zones, no winding pour, PT1-PT8); controls step writes a fresh table; sign-off 76 / 0, regress 115 / 0, controls 12 / 12 |

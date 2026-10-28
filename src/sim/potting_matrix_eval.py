@@ -9,7 +9,8 @@ additives. Each claim is tested with the repo's own models; MODELED, nothing mix
   phase-change additive: latent heat against the neck-module dissipation of the transmit model (boost)
 Verified constituent data: 3M Glass Bubbles iM30K (3M product information table, K / S / iM series, copy at https://Aircraftspruce.Com/catalog/pdf/3MGLASS BUBBLES.pdf):
 true density 0.60 g/cc (0.57-0.63), crush 28,000 psi at 90 % survival (the iM30K data sheet Rev C lists 27,000 psi), calculated thermal conductivity 0.200 W/mK,
-dielectric constant 1.2-2.0 (theoretical). Every other constituent value is an ASSUMED class value (ASSUMPTIONS 44).
+dielectric constant 1.2-2.0 (theoretical). Owner-supplied data sheets (2026-10-28): iM30K, MG 832TC (Ver. 4.3), MG 841AR (Rev. 7.0 and Ver. 2.05): products() and
+product_fit use their printed values. Every other constituent value is an ASSUMED class value (ASSUMPTIONS 44).
 usage (repo root, after make setup and the system-live step): python3 src/sim/potting_matrix_eval.py [OUT.json]"""
 import sys, os, json, math
 import numpy as np
@@ -61,6 +62,30 @@ def paint(r=0.044, gate_us=5.91):
         out.append(dict(coating=lab or out[-1]["coating"], Rs_ohm_sq=Rs, tau_us=round(tau, 4), left_at_first_gate=float(f"{math.exp(-gate_us / tau):.3g}")))
     return out
 
+# owner-supplied manufacturer data sheets (2026-10-28, data/seed/datasheets, DATASHEET_LOG): the values the fit evaluation uses, as printed
+TC832 = dict(name="MG Chemicals 832TC thermally conductive epoxy (TDS Ver. 4.3, 04 Feb 2026)", rho=1.7, visc_cP=27000, mix="1:1 by volume", work_h=2.0, shrink_pct=1.4,
+             k=0.7, Tg_C=50.0, cte_ppm=(142, 114), shore_D=81, breakdown_V_at_mm=(48300, 3.175), er_1MHz=3.7, df_1MHz=0.1, service_C=(-30, 175),
+             cure="96 h at 25 C, or 2 h 65 C / 1 h 80 C / 45 min 100 C", deair="vacuum 25 inHg about 2 min")
+NI841 = dict(name="MG Chemicals 841AR Super Shield nickel conductive coating (TDS Rev. 7.0, 17 Sept 2026; older TDS Ver. 2.05, 31 Oct 2017)",
+             Rs=[(25, 1.60, "Rev 7.0"), (50, 0.80, "Rev 7.0"), (41, 0.52, "Ver 2.05, 1 coat 1.6 mil"), (102, 0.38, "Ver 2.05, 2 coats 4.0 mil"), (147, 0.29, "Ver 2.05, 3 coats 5.8 mil")],
+             resistivity_ohm_cm=4.0e-3, magnetic="ferromagnetic (both); relative permeability >= 100 (Ver 2.05)", service_C=(-40, 120), solvent="acetone, dimethyl carbonate, heptan-2-one (etches ABS / PC; Ver 2.05)",
+             adhesion_5B="ABS, PC, polyamide, PVC, FR4 (Rev 7.0); PETG not listed", cure="24 h at 25 C or 30 min at 65 C")
+IM30K = dict(name="3M Glass Bubbles iM30K data sheet (owner copy)", crush_psi=27000, rho=0.60, packing=0.60, d_um=18, soften_C=600, flotation=0.90, volatiles_wt=0.005)
+
+def products(r=0.044, gate_us=5.91):
+    """fit of the three owner-supplied products, with their printed values: 832TC neat and with 45 vol% iM30K on the coil quiet time; 841AR eddy decay at its
+    printed sheet resistances; 832TC dielectric strength against the 460 V flyback nodes and its Tg against the modeled head temperature"""
+    er_b = (round(bruggeman([(0.55, TC832["er_1MHz"]), (0.45, K["im30k"]["er"][0])]), 2), round(bruggeman([(0.55, TC832["er_1MHz"]), (0.45, K["im30k"]["er"][1])]), 2))
+    k_b = round(bruggeman([(0.55, TC832["k"]), (0.45, K["im30k"]["k"][0])]), 3)
+    rho_b = round(0.55 * TC832["rho"] + 0.45 * IM30K["rho"], 3)
+    coilres = coil([("832TC neat", TC832["er_1MHz"]), ("832TC + 45 % iM30K (low)", er_b[0]), ("832TC + 45 % iM30K (high)", er_b[1])])[0]
+    mu0 = 4e-7 * math.pi
+    paint841 = [dict(thick_um=t, Rs_ohm_sq=Rs, src=s, tau_us=round(mu0 * r / (2 * Rs) * 1e6, 4), left_at_first_gate=float(f"{math.exp(-gate_us / (mu0 * r / (2 * Rs) * 1e6)):.3g}"))
+                for t, Rs, s in NI841["Rs"]]
+    kv_mm = TC832["breakdown_V_at_mm"][0] / TC832["breakdown_V_at_mm"][1] / 1000
+    return dict(TC832=TC832, NI841=NI841, IM30K=IM30K, coil=coilres, tc832_bubbles=dict(er=er_b, k_W_mK=k_b, rho_g_cc=rho_b),
+                paint841=paint841, tc832_kV_mm=round(kv_mm, 1), hv_node_V=460.0, head_peak_C=50.6)
+
 def main(outp):
     prop = mix(0.45, 0.125, 0.015, "bn"); prop_al = mix(0.45, 0.125, 0.015, "alumina")
     need_bn = k_needed_for(3.0, "bn"); need_al = k_needed_for(3.0, "alumina")
@@ -94,15 +119,38 @@ def main(outp):
      dict(zone="U1 HB2 pocket", epoxy_matrix="YES", use="the proposed mix", why="the Hall switch reads the magnet through the wall: non-magnetic fill, no change"),
      dict(zone="CB1D / LB1 / SB1R / cap / AU1", epoxy_matrix="NO", use="conformal coat", why="antenna, LED light, RX-coil capacitance, serviceable pads (potting map)"),
      dict(zone="phase-change additive", epoxy_matrix="NPM hot zone only, after PT5", use=f"{pcm['grams_for_10_min'][0]}-{pcm['grams_for_10_min'][1]} g microencapsulated PCM buffers 10 min of boost", why="the head runs cool (peak 50.6 C at 40 C ambient): no head zone needs it; no NPM thermal model exists, so the bench decides"),
-     dict(zone="conductive shield paint", epoxy_matrix="ONLY SLIT", use="comb / slit pattern, one ground point, on the CB1D cavity only if a bench test shows pickup", why="a closed painted wall around the axis is a closed eddy loop (rule 5); the copper-cloth septum already screens the analog cell"),
+     dict(zone="conductive shield paint", epoxy_matrix="ONLY SLIT", use="comb / slit pattern, one ground point, on the CB1D cavity only if a bench test shows pickup; inside the head only a non-magnetic paint (no nickel: MG 841AR is ferromagnetic, see product_fit)", why="a closed painted wall around the axis is a closed eddy loop (rule 5); the copper-cloth septum already screens the analog cell"),
+    ]
+    pr = products(); pc = {(c["fill"], c["phi"]): c["margin_us"] for c in pr["coil"]}
+    m_neat = [pc[("832TC neat", f)] for f in (0.3, 0.7)]; m_bub = [v for (lab, f), v in pc.items() if lab != "832TC neat"]
+    t841 = [x["tau_us"] for x in pr["paint841"]]; TC = pr["TC832"]; B = pr["tc832_bubbles"]
+    fit = [
+     dict(product="3M iM30K glass bubbles", zone="NPM main, U3, U1, L1 gallery (option)", fit="YES (filler)",
+          why=f"data sheet: {IM30K['rho']} g/cc, crush {IM30K['crush_psi']} psi at 90 % survival, 18 um: survives hand mixing and vacuum de-airing; lowers density and er of any resin it goes into"),
+     dict(product="MG 832TC epoxy", zone="TX coil windings", fit="NO",
+          why=f"er {TC['er_1MHz']} (DF {TC['df_1MHz']}) at 1 MHz: quiet-time margin {max(m_neat)} to {min(m_neat)} us neat, {max(m_bub)} to {min(m_bub)} us with 45 % iM30K; all below the first gate"),
+     dict(product="MG 832TC epoxy", zone="NPM hot zone", fit="YES (candidate, PT5 decides)",
+          why=f"the only fill with a printed conductivity: {TC['k']} W/mK, about twice the proposed bubble mix; dielectric strength {pr['tc832_kV_mm']} kV/mm against the {pr['hv_node_V']:.0f} V flyback nodes (1 mm of fill holds about {pr['tc832_kV_mm'] * 1000 / pr['hv_node_V']:.0f}x); "
+              f"Tg only {TC['Tg_C']:.0f} C: above it the epoxy softens and its CTE stays {TC['cte_ppm'][1]} ppm/C (service to {TC['service_C'][1]} C), so PT5 must log the hot-zone temperature; {TC['visc_cP']} cP: pour and vacuum de-air ({TC['deair']}), no needle injection"),
+     dict(product="MG 832TC epoxy + 45 vol% iM30K", zone="NPM main, U3 PM2 bay, U1 HB2 pocket", fit="YES (after a trial mix, PT1 / PT7)",
+          why=f"modeled er {B['er'][0]}-{B['er'][1]}, k {B['k_W_mK']} W/mK, {B['rho_g_cc']} g/cc (neat 832TC {TC['rho']} g/cc: about {round(vol.get('NPM main zone', 0) * (TC['rho'] - B['rho_g_cc']))} g more in the NPM main zone); "
+              "832TC is already filled, so 45 % bubbles on top may not pour: the trial mix decides the bubble fraction (start at 20-30 %)"),
+     dict(product="MG 832TC epoxy", zone="L2 analog cell", fit="NO", why=f"Shore {TC['shore_D']} D, {TC['shrink_pct']} % shrinkage, CTE {TC['cte_ppm'][0]} ppm/C: loads the precision parts and joints; the soft gel stays"),
+     dict(product="MG 832TC epoxy", zone="L1 gallery", fit="NO (use the bubble mix)", why=f"er {TC['er_1MHz']} next to the RX leads adds lead capacitance; the bubble mix (er {B['er'][0]}-{B['er'][1]}) is the better lock there"),
+     dict(product="MG 841AR nickel paint", zone="head: vault, CB1D cavity, anywhere inside the coil field", fit="NO",
+          why=f"eddy decay is not the problem (tau {min(t841)}-{max(t841)} us at 0.29-1.6 ohm/sq, gone long before the {g0} us gate); the problem is the nickel: "
+              "ferromagnetic, relative permeability >= 100 (Ver 2.05), a magnetic surface the TX field magnetises on every pulse; its remanence and magnetic viscosity are not on either sheet (UNVERIFIED), so it may leave a slow tail in the RX window; the eddy rule (5) forbids a closed painted wall anyway"),
+     dict(product="MG 841AR nickel paint", zone="neck module (NPM) inner wall, outside the coil field", fit="YES (option, slit, after PT9)",
+          why="screens the 460 V switching node; comb / slit pattern with one ground point (rule 5); PETG adhesion not on the sheet and the acetone solvent etches some plastics: coupon test PT7; PT9 checks the RX tail with a painted coupon at the coil"),
     ]
     out = dict(status="MODELED: effective-medium mixing, transmit model, thin-cylinder eddy decay; constituent values ASSUMED except the 3M iM30K data", constituents=K,
                proposed_bn=prop, proposed_alumina=prop_al, vol_pct_for_3_W_mK=dict(bn=round(need_bn * 100), alumina=round(need_al * 100)), coil=coilres, first_gate_us=g0,
                paint=paint(), heat=heat, phase_change=pcm, claims=claims, zones=zones,
-               single_matrix_coverage_cm3=round(sum(vol.get(k, 0) for k in ("L1 gallery", "NPM main zone", "U3 PM2 bay", "U1 HB2 pocket")), 1), total_fill_cm3=round(sum(vol.values()), 1))
+               single_matrix_coverage_cm3=round(sum(vol.get(k, 0) for k in ("L1 gallery", "NPM main zone", "U3 PM2 bay", "U1 HB2 pocket")), 1), total_fill_cm3=round(sum(vol.values()), 1), products=pr, product_fit=fit)
     json.dump(out, open(outp, "w"), indent=1)
     for z in zones: print(f"{z['epoxy_matrix']:26s} {z['zone']:32s} {z['use'][:60]}")
     for c in claims: print(f"{c['verdict']:22s} {c['claim'][:70]:70s} | {c['evidence'][:150]}")
     print("proposed BN mix:", prop); print("coil:", [(r["fill"], r["phi"], r["margin_us"]) for r in coilres]); print("paint:", out["paint"]); print("phase change:", pcm)
+    for f in fit: print(f"{f['fit']:34s} {f['product']:32s} {f['zone'][:40]:40s} | {f['why'][:110]}")
 
 if __name__ == "__main__": main(sys.argv[1] if len(sys.argv) > 1 else "data/results/potting_matrix_eval.json")

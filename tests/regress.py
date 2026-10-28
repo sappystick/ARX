@@ -412,6 +412,16 @@ try:
         and _me["proposed_bn"]["high"]["k_W_mK"]<3.0 and len(_me["claims"])>=8,
         f"mix {_me['proposed_bn']['low']['k_W_mK']}-{_me['proposed_bn']['high']['k_W_mK']} W/mK, er {_me['proposed_bn']['low']['er']}-{_me['proposed_bn']['high']['er']}; coverage {_me['single_matrix_coverage_cm3']} of {_me['total_fill_cm3']} cm3")
 except FileNotFoundError: chk("single-matrix evaluation evidence (data/results/potting_matrix_eval.json)",False,"missing")
+# owner-supplied products (2026-10-28): 832TC kept off the windings with its printed er, 841AR nickel paint kept out of the head (ferromagnetic), each zone fit listed
+try:
+    _me=json.load(open("data/results/potting_matrix_eval.json")); _pf=_me["product_fit"]; _pr=_me["products"]
+    _f={(x["product"],x["zone"].split(" (")[0].split(",")[0]):x["fit"] for x in _pf}
+    chk("owner products: 832TC (er 3.7) off the TX windings, 841AR nickel paint not in the head, 832TC dielectric strength >> 460 V per mm, datasheets saved",
+        all(c["margin_us"]<0 for c in _pr["coil"]) and _f[("MG 832TC epoxy","TX coil windings")]=="NO" and _f[("MG 841AR nickel paint","head: vault")]=="NO"
+        and _pr["TC832"]["er_1MHz"]==3.7 and _pr["tc832_kV_mm"]*1000>10*_pr["hv_node_V"] and len(_pf)>=8
+        and all(os.path.exists("data/seed/datasheets/"+n) for n in ("MG_832TC_TDS_Ver4.3_2026-02-04.pdf","MG_841AR_TDS_Rev7.0_2026-09-17.pdf","3M_GlassBubbles_iM30K_datasheet.pdf")),
+        f"832TC margins {min(c['margin_us'] for c in _pr['coil'])}..{max(c['margin_us'] for c in _pr['coil'])} us; 841AR tau <= {max(x['tau_us'] for x in _pr['paint841'])} us; {len(_pf)} fit rows")
+except (FileNotFoundError, KeyError) as e: chk("owner-product fit evidence (potting_matrix_eval.json product_fit)",False,f"missing {e}")
 # P2 exact potting volumes (src/mech/potting_volumes.py): positive, inside their envelopes, lower <= upper bound, every zone with a fill port and a vent
 try:
     _pv=json.load(open("data/results/potting_volumes.json")); _n=_pv["npm"]; _a=_pv["l4_absorber"]
