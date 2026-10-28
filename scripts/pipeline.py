@@ -82,7 +82,7 @@ STEPS = [
     ("route-au1", route("AU1"), ""),
     ("drc-au1", W + "python3 drc.py AU1 kit_v20/route_AU1.json 0", ""),
     ("kicad-au1", "mkdir -p work/kit_v22/KICAD && " + W + "python3 rect_inject.py AU1 kit_v20/route_AU1.json kit_v6/AU1/PF233-AU1.kicad_pcb kit_v22/KICAD/PF233-AU1_routed.kicad_pcb", ""),
-    ("gerber-au1", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-AU1_routed.kicad_pcb AU1 work/kit_v22/GERBER_AU1 PF233-AU1 F.Cu,In1.Cu,In2.Cu,In3.Cu,In4.Cu,B.Cu,F.Mask,B.Mask,F.Paste,B.Paste,F.Silkscreen,B.Silkscreen,Edge.Cuts && " + W + "python3 gerber_edge_check.py kit_v22/gerber_edge_AU1.json kit_v22/GERBER_AU1 PF233-AU1", "kicad"),
+    ("gerber-au1", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-AU1_routed.kicad_pcb AU1 work/kit_v22/GERBER_AU1 PF233-AU1 F.Cu,In1.Cu,In2.Cu,In3.Cu,In4.Cu,In5.Cu,In6.Cu,B.Cu,F.Mask,B.Mask,F.Paste,B.Paste,F.Silkscreen,B.Silkscreen,Edge.Cuts && " + W + "python3 gerber_edge_check.py kit_v22/gerber_edge_AU1.json kit_v22/GERBER_AU1 PF233-AU1", "kicad"),
     ("sbq-fast", W + "python3 sbq_gen2.py && python3 sbq_export.py && python3 sbq_sim.py && python3 sbq_damp2.py", ""),
     ("pcb-hta", W + "python3 hta_gerber.py > /dev/null && python3 hta_kicad.py && python3 gerber_edge_check.py kit_v22/gerber_edge_HTA.json kit_v18/HTA PF233-HTA", ""),
     ("kicad-drc", "; ".join([f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-{b}_routed.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("CB1D", "LB1", "PB1R", "PM2", "HB2", "AU1")]

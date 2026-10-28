@@ -22,13 +22,13 @@ elif board=="PM2":
     wid={"BAT_P":1.5,"BAT_F":1.5,"VBUS":1.0,"GND":1.0}
     R=Router("kit_v6/PM2/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu","VBUS":"In2.Cu"},wid,clr=0.2)
 elif board=="AU1":
-    # 36 x 44 audio board (battery side), 6 layers: F / In2 / B signal, hatched planes GND (In1), +5V_AU (In3), +3V3_AU (In4); 0.5 mm on the pack input, the buck
+    # 36 x 60 audio board (battery side), 8 layers since 2026-10-28: F / In2 / In5 / In6 / B signal, hatched planes GND (In1), +5V_AU (In3), +3V3_AU (In4); 0.5 mm on the pack input, the buck
     # switch node and the speaker outputs; plane stubs 0.2 mm: the 0.5 mm-pitch MCU and the 0.65 mm-pitch amplifier pads only escape at 0.2 mm on the 0.15 mm grid
     # (a 0.5 mm +5V_AU track could not reach the amplifier VDD pin: CB1D-style plane instead, 2026-10-28)
     wid={"VBUS_AU":0.5,"SW_AU":0.6,"SPK_P":0.5,"SPK_N":0.5,"GND":0.2,"+5V_AU":0.2,"+3V3_AU":0.2}
     # reorder-and-retry (deterministic): route from scratch with the nets that failed moved to the front and the pads whose plane stub failed stubbed first,
     # up to 6 rounds, keep the best (opt-in for AU1)
-    mk=lambda: Router("kit_v6/AU1/pads.json",["F.Cu","In2.Cu","B.Cu"],{"GND":"In1.Cu","+5V_AU":"In3.Cu","+3V3_AU":"In4.Cu"},wid,clr=0.2)      # 6 layers (pw_export)
+    mk=lambda: Router("kit_v6/AU1/pads.json",["F.Cu","In2.Cu","In5.Cu","In6.Cu","B.Cu"],{"GND":"In1.Cu","+5V_AU":"In3.Cu","+3V3_AU":"In4.Cu"},wid,clr=0.2)      # 8 layers (pw_export, 2026-10-28)
     front=["BSL_INV","US_INN"]; stubs=set(); best=None                       # learned (2026-10-28 exact fine-zone keep-out): these two lost their only escape to later nets
     import random; t0=time.time()
     def _save(b_): json.dump(dict(stats=b_[2],tracks=b_[1].tracks,vias=b_[1].vias,layers=b_[1].layers,planes=b_[1].planes,R=b_[1].R),open(f"kit_v20/route_{board}.json","w"))

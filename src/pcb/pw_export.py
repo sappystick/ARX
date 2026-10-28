@@ -157,13 +157,14 @@ if errs or missing: sys.exit(1)
 NETID = {n: i for i, n in enumerate(sorted(D.NETS), 1)}
 def K(x, y): return f"{CX + x:.4f} {CY + y:.4f}"
 W, H = SIZE
-if PW == "U":     # AU1: 6 layers (F, In1 GND, In2 signal, In3 +5V_AU, In4 +3V3_AU, B; route_run.py): the fine-pitch MCU / amplifiers escape on F / In2 / B with plane stubs
+if PW == "U":     # AU1: 8 layers since 2026-10-28 (F, In1 GND, In2 signal, In3 +5V_AU, In4 +3V3_AU, In5 signal, In6 signal, B; route_run.py): five signal layers for the
+    # fan-out of the 0.5 mm-pitch MCU (at 6 layers / 3 signal layers 5 of 38 nets stayed unrouted with the 0.6 mm via of the fab rules); 1.6 mm, 7 dielectrics
     L = ["(kicad_pcb (version 20221018) (generator \"pf233_power_export\")", "  (general (thickness 1.6) (legacy_teardrops no))", '  (paper "A4")', "  (layers",
-         '    (0 "F.Cu" signal) (1 "In1.Cu" signal) (2 "In2.Cu" signal) (3 "In3.Cu" signal) (4 "In4.Cu" signal) (31 "B.Cu" signal) (34 "B.Paste" user) (35 "F.Paste" user) (36 "B.SilkS" user "B.Silkscreen") (37 "F.SilkS" user "F.Silkscreen")',
+         '    (0 "F.Cu" signal) (1 "In1.Cu" signal) (2 "In2.Cu" signal) (3 "In3.Cu" signal) (4 "In4.Cu" signal) (5 "In5.Cu" signal) (6 "In6.Cu" signal) (31 "B.Cu" signal) (34 "B.Paste" user) (35 "F.Paste" user) (36 "B.SilkS" user "B.Silkscreen") (37 "F.SilkS" user "F.Silkscreen")',
          '    (38 "B.Mask" user) (39 "F.Mask" user) (40 "Dwgs.User" user "User.Drawings") (41 "Cmts.User" user "User.Comments") (44 "Edge.Cuts" user) (47 "F.CrtYd" user "F.Courtyard") (49 "F.Fab" user))',
-         '  (setup (pad_to_mask_clearance 0.05) (stackup (layer "F.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 1" (type "prepreg") (thickness 0.2)) (layer "In1.Cu" (type "copper") (thickness 0.035)) '
-         '(layer "dielectric 2" (type "core") (thickness 0.4)) (layer "In2.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 3" (type "prepreg") (thickness 0.2)) (layer "In3.Cu" (type "copper") (thickness 0.035)) '
-         '(layer "dielectric 4" (type "core") (thickness 0.4)) (layer "In4.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 5" (type "prepreg") (thickness 0.2)) (layer "B.Cu" (type "copper") (thickness 0.035)) (copper_finish "HASL lead-free")))', '  (net 0 "")']
+         '  (setup (pad_to_mask_clearance 0.05) (stackup ' + " ".join(
+             f'(layer "{c}" (type "copper") (thickness 0.035))' + (f' (layer "dielectric {k + 1}" (type "{"prepreg" if k % 2 == 0 else "core"}") (thickness {0.15 if k % 2 == 0 else 0.25}))' if k < 7 else "")
+             for k, c in enumerate(["F.Cu", "In1.Cu", "In2.Cu", "In3.Cu", "In4.Cu", "In5.Cu", "In6.Cu", "B.Cu"])) + ' (copper_finish "HASL lead-free")))', '  (net 0 "")']
 else:
     L = ["(kicad_pcb (version 20221018) (generator \"pf233_power_export\")", f"  (general (thickness 1.6) (legacy_teardrops no))", '  (paper "A4")', "  (layers",
          '    (0 "F.Cu" signal) (1 "In1.Cu" signal) (2 "In2.Cu" signal) (31 "B.Cu" signal) (34 "B.Paste" user) (35 "F.Paste" user) (36 "B.SilkS" user "B.Silkscreen") (37 "F.SilkS" user "F.Silkscreen")',
