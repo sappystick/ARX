@@ -301,7 +301,7 @@
    "check": "LB1 and CB1D independent DRC: 0 violations, 0 opens",
    "value": "0/0",
    "limit": "0/0",
-   "result": "FAIL",
+   "result": "PASS",
    "note": ""
   },
   {
@@ -442,7 +442,7 @@
  ],
  "interferences": [],
  "voxel_mm": 0.5,
- "fails": 1,
+ "fails": 0,
  "warns": 1,
  "z_ranges": {
   "FORMER_L1": [

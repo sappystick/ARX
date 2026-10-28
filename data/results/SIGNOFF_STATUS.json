@@ -1,23 +1,23 @@
 {
  "counts": {
-  "PASS": 69,
-  "FAIL": 5,
+  "PASS": 73,
+  "FAIL": 1,
   "SKIP": 0,
   "UNVERIFIED": 4
  },
  "boards": {
   "CB1D": {
    "route": {
-    "state": "FAIL",
-    "detail": "45/46 nets"
+    "state": "PASS",
+    "detail": "46/46 nets"
    },
    "indep": {
-    "state": "FAIL",
-    "detail": "0 violations, 1 opens"
+    "state": "PASS",
+    "detail": "0 violations, 0 opens"
    },
    "kicad": {
-    "state": "FAIL",
-    "detail": "errors {}, unconnected 1, HV control live"
+    "state": "PASS",
+    "detail": "errors {}, unconnected 0, HV control live"
    },
    "gerber": {
     "state": "PASS",
@@ -345,7 +345,7 @@
    "detail": "13 checks"
   },
   "full head cross-check (26 solids, 3D interference)": {
-   "state": "FAIL",
+   "state": "PASS",
    "detail": "42 checks, 1 warnings"
   },
   "0.2 mm fine check": {
