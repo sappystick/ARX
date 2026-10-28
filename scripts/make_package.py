@@ -12,7 +12,7 @@ def run(*a, **k): return subprocess.run(a, capture_output=True, text=True, **k)
 # ---------------------------------------------------------------- KiCad boards (routed files + design rules) and schematics
 BOARDS = [("CB1D", "PF233-CB1D_routed", "CB1D-C2 controller, D78, 6 layers (LED clock on JLB.3, BMI270 yaw gyro)", "in the verified flow"), ("LB1", "PF233-LB1_routed", "LB1-v6 display, D78, 4 layers, 66 x SK9822-EC20 clocked", "in the verified flow"),
           ("PB1R", "PF233-PB1R_routed", "PB1R-v4 TX stage, 70 x 70, 4 layers (CB7-CB9 pad angle fixed)", "in the verified flow"), ("PM2", "PF233-PM2_routed", "PM2 battery dock, 28 x 70", "in the verified flow"),
-          ("HB2", "PF233-HB2_routed", "HB2 grip board, 24 x 38", "in the verified flow"), ("TXJ1", "TXJ1", "TXJ1 junction, 2 layers", "in the verified flow"),
+          ("HB2", "PF233-HB2_routed", "HB2-B grip board, 24 x 38 (audio link pass-through)", "in the verified flow"), ("AU1", "PF233-AU1_routed", "AU1 audio board, 36 x 44, 4 layers", "in the verified flow"), ("TXJ1", "TXJ1", "TXJ1 junction, 2 layers", "in the verified flow"),
           ("SB1R-QA", "SB1R-QA", "SB1R-QA receive coil board, D228", "in the verified flow"), ("SB1R-QB", "SB1R-QB", "SB1R-QB receive coil board, D228", "in the verified flow"),
           ("HTA", "PF233-HTA", "HTA timing-coil board, D90", "in the verified flow (v2: the first Gerbers were an open coil)"),
           ("AB1A", "PF233-AB1A", "AB1A receive analog board, D40, 6 layers, AD7389-4 build with the +3V3D island", "routed, KiCad / independent DRC clean; exposed-pad land closed in RX_r2 (B1); remaining blockers in releases/RX_r2/BLOCKERS.md"),
@@ -31,7 +31,7 @@ for b, f, desc, st in BOARDS:
     run("kicad-cli", "pcb", "export", "glb", "--subst-models", "--include-tracks", "--include-pads", "--include-zones", "-o", f"{R}/models3d/{b}_with_components.glb", pcb)
 for f in sorted(glob.glob("data/kicad/3dmodels/*.wrl")): pass
 # ---------------------------------------------------------------- Gerbers: pointers (the release package and the published sets)
-GERB = {"CB1D": "data/gerber/CB1D_C2", "LB1": "data/gerber/LB1_v6", "PB1R": "data/gerber/PB1R_v4", "PM2": "data/gerber/PM2", "HB2": "data/gerber/HB2", "TXJ1": "data/gerber/TXJ1_v2",
+GERB = {"CB1D": "data/gerber/CB1D_C2", "LB1": "data/gerber/LB1_v6", "PB1R": "data/gerber/PB1R_v4", "PM2": "data/gerber/PM2_B", "HB2": "data/gerber/HB2_B", "AU1": "data/gerber/AU1", "TXJ1": "data/gerber/TXJ1_v2",
         "SB1R-QA": "data/gerber/SB1R_QA_v2", "SB1R-QB": "data/gerber/SB1R_QB_v2", "HTA": "data/gerber/HTA_v2", "AB1A": "data/gerber/AB1A_v1", "AB1B": "data/gerber/AB1B_v1"}
 # ---------------------------------------------------------------- STL classification
 man = {r["file"]: r for r in csv.DictReader(open("stl/MANIFEST.csv"))}
@@ -60,7 +60,7 @@ for _f in glob.glob("deliverables/receive_cutaway/*"): shutil.copy(_f, f"{R}/blu
 r = run(sys.executable, "src/render/blueprint_r3.py", f"{R}/blueprint", env=dict(os.environ, BLUEPRINT_RECORD=f"{R}/blueprint/cutaway_faces.json")) if not os.environ.get("SKIP_BLUEPRINT") else None; print("blueprint:", (r.stdout.strip(), r.stderr[-300:]) if r else "skipped (SKIP_BLUEPRINT)")
 # ---------------------------------------------------------------- manufacturing set per board (copies, not pointers): Gerber + drill zip, BOM, pick-and-place, netlist, layer PDF, bare-board STEP
 import zipfile
-BOMS = {b: (f"data/results/PF233-{b}_BOM.csv", f"data/results/PF233-{b}_pickplace.csv") for b in ("AB1A", "AB1B", "CB1D", "HB2", "LB1", "PB1R", "PM2")}
+BOMS = {b: (f"data/results/PF233-{b}_BOM.csv", f"data/results/PF233-{b}_pickplace.csv") for b in ("AB1A", "AB1B", "AU1", "CB1D", "HB2", "LB1", "PB1R", "PM2")}
 BOMS.update({b: (f"docs/delivery/boards/{b}_BOM.csv", f"docs/delivery/boards/{b}_pickplace.csv") for b in ("TXJ1", "SB1R-QA", "SB1R-QB")})
 NETS = {"AB1A": "data/results/PF233-AB1A.net", "AB1B": "data/results/PF233-AB1B.net", "PB1R": "data/results/PF233-PB1R.net", "CB1D": "work/kit_v18/CB1D/PF233-CB1D.net"}
 mfg = []

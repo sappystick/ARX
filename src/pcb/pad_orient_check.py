@@ -8,7 +8,7 @@ import sys, json, os
 import pcbnew
 BOARDS = {"LB1": ("kit_v22/KICAD/PF233-LB1_routed.kicad_pcb", "kit_v18/LB1/pads.json"), "CB1D": ("kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb", "kit_v18/CB1D/pads.json"),
           "PB1R": ("kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb", "kit_v6/PB1R/pads.json"), "PM2": ("kit_v22/KICAD/PF233-PM2_routed.kicad_pcb", "kit_v6/PM2/pads.json"),
-          "HB2": ("kit_v22/KICAD/PF233-HB2_routed.kicad_pcb", "kit_v6/HB2/pads.json")}
+          "HB2": ("kit_v22/KICAD/PF233-HB2_routed.kicad_pcb", "kit_v6/HB2/pads.json"), "AU1": ("kit_v22/KICAD/PF233-AU1_routed.kicad_pcb", "kit_v6/AU1/pads.json")}
 TOL = 0.005
 out = {}
 for name, (brd, pj) in BOARDS.items():

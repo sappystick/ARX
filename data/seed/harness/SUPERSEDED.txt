@@ -1,1 +1,2 @@
 - HARNESS_MASTER_v3.csv -> HARNESS_MASTER_v4.csv (2026-10-28): LB1-v6 clocked LEDs: JLB.3 carries LED_CLK (W066), GND on JLB.4 only (W037)
+HARNESS_MASTER_v4.csv superseded 2026-10-28 by HARNESS_MASTER_v5.csv: W067 AUD_LINK on the spare signal-cord core 5 (CB1D-C2 JTR.5 <-> HB2-B JH.5), AU1 audio board leads W068-W081 (link, power from PM2-B JAUP, speaker, jack, output selector).

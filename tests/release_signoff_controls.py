@@ -48,7 +48,7 @@ def status(name, register=None, expect_rc=0, expect_text=None, what=None, work=N
     j = json.load(open(oj)) if os.path.exists(oj) else {}; extra = True
     if what: extra = what(j)
     return rc, tx, j, extra
-rc, tx, j1, ok = status("b1"); case("sign-off table baseline: 0 FAIL, fixed shape (11 boards x 6 checks)", 0, None, rc, tx, len(j1["boards"]) == 11 and all(len(v) == 6 for v in j1["boards"].values()) and j1["counts"]["FAIL"] == 0)
+rc, tx, j1, ok = status("b1"); case("sign-off table baseline: 0 FAIL, fixed shape (12 boards x 6 checks)", 0, None, rc, tx, len(j1["boards"]) == 12 and all(len(v) == 6 for v in j1["boards"].values()) and j1["counts"]["FAIL"] == 0)
 rc, tx, j2, ok = status("b1b"); case("sign-off table is idempotent: a second run writes byte-identical JSON and markdown", 0, None, rc, tx,
                                        open(os.path.join(T, "b1.json"), "rb").read() == open(os.path.join(T, "b1b.json"), "rb").read() and open(os.path.join(T, "b1_status.md"), "rb").read() == open(os.path.join(T, "b1b_status.md"), "rb").read())
 nopm2 = farm("work", os.path.join(T, "w_nopm2"), omit={"kit_v20/route_PM2.json"})

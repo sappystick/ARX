@@ -29,6 +29,7 @@ N_LED = len(PIX); I_CODE31_MA = 18.0; I_STATIC_MA = 1.0; I_CAP_A = 0.35         
 LED_CLK_HZ = 8e6; LED_FRAME_US = (64 + 32 * N_LED) / LED_CLK_HZ * 1e6
 UART_BAUD = 1_000_000; LINK_BYTES = 10; UART_US = LINK_BYTES * 10 / UART_BAUD * 1e6     # start + 8 data + stop; bytes: sync, seq, mode, class, tau, snr, depth, bearing(2), crc
 HK_US, SPARE = 10.0, 0.10                                                                # as fw_timeline.py
+REPLY_BYTES = 2; REPLY_US = REPLY_BYTES * 10 / 1e6 * 1e6 + 10.0                            # AU1 answers in the same slot: 2 bytes at 1 Mbaud + 10 us bus turnaround (ASSUMED)
 I2C_HZ = 400e3; GYRO_BITS = 9 * 5 + 2; GYRO_US = GYRO_BITS / I2C_HZ * 1e6                    # CB1D-C2 BMI270 yaw read: addr+W, reg, restart addr+R, 2 data bytes (+ start / stop) at 400 kHz
 WINDOW_MS = 30.0                                                                         # averaging window per mode (ASSUMPTIONS 39): trade against depth gain (ENHANCEMENT_REVIEW s.2)
 SYNTH_MS = 2.0                                                                           # handle synth buffer (64 samples at 32 kHz), ASSUMED
@@ -97,6 +98,7 @@ if __name__ == "__main__":
             t = rx_end
             if mode == "LED_ONLY": sched[mode].append(("led frame", t, t + LED_FRAME_US)); t += LED_FRAME_US
             sched[mode].append(("descriptor UART", t, t + UART_US)); t += UART_US
+            sched[mode].append(("AU1 reply: selector state + status (half duplex)", t, t + REPLY_US)); t += REPLY_US
             if mode == "COMBINED": sched[mode].append(("led frame (between sweeps only)", t, t + LED_FRAME_US)); t += LED_FRAME_US
             sched[mode].append(("gyro I2C read (yaw rate)", t, t + GYRO_US)); t += GYRO_US
         ends = {mode: max(b for _, a, b in s) for mode, s in sched.items()}

@@ -51,13 +51,15 @@ B["TXJ1"] = dict(route=NA, indep=NA, kicad=kicad("TXJ1", True), gerber=gerbers("
 for q in ("QA", "QB"):
     B[f"SB1R-{q}"] = dict(route=NA, indep=NA, kicad=kicad(f"SB1R-{q}", False), gerber=gerbers(f"kit_v22/GERBER_SB1R_{q}"), plane=NA,
                           cross=chk("kit_v22/sbq_geometry.json", lambda d: (d["via_margin_mm"] >= 0.3 and d["hole_margin_mm"] >= 0.5, f"via margin {d['via_margin_mm']}, hole margin {d['hole_margin_mm']} mm")))
-for b in ("PM2", "HB2"):
+for b in ("PM2", "HB2", "AU1"):
     r = rd(f"kit_v20/route_{b}.json")
     if r is None:
         u = ("UNVERIFIED", f"U-ROUTE-{b}") if f"U-ROUTE-{b}" in UNV else ("FAIL", "not routed")
         B[b] = dict(route=u, indep=u, kicad=u, gerber=u, plane=NA, cross=u)
     elif b == "PM2": B[b] = dict(route=route(b), indep=indep(b), kicad=kicad(b, False), gerber=gerbers(f"kit_v22/GERBER_{b}", edge=f"kit_v22/gerber_edge_{b}.json"), plane=NA,
                                cross=chk("kit_v23/power_dock_check.json", lambda d: (all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} dock-chain checks")))
+    elif b == "AU1": B[b] = dict(route=route(b), indep=indep(b), kicad=kicad(b, False), gerber=gerbers(f"kit_v22/GERBER_{b}", edge=f"kit_v22/gerber_edge_{b}.json"), plane=NA,
+                               cross=chk("kit_v23/au1_check.json", lambda d: (all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} audio-board checks")))
     else: B[b] = dict(route=route(b), indep=indep(b), kicad=kicad(b, False), gerber=gerbers(f"kit_v22/GERBER_{b}", edge=f"kit_v22/gerber_edge_{b}.json"), plane=NA,
                       cross=chk("kit_v22/trigger_check.json", lambda d: (all(c["result"] == "PASS" for c in d["checks"]), f"{len(d['checks'])} trigger-chain checks")))
 for _b in ("A", "B"):                                                                # AD7389-4 receive boards with the +3V3D island on In4 (afe_layout.py BOARD_CFG7)
@@ -98,7 +100,7 @@ EV = {k: ev_state(k) for k in KNOWN_EVIDENCE}
 for k in UNV:                                                      # a registered ID nothing displays would be invisible: show it
     if k not in EV and not k.startswith(("U-ROUTE-", "U-KICAD-")): EV[k] = ("UNVERIFIED", UNV[k])
 # board rows: a registered board ID must belong to a board row, an unregistered missing result is a FAIL (see chk); the table shape is fixed
-EXPECTED_BOARDS = ["CB1D", "LB1", "PB1R", "TXJ1", "SB1R-QA", "SB1R-QB", "PM2", "HB2", "AB1A", "AB1B", "HTA"]
+EXPECTED_BOARDS = ["CB1D", "LB1", "PB1R", "TXJ1", "SB1R-QA", "SB1R-QB", "PM2", "HB2", "AU1", "AB1A", "AB1B", "HTA"]
 assert list(B) == EXPECTED_BOARDS, f"board rows changed: {list(B)}"
 for b_, row in B.items(): assert set(row) == {"route", "indep", "kicad", "gerber", "plane", "cross"}, f"{b_}: check columns changed"
 for k in UNV:

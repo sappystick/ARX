@@ -7,7 +7,7 @@ def parse(path):
     return nets
 P={"CB1D":"kit_v18/CB1D/PF233-CB1D.net","LB1":"kit_v18/LB1/PF233-LB1.net"}
 for p in glob.glob("legacy/**/*.net",recursive=True): P[os.path.basename(p).replace("PF233-","").replace(".net","")]=p
-P.update(HB2="kit_v6/HB2/PF233-HB2.net",PM2="kit_v6/PM2/PF233-PM2.net")        # upper assembly v1 boards (make pcb-hb2 pcb-pm2)
+P.update(HB2="kit_v6/HB2/PF233-HB2.net",PM2="kit_v6/PM2/PF233-PM2.net",AU1="kit_v6/AU1/PF233-AU1.net")        # upper assembly v1 boards (make pcb-hb2 pcb-pm2) and the AU1 audio board
 PIN={}                                    # PIN[board][conn][pin]=net
 for b,p in P.items():
     for net,nodes in parse(p).items():
@@ -16,8 +16,8 @@ for b,p in P.items():
 ALIAS={("SDOA1","SDO1"),("SDOA2","SDO2"),("SDOA3","SDO3"),("SDOB1","SDO1"),("SDOB2","SDO2"),("VCM_OUT","RAW_MONO"),("JB10_VCM","RAW_MONO"),("VCM_OUT","VCM"),("TRIG_EXT","TRIG"),("DIAL_EXT","DIAL"),("VBUS_IN","VBUS"),("COIL_B","DRAIN1"),("COIL_A","VBUS"),("HTA_P","HTA_P")}
 def same(a,b): return a==b or (a,b) in ALIAS or (b,a) in ALIAS or (a=="GND" and b=="GND")
 errors=[]; rows=[("level","from","pin","net","to","pin","net","status")]
-LINKS=[("CB1D","JA","AB1A","J2","L2"),("CB1D","JB","AB1B","J2","L2"),("CB1D","JLB","LB1","JLB","L6"),("CB1D","JPB","PB1R","JC","neck"),("CB1D","JTR","HB2","JH","handle"),("CB1D","JPW","PB1R","JP","power"),("CB1D","JPW","PM2","JP","power"),("CB1D","JCL","PB1R","JL1","TX")]
-OPEN_BY_DESIGN={("CB1D","JTR","5"),("CB1D","JTR","6")}   # JOY_X/JOY_Y: joystick removed, no conductor in the 5-core signal cord (CB1D revision pending)
+LINKS=[("HB2","JAU","AU1","JLINK","grip lead"),("PM2","JAUP","AU1","JPWR","dock lead"),("CB1D","JA","AB1A","J2","L2"),("CB1D","JB","AB1B","J2","L2"),("CB1D","JLB","LB1","JLB","L6"),("CB1D","JPB","PB1R","JC","neck"),("CB1D","JTR","HB2","JH","handle"),("CB1D","JPW","PB1R","JP","power"),("CB1D","JPW","PM2","JP","power"),("CB1D","JCL","PB1R","JL1","TX")]
+OPEN_BY_DESIGN={("CB1D","JTR","6")}   # JTR.6: no conductor in the 5-core signal cord; JTR.5 = AUD_LINK on core 5 since CB1D-C2 / HB2-B (harness v5 W067)
 used={}; open_rows=[]
 for a,ca,b,cb,lvl in LINKS:
     for pin,net in sorted(PIN[a][ca].items(),key=lambda x:int(x[0])):
@@ -40,7 +40,7 @@ for a,ca,b,cb,lvl in LINKS:
     for pin,c in cnt.items():
         if c!=1: errors.append(f"{a}.{ca}.{pin} mapped {c} times to {b}.{cb}")
 # harness master: every conductor end exists and carries the named signal
-H=list(csv.DictReader(open("harness/HARNESS_MASTER_v4.csv")))
+H=list(csv.DictReader(open("harness/HARNESS_MASTER_v5.csv")))
 tok=re.compile(r"\b([A-Z0-9]+)\.(J[A-Z0-9]*)\.(\d+(?:/\d+)?)")
 hrows=[]; hbad=0
 for r in H:

@@ -16,8 +16,9 @@ BOARDS = {   # board -> gerber folder, kicad files, result files, bom/net files
     "PB1R": dict(gerber="data/gerber/PB1R_v4", kicad=["PF233-PB1R_routed.kicad_pcb", "PF233-PB1R_routed.kicad_dru", "PF233-PB1R_placed.kicad_pcb"], results=["route_PB1R.json", "drc_PB1R.json", "kicad_drc_PB1R.json", "gerber_edge_PB1R.json", "gerber_plane_PB1R.json", "pb1r_check.json", "PF233-PB1R_BOM.csv", "PF233-PB1R_pickplace.csv", "PF233-PB1R.net"]),
     "CB1D": dict(gerber="data/gerber/CB1D_C2", kicad=["PF233-CB1D_routed.kicad_pcb", "PF233-CB1D_routed.kicad_dru"], results=["route_CB1D.json", "drc_CB1D.json", "kicad_drc_CB1D.json", "gerber_hv_CB1D.json", "gerber_edge_CB1D.json", "wiring_audit.json", "trigger_check.json"]),
     "TXJ1": dict(gerber="data/gerber/TXJ1_v2", kicad=["TXJ1.kicad_pcb", "TXJ1.kicad_dru"], results=["kicad_drc_TXJ1.json", "tx_system.json"]),
-    "PM2": dict(gerber="data/gerber/PM2", kicad=["PF233-PM2_routed.kicad_pcb", "PF233-PM2_routed.kicad_dru", "PF233-PM2_placed.kicad_pcb"], results=["route_PM2.json", "drc_PM2.json", "kicad_drc_PM2.json", "gerber_edge_PM2.json", "power_dock_check.json"]),
-    "HB2": dict(gerber="data/gerber/HB2", kicad=["PF233-HB2_routed.kicad_pcb", "PF233-HB2_routed.kicad_dru", "PF233-HB2_placed.kicad_pcb"], results=["route_HB2.json", "drc_HB2.json", "kicad_drc_HB2.json", "gerber_edge_HB2.json", "trigger_check.json"]),
+    "PM2": dict(gerber="data/gerber/PM2_B", kicad=["PF233-PM2_routed.kicad_pcb", "PF233-PM2_routed.kicad_dru", "PF233-PM2_placed.kicad_pcb"], results=["route_PM2.json", "drc_PM2.json", "kicad_drc_PM2.json", "gerber_edge_PM2.json", "power_dock_check.json"]),
+    "HB2": dict(gerber="data/gerber/HB2_B", kicad=["PF233-HB2_routed.kicad_pcb", "PF233-HB2_routed.kicad_dru", "PF233-HB2_placed.kicad_pcb"], results=["route_HB2.json", "drc_HB2.json", "kicad_drc_HB2.json", "gerber_edge_HB2.json", "trigger_check.json"]),
+    "AU1": dict(gerber="data/gerber/AU1", kicad=["PF233-AU1_routed.kicad_pcb", "PF233-AU1_routed.kicad_dru"], results=["route_AU1.json", "drc_AU1.json", "kicad_drc_AU1.json", "gerber_edge_AU1.json", "au1_check.json"]),
 }
 SHARED = ["tx_vbus.json", "TX_ONTIME_LUT.csv", "SYSTEM_STRESS_MARGINS.csv", "system_budget.json", "SIGNOFF_STATUS.json",
           "fab_margin_audit.json", "pad_orient_check.json", "fw_timeline.json", "pf233_timing.h", "system_live.json"]   # r5: margins, KiCad pad check, firmware timing header, system model
@@ -38,7 +39,7 @@ for b, spec in BOARDS.items():
     open(f"{d}/CHECKS.md", "w").write("\n".join(lines) + "\n")
     states = [v["state"] for v in st.values()]; summary.append((b, n, states.count("PASS"), states.count("UNVERIFIED"), spec["gerber"] is not None))
 for r in SHARED: cp(f"data/results/{r}", f"{out}/shared/{r}")
-cp("data/seed/harness/HARNESS_MASTER_v4.csv", f"{out}/shared/HARNESS_MASTER_v4.csv")   # r5: the wiring the boards are cut for (W066 LED_CLK)
+cp("data/seed/harness/HARNESS_MASTER_v5.csv", f"{out}/shared/HARNESS_MASTER_v5.csv")   # r5: the wiring the boards are cut for (W066 LED_CLK)
 cp("docs/STATUS.md", f"{out}/STATUS.md"); cp("docs/UNVERIFIED.md", f"{out}/UNVERIFIED.md"); cp("docs/design/FAB_RULES.md", f"{out}/FAB_RULES.md")
 git = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
 md = [f"# Transmit-region release TX_{rev}", "", f"Commit {git}; {datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}. MODELED / tool-checked only. Not fabricated, not measured, not reviewed by a fabricator.", "",

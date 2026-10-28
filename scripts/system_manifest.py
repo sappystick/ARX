@@ -15,8 +15,9 @@ BOARDS = {   # board: (gerber dir, kicad file, bom, pick-and-place, schematic)
  "CB1D": ("data/gerber/CB1D_C2", "data/kicad/PF233-CB1D_routed.kicad_pcb", "data/results/PF233-CB1D_BOM.csv", "data/results/PF233-CB1D_pickplace.csv", "data/kicad/sch/PF233-CB1D.kicad_sch"),
  "LB1": ("data/gerber/LB1_v6", "data/kicad/PF233-LB1_routed.kicad_pcb", "data/results/PF233-LB1_BOM.csv", "data/results/PF233-LB1_pickplace.csv", "data/kicad/sch/PF233-LB1.kicad_sch"),
  "PB1R": ("data/gerber/PB1R_v4", "data/kicad/PF233-PB1R_routed.kicad_pcb", "data/results/PF233-PB1R_BOM.csv", "data/results/PF233-PB1R_pickplace.csv", "data/kicad/sch/PF233-PB1R.kicad_sch"),
- "PM2": ("data/gerber/PM2", "data/kicad/PF233-PM2_routed.kicad_pcb", "data/results/PF233-PM2_BOM.csv", "data/results/PF233-PM2_pickplace.csv", "data/kicad/sch/PF233-PM2.kicad_sch"),
- "HB2": ("data/gerber/HB2", "data/kicad/PF233-HB2_routed.kicad_pcb", "data/results/PF233-HB2_BOM.csv", "data/results/PF233-HB2_pickplace.csv", "data/kicad/sch/PF233-HB2.kicad_sch"),
+ "PM2": ("data/gerber/PM2_B", "data/kicad/PF233-PM2_routed.kicad_pcb", "data/results/PF233-PM2_BOM.csv", "data/results/PF233-PM2_pickplace.csv", "data/kicad/sch/PF233-PM2.kicad_sch"),
+ "HB2": ("data/gerber/HB2_B", "data/kicad/PF233-HB2_routed.kicad_pcb", "data/results/PF233-HB2_BOM.csv", "data/results/PF233-HB2_pickplace.csv", "data/kicad/sch/PF233-HB2.kicad_sch"),
+ "AU1": ("data/gerber/AU1", "data/kicad/PF233-AU1_routed.kicad_pcb", "data/results/PF233-AU1_BOM.csv", "data/results/PF233-AU1_pickplace.csv", None),
  "TXJ1": ("data/gerber/TXJ1_v2", "data/kicad/TXJ1.kicad_pcb", "docs/delivery/boards/TXJ1_BOM.csv", "docs/delivery/boards/TXJ1_pickplace.csv", None),
  "SB1R-QA": ("data/gerber/SB1R_QA_v2", "data/kicad/SB1R-QA.kicad_pcb", "docs/delivery/boards/SB1R-QA_BOM.csv", "docs/delivery/boards/SB1R-QA_pickplace.csv", None),
  "SB1R-QB": ("data/gerber/SB1R_QB_v2", "data/kicad/SB1R-QB.kicad_pcb", "docs/delivery/boards/SB1R-QB_BOM.csv", "docs/delivery/boards/SB1R-QB_pickplace.csv", None),
@@ -40,7 +41,7 @@ for k in range(1, 7):
     cand = glob.glob(f"work/kit_v15/PRINT/FORMER_L{k}*.stl")
     rows.append(("former", f"FORMER_L{k}", cand[0] if cand else f"work/kit_v15/PRINT/FORMER_L{k}_petal_coil_former.stl", "PRESENT" if cand else "MISSING", os.path.getsize(cand[0]) if cand else 0, "", "generated, not stored (about 70 MB each): make formers-print"))
 bm = list(csv.reader(open("data/results/BOM_MASTER.csv"))); head, body = bm[0], bm[1:]
-CUR = ("AB1A", "AB1B", "CB1D", "HB2", "LB1", "PB1R", "PM2")                  # boards with a BOM generated from the current routed board (data/results/PF233-<B>_BOM.csv)
+CUR = ("AB1A", "AB1B", "AU1", "CB1D", "HB2", "LB1", "PB1R", "PM2")                  # boards with a BOM generated from the current routed board (data/results/PF233-<B>_BOM.csv)
 body = [r for r in body if r[0] not in [f"pcb {b}" for b in CUR] + ["pcb HB1", "pcb PM1"]]   # BOM_MASTER rows of these boards are older builds (ADS8860 AB1, OKI 12/1.5 M12); HB1 / PM1 are superseded by HB2 / PM2
 for b in CUR:
     for r in list(csv.reader(open(f"data/results/PF233-{b}_BOM.csv")))[1:]: body.append([f"pcb {b}", r[1], r[0], f"{r[3]} {r[4]}".strip()[:70], b, r[5][:40]])

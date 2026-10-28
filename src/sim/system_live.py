@@ -9,7 +9,7 @@ Sources (no new physics here):
   converter efficiency 0.85 for both modules: the factor system_budget.py already uses for the cord current (ASSUMED, ASSUMPTIONS 38)
   M12 load other than the gate drive: not budgeted (ASSUMPTIONS 29), an input here, default 0.10 W (ASSUMED)
   pack: 7S1P Molicel P30B, 7 x 3.6 V x 3.0 Ah = 75.6 Wh (system_budget.py), used to the BMS cut-off
-  wiring: HARNESS_MASTER_v4.csv lengths; copper resistivity 1.72e-8 ohm m at 20 C (pb1r_check / power_system value) on the AWG nominal area
+  wiring: HARNESS_MASTER_v5.csv lengths; copper resistivity 1.72e-8 ohm m at 20 C (pb1r_check / power_system value) on the AWG nominal area
     A = pi/4 (0.127 mm x 92^((36 - n) / 39))^2; TX layer leads from tx_system.json (litz)
   vault temperature: linear fit of the sim_thermal.json hot spot rise against the dissipated power (an interpolation of that model, not a new one)
 usage (in work/): python3 system_live.py [OUT.json]"""
@@ -80,7 +80,7 @@ def node(t):
 def wiring():
     tx = json.load(open("kit_v22/tx_system.json")) if os.path.exists("kit_v22/tx_system.json") else json.load(open("../data/results/tx_system.json"))
     leadR = {(l["layer"], l["lead"]): l["R_mohm"] * 1e-3 for l in tx["leads"]}
-    p = next(x for x in ("harness/HARNESS_MASTER_v4.csv", "../data/seed/harness/HARNESS_MASTER_v4.csv", "data/seed/harness/HARNESS_MASTER_v4.csv") if os.path.exists(x))
+    p = next(x for x in ("harness/HARNESS_MASTER_v5.csv", "../data/seed/harness/HARNESS_MASTER_v5.csv", "data/seed/harness/HARNESS_MASTER_v5.csv") if os.path.exists(x))
     out = []
     for r in csv.DictReader(open(p)):
         spec = r["spec"]; L_m = float(r["length_m"]); sig = r["signal"]; R = None; src = ""
@@ -115,7 +115,7 @@ def main(outp):
              dict(a="CB1D", b="AB1B", id="FFC-B", signal="+5VA / +3V3D / SPI (FFC, B5)", I_A=round(1 * 2 * 0.0045 + 2 * 0.005 + (0.023 + 0.0041), 4), note="OPA2211 + OPA2365 max IQ + one AD7389-4 operational max")]
     out = dict(model="system_live r1", links=links, status="MODELED", tx=TX, modes=MODES, caps={k: dict(CL=v["CL"], derate=v["derate"], label=v["label"]) for k, v in CAPS.items()}, pack=PACK, eta=ETA,
                i5=I5, gate=dict(Qg=QG, Vg=VG), limits=LIMITS, thermal=th, wires=wires, golden=golden, check_vs_sweep=chk,
-               sources=["tx_vbus_sweep.py pulse()/ton_loop()", "system_budget.py rail terms", "TI SBOS377L / SBOS365G IQ", "sim_thermal.json (linear fit)", "HARNESS_MASTER_v4.csv", "tx_system.json"])
+               sources=["tx_vbus_sweep.py pulse()/ton_loop()", "system_budget.py rail terms", "TI SBOS377L / SBOS365G IQ", "sim_thermal.json (linear fit)", "HARNESS_MASTER_v5.csv", "tx_system.json"])
     json.dump(out, open(outp, "w"), indent=1, default=float)
     b = [g for g in golden if g["mode"] == "boost" and g["cap"] == "design" and g["V"] == 24.5][0]; s = [g for g in golden if g["mode"] == "scan" and g["cap"] == "design" and g["V"] == 24.5][0]
     print(f"system_live: {len(golden)} golden cases, {len(wires)} wires; at 24.5 V scan {s['P_total_W']:.2f} W {s['hours']:.1f} h, boost {b['P_total_W']:.2f} W {b['hours']:.1f} h; vault fit {th['K_per_W']:.2f} K/W (max dev {th['max_dev_K']:.2f} K)")

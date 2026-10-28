@@ -43,6 +43,7 @@ STEPS = [
     ("pcb-lb1", W + "PW=L python3 pw_design.py && PW=L python3 lb1_export.py", ""),
     ("pcb-hb1", W + "PW=H python3 pw_design.py && PW=H python3 pw_export.py", ""),
     ("pcb-hb2", W + "PW=G python3 pw_design.py && PW=G python3 pw_export.py", ""),
+    ("pcb-au1", W + "mkdir -p kit_v23 && PW=U python3 pw_design.py && PW=U python3 pw_export.py && PW=U python3 au1_check.py > /dev/null", ""),   # AU1 audio board (output modes): placement + electrical cross-check
     ("pcb-pb1r", W + "PW=R python3 pw_design.py && PW=R python3 pw_export.py", ""),
     ("pcb-cb1d", W + "PW=C DISC=1 python3 pw_design.py && PW=C DISC=1 python3 cb1d_export.py", ""),
     ("tx-vbus", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py", ""),
@@ -78,18 +79,22 @@ STEPS = [
     ("drc-hb2", W + "python3 drc.py HB2 kit_v20/route_HB2.json 0", ""),
     ("kicad-hb2", "mkdir -p work/kit_v22/KICAD && " + W + "python3 rect_inject.py HB2 kit_v20/route_HB2.json kit_v6/HB2/PF233-HB2.kicad_pcb kit_v22/KICAD/PF233-HB2_routed.kicad_pcb", ""),
     ("gerber-hb2", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-HB2_routed.kicad_pcb HB2 work/kit_v22/GERBER_HB2 PF233-HB2 && " + W + "python3 gerber_edge_check.py kit_v22/gerber_edge_HB2.json kit_v22/GERBER_HB2 PF233-HB2", "kicad"),
+    ("route-au1", route("AU1"), ""),
+    ("drc-au1", W + "python3 drc.py AU1 kit_v20/route_AU1.json 0", ""),
+    ("kicad-au1", "mkdir -p work/kit_v22/KICAD && " + W + "python3 rect_inject.py AU1 kit_v20/route_AU1.json kit_v6/AU1/PF233-AU1.kicad_pcb kit_v22/KICAD/PF233-AU1_routed.kicad_pcb", ""),
+    ("gerber-au1", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-AU1_routed.kicad_pcb AU1 work/kit_v22/GERBER_AU1 PF233-AU1 && " + W + "python3 gerber_edge_check.py kit_v22/gerber_edge_AU1.json kit_v22/GERBER_AU1 PF233-AU1", "kicad"),
     ("sbq-fast", W + "python3 sbq_gen2.py && python3 sbq_export.py && python3 sbq_sim.py && python3 sbq_damp2.py", ""),
     ("pcb-hta", W + "python3 hta_gerber.py > /dev/null && python3 hta_kicad.py && python3 gerber_edge_check.py kit_v22/gerber_edge_HTA.json kit_v18/HTA PF233-HTA", ""),
-    ("kicad-drc", "; ".join([f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-{b}_routed.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("CB1D", "LB1", "PB1R", "PM2", "HB2")]
+    ("kicad-drc", "; ".join([f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-{b}_routed.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("CB1D", "LB1", "PB1R", "PM2", "HB2", "AU1")]
                   + ["python3 src/pcb/kicad_drc.py work/kit_v22/KICAD_TXJ1/TXJ1.kicad_pcb work/kit_v22/kicad_drc_TXJ1.json TXJ1 | head -1"]
                   + ["python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-HTA.kicad_pcb work/kit_v22/kicad_drc_HTA.json HTA | head -1"]
                   + [f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD_SBQ/{b}.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("SB1R-QA", "SB1R-QB")]), "kicad"),
     ("print-check", "python3 src/mech/print_check.py data/results/print_check.json", ""),
     ("indep-drc", "mkdir -p data/results/indep_drc && " + " && ".join(f"python3 src/pcb/indep_drc.py {b} {p} data/results/indep_drc/{b}.json" for b, p in (("TXJ1", "data/kicad/TXJ1.kicad_pcb"), ("SB1R-QA", "data/kicad/SB1R-QA.kicad_pcb"), ("SB1R-QB", "data/kicad/SB1R-QB.kicad_pcb"), ("HTA", "data/kicad/PF233-HTA.kicad_pcb"))) + " && python3 tests/indep_drc_controls.py && python3 src/pcb/board_sch.py data/results/board_sch", ""),
     ("models3d", W + "mkdir -p kit_v22/3dmodels && python3 models3d.py kit_v22/3dmodels", ""),
-    ("models3d-check", W + "python3 models3d_check.py kit_v22/3dmodels kit_v22/models3d_check.json " + " ".join(f"kit_v22/KICAD/PF233-{b}_routed.kicad_pcb" for b in ("CB1D", "LB1", "PB1R", "PM2", "HB2")) + " kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb kit_v3/PCB_AB1A/PF233-AB1A.kicad_pcb kit_v3/PCB_AB1B/PF233-AB1B.kicad_pcb", ""),
+    ("models3d-check", W + "python3 models3d_check.py kit_v22/3dmodels kit_v22/models3d_check.json " + " ".join(f"kit_v22/KICAD/PF233-{b}_routed.kicad_pcb" for b in ("CB1D", "LB1", "PB1R", "PM2", "HB2", "AU1")) + " kit_v22/KICAD_SBQ/SB1R-QA.kicad_pcb kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb kit_v3/PCB_AB1A/PF233-AB1A.kicad_pcb kit_v3/PCB_AB1B/PF233-AB1B.kicad_pcb", ""),
     ("pad-orient", W + "/usr/bin/python3 pad_orient_check.py > /dev/null 2>&1", ""),       # KiCad pad geometry = placement model on the rotated-footprint boards (CORRECTIONS 2026-10-28): kit_v22/pad_orient_check.json
-    ("sch-func", W + "mkdir -p kit_v22/SCHF && PW=R python3 sch_func.py PB1R kit_v22/SCHF && PW=P python3 sch_func.py PM2 kit_v22/SCHF && PW=G python3 sch_func.py HB2 kit_v22/SCHF && PW=C DISC=1 python3 sch_func.py CB1D kit_v22/SCHF && PW=L python3 sch_func.py LB1 kit_v22/SCHF && BOARD=A python3 sch_func.py AB1A kit_v22/SCHF && BOARD=B python3 sch_func.py AB1B kit_v22/SCHF", "kicad"),
+    ("sch-func", W + "mkdir -p kit_v22/SCHF && PW=R python3 sch_func.py PB1R kit_v22/SCHF && PW=P python3 sch_func.py PM2 kit_v22/SCHF && PW=G python3 sch_func.py HB2 kit_v22/SCHF && PW=U python3 sch_func.py AU1 kit_v22/SCHF && PW=C DISC=1 python3 sch_func.py CB1D kit_v22/SCHF && PW=L python3 sch_func.py LB1 kit_v22/SCHF && BOARD=A python3 sch_func.py AB1A kit_v22/SCHF && BOARD=B python3 sch_func.py AB1B kit_v22/SCHF", "kicad"),
     ("cap-v18", W + "python3 cap_v18.py > /dev/null", ""),                        # HUB_CAP_HTA_v3_vault through the closing union (kit_v18/PARTS): was not a step, so a fresh work/ carried the open seed copy (108 bad edges) into head_crosscheck and curate
     ("mech-npm", W + "python3 mech_v20.py > /dev/null", ""),                       # neck module / elbow / battery drawer meshes (kit_v19/SPINE): pb1r_check NPM fit reads them; was not a step, so a fresh work/ skipped that check
     ("fw-timeline", W + "mkdir -p kit_v23 && python3 fw_timeline.py > /dev/null", ""),     # P5 firmware timing model + generated C header (kit_v23/pf233_timing.h)

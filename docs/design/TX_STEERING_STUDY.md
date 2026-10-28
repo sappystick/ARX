@@ -1,5 +1,7 @@
 # TX field steering: separately driven coils (study 2026-10-28, MODELED; src/sim/tx_steer_study.py, regress row)
 
+**DEFERRED (owner, 2026-10-28):** no transmit reconfiguration is in the design. The transmitter stays as built: six concentric layers in parallel on one PB1R driver. This study and the two-group alternating-polarity idea (odd / even layers on two drivers) are kept for a later phase only.
+
 Owner question: drive the six petals separately, timed in sequence, to "spin" the field; the petals were meant to have their own wiring.
 
 ## What the built coil is

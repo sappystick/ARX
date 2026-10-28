@@ -98,6 +98,9 @@ def build(t, L):
     if t == "PICO":                                                                                    # Raspberry Pi Pico 2 W: 21 x 51 mm green module on the 40 pins, USB-micro at -y end, RP2350 + CYW43439 can
         z0 = 2.5; return [box(-10.5, 10.5, -25.5, 25.5, z0, z0 + 1.0, GREEN), box(-4.0, 4.0, -26.0, -20.0, z0 + 1.0, z0 + 3.8, METAL), box(-3.5, 3.5, -8.0, -1.0, z0 + 1.0, z0 + 1.9, BLACK), box(2.0, 8.0, 6.0, 14.0, z0 + 1.0, z0 + 2.0, METAL), box(-6.0, -1.0, 8.0, 13.0, z0 + 1.0, z0 + 1.9, BLACK)] + [box(px - 0.3, px + 0.3, py - 0.3, py + 0.3, 0.0, z0 + 1.0, GOLD) for (_, px, py, w, h, s) in P]
     if t.startswith("WIRE"): return []                                                                  # bare solder pads for wires
+    if t in ("VSSOP28", "HVSSOP8EP", "WQFN16EP", "SOT23-6BUCK", "SOT23-5LDO", "SRN4018"):              # AU1 packages: body box from LIB body (datasheet package size and max height)
+        bw, bh, bz = L["body"]; col = (0.35, 0.35, 0.35) if t == "SRN4018" else BLACK
+        return [box(-bw / 2, bw / 2, -bh / 2, bh / 2, 0.0, bz, col)]
     raise KeyError(t)
 # --------------------------------------------------------------------------------------------------------- VRML
 def wrl(parts, name):

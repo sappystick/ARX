@@ -5,7 +5,8 @@ DATE = "2026-10-26"
 TITLE = {"CB1D": "CB1D-C2 controller: Pico 2 W, supplies, handle cable, receive-board links, TX monitor", "LB1": "LB1-v6 display: 66 x SK9822-EC20 clocked chain with 3V3 -> 5 V data and clock buffers",
          "PB1R": "PB1R transmit stage: gate drive, two 650 V FETs, shunt, flyback clamp, overcurrent comparator, 12 V aux", "PM2": "PM2 battery dock: fuse, P-FET power switch with soft start, bulk, cord",
          "HB2": "HB2 grip board: Hall trigger, 4-position dial divider, signal cord", "AB1A": "AB1A receive analog board: 3 channels (GX, GY, X8), blanking, gain, 16-bit quad ADC (AD7389-4)",
-         "AB1B": "AB1B receive analog board: 2 channels (Y8, MONO), blanking, gain, 16-bit quad ADC (AD7389-4)"}
+         "AB1B": "AB1B receive analog board: 2 channels (Y8, MONO), blanking, gain, 16-bit quad ADC (AD7389-4)",
+         "AU1": "AU1 audio board: descriptor link, MSPM0G3507 voice synth, TPA2005D1 speaker amp, TPA6132A2 headphone amp, 3-position output selector"}
 def _by(PARTS, *prefixes): return [r for r in PARTS if r.startswith(prefixes)]
 def blocks(b, PARTS, PINNET):
     if b == "PB1R": return [
@@ -30,6 +31,12 @@ def blocks(b, PARTS, PINNET):
         dict(title="1  Signal cord to the head", note=["JH: +3V3 (P3V3), GND, TRIG, DIAL, two unused, SHLD.", "RSHH (0 R) bonds the signal-cord shield to GND at the handle."], refs=["JH", "RSHH"]),
         dict(title="2  Hall trigger", note=["HS1 (digital Hall switch, open drain): magnet near at rest -> TRIG low.", "RH1 1 k in series to the cord; CH1 100 nF decoupling."], refs=["HS1", "CH1", "RH1"]),
         dict(title="3  Dial (4-position rotary)", note=["RD0 10 k pull-up from P3V3 to DIAL (= JDIAL COM). Positions: P1 straight to GND; P2 / P3 / P4 through RD2 3k3 / RD3 10 k / RD4 33 k to GND, so each position gives a different divider level."], refs=["JDIAL", "RD0", "RD2", "RD3", "RD4"])]
+    if b == "AU1": return [
+        dict(title="1  Power: pack -> 5 V buck -> 3.3 V LDO", note=["JPWR from PM2-B JAUP (switched, fused 0.5 A). UB TPS560430 (RFT / RFB set 5.0 V, LB 22 uH), UL TLV75533 3.3 V."], refs=["JPWR", "UB", "LB", "CBI", "CBI2", "CBB", "CBO", "RFT", "RFB", "UL", "CLI", "CLO"]),
+        dict(title="2  Controller", note=["UM MSPM0G3507: DAC (PA15) for the voice, PWM (PA14) for the right channel, UART0 for the link; JSWD programming pads."], refs=["UM", "CVC", "CVD", "CVD2", "RNR", "CNR", "JSWD"]),
+        dict(title="3  Descriptor link and output selector", note=["JLINK from HB2-B JAU: half-duplex, TX through RTX 1 k, entry RLK 100 R with BAS16 clamps.", "JSEL: 3-position selector to GND, pull-ups RS1-RS3 (AUDIO_ONLY / LED_ONLY / COMBINED)."], refs=["JLINK", "RLK", "RTX", "DLK1", "DLK2", "JSEL", "RS1", "RS2", "RS3"]),
+        dict(title="4  Speaker amplifier", note=["US TPA2005D1, gain 2 x 150 k / RI = 2 V/V, input caps CI1 / CI2, SHUTDOWN pulled low (RSD) until the MCU enables it; JSPK 8 ohm speaker."], refs=["US", "CSV", "CSV2", "CI1", "CI2", "RI1", "RI2", "RSD", "JSPK"]),
+        dict(title="5  Headphone amplifier", note=["UH TPA6132A2 DirectPath, 0 dB (G0 high, G1 low), single-ended inputs; left = DAC, right = RC-filtered PWM (RPW / CPW).", "JHP: panel jack tip / ring / sleeve and plug-detect (RDT pull-up)."], refs=["UH", "CHL", "CHR", "CHV", "CHP", "CHF", "CHS", "RHE", "RPW", "CPW", "JHP", "RDT"])]
     if b == "LB1": return [
         dict(title="1  Data and clock entry: 3V3 -> 5 V buffers", note=["JLB: +5V, LED_IN, LED_CLK, GND from CB1D. U1 / U2 (74AHCT1G125) buffer LED_IN / LED_CLK to 5 V logic;", "RS / RSC 33 R series damping -> LD_D0 / LD_C0."], refs=["JLB", "U1", "RS", "U2", "RSC"]),
         dict(title="2  SK9822-EC20 clocked chain, 66 pixels", note=["SDO of each pixel goes straight to SDI of the next (wired); CKO -> CKI of the next by net label (LD_Cn).", "Pins: 1 SDO, 2 GND, 3 SDI, 4 CKI, 5 VDD (+5V), 6 CKO. LD66 SDO / CKO are left open (LD_END_NC / LD_CEND_NC)."], refs=_by(PARTS, "LD"), link=("1", "3"), cols=11, width=2000),
@@ -42,15 +49,15 @@ def blocks(b, PARTS, PINNET):
         dict(title="5  Monitor multiplexer", note=["UM (74HC4051): S0 / S1 / S2 from the Pico, MUX_COM -> RMO / CMO -> the Pico ADC (MUX_OUT).", "Inputs in use: Y0 = ISENSE1, Y1 = NTC_SENSE, Y4 = HTA_IN; E, VEE and GND are grounded."], refs=["UM", "CM1", "RMO", "CMO"]),
         dict(title="6  Current-limit reference (REF_I1)", note=["REF_PWM1 (PWM from the Pico) -> RR1 -> REF_N1 -> RR2 -> REF_I1 with CR1 / CR2 to GND: a two-pole RC filter; REF_I1 goes to the comparator on PB1R."], refs=["RR1", "RR2", "CR1", "CR2"]),
         dict(title="7  VBUS sense", note=["RV1 100 k / RV2 10 k divider from VBUS to VBUS_SENSE (Pico ADC), CV4 filter."], refs=["RV1", "RV2", "CV4"]),
-        dict(title="8  Handle cable: trigger, dial, shield", note=["JTR: +3V3, GND, TRIG, DIAL, JOYX, JOYY, SHLD (the only signal cable leaving the head).", "TRIG / DIAL inputs: series 1 k, BAS16 clamps to P3V3 / GND (DH / DL), 10 nF, pull-ups RP1 47 k / RP2 10 k.",
-                                                      "RJ5 / RJ6 (0 R, not fitted): optional grounding of JTR.5 / JTR.6. RSH + CSH shield termination."],
-             refs=["JTR", "RT1", "DH1", "DL1", "CQ1", "RP1", "RD1", "DH2", "DL2", "CQ2", "RP2", "RJ5", "RJ6", "RSH", "CSH"]),
+        dict(title="8  Handle cable: trigger, dial, audio link, shield", note=["JTR: +3V3, GND, TRIG, DIAL, AUD_LINK, -, SHLD (the only signal cable leaving the head).", "TRIG / DIAL inputs: series 1 k, BAS16 clamps to P3V3 / GND (DH / DL), 10 nF, pull-ups RP1 47 k / RP2 10 k.",
+                                                      "AUD_LINK (CB1D-C2): half-duplex link to AU1 from Pico pin 20 through RAU 100 R, BAS16 clamps DAU1 / DAU2. RJ6 (0 R, not fitted): optional grounding of JTR.6. RSH + CSH shield termination."],
+             refs=["JTR", "RT1", "DH1", "DL1", "CQ1", "RP1", "RD1", "DH2", "DL2", "CQ2", "RP2", "RAU", "DAU1", "DAU2", "RJ6", "RSH", "CSH"]),
         dict(title="9  Links to the receive boards AB1A / AB1B", note=["JA / JB: +5VA, +3V3D, SPI (SCLK, CS, SDOA1..3, SDOB1..2), BLANK, and from AB1B the VCM_OUT return; RJB10 (fitted 0 R) ties JB.10 to VCM_OUT."], refs=["JA", "JB", "RJB10"]),
         dict(title="10  Link to PB1R", note=["JPB: 12V-side signals only: UMB_SHLD, TX1_IN, REF_I1, FAULT1_N, ISENSE1, NTC_SENSE, GND (same order as JC on PB1R).", "RUS / CUS bleed the umbilical shield."], refs=["JPB", "RUS", "CUS"]),
         dict(title="11  Coil monitor: damping chain", note=["JCL: coil leads COIL_B (drain side) / COIL_A (VBUS side). RDM1..3 (3 x 110 R, 600 V) form the damping chain DM1 / DM2 between them.", "High-voltage nets COIL_B / DM1 / DM2: 1.0 mm rule."], refs=["JCL", "RDM1", "RDM2", "RDM3"]),
         dict(title="12  HTA timing-coil input", note=["JHTA: HTA coil leads (twisted pair from the cap). RHTA 10 k series, CHTA 1 n, DHA1 / DHA2 clamp to P3V3 / GND -> HTA_IN (multiplexer input)."], refs=["JHTA", "RHTA", "CHTA", "DHA1", "DHA2"]),
         dict(title="13  Display link", note=["JLB: +5V, LED_IN, LED_CLK (from the Pico), GND to LB1."], refs=["JLB"]),
-        dict(title="14  Yaw gyro (sweep direction)", note=["UG BMI270 (alternate: ST LSM6DSO, same land) on I2C (Pico pins 26 / 27): SDO to GND, CSB and pins 2 / 3 to P3V3; CG1 / CG2 100 nF at VDDIO / VDD;", "RGA / RGL 4k7 pull-ups. Read in the idle slot after the receive window."], refs=["UG", "CG1", "CG2", "RGA", "RGL"])]
+        dict(title="14  Yaw gyro (sweep direction)", note=["UG BMI270 (alternate: ST LSM6DSO, same land) on I2C (Pico pins 26 / 27, alternate address: SDO high); UG_VIO = VDD, VDDIO, CSB, SDO, pins 2 / 3,", "fed from P3V3 by RGF 10 R with CG1 / CG2 100 nF; RGA / RGL 4k7 pull-ups. Read in the idle slot after the receive window."], refs=["UG", "CG1", "CG2", "RGF", "RGA", "RGL"])]
     if b in ("AB1A", "AB1B"):
         chans = {"AB1A": [("GX", 1, "U1", "A"), ("GY", 2, "U1", "B"), ("X8", 3, "U2", "A")], "AB1B": [("Y8", 1, "U1", "A"), ("MONO", 2, "U1", "B")]}[b]
         v7 = "CRC" in PARTS                                                        # AD7389-4 variant: one quad ADC replaces the ADS8860s and the REF5041 chain

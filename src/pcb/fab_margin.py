@@ -14,7 +14,7 @@ from shapely.ops import unary_union, nearest_points, polygonize
 from shapely.strtree import STRtree
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import dru_gen as DG
 BOARDS = {"CB1D": "data/kicad/PF233-CB1D_routed.kicad_pcb", "LB1": "data/kicad/PF233-LB1_routed.kicad_pcb", "PB1R": "data/kicad/PF233-PB1R_routed.kicad_pcb",
-          "PM2": "data/kicad/PF233-PM2_routed.kicad_pcb", "HB2": "data/kicad/PF233-HB2_routed.kicad_pcb", "TXJ1": "data/kicad/TXJ1.kicad_pcb", "HTA": "data/kicad/PF233-HTA.kicad_pcb",
+          "PM2": "data/kicad/PF233-PM2_routed.kicad_pcb", "HB2": "data/kicad/PF233-HB2_routed.kicad_pcb", "AU1": "data/kicad/PF233-AU1_routed.kicad_pcb", "TXJ1": "data/kicad/TXJ1.kicad_pcb", "HTA": "data/kicad/PF233-HTA.kicad_pcb",
           "SB1R-QA": "data/kicad/SB1R-QA.kicad_pcb", "SB1R-QB": "data/kicad/SB1R-QB.kicad_pcb", "AB1A": "data/kicad/PF233-AB1A.kicad_pcb", "AB1B": "data/kicad/PF233-AB1B.kicad_pcb"}
 MM = 1e-6; ERR = int(0.002 / MM)                                                    # nm -> mm; 2 um arc approximation error
 TIGHT, NEAR = 0.02, 0.05

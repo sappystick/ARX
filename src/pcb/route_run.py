@@ -2,7 +2,7 @@ import sys, json, time, os, hashlib
 from router import Router
 board=sys.argv[1]
 # a saved router state is only valid for the netlist/pads, router code and configuration it was made with (a stale state produced stale routes twice): key it to a hash of all three
-_pads={"LB1":"kit_v18/LB1/pads.json","PB1R":"kit_v6/PB1R/pads.json","PM2":"kit_v6/PM2/pads.json","HB2":"kit_v6/HB2/pads.json"}.get(board,"kit_v18/CB1D/pads.json")
+_pads={"LB1":"kit_v18/LB1/pads.json","PB1R":"kit_v6/PB1R/pads.json","PM2":"kit_v6/PM2/pads.json","HB2":"kit_v6/HB2/pads.json","AU1":"kit_v6/AU1/pads.json"}.get(board,"kit_v18/CB1D/pads.json")
 _h=hashlib.sha1(b"".join(open(f,"rb").read() for f in (_pads,"router.py","route_run.py"))).hexdigest()
 _shaf=f"kit_v20/state_{board}.sha"; _old=open(_shaf).read().strip() if os.path.exists(_shaf) else None
 if _old != _h:
@@ -19,6 +19,10 @@ elif board=="PM2":
     # 28 x 70 battery-dock board: F/B signal layers, hatched GND (In1) and VBUS (In2); the pack current (5 A fuse) rides BAT_P / BAT_F at 1.5 mm and VBUS / GND at 1.0 mm
     wid={"BAT_P":1.5,"BAT_F":1.5,"VBUS":1.0,"GND":1.0}
     R=Router("kit_v6/PM2/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu","VBUS":"In2.Cu"},wid,clr=0.2)
+elif board=="AU1":
+    # 36 x 44 audio board (battery side): F/B signal layers, hatched GND (In1) and +3V3_AU (In2); 0.5 mm on the pack input, the 5 V rail and the speaker outputs, 0.6 mm on the buck switch node
+    wid={"VBUS_AU":0.5,"+5V_AU":0.5,"SW_AU":0.6,"SPK_P":0.5,"SPK_N":0.5,"GND":0.4,"+3V3_AU":0.3}
+    R=Router("kit_v6/AU1/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu","+3V3_AU":"In2.Cu"},wid,clr=0.2)
 elif board=="HB2":
     # 24 x 38 grip board: F/B signal layers, hatched GND (In1); trigger and dial signals only
     R=Router("kit_v6/HB2/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu"},{"P3V3":0.3},clr=0.2)

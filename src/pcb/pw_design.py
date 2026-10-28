@@ -46,6 +46,25 @@ LIB = {
                 pins=[("1", "SDO", "bidirectional"), ("2", "ASDX", "bidirectional"), ("3", "ASCX", "bidirectional"), ("4", "INT1", "bidirectional"), ("5", "VDDIO", "power_in"), ("6", "GNDIO", "power_in"), ("7", "GND", "power_in"),
                       ("8", "VDD", "power_in"), ("9", "INT2", "bidirectional"), ("10", "OCSB", "input"), ("11", "OSDO", "output"), ("12", "CSB", "input"), ("13", "SCX", "input"), ("14", "SDX", "bidirectional")],
                 pads=[("1", -1.1625, -0.75, 0.475, 0.25, "rect"), ("2", -1.1625, -0.25, 0.475, 0.25, "rect"), ("3", -1.1625, 0.25, 0.475, 0.25, "rect"), ("4", -1.1625, 0.75, 0.475, 0.25, "rect"), ("5", -0.5, 0.9125, 0.25, 0.475, "rect"), ("6", 0.0, 0.9125, 0.25, 0.475, "rect"), ("7", 0.5, 0.9125, 0.25, 0.475, "rect"), ("8", 1.1625, 0.75, 0.475, 0.25, "rect"), ("9", 1.1625, 0.25, 0.475, 0.25, "rect"), ("10", 1.1625, -0.25, 0.475, 0.25, "rect"), ("11", 1.1625, -0.75, 0.475, 0.25, "rect"), ("12", 0.5, -0.9125, 0.25, 0.475, "rect"), ("13", 0.0, -0.9125, 0.25, 0.475, "rect"), ("14", -0.5, -0.9125, 0.25, 0.475, "rect")], body=(3.0, 2.5, 0.83)),
+# ---- AU1 audio board (2026-10-28, output modes; land patterns read off the TI / Bourns / KiCad sources named in each entry, DATASHEET_LOG)
+"VSSOP28": dict(desc="MCU TI MSPM0G3507SDGS28 VSSOP-28 0.5 mm (SLASEX6C Oct 2025 Figure 6-6 pinout; land DGS0028A: 28 x 1.45 x 0.3, rows 4.4 apart)", fp="PF233:VSSOP-28_4.4x7.1mm_P0.5mm", fine=True,
+                pins=[("1", "PA26", "bidirectional"), ("2", "PA27", "bidirectional"), ("3", "VCORE", "bidirectional"), ("4", "PA0", "bidirectional"), ("5", "PA1", "bidirectional"), ("6", "NRST", "bidirectional"), ("7", "VDD", "bidirectional"), ("8", "VSS", "bidirectional"), ("9", "PA2", "bidirectional"), ("10", "PA3", "bidirectional"), ("11", "PA4", "bidirectional"), ("12", "PA5", "bidirectional"), ("13", "PA6", "bidirectional"), ("14", "PA9", "bidirectional"), ("15", "PA10", "bidirectional"), ("16", "PA11", "bidirectional"), ("17", "PA14", "bidirectional"), ("18", "PA15_DAC", "bidirectional"), ("19", "PA16", "bidirectional"), ("20", "PA17", "bidirectional"), ("21", "PA18", "bidirectional"), ("22", "PA19_SWDIO", "bidirectional"), ("23", "PA20_SWCLK", "bidirectional"), ("24", "PA21", "bidirectional"), ("25", "PA22", "bidirectional"), ("26", "PA23", "bidirectional"), ("27", "PA24", "bidirectional"), ("28", "PA25", "bidirectional")],
+                pads=[("1", -2.2, -3.25, 1.45, 0.3, "rect"), ("2", -2.2, -2.75, 1.45, 0.3, "rect"), ("3", -2.2, -2.25, 1.45, 0.3, "rect"), ("4", -2.2, -1.75, 1.45, 0.3, "rect"), ("5", -2.2, -1.25, 1.45, 0.3, "rect"), ("6", -2.2, -0.75, 1.45, 0.3, "rect"), ("7", -2.2, -0.25, 1.45, 0.3, "rect"), ("8", -2.2, 0.25, 1.45, 0.3, "rect"), ("9", -2.2, 0.75, 1.45, 0.3, "rect"), ("10", -2.2, 1.25, 1.45, 0.3, "rect"), ("11", -2.2, 1.75, 1.45, 0.3, "rect"), ("12", -2.2, 2.25, 1.45, 0.3, "rect"), ("13", -2.2, 2.75, 1.45, 0.3, "rect"), ("14", -2.2, 3.25, 1.45, 0.3, "rect"), ("15", 2.2, 3.25, 1.45, 0.3, "rect"), ("16", 2.2, 2.75, 1.45, 0.3, "rect"), ("17", 2.2, 2.25, 1.45, 0.3, "rect"), ("18", 2.2, 1.75, 1.45, 0.3, "rect"), ("19", 2.2, 1.25, 1.45, 0.3, "rect"), ("20", 2.2, 0.75, 1.45, 0.3, "rect"), ("21", 2.2, 0.25, 1.45, 0.3, "rect"), ("22", 2.2, -0.25, 1.45, 0.3, "rect"), ("23", 2.2, -0.75, 1.45, 0.3, "rect"), ("24", 2.2, -1.25, 1.45, 0.3, "rect"), ("25", 2.2, -1.75, 1.45, 0.3, "rect"), ("26", 2.2, -2.25, 1.45, 0.3, "rect"), ("27", 2.2, -2.75, 1.45, 0.3, "rect"), ("28", 2.2, -3.25, 1.45, 0.3, "rect")], body=(3.0, 7.1, 1.1)),
+"HVSSOP8EP": dict(desc="class-D amp TI TPA2005D1DGN HVSSOP-8 PowerPAD (SLOS369G: 1 SHUTDOWN, 2 NC, 3 IN+, 4 IN-, 5 VO+, 6 VDD, 7 GND, 8 VO-, pad GND; land DGN0008G: 8 x 1.4 x 0.45 on 0.65, rows 4.4 apart, pad 1.57 x 1.89)", fp="PF233:HVSSOP-8-1EP_3x3mm_P0.65mm", fine=True,
+                pins=[("1", "SHUTDOWN", "input"), ("2", "NC", "passive"), ("3", "IN+", "input"), ("4", "IN-", "input"), ("5", "VO+", "output"), ("6", "VDD", "power_in"), ("7", "GND", "power_in"), ("8", "VO-", "output"), ("9", "EP", "power_in")],
+                pads=[("1", -2.2, -0.975, 1.4, 0.45, "rect"), ("2", -2.2, -0.325, 1.4, 0.45, "rect"), ("3", -2.2, 0.325, 1.4, 0.45, "rect"), ("4", -2.2, 0.975, 1.4, 0.45, "rect"), ("5", 2.2, 0.975, 1.4, 0.45, "rect"), ("6", 2.2, 0.325, 1.4, 0.45, "rect"), ("7", 2.2, -0.325, 1.4, 0.45, "rect"), ("8", 2.2, -0.975, 1.4, 0.45, "rect"), ("9", 0.0, 0.0, 1.57, 1.89, "rect")], body=(3.0, 3.0, 1.1)),
+"WQFN16EP": dict(desc="headphone amp TI TPA6132A2RTE WQFN-16 (SLOS597B pin table; land RTE0016C: 16 x 0.6 x 0.24 on 0.5, centres +-1.4, pad 1.68 square)", fp="PF233:WQFN-16-1EP_3x3mm_P0.5mm", fine=True,
+                pins=[("1", "INL-", "input"), ("2", "INL+", "input"), ("3", "INR+", "input"), ("4", "INR-", "input"), ("5", "OUTR", "output"), ("6", "G0", "input"), ("7", "G1", "input"), ("8", "HPVSS", "power_out"),
+                      ("9", "CPN", "passive"), ("10", "PGND", "power_in"), ("11", "CPP", "passive"), ("12", "HPVDD", "power_out"), ("13", "EN", "input"), ("14", "VDD", "power_in"), ("15", "SGND", "power_in"), ("16", "OUTL", "output"), ("17", "EP", "power_in")],
+                pads=[("1", -1.4, -0.75, 0.6, 0.24, "rect"), ("2", -1.4, -0.25, 0.6, 0.24, "rect"), ("3", -1.4, 0.25, 0.6, 0.24, "rect"), ("4", -1.4, 0.75, 0.6, 0.24, "rect"), ("5", -0.75, 1.4, 0.24, 0.6, "rect"), ("6", -0.25, 1.4, 0.24, 0.6, "rect"), ("7", 0.25, 1.4, 0.24, 0.6, "rect"), ("8", 0.75, 1.4, 0.24, 0.6, "rect"), ("9", 1.4, 0.75, 0.6, 0.24, "rect"), ("10", 1.4, 0.25, 0.6, 0.24, "rect"), ("11", 1.4, -0.25, 0.6, 0.24, "rect"), ("12", 1.4, -0.75, 0.6, 0.24, "rect"), ("13", 0.75, -1.4, 0.24, 0.6, "rect"), ("14", 0.25, -1.4, 0.24, 0.6, "rect"), ("15", -0.25, -1.4, 0.24, 0.6, "rect"), ("16", -0.75, -1.4, 0.24, 0.6, "rect"), ("17", 0.0, 0.0, 1.68, 1.68, "rect")], body=(3.0, 3.0, 0.8)),
+"SOT23-6BUCK": dict(desc="buck TI TPS560430 SOT-23-6 (SLVSE22B: 1 CB, 2 GND, 3 FB, 4 EN, 5 VIN, 6 SW; land from the KiCad library SOT-23-6: 1.325 x 0.6 at x +-1.1375, pitch 0.95)", fp="Package_TO_SOT_SMD:SOT-23-6",
+                pins=[("1", "CB", "passive"), ("2", "GND", "power_in"), ("3", "FB", "input"), ("4", "EN", "input"), ("5", "VIN", "power_in"), ("6", "SW", "power_out")],
+                pads=[("1", -1.1375, -0.95, 1.325, 0.6, "roundrect"), ("2", -1.1375, 0.0, 1.325, 0.6, "roundrect"), ("3", -1.1375, 0.95, 1.325, 0.6, "roundrect"), ("4", 1.1375, 0.95, 1.325, 0.6, "roundrect"), ("5", 1.1375, 0.0, 1.325, 0.6, "roundrect"), ("6", 1.1375, -0.95, 1.325, 0.6, "roundrect")], body=(2.9, 1.6, 1.45)),
+"SOT23-5LDO": dict(desc="LDO TI TLV75533PDBV SOT-23-5 (SBVS320D DBV: 1 IN, 2 GND, 3 EN, 4 NC, 5 OUT; same land as SOT23-5)", fp="Package_TO_SOT_SMD:SOT-23-5",
+                pins=[("1", "IN", "power_in"), ("2", "GND", "power_in"), ("3", "EN", "input"), ("4", "NC", "passive"), ("5", "OUT", "power_out")],
+                pads=[("1", -1.1, -0.95, 1.0, 0.6, "roundrect"), ("2", -1.1, 0, 1.0, 0.6, "roundrect"), ("3", -1.1, 0.95, 1.0, 0.6, "roundrect"), ("4", 1.1, 0.95, 1.0, 0.6, "roundrect"), ("5", 1.1, -0.95, 1.0, 0.6, "roundrect")], body=(2.9, 1.6, 1.45)),
+"SRN4018": dict(desc="inductor Bourns SRN4018-220M 22 uH 0.348 ohm 0.9 A rms 0.95 A sat (datasheet REV. 10/26: 4.0 x 4.0 x 1.8 max, layout 2 x 1.5 x 3.6, 4.55 overall)", fp="PF233:L_Bourns_SRN4018",
+                pins=[("1", "1", "passive"), ("2", "2", "passive")], pads=[("1", -1.525, 0.0, 1.5, 3.6, "rect"), ("2", 1.525, 0.0, 1.5, 3.6, "rect")], body=(4.0, 4.0, 1.8)),
 "SOT23-5": dict(desc="74AHCT1G125 buffer SOT-23-5: 1 OE#, 2 A, 3 GND, 4 Y, 5 VCC (TI SCLS378P Table 4-1, verified 2026-10-28)", fp="Package_TO_SOT_SMD:SOT-23-5", pins=[("1", "OE", "input"), ("2", "A", "input"), ("3", "GND", "power_in"), ("4", "Y", "output"), ("5", "VCC", "power_in")], pads=[("1", -1.1, -0.95, 1.0, 0.6, "roundrect"), ("2", -1.1, 0, 1.0, 0.6, "roundrect"), ("3", -1.1, 0.95, 1.0, 0.6, "roundrect"), ("4", 1.1, 0.95, 1.0, 0.6, "roundrect"), ("5", 1.1, -0.95, 1.0, 0.6, "roundrect")], body=(3.0, 1.7, 1.1)), "HDR2x6": tht(6, 2.54, 2, 1.8, 1.0, "Pin header"),
  "D2PAK": dict(desc="MOSFET TO-263-3 (D2PAK) G-D-S, tab = drain (VERIFY land pattern)", fp="Package_TO_SOT_SMD:TO-263-3_TabPin2",
                pins=[("1", "G", "input"), ("2", "D", "passive"), ("3", "S", "passive")],
@@ -197,8 +216,12 @@ if PW == "C":
     add("RV1", "R0603", "100k", "0.1%"); add("RV2", "R0603", "10k", "0.1%"); add("CV4", "C0603", "100n", "X7R")
     net("VBUS", ("RV1", 1)); net("VBUS_SENSE", ("RV2", 1), ("RV1", 2), ("CV4", 1)); net("GND", ("RV2", 2), ("CV4", 2))
     # handle: trigger + dial (the only things that leave the head besides power)
-    add("JTR", "HDR1x7", "Handle: +3V3 GND TRIG DIAL JOYX JOYY SHLD", "shielded 6-core + drain (the only signal cable leaving the head)"); net("P3V3", ("JTR", 1)); net("GND", ("JTR", 2)); net("TRIG_EXT", ("JTR", 3), ("RT1", 1)); net("DIAL_EXT", ("JTR", 4), ("RD1", 1)); net("SHIELD", ("JTR", 7), ("RSH", 1), ("CSH", 1)); net("JTR5_OPT", ("JTR", 5), ("RJ5", 1)); net("JTR6_OPT", ("JTR", 6), ("RJ6", 1)); net("GND", ("RJ5", 2), ("RJ6", 2))
-    add("RJ5", "R0603", "0R DNP", "option: fit to ground JTR.5 at the CB1D end (handle-end check: OPEN_ITEMS 25)"); add("RJ6", "R0603", "0R DNP", "option: fit to ground JTR.6 at the CB1D end (handle-end check: OPEN_ITEMS 25)")
+    add("JTR", "HDR1x7", "Handle: +3V3 GND TRIG DIAL AUD_LINK - SHLD", "shielded 6-core + drain (the only signal cable leaving the head)"); net("P3V3", ("JTR", 1)); net("GND", ("JTR", 2)); net("TRIG_EXT", ("JTR", 3), ("RT1", 1)); net("DIAL_EXT", ("JTR", 4), ("RD1", 1)); net("SHIELD", ("JTR", 7), ("RSH", 1), ("CSH", 1)); net("AUD_LINK", ("JTR", 5), ("RAU", 1), ("DAU1", 2), ("DAU2", 1)); net("JTR6_OPT", ("JTR", 6), ("RJ6", 1)); net("GND", ("RJ6", 2))
+    # CB1D-C2 (2026-10-28, output modes): JTR.5 = AUD_LINK, the half-duplex 1 Mbaud descriptor link to the AU1 audio board on the spare signal-cord core 5,
+    # driven in the idle slot only (PIO on Pico pin 20, GP15: ASSUMPTIONS 22, UNVERIFIED); 100 R series and BAS16 clamps at the cord entry (as the HTA input); RJ5 removed
+    add("RAU", "R0603", "100R", "link series / cord damping"); add("DAU1", "DSOD", "BAS16", "clamp to 3V3"); add("DAU2", "DSOD", "BAS16", "clamp to GND")
+    net("AUD_PIO", ("RAU", 2), ("U1", 20)); net("P3V3", ("DAU1", 1)); net("GND", ("DAU2", 2))
+    add("RJ6", "R0603", "0R DNP", "option: fit to ground JTR.6 at the CB1D end (handle-end check: OPEN_ITEMS 25)")
     add("RJB10", "R0603", "0R", "FITTED: JB.10 (AB1B idle MONO input, RS2 into the MONO amplifier) to VCM_OUT; remove only to isolate the input, which then floats: not for service"); net("JB10_VCM", ("RJB10", 1)); net("VCM_OUT", ("RJB10", 2))   # JTR.5/.6 (JOYX/JOYY) unconnected: joystick removed (owner decision 2026-10-23), CB1D-B
     add("RSH", "R0603", "1M", ""); add("CSH", "C0603", "1n 100V", "C0G"); net("GND", ("RSH", 2), ("CSH", 2))
     for k, (ext, inn) in enumerate((("TRIG_EXT", "TRIG_IN"), ("DIAL_EXT", "DIAL_IN")), 1):
@@ -278,6 +301,10 @@ if PW == "P":
     add("CB1", "CAN10", "100u 50V hybrid", "Panasonic EEHZC1H101P (ZC, 10x10.2, 28 mohm, 1.6 A rms)"); net("VBUS", ("CB1", 1)); net("GND", ("CB1", 2))
     add("CM1", "C1210", "10u 50V", "X7R"); net("VBUS", ("CM1", 1)); net("GND", ("CM1", 2))
     add("RBL", "R1206", "100k", "bleeder"); net("VBUS", ("RBL", 1)); net("GND", ("RBL", 2))
+    # PM2-B (2026-10-28, output modes): switched, fused tap for the AU1 audio board (after Q1, so AU1 is off with the power switch); Bourns SF-1206S050-2
+    # (0.50 A slow blow, 0.596 ohm, 32 VDC, SF-1206S datasheet REV. J 04/21, same land as F1)
+    add("F2", "FUSE1206B", "0.5A slow 32V", "Bourns SF-1206S050-2 (0.50 A slow blow, 32 VDC)"); net("VBUS", ("F2", 1)); net("VBUS_AU", ("F2", 2))
+    add("JAUP", "WIRE2", "Power to AU1: VBUS_AU, GND", "AWG24 pair, 0.15 m"); net("VBUS_AU", ("JAUP", 1)); net("GND", ("JAUP", 2))
     add("JP", "WIRE4", "Power cord: VBUS VBUS GND GND", "coiled cord 2 x AWG20 shielded (one conductor per net, second pad for strain relief)")
     net("VBUS", ("JP", 1), ("JP", 2)); net("GND", ("JP", 3), ("JP", 4))
     add("JS", "WIRE2S", "Shields: power-cord braid, septum Cu mesh", "single-point drain at PM2"); net("SHIELD", ("JS", 1), ("JS", 2), ("RSH", 1), ("CSH", 1))
@@ -286,7 +313,10 @@ if PW == "G":
     # ------------------------------------------------------------------ HB2 (upper assembly v1): grip board in the top housing; trigger Hall switch and dial; no joystick
     # JH keeps the CB1D JTR pinout; pins 5/6 (the old joystick) have no conductor in the 5-core signal cord
     add("JH", "HDR1x7", "Signal cord to the head: +3V3 GND TRIG DIAL - - SHLD", "coiled cord 5-core AWG28 shielded")
-    for p_, nm in ((1, "P3V3"), (2, "GND"), (3, "TRIG"), (4, "DIAL"), (5, "JH5_NC"), (6, "JH6_NC"), (7, "SHIELD")): net(nm, ("JH", p_))
+    for p_, nm in ((1, "P3V3"), (2, "GND"), (3, "TRIG"), (4, "DIAL"), (5, "AUD_LINK"), (6, "JH6_NC"), (7, "SHIELD")): net(nm, ("JH", p_))
+    # HB2-B (2026-10-28, output modes): JH.5 = AUD_LINK on the spare signal-cord core 5 (half-duplex 1 Mbaud descriptor link, head <-> AU1 audio board),
+    # passed straight to JAU, the 0.2 m lead in the grip rear channel to AU1 (battery side); the 3-position output selector sits on AU1, not in the dial ladder
+    add("JAU", "WIRE2", "Lead to AU1: AUD_LINK, GND", "AWG28 pair, grip rear channel"); net("AUD_LINK", ("JAU", 1)); net("GND", ("JAU", 2))
     add("HS1", "HALL_SW", "DRV5023BIQLPG", "TI DRV5023BI TO-92: 1 VCC / 2 GND / 3 OUT open-drain, 2.5-38 V, BOP 6-24 mT, BRP 3-9 mT; magnet near at rest -> TRIG low, pressed -> TRIG high")
     add("CH1", "C0603", "100n", ""); add("RH1", "R0603", "1k", "")
     net("P3V3", ("HS1", 1), ("CH1", 1)); net("GND", ("HS1", 2), ("CH1", 2)); net("HALL_OUT", ("HS1", 3), ("RH1", 1)); net("TRIG", ("RH1", 2))
@@ -309,6 +339,46 @@ if PW == "L":
     add("U2", "SOT23-5", "74AHCT1G125", "TI SN74AHCT1G125DBV (level shift 3V3 -> 5V LED clock; SCLS378P: VIH 2.0 V, tpd 6 ns max at 5 V)"); net("+5V", ("U2", 5)); net("GND", ("U2", 3), ("U2", 1)); net("LED_CLK", ("U2", 2)); net("LC_BUF", ("U2", 4), ("RSC", 1))
     add("RSC", "R0603", "33R", "series damping (clock)"); net("LD_C0", ("RSC", 2))
     add("JLB", "WIRE1x4", "to CB1D: +5V, LED_IN, LED_CLK, GND", "4 wire pads, no header (a header is 9 mm tall and hits the cap)"); net("+5V", ("JLB", 1)); net("LED_IN", ("JLB", 2)); net("LED_CLK", ("JLB", 3)); net("GND", ("JLB", 4))
+if PW == "U":
+    # ------------------------------------------------------------------ AU1 audio board (2026-10-28, output modes; docs/design/OUTPUT_MODES_PLAN.md), battery-side housing
+    # pack -> TPS560430 buck 5 V (TI design example SLVSE22B: RFBT 88.7 k / RFBB 22.1 k with VREF 1.0 V, CBOOT 100 n, CIN 2.2 u 50 V + 100 n, COUT 22 u 10 V; L 22 uH SRN4018-220M)
+    # -> TLV75533 LDO 3.3 V (1 u in / out) -> MSPM0G3507 (VCORE 470 n, VDD 10 u, NRST pull-up); descriptor link in on JLINK (half-duplex UART0 PA10 TX via 1 k / PA11 RX);
+    # DAC (PA15) -> TPA2005D1 speaker amp (gain 2 x 150 k / RI = 2 V/V, input caps) and headphone left; PWM (PA14) RC-filtered -> headphone right (stereo pan = bearing);
+    # TPA6132A2 headphone amp (single-ended inputs, 1 u caps, HPVDD 2.2 u, flying 1 u, HPVSS 1 u, G0 high / G1 low = 0 dB); 3-position output selector on JSEL (pull-ups);
+    # speaker, panel jack (with plug-detect switch), selector and power arrive on wire pads (panel parts: ASSUMPTIONS, part numbers UNVERIFIED)
+    add("JPWR", "WIRE2", "Power from PM2 JAUP: VBUS_AU, GND", "AWG24 pair"); net("VBUS_AU", ("JPWR", 1)); net("GND", ("JPWR", 2))
+    add("JLINK", "WIRE2", "Link from HB2 JAU: AUD_LINK, GND", "AWG28 pair"); net("AUD_LINK", ("JLINK", 1)); net("GND", ("JLINK", 2))
+    add("UB", "SOT23-6BUCK", "TPS560430", "TI TPS560430 4-36 V buck, 600 mA"); add("LB", "SRN4018", "22uH", "Bourns SRN4018-220M")
+    add("CBI", "C1210", "2.2u 50V", "X7R input"); add("CBI2", "C0603", "100n 50V", "X7R input HF"); add("CBB", "C0603", "100n", "X7R boot"); add("CBO", "C1210", "22u 10V", "X7R output")
+    add("RFT", "R0603", "88k7", "FB top"); add("RFB", "R0603", "22k1", "FB bottom")
+    net("VBUS_AU", ("UB", 5), ("UB", 4), ("CBI", 1), ("CBI2", 1)); net("GND", ("UB", 2), ("CBI", 2), ("CBI2", 2), ("CBO", 2), ("RFB", 2))
+    net("SW_AU", ("UB", 6), ("LB", 1), ("CBB", 2)); net("CB_AU", ("UB", 1), ("CBB", 1)); net("+5V_AU", ("LB", 2), ("CBO", 1), ("RFT", 1)); net("FB_AU", ("UB", 3), ("RFT", 2), ("RFB", 1))
+    add("UL", "SOT23-5LDO", "TLV75533", "TI TLV75533PDBV 3.3 V 500 mA"); add("CLI", "C0603", "1u", "X7R"); add("CLO", "C0603", "1u", "X7R")
+    net("+5V_AU", ("UL", 1), ("UL", 3), ("CLI", 1)); net("GND", ("UL", 2), ("CLI", 2), ("CLO", 2)); net("+3V3_AU", ("UL", 5), ("CLO", 1)); net("UL_NC", ("UL", 4))
+    add("UM", "VSSOP28", "MSPM0G3507SDGS28", "TI MSPM0G3507 Cortex-M0+ 80 MHz, 12-bit DAC")
+    add("CVC", "C0603", "470n", "X7R VCORE"); add("CVD", "C0805", "10u", "X7R VDD"); add("CVD2", "C0603", "100n", "X7R VDD HF"); add("RNR", "R0603", "47k", "NRST pull-up"); add("CNR", "C0603", "10n", "NRST")
+    net("+3V3_AU", ("UM", 7), ("CVD", 1), ("CVD2", 1), ("RNR", 1)); net("GND", ("UM", 8), ("CVC", 2), ("CVD", 2), ("CVD2", 2), ("CNR", 2)); net("VCORE_AU", ("UM", 3), ("CVC", 1)); net("NRST_AU", ("UM", 6), ("RNR", 2), ("CNR", 1))
+    add("JSWD", "HDR1x5", "SWD: 3V3 SWDIO SWCLK GND NRST", "programming pads"); net("+3V3_AU", ("JSWD", 1)); net("SWDIO_AU", ("JSWD", 2), ("UM", 22)); net("SWCLK_AU", ("JSWD", 3), ("UM", 23)); net("GND", ("JSWD", 4)); net("NRST_AU", ("JSWD", 5))
+    add("RLK", "R0603", "100R", "link entry"); add("RTX", "R0603", "1k", "TX into the shared line"); add("DLK1", "DSOD", "BAS16", "clamp to 3V3"); add("DLK2", "DSOD", "BAS16", "clamp to GND")
+    net("AUD_LINK", ("RLK", 1), ("DLK1", 2), ("DLK2", 1)); net("LINK_N", ("RLK", 2), ("UM", 16), ("RTX", 2)); net("LINK_TX", ("RTX", 1), ("UM", 15)); net("+3V3_AU", ("DLK1", 1)); net("GND", ("DLK2", 2))
+    add("JSEL", "WIRE4", "Output selector: COM P1 P2 P3", "3-position rotary, battery side"); add("RS1", "R0603", "10k", ""); add("RS2", "R0603", "10k", ""); add("RS3", "R0603", "10k", "")
+    net("GND", ("JSEL", 1)); net("SEL1", ("JSEL", 2), ("RS1", 2), ("UM", 24)); net("SEL2", ("JSEL", 3), ("RS2", 2), ("UM", 25)); net("SEL3", ("JSEL", 4), ("RS3", 2), ("UM", 27)); net("+3V3_AU", ("RS1", 1), ("RS2", 1), ("RS3", 1))
+    add("US", "HVSSOP8EP", "TPA2005D1DGN", "TI TPA2005D1 1.4 W class-D"); add("CSV", "C0603", "1u", "X7R VDD"); add("CSV2", "C1210", "10u 10V", "X7R VDD bulk")
+    add("CI1", "C0603", "1u", "input"); add("CI2", "C0603", "1u", "input"); add("RI1", "R0603", "150k", "RI"); add("RI2", "R0603", "150k", "RI"); add("RSD", "R0603", "100k", "SHUTDOWN pull-down")
+    net("+5V_AU", ("US", 6), ("CSV", 1), ("CSV2", 1)); net("GND", ("US", 7), ("US", 9), ("CSV", 2), ("CSV2", 2), ("CI2", 1), ("RSD", 2)); net("US_NC", ("US", 2))
+    net("DAC_AU", ("UM", 18), ("CI1", 1), ("CHL", 1)); net("SPK_INP", ("CI1", 2), ("RI1", 1)); net("US_INP", ("RI1", 2), ("US", 3)); net("SPK_INN", ("CI2", 2), ("RI2", 1)); net("US_INN", ("RI2", 2), ("US", 4))
+    net("SPK_SD", ("US", 1), ("RSD", 1), ("UM", 28))
+    add("JSPK", "WIRE2", "Speaker: SPK+ SPK- (8 ohm)", "speaker leads"); net("SPK_P", ("US", 5), ("JSPK", 1)); net("SPK_N", ("US", 8), ("JSPK", 2))
+    add("UH", "WQFN16EP", "TPA6132A2RTE", "TI TPA6132A2 DirectPath headphone amp"); add("CHL", "C0603", "1u", "input L"); add("CHR", "C0603", "1u", "input R")
+    add("CHV", "C0603", "2.2u", "VDD"); add("CHP", "C0603", "2.2u", "HPVDD"); add("CHF", "C0603", "1u", "flying"); add("CHS", "C0603", "1u", "HPVSS"); add("RHE", "R0603", "100k", "EN pull-down")
+    add("RPW", "R0603", "1k", "PWM filter"); add("CPW", "C0603", "10n", "PWM filter")
+    net("PWM_AU", ("UM", 17), ("RPW", 1)); net("PWM_F", ("RPW", 2), ("CPW", 1), ("CHR", 1)); net("GND", ("CPW", 2))
+    net("HP_INL", ("CHL", 2), ("UH", 1)); net("HP_INR", ("CHR", 2), ("UH", 4)); net("GND", ("UH", 2), ("UH", 3), ("UH", 7), ("UH", 10), ("UH", 15), ("UH", 17), ("CHV", 2), ("CHP", 2), ("CHS", 2), ("RHE", 2))
+    net("+3V3_AU", ("UH", 14), ("UH", 6), ("CHV", 1)); net("HPVDD_AU", ("UH", 12), ("CHP", 1)); net("CPP_AU", ("UH", 11), ("CHF", 1)); net("CPN_AU", ("UH", 9), ("CHF", 2)); net("HPVSS_AU", ("UH", 8), ("CHS", 1))
+    net("HP_EN", ("UH", 13), ("RHE", 1), ("UM", 26))
+    add("JHP", "WIRE4", "Headphone jack: TIP(L) RING(R) SLEEVE DET", "panel 3.5 mm jack with plug-detect switch"); add("RDT", "R0603", "10k", "jack detect pull-up")
+    net("HP_L", ("UH", 16), ("JHP", 1)); net("HP_R", ("UH", 5), ("JHP", 2)); net("GND", ("JHP", 3)); net("HP_DET", ("JHP", 4), ("RDT", 2), ("UM", 1)); net("+3V3_AU", ("RDT", 1))
+    for _pn in (2, 4, 5, 9, 10, 11, 12, 13, 14, 19, 20, 21): net(f"UM_P{_pn}_NC", ("UM", _pn))
 if PW == "C" and os.environ.get("DISC"):
     # ---- CB1D additions: hub-top antenna (HTA) monitor input on spare mux channel Y4 (select line S2 from the spare Pico pin GP1)
     NETS["GND"] = [p for p in NETS["GND"] if p not in (("UM", "1"), ("UM", "9"))]
@@ -324,7 +394,12 @@ if PW == "C" and os.environ.get("DISC"):
     # Pico pins 26 / 27 (GP20 / GP21, I2C0 SDA / SCL by the Pico pinout: ASSUMPTIONS 22, UNVERIFIED), next to the free band above the top header; 4k7 pull-ups for 400 kHz
     add("UG", "BMI270", "BMI270", "Bosch BMI270 IMU (yaw rate), I2C"); add("CG1", "C0603", "100n", "X7R, VDDIO"); add("CG2", "C0603", "100n", "X7R, VDD")
     add("RGA", "R0603", "4k7", "I2C SDA pull-up"); add("RGL", "R0603", "4k7", "I2C SCL pull-up")
-    net("P3V3", ("UG", 5), ("UG", 8), ("UG", 12), ("UG", 2), ("UG", 3), ("CG1", 1), ("CG2", 1), ("RGA", 1), ("RGL", 1)); net("GND", ("UG", 1), ("UG", 6), ("UG", 7), ("CG1", 2), ("CG2", 2))
+    # UG_VIO: a local supply net (VDD, VDDIO, CSB, pins 2 / 3 and SDO) joined on the surface and fed from P3V3 through RGF 10 R (with CG1 / CG2 a supply filter):
+    # the corner pads of the 0.5 mm LGA cannot each take a plane via next to the I2C escapes (CB1D route 2026-10-28). SDO high selects the alternate I2C
+    # address (BMI270 0x69, LSM6DSO SA0 = 1 -> 0x6B), allowed by both datasheets
+    add("RGF", "R0603", "10R", "gyro supply filter")
+    net("UG_VIO", ("UG", 1), ("UG", 2), ("UG", 3), ("UG", 5), ("UG", 8), ("UG", 12), ("CG1", 1), ("CG2", 1), ("RGF", 2)); net("P3V3", ("RGF", 1), ("RGA", 1), ("RGL", 1))
+    net("GND", ("UG", 6), ("UG", 7), ("CG1", 2), ("CG2", 2))
     net("GYR_SDA", ("UG", 14), ("RGA", 2), ("U1", 26)); net("GYR_SCL", ("UG", 13), ("RGL", 2), ("U1", 27))
     for _pn, _nm in ((4, "INT1"), (9, "INT2"), (10, "OCSB"), (11, "OSDO")): net(f"UG_{_nm}_NC", ("UG", _pn))
 for k in NETS: NETS[k] = list(dict.fromkeys(NETS[k]))

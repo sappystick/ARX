@@ -20,7 +20,7 @@ def libpart(path):
 hc, hn = parse_net("kit_v6/HB2/PF233-HB2.net"); cc, cn = parse_net("kit_v18/CB1D/PF233-CB1D.net"); hp = libpart("kit_v6/HB2/PF233-HB2.net")
 def net_of(nets, ref, pin): return next((n for n, nodes in nets.items() if any(r == ref and p == pin for r, p, _ in nodes)), None)
 def on(nets, n, ref, pin): return any(r == ref and p == pin for r, p, _ in nets.get(n, []))
-H = list(csv.DictReader(open("harness/HARNESS_MASTER_v4.csv")))
+H = list(csv.DictReader(open("harness/HARNESS_MASTER_v5.csv")))
 row = next((h for h in H if "HB2.JH.3" in json.dumps(h) and "CB1D.JTR.3" in json.dumps(h)), None)
 
 # 1 connectivity of the trigger chain

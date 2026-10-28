@@ -19,6 +19,7 @@ class Router:
                 s.own[l][m]=nid
                 if p.get("fine"): s.finem[l]|=m
             cells=np.argwhere(m); s.padcells.append((nid,cells,list(lays)))
+        s.finez=ndi.binary_dilation(s.finem.any(axis=0),structure=disk(10)) if s.finem.any() else np.zeros((s.N,s.N),bool)   # 1.5 mm zone around fine-pitch pads
         s.stats={}
     def rast(s,p):
         m=np.zeros((s.N,s.N),bool); r0,c0=s.cell(p["x"],p["y"]); hw=int(math.ceil(p["w"]/2/GR)); hh=int(math.ceil(p["h"]/2/GR))
@@ -36,16 +37,17 @@ class Router:
             o=s.own[l]; others=(o!=0)&(o!=nid); hvm=np.zeros_like(others)
             for h in s.hv:
                 if h in s.nid and s.nid[h]!=nid: hvm|=(o==s.nid[h])
-            rc=int(math.ceil((s.clr+hw)/GR)); b=ndi.binary_dilation(others&~s.finem[l],structure=disk(rc))
-            # around fine-pitch pads the halo is the exact cell count: ceil((0.2+0.1)/0.15) is 3 in floating point (0.45 mm) and seals a 0.5 mm-pitch middle pad;
-            # every other copper keeps the old (conservative) halo, so boards without fine pads route exactly as before
-            if s.finem[l].any(): b|=ndi.binary_dilation(others&s.finem[l],structure=disk(int(math.ceil((s.clr+hw)/GR-1e-9))))
+            rc=int(math.ceil((s.clr+hw)/GR)); b=ndi.binary_dilation(others&~s.finez,structure=disk(rc))
+            # in the zone around fine-pitch pads (finez: 1.5 mm) the halo of all copper is the exact cell count: ceil((0.2+0.1)/0.15) is 3 in floating point
+            # (0.45 mm) and seals a 0.5 mm-pitch middle pad and its neighbours' stubs; elsewhere the old (conservative) halo, so boards without fine pads route as before
+            if s.finez.any(): b|=ndi.binary_dilation(others&s.finez,structure=disk(int(math.ceil((s.clr+hw)/GR-1e-9))))
             rh=int(math.ceil(((s.hv_clr if (ishv or True) else s.clr)+hw)/GR))
             if ishv: b=ndi.binary_dilation(others,structure=disk(rh))
             else: b|=ndi.binary_dilation(hvm,structure=disk(rh))
             b|=(s.edged<s.edge+hw)
             blk.append(b)
-            rv=int(math.ceil((s.clr+s.via_pad/2)/GR)); vb=ndi.binary_dilation(others,structure=disk(rv)) if not ishv else ndi.binary_dilation(others,structure=disk(int(math.ceil((s.hv_clr+s.via_pad/2)/GR))))
+            rv=int(math.ceil((s.clr+s.via_pad/2)/GR)); vb=ndi.binary_dilation(others&~s.finez,structure=disk(rv)) if not ishv else ndi.binary_dilation(others,structure=disk(int(math.ceil((s.hv_clr+s.via_pad/2)/GR))))
+            if not ishv and s.finez.any(): vb|=ndi.binary_dilation(others&s.finez,structure=disk(int(math.ceil((s.clr+s.via_pad/2)/GR-1e-9))))
             if not ishv and len(hvm.nonzero()[0]): vb|=ndi.binary_dilation(hvm,structure=disk(int(math.ceil((s.hv_clr+s.via_pad/2)/GR))))
             viablk|=vb
         viablk|=(s.edged<s.edge+s.via_pad/2)

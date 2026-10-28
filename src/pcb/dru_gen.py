@@ -22,6 +22,7 @@ BOARDS = {
     "SB1R-QA": dict(hv=[], hv_mm=1.0, power={}),
     "SB1R-QB": dict(hv=[], hv_mm=1.0, power={}),
     "HB2": dict(hv=[], hv_mm=1.0, power={"P3V3": 0.3}),
+    "AU1": dict(hv=[], hv_mm=1.0, power={"VBUS_AU": 0.5, "+5V_AU": 0.5, "SW_AU": 0.6, "SPK_P": 0.5, "SPK_N": 0.5, "GND": 0.4, "+3V3_AU": 0.3}),      # = the router widths (route_run.py)
     "HTA": dict(hv=[], hv_mm=1.0, power={}),
     "TXJ1": dict(hv=["TX_A", "TX_B"], hv_mm=1.0, power={"TX_A": 3.0, "TX_B": 3.0}),
     # Step 12: receive analog boards (low voltage). Router designs to the floor itself for clearance (0.16 mm) and, only here, to the vendors' documented Standard via:

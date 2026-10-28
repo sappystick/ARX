@@ -330,7 +330,7 @@ except FileNotFoundError: chk("solid_union study evidence (data/results/studies/
 # P1 manufacturing margin audit (src/pcb/fab_margin.py): every released board measured at or above every fabrication floor; margins are reported, not gated
 try:
     _fm=json.load(open("data/results/fab_margin_audit.json"))["boards"]
-    chk("fab margin audit: all 11 released boards at or above every floor (copper gap, HV 1.0 mm, edge, drill-drill, drill-copper, via / PTH ring, track)",len(_fm)==11 and all(b["pass"] for b in _fm.values()),
+    chk("fab margin audit: all 12 released boards at or above every floor (copper gap, HV 1.0 mm, edge, drill-drill, drill-copper, via / PTH ring, track)",len(_fm)==12 and all(b["pass"] for b in _fm.values()),
         "; ".join(f"{k} {b['min_margin_mm']} ({b['min_margin_of']})" for k,b in _fm.items()))
 except FileNotFoundError: chk("fab margin audit evidence (data/results/fab_margin_audit.json)",False,"missing")
 # output modes step 1 (src/sim/output_modes.py): audio / LED renderers from one descriptor; idle slot, latency, LED rail cap, silent search, distinct voices and colours
@@ -350,9 +350,14 @@ d=rd("kit_v23/tx_steer_study.json")
 if d: _c=d["checks"]; chk("TX steering study: full coil nulled, single offset coil steers but leaks >= 10 V, push-pull pairs null to both quads with a horizontal field below the centre",
           d["ok"] and _c["single_coil_leak_V_min"]>=10, f"single leak {_c['single_coil_leak_V_min']} V; pair field / full at 100-300 mm {_c['pair_field_rel_full']}")
 else: skip("TX steering study")
+# AU1 audio board cross-check (src/pcb/au1_check.py): buck / LDO / amplifier operating points against the datasheet limits, link, fuse, harness ends
+d=rd("kit_v23/au1_check.json")
+if d: chk("AU1 audio board: every electrical cross-check passes (buck 5 V, inductor peak, LDO dropout, amp swing, fuse, harness ends)",all(c["result"]=="PASS" for c in d["checks"]) and len(d["checks"])>=20,
+          f"{len(d['checks'])} checks; buck {d['operating']['buck_V']} V, L peak {d['operating']['ipk_A']} A, input {d['operating']['iin_A']} A")
+else: skip("AU1 cross-check")
 # KiCad pad geometry = placement model, pad by pad (src/pcb/pad_orient_check.py): the KiCad pad angle is absolute; a missing angle left rotated pads unrotated
 d=rd("kit_v22/pad_orient_check.json")
-if d: _b=d["boards"]; chk("KiCad pads = placement model on LB1, CB1D, PB1R, PM2, HB2 (centre and size within 0.005 mm)",len(_b)==5 and all(v["ok"] for v in _b.values()),"; ".join(f"{k} {v.get('pads_compared')} pads {v.get('mismatches')} off" for k,v in _b.items()))
+if d: _b=d["boards"]; chk("KiCad pads = placement model on LB1, CB1D, PB1R, PM2, HB2, AU1 (centre and size within 0.005 mm)",len(_b)==6 and all(v["ok"] for v in _b.values()),"; ".join(f"{k} {v.get('pads_compared')} pads {v.get('mismatches')} off" for k,v in _b.items()))
 else: skip("KiCad pad orientation check")
 # LB1-v6 clocked LEDs (src/pcb/led_upgrade_check.py): SK9822-EC20 at the placed positions and chain rotations, pad gap and body gap floors, 0.3 mm under the roof
 try:
