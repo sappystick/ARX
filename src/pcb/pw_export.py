@@ -101,11 +101,13 @@ elif PW == "U":
              "UM": (-4.0, 1.0, 0), "US": (7.0, -1.0, 0), "UH": (7.0, 9.5, 0), "UB": (-4.0, -15.0, 0), "LB": (3.0, -15.0, 0), "UL": (-4.0, -9.0, 0),
              # NRST cluster in one column left of the VCORE / VDD caps, fed from pin 6 through the gap between them; TPA6132A2 charge-pump caps on their pins
              # (CHF beside CPP 11 / CPN 9, CHS under HPVSS 8): the scattered anchors left NRST_AU and HPVSS_AU unroutable (2026-10-28)
-             "RNR": (-12.0, -0.55, 0), "CNR": (-12.0, 1.3, 180), "TPRST": (-12.0, -2.9, 0), "CHF": (10.2, 9.9, 270), "CHS": (8.05, 12.7, 270)}
+             "RNR": (-12.0, -0.55, 0), "CNR": (-12.0, 1.3, 180), "TPRST": (-12.0, -2.9, 0), "CHF": (10.2, 9.9, 270), "CHS": (8.05, 12.7, 270),
+             # speaker-amp input resistors beside their pins (RI1 -> US.3 below, RI2 -> US.4 level with it), CI1 lifted to clear RI2 (US_INN did not route from (3, 7))
+             "RI2": (2.0, -0.05, 0), "CI1": (2.0, 1.8, 0)}
     anchors = {"CBI": (-10, -14), "CBI2": (-10, -11), "CBB": (-4, -11.5), "CBO": (9, -14), "RFT": (0, -11), "RFB": (3, -11), "CLI": (-8, -8), "CLO": (0, -8),
                "CVC": (-9, -2), "CVD": (-9, 1), "CVD2": (-9, 4), "RBSL": (0, 5),
                "RLK": (-6, 14), "RTX": (-2, 14), "DLK1": (-6, 17), "DLK2": (-2, 17), "RS1": (-11, 1), "RS2": (-11, 4), "RS3": (-11, 7),
-               "CSV": (11, -4), "CSV2": (12, -8), "CI1": (2, 1), "CI2": (2, 4), "RI1": (3, -2), "RI2": (3, 7), "RSD": (11, 3),
+               "CSV": (11, -4), "CSV2": (12, -8), "CI2": (2, 4), "RI1": (3, -2), "RSD": (11, 3),
                "CHL": (2, 10), "CHR": (2, 13), "CHV": (11, 6), "CHP": (11, 13), "RHE": (4, 16), "RPW": (0, 16), "CPW": (0, 19), "RDT": (2.5, -3.5)}
     PL = autoplace(fixed, anchors)
 elif PW == "G":

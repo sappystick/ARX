@@ -27,7 +27,7 @@ elif board=="AU1":
     # reorder-and-retry (deterministic): route from scratch with the nets that failed moved to the front and the pads whose plane stub failed stubbed first,
     # up to 6 rounds, keep the best (opt-in for AU1)
     mk=lambda: Router("kit_v6/AU1/pads.json",["F.Cu","In2.Cu","B.Cu"],{"GND":"In1.Cu","+5V_AU":"In3.Cu","+3V3_AU":"In4.Cu"},wid,clr=0.2)      # 6 layers (pw_export)
-    front=[]; stubs=set(); best=None
+    front=["BSL_INV","US_INN"]; stubs=set(); best=None                       # learned (2026-10-28 exact fine-zone keep-out): these two lost their only escape to later nets
     for rnd in range(6):
         R=mk(); R.fine_order="span"; R.priority=list(front); R.stub_first=set(stubs); st=R.run(budget=1e9,state=None)
         nf=len(st["failures"]); print("AU1 round",rnd,"routed",st["nets_routed"],"of",st["nets_to_route"],"failures",nf,flush=True)
@@ -42,6 +42,7 @@ elif board=="HB2":
 else:
     wid={"VBUS_IN":0.8,"+5V":0.6,"+5VA":0.5,"P3V3":0.3,"+3V3D":0.4,"VCM_OUT":0.3}
     R=Router("kit_v18/CB1D/pads.json",["F.Cu","In2.Cu","In3.Cu","B.Cu"],{"GND":"In1.Cu","P3V3":"In4.Cu"},wid,hv={"COIL_B","DM1","DM2","COIL_A"},clr=0.2)
+    R.stub_first={"UG.6","UG.7"}   # learned (2026-10-28 exact fine-zone keep-out): the gyro GND pads lost their plane via to the I2C / UG_VIO escapes
 R.priority=['MUX_S0','MUX_S1','MUX_S2','TRIG_IN','VCM_OUT','HTA_P','DIAL_IN','JOY_YF','SDOA1','SDOA3','SCLK','JOY_XF','HTA_IN','JOY_X']
 st=R.run(budget=270,state=f'kit_v20/state_{board}.pkl'); print(board,st,"length_mm",round(R.length()))
 if st.get("finished"): json.dump(dict(stats=st,tracks=R.tracks,vias=R.vias,layers=R.layers,planes=R.planes,R=R.R),open(f"kit_v20/route_{board}.json","w"))
