@@ -64,6 +64,21 @@ def _tg(t): return LineString(t["pts"]).buffer(t["width"] / 2, 16) if len(t["pts
 def _clear(t, others):
     g = _tg(t); return min((g.distance(o) for o in others), default=9.0)
 fine = [p for p in P if p.get("fine") and p.get("net") and not p["tht"]]; esc = 0
+# neck-down: signal segments (width <= 0.2) within 1.5 mm of a fine-pitch pad are written at 0.15 mm, the fab minimum (dru_gen GEN track) the router assumed there
+NECK, NZ = 0.15, 1.5; neck = 0
+if fine:
+    fz = [_pg(p) for p in fine]; ftree = STRtree(fz); out = []
+    for tr in r["tracks"]:
+        if tr["width"] > 0.2 + 1e-9 or len(tr["pts"]) < 2 or tr["layer"] != "F.Cu": out.append(tr); continue
+        runs = []
+        for a_, b_ in zip(tr["pts"][:-1], tr["pts"][1:]):
+            seg = LineString([a_, b_]); w = NECK if len(ftree.query(seg, predicate="dwithin", distance=NZ)) else tr["width"]
+            if runs and runs[-1][0] == w: runs[-1][1].append(list(b_))
+            else: runs.append((w, [list(a_), list(b_)]))
+        neck += sum(1 for w, _ in runs if w == NECK)
+        out += [dict(tr, width=w, pts=pts) for w, pts in runs]
+    r["tracks"] = out
+print(board, "neck-down runs at 0.15 mm near fine-pitch pads:", neck)
 for ti, tr in enumerate(r["tracks"]):
     if tr["layer"] != "F.Cu" or len(tr["pts"]) < 2: continue
     for end in (0, -1):

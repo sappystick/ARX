@@ -2,6 +2,7 @@ import json, math, heapq, time, os
 import numpy as np
 from scipy import ndimage as ndi
 GR=0.15
+NECK=0.15   # track width inside the 1.5 mm fine-pitch zone (dru_gen GEN track 0.15, docs/design/FAB_RULES_VERIFIED.md); route_fix.py applies it to the exported copper
 def disk(r): y,x=np.ogrid[-r:r+1,-r:r+1]; return (x*x+y*y)<=r*r+0.5
 class Router:
     def __init__(s,pads_json,layers,planes,widths,hv=(),clr=0.2,hv_clr=1.0,via_pad=0.6,via_drill=0.3,default_w=0.2,edge_clr=0.5):
@@ -63,7 +64,8 @@ class Router:
             if s.finez.any():
                 trk=others&s.finez&(s.padown[l]==0)                  # tracks / vias in the zone: their raster already over-covers them (disk of one cell around a 0.1 mm half-width)
                 b|=ndi.binary_dilation(trk,structure=disk(int(math.ceil((s.clr+hw)/GR-1e-9))))
-                R_,C_,I_,D_=s.fpd[l]; sel=(I_!=nid)&(D_<s.clr+hw-1e-9)  # pads: exact distance from the cell centre to the pad shape
+                hwf=min(hw,NECK/2) if l==0 else hw                                     # signal tracks neck down to the 0.15 mm fab minimum in the zone (route_fix.py writes that width)
+                R_,C_,I_,D_=s.fpd[l]; sel=(I_!=nid)&(D_<s.clr+hwf-1e-9)  # pads: exact distance from the cell centre to the pad shape
                 if len(R_): b[R_[sel].astype(int),C_[sel].astype(int)]=True
             rh=int(math.ceil(((s.hv_clr if (ishv or True) else s.clr)+hw)/GR))
             if ishv: b=ndi.binary_dilation(others,structure=disk(rh))
