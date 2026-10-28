@@ -69,7 +69,7 @@ NECK, NZ = 0.15, 1.5; neck = 0
 if fine:
     fz = [_pg(p) for p in fine]; ftree = STRtree(fz); out = []
     for tr in r["tracks"]:
-        if tr["width"] > 0.2 + 1e-9 or len(tr["pts"]) < 2 or tr["layer"] != "F.Cu": out.append(tr); continue
+        if tr["width"] > 0.2 + 1e-9 or len(tr["pts"]) < 2: out.append(tr); continue          # all layers: the router's fine zone applies on every layer
         runs = []
         for a_, b_ in zip(tr["pts"][:-1], tr["pts"][1:]):
             seg = LineString([a_, b_]); w = NECK if len(ftree.query(seg, predicate="dwithin", distance=NZ)) else tr["width"]

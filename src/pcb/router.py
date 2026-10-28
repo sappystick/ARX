@@ -62,9 +62,11 @@ class Router:
             # in the zone around fine-pitch pads (finez: 1.5 mm) the halo of all copper is the exact cell count: ceil((0.2+0.1)/0.15) is 3 in floating point
             # (0.45 mm) and seals a 0.5 mm-pitch middle pad and its neighbours' stubs; elsewhere the old (conservative) halo, so boards without fine pads route as before
             if s.finez.any():
-                trk=others&s.finez&(s.padown[l]==0)                  # tracks / vias in the zone: their raster already over-covers them (disk of one cell around a 0.1 mm half-width)
-                b|=ndi.binary_dilation(trk,structure=disk(int(math.ceil((s.clr+hw)/GR-1e-9))))
-                hwf=min(hw,NECK/2) if l==0 else hw                                     # signal tracks neck down to the 0.15 mm fab minimum in the zone (route_fix.py writes that width)
+                # tracks / vias in the zone (2026-10-28): thin tracks occupy only their centre cells there (mark()), so the keep-out is measured centre to centre:
+                # clearance + this track's half width + the other's (0.075, the neck-down); no diagonal steps in the zone (astar), so cell distance = copper distance
+                hwf=hw if hw>0.1+1e-9 else NECK/2                                  # thin signal tracks neck down to the 0.15 mm fab minimum in the zone (route_fix.py)
+                f=(s.clr+hwf+NECK/2)/GR-1e-9; rr=int(math.ceil(f)); yy,xx=np.ogrid[-rr:rr+1,-rr:rr+1]
+                trk=others&s.finez&(s.padown[l]==0); b|=ndi.binary_dilation(trk,structure=(xx*xx+yy*yy)<f*f) if trk.any() else False
                 R_,C_,I_,D_=s.fpd[l]; sel=(I_!=nid)&(D_<s.clr+hwf-1e-9)  # pads: exact distance from the cell centre to the pad shape
                 if len(R_): b[R_[sel].astype(int),C_[sel].astype(int)]=True
             rh=int(math.ceil(((s.hv_clr if (ishv or True) else s.clr)+hw)/GR))
@@ -84,7 +86,7 @@ class Router:
         return blk,viablk
     def astar(s,sources,goal_set,goal_fn,blk,viablk,nid):
         N=s.N; nl=s.nl; B=[b.astype(np.uint8).ravel().tobytes() for b in blk]; V=viablk.astype(np.uint8).ravel().tobytes()
-        heap=[]; g={}; par={}
+        heap=[]; g={}; par={}; FZ=s.finez.astype(np.uint8).ravel().tobytes() if s.finez.any() else None
         for idx in sources: g[idx]=0.0; heapq.heappush(heap,(0.0,0.0,idx))
         nb=[(-1,0,1.0),(1,0,1.0),(0,-1,1.0),(0,1,1.0),(-1,-1,1.414),(-1,1,1.414),(1,-1,1.414),(1,1,1.414)]
         gx=None; gl=None
@@ -103,6 +105,7 @@ class Router:
             for dr,dc,cost in nb:
                 r2=r+dr; c2=c+dc
                 if r2<0 or c2<0 or r2>=N or c2>=N: continue
+                if dr and dc and FZ is not None and (FZ[r*N+c] or FZ[r2*N+c2]): continue      # orthogonal steps only in the fine-pitch zone
                 if B[l][r2*N+c2]: continue
                 if dr and dc and (B[l][r*N+c2] or B[l][r2*N+c]): continue
                 i2=l*N*N+r2*N+c2; ng=gc0+cost
@@ -121,9 +124,11 @@ class Router:
     def mark(s,path,nid,net):
         N=s.N; hwc=max(0,int(round(s.halfw(net)/GR))); out=[]; cur=[]; lay=None; vcount=0
         cells=[(i//(N*N),(i//N)%N,i%N) for i in path]
+        thin=s.halfw(net)<=0.1+1e-9
         for k,(l,r,c) in enumerate(cells):
-            m=disk(hwc) if hwc>0 else np.ones((1,1),bool)
-            a=s.own[l]; r0=max(0,r-hwc); r1=min(N,r+hwc+1); c0=max(0,c-hwc); c1=min(N,c+hwc+1); sub=m[(r0-(r-hwc)):(r1-(r-hwc)),(c0-(c-hwc)):(c1-(c-hwc))]; reg=a[r0:r1,c0:c1]; reg[sub&(reg==0)]=nid
+            hwc_=0 if (thin and s.finez[r,c]) else hwc                       # thin tracks in the fine zone: centre cells only (the keep-out in masks() adds both half widths)
+            m=disk(hwc_) if hwc_>0 else np.ones((1,1),bool)
+            a=s.own[l]; r0=max(0,r-hwc_); r1=min(N,r+hwc_+1); c0=max(0,c-hwc_); c1=min(N,c+hwc_+1); sub=m[(r0-(r-hwc_)):(r1-(r-hwc_)),(c0-(c-hwc_)):(c1-(c-hwc_))]; reg=a[r0:r1,c0:c1]; reg[sub&(reg==0)]=nid
             if k>0 and cells[k-1][0]!=l:
                 x,y=s.xy(r,c); s.vias.append((x,y,net)); vr=int(math.ceil(s.via_pad/2/GR))
                 for L in range(s.nl):
