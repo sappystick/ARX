@@ -34,7 +34,7 @@ SOCK = 44.0; CLR_T = 0.2                                                    # tu
 AT = (22.0, 19.0); ATL = 200.0; DET = (90.0, 68.0, 46.0); ASOCK = 95.0      # armrest tube, length, insertion depths of the 3 positions, socket length
 RC, CW, CL_ = 46.0, 3.0, 85.0                                               # forearm cup inner radius, wall, length
 CELL_D, CELL_L, PITCH, NCELL = 18.6, 65.3, 19.6, 7                          # 18650 envelope (P30B max, unverified) and holder pitch
-MT60 = (20.0, 16.5, 8.6)                                                    # MT60 body envelope x (mating axis) y z (unverified, ASSUMPTIONS 25)
+MT60 = (27.5, 12.0, 12.5)                                                   # MT60 body envelope x (mating axis) y z: Amass V1.2 drawing, MT60-M 27.50 long (MT60-F 26.70), face 12.00 x 12.50, 12.49 tall (B7; was an assumed 20 x 16.5 x 8.6)
 BMS = (60.0, 41.0, 5.4)                                                     # BMS envelope that the bay accepts (part to be chosen to fit)
 CORD_OD = 10.4; BORE_R = 5.6; BORE_Y = 6.4                                  # coiled-cord envelope, twin-bore radius and centre offset
 SEPT, SP_LEN, SP_PITCH = 1.4, 8.0, 75.0                                     # septum strip thickness, spacer length and pitch

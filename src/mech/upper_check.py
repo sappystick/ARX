@@ -107,7 +107,7 @@ chk("cells: 7 x 18650 fit the cell bay, radial clearance in the y = 0 section (m
 chk("cells: length clearance to the side walls (mm)", min(rect_clear(section(T["U7_BATTERY_PACK_SHELL"], 0, q["x"]), -c["l"] / 2, c["l"] / 2, q["z"] - c["d"] / 2, q["z"] + c["d"] / 2) for q in c["centres"]), 0.2, None)
 b = ENV["BMS"]; chk("BMS bay accepts the 60 x 41 x 5.4 envelope (mm)", rect_clear(section(T["U7_BATTERY_PACK_SHELL"], 0, -60.0), *b["y"], *b["z"]), 0.1, None, "part to be chosen to fit")
 for nm, part, x in (("MT60-M in the pedestal", "U6_BATTERY_DOCK", ENV["MT60_M"]["x"][0] + 10.0), ("MT60-F in the pack front wall", "U7_BATTERY_PACK_SHELL", -1.25)):
-    e = ENV["MT60_M" if "M in" in nm else "MT60_F"]; chk(f"{nm}: envelope clearance (mm)", rect_clear(section(T[part], 0, x), *e["y"], *e["z"]), 0.15, None, "MT60 size unverified (ASSUMPTIONS 25)")
+    e = ENV["MT60_M" if "M in" in nm else "MT60_F"]; chk(f"{nm}: envelope clearance (mm)", rect_clear(section(T[part], 0, x), *e["y"], *e["z"]), 0.15, None, "MT60 envelope from the Amass V1.2 drawing (ASSUMPTIONS 25)")
 mM, mF = ENV["MT60_M"], ENV["MT60_F"]; chk("MT60 pair axis alignment (mm)", math.hypot(np.mean(mM["y"]) - np.mean(mF["y"]), np.mean(mM["z"]) - np.mean(mF["z"])), 0.0, 0.2)
 chk("MT60 mating faces: pedestal face to pack face (mm)", mM["mating_face_x"] - mF["x"][1], 0.0, 1.0, "connector float takes up the rest")
 L, P_ = ENV["latch"], ENV["latch_pocket"]; Sp = section(T["U6_BATTERY_DOCK"], 0, float(np.mean(P_["x"])))

@@ -121,7 +121,7 @@ def router(n=20):
 
 # ------------------------------------------------------------------ noise
 K = 1.380649e-23; T = 300.0
-def noise_case(name, G=40.0, rs=100.0, rcoil=10.4, en=1.1e-9, sw_ohm=3.0, adc_snr_db=90.5, swing_v=1.25, fs_pp=2.5, bw=360e3, osr_gain_db=0.0, rg_rf=(10.0, 390.0)):
+def noise_case(name, G=40.0, rs=100.0, rcoil=10.4, en=1.1e-9, sw_ohm=5.5, adc_snr_db=90.5, swing_v=1.25, fs_pp=2.5, bw=360e3, osr_gain_db=0.0, rg_rf=(10.0, 390.0)):
     Rg, Rf = rg_rf; rn = lambda R: math.sqrt(4 * K * T * R)
     # input-referred: coil + RS + switch (series path) + amplifier voltage noise + RG||RF feedback network + ADC noise / G
     fb = rn(Rg * Rf / (Rg + Rf))
@@ -141,7 +141,7 @@ def noise():
              noise_case("amplifier 1.1 -> 1.0 nV/rtHz class (ADA4896-2 listed in datasheet Table 10)", en=1.0e-9),
              noise_case("combined: differential drive, RS 33 ohm, rolling-average OSR 8 (gain stays 40)", swing_v=2.5, rs=33.0, osr_gain_db=97.9 - 90.5),
              noise_case("AD4134-class 24-bit (rejected: 450 mW, 1.8 V rails): ADC term negligible", adc_snr_db=107.0, fs_pp=8.192, swing_v=4.096)]
-    save("noise", dict(cases=cases, assumptions=["AD7389-4: SNR 90.5 dB typ, +-VREF = +-2.5 V differential, 2 MSPS, input range limits (datasheet p. 3)", "OPA2211 voltage noise 1.1 nV/rtHz and 3 ohm switch resistance: ASSUMED, the repo holds no datasheet for them (UNVERIFIED, U-DS-RXAMP)",
+    save("noise", dict(cases=cases, assumptions=["AD7389-4: SNR 90.5 dB typ, +-VREF = +-2.5 V differential, 2 MSPS, input range limits (datasheet p. 3)", "OPA2211 voltage noise 1.1 nV/rtHz (TI SBOS377L) and 5.5 ohm switch resistance (74LVC1G66 typ at VCC 4.5 V, TI SCES323R; was an assumed 3 ohm), the repo holds no datasheet for them (UNVERIFIED, U-DS-RXAMP)",
                                   "coil 10.4 ohm (SB1R-QA model), RS 100 ohm, RG 10 / RF 390 (gain 40), noise bandwidth 360 kHz (RAAF 200 ohm / CAAF 2.2 nF), T = 300 K", "ADC noise = full-scale rms / 10^(SNR/20) over 1 MHz, referred to the input through the stage gain",
                                   "dynamic range here is the peak-signal / noise ratio of the front end at the amplifier input; it says nothing about the target signal level, which needs the field model and the bench"])); return cases
 

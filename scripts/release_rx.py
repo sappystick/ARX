@@ -14,9 +14,8 @@ try: S = json.load(open(SJ))
 except Exception: die(f"{SJ} missing: run make signoff")
 if S["counts"]["FAIL"]: die(f"the sign-off has {S['counts']['FAIL']} FAIL")
 if subprocess.run([sys.executable, "scripts/publish_data.py", "--check"], capture_output=True).returncode: die("data/ is stale against work/: run scripts/publish_data.py, review, commit, then sign off again")
-BLOCKERS = ["BLOCKER 2 (interface): SDI is tied to ground (the datasheet does not say whether that is allowed) and no software reset is issued; the 2-wire readout (SDOA = channels A then C, SDOB = channel B, J2 SDO3 unused on AB1A) needs a CB1D firmware change.",
-            "BLOCKER 3 (supply): the extra +3V3D load (about 25 mA, 89 mW typical from the datasheet) is not checked against the rail budget.",
-            "OPEN: island hatch connectivity has been read back from the Gerbers (gerber_geom) and KiCad-checked, but not opened in a CAM viewer or reviewed by a fabricator (U-CAM-VIEW, U-FAB-DRC); SW1G66, OPA2365 and BAV199 pin maps stay VERIFY; nothing here is built or measured."]
+BLOCKERS = ["Closed in RX_r3 (2026-10-28): BLOCKER 2 (SDI tied low / readout): the datasheet covers it (Table 17: WR = 0, REGADDR 0 is ignored), and the 2-wire readout is modeled and tested against the netlists (src/sim/ad7389_readout.py, B6); BLOCKER 3 (+3V3D budget): AMS1117-3.3 rows in system_budget with the RML 270 ohm minimum-load bleed on CB1D (B3). Both remain MODELED: the CB1D firmware does not exist yet.",
+            "OPEN: island hatch connectivity has been read back from the Gerbers (gerber_geom) and KiCad-checked, but not opened in a CAM viewer or reviewed by a fabricator (U-CAM-VIEW, U-FAB-DRC); SW1G66 (TI SCES323R) and BAV199 (Nexperia v.3) pin maps are now datasheet-checked (B7); OPA2365 per DATASHEET_LOG U-DS-RXAMP; nothing here is built or measured."]
 os.makedirs(out); summary = []; unv = S["unverified"]
 def cp(src, dst):
     if not os.path.exists(src): return False
