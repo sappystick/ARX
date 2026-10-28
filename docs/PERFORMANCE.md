@@ -36,7 +36,7 @@ Between serial and parallel cold runs only these files differ: `state_*.pkl` (ro
 
 ## Solid-union cache (2026-10-28, `src/mech/solid_union.py`)
 Content-hash cache in `work/.pipeline/solid_union_cache/` (git-ignored, invisible to the tracer, wiped by `make clean`; `SOLID_UNION_CACHE=off` runs the uncached path):
-each body's 0.005 mm dilation (Mesh64 with every field and the tolerance), each body set's final union (V, F, info) and the winning snap grid are keyed by a SHA-256 of exactly
+each body set's final union (V, F, info) and the winning snap grid are keyed by a SHA-256 of exactly
 what the computation reads (float32 / uint32 bytes as handed to manifold3d, margin, sphere segments, manifold3d version, candidate list). The margin stays 0.005 mm and
 `solid_union_failed.npz` is still written on a failure.
 
@@ -52,6 +52,9 @@ v5 build (`hub_v22.py` + `parts_v22.py`, serial, 4-core container, scratch copie
 | uncached, run 2 | 778.6 s | 0 of 58 |
 | cache cold (empty cache; fills it) | 794.1 s (+2 %) | 0 of 58 |
 | cache warm (nothing changed) | 113.6 s (6.9x faster) | 0 of 58 |
-| one body changed (DILONLY) | DILONLY_S | DILONLY_DIFF |
+| EXPERIMENTAL per-body dilation cache only (every union recomputed from cached dilations) | 132.3 s | **5 of 58 differ**: a Manifold rebuilt from a cached Mesh64 (all fields, IDs, `set_tolerance`) unions and simplifies differently (ROOF_PLATE 104 536 vs 134 436 triangles in a direct test, CORE 216 916 vs 398 556): NOT byte-identical, so this cache is OFF (`SOLID_UNION_DILATE_CACHE=1` only for experiments) |
+| one body set changed: the CORE union recomputed, every other union and every snap index from the cache (final code) | PARTIAL_S | PARTIAL_DIFF |
 
 Cache size after one v5 build: 69.4 MB.
+What the cache does NOT do: re-use the dilation of an unchanged body inside a changed body set (no byte-identical way was found with manifold3d's public API). A change to one body
+re-runs the union of the part it belongs to (for the CORE cylinder that is most of the 13 min); every other part comes from the cache.

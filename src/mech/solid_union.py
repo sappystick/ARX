@@ -61,10 +61,10 @@ def position_bad_edges(F, V):
 def dilate(V, F, r=MARGIN):
     m = M3.Manifold(M3.Mesh(vert_properties=np.asarray(V, np.float32), tri_verts=np.asarray(F, np.uint32)))
     return m.minkowski_sum(M3.Manifold.sphere(r, 8))
-# ---- content-hash cache (2026-10-28): an unchanged body is never dilated again, an unchanged body set is never unioned again, and the winning snap grid is remembered.
+# ---- content-hash cache (2026-10-28): an unchanged body SET is never unioned again (whole result cached) and the winning snap grid is remembered; the per-body dilation cache
+# exists but is OFF (not byte-identical, see DILATE_CACHE).
 # Keys hash exactly what each computation reads (float32 / uint32 bytes as handed to manifold3d, margin, sphere segments, manifold3d version, the snap candidate list).
-# Dilated bodies are stored as Mesh64 with every field and the tolerance, so the rebuilt Manifold is the same object the uncached path builds (proved byte-identical:
-# docs/PERFORMANCE.md). SOLID_UNION_CACHE=off (or "0") runs the uncached path; the directory is work/.pipeline/solid_union_cache (git-ignored, invisible to the tracer, wiped by make clean).
+# Proved byte-identical to the uncached path for the whole-union and snap caches (docs/PERFORMANCE.md). SOLID_UNION_CACHE=off (or "0") runs the uncached path; the directory is work/.pipeline/solid_union_cache (git-ignored, invisible to the tracer, wiped by make clean).
 import hashlib, os, json
 CACHE = os.environ.get("SOLID_UNION_CACHE", os.path.join(".pipeline", "solid_union_cache"))
 CACHE_ON = CACHE not in ("off", "0", "")
@@ -86,13 +86,15 @@ def _load(path):
     try:
         with np.load(path, allow_pickle=False) as z: return {k: z[k] for k in z.files}
     except Exception: return None
+DILATE_CACHE = os.environ.get("SOLID_UNION_DILATE_CACHE") == "1"         # EXPERIMENTAL, off: a Manifold rebuilt from a cached Mesh64 (every field, IDs, set_tolerance) does not union + simplify like the
+                                                                          # in-memory one (ROOF_PLATE 104536 vs 134436 triangles, CORE 216916 vs 398556), so it is NOT byte-identical: never use it for a release
 def dilate_cached(V, F, r=MARGIN):
-    if not CACHE_ON: return dilate(V, F, r)
+    if not (CACHE_ON and DILATE_CACHE): return dilate(V, F, r)
     p = _path(_mesh_key(b"dilate-v1", V, F, float(r), 8), "dilate"); z = _load(p)
     if z is not None:
         STATS["dilate_hit"] += 1
         kw = {k: z[k] for k in _M64 if k in z and z[k].size}
-        return M3.Manifold(M3.Mesh64(tolerance=float(z["tolerance"]), **kw))
+        return M3.Manifold(M3.Mesh64(**kw)).set_tolerance(float(z["tolerance"]))
     STATS["dilate_miss"] += 1; d = dilate(V, F, r)
     if d.status() == M3.Error.NoError:
         m = d.to_mesh64(); _save(p, tolerance=np.float64(d.get_tolerance()), **{k: np.asarray(getattr(m, k)) for k in _M64})
