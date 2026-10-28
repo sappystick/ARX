@@ -185,6 +185,13 @@
    "note": "lateral distance from the connector's pads to the window edge, in the 19 mm pocket between board and back wall"
   },
   {
+   "check": "NPM fit: no PB1R component body intersects the NPM body (walls, tunnel, sockets), the lid or the hot-zone dam v2, and none stands through the board face",
+   "result": "PASS",
+   "value": "0 intersections",
+   "limit": "0",
+   "note": "41 bodies tested against 3 meshes at 0.5 mm height steps; tallest part 10.5 mm; nearest body to the tunnel ring: see ASSUMPTIONS 33"
+  },
+  {
    "check": "bulk-capacitor cans (9 x aluminium): return less than 1e-3 of the nugget (as the hatched planes do); WARN = listed exception, owner decision (OPEN_ITEMS 34)",
    "result": "WARN",
    "value": "0.51 x the nugget",

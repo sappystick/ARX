@@ -1,0 +1,2 @@
+SUPERSEDED by releases/RX_r2 (2026-10-28).
+Reason: RX_r1 carried BLOCKER 1, a 2.0 mm PLACEHOLDER exposed pad for the AD7389-4. RX_r2 uses the Ultra Librarian CP-24-25_ADI land (EP 0.6096 SQ, terminals 0.254 x 0.762), which agrees with ADI Fig. 43, routed with the CRF nudge and the hole-to-hole rule in the router (docs/design/AB1_ROUTING_STATE.md). Files here are kept unchanged for provenance; do not order from this folder.

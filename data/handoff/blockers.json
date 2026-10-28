@@ -1,23 +1,15 @@
 {"note": "Open work, in the order to do it. `make state` prints this. needs = what must exist first; done_when = the check that closes it. owner=true means a person must supply something (do not guess it). Edit with the commit that changes the state.",
  "items": [
-  {"id": "B1", "what": "AD7389-4 exposed-pad land pattern (AB1A, AB1B): footprint in src/pcb/afe_design.py _ad7389() is a PLACEHOLDER (EP 2.0 mm square)", "owner": true,
-   "needs": "ADI CP-24-25 (LFCSP-24 4x4) land pattern drawing or KiCad footprint from the owner", "done_when": "pad list replaced, `make signoff` PASS for AB1A/AB1B, remove BLOCKER 1 from releases/RX_r1 and docs/delivery/ASSEMBLY_ORDER.md"},
-  {"id": "B2", "what": "Fabricator DRC and CAM-viewer pass for every board (U-FAB-DRC, U-CAM-VIEW)", "owner": true,
-   "needs": "owner uploads Gerbers to the chosen fabricator / opens them in a CAM viewer and pastes the result", "done_when": "rows removed from docs/UNVERIFIED.md with the evidence file"},
-  {"id": "B3", "what": "+3V3D budget: AMS1117-3.3 rating (feeds the AB1 island, about 50-54 mA) and +5V rows in system_budget.py; log AD7389 SDI Table 17 (p. 26) in DATASHEET_LOG and ASSUMPTIONS", "owner": false,
-   "needs": "AMS1117 datasheet (fetch; if unreachable keep UNVERIFIED)", "done_when": "system_budget.json has the rows, regress passes"},
-  {"id": "B4", "what": "RS discrepancy: DESIGN_STATE says RS3 1 k -> 100 ohm, BOM and afe_design RS dict say 1000 for X8/Y8/MONO", "owner": false,
-   "needs": "decide one value per channel, state the choice", "done_when": "CORRECTIONS row + design + BOM agree; AB1 re-exported"},
-  {"id": "B5", "what": "Rigid-flex spine (OPEN_ITEMS 3) and the CB1D JA/JB to AB1 J2 physical link path across the septum window / absorber cell are not designed or 3D-checked", "owner": false,
-   "needs": "decision: ribbon/FFC vs rigid-flex; geometry in parts_v22.py spine comb", "done_when": "3D interference check + regress row"},
-  {"id": "B6", "what": "CB1D firmware: AD7389-4 2-wire readout (SDOA = A then C, SDOB = B, SDI low, wait >= 11 ms after power-up)", "owner": false,
-   "needs": "none (Python DSP first, OPEN_ITEMS 5)", "done_when": "documented readout model + test"},
-  {"id": "B7", "what": "Unverified datasheets: TC4420, IPB65R095C7, OKI-78SR, BAV199, Molicel P30B, MT60 envelope, PB1R JL1 / RCL1", "owner": false,
-   "needs": "retry fetch with WebSearch for the real PDF link", "done_when": "DATASHEET_LOG VERIFIED heading + docs/UNVERIFIED.md row removed"},
-  {"id": "B8", "what": "BOM and pick-and-place for TXJ1 and SB1R-QA/QB; potting sequence; U8_SEPTUM split joint; upper-assembly first article", "owner": false,
-   "needs": "generators", "done_when": "files in docs/delivery and SYSTEM_MANIFEST rows"},
-  {"id": "B9", "what": "Router robustness: rip-up/negotiated-congestion router, differential drive + 33 ohm series resistor (check BAV199 clamp rating first)", "owner": false,
-   "needs": "owner choice (docs/design/RECEIVE_OPTIONS_MODEL.md)", "done_when": "model + regress rows; do not start unasked"},
-  {"id": "B10", "what": "Everything performance-related is MODELED; no bench data (U-BENCH)", "owner": true,
-   "needs": "hardware", "done_when": "data/bench/ filled"}
+  {"id": "B2", "what": "Fabricator DRC and CAM-viewer pass for every board (U-FAB-DRC, U-CAM-VIEW)", "owner": true, "needs": "owner uploads Gerbers to the chosen fabricator / opens them in a CAM viewer and pastes the result", "done_when": "rows removed from docs/UNVERIFIED.md with the evidence file"},
+  {"id": "B3", "what": "+3V3D budget: AMS1117-3.3 rating (feeds the AB1 island, about 50-54 mA) and +5V rows in system_budget.py; log AD7389 SDI Table 17 (p. 26) in DATASHEET_LOG and ASSUMPTIONS", "owner": false, "needs": "AMS1117 datasheet (fetch; if unreachable keep UNVERIFIED)", "done_when": "system_budget.json has the rows, regress passes"},
+  {"id": "B4", "what": "RS discrepancy: DESIGN_STATE says RS3 1 k -> 100 ohm, BOM and afe_design RS dict say 1000 for X8/Y8/MONO", "owner": false, "needs": "decide one value per channel, state the choice", "done_when": "CORRECTIONS row + design + BOM agree; AB1 re-exported"},
+  {"id": "B5", "what": "Rigid-flex spine (OPEN_ITEMS 3) and the CB1D JA/JB to AB1 J2 physical link path across the septum window / absorber cell are not designed or 3D-checked", "owner": false, "needs": "decision: ribbon/FFC vs rigid-flex; geometry in parts_v22.py spine comb", "done_when": "3D interference check + regress row"},
+  {"id": "B6", "what": "CB1D firmware: AD7389-4 2-wire readout (SDOA = A then C, SDOB = B, SDI low, wait >= 11 ms after power-up)", "owner": false, "needs": "none (Python DSP first, OPEN_ITEMS 5)", "done_when": "documented readout model + test"},
+  {"id": "B7", "what": "Unverified datasheets: TC4420, IPB65R095C7, OKI-78SR, BAV199, Molicel P30B, MT60 envelope, PB1R JL1 / RCL1", "owner": false, "needs": "retry fetch with WebSearch for the real PDF link", "done_when": "DATASHEET_LOG VERIFIED heading + docs/UNVERIFIED.md row removed"},
+  {"id": "B8", "what": "BOM and pick-and-place for TXJ1 and SB1R-QA/QB; potting sequence; U8_SEPTUM split joint; upper-assembly first article", "owner": false, "needs": "generators", "done_when": "files in docs/delivery and SYSTEM_MANIFEST rows"},
+  {"id": "B9", "what": "Router robustness: rip-up/negotiated-congestion router, differential drive + 33 ohm series resistor (check BAV199 clamp rating first)", "owner": false, "needs": "owner choice (docs/design/RECEIVE_OPTIONS_MODEL.md)", "done_when": "model + regress rows; do not start unasked"},
+  {"id": "B10", "what": "Everything performance-related is MODELED; no bench data (U-BENCH)", "owner": true, "needs": "hardware", "done_when": "data/bench/ filled"}
+ ],
+ "closed": [
+  {"id": "B1", "closed": "2026-10-28", "evidence": "src/pcb/afe_design.py _ad7389() = Ultra Librarian CP-24-25_ADI (data/seed/footprints/), regress 'land equals the Ultra Librarian footprint'; make signoff 67 PASS / 0 FAIL (AB1A/AB1B route, indep, kicad, gerber, plane, cross PASS); releases/RX_r2 without BLOCKER 1; RX_r1 SUPERSEDED"}
  ]}

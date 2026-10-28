@@ -7,9 +7,12 @@
 "src/pcb"
 ],
 "R": [
+"src/pcb/dru_gen.py",
 "src/pcb/indep_drc.py",
 "src/pcb/kicad_drc.py",
 "work/ab1_island_check.py",
+"work/afe_design.py",
+"work/afe_layout.py",
 "work/kit_v3/PCB_AB1A/PF233-AB1A.kicad_pcb",
 "work/kit_v3/PCB_AB1A/PF233-AB1A_check.json",
 "work/kit_v3/PCB_AB1B/PF233-AB1B.kicad_pcb",
@@ -111,7 +114,10 @@
 ],
 "R": [
 "work/cap_hood_v16.py",
-"work/render_v6.py"
+"work/golden_cone_head.py",
+"work/render_v6.py",
+"work/rodin_core_v4.py",
+"work/solid_union.py"
 ],
 "W": [
 "work/kit_v16/PARTS/BASE_PLATE_RX_CASSETTE_v3.stl",
@@ -155,6 +161,7 @@
 "work/kit_v6/PB1R/pads.json",
 "work/kit_v6/PM2/PF233-PM2.net",
 "work/pb1r_check.py",
+"work/sch_export.py",
 "work/tx_vbus_sweep.py"
 ],
 "W": [
@@ -312,7 +319,6 @@
 "data/gerber/TXJ1_v2/TXJ1-v2-F_Mask.gbr",
 "data/gerber/TXJ1_v2/TXJ1-v2-PTH.drl",
 "data/kicad/3dmodels/PF233_AD7389.wrl",
-"data/kicad/3dmodels/PF233_ADS8860.wrl",
 "data/kicad/3dmodels/PF233_BAV199.wrl",
 "data/kicad/3dmodels/PF233_C0402.wrl",
 "data/kicad/3dmodels/PF233_C0603.wrl",
@@ -350,7 +356,6 @@
 "data/kicad/3dmodels/PF233_R0805.wrl",
 "data/kicad/3dmodels/PF233_R1206.wrl",
 "data/kicad/3dmodels/PF233_R2512.wrl",
-"data/kicad/3dmodels/PF233_REF5041.wrl",
 "data/kicad/3dmodels/PF233_SOT223.wrl",
 "data/kicad/3dmodels/PF233_SOT23-5.wrl",
 "data/kicad/3dmodels/PF233_SW1G66.wrl",
@@ -420,21 +425,31 @@
 "data/results/PF233-AB1A.net",
 "data/results/PF233-AB1A_BOM.csv",
 "data/results/PF233-AB1A_check.json",
+"data/results/PF233-AB1A_functional.pdf",
 "data/results/PF233-AB1A_functional_check.json",
 "data/results/PF233-AB1A_pickplace.csv",
 "data/results/PF233-AB1B.net",
 "data/results/PF233-AB1B_BOM.csv",
 "data/results/PF233-AB1B_check.json",
+"data/results/PF233-AB1B_functional.pdf",
 "data/results/PF233-AB1B_functional_check.json",
 "data/results/PF233-AB1B_pickplace.csv",
+"data/results/PF233-CB1D_BOM.csv",
 "data/results/PF233-CB1D_functional_check.json",
+"data/results/PF233-CB1D_pickplace.csv",
+"data/results/PF233-HB2_BOM.csv",
 "data/results/PF233-HB2_functional_check.json",
+"data/results/PF233-HB2_pickplace.csv",
+"data/results/PF233-LB1_BOM.csv",
 "data/results/PF233-LB1_functional_check.json",
+"data/results/PF233-LB1_pickplace.csv",
 "data/results/PF233-PB1R.net",
 "data/results/PF233-PB1R_BOM.csv",
 "data/results/PF233-PB1R_functional_check.json",
 "data/results/PF233-PB1R_pickplace.csv",
+"data/results/PF233-PM2_BOM.csv",
 "data/results/PF233-PM2_functional_check.json",
+"data/results/PF233-PM2_pickplace.csv",
 "data/results/SIGNOFF_STATUS.json",
 "data/results/SYSTEM_STRESS_MARGINS.csv",
 "data/results/TX_ONTIME_LUT.csv",
@@ -493,7 +508,11 @@
 "scripts/publish_data.py",
 "scripts/release_tx.py",
 "scripts/signoff_status.py",
+"src/pcb/dru_gen.py",
+"src/pcb/gerber_geom.py",
 "tests/release_signoff_controls.py",
+"work/kit_v18/CB1D/PF233-CB1D_BOM.csv",
+"work/kit_v18/CB1D/PF233-CB1D_pickplace.csv",
 "work/kit_v18/HTA/PF233-HTA-B_Cu.gbr",
 "work/kit_v18/HTA/PF233-HTA-B_Mask.gbr",
 "work/kit_v18/HTA/PF233-HTA-Edge_Cuts.gbr",
@@ -505,13 +524,14 @@
 "work/kit_v18/HTA/PF233-HTA-PTH.drl",
 "work/kit_v18/HTA/PF233-HTA_BOM.csv",
 "work/kit_v18/HTA/PF233-HTA_preview.png",
+"work/kit_v18/LB1/PF233-LB1_BOM.csv",
+"work/kit_v18/LB1/PF233-LB1_pickplace.csv",
 "work/kit_v20/route_CB1D.json",
 "work/kit_v20/route_HB2.json",
 "work/kit_v20/route_LB1.json",
 "work/kit_v20/route_PB1R.json",
 "work/kit_v20/route_PM2.json",
 "work/kit_v22/3dmodels/PF233_AD7389.wrl",
-"work/kit_v22/3dmodels/PF233_ADS8860.wrl",
 "work/kit_v22/3dmodels/PF233_BAV199.wrl",
 "work/kit_v22/3dmodels/PF233_C0402.wrl",
 "work/kit_v22/3dmodels/PF233_C0603.wrl",
@@ -549,7 +569,6 @@
 "work/kit_v22/3dmodels/PF233_R0805.wrl",
 "work/kit_v22/3dmodels/PF233_R1206.wrl",
 "work/kit_v22/3dmodels/PF233_R2512.wrl",
-"work/kit_v22/3dmodels/PF233_REF5041.wrl",
 "work/kit_v22/3dmodels/PF233_SOT223.wrl",
 "work/kit_v22/3dmodels/PF233_SOT23-5.wrl",
 "work/kit_v22/3dmodels/PF233_SW1G66.wrl",
@@ -765,10 +784,14 @@
 "work/kit_v3/PCB_AB1B/PF233-AB1B_BOM.csv",
 "work/kit_v3/PCB_AB1B/PF233-AB1B_check.json",
 "work/kit_v3/PCB_AB1B/PF233-AB1B_pickplace.csv",
+"work/kit_v6/HB2/PF233-HB2_BOM.csv",
+"work/kit_v6/HB2/PF233-HB2_pickplace.csv",
 "work/kit_v6/PB1R/PF233-PB1R.kicad_pcb",
 "work/kit_v6/PB1R/PF233-PB1R.net",
 "work/kit_v6/PB1R/PF233-PB1R_BOM.csv",
 "work/kit_v6/PB1R/PF233-PB1R_pickplace.csv",
+"work/kit_v6/PM2/PF233-PM2_BOM.csv",
+"work/kit_v6/PM2/PF233-PM2_pickplace.csv",
 "work/out_board/AB1A_layout.json",
 "work/out_board/AB1B_layout.json"
 ],
@@ -853,7 +876,10 @@
 "src/pcb"
 ],
 "R": [
+"src/pcb/dru_gen.py",
 "src/pcb/kicad_gerber.py",
+"work/afe_design.py",
+"work/afe_layout.py",
 "work/dru_gen.py",
 "work/gerber_ab1_check.py",
 "work/gerber_edge_check.py",
@@ -907,7 +933,9 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/dru_gen.py",
 "work/gerber_edge_check.py",
+"work/gerber_geom.py",
 "work/gerber_hv_check.py",
 "work/gerber_out.py",
 "work/kit_v18/CB1D/pads.json",
@@ -934,8 +962,11 @@
 "src/pcb"
 ],
 "R": [
+"src/pcb/dru_gen.py",
 "src/pcb/kicad_gerber.py",
+"work/dru_gen.py",
 "work/gerber_edge_check.py",
+"work/gerber_geom.py",
 "work/kit_v22/KICAD/PF233-HB2_routed.kicad_pcb"
 ],
 "W": [
@@ -959,7 +990,9 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/dru_gen.py",
 "work/gerber_edge_check.py",
+"work/gerber_geom.py",
 "work/gerber_out.py",
 "work/kit_v18/LB1/pads.json",
 "work/kit_v20/route_LB1.json"
@@ -982,8 +1015,11 @@
 "src/pcb"
 ],
 "R": [
+"src/pcb/dru_gen.py",
 "src/pcb/kicad_gerber.py",
+"work/dru_gen.py",
 "work/gerber_edge_check.py",
+"work/gerber_geom.py",
 "work/gerber_plane_check.py",
 "work/kit_v20/route_PB1R.json",
 "work/kit_v22/KICAD/PF233-PB1R_routed.kicad_pcb",
@@ -1012,8 +1048,11 @@
 "src/pcb"
 ],
 "R": [
+"src/pcb/dru_gen.py",
 "src/pcb/kicad_gerber.py",
+"work/dru_gen.py",
 "work/gerber_edge_check.py",
+"work/gerber_geom.py",
 "work/kit_v22/KICAD/PF233-PM2_routed.kicad_pcb"
 ],
 "W": [
@@ -1093,9 +1132,13 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/golden_cone_head.py",
 "work/hood_axi.py",
 "work/hood_v20.py",
-"work/kit_v15/LOW/paths.pkl"
+"work/kit_v15/LOW/paths.pkl",
+"work/render_v6.py",
+"work/rodin_core_v4.py",
+"work/solid_union.py"
 ],
 "W": [
 "work/kit_v18/PARTS/FERRITE_TILE_INNER_v3_reference.stl",
@@ -1120,7 +1163,9 @@
 "data/kicad/SB1R-QB.kicad_pcb",
 "data/kicad/TXJ1.kicad_pcb",
 "src/pcb/board_sch.py",
+"src/pcb/dru_gen.py",
 "src/pcb/indep_drc.py",
+"src/pcb/sch_export.py",
 "tests/indep_drc_controls.py"
 ],
 "W": [
@@ -1163,6 +1208,7 @@
 "src/pcb"
 ],
 "R": [
+"src/pcb/dru_gen.py",
 "src/pcb/kicad_drc.py",
 "work/kit_v22/KICAD/PF233-CB1D_routed.kicad_pcb",
 "work/kit_v22/KICAD/PF233-HB2_routed.kicad_pcb",
@@ -1230,11 +1276,41 @@
 "work/kit_v22/KICAD/PF233-PM2_routed.kicad_pcb"
 ]
 },
+"mech-npm": {
+"L": [
+"scripts/tracehook"
+],
+"R": [
+"work/golden_cone_head.py",
+"work/mech_v20.py",
+"work/rodin_core_v4.py",
+"work/solid_union.py"
+],
+"W": [
+"work/kit_v19/SPINE/BAT_B1_drawer_sleeve.stl",
+"work/kit_v19/SPINE/BAT_B2_end_cap_with_latch.stl",
+"work/kit_v19/SPINE/BAT_B3_contact_plate.stl",
+"work/kit_v19/SPINE/CAS_R1_cassette_segment_150.stl",
+"work/kit_v19/SPINE/CAS_R2_trolley.stl",
+"work/kit_v19/SPINE/CAS_R3_end_anchor.stl",
+"work/kit_v19/SPINE/ELB_E1_elbow_and_grip.stl",
+"work/kit_v19/SPINE/ELB_E2_grip_endcap.stl",
+"work/kit_v19/SPINE/ELB_E3_trigger.stl",
+"work/kit_v19/SPINE/ELB_E4_joystick_boss.stl",
+"work/kit_v19/SPINE/ELB_E5_forearm_cuff.stl",
+"work/kit_v19/SPINE/NPM_N1_body_with_tunnel_v2.stl",
+"work/kit_v19/SPINE/NPM_N2_lid_with_fill_ports.stl",
+"work/kit_v19/SPINE/NPM_N3_hot_zone_dam_v2.stl",
+"work/kit_v19/SPINE/spine_report.json"
+]
+},
 "models3d": {
 "L": [],
 "R": [
+"work/afe_design.py",
 "work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv",
-"work/models3d.py"
+"work/models3d.py",
+"work/pw_design.py"
 ],
 "W": [
 "work/kit_v22/3dmodels/PF233_AD7389.wrl",
@@ -1287,6 +1363,7 @@
 "models3d-check": {
 "L": [],
 "R": [
+"work/afe_design.py",
 "work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv",
 "work/kit_v22/3dmodels/PF233_AD7389.wrl",
 "work/kit_v22/3dmodels/PF233_BAV199.wrl",
@@ -1341,7 +1418,9 @@
 "work/kit_v22/KICAD_SBQ/SB1R-QB.kicad_pcb",
 "work/kit_v3/PCB_AB1A/PF233-AB1A.kicad_pcb",
 "work/kit_v3/PCB_AB1B/PF233-AB1B.kicad_pcb",
-"work/models3d_check.py"
+"work/models3d.py",
+"work/models3d_check.py",
+"work/pw_design.py"
 ],
 "W": [
 "work/kit_v22/models3d_check.json"
@@ -1354,7 +1433,10 @@
 "R": [
 "work/afe_design.py",
 "work/afe_export.py",
-"work/afe_layout.py"
+"work/afe_layout.py",
+"work/golden_cone_head.py",
+"work/models3d.py",
+"work/rodin_core_v4.py"
 ],
 "W": [
 "work/kit_v3/PCB_AB1A/PF233-AB1A-B_Cu.gbr",
@@ -1405,7 +1487,10 @@
 ],
 "R": [
 "work/cb1d_export.py",
-"work/pw_design.py"
+"work/golden_cone_head.py",
+"work/models3d.py",
+"work/pw_design.py",
+"work/rodin_core_v4.py"
 ],
 "W": [
 "work/kit_v18/CB1D/PF233-CB1D.kicad_pcb",
@@ -1423,8 +1508,11 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/golden_cone_head.py",
+"work/models3d.py",
 "work/pw_design.py",
-"work/pw_export.py"
+"work/pw_export.py",
+"work/rodin_core_v4.py"
 ],
 "W": [
 "work/kit_v6/HB1/PF233-HB1.kicad_pcb",
@@ -1442,8 +1530,11 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/golden_cone_head.py",
+"work/models3d.py",
 "work/pw_design.py",
-"work/pw_export.py"
+"work/pw_export.py",
+"work/rodin_core_v4.py"
 ],
 "W": [
 "work/kit_v6/HB2/PF233-HB2.kicad_pcb",
@@ -1462,7 +1553,9 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/dru_gen.py",
 "work/gerber_edge_check.py",
+"work/gerber_geom.py",
 "work/hta_gerber.py",
 "work/hta_kicad.py",
 "work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv"
@@ -1489,10 +1582,12 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/golden_cone_head.py",
 "work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv",
 "work/lb1_export.py",
 "work/models3d.py",
-"work/pw_design.py"
+"work/pw_design.py",
+"work/rodin_core_v4.py"
 ],
 "W": [
 "work/kit_v18/LB1/PF233-LB1.kicad_pcb",
@@ -1510,8 +1605,11 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/golden_cone_head.py",
+"work/models3d.py",
 "work/pw_design.py",
-"work/pw_export.py"
+"work/pw_export.py",
+"work/rodin_core_v4.py"
 ],
 "W": [
 "work/kit_v6/PB1R/PF233-PB1R.kicad_pcb",
@@ -1530,12 +1628,15 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/golden_cone_head.py",
 "work/kit_v18/CB1D/PF233-CB1D.net",
 "work/kit_v23/tx_vbus.json",
 "work/kit_v6/PB1R/PF233-PB1R.net",
+"work/models3d.py",
 "work/power_dock_check.py",
 "work/pw_design.py",
 "work/pw_export.py",
+"work/rodin_core_v4.py",
 "work/sch_export.py"
 ],
 "W": [
@@ -1599,7 +1700,8 @@
 "stl/upper/U6_BATTERY_DOCK.stl",
 "stl/upper/U7_BATTERY_PACK_SHELL.stl",
 "stl/upper/U8_CORD_ANCHOR.stl",
-"stl/upper/U8_SEPTUM_extended.stl",
+"stl/upper/U8_SEPTUM_extended_SEG_A.stl",
+"stl/upper/U8_SEPTUM_extended_SEG_B.stl",
 "stl/upper/U9_CAM_COLLAR.stl",
 "stl/yoke/BUSHING_IN_TUBE_A.stl",
 "stl/yoke/BUSHING_ON_TUBE_B.stl",
@@ -1634,6 +1736,38 @@
 "work/kit_v22/SCHF"
 ],
 "R": [
+"data/gerber/AB1A_v1/PF233-AB1A-v1-B_Cu.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-B_Mask.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-B_Paste.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-B_Silkscreen.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-Edge_Cuts.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-F_Cu.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-F_Mask.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-F_Paste.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-F_Silkscreen.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-In1_Cu.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-In2_Cu.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-In3_Cu.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-In4_Cu.gbr",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-NPTH.drl",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-PTH.drl",
+"data/gerber/AB1A_v1/PF233-AB1A-v1-job.gbrjob",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-B_Cu.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-B_Mask.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-B_Paste.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-B_Silkscreen.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-Edge_Cuts.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-F_Cu.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-F_Mask.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-F_Paste.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-F_Silkscreen.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-In1_Cu.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-In2_Cu.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-In3_Cu.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-In4_Cu.gbr",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-NPTH.drl",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-PTH.drl",
+"data/gerber/AB1B_v1/PF233-AB1B-v1-job.gbrjob",
 "data/gerber/CB1D_B3/PF233-CB1D-B3-B_Cu.gbr",
 "data/gerber/CB1D_B3/PF233-CB1D-B3-B_Mask.gbr",
 "data/gerber/CB1D_B3/PF233-CB1D-B3-Edge_Cuts.gbr",
@@ -1724,7 +1858,7 @@
 "data/gerber/TXJ1_v2/TXJ1-v2-F_Cu.gbr",
 "data/gerber/TXJ1_v2/TXJ1-v2-F_Mask.gbr",
 "data/gerber/TXJ1_v2/TXJ1-v2-PTH.drl",
-"data/kicad/3dmodels/PF233_ADS8860.wrl",
+"data/kicad/3dmodels/PF233_AD7389.wrl",
 "data/kicad/3dmodels/PF233_BAV199.wrl",
 "data/kicad/3dmodels/PF233_C0402.wrl",
 "data/kicad/3dmodels/PF233_C0603.wrl",
@@ -1762,13 +1896,19 @@
 "data/kicad/3dmodels/PF233_R0805.wrl",
 "data/kicad/3dmodels/PF233_R1206.wrl",
 "data/kicad/3dmodels/PF233_R2512.wrl",
-"data/kicad/3dmodels/PF233_REF5041.wrl",
 "data/kicad/3dmodels/PF233_SOT223.wrl",
 "data/kicad/3dmodels/PF233_SOT23-5.wrl",
 "data/kicad/3dmodels/PF233_SW1G66.wrl",
 "data/kicad/3dmodels/PF233_TC4420.wrl",
 "data/kicad/3dmodels/PF233_TERM2.wrl",
 "data/kicad/3dmodels/PF233_TERM4.wrl",
+"data/kicad/3dmodels/models_report.json",
+"data/kicad/PF233-AB1A.kicad_dru",
+"data/kicad/PF233-AB1A.kicad_pcb",
+"data/kicad/PF233-AB1A.kicad_pro",
+"data/kicad/PF233-AB1B.kicad_dru",
+"data/kicad/PF233-AB1B.kicad_pcb",
+"data/kicad/PF233-AB1B.kicad_pro",
 "data/kicad/PF233-CB1D_routed.kicad_dru",
 "data/kicad/PF233-CB1D_routed.kicad_pcb",
 "data/kicad/PF233-CB1D_routed.kicad_pro",
@@ -1806,27 +1946,53 @@
 "data/kicad/sch/PF233-PB1R.kicad_sch",
 "data/kicad/sch/PF233-PM1.kicad_sch",
 "data/kicad/sch/PF233-PM2.kicad_sch",
+"data/kicad/sch_functional/PF233-AB1A_functional.kicad_sch",
+"data/kicad/sch_functional/PF233-AB1B_functional.kicad_sch",
 "data/kicad/sch_functional/PF233-CB1D_functional.kicad_sch",
 "data/kicad/sch_functional/PF233-HB2_functional.kicad_sch",
 "data/kicad/sch_functional/PF233-LB1_functional.kicad_sch",
 "data/kicad/sch_functional/PF233-PB1R_functional.kicad_sch",
 "data/kicad/sch_functional/PF233-PM2_functional.kicad_sch",
+"data/results/PF233-AB1A.net",
+"data/results/PF233-AB1A_BOM.csv",
+"data/results/PF233-AB1A_check.json",
+"data/results/PF233-AB1A_functional_check.json",
+"data/results/PF233-AB1A_pickplace.csv",
+"data/results/PF233-AB1B.net",
+"data/results/PF233-AB1B_BOM.csv",
+"data/results/PF233-AB1B_check.json",
+"data/results/PF233-AB1B_functional_check.json",
+"data/results/PF233-AB1B_pickplace.csv",
+"data/results/PF233-CB1D_BOM.csv",
 "data/results/PF233-CB1D_functional_check.json",
+"data/results/PF233-CB1D_pickplace.csv",
+"data/results/PF233-HB2_BOM.csv",
 "data/results/PF233-HB2_functional_check.json",
+"data/results/PF233-HB2_pickplace.csv",
+"data/results/PF233-LB1_BOM.csv",
 "data/results/PF233-LB1_functional_check.json",
+"data/results/PF233-LB1_pickplace.csv",
 "data/results/PF233-PB1R.net",
 "data/results/PF233-PB1R_BOM.csv",
 "data/results/PF233-PB1R_functional_check.json",
 "data/results/PF233-PB1R_pickplace.csv",
+"data/results/PF233-PM2_BOM.csv",
 "data/results/PF233-PM2_functional_check.json",
+"data/results/PF233-PM2_pickplace.csv",
 "data/results/SYSTEM_STRESS_MARGINS.csv",
 "data/results/TX_ONTIME_LUT.csv",
+"data/results/ab1_island_check_AB1A.json",
+"data/results/ab1_island_check_AB1B.json",
 "data/results/drc_CB1D.json",
 "data/results/drc_HB2.json",
 "data/results/drc_LB1.json",
 "data/results/drc_PB1R.json",
 "data/results/drc_PM2.json",
 "data/results/fine_check.json",
+"data/results/gerber_ab1_AB1A.json",
+"data/results/gerber_ab1_AB1B.json",
+"data/results/gerber_edge_AB1A.json",
+"data/results/gerber_edge_AB1B.json",
 "data/results/gerber_edge_CB1D.json",
 "data/results/gerber_edge_HB2.json",
 "data/results/gerber_edge_HTA.json",
@@ -1836,6 +2002,10 @@
 "data/results/gerber_hv_CB1D.json",
 "data/results/gerber_plane_PB1R.json",
 "data/results/head_crosscheck.json",
+"data/results/indep_drc_AB1A.json",
+"data/results/indep_drc_AB1B.json",
+"data/results/kicad_drc_AB1A.json",
+"data/results/kicad_drc_AB1B.json",
 "data/results/kicad_drc_CB1D.json",
 "data/results/kicad_drc_HB2.json",
 "data/results/kicad_drc_HTA.json",
@@ -1845,7 +2015,7 @@
 "data/results/kicad_drc_SB1R-QA.json",
 "data/results/kicad_drc_SB1R-QB.json",
 "data/results/kicad_drc_TXJ1.json",
-"data/results/pb1r_check.json",
+"data/results/models3d_check.json",
 "data/results/power_dock_check.json",
 "data/results/route_CB1D.json",
 "data/results/route_HB2.json",
@@ -1861,7 +2031,10 @@
 "data/results/tx_vbus.json",
 "data/results/wiring_audit.json",
 "scripts/publish_data.py",
+"src/pcb/dru_gen.py",
 "src/pcb/gerber_geom.py",
+"work/kit_v18/CB1D/PF233-CB1D_BOM.csv",
+"work/kit_v18/CB1D/PF233-CB1D_pickplace.csv",
 "work/kit_v18/HTA/PF233-HTA-B_Cu.gbr",
 "work/kit_v18/HTA/PF233-HTA-B_Mask.gbr",
 "work/kit_v18/HTA/PF233-HTA-Edge_Cuts.gbr",
@@ -1873,13 +2046,14 @@
 "work/kit_v18/HTA/PF233-HTA-PTH.drl",
 "work/kit_v18/HTA/PF233-HTA_BOM.csv",
 "work/kit_v18/HTA/PF233-HTA_preview.png",
+"work/kit_v18/LB1/PF233-LB1_BOM.csv",
+"work/kit_v18/LB1/PF233-LB1_pickplace.csv",
 "work/kit_v20/route_CB1D.json",
 "work/kit_v20/route_HB2.json",
 "work/kit_v20/route_LB1.json",
 "work/kit_v20/route_PB1R.json",
 "work/kit_v20/route_PM2.json",
 "work/kit_v22/3dmodels/PF233_AD7389.wrl",
-"work/kit_v22/3dmodels/PF233_ADS8860.wrl",
 "work/kit_v22/3dmodels/PF233_BAV199.wrl",
 "work/kit_v22/3dmodels/PF233_C0402.wrl",
 "work/kit_v22/3dmodels/PF233_C0603.wrl",
@@ -1917,7 +2091,6 @@
 "work/kit_v22/3dmodels/PF233_R0805.wrl",
 "work/kit_v22/3dmodels/PF233_R1206.wrl",
 "work/kit_v22/3dmodels/PF233_R2512.wrl",
-"work/kit_v22/3dmodels/PF233_REF5041.wrl",
 "work/kit_v22/3dmodels/PF233_SOT223.wrl",
 "work/kit_v22/3dmodels/PF233_SOT23-5.wrl",
 "work/kit_v22/3dmodels/PF233_SW1G66.wrl",
@@ -2132,57 +2305,19 @@
 "work/kit_v3/PCB_AB1B/PF233-AB1B_BOM.csv",
 "work/kit_v3/PCB_AB1B/PF233-AB1B_check.json",
 "work/kit_v3/PCB_AB1B/PF233-AB1B_pickplace.csv",
+"work/kit_v6/HB2/PF233-HB2_BOM.csv",
+"work/kit_v6/HB2/PF233-HB2_pickplace.csv",
 "work/kit_v6/PB1R/PF233-PB1R.kicad_pcb",
 "work/kit_v6/PB1R/PF233-PB1R.net",
 "work/kit_v6/PB1R/PF233-PB1R_BOM.csv",
 "work/kit_v6/PB1R/PF233-PB1R_pickplace.csv",
+"work/kit_v6/PM2/PF233-PM2_BOM.csv",
+"work/kit_v6/PM2/PF233-PM2_pickplace.csv",
 "work/out_board/AB1A_layout.json",
 "work/out_board/AB1B_layout.json"
 ],
 "W": [
-"data/gerber/AB1A_v1/PF233-AB1A-v1-B_Cu.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-B_Mask.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-B_Paste.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-B_Silkscreen.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-Edge_Cuts.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-F_Cu.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-F_Mask.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-F_Paste.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-F_Silkscreen.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-In1_Cu.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-In2_Cu.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-In3_Cu.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-In4_Cu.gbr",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-NPTH.drl",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-PTH.drl",
-"data/gerber/AB1A_v1/PF233-AB1A-v1-job.gbrjob",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-B_Cu.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-B_Mask.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-B_Paste.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-B_Silkscreen.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-Edge_Cuts.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-F_Cu.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-F_Mask.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-F_Paste.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-F_Silkscreen.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-In1_Cu.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-In2_Cu.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-In3_Cu.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-In4_Cu.gbr",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-NPTH.drl",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-PTH.drl",
-"data/gerber/AB1B_v1/PF233-AB1B-v1-job.gbrjob",
-"data/kicad/3dmodels/PF233_AD7389.wrl",
-"data/kicad/3dmodels/models_report.json",
-"data/kicad/PF233-AB1A.kicad_dru",
-"data/kicad/PF233-AB1A.kicad_pcb",
-"data/kicad/PF233-AB1A.kicad_pro",
-"data/kicad/PF233-AB1B.kicad_dru",
-"data/kicad/PF233-AB1B.kicad_pcb",
-"data/kicad/PF233-AB1B.kicad_pro",
-"data/kicad/sch_functional/PF233-AB1A_functional.kicad_sch",
 "data/kicad/sch_functional/PF233-AB1A_functional.pdf",
-"data/kicad/sch_functional/PF233-AB1B_functional.kicad_sch",
 "data/kicad/sch_functional/PF233-AB1B_functional.pdf",
 "data/kicad/sch_functional/PF233-CB1D_functional.pdf",
 "data/kicad/sch_functional/PF233-HB2_functional.pdf",
@@ -2191,27 +2326,9 @@
 "data/kicad/sch_functional/PF233-PM2_functional.pdf",
 "data/results/AB1A_layout.json",
 "data/results/AB1B_layout.json",
-"data/results/PF233-AB1A.net",
-"data/results/PF233-AB1A_BOM.csv",
-"data/results/PF233-AB1A_check.json",
-"data/results/PF233-AB1A_functional_check.json",
-"data/results/PF233-AB1A_pickplace.csv",
-"data/results/PF233-AB1B.net",
-"data/results/PF233-AB1B_BOM.csv",
-"data/results/PF233-AB1B_check.json",
-"data/results/PF233-AB1B_functional_check.json",
-"data/results/PF233-AB1B_pickplace.csv",
-"data/results/ab1_island_check_AB1A.json",
-"data/results/ab1_island_check_AB1B.json",
-"data/results/gerber_ab1_AB1A.json",
-"data/results/gerber_ab1_AB1B.json",
-"data/results/gerber_edge_AB1A.json",
-"data/results/gerber_edge_AB1B.json",
-"data/results/indep_drc_AB1A.json",
-"data/results/indep_drc_AB1B.json",
-"data/results/kicad_drc_AB1A.json",
-"data/results/kicad_drc_AB1B.json",
-"data/results/models3d_check.json"
+"data/results/PF233-AB1A_functional.pdf",
+"data/results/PF233-AB1B_functional.pdf",
+"data/results/pb1r_check.json"
 ]
 },
 "route-cb1d": {
@@ -2219,6 +2336,7 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/dru_gen.py",
 "work/kit_v18/CB1D/pads.json",
 "work/kit_v20/state_CB1D.sha",
 "work/route_fix.py",
@@ -2235,6 +2353,7 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/dru_gen.py",
 "work/kit_v20/state_HB2.sha",
 "work/kit_v6/HB2/pads.json",
 "work/route_fix.py",
@@ -2251,6 +2370,7 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/dru_gen.py",
 "work/kit_v18/LB1/pads.json",
 "work/kit_v20/state_LB1.sha",
 "work/route_fix.py",
@@ -2267,6 +2387,7 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/dru_gen.py",
 "work/kit_v20/state_PB1R.sha",
 "work/kit_v6/PB1R/pads.json",
 "work/route_fix.py",
@@ -2284,6 +2405,7 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/dru_gen.py",
 "work/kit_v20/state_PM2.sha",
 "work/kit_v6/PM2/pads.json",
 "work/route_fix.py",
@@ -2302,6 +2424,7 @@
 "R": [
 "work/kit_v15/LOW/paths.pkl",
 "work/kit_v22/sbq_radii.json",
+"work/models3d.py",
 "work/sbq_damp2.py",
 "work/sbq_export.py",
 "work/sbq_gen2.py",
@@ -2384,7 +2507,9 @@
 "sch-func": {
 "L": [],
 "R": [
+"work/afe_design.py",
 "work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv",
+"work/pw_design.py",
 "work/sch_blocks.py",
 "work/sch_func.py"
 ],
@@ -2536,6 +2661,7 @@
 "tx": {
 "L": [],
 "R": [
+"work/solid_union.py",
 "work/tx_system.py"
 ],
 "W": [
@@ -2572,9 +2698,13 @@
 "scripts/tracehook"
 ],
 "R": [
+"work/golden_cone_head.py",
 "work/kit_v15/LOW/paths.pkl",
 "work/kit_v23/power_dock_check.json",
+"work/render_v6.py",
+"work/rodin_core_v4.py",
 "work/shaft_calc_v20.py",
+"work/solid_union.py",
 "work/upper_check.py",
 "work/upper_figure.py",
 "work/upper_v21.py"
@@ -2595,6 +2725,8 @@
 "work/kit_v23/UPPER/U8_CORD_ANCHOR.stl",
 "work/kit_v23/UPPER/U8_SEPTUM_collapsed.stl",
 "work/kit_v23/UPPER/U8_SEPTUM_extended.stl",
+"work/kit_v23/UPPER/U8_SEPTUM_extended_SEG_A.stl",
+"work/kit_v23/UPPER/U8_SEPTUM_extended_SEG_B.stl",
 "work/kit_v23/UPPER/U9_CAM_COLLAR.stl",
 "work/kit_v23/UPPER/UPPER_ASSEMBLY_collapsed.stl",
 "work/kit_v23/UPPER/UPPER_ASSEMBLY_extended.stl",
@@ -2614,7 +2746,8 @@
 "work/kit_v15/PRINT/report.json",
 "work/parts_v22.py",
 "work/render_v6.py",
-"work/rodin_core_v4.py"
+"work/rodin_core_v4.py",
+"work/solid_union.py"
 ],
 "W": [
 "work/kit_v22/ANALOG_TRAY_v5.stl",
@@ -2633,6 +2766,10 @@
 ],
 "R": [
 "work/cap_hood_v16.py",
+"work/golden_cone_head.py",
+"work/render_v6.py",
+"work/rodin_core_v4.py",
+"work/solid_union.py",
 "work/yoke_v20.py"
 ],
 "W": [
@@ -2665,10 +2802,8 @@
 "work/kit_v19/SPINE/ELB_E3_trigger.stl",
 "work/kit_v19/SPINE/ELB_E4_joystick_boss.stl",
 "work/kit_v19/SPINE/ELB_E5_forearm_cuff.stl",
-"work/kit_v19/SPINE/NPM_N1_body_with_tunnel.stl",
 "work/kit_v19/SPINE/NPM_N1_body_with_tunnel_v2.stl",
 "work/kit_v19/SPINE/NPM_N2_lid_with_fill_ports.stl",
-"work/kit_v19/SPINE/NPM_N3_hot_zone_dam.stl",
 "work/kit_v19/SPINE/NPM_N3_hot_zone_dam_v2.stl",
 "work/kit_v19/YOKE/BUSHING_IN_TUBE_A.stl",
 "work/kit_v19/YOKE/BUSHING_ON_TUBE_B.stl",
