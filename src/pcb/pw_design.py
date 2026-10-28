@@ -114,6 +114,10 @@ if "HDR1x5" not in LIB: LIB["HDR1x5"] = tht(5, 2.54, 1, 1.8, 1.0, "Pin header")
 # arrangement but VERIFY against the chosen part (docs/ASSUMPTIONS.md 26)
 LIB["WIRE3"] = dict(tht(3, 5.08, 1, 3.0, 1.7, "Wire pads"), body=(4.04, 14.7, 0.1))
 LIB["WIRE4"] = dict(tht(4, 5.08, 1, 3.0, 1.7, "Wire pads"), body=(4.04, 19.8, 0.1))
+# coil-lead solder holes (2026-10-28, replace the 5.08 mm screw terminals on the flyback net: the MKDS 1,5 class clamps AWG 26-14 and is rated 250 V, the leads are
+# AWG12 / AWG22 at about 460 V; CORRECTIONS). AWG12: 3.8 mm pad, 2.6 mm drill (the TXJ1_v2 pad); AWG22: 2.0 mm pad, 1.0 mm drill; 5.08 pitch leaves 1.28 / 3.08 mm copper gap (HV rule 1.0)
+LIB["WIRE2_AWG12"] = dict(tht(2, 5.08, 1, 3.8, 2.6, "Solder holes AWG12"), body=(4.1, 9.2, 0.1))
+LIB["WIRE2_AWG22"] = dict(tht(2, 5.08, 1, 2.0, 1.0, "Solder holes AWG22"), body=(2.3, 7.4, 0.1))
 LIB["WIRE2S"] = dict(tht(2, 2.54, 1, 1.8, 1.0, "Wire pads"), body=(3.0, 6.6, 0.1))
 LIB["PMOS_SO8"] = dict(desc="P-channel MOSFET SO-8, -40 V, Rds(on) <= 15 mohm at -10 V (1-3 S, 4 G, 5-8 D: VERIFY)", fp="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
                        pins=[("1", "S", "passive"), ("2", "S", "passive"), ("3", "S", "passive"), ("4", "G", "input"), ("5", "D", "passive"), ("6", "D", "passive"), ("7", "D", "passive"), ("8", "D", "passive")],
@@ -237,7 +241,8 @@ if PW == "C":
     for i, nm in enumerate(["UMB_SHLD", "GND", "TX1_IN", "REF_I1", "FAULT1_N", "ISENSE1", "NTC_SENSE", "GND"], 1): net(nm, ("JPB", i))
     add("RUS", "R0603", "1M", ""); add("CUS", "C0603", "1n 100V", "C0G"); net("UMB_SHLD", ("RUS", 1), ("CUS", 1)); net("GND", ("RUS", 2), ("CUS", 2))
     # coil interface at the HEAD end of the coil leads: critical damping (3 x 110 R = 330 R, 600 V) and the AC-coupled MONO receive tap to AB1B
-    add("JCL", "TERM2", "Coil leads from the neck module: COIL_B (drain side), COIL_A (VBUS side)", "5.08 mm terminal block, silicone AWG12 leads")
+    # CB1D-C2: JCL = solder holes for the AWG22 tap pair (harness W058; was a 5.08 mm terminal block rated 250 V on the 460 V COIL_B node; CORRECTIONS)
+    add("JCL", "WIRE2_AWG22", "Coil taps from TXJ1: COIL_B (drain side), COIL_A (VBUS side)", "plated holes 1.0 mm for the AWG22 600 V tap pair")
     for k in (1, 2, 3): add(f"RDM{k}", "R2512", "110R", "damping chain 3 x 110 = 330 R (600 V)")
     net("COIL_B", ("JCL", 1), ("RDM1", 1)); net("DM1", ("RDM1", 2), ("RDM2", 1)); net("DM2", ("RDM2", 2), ("RDM3", 1)); net("COIL_A", ("JCL", 2), ("RDM3", 2))
     # CB1D-B: the AC-coupled MONO tap (CMON 100 nF / 630 V, RBI) is removed: a 460 V node on a 1.27 mm header could not meet the 1.0 mm HV rule (KiCad DRC), and the mono/disc channel is not used with RX-Q
@@ -265,7 +270,8 @@ if PW == "R":
     add("DC1", "DSMC", "ES3J 600V 3A", "ultrafast clamp diode (Good-Ark ES3J: 600 V, trr 35 ns); below the 630 V rule: WATCH, no verified >= 630 V ultrafast SMC part"); net("DRAIN1", ("DC1", 2)); net("CLAMP1", ("DC1", 1))
     for cl in ("CL1A", "CL1B"): add(cl, "C1210", "100n 630V", "C0G/X7R HV"); net("CLAMP1", (cl, 1)); net("VBUS", (cl, 2))
     add("RCL1", "WIRE2", "external 5k 10W (lid bank)", "resistor bank bonded under the lid"); net("CLAMP1", ("RCL1", 1)); net("VBUS", ("RCL1", 2))
-    add("JL1", "TERM2", "Coil outer band: DRAIN, VBUS", "5.08 mm terminal block"); net("DRAIN1", ("JL1", 1)); net("VBUS", ("JL1", 2))
+    # PB1R-v5 (2026-10-28): JL1 = solder holes for the AWG12 TX pair (was a 5.08 mm terminal block: AWG 26-14 and 250 V against AWG12 at 460 V; CORRECTIONS)
+    add("JL1", "WIRE2_AWG12", "Coil pair: DRAIN1, VBUS (AWG12 soldered)", "plated holes 2.6 mm, no terminal block on the flyback net"); net("DRAIN1", ("JL1", 1)); net("VBUS", ("JL1", 2))
     add("RK1", "R0603", "100", ""); add("CK1", "C0603", "100p", "C0G"); add("RPU1", "R0603", "10k", ""); add("RF1", "R0603", "1k", "")
     net("SRC1", ("RK1", 1)); net("ISENSE1", ("RK1", 2), ("CK1", 1), ("U3", 2)); net("GND", ("CK1", 2)); net("REF_I1", ("U3", 3)); net("OC1_OUT", ("U3", 1), ("RPU1", 1), ("RF1", 1)); net("AUX12", ("RPU1", 2)); net("FAULT1_N", ("RF1", 2))
     add("M12", "OKI3", "12 V 1.0 A switching module", "Murata OKI-78SR-12/1.0-W36-C, Vin 15-36 V covers the 7S range 19.6-29.4 V (MDC_OKI-78SR-W36.C05; the series has no 12 V 1.5 A model)"); net("VBUS", ("M12", 1)); net("GND", ("M12", 2)); net("AUX12", ("M12", 3))

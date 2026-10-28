@@ -355,6 +355,12 @@ d=rd("kit_v23/au1_check.json")
 if d: chk("AU1 audio board: every electrical cross-check passes (buck 5 V, inductor peak, LDO dropout, amp swing, fuse, harness ends)",all(c["result"]=="PASS" for c in d["checks"]) and len(d["checks"])>=20,
           f"{len(d['checks'])} checks; buck {d['operating']['buck_V']} V, L peak {d['operating']['ipk_A']} A, input {d['operating']['iin_A']} A")
 else: skip("AU1 cross-check")
+# board-to-harness interface (src/pcb/interface_check.py): every harness wire end on a board with pads.json lands on a pad that takes it (drill / pad / terminal range),
+# carries its worst current at <= 10 A/mm2, and every screw terminal is rated for its net voltage (Phoenix MKDS 1,5 data sheet: AWG 26-14, 250 V)
+d=rd("kit_v23/interface_check.json")
+if d: chk("interface: every harness wire end fits its pad or terminal, within the current rule, and every screw terminal is rated for its net voltage",d["fails"]==0 and d["ends_checked"]>=60 and all(t["result"]=="PASS" for t in d["terminals"]),
+          f"{d['ends_checked']} ends, {d['fails']} FAIL, {len(d['terminals'])} terminal pins, {len(d['not_covered'])} ends off-board or without pads.json")
+else: skip("interface check")
 # receive DSP reference (src/sim/dsp_ref.py): tau estimator at the Cramer-Rao bound, class / bearing at SNR 10, ground rejection with the held-ground ridge fit
 d=rd("kit_v23/dsp_ref.json")
 if d: _a=d["accuracy_vs_snr"]; chk("DSP reference: tau error within 1.5 x Cramer-Rao at SNR 30, class >= 80 % and bearing <= 5 deg at SNR 10, 0 false detections over varying ground, small gold over ground found",

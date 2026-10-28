@@ -11,7 +11,7 @@ sha = lambda p: hashlib.sha256(open(p, "rb").read()).hexdigest()
 def run(*a, **k): return subprocess.run(a, capture_output=True, text=True, **k)
 # ---------------------------------------------------------------- KiCad boards (routed files + design rules) and schematics
 BOARDS = [("CB1D", "PF233-CB1D_routed", "CB1D-C2 controller, D78, 6 layers (LED clock on JLB.3, BMI270 yaw gyro)", "in the verified flow"), ("LB1", "PF233-LB1_routed", "LB1-v6 display, D78, 4 layers, 66 x SK9822-EC20 clocked", "in the verified flow"),
-          ("PB1R", "PF233-PB1R_routed", "PB1R-v4 TX stage, 70 x 70, 4 layers (CB7-CB9 pad angle fixed)", "in the verified flow"), ("PM2", "PF233-PM2_routed", "PM2 battery dock, 28 x 70", "in the verified flow"),
+          ("PB1R", "PF233-PB1R_routed", "PB1R-v5 TX stage, 70 x 70, 4 layers (JL1 AWG12 solder holes, CB7-CB9 pad angle)", "in the verified flow"), ("PM2", "PF233-PM2_routed", "PM2 battery dock, 28 x 70", "in the verified flow"),
           ("HB2", "PF233-HB2_routed", "HB2-B grip board, 24 x 38 (audio link pass-through)", "in the verified flow"), ("AU1", "PF233-AU1_routed", "AU1 audio board, 36 x 44, 4 layers", "in the verified flow"), ("TXJ1", "TXJ1", "TXJ1 junction, 2 layers", "in the verified flow"),
           ("SB1R-QA", "SB1R-QA", "SB1R-QA receive coil board, D228", "in the verified flow"), ("SB1R-QB", "SB1R-QB", "SB1R-QB receive coil board, D228", "in the verified flow"),
           ("HTA", "PF233-HTA", "HTA timing-coil board, D90", "in the verified flow (v2: the first Gerbers were an open coil)"),
@@ -31,7 +31,7 @@ for b, f, desc, st in BOARDS:
     run("kicad-cli", "pcb", "export", "glb", "--subst-models", "--include-tracks", "--include-pads", "--include-zones", "-o", f"{R}/models3d/{b}_with_components.glb", pcb)
 for f in sorted(glob.glob("data/kicad/3dmodels/*.wrl")): pass
 # ---------------------------------------------------------------- Gerbers: pointers (the release package and the published sets)
-GERB = {"CB1D": "data/gerber/CB1D_C2", "LB1": "data/gerber/LB1_v6", "PB1R": "data/gerber/PB1R_v4", "PM2": "data/gerber/PM2_B", "HB2": "data/gerber/HB2_B", "AU1": "data/gerber/AU1", "TXJ1": "data/gerber/TXJ1_v2",
+GERB = {"CB1D": "data/gerber/CB1D_C2", "LB1": "data/gerber/LB1_v6", "PB1R": "data/gerber/PB1R_v5", "PM2": "data/gerber/PM2_B", "HB2": "data/gerber/HB2_B", "AU1": "data/gerber/AU1", "TXJ1": "data/gerber/TXJ1_v2",
         "SB1R-QA": "data/gerber/SB1R_QA_v2", "SB1R-QB": "data/gerber/SB1R_QB_v2", "HTA": "data/gerber/HTA_v2", "AB1A": "data/gerber/AB1A_v1", "AB1B": "data/gerber/AB1B_v1"}
 # ---------------------------------------------------------------- STL classification
 man = {r["file"]: r for r in csv.DictReader(open("stl/MANIFEST.csv"))}
