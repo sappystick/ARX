@@ -29,7 +29,7 @@ elif board=="AU1":
     # reorder-and-retry (deterministic): route from scratch with the nets that failed moved to the front and the pads whose plane stub failed stubbed first,
     # up to 6 rounds, keep the best (opt-in for AU1)
     mk=lambda: Router("kit_v6/AU1/pads.json",["F.Cu","In2.Cu","In5.Cu","In6.Cu","B.Cu"],{"GND":"In1.Cu","+5V_AU":"In3.Cu","+3V3_AU":"In4.Cu"},wid,clr=0.2)      # 8 layers (pw_export, 2026-10-28)
-    front=["BSL_INV","US_INN"]; stubs=set(); best=None                       # learned (2026-10-28 exact fine-zone keep-out): these two lost their only escape to later nets
+    front=["SPK_SD","BSL_INV","US_INN"]; stubs=set(); best=None              # SPK_SD (UM.19) first: BSL_INV from UM.21 otherwise runs down past pins 20 / 19 and walls it in                       # learned (2026-10-28 exact fine-zone keep-out): these two lost their only escape to later nets
     import random; t0=time.time()
     def _save(b_): json.dump(dict(stats=b_[2],tracks=b_[1].tracks,vias=b_[1].vias,layers=b_[1].layers,planes=b_[1].planes,R=b_[1].R),open(f"kit_v20/route_{board}.json","w"))
     for rnd in range(12):
