@@ -22,5 +22,7 @@ for ly in set(r["planes"].values()):
         need = size + 2.0
         res.append(dict(layer=ly, item=name, clear_dia=best, need=need, ok=best >= need - 1e-3))
 bad = [x for x in res if not x["ok"]]
-json.dump(dict(board=board, checked=len(res), failures=len(bad), failing=bad[:20]), open(f"kit_v22/gerber_hv_{board}.json", "w"), indent=1)
+npl = len(set(r["planes"].values())); n_pad = sum(1 for t in targets if not t[3].startswith("via"))
+json.dump(dict(board=board, checked=len(res), expected=len(targets) * npl, hv_tht_pads=n_pad, hv_vias=len(targets) - n_pad, plane_layers=npl, failures=len(bad), failing=bad[:20]),
+          open(f"kit_v22/gerber_hv_{board}.json", "w"), indent=1)
 print(f"{board}: HV plane keep-out in the Gerbers: {len(res)} pad/via x plane-layer checks, {len(bad)} below pad + 2.0 mm"); [print("  ", b) for b in bad[:6]]

@@ -39,7 +39,10 @@ def indep(b): return chk(f"kit_v22/drc_{b}.json", lambda d: (d["clearance_violat
 def route(b): return chk(f"kit_v20/route_{b}.json", lambda d: (d["stats"]["nets_routed"] == d["stats"]["nets_to_route"] and not d["stats"]["failures"], f"{d['stats']['nets_routed']}/{d['stats']['nets_to_route']} nets"))
 B = {}
 B["CB1D"] = dict(route=route("CB1D"), indep=indep("CB1D"), kicad=kicad("CB1D", True), gerber=gerbers("kit_v22/GERBER_CB1D_v2", edge="kit_v22/gerber_edge_CB1D.json"),
-                 plane=chk("kit_v22/gerber_hv_CB1D.json", lambda d: (d["failures"] == 0 and d["checked"] >= 8, f"{d['checked']} HV pad/via x plane checks")),
+                 # every HV through-hole pad and via on every plane layer, counted from the route itself (was a fixed ">= 8", which a route with one HV via fewer failed);
+                 # at least the two JCL coil-tap holes on both planes
+                 plane=chk("kit_v22/gerber_hv_CB1D.json", lambda d: (d["failures"] == 0 and d.get("expected", -1) == d["checked"] and d.get("hv_tht_pads", 0) >= 2 and d["checked"] >= 2 * d.get("plane_layers", 2),
+                           f"{d['checked']} HV pad/via x plane checks ({d.get('hv_tht_pads')} pads, {d.get('hv_vias')} vias)")),
                  cross=chk("kit_v22/wiring_audit.json", lambda d: (not d["errors"], f"{d['link_pins']} link pins, {d['harness_conductors']} conductors")))
 B["LB1"] = dict(route=route("LB1"), indep=indep("LB1"), kicad=kicad("LB1", False), gerber=gerbers("kit_v22/GERBER_LB1_v2", edge="kit_v22/gerber_edge_LB1.json"), plane=NA,
                 cross=chk("kit_v22/stack_check.json", lambda d: (all(r["result"] == "PASS" for r in d), f"{len(d)} stack-up checks")))
