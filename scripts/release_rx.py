@@ -2,8 +2,8 @@
 """Package the receive boards (AB1A, AB1B: AD7389-4 build with the +3V3D island on In4) into releases/RX_<REV>/ with Gerber and drill zips, BOM, pick-and-place, netlist, KiCad board and rules,
 functional schematic PDF, component models (VRML) and a glTF export, per-board CHECKS.md, BLOCKERS.md and a hash manifest. Refuses to run if the sign-off has a FAIL or is missing, if data/ is stale
 against work/, or if the release folder exists (new versions get new names). Copies from the COMMITTED data/ folders. MODELED / tool-checked only.
-BLOCKER carried by every release: the exposed-pad size of the LFCSP is a PLACEHOLDER (the package drawing shows no large pad while the text says to ground it): the land pattern is not releasable
-until the exposed pad is confirmed with the ADI recommended land pattern.
+BLOCKER 1 (the AD7389-4 exposed-pad PLACEHOLDER) was carried by RX_r1 only: closed in RX_r2 (B1, land = Ultra Librarian CP-24-25_ADI, agrees with ADI Fig. 43).
+The remaining BLOCKER entries keep their numbers so a reader of RX_r1 can follow them.
 usage: release_rx.py REV      e.g. r1 -> releases/RX_r1"""
 import sys, os, json, shutil, subprocess, datetime, glob, zipfile
 rev = sys.argv[1] if len(sys.argv) > 1 else "r1"; out = f"{os.environ.get('ARX_RELEASE_ROOT', 'releases')}/RX_{rev}"
@@ -14,8 +14,7 @@ try: S = json.load(open(SJ))
 except Exception: die(f"{SJ} missing: run make signoff")
 if S["counts"]["FAIL"]: die(f"the sign-off has {S['counts']['FAIL']} FAIL")
 if subprocess.run([sys.executable, "scripts/publish_data.py", "--check"], capture_output=True).returncode: die("data/ is stale against work/: run scripts/publish_data.py, review, commit, then sign off again")
-BLOCKERS = ["BLOCKER 1 (land pattern): the exposed pad of the AD7389-4 LFCSP is a 2.0 mm PLACEHOLDER. The package drawing (datasheet p. 31, Fig. 43) shows no large exposed pad, only a 0.50 mm chamfered square labelled pin-1 indicator, while the pin table and text say the exposed pad must be grounded. The land pattern is not releasable until the exposed pad is confirmed with the ADI recommended land pattern.",
-            "BLOCKER 2 (interface): SDI is tied to ground (the datasheet does not say whether that is allowed) and no software reset is issued; the 2-wire readout (SDOA = channels A then C, SDOB = channel B, J2 SDO3 unused on AB1A) needs a CB1D firmware change.",
+BLOCKERS = ["BLOCKER 2 (interface): SDI is tied to ground (the datasheet does not say whether that is allowed) and no software reset is issued; the 2-wire readout (SDOA = channels A then C, SDOB = channel B, J2 SDO3 unused on AB1A) needs a CB1D firmware change.",
             "BLOCKER 3 (supply): the extra +3V3D load (about 25 mA, 89 mW typical from the datasheet) is not checked against the rail budget.",
             "OPEN: island hatch connectivity has been read back from the Gerbers (gerber_geom) and KiCad-checked, but not opened in a CAM viewer or reviewed by a fabricator (U-CAM-VIEW, U-FAB-DRC); SW1G66, OPA2365 and BAV199 pin maps stay VERIFY; nothing here is built or measured."]
 os.makedirs(out); summary = []; unv = S["unverified"]

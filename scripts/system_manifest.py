@@ -30,7 +30,7 @@ for b, (gd, kc, bom, pp, sch) in BOARDS.items():
     else: rows.append(("board", f"{b} Gerber", gd, "MISSING", 0, "", ""))
     add("board", f"{b} KiCad board", kc); add("board", f"{b} BOM", bom); add("board", f"{b} pick-and-place", pp); add("board", f"{b} schematic", sch)
 rows.append(("board", "rigid-flex spine (OPEN_ITEMS 3)", "-", "MISSING", 0, "", "not designed: stackup, bend radius, shield hatch, connector footprints"))
-rows.append(("board", "AB1A / AB1B fabrication", "releases/RX_r1", "BLOCKED", 0, "", "exposed-pad land pattern is a placeholder (releases/RX_r1/BLOCKERS.md)"))
+rows.append(("board", "AB1A / AB1B fabrication", "releases/RX_r2", "BLOCKED", 0, "", "exposed pad closed in RX_r2 (B1); still blocked by BLOCKER 2 (SDI / readout) and BLOCKER 3 (+3V3D budget) until closed, plus U-FAB-DRC / U-CAM-VIEW (releases/RX_r2/BLOCKERS.md)"))
 man = {r["file"]: r for r in csv.DictReader(open("stl/MANIFEST.csv"))}
 pcr = {p["file"]: p for p in json.load(open("data/results/print_check.json"))["parts"]}
 for f in sorted(glob.glob("stl/*/*.stl")):

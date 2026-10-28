@@ -40,7 +40,8 @@ LIB = {
     pads=[("1", -2.15, -0.975, 1.45, 0.4, "roundrect"), ("2", -2.15, -0.325, 1.45, 0.4, "roundrect"), ("3", -2.15, 0.325, 1.45, 0.4, "roundrect"), ("4", -2.15, 0.975, 1.45, 0.4, "roundrect"),
           ("5", 2.15, 0.975, 1.45, 0.4, "roundrect"), ("6", 2.15, 0.325, 1.45, 0.4, "roundrect"), ("7", 2.15, -0.325, 1.45, 0.4, "roundrect"), ("8", 2.15, -0.975, 1.45, 0.4, "roundrect")], body=(3.0, 3.0, 1.1)),
 }
-EP_LAND = 0.6096; PAD_C = 1.9685; PAD_L = 0.762; PAD_W = 0.254                                # AD7389-4 land = Ultra Librarian CP-24-25_ADI nominal (24 mil EP); was a 2.0 mm EP PLACEHOLDER with flush 0.25 x 0.40 terminals
+import os
+EP_LAND = 0.6096; PAD_C, PAD_L = {"N": (1.9685, 0.762), "L": (1.9177, 0.6604), "M": (2.0193, 0.8636)}[os.environ.get("AFE_LAND", "N")]; PAD_W = 0.254                                # AD7389-4 land = Ultra Librarian CP-24-25_ADI (24 mil EP); AFE_LAND = N nominal (default) / L least / M most density, the three variants in the zip; was a 2.0 mm EP PLACEHOLDER with flush 0.25 x 0.40 terminals
 def _ad7389():
     """AD7389-4 quad 16-bit simultaneous SAR ADC, 24-lead LFCSP 4x4 0.5 mm (CP-24-25). Pin map from the datasheet Rev. 0 (Table 8, Fig. 9). Land pattern (B1, 2026-10-28) =
     Ultra Librarian CP-24-25_ADI (nominal density; data/seed/footprints/UltraLibrarian_AD7389-4BCPZ_CP-24-25_ADI.zip, KiCADv6): terminals 0.254 x 0.762 at 1.9685 mm (inner end

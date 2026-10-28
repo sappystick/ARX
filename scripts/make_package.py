@@ -15,8 +15,8 @@ BOARDS = [("CB1D", "PF233-CB1D_routed", "CB1D-B controller, D78, 6 layers", "in 
           ("HB2", "PF233-HB2_routed", "HB2 grip board, 24 x 38", "in the verified flow"), ("TXJ1", "TXJ1", "TXJ1 junction, 2 layers", "in the verified flow"),
           ("SB1R-QA", "SB1R-QA", "SB1R-QA receive coil board, D228", "in the verified flow"), ("SB1R-QB", "SB1R-QB", "SB1R-QB receive coil board, D228", "in the verified flow"),
           ("HTA", "PF233-HTA", "HTA timing-coil board, D90", "in the verified flow (v2: the first Gerbers were an open coil)"),
-          ("AB1A", "PF233-AB1A", "AB1A receive analog board, D40, 6 layers, AD7389-4 build with the +3V3D island", "routed, KiCad / independent DRC clean; BLOCKED by the exposed-pad land pattern (releases/RX_r1/BLOCKERS.md)"),
-          ("AB1B", "PF233-AB1B", "AB1B receive analog board, D40, 6 layers, AD7389-4 build", "routed, KiCad / independent DRC clean; BLOCKED by the exposed-pad land pattern (releases/RX_r1/BLOCKERS.md)")]
+          ("AB1A", "PF233-AB1A", "AB1A receive analog board, D40, 6 layers, AD7389-4 build with the +3V3D island", "routed, KiCad / independent DRC clean; exposed-pad land closed in RX_r2 (B1); remaining blockers in releases/RX_r2/BLOCKERS.md"),
+          ("AB1B", "PF233-AB1B", "AB1B receive analog board, D40, 6 layers, AD7389-4 build", "routed, KiCad / independent DRC clean; exposed-pad land closed in RX_r2 (B1); remaining blockers in releases/RX_r2/BLOCKERS.md")]
 for b, f, desc, st in BOARDS:
     for ext in (".kicad_pcb", ".kicad_dru", ".kicad_pro"):
         if os.path.exists(f"data/kicad/{f}{ext}"): shutil.copy(f"data/kicad/{f}{ext}", f"{R}/kicad/{f}{ext}")

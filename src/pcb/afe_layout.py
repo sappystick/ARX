@@ -25,9 +25,9 @@ else:
 BOARD_CFG = {"A": dict(uarots="", nudges="", pre=""), "B": dict(uarots="", nudges="", pre="FB_MONO")}      # B: RG2.1 sits in a pocket that VCM walls in unless FB_MONO is routed first (verified: 0 open)
 for _k, _env in (("uarots", "AFE_UAROTS"), ("nudges", "AFE_NUDGE"), ("pre", "AFE_PRE")):
     if BOARD_CFG[os.environ.get("BOARD", "A")][_k] and _env not in os.environ and not D.ADC7: os.environ[_env] = BOARD_CFG[os.environ.get("BOARD", "A")][_k]
-# Committed configuration of the AD7389-4 build (Option 1: +3V3D island on In4). Chip position, nudges, capacitor positions relative to the chip (REF:dx:dy:rot), island rectangle relative to the chip (x0:x1:y0:y1), short stubs with the plane via for the +3V3D pins.
-BOARD_CFG7 = {"A": dict(ux="9.5", uy="0.0", nudges="SW2:0.4:0,CBD:-0.3:0", caps="CRG:0.1:4.0:90,CVC:-1.8:4.6:0,CVL:2.0:4.6:0", island="1", island_rel="-2.5:3.1:2.0:3.6", planestub="UA1", psnets="+3V3D"),
-              "B": dict(ux="9.5", uy="0.0", nudges="RD2:0.4:0", caps="CRG:-0.3:4.0:90,CVC:-1.8:5.0:0,CVL:2.0:5.0:0", island="1", island_rel="-2.5:3.1:2.0:3.6", planestub="UA1", psnets="+3V3D")}   # island x 7.0 .. 12.6 mm: >= 3 mm from the OPA2211 pads
+# Committed configuration of the AD7389-4 build (Option 1: +3V3D island on In4). B1 (2026-10-28): CRF (REFOUT 1 uF) 0.3 mm further from UA1 on both boards: the Ultra Librarian land puts the UA1.17 toe 0.35 mm further out and walled VREF_RAW in (one-cell diagonal squeeze between CRF and the CS stub). Chip position, nudges, capacitor positions relative to the chip (REF:dx:dy:rot), island rectangle relative to the chip (x0:x1:y0:y1), short stubs with the plane via for the +3V3D pins.
+BOARD_CFG7 = {"A": dict(ux="9.5", uy="0.0", nudges="SW2:0.4:0,CBD:-0.3:0,CRF:0:-0.3", caps="CRG:0.1:4.0:90,CVC:-1.8:4.6:0,CVL:2.0:4.6:0", island="1", island_rel="-2.5:3.1:2.0:3.6", planestub="UA1", psnets="+3V3D"),
+              "B": dict(ux="9.5", uy="0.0", nudges="RD2:0.4:0,CRF:0:-0.3", caps="CRG:-0.3:4.0:90,CVC:-1.8:5.0:0,CVL:2.0:5.0:0", island="1", island_rel="-2.5:3.1:2.0:3.6", planestub="UA1", psnets="+3V3D")}   # island x 7.0 .. 12.6 mm: >= 3 mm from the OPA2211 pads
 if D.ADC7:
     for _k, _env in (("ux", "AFE_UX"), ("uy", "AFE_UY"), ("nudges", "AFE_NUDGE"), ("caps", "AFE_CAPS"), ("island", "AFE_ISLAND"), ("island_rel", "AFE_ISLAND_REL"), ("planestub", "AFE_PLANESTUB"), ("psnets", "AFE_PSNETS")):
         if _env not in os.environ: os.environ[_env] = BOARD_CFG7[os.environ.get("BOARD", "A")][_k]
@@ -122,6 +122,16 @@ def mark_core(pd):
     for L in layers_of(pd): core[L, y0:y1 + 1, x0:x1 + 1] = net; blk[L, y0:y1 + 1, x0:x1 + 1] = net
 for pd in PADS: stamp_pad(pd)
 for pd in PADS: mark_core(pd)
+HOLE_HOLE = 0.41                                                                             # dru_gen GEN hole_to_hole (edge-to-edge drill gap), enforced for every via, any net (B1 fix: two +3V3D vias sat 0.346 mm apart)
+nohole = np.zeros((N + 1, N + 1), bool)                                                      # True = no new via centre allowed (too close to an existing drill)
+def mark_hole(x, y, drill):
+    r = HOLE_HOLE + (drill + VIA_DRILL) / 2; k = int(math.ceil(r / GRID)); ci, cj = cell(x, y)
+    for dj in range(-k, k + 1):
+        for di in range(-k, k + 1):
+            a, b = ci + di, cj + dj
+            if 0 <= a <= N and 0 <= b <= N and math.hypot(a * GRID - OFF - x, b * GRID - OFF - y) < r - 1e-9: nohole[b, a] = True
+for pd in PADS:
+    if pd["tht"] and pd.get("drill"): mark_hole(pd["x"], pd["y"], pd["drill"])
 def passable(L, net):
     return (~edge) & ((core[L] == -1) | (core[L] == net)) & ((blk[L] == -1) | (blk[L] == net))
 STUB = {}
@@ -148,12 +158,12 @@ def stamp_via(i, j, net):
                 if blk[L, b, a] == -1: blk[L, b, a] = net
                 elif blk[L, b, a] != net: blk[L, b, a] = -2
         core[L, j, i] = net
-    x, y = xy(i, j); VIAS.append((x, y, net))
+    x, y = xy(i, j); VIAS.append((x, y, net)); mark_hole(x, y, VIA_DRILL)
 NB = [(1, 0, 1.0), (-1, 0, 1.0), (0, 1, 1.0), (0, -1, 1.0), (1, 1, 1.414), (1, -1, 1.414), (-1, 1, 1.414), (-1, -1, 1.414)]
 def via_ok_map(net):
     both = np.ones((N + 1, N + 1), bool)
     for L in range(NL): both &= passable(L, net)
-    ok = ndimage.binary_erosion(both.astype(np.uint8), structure=np.ones((2 * VR + 1, 2 * VR + 1), bool), border_value=0).astype(bool)
+    ok = ndimage.binary_erosion(both.astype(np.uint8), structure=np.ones((2 * VR + 1, 2 * VR + 1), bool), border_value=0).astype(bool) & ~nohole
     if ISL is not None:
         gx = xx * GRID - OFF; gy = yy * GRID - OFF
         if net == NETID["+3V3D"]: ok &= (gx >= ISL[0] + VIA_D / 2 + 0.1) & (gx <= ISL[1] - VIA_D / 2 - 0.1) & (gy >= ISL[2] + VIA_D / 2 + 0.1) & (gy <= ISL[3] - VIA_D / 2 - 0.1)
@@ -228,6 +238,7 @@ def register_plane(net, path, a=None, b=None):
     for c in path: T.add(c)
     if a is not None:
         for L in range(NL): T.add((L, a, b))
+PLANE_WIN = int(os.environ.get("AFE_PLANEWIN", 70))                                          # cells: LAST-RESORT reach to an existing plane via by a track (after the 4 mm track and the new-via fanout fail). B1: J2.3 on AB1A lost its fanout via site to the hole-to-hole rule; the island vias are 4.3-4.9 mm away
 def plane_connect(pd):
     net = NETID[pd["net"]]; L = LIDX[pd["layer"]]; cx, cy = cell(pd["x"], pd["y"])
     tg = [c for c in TREE.get(net, ()) if c[0] == L and abs(c[1] - cx) < 40 and abs(c[2] - cy) < 40]
@@ -235,6 +246,10 @@ def plane_connect(pd):
         path = astar(net, pad_cells(pd), tg, allow_via=False, window=(cx - 50, cy - 50, cx + 50, cy + 50), max_exp=60000)
         if path: commit(path, net); register_plane(net, path); return True
     if fanout(pd): return True
+    W_ = PLANE_WIN; tg = [c for c in TREE.get(net, ()) if c[0] == L and abs(c[1] - cx) < W_ and abs(c[2] - cy) < W_]
+    if tg and W_ > 40:
+        path = astar(net, pad_cells(pd), tg, allow_via=False, window=(cx - W_ - 10, cy - W_ - 10, cx + W_ + 10, cy + W_ + 10), max_exp=250000)
+        if path: commit(path, net); register_plane(net, path); return True
     return via_in_pad(pd)
 VIP = []
 def via_in_pad(pd):

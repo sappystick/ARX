@@ -214,6 +214,12 @@ if os.path.isdir("releases/RX_r1"):                                   # receive-
     _nman=sum(1 for _ in open("releases/RX_r1/MANIFEST.csv"))-1
     chk("release RX_r1: exposed-pad BLOCKER carried, manifest hashes verify, wording is not 'ready for fabrication'","BLOCKER 1" in _rm and "exposed pad" in _rm and not _bad and "ready for fabrication" not in _rm.replace("not ready for fabrication",""),f"{_nman} files hashed, {len(_bad)} mismatches")
 else: skip("release RX_r1")
+if os.path.isdir("releases/RX_r2"):                                   # B1: the exposed-pad blocker is closed in RX_r2; RX_r1 stays as written and is marked SUPERSEDED
+    import hashlib, csv as _csv
+    _rm=open("releases/RX_r2/RELEASE.md").read()+open("releases/RX_r2/BLOCKERS.md").read()
+    _bad=[_r[0] for _r in _csv.reader(open("releases/RX_r2/MANIFEST.csv")) if _r and len(_r)>2 and len(_r[2])==64 and (not os.path.exists(_r[0]) or hashlib.sha256(open(_r[0],"rb").read()).hexdigest()!=_r[2])]
+    chk("release RX_r2: BLOCKER 1 (exposed pad) removed, RX_r1 marked SUPERSEDED, manifest hashes verify, wording is not 'ready for fabrication'","BLOCKER 1" not in _rm and "PLACEHOLDER" not in _rm and os.path.exists("releases/RX_r1/SUPERSEDED.txt") and not _bad and "ready for fabrication" not in _rm.replace("not ready for fabrication",""),f"{len(_bad)} mismatches")
+else: skip("release RX_r2")
 _m=open("src/mech/mech_v20.py").read()
 chk("NPM cable window in mech_v20.py is still x -26..-14 (the numbers pb1r_check.py measures PB1R's JL1 / JP / JC against)","plate(-34, 12.5, NZ / 2, 16.0, 3.0, NZ), plate(14, 12.5, NZ / 2, 56.0, 3.0, NZ)" in _m,"back-wall plates")
 d=rd("kit_v22/pb1r_check.json")
@@ -234,5 +240,25 @@ if d:
     chk("PB1R fits the neck module: no component body intersects the NPM body v2 (rails, walls, tunnel), the lid or the hot-zone dam v2 (11 bodies did before the Step 7 audit)",bool(_f) and _f[0]["result"]=="PASS",str(_f[0]["value"]) if _f else "missing")
 _sd=[n for n in ("NPM_N1_body_with_tunnel_v2","NPM_N3_hot_zone_dam_v2") if os.path.exists(f"stl/shaft_handle/{n}.stl")]
 chk("curated STLs carry the NPM v2 parts (body with edge rails, dam at x -5..-3) and the superseded ones are marked",len(_sd)==2 and os.path.exists("stl/shaft_handle/SUPERSEDED.txt"),str(_sd))
+# B1: AD7389-4 land = the saved Ultra Librarian CP-24-25_ADI footprint (nominal), pad by pad; EP inside ADI Fig. 43 (0.40-0.60 SQ max land 0.6096)
+import zipfile as _zf
+_z="data/seed/footprints/UltraLibrarian_AD7389-4BCPZ_CP-24-25_ADI.zip"
+if os.path.exists(_z):
+    _t=_zf.ZipFile(_z).read("KiCADv6/footprints.pretty/CP-24-25_ADI.kicad_mod").decode()
+    _ul={m[0]:(float(m[1]),float(m[2]),float(m[4]),float(m[5])) if m[3]=="90" else (float(m[1]),float(m[2]),float(m[4]),float(m[5])) for m in re.findall(r'pad "(\d+)" smd rect \(at (\S+) (\S+)(?: (\d+))?\) \(size (\S+) (\S+)\)',_t)}
+    _ulr={k:((x,y,h,w) if (k!="25" and abs(abs(x)-1.9685)<1e-3) else (x,y,w,h)) for k,(x,y,w,h) in _ul.items()}        # rotated 90: KiCad size is (w,h) before rotation
+    _o=_sp.run([sys.executable,"-c","import sys,json; sys.path.insert(0,'src/pcb'); import afe_design as D; print(json.dumps([(n,x,y,w,h) for n,x,y,w,h,s in D.LIB['AD7389']['pads']]))"],capture_output=True,text=True).stdout
+    _ours={n:(x,y,w,h) for n,x,y,w,h in json.loads(_o)} if _o.strip() else {}
+    _bad=[k for k in _ulr if k not in _ours or max(abs(a-b) for a,b in zip(_ulr[k],_ours[k]))>1e-3]
+    chk("AB1 AD7389-4 land equals the Ultra Librarian CP-24-25_ADI footprint pad by pad (24 terminals 0.254 x 0.762 at 1.9685, EP 0.6096 SQ = Fig. 43 EP max)",len(_ulr)==25 and not _bad and len(_ours)==25,f"mismatch {_bad[:5]}")
+else: chk("AB1 AD7389-4 land source on disk",False,_z+" missing")
+# B4: input series resistors: signal channels (GX/GY = QUAD-A/B) 100 ohm as in sbq_damp2; spare/idle X8, Y8, MONO 1 kohm
+_o=_sp.run([sys.executable,"-c","import sys,json; sys.path.insert(0,'src/pcb'); import afe_design as D; print(json.dumps(D.RS))"],capture_output=True,text=True).stdout
+_rs=json.loads(_o) if _o.strip() else {}
+_sd=re.search(r"^L, Rc, RS, .*?=\s*[0-9.e-]+,\s*[0-9.]+,\s*([0-9.]+)",open("src/sim/sbq_damp2.py").read(),re.M)
+chk("AB1 RS: GX/GY 100 ohm (= sbq_damp2 RS), X8/Y8/MONO 1 kohm (B4 decision, CORRECTIONS)",_rs=={"GX":100,"GY":100,"X8":1000,"Y8":1000,"MONO":1000} and _sd is not None and float(_sd.group(1))==100,f"{_rs} sbq_damp2 {_sd.group(1) if _sd else 'n/a'}")
+# B6: AD7389-4 2-wire readout model (CB1D firmware side), checked against the board netlists
+_r=_sp.run([sys.executable,"src/sim/ad7389_readout.py"],capture_output=True,text=True)
+chk("AD7389-4 readout model (B6): 2-wire SDOA = A then C, SDOB = B; channel mapping and SDO/SDI wiring read from afe_design; one-frame latency; no data before 5 ms, settled from 11 ms; SDI low writes nothing",_r.returncode==0,f"{_r.stdout.count('PASS')} pass, {_r.stdout.count('FAIL')} fail")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

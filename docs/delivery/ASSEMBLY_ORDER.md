@@ -1,11 +1,11 @@
 # Assembly order (first experimental build; MODELED design, nothing built)
 
-Sources: docs/DESIGN_STATE.md section 3 (vault levels), docs/design/UPPER_ASSEMBLY_v1.md, docs/design/BENCH_FIRST_ARTICLE_TX.md, releases/TX_r2, releases/RX_r1, docs/delivery/SYSTEM_MANIFEST.csv.
+Sources: docs/DESIGN_STATE.md section 3 (vault levels), docs/design/UPPER_ASSEMBLY_v1.md, docs/design/BENCH_FIRST_ARTICLE_TX.md, releases/TX_r2, releases/RX_r2 (RX_r1 SUPERSEDED), docs/delivery/SYSTEM_MANIFEST.csv.
 Steps marked NOT SPECIFIED have no source in the repository: they are listed so nobody assumes they were designed.
 
 ## 0. Before anything is assembled
 1. Print every PRINT-class STL of stl/head, stl/pins, stl/yoke, stl/upper, stl/shaft_handle (classes and print-check state: SYSTEM_MANIFEST.csv). Print upright; rib undersides of the cylinder need supports (DESIGN_STATE section 3). Generate the six formers with `make formers-print` (about 70 MB each, not stored).
-2. Order the boards: transmit region from releases/TX_r2 (PB1R, CB1D, TXJ1, PM2, HB2); LB1, HTA and SB1R-QA / SB1R-QB from data/gerber; AB1A / AB1B from releases/RX_r1 ONLY AFTER BLOCKER 1 (exposed-pad land pattern) is closed. Fabricator DRC and a CAM-viewer pass are open (U-FAB-DRC, U-CAM-VIEW).
+2. Order the boards: transmit region from releases/TX_r2 (PB1R, CB1D, TXJ1, PM2, HB2); LB1, HTA and SB1R-QA / SB1R-QB from data/gerber; AB1A / AB1B from releases/RX_r2 (exposed-pad land closed, B1: Ultra Librarian CP-24-25_ADI land, filled and plated-over via in the EP) ONLY AFTER the remaining receive blockers in releases/RX_r2/BLOCKERS.md are closed. Fabricator DRC and a CAM-viewer pass are open (U-FAB-DRC, U-CAM-VIEW).
 3. Purchased parts: docs/delivery/PURCHASED_PARTS.csv (the AB1 rows are the AD7389-4 build) and data/results/BOM_SHAFT_YOKE.csv. Datasheets that were refused are listed in docs/UNVERIFIED.md.
 
 ## 1. Head, bottom up (hub frame, z up; heel at 178 deg)

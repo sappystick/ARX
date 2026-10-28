@@ -58,11 +58,20 @@ Evidence file for the datasheet groups that replaced U-DS-PARTS (`scripts/signof
 | Molicel INR-18650-P30B | https://www.molicel.com/wp-content/uploads/INR18650P30B-V2-80092.pdf | HTTP 404; the only PDF found is a copy on fsaeonline.com (not a manufacturer or distributor host), not used | 3.0 Ah, 3.6 V, 4.2 V charge, 30 A continuous, 18.6 x 65.3 mm (ASSUMPTIONS 27): unverified |
 | Amass MT60 body envelope | the Amass sheet above (ratings read) | the envelope is in the drawing image, not read | 20 x 16.5 x 8.6 mm (ASSUMPTIONS 25): unverified |
 
-## U-DS-BAV199: UNVERIFIED (receive input clamp)
+## U-DS-BAV199: VERIFIED (receive input clamp; B7, 2026-10-28)
 
-| Part | URL tried | Reply | Kept as |
-|---|---|---|---|
-| Nexperia BAV199 (AB1 D1-D3) | https://assets.nexperia.com/documents/data-sheet/BAV199.pdf (curl, browser, WebFetch) | HTTP 403 | low-leakage double diode, surge rating (ASSUMPTIONS 19/21): unverified |
+Source: Nexperia "BAV199 Low-leakage double diode", Product data sheet BAV199 v.3, 1 September 2020 (10 pages; revision history v.3 20200901, v.2 20011012). nexperia.com and assets.nexperia.com answered HTTP 403 (curl, WebFetch); the Nexperia-authored PDF was fetched from the mirror https://cdn.components.ru/media/PDF/1264335.pdf and is saved unchanged as data/seed/datasheets/BAV199_Nexperia_v3_2020-09-01.pdf (sha256 c09cdf672eb4274e...). A second-source Guangdong Hottech BAV199 sheet (owner-supplied) is kept as data/seed/datasheets/BAV199_GuangdongHottech_secondsource.pdf for reference only: its ratings (VR 70 V, IFM 500 mA, IO 215 mA, PD 200 mW, Tj 125 C) are NOT used for the Nexperia part.
+
+| Item | Datasheet value (Nexperia v.3, Table) | Used for |
+|---|---|---|
+| Pinning | 1 = A1 (anode diode 1), 2 = K2 (cathode diode 2), 3 = K1 + A2 (Table 2) | afe_design D.1 = GND, D.2 = +5VA, D.3 = IN: matches (clamp below GND and above +5VA) |
+| Reverse voltage | VR 75 V, VRRM 85 V (Table 5) | 5 V rails: no stress |
+| Forward current, single diode | IF 160 mA continuous; IFRM 500 mA repetitive peak; IFSM 4 A non-repetitive (tp 1 us square, Tj(init) 25 C) (Table 5) | clamp current through RS (B4, B9 33 ohm option) |
+| Power | Ptot 250 mW (Tamb <= 25 C) ; Tj 150 C max (Table 5) | |
+| Forward voltage | VF max 900 mV at 1 mA, 1 V at 10 mA, 1.1 V at 50 mA, 1.25 V at 150 mA (Tj 25 C) | clamp level in sbq_damp2 |
+| Leakage | IR 3 pA typ / 5 nA max at VR 75 V, Tj 25 C; 3 / 80 nA at 150 C | input offset: 5 nA x 100 ohm = 0.5 uV |
+| Capacitance | Cd 2 pF typ (VR 0 V, 1 MHz) | input capacitance |
+| Recovery | trr 0.8 us typ / 3 us max (IF = IR = 10 mA, IR(meas) 1 mA); VFRM 1.75 V max | clamp release after an overload |
 
 ## U-DS-HVTERM: UNVERIFIED (flyback-net connector and clamp resistor bank)
 
@@ -70,6 +79,23 @@ Evidence file for the datasheet groups that replaced U-DS-PARTS (`scripts/signof
 |---|---|---|---|
 | PB1R JL1, 5.08 mm 2-way terminal block on DRAIN1 / VBUS | Phoenix Contact product page for MKDS 1,5/2-5,08 (1715721), URL not found by search; https://www.phoenixcontact.com/en-us/products/pcb-terminal-block-mkds-15-2-508-1715721 | HTTP 404 | distributor listings (not used) give 250 V (III/3), 400 V (III/2), 630 V (II/2): whether the 466 V flyback peak meets rule 6 depends on the category the manufacturer states |
 | PB1R RCL1, 5 kohm 10 W resistor bank under the lid | no part chosen | - | voltage rating unknown (BOM text has none) |
+
+## AMS1117-3.3 (CB1D UL, +3V3D for the AB1 ADCs): VERIFIED (B3, 2026-10-28)
+
+Source: Advanced Monolithic Systems "AMS1117 1A Low Dropout Voltage Regulator" (DS1117, PDF created 2009-08-27, 8 pages), http://www.advanced-monolithic.com/pdf/ds1117.pdf (HTTP 200), saved unchanged as data/seed/datasheets/AMS1117_AdvancedMonolithic_DS1117_2009-08-27.pdf (sha256 189a2651878a87d5...). Second sources (UMW and others) use other dies: the order must name AMS or re-check against that maker's sheet.
+
+| Item | Datasheet value | Used for |
+|---|---|---|
+| Pinning (SOT-223 top view) | 1 Ground/Adjust, 2 VOUT, 3 VIN, tab = output | pw_design SOT223 "1 GND/ADJ, 2 VOUT, 3 VIN, tab VOUT": matches (VERIFY tag can go) |
+| Output | AMS1117-3.3 at VIN 4.8 V: 3.251 / 3.300 / 3.349 V (second row, the boldface full-temperature limits: 3.201 / 3.300 / 3.399 V); output current up to 1 A | +3V3D (AD7389-4 VCC 3.0-3.6 V: inside) |
+| Dropout | 1.1 typ / 1.3 V max at IOUT 0.8 A (Note 4: higher above 0.8 A) | 5.0 -> 3.3 V leaves 1.7 V |
+| Current limit | 900 min / 1100 typ / 1500 max mA at VIN-VOUT 1.5 V | |
+| Minimum load | 5 typ / **10 mA max** to keep regulation (Note 5, 1.5 V <= VIN-VOUT <= 12 V) | **+3V3D load must stay >= 10 mA** (see system_budget) |
+| Quiescent current | 5 typ / 11 mA max | +5V budget |
+| Line / load regulation (3.3 V) | 0.5 / 10 mV (1.5-12 V); 3 / 15 mV (0-0.8 A, VIN 4.75 V) | |
+| Ripple rejection | 72 dB typ (60 min) at 120 Hz, 22 uF tantalum, 1 A | |
+| Thermal | theta-JA SOT-223 90 C/W (46 to > 90 C/W with copper); theta-JC 15 C/W; Tj -40..125 C; max dissipation 1.2 W SOT-223 (Note 2) | |
+| Absolute maximum | VIN 15 V; lead 265 C 25 s | |
 
 ## U-DS-AD7389: VERIFIED from the user-supplied datasheet (AD7389-4 Rev. 0, 1/2022, 31 pages)
 
