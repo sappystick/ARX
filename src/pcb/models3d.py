@@ -137,7 +137,7 @@ def placed_mesh(t, L, x0, y0, rot=0.0, back=False):
 def types_by_board():
     import importlib
     out = {}
-    for pw in "CRPGLHMT":
+    for pw in "CRPGLHMTU":          # U = AU1 (2026-10-28: its own package types had no models)
         os.environ["PW"] = pw; os.environ["DISC"] = "1"; sys.modules.pop("pw_design", None)
         try: D = importlib.import_module("pw_design")
         except Exception: continue

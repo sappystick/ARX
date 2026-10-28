@@ -114,15 +114,16 @@ if "HDR1x5" not in LIB: LIB["HDR1x5"] = tht(5, 2.54, 1, 1.8, 1.0, "Pin header")
 # terminal pad geometry exactly (same positions, pads, drills, pitch: no re-route) and fit no connector body; wires are soldered through and staked (ASSEMBLY_ORDER)
 for _h in ("HDR1x2", "HDR1x4", "HDR1x5", "HDR1x7", "HDR2x4", "TERM4"):
     _w = "WIRE" + _h[3:] if _h.startswith("HDR") else "WIRE4T"
-    if _w not in LIB: LIB[_w] = dict(LIB[_h], desc=LIB[_h]["desc"].replace("Pin header", "Wire holes").replace("Terminal block", "Wire holes"), body=(LIB[_h]["body"][0], LIB[_h]["body"][1], 0.1))
+    if _w not in LIB: LIB[_w] = dict(LIB[_h], desc=LIB[_h]["desc"].replace("Pin header", "Wire holes").replace("Terminal block", "Wire holes"), body=(LIB[_h]["body"][0], LIB[_h]["body"][1], 0.1),
+                                     fp=LIB[_h]["fp"].replace("Connector:Pin_header", "Connector:Wire_pads").replace("Connector:Terminal_block", "Connector:Wire_pads"))   # bare pads: no 3-D body
 # upper assembly v1 (PM2 / HB2): wire pads for panel parts and the cords, and an SO-8 P-channel MOSFET. SO-8 pinout 1-3 S, 4 G, 5-8 D is the common P-FET
 # arrangement but VERIFY against the chosen part (docs/ASSUMPTIONS.md 26)
 LIB["WIRE3"] = dict(tht(3, 5.08, 1, 3.0, 1.7, "Wire pads"), body=(4.04, 14.7, 0.1))
 LIB["WIRE4"] = dict(tht(4, 5.08, 1, 3.0, 1.7, "Wire pads"), body=(4.04, 19.8, 0.1))
 # coil-lead solder holes (2026-10-28, replace the 5.08 mm screw terminals on the flyback net: the MKDS 1,5 class clamps AWG 26-14 and is rated 250 V, the leads are
 # AWG12 / AWG22 at about 460 V; CORRECTIONS). AWG12: 3.8 mm pad, 2.6 mm drill (the TXJ1_v2 pad); AWG22: 2.0 mm pad, 1.0 mm drill; 5.08 pitch leaves 1.28 / 3.08 mm copper gap (HV rule 1.0)
-LIB["WIRE2_AWG12"] = dict(tht(2, 5.08, 1, 3.8, 2.6, "Solder holes AWG12"), body=(4.1, 9.2, 0.1))
-LIB["WIRE2_AWG22"] = dict(tht(2, 5.08, 1, 2.0, 1.0, "Solder holes AWG22"), body=(2.3, 7.4, 0.1))
+LIB["WIRE2_AWG12"] = dict(tht(2, 5.08, 1, 3.8, 2.6, "Wire pads AWG12"), body=(4.1, 9.2, 0.1))
+LIB["WIRE2_AWG22"] = dict(tht(2, 5.08, 1, 2.0, 1.0, "Wire pads AWG22"), body=(2.3, 7.4, 0.1))
 LIB["WIRE2S"] = dict(tht(2, 2.54, 1, 1.8, 1.0, "Wire pads"), body=(3.0, 6.6, 0.1))
 LIB["PMOS_SO8"] = dict(desc="P-channel MOSFET SO-8, -40 V, Rds(on) <= 15 mohm at -10 V (1-3 S, 4 G, 5-8 D: VERIFY)", fp="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
                        pins=[("1", "S", "passive"), ("2", "S", "passive"), ("3", "S", "passive"), ("4", "G", "input"), ("5", "D", "passive"), ("6", "D", "passive"), ("7", "D", "passive"), ("8", "D", "passive")],
