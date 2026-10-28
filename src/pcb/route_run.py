@@ -7,9 +7,9 @@ board=sys.argv[1]
 _pads={"LB1":"kit_v18/LB1/pads.json","PB1R":"kit_v6/PB1R/pads.json","PM2":"kit_v6/PM2/pads.json","HB2":"kit_v6/HB2/pads.json","AU1":"kit_v6/AU1/pads.json"}.get(board,"kit_v18/CB1D/pads.json")
 _h=hashlib.sha1(b"".join(open(f,"rb").read() for f in (_pads,"router.py","route_run.py"))).hexdigest()
 _shaf=f"kit_v20/state_{board}.sha"; _old=open(_shaf).read().strip() if os.path.exists(_shaf) else None
-if _old != _h:
-    for _f in (f"kit_v20/state_{board}.pkl", f"kit_v20/route_{board}.json"):
-        if os.path.exists(_f): os.remove(_f)
+if _old != _h and not os.environ.get("REPAIR"):               # repair mode works on the saved layout: no reset (the exact DRC after it is the check)
+    for _f in (f"kit_v20/state_{board}.pkl", f"kit_v20/route_{board}.json"):   # never delete a finished layout: keep it as *_stale (a stale state produced stale routes twice)
+        if os.path.exists(_f): os.replace(_f, _f.replace(f"_{board}.", f"_{board}_stale."))
     os.makedirs("kit_v20",exist_ok=True); open(_shaf,"w").write(_h); print(board,"router state reset (pads / router / config changed)" if _old else "router state: new")
 if board=="LB1":
     R=Router("kit_v18/LB1/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu","+5V":"In2.Cu"},{"+5V":0.4,"GND":0.4},clr=0.2)
