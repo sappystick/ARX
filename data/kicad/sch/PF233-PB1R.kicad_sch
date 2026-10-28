@@ -615,7 +615,7 @@
   )
   (symbol (lib_id "PF233_auto:DC1") (at 30.48 243.84 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (uuid "5cf66a45-0a09-55d9-9f3f-886b62aa73ce")
     (property "Reference" "DC1" (at 30.48 241.30 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "ES3J 600V 3A" (at 30.48 247.65 0) (effects (font (size 1.0 1.0))))
+    (property "Value" "US3M 1000V 3A" (at 30.48 247.65 0) (effects (font (size 1.0 1.0))))
     (property "Footprint" "Diode_SMD:D_SMC" (at 30.48 243.84 0) (effects (font (size 1.27 1.27)) hide))
     (pin "1" (uuid "729454cb-8ad8-534f-9d37-49d5077a606d"))
     (pin "2" (uuid "08d48e7a-0b97-5e6a-91c6-4523cf90a1c2"))

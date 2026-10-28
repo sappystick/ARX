@@ -81,7 +81,7 @@
    },
    "cross": {
     "state": "PASS",
-    "detail": "16 checks, 2 warn"
+    "detail": "16 checks, 1 warn"
    }
   },
   "TXJ1": {
@@ -362,7 +362,7 @@
   },
   "tests/regress.py (strict: a missing result FAILs)": {
    "state": "PASS",
-   "detail": "118 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
+   "detail": "120 PASS; FAILS 0 SKIPS 0 UNVERIFIED 0"
   }
  },
  "evidence": {

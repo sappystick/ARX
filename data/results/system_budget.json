@@ -34,26 +34,26 @@
    "note": "ID 24 A at TC 25 C, 15 A at TC 100 C, ID,pulse 100 A (Infineon IPB65R095C7 Rev. 2.0, DATASHEET_LOG)"
   },
   {
-   "part": "ES3J clamp diode",
+   "part": "US3M clamp diode",
    "stress": "reverse voltage (capacitor peak)",
    "value": 435.163,
-   "rating": 600,
+   "rating": 1000,
    "unit": "V",
-   "margin_pct": 27.5,
+   "margin_pct": 56.5,
    "required_margin_pct": 20,
    "status": "PASS",
-   "note": "VRRM 600 V (Good-Ark ES3x, DATASHEET_LOG); below the 630 V rule: no verified >= 630 V ultrafast SMC part (WATCH in DATASHEET_LOG)"
+   "note": "VRRM / V(BR)R 1000 V (Diodes Inc. US3M DS37228 Rev. 5, DATASHEET_LOG); meets the 630 V rule (ES3J 600 V replaced 2026-10-28)"
   },
   {
-   "part": "ES3J clamp diode",
+   "part": "US3M clamp diode",
    "stress": "repetitive peak current",
    "value": 19.877,
-   "rating": 100,
+   "rating": 120,
    "unit": "A",
-   "margin_pct": 80.1,
+   "margin_pct": 83.4,
    "required_margin_pct": 50,
    "status": "PASS",
-   "note": "IFSM 100 A is non-repetitive 8.3 ms (Good-Ark ES3x): repetitive 4 us pulses at 400 Hz are not rated by the sheet"
+   "note": "IFSM 120 A is non-repetitive 8.3 ms (Diodes Inc. US3M): repetitive 4 us pulses at 400 Hz are not rated by the sheet"
   },
   {
    "part": "CL1A/B clamp capacitor 630 V",

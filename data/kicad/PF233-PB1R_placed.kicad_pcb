@@ -287,7 +287,7 @@
   )
   (footprint "Diode_SMD:D_SMC" (layer "F.Cu") (at 71.0000 89.0000)
     (property "Reference" "DC1" (at 0 -2.5 0) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
-    (property "Value" "ES3J 600V 3A" (at 0 2.5 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
+    (property "Value" "US3M 1000V 3A" (at 0 2.5 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
     (attr smd)
     (model "${KIPRJMOD}/3dmodels/PF233_DSMC.wrl" (offset (xyz 0 0 0)) (scale (xyz 0.3937 0.3937 0.3937)) (rotate (xyz 0 0 0)))
     (pad "1" smd roundrect (at -3.400 0.000) (size 2.400 3.400) (layers "F.Cu" "F.Paste" "F.Mask") (net 2 "CLAMP1"))

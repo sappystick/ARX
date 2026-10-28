@@ -534,7 +534,7 @@
   (label "VBUS" (at 252.730 162.560 0) (fields_autoplaced yes) (effects (font (size 1.27 1.27)) (justify left)) (uuid "49c51fdf-ca9c-5d00-9863-7e8c58ce38e3"))
   (symbol (lib_id "PF233F:D_H") (at 281.940 160.020 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (uuid "dcc1f7d1-22ff-58b0-83d2-8ea677124dc6")
     (property "Reference" "DC1" (at 281.940 157.020 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "ES3J 600V 3A" (at 281.940 163.020 0) (effects (font (size 1.0 1.0))))
+    (property "Value" "US3M 1000V 3A" (at 281.940 163.020 0) (effects (font (size 1.0 1.0))))
     (property "Footprint" "Diode_SMD:D_SMC" (at 281.940 160.020 0) (effects (font (size 1.27 1.27)) hide))
     (pin "2" (uuid "e467ffaf-e622-505d-bc5e-768166a9deee"))
     (pin "1" (uuid "ee18d692-8e96-5bd1-a417-5330e94dd66b"))

@@ -82,7 +82,7 @@
   },
   {
    "check": "parts on the flyback nets are 630 V or better (BOM text): exceptions are listed, not hidden",
-   "result": "WARN",
+   "result": "PASS",
    "value": {
     "CL1A": [
      "100n 630V",
@@ -93,8 +93,8 @@
      630
     ],
     "DC1": [
-     "ES3J 600V 3A",
-     600
+     "US3M 1000V 3A",
+     1000
     ],
     "JL1": [
      "Coil pair: DRAIN1, VBUS (AWG12 soldered)",
@@ -114,7 +114,7 @@
     ]
    },
    "limit": ">= 630 V",
-   "note": "below 630: ['DC1']; no voltage in the BOM text: ['JL1']; stress: capacitor peak 435 V, Vds 462 V (UNVERIFIED ratings, Step 5)"
+   "note": "below 630: []; no voltage in the BOM text: ['JL1']; stress: capacitor peak 435 V, Vds 462 V (UNVERIFIED ratings, Step 5)"
   },
   {
    "check": "PB1R JC (umbilical) pin names equal CB1D JPB pin names",

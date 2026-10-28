@@ -86,7 +86,7 @@
  "limits": {
   "Vds": 650.0,
   "clamp_rule": 630.0,
-  "diode_VRRM": 600.0,
+  "diode_VRRM": 1000.0,
   "RCL_W": 10.0,
   "droop_pct": 5.0,
   "rail5_A": 1.5,

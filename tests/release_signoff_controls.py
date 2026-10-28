@@ -12,22 +12,27 @@ def run(*a, env=None):
     e = dict(os.environ); e.update(env or {}); r = subprocess.run([PY, *a], capture_output=True, text=True, env=e); return r.returncode, (r.stdout + r.stderr)
 def case(name, expect_rc, expect_text, rc, text, extra=True):
     ok = rc == expect_rc and (expect_text is None or expect_text in text) and extra; cases.append(dict(name=name, expected=f"rc {expect_rc}" + (f" + '{expect_text}'" if expect_text else ""), got=f"rc {rc}: {text.strip().splitlines()[0][:90] if text.strip() else ''}", ok=bool(ok)))
-# ---------------- release-tx
+# ---------------- release-tx (2026-10-28: the independent subprocesses run in parallel, see PARALLEL below; the stale-data control edits a work/ file and runs alone, last)
 env = {"ARX_RELEASE_ROOT": T}
-rc, tx = run("scripts/release_tx.py", "ctl1", env=env)
-man = os.path.join(T, "TX_ctl1", "MANIFEST.csv"); good = False
-if os.path.exists(man):
-    rows = list(csv.DictReader(open(man))); good = len(rows) > 30 and all(hashlib.sha256(open(r["file"], "rb").read()).hexdigest() == r["sha256"] for r in rows if os.path.exists(r["file"]))
-case("release-tx positive control: writes a package whose manifest hashes verify", 0, "written", rc, tx, good)
-rc, tx = run("scripts/release_tx.py", "ctl1", env=env); case("release-tx refuses an existing revision", 1, "exists", rc, tx)
 S = json.load(open("data/results/SIGNOFF_STATUS.json")); S["counts"]["FAIL"] = 1; bad = os.path.join(T, "status_fail.json"); json.dump(S, open(bad, "w"))
-rc, tx = run("scripts/release_tx.py", "ctl2", env={**env, "ARX_SIGNOFF_JSON": bad}); case("release-tx refuses a sign-off that has a FAIL", 1, "FAIL", rc, tx, not os.path.exists(os.path.join(T, "TX_ctl2")))
-victim = "work/kit_v22/wiring_audit.json"; keep = open(victim, "rb").read()
-try:
-    d = json.loads(keep); d["_control"] = 1; open(victim, "w").write(json.dumps(d, indent=1))
-    rc, tx = run("scripts/release_tx.py", "ctl3", env=env); case("release-tx refuses stale data (a work/ result differs from data/)", 1, "stale", rc, tx, not os.path.exists(os.path.join(T, "TX_ctl3")))
-finally: open(victim, "wb").write(keep)
-rc, tx = run("scripts/publish_data.py", "--check"); case("work/ restored after the stale-data control (publish check: 0 stale)", 0, "0 stale", rc, tx)
+def rel_positive():
+    rc, tx = run("scripts/release_tx.py", "ctl1", env=env)
+    man = os.path.join(T, "TX_ctl1", "MANIFEST.csv"); good = False
+    if os.path.exists(man):
+        rows = list(csv.DictReader(open(man))); good = len(rows) > 30 and all(hashlib.sha256(open(r["file"], "rb").read()).hexdigest() == r["sha256"] for r in rows if os.path.exists(r["file"]))
+    r2 = run("scripts/release_tx.py", "ctl1", env=env)                     # the repeat needs ctl1 written: same worker, after it
+    return [("release-tx positive control: writes a package whose manifest hashes verify", 0, "written", rc, tx, good), ("release-tx refuses an existing revision", 1, "exists", *r2, True)]
+def rel_fail():
+    rc, tx = run("scripts/release_tx.py", "ctl2", env={**env, "ARX_SIGNOFF_JSON": bad})
+    return [("release-tx refuses a sign-off that has a FAIL", 1, "FAIL", rc, tx, not os.path.exists(os.path.join(T, "TX_ctl2")))]
+def rel_stale():
+    out = []; victim = "work/kit_v22/wiring_audit.json"; keep = open(victim, "rb").read()
+    try:
+        d = json.loads(keep); d["_control"] = 1; open(victim, "w").write(json.dumps(d, indent=1))
+        rc, tx = run("scripts/release_tx.py", "ctl3", env=env); out.append(("release-tx refuses stale data (a work/ result differs from data/)", 1, "stale", rc, tx, not os.path.exists(os.path.join(T, "TX_ctl3"))))
+    finally: open(victim, "wb").write(keep)
+    rc, tx = run("scripts/publish_data.py", "--check"); out.append(("work/ restored after the stale-data control (publish check: 0 stale)", 0, "0 stale", rc, tx, True))
+    return out
 # ---------------- sign-off table
 reg = open("docs/UNVERIFIED.md").read()
 def farm(src, dst, omit=(), replace=None, rel=""):
@@ -48,24 +53,43 @@ def status(name, register=None, expect_rc=0, expect_text=None, what=None, work=N
     j = json.load(open(oj)) if os.path.exists(oj) else {}; extra = True
     if what: extra = what(j)
     return rc, tx, j, extra
-rc, tx, j1, ok = status("b1"); case("sign-off table baseline: 0 FAIL, fixed shape (12 boards x 6 checks)", 0, None, rc, tx, len(j1["boards"]) == 12 and all(len(v) == 6 for v in j1["boards"].values()) and j1["counts"]["FAIL"] == 0)
-rc, tx, j2, ok = status("b1b"); case("sign-off table is idempotent: a second run writes byte-identical JSON and markdown", 0, None, rc, tx,
-                                       open(os.path.join(T, "b1.json"), "rb").read() == open(os.path.join(T, "b1b.json"), "rb").read() and open(os.path.join(T, "b1_status.md"), "rb").read() == open(os.path.join(T, "b1b_status.md"), "rb").read())
-nopm2 = farm("work", os.path.join(T, "w_nopm2"), omit={"kit_v20/route_PM2.json"})
-rc, tx, j, ok = status("nopm2", re.sub(r"^\| U-ROUTE-PM2 \|.*\n", "", reg, flags=re.M), what=lambda j: j["boards"]["PM2"]["route"]["state"] == "FAIL", work=nopm2)
-case("a board row cannot vanish: U-ROUTE-PM2 not registered and no PM2 route result (fixture work/) -> PM2 FAIL", 1, None, rc, tx, ok)
-nohta = farm("work", os.path.join(T, "w_nohta"), omit={"kit_v22/kicad_drc_HTA.json"})
-rc, tx, j, ok = status("nohta", re.sub(r"^\| U-KICAD-HTA \|.*\n", "", reg, flags=re.M), what=lambda j: j["boards"]["HTA"]["kicad"]["state"] == "FAIL", work=nohta)
-case("U-KICAD-HTA not registered and no HTA KiCad DRC result (fixture work/) -> HTA FAIL", 1, None, rc, tx, ok)
-nofab = farm(".", os.path.join(T, "r_nofab"), omit={"docs/design/FAB_RULES_VERIFIED.md"})
-rc, tx, j, ok = status("nofab", re.sub(r"^\| U-FAB-RULES \|.*\n", "", reg, flags=re.M), what=lambda j: j["evidence"]["U-FAB-RULES"]["state"] == "FAIL", evroot=nofab)
-case("a closed item needs its evidence: U-FAB-RULES not registered, evidence file absent (fixture repo) -> FAIL", 1, None, rc, tx, ok)
-log = open("docs/design/DATASHEET_LOG.md").read() if os.path.exists("docs/design/DATASHEET_LOG.md") else ""
-unv = farm(".", os.path.join(T, "r_dsunv"), replace={"docs/design/DATASHEET_LOG.md": re.sub(r"^## U-DS-HALL: VERIFIED", "## U-DS-HALL: UNVERIFIED", log, flags=re.M)})
-rc, tx, j, ok = status("dsunv", re.sub(r"^\| U-DS-HALL \|.*\n", "", reg, flags=re.M), what=lambda j: j["evidence"]["U-DS-HALL"]["state"] == "FAIL", evroot=unv)
-case("a datasheet group closes only with a VERIFIED section: U-DS-HALL not registered, its log section UNVERIFIED (fixture) -> FAIL", 1, None, rc, tx, ok)
-rc, tx, j, ok = status("orphan", reg.rstrip("\n") + "\n| U-ROUTE-XYZ | invented | nowhere | never | none |\n", what=lambda j: j["evidence"].get("U-ROUTE-XYZ", {}).get("state") == "FAIL")
-case("a registered board ID that no board row shows is a FAIL (cannot hide)", 1, None, rc, tx, ok)
+def t_base():
+    rc, tx, j1, ok = status("b1"); out = [("sign-off table baseline: 0 FAIL, fixed shape (12 boards x 6 checks)", 0, None, rc, tx, len(j1["boards"]) == 12 and all(len(v) == 6 for v in j1["boards"].values()) and j1["counts"]["FAIL"] == 0)]
+    rc, tx, j2, ok = status("b1b"); out.append(("sign-off table is idempotent: a second run writes byte-identical JSON and markdown", 0, None, rc, tx,
+                                       open(os.path.join(T, "b1.json"), "rb").read() == open(os.path.join(T, "b1b.json"), "rb").read() and open(os.path.join(T, "b1_status.md"), "rb").read() == open(os.path.join(T, "b1b_status.md"), "rb").read()))
+    return out
+def t_nopm2():
+    nopm2 = farm("work", os.path.join(T, "w_nopm2"), omit={"kit_v20/route_PM2.json"})
+    rc, tx, j, ok = status("nopm2", re.sub(r"^\| U-ROUTE-PM2 \|.*\n", "", reg, flags=re.M), what=lambda j: j["boards"]["PM2"]["route"]["state"] == "FAIL", work=nopm2)
+    return [("a board row cannot vanish: U-ROUTE-PM2 not registered and no PM2 route result (fixture work/) -> PM2 FAIL", 1, None, rc, tx, ok)]
+def t_nohta():
+    nohta = farm("work", os.path.join(T, "w_nohta"), omit={"kit_v22/kicad_drc_HTA.json"})
+    rc, tx, j, ok = status("nohta", re.sub(r"^\| U-KICAD-HTA \|.*\n", "", reg, flags=re.M), what=lambda j: j["boards"]["HTA"]["kicad"]["state"] == "FAIL", work=nohta)
+    return [("U-KICAD-HTA not registered and no HTA KiCad DRC result (fixture work/) -> HTA FAIL", 1, None, rc, tx, ok)]
+def t_nofab():
+    nofab = farm(".", os.path.join(T, "r_nofab"), omit={"docs/design/FAB_RULES_VERIFIED.md"})
+    rc, tx, j, ok = status("nofab", re.sub(r"^\| U-FAB-RULES \|.*\n", "", reg, flags=re.M), what=lambda j: j["evidence"]["U-FAB-RULES"]["state"] == "FAIL", evroot=nofab)
+    return [("a closed item needs its evidence: U-FAB-RULES not registered, evidence file absent (fixture repo) -> FAIL", 1, None, rc, tx, ok)]
+def t_dsunv():
+    log = open("docs/design/DATASHEET_LOG.md").read() if os.path.exists("docs/design/DATASHEET_LOG.md") else ""
+    unv = farm(".", os.path.join(T, "r_dsunv"), replace={"docs/design/DATASHEET_LOG.md": re.sub(r"^## U-DS-HALL: VERIFIED", "## U-DS-HALL: UNVERIFIED", log, flags=re.M)})
+    rc, tx, j, ok = status("dsunv", re.sub(r"^\| U-DS-HALL \|.*\n", "", reg, flags=re.M), what=lambda j: j["evidence"]["U-DS-HALL"]["state"] == "FAIL", evroot=unv)
+    return [("a datasheet group closes only with a VERIFIED section: U-DS-HALL not registered, its log section UNVERIFIED (fixture) -> FAIL", 1, None, rc, tx, ok)]
+def t_orphan():
+    rc, tx, j, ok = status("orphan", reg.rstrip("\n") + "\n| U-ROUTE-XYZ | invented | nowhere | never | none |\n", what=lambda j: j["evidence"].get("U-ROUTE-XYZ", {}).get("state") == "FAIL")
+    return [("a registered board ID that no board row shows is a FAIL (cannot hide)", 1, None, rc, tx, ok)]
+# PARALLEL: every job reads work/ and the repo and writes only into its own files under T; results are reported in the fixed order below whatever finishes first.
+# rel_stale edits work/kit_v22/wiring_audit.json (the farms and the table runs read it), so it runs after all of them, alone
+from concurrent.futures import ThreadPoolExecutor
+JOBS = [rel_positive, rel_fail, t_base, t_nopm2, t_nohta, t_nofab, t_dsunv, t_orphan]
+with ThreadPoolExecutor(max_workers=min(len(JOBS), max(2, os.cpu_count() or 2))) as ex: results = list(ex.map(lambda f: f(), JOBS))
+results.append(rel_stale())
+# case order as before the parallel rewrite: the release controls (positive, repeat, FAIL, stale + publish check), then the table controls
+for c in results[0]: case(*c)
+for c in results[1]: case(*c)
+for c in results[8]: case(*c)
+for i in range(2, 8):
+    for c in results[i]: case(*c)
 res = dict(cases=cases, all_ok=all(c["ok"] for c in cases))
 os.makedirs("work/kit_v22", exist_ok=True); json.dump(res, open("work/kit_v22/controls_3_9.json", "w"), indent=1)
 for c in cases: print(("PASS " if c["ok"] else "FAIL ") + c["name"] + ("" if c["ok"] else f"  [expected {c['expected']}; got {c['got']}]"))

@@ -2,8 +2,8 @@ part,stress,value,rating,unit,margin_pct,required_margin_pct,status,note
 IPB65R095C7 (2 in parallel),"Vds peak, design case (one 100 nF C0G/film)",462.368,650,V,28.9,20,PASS,drain peak at turn-off; X7R as built is lower (379 V) but loses capacitance with bias
 IPB65R095C7,"Vds peak, as-built 2 x X7R derated",379.452,650,V,41.6,20,PASS,
 IPB65R095C7,drain current per FET at 20 A peak,10.0,24,A,58.3,30,PASS,"ID 24 A at TC 25 C, 15 A at TC 100 C, ID,pulse 100 A (Infineon IPB65R095C7 Rev. 2.0, DATASHEET_LOG)"
-ES3J clamp diode,reverse voltage (capacitor peak),435.163,600,V,27.5,20,PASS,"VRRM 600 V (Good-Ark ES3x, DATASHEET_LOG); below the 630 V rule: no verified >= 630 V ultrafast SMC part (WATCH in DATASHEET_LOG)"
-ES3J clamp diode,repetitive peak current,19.877,100,A,80.1,50,PASS,IFSM 100 A is non-repetitive 8.3 ms (Good-Ark ES3x): repetitive 4 us pulses at 400 Hz are not rated by the sheet
+US3M clamp diode,reverse voltage (capacitor peak),435.163,1000,V,56.5,20,PASS,"VRRM / V(BR)R 1000 V (Diodes Inc. US3M DS37228 Rev. 5, DATASHEET_LOG); meets the 630 V rule (ES3J 600 V replaced 2026-10-28)"
+US3M clamp diode,repetitive peak current,19.877,120,A,83.4,50,PASS,IFSM 120 A is non-repetitive 8.3 ms (Diodes Inc. US3M): repetitive 4 us pulses at 400 Hz are not rated by the sheet
 CL1A/B clamp capacitor 630 V,voltage,435.163,630,V,30.9,20,PASS,C0G/film only; X7R loses 65 percent of capacitance at this bias
 RCL1 5 kohm 10 W,power,3.815,10,W,61.9,30,PASS,x7r case 4.7 W
 3 x 110 ohm R2512 chain,voltage per resistor at flyback peak,145.456,500,V,70.9,20,PASS,"Vishay CRCW2512 e3 Umax 500 V (document 20035, DATASHEET_LOG; was assumed 200 V); insulation against ambient 300 V for 1 min"

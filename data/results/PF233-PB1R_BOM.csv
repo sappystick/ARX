@@ -7,7 +7,7 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,C12A,C1210,22u 25V,X7R,Capacitor_SMD:C_1210_3225Metric
 9,"CB1,CB2,CB3,CB4,CB5,CB6,CB7,CB8,CB9",CAN10,100u 50V hybrid,"Panasonic EEHZC1H101P (ZC, 10x10.2, 28 mohm, 1.6 A rms)",Capacitor_SMD:CP_Elec_10x10
 2,"Q1A,Q1B",D2PAK,650V SJ 95mR,IPB65R095C7 class (VERIFY),Package_TO_SOT_SMD:TO-263-3_TabPin2
-1,DC1,DSMC,ES3J 600V 3A,"ultrafast clamp diode (Good-Ark ES3J: 600 V, trr 35 ns); below the 630 V rule: WATCH, no verified >= 630 V ultrafast SMC part",Diode_SMD:D_SMC
+1,DC1,DSMC,US3M 1000V 3A,"ultrafast clamp diode (Diodes Inc. US3M, DS37228 Rev. 5: 1000 V, 3 A, trr 85 ns max), same SMC footprint; replaced ES3J 600 V (rule 6, 2026-10-28)",Diode_SMD:D_SMC
 1,DOC1,DSOD,BAS16,,Diode_SMD:D_SOD-123
 1,U3,LM393,LM393,TI LM393DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
 1,M12,OKI3,12 V 1.0 A switching module,"Murata OKI-78SR-12/1.0-W36-C, Vin 15-36 V covers the 7S range 19.6-29.4 V (MDC_OKI-78SR-W36.C05; the series has no 12 V 1.5 A model)",Converter_DCDC:Converter_DCDC_Murata_OKI-78SR_Horizontal

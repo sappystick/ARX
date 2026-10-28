@@ -78,3 +78,9 @@ src/mech/mesh_compare.py (symmetric-difference volume, exact max vertex-to-surfa
 The only lever left is the dilation itself (91 %); every way of reusing or parallelising it found so far has to pass the body through arrays, and that changes the union.
 The code path exists behind SOLID_UNION_REBUILD=1 (off) and `make su-proof` re-tests it on the v5 build (byte identity cached vs uncached, geometry vs the committed path)
 for a future manifold3d version. The committed path and its whole-union + snap cache are unchanged.
+
+## 2026-10-28: Gerber geometry and the controls step
+
+- `src/pcb/gerber_geom.layer_geometry` merges each run of same-polarity primitives with one `unary_union` instead of one union per primitive (43,877 calls on the published set). Same copper: worst symmetric difference 6e-13 mm2 over all 258 published layers; regress keeps `layer_geometry_sequential` as the reference on a hatched plane and a fine-pitch layer. All layers: 186 s -> 18 s.
+- Effect: `publish` 79 s -> 10.5 s, `scripts/publish_data.py --check` 55 s -> about 6 s, `release-tx` about 67 s -> a few seconds.
+- `tests/release_signoff_controls.py` runs its independent subprocesses in parallel (thread pool: release positive + repeat, release FAIL refusal, the seven sign-off-table controls); the stale-data control edits a work/ file and runs alone afterwards. Case order and results unchanged (12 / 12). `controls` 245 s -> 32 s; an incremental sign-off after a one-part change: about 8 min -> 84 s.

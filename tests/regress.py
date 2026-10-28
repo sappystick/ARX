@@ -412,6 +412,13 @@ try:
         and _me["proposed_bn"]["high"]["k_W_mK"]<3.0 and len(_me["claims"])>=8,
         f"mix {_me['proposed_bn']['low']['k_W_mK']}-{_me['proposed_bn']['high']['k_W_mK']} W/mK, er {_me['proposed_bn']['low']['er']}-{_me['proposed_bn']['high']['er']}; coverage {_me['single_matrix_coverage_cm3']} of {_me['total_fill_cm3']} cm3")
 except FileNotFoundError: chk("single-matrix evaluation evidence (data/results/potting_matrix_eval.json)",False,"missing")
+# Gerber geometry (2026-10-28 speed-up): the batched layer build (one unary_union per same-polarity run) gives the same copper as the original one-by-one build
+try:
+    sys.path.insert(0,"src/pcb"); import gerber_geom as _gg
+    _gf=sorted(glob.glob("data/gerber/PB1R_v5/*In1_Cu.gbr"))+sorted(glob.glob("data/gerber/AU1/*F_Cu.gbr"))
+    _gd=[(_gg.layer_geometry(f)[0].symmetric_difference(_gg.layer_geometry_sequential(f)[0]).area) for f in _gf[:2]]
+    chk("Gerber geometry: batched build equals the sequential build (hatched plane + fine-pitch signal layer)", len(_gd)==2 and max(_gd)<1e-6, f"sym-diff {[float(f'{d:.2g}') for d in _gd]} mm2 on {[os.path.basename(f) for f in _gf[:2]]}")
+except Exception as e: chk("Gerber geometry batched vs sequential",False,f"{type(e).__name__}: {e}")
 # rule 6 on the flyback nets (2026-10-28): every PB1R part on DRAIN1 / CLAMP1 that carries a voltage rating is >= 630 V (US3M replaced the 600 V ES3J; RCL1 = PR03 750 V)
 try:
     _pc=[r for r in json.load(open("work/kit_v22/pb1r_check.json"))["checks"] if "630 V or better" in r["check"]][0]
