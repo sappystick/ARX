@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Regression: reads results written into work/ by the make targets and compares with the expected numbers. Missing result files are reported as SKIP, not PASS."""
-import json, os, sys
+import json, os, sys, glob
 W="work"; res=[]
 def rd(p):
     try: return json.load(open(os.path.join(W,p)))
@@ -283,5 +283,26 @@ for _b in ("TXJ1","SB1R-QA","SB1R-QB"):
 chk("B8 BOM + pick-and-place for TXJ1, SB1R-QA, SB1R-QB regenerate identically from data/kicad (y-up, board-centre origin)",all(_ok),str(_ok))
 _fp=rd("../data/results/formers_print_check.json") or (json.load(open("data/results/formers_print_check.json")) if os.path.exists("data/results/formers_print_check.json") else None)
 chk("six print-resolution formers (make formers-print, not in git): closed, oriented, inside a 250 mm build volume (data/results/formers_print_check.json)",bool(_fp) and len(_fp["formers"])==6 and _fp["all_ok"],str([f["bbox_mm"][0] for f in _fp["formers"]]) if _fp else "missing")
+# mesh/plane sections (src/mech/mesh_section.py, used by blueprint_r3, cutaway_receive, pb1r_check): the cut must not depend on the vertex order inside a triangle
+sys.path.insert(0,"src/mech"); import mesh_section as _ms, numpy as _np, struct as _struct
+def _tris(p):
+    b=open(p,"rb").read(); k=_struct.unpack("<I",b[80:84])[0]
+    return _np.frombuffer(b,dtype=_np.dtype([("n","<3f4"),("v","<9f4"),("a","<u2")]),count=k,offset=84)["v"].reshape(-1,3,3).astype(float)
+_sec=[]
+for _f,_ax,_v in (("stl/head/CORE_CYLINDER_v5_integrated.stl",1,0.0),("stl/head/LOTUS_HOOD_CARRIER_v3_butted.stl",2,31.0),("stl/shaft_handle/NPM_N1_body_with_tunnel_v2.stl",2,20.0)):
+    _T=_tris(_f); _a=[(_g.area if _g is not None else 0.0) for _g in (_ms.section(_T,_ax,_v),_ms.section(_np.roll(_T,1,axis=1),_ax,_v),_ms.section(_T[:,::-1],_ax,_v))]
+    _sec.append((os.path.basename(_f),round(_a[0],2),_a[0]>1.0 and max(_a)-min(_a)<1e-6*max(_a)))
+chk("mesh sections non-empty and identical under vertex rotation / reversal (CORRECTIONS: empty or partial sections before mesh_section.py)",all(x[2] for x in _sec),str([x[:2] for x in _sec]))
+# package: no STL that its folder's SUPERSEDED.txt lists is shipped as a print file; the clickable viewer links only files that exist
+_PK="deliverables/PHIFOLD233_PACKAGE_r5"
+_sup=sorted({m for f in glob.glob("stl/*/SUPERSEDED.txt") for m in re.findall(r"^- (\S+\.stl) ->",open(f).read(),re.M)})
+_bad=[m for m in _sup if glob.glob(f"{_PK}/stl_print/*/{m}")]
+chk("package stl_print holds no STL listed in a SUPERSEDED.txt",bool(_sup) and not _bad,f"{len(_sup)} superseded, shipped: {_bad}")
+if os.path.exists(f"{_PK}/viewer.html"):
+    _m=re.search(r"const D = (\{.*?\});\n",open(f"{_PK}/viewer.html").read(),re.S); _D=json.loads(_m.group(1).replace("<\\/","</"))
+    _hr=[f["href"] for i in _D["items"] for f in i["files"]]+[f["href"] for f in _D["docs"]]+[t for i in _D["items"] for t in i.get("thumbs",[])]
+    _miss=[h for h in _hr if not os.path.exists(os.path.join(_PK,h))]; _incut={i["id"] for i in _D["items"] if i["in_cut"]}
+    chk("cut-away viewer: every file link resolves, every board has KiCad + Gerber links, every cut face belongs to an item",not _miss and all(any(f["fmt"]=="Gerber + drill" for f in i["files"]) and any(f["fmt"]=="KiCad board" for f in i["files"]) for i in _D["items"] if i["kind"]=="board") and all(f["id"] in _incut for P in _D["panels"].values() for f in P["faces"]),f"{len(_hr)} links, {len(_miss)} missing, {len(_D['items'])} items")
+else: skip("cut-away viewer (python3 src/render/viewer_r1.py after make_package.py)")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

@@ -151,6 +151,10 @@ gerber-pb1r: kicad-pb1r
 package:
 	python3 scripts/make_package.py
 
+# clickable cut-away (deliverables/PHIFOLD233_PACKAGE_r5/viewer.html), from the package's recorded cut faces
+viewer:
+	python3 src/render/viewer_r1.py
+
 # PM2 and HB2 (rectangular upper-assembly boards, Step 4): same flow as PB1R without the HV carve-out
 route-pm2: pcb-pm2
 	cd $(W) && for i in 1 2 3 4 5 6; do $(PY) route_run.py PM2; [ -f kit_v20/route_PM2.json ] && break; done; test -f kit_v20/route_PM2.json && $(PY) route_fix.py PM2 kit_v20/route_PM2.json

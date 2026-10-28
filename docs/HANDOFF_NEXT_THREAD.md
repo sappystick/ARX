@@ -75,3 +75,4 @@ Resume Arx / PHI-FOLD 233. Run `make state` and read docs/HANDOFF_NEXT_THREAD.md
 | 2026-10-28 | B3, B5, B6, B7 (narrowed), B8; cap-v18, mech-npm steps | f2f0d5c | 0 fail | 71/0/0/4 | datasheets on disk; M12 and MT60 corrected |
 | 2026-10-28 | signoff-cold, formers-print, TX_r4, RX_r3, package r5 | (this commit) | 0 fail | 71/0/0/4 | final delivery of this thread |
 
+| 2026-10-28 | Clickable cut-away viewer (package r5 viewer.html, `make viewer`); shared mesh_section.py (empty/partial sections fixed, blueprint + receive cut-away regenerated, NPM fit re-run on full sections); superseded NPM v1 STLs removed from stl_print; PURCHASED_PARTS board rows from the current BOMs | (this commit) | 96 PASS / 0 fail | 71/0/0/4 | CORRECTIONS: 4 rows |

@@ -10,14 +10,15 @@ Tool status: sign-off 71 PASS / 0 FAIL / 0 SKIP / 4 UNVERIFIED (docs/STATUS.md);
 
 | Folder | Contents | Format |
 |---|---|---|
-| `stl_print/` | every printable part (58 files incl. the formers when generated), same folders as the repo `stl/` | binary STL, mm, closed and oriented (print_check 49/49), SHA-256 in `STL_CLASSIFICATION.csv` |
+| `stl_print/` | every printable part (55 files incl. the formers when generated), same folders as the repo `stl/` | binary STL, mm, closed and oriented (print_check 49/49), SHA-256 in `STL_CLASSIFICATION.csv` |
 | `stl_print/formers/` | the six full-resolution petal coil formers (about 70 MB each) when `make formers-print` was run; not in git | binary STL |
 | `stl_reference/` | 5 fit references (full-length septum, upper-assembly assemblies, ferrite tile): not print files | binary STL |
 | `kicad/` | every board: `.kicad_pcb`, `.kicad_dru` (rule file), `.kicad_pro`, 3-D models (`3dmodels/`, VRML nominal outlines) | KiCad 9 |
 | `schematics/` | functional schematics | `.kicad_sch` + PDF |
 | `manufacturing/<board>/` | Gerber + drill zip (KiCad-written), BOM, pick-and-place (y-up), netlist where one exists, layer PDFs, bare-board STEP | Gerber RS-274X / Excellon, CSV, PDF, STEP |
 | `models3d/`, `renders/boards/` | each board with parts (GLB) and KiCad 3-D renders | glTF binary, PNG |
-| `blueprint/` | layered cut-away of the whole system | PDF, PNG |
+| `blueprint/` | layered cut-away of the whole system; `cutaway_faces.json` = its cut faces by part | PDF, PNG, JSON |
+| `viewer.html` | clickable cut-away: click a part (or pick it in the index) for its STL, KiCad, Gerber, BOM, pick-and-place, STEP, GLB and release files | HTML (open in a browser) |
 
 Not available: STEP / native CAD of the PRINTED parts. The generators build meshes (Python -> STL), there is no solid-modelling kernel in the repo, so STL is the master format for printing; a STEP would be a mesh wrapped in STEP, not a feature model. Board STEP files contain the bare board (the component models are VRML).
 
@@ -39,7 +40,7 @@ Not available: STEP / native CAD of the PRINTED parts. The generators build mesh
 
 ## 3. Printed parts
 
-58 PRINT, 5 REFERENCE, 8 SUPERSEDED (not copied; listed in `STL_CLASSIFICATION.csv` with the reason). Geometry checks measured on the meshes: cylinder v5 47/47, head cross-check, upper assembly 64/64 (incl. the MT60 envelope from the Amass drawing and the septum half-lap joint), yoke, print check 49/49 closed / oriented / fit a 250 mm build volume. Not checked here: slicing, supports, shrinkage, tolerances of a real printer.
+55 PRINT, 5 REFERENCE, 10 SUPERSEDED (not copied; listed in `STL_CLASSIFICATION.csv` with the reason). Geometry checks measured on the meshes: cylinder v5 47/47, head cross-check, upper assembly 64/64 (incl. the MT60 envelope from the Amass drawing and the septum half-lap joint), yoke, print check 49/49 closed / oriented / fit a 250 mm build volume. Not checked here: slicing, supports, shrinkage, tolerances of a real printer.
 
 ## 4. Purchased parts and documents
 

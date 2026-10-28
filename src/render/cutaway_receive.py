@@ -20,17 +20,8 @@ from shapely import affinity
 def tris(p):
     b = open(p, "rb").read(); k = struct.unpack("<I", b[80:84])[0]
     return np.frombuffer(b, dtype=np.dtype([("n", "<3f4"), ("v", "<9f4"), ("a", "<u2")]), count=k, offset=84)["v"].reshape(-1, 3, 3).astype(float)
-def section(T, axis, val):
-    keep = [i for i in range(3) if i != axis]; d = T[:, :, axis] - (val + 1.234e-4); m = (d.min(1) < 0) & (d.max(1) > 0); segs = []
-    for tri, dd in zip(T[m], d[m]):
-        q = [tri[i] + dd[i] / (dd[i] - dd[j]) * (tri[j] - tri[i]) for i, j in ((0, 1), (1, 2), (2, 0)) if (dd[i] < 0) != (dd[j] < 0)]
-        if len(q) == 2 and np.linalg.norm(q[0] - q[1]) > 1e-9: segs.append(LineString([tuple(q[0][keep]), tuple(q[1][keep])]))
-    if not segs: return None
-    faces = list(polygonize(unary_union(segs)))
-    if not faces: return None
-    g = faces[0]
-    for f in faces[1:]: g = g.symmetric_difference(f)
-    return g
+def section(T, axis, val):                                             # src/mech/mesh_section.py (symmetric edge interpolation)
+    import mesh_section as _ms; return _ms.section(T, axis, val)
 def rotz(T, deg):
     c, s = math.cos(math.radians(deg)), math.sin(math.radians(deg)); R = np.array([[c, -s, 0], [s, c, 0], [0, 0, 1]]); return T @ R.T
 HEEL = lambda T: rotz(T, -178.0)

@@ -26,113 +26,9 @@ material,clear silicone,1,a few cm3 over the LEDs,cup CD,
 material,M3 heat-set insert D4.0 x 5,3,brass,hub bosses,
 material,screw M3 x 8,3,stainless,base plate to hub,
 material,acrylic or PETG lens disc (optional),1,"D90 x 0.8, opal",cap top,
-pcb PB1R,"CE1,C12B",2,100n X7R,PB1R,Capacitor_SMD:C_0603_1608Metric
-pcb PB1R,CK1,1,100p C0G,PB1R,Capacitor_SMD:C_0603_1608Metric
-pcb PB1R,"CU3,CD7",2,1u 25V X7R,PB1R,Capacitor_SMD:C_0805_2012Metric
-pcb PB1R,"CL1A,CL1B",2,100n 630V C0G/X7R HV,PB1R,Capacitor_SMD:C_1210_3225Metric
-pcb PB1R,"CM1,CM2,CM3,CM4",4,10u 50V X7R,PB1R,Capacitor_SMD:C_1210_3225Metric
-pcb PB1R,C12A,1,22u 25V X7R,PB1R,Capacitor_SMD:C_1210_3225Metric
-pcb PB1R,"CD1,CD2,CD3,CD4,CD5,CD6",6,"150u 35V polymer Ta KEMET T52x/Panasonic POSCAP class, low ESR",PB1R,Capacitor_Tantalum_SMD:CP_EIA-7343-43_Ke
-pcb PB1R,"Q1A,Q1B",2,650V SJ 95mR IPB65R095C7 class (VERIFY),PB1R,Package_TO_SOT_SMD:TO-263-3_TabPin2
-pcb PB1R,DC1,1,ES3J 600V 3A ultrafast clamp diode,PB1R,Diode_SMD:D_SMC
-pcb PB1R,DOC1,1,BAS16 ,PB1R,Diode_SMD:D_SOD-123
-pcb PB1R,JC,1,Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC G,PB1R,Connector:Pin_header_2x4_P2.54mm
-pcb PB1R,U3,1,LM393 TI LM393DR,PB1R,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
-pcb PB1R,M12,1,12 V 1.5 A switching module Murata OKI-78SR-12/1.5-W36 class (Vin 15-3,PB1R,Converter_DCDC:Converter_DCDC_Murata_OKI
-pcb PB1R,"RGQ1A,RGQ1B",2,10 ,PB1R,Resistor_SMD:R_0603_1608Metric
-pcb PB1R,"RIN1,RK1",2,100 ,PB1R,Resistor_SMD:R_0603_1608Metric
-pcb PB1R,"RGP1,RPU1",2,10k ,PB1R,Resistor_SMD:R_0603_1608Metric
-pcb PB1R,RNTC,1,10k NTC NTC on the FET spreader,PB1R,Resistor_SMD:R_0603_1608Metric
-pcb PB1R,RUS,1,1M ,PB1R,Resistor_SMD:R_0603_1608Metric
-pcb PB1R,RF1,1,1k ,PB1R,Resistor_SMD:R_0603_1608Metric
-pcb PB1R,RS1S,1,10m 3W Kelvin shunt,PB1R,Resistor_SMD:R_2512_6332Metric
-pcb PB1R,U1,1,TC4420 Microchip TC4420,PB1R,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
-pcb PB1R,JL1,1,"Coil outer band: DRAIN, VBUS 5.08 mm terminal block",PB1R,Connector:Terminal_block_1x2_P5.08mm
-pcb PB1R,JP,1,Power in: VBUS VBUS GND GND 5.08 mm terminal block 10 A,PB1R,Connector:Terminal_block_1x4_P5.08mm
-pcb PB1R,RCL1,1,external 5k 10W (lid bank) resistor bank bonded under the lid,PB1R,Connector:SolderPad_2x_P5.08mm
-pcb PM1,CAUX2,1,100n X7R,PM1,Capacitor_SMD:C_0603_1608Metric
-pcb PM1,CS1,1,100n X7R 50V,PM1,Capacitor_SMD:C_0603_1608Metric
-pcb PM1,CSH,1,1n 100V C0G,PM1,Capacitor_SMD:C_0603_1608Metric
-pcb PM1,"CM1,CM2",2,10u 50V X7R,PM1,Capacitor_SMD:C_1210_3225Metric
-pcb PM1,CAUX,1,22u 25V X7R,PM1,Capacitor_SMD:C_1210_3225Metric
-pcb PM1,"CB1,CB2",2,"470u 50V hybrid polymer/Al 10x10, low ESR",PM1,Capacitor_SMD:CP_Elec_10x10
-pcb PM1,"DPA,DPB",2,SS3P6 60V 3A Schottky SMB 60 V 3 A,PM1,Diode_SMD:D_SMB
-pcb PM1,DTVS,1,"SMCJ33A TVS 33 V stand-off, uni-directional",PM1,Diode_SMD:D_SMC
-pcb PM1,"DOA,DOB",2,SS10P6 60V 10A Schottky SMC 60 V 10 A,PM1,Diode_SMD:D_SMC
-pcb PM1,FB1,1,BLM/742792 class 6A ferrite bead,PM1,Inductor_SMD:L_1812_4532Metric
-pcb PM1,"FA,FB",2,5A slow 32V Littelfuse 0453005 class (verify DC rating),PM1,Fuse:Fuse_1812_4532Metric
-pcb PM1,JR,1,RS-485 to pod 2.54 mm header,PM1,Connector:Pin_header_1x2_P2.54mm
-pcb PM1,JBK,1,Aux buck module VIN GND VOUT COTS 36 V -> 12 V >= 1.5 A buck module (e,PM1,Connector:Pin_header_1x3_P2.54mm
-pcb PM1,JS,1,Signals: 12V GND 485A 485B SENSE A_ID B_ID SHLD 2.54 mm header,PM1,Connector:Pin_header_2x4_P2.54mm
-pcb PM1,RS1,1,100k 0.1%,PM1,Resistor_SMD:R_0603_1608Metric
-pcb PM1,RS2,1,10k 0.1%,PM1,Resistor_SMD:R_0603_1608Metric
-pcb PM1,RSH,1,1M ,PM1,Resistor_SMD:R_0603_1608Metric
-pcb PM1,RBL,1,100k bleeder,PM1,Resistor_SMD:R_1206_3216Metric
-pcb PM1,"RPA,RPB",2,22R 2W pulse Vishay CRCW-HP / KOA SR732 class,PM1,Resistor_SMD:R_2512_6332Metric
-pcb PM1,JA,1,"Cartridge A: NEG, PRE, POS, ID 5.08 mm blade-contact block (see shaft ",PM1,Connector:Terminal_block_1x4_P5.08mm
-pcb PM1,JB,1,"Cartridge B: NEG, PRE, POS, ID 5.08 mm blade-contact block (see shaft ",PM1,Connector:Terminal_block_1x4_P5.08mm
-pcb PM1,JP,1,Power out: VBUS VBUS GND GND 5.08 mm terminal block 10 A,PM1,Connector:Terminal_block_1x4_P5.08mm
-pcb HB1,CH1,1,100n ,HB1,Capacitor_SMD:C_0603_1608Metric
-pcb HB1,JDIAL,1,Dial: COM P1 P2 P3 P4 (4-position rotary switch) 4-position rotary swi,HB1,Connector:Pin_header_1x5_P2.54mm
-pcb HB1,JJOY,1,Joystick: V GND X Y SW 2-axis thumb joystick module,HB1,Connector:Pin_header_1x5_P2.54mm
-pcb HB1,JH,1,Cable to head: +3V3 GND TRIG DIAL JOYX JOYY SHLD shielded 6-core + dra,HB1,Connector:Pin_header_1x7_P2.54mm
-pcb HB1,RSHH,1,0R shield to grip foil,HB1,Resistor_SMD:R_0603_1608Metric
-pcb HB1,"RD0,RD3",2,10k ,HB1,Resistor_SMD:R_0603_1608Metric
-pcb HB1,RSW,1,10k joystick switch pull-up,HB1,Resistor_SMD:R_0603_1608Metric
-pcb HB1,RH1,1,1k ,HB1,Resistor_SMD:R_0603_1608Metric
-pcb HB1,RD4,1,33k ,HB1,Resistor_SMD:R_0603_1608Metric
-pcb HB1,RD2,1,3k3 ,HB1,Resistor_SMD:R_0603_1608Metric
-pcb HB1,HS1,1,SS49E Honeywell SS49E linear Hall (trigger magnet travel 0-4 mm),HB1,Package_TO_SOT_THT:TO-92_Inline
-pcb CB1D,"CP2,C5B,CV2,CL2,CM1,CV4",6,100n X7R,CB1D,Capacitor_SMD:C_0603_1608Metric
-pcb CB1D,"CJX,CJY",2,10n ,CB1D,Capacitor_SMD:C_0603_1608Metric
-pcb CB1D,"CQ1,CQ2",2,10n X7R,CB1D,Capacitor_SMD:C_0603_1608Metric
-pcb CB1D,"CMO,CHTA",2,1n C0G,CB1D,Capacitor_SMD:C_0603_1608Metric
-pcb CB1D,"CSH,CUS",2,1n 100V C0G,CB1D,Capacitor_SMD:C_0603_1608Metric
-pcb CB1D,"CR1,CR2",2,1u X7R,CB1D,Capacitor_SMD:C_0603_1608Metric
-pcb CB1D,CP1,1,10u 10V X7R,CB1D,Capacitor_SMD:C_0805_2012Metric
-pcb CB1D,CV3,1,1u X7R,CB1D,Capacitor_SMD:C_0805_2012Metric
-pcb CB1D,CMON,1,"100n 630V HV coupling cap, MONO receive tap",CB1D,Capacitor_SMD:C_1210_3225Metric
-pcb CB1D,CV1,1,10u 16V X7R,CB1D,Capacitor_SMD:C_1210_3225Metric
-pcb CB1D,"CI1,CI2",2,10u 50V X7R,CB1D,Capacitor_SMD:C_1210_3225Metric
-pcb CB1D,CL1,1,22u 10V X7R,CB1D,Capacitor_SMD:C_1210_3225Metric
-pcb CB1D,C5A,1,22u 16V X7R,CB1D,Capacitor_SMD:C_1210_3225Metric
-pcb CB1D,DTV,1,SMCJ33A TVS,CB1D,Diode_SMD:D_SMC
-pcb CB1D,"DH1,DL1,DH2,DL2",4,BAS16 ,CB1D,Diode_SMD:D_SOD-123
-pcb CB1D,DHA1,1,BAS16 clamp to 3V3,CB1D,Diode_SMD:D_SOD-123
-pcb CB1D,DHA2,1,BAS16 clamp to GND,CB1D,Diode_SMD:D_SOD-123
-pcb CB1D,FB2,1,ferrite bead 1 A analog supply bead,CB1D,Inductor_SMD:L_1812_4532Metric
-pcb CB1D,F1,1,5A slow 32V Littelfuse 0453005 class,CB1D,Fuse:Fuse_1812_4532Metric
-pcb CB1D,UM,1,74HC4051 Nexperia/TI 74HC4051D,CB1D,Package_SO:SOIC-16_3.9x9.9mm_P1.27mm
-pcb CB1D,JDBG,1,"RUN / GND (reset, SWD pads on Pico underside) 2.54 mm header",CB1D,Connector:Pin_header_1x2_P2.54mm
-pcb CB1D,JTR,1,Handle: +3V3 GND TRIG DIAL JOYX JOYY SHLD shielded 6-core + drain (the,CB1D,Connector:Pin_header_1x7_P2.54mm
-pcb CB1D,JPB,1,to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND 2.54 mm header,CB1D,Connector:Pin_header_2x4_P2.54mm
-pcb CB1D,JA,1,to AB1A J2 1.27 mm 2x6 header,CB1D,Connector:Pin_header_1.27_2x6_P1.27mm
-pcb CB1D,JB,1,to AB1B J2 1.27 mm 2x6 header,CB1D,Connector:Pin_header_1.27_2x6_P1.27mm
-pcb CB1D,M5,1,5 V 1.5 A switching module Murata OKI-78SR-5/1.5-W36 class (Vin 7-36 V,CB1D,Converter_DCDC:Converter_DCDC_Murata_OKI
-pcb CB1D,U1,1,Pico 2 W Raspberry Pi Pico 2 W (RP2350 + CYW43439),CB1D,Module:RaspberryPi_Pico_Common_THT
-pcb CB1D,RV1,1,100k 0.1%,CB1D,Resistor_SMD:R_0603_1608Metric
-pcb CB1D,RBI,1,100k bias to VCM,CB1D,Resistor_SMD:R_0603_1608Metric
-pcb CB1D,"RR1,RR2",2,10k ,CB1D,Resistor_SMD:R_0603_1608Metric
-pcb CB1D,RV2,1,10k 0.1%,CB1D,Resistor_SMD:R_0603_1608Metric
-pcb CB1D,"RP1,RP2",2,10k pull-up,CB1D,Resistor_SMD:R_0603_1608Metric
-pcb CB1D,RHTA,1,10k series protection,CB1D,Resistor_SMD:R_0603_1608Metric
-pcb CB1D,"RSH,RUS",2,1M ,CB1D,Resistor_SMD:R_0603_1608Metric
-pcb CB1D,"RMO,RJX,RJY",3,1k ,CB1D,Resistor_SMD:R_0603_1608Metric
-pcb CB1D,"RT1,RD1",2,1k series protection,CB1D,Resistor_SMD:R_0603_1608Metric
-pcb CB1D,"RDM1,RDM2,RDM3",3,110R damping chain 3 x 110 = 330 R (600 V),CB1D,Resistor_SMD:R_2512_6332Metric
-pcb CB1D,UL,1,AMS1117-3.3 3.3 V LDO for ADC I/O,CB1D,Package_TO_SOT_SMD:SOT-223-3_TabPin2
-pcb CB1D,JCL,1,"Coil leads from the neck module: COIL_B (drain side), COIL_A (VBUS sid",CB1D,Connector:Terminal_block_1x2_P5.08mm
-pcb CB1D,JPW,1,Power in: VBUS VBUS GND GND (from shaft) 5.08 mm terminal block,CB1D,Connector:Terminal_block_1x4_P5.08mm
-pcb CB1D,JHTA,1,HTA coil leads (twisted pair from the cap) solder pads 5.08 mm,CB1D,Connector:SolderPad_2x_P5.08mm
-pcb LB1,"CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11",11,100n X7R 10V,LB1,Capacitor_SMD:C_0603_1608Metric
-pcb LB1,CB,1,10u 16V X7R,LB1,Capacitor_SMD:C_1210_3225Metric
-pcb LB1,JLB,1,"to CB1D: +5V, LED_IN, GND, GND wire pads",LB1,Connector:Pin_header_1x4_P2.54mm
-pcb LB1,"LD1,LD2,LD3,LD4,LD5,LD6,LD7,LD8,LD9,LD10,LD11,LD12,LD13,LD14,LD15,LD16,LD17,LD18,LD19,LD20,LD21,LD22,LD23,LD24,LD25,LD26,LD27,LD28,LD29,LD30,LD31,LD32,LD33,LD34,LD35,LD36,LD37,LD38,LD39,LD40,LD41,LD42,LD43,LD44,LD45,LD46,LD47,LD48,LD49,LD50,LD51,LD52,LD53,LD54,LD55,LD56,LD57,LD58,LD59,LD60,LD61,LD62,LD63,LD64,LD65,LD66",66,SK6812 MINI-E RGB Worldsemi SK6812MINI-E class (verify),LB1,LED_SMD:LED_SK6812MINI-E_3.2x2.8mm
-pcb LB1,RS,1,33R series damping,LB1,Resistor_SMD:R_0603_1608Metric
-pcb LB1,U1,1,74AHCT1G125 TI SN74AHCT1G125DBV (level shift 3V3 -> 5V data),LB1,Package_TO_SOT_SMD:SOT-23-5
 pcb HTA,PCB,1,"4-layer 1.6 mm D90 FR-4, 1 oz outer/inner, ENIG, mask both sides no components; the coil is the copper",HTA,
 pcb HTA,wires,1,"twisted pair AWG30, 130 mm solder to pads A and B, down the D8 port to JHTA on CB1D",HTA,
-pcb AB1A,UA1,1,AD7389-4 ADI AD7389-4BCPZ,AB1A,Package_CSP:LFCSP-24-1EP_4x4mm_P0.5mm_EP
+pcb AB1A,UA1,1,AD7389-4 ADI AD7389-4BCPZ,AB1A,Package_CSP:CP-24-25_ADI_LFCSP-24-1EP_4x
 pcb AB1A,"D1,D2,D3",3,BAV199 Nexperia BAV199,AB1A,Package_TO_SOT_SMD:SOT-23
 pcb AB1A,"CSW1,CSW2,CSW3,CO1,CO2,CRC,CBD,CDF",8,100n X7R 10V,AB1A,Capacitor_SMD:C_0402_1005Metric
 pcb AB1A,"CVC,CVL,CRG,CRF",4,1u X7R 10V,AB1A,Capacitor_SMD:C_0402_1005Metric
@@ -151,7 +47,7 @@ pcb AB1A,"RD1,RD2",2,100k thin-film 0.1%,AB1A,Resistor_SMD:R_0402_1005Metric
 pcb AB1A,"RAAF1,RAAF2,RAAF3",3,200 thin-film 0.1%,AB1A,Resistor_SMD:R_0402_1005Metric
 pcb AB1A,"RF1,RF2,RF3",3,390 thin-film 0.1%,AB1A,Resistor_SMD:R_0402_1005Metric
 pcb AB1A,"SW1,SW2,SW3",3,74LVC1G66 TI SN74LVC1G66DBVR,AB1A,Package_TO_SOT_SMD:SOT-23-5
-pcb AB1B,UA1,1,AD7389-4 ADI AD7389-4BCPZ,AB1B,Package_CSP:LFCSP-24-1EP_4x4mm_P0.5mm_EP
+pcb AB1B,UA1,1,AD7389-4 ADI AD7389-4BCPZ,AB1B,Package_CSP:CP-24-25_ADI_LFCSP-24-1EP_4x
 pcb AB1B,"D1,D2",2,BAV199 Nexperia BAV199,AB1B,Package_TO_SOT_SMD:SOT-23
 pcb AB1B,"CSW1,CSW2,CO1,CRC,CBD,CDF",6,100n X7R 10V,AB1B,Capacitor_SMD:C_0402_1005Metric
 pcb AB1B,"CVC,CVL,CRG,CRF",4,1u X7R 10V,AB1B,Capacitor_SMD:C_0402_1005Metric
@@ -169,3 +65,113 @@ pcb AB1B,"RD1,RD2",2,100k thin-film 0.1%,AB1B,Resistor_SMD:R_0402_1005Metric
 pcb AB1B,"RAAF1,RAAF2",2,200 thin-film 0.1%,AB1B,Resistor_SMD:R_0402_1005Metric
 pcb AB1B,"RF1,RF2",2,390 thin-film 0.1%,AB1B,Resistor_SMD:R_0402_1005Metric
 pcb AB1B,"SW1,SW2",2,74LVC1G66 TI SN74LVC1G66DBVR,AB1B,Package_TO_SOT_SMD:SOT-23-5
+pcb CB1D,"CP2,C5B,CV2,CL2,CM1,CV4",6,100n X7R,CB1D,Capacitor_SMD:C_0603_1608Metric
+pcb CB1D,"CQ1,CQ2",2,10n X7R,CB1D,Capacitor_SMD:C_0603_1608Metric
+pcb CB1D,"CMO,CHTA",2,1n C0G,CB1D,Capacitor_SMD:C_0603_1608Metric
+pcb CB1D,"CSH,CUS",2,1n 100V C0G,CB1D,Capacitor_SMD:C_0603_1608Metric
+pcb CB1D,"CR1,CR2",2,1u X7R,CB1D,Capacitor_SMD:C_0603_1608Metric
+pcb CB1D,CP1,1,10u 10V X7R,CB1D,Capacitor_SMD:C_0805_2012Metric
+pcb CB1D,CV3,1,1u X7R,CB1D,Capacitor_SMD:C_0805_2012Metric
+pcb CB1D,CV1,1,10u 16V X7R,CB1D,Capacitor_SMD:C_1210_3225Metric
+pcb CB1D,"CI1,CI2",2,10u 50V X7R,CB1D,Capacitor_SMD:C_1210_3225Metric
+pcb CB1D,CL1,1,22u 10V X7R,CB1D,Capacitor_SMD:C_1210_3225Metric
+pcb CB1D,C5A,1,22u 16V X7R,CB1D,Capacitor_SMD:C_1210_3225Metric
+pcb CB1D,DTV,1,"SMCJ30A TVS 30 V stand-off, VC 48.4 V (Vishay SMCJ30A): clamps under t",CB1D,Diode_SMD:D_SMC
+pcb CB1D,"DH1,DL1,DH2,DL2",4,BAS16,CB1D,Diode_SMD:D_SOD-123
+pcb CB1D,DHA1,1,BAS16 clamp to 3V3,CB1D,Diode_SMD:D_SOD-123
+pcb CB1D,DHA2,1,BAS16 clamp to GND,CB1D,Diode_SMD:D_SOD-123
+pcb CB1D,FB2,1,ferrite bead 1 A analog supply bead,CB1D,Inductor_SMD:L_1812_4532Metric
+pcb CB1D,F1,1,"5A slow 32V Bourns SF-1206S500-2 (5.00 A slow blow, 32 VDC, 50 A inter",CB1D,Fuse:Fuse_1206_3216Metric
+pcb CB1D,UM,1,74HC4051 Nexperia/TI 74HC4051D,CB1D,Package_SO:SOIC-16_3.9x9.9mm_P1.27mm
+pcb CB1D,JDBG,1,"RUN / GND (reset, SWD pads on Pico underside) 2.54 mm header",CB1D,Connector:Pin_header_1x2_P2.54mm
+pcb CB1D,JLB,1,"to LB1: +5V, LED_IN, GND, GND 4 wires to the display board",CB1D,Connector:Pin_header_1x4_P2.54mm
+pcb CB1D,JTR,1,Handle: +3V3 GND TRIG DIAL JOYX JOYY SHLD shielded 6-core + drain (the,CB1D,Connector:Pin_header_1x7_P2.54mm
+pcb CB1D,JPB,1,to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND 2.54 mm header,CB1D,Connector:Pin_header_2x4_P2.54mm
+pcb CB1D,JA,1,to AB1A J2 1.27 mm 2x6 header,CB1D,Connector:Pin_header_1.27_2x6_P1.27mm
+pcb CB1D,JB,1,to AB1B J2 1.27 mm 2x6 header,CB1D,Connector:Pin_header_1.27_2x6_P1.27mm
+pcb CB1D,M5,1,"5 V 1.5 A switching module Murata OKI-78SR-5/1.5-W36-C (Vin 7-36 V, MD",CB1D,Converter_DCDC:Converter_DCDC_Murata_OKI
+pcb CB1D,U1,1,Pico 2 W Raspberry Pi Pico 2 W (RP2350 + CYW43439),CB1D,Module:RaspberryPi_Pico_Common_THT
+pcb CB1D,RJB10,1,"0R FITTED: JB.10 (AB1B idle MONO input, RS2 into the MONO amplifier) t",CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,RJ5,1,0R DNP option: fit to ground JTR.5 at the CB1D end (handle-end check: ,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,RJ6,1,0R DNP option: fit to ground JTR.6 at the CB1D end (handle-end check: ,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,RV1,1,100k 0.1%,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,"RR1,RR2",2,10k,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,RV2,1,10k 0.1%,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,RP2,1,10k pull-up,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,RHTA,1,10k series protection,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,"RSH,RUS",2,1M,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,RMO,1,1k,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,"RT1,RD1",2,1k series protection,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,RML,1,"270 Vishay CRCW0603 270R 1% (P70 0.10 W, doc 20035)",CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,RP1,1,47k pull-up (47k on TRIG: low level with the 2 kohm series path stays ,CB1D,Resistor_SMD:R_0603_1608Metric
+pcb CB1D,"RDM1,RDM2,RDM3",3,110R damping chain 3 x 110 = 330 R (600 V),CB1D,Resistor_SMD:R_2512_6332Metric
+pcb CB1D,UL,1,AMS1117-3.3 3.3 V LDO for ADC I/O,CB1D,Package_TO_SOT_SMD:SOT-223-3_TabPin2
+pcb CB1D,JCL,1,"Coil leads from the neck module: COIL_B (drain side), COIL_A (VBUS sid",CB1D,Connector:Terminal_block_1x2_P5.08mm
+pcb CB1D,JPW,1,Power in: VBUS VBUS GND GND (from shaft) 5.08 mm terminal block,CB1D,Connector:Terminal_block_1x4_P5.08mm
+pcb CB1D,JHTA,1,HTA coil leads (twisted pair from the cap) solder pads 5.08 mm,CB1D,Connector:SolderPad_2x_P5.08mm
+pcb HB2,CH1,1,100n,HB2,Capacitor_SMD:C_0603_1608Metric
+pcb HB2,HS1,1,"DRV5023BIQLPG TI DRV5023BI TO-92: 1 VCC / 2 GND / 3 OUT open-drain, 2.",HB2,Package_TO_SOT_THT:TO-92_Inline
+pcb HB2,JDIAL,1,"Dial: COM P1 P2 P3 P4 (4-pos rotary, top housing) 4-position rotary sw",HB2,Connector:Pin_header_1x5_P2.54mm
+pcb HB2,JH,1,Signal cord to the head: +3V3 GND TRIG DIAL - - SHLD coiled cord 5-cor,HB2,Connector:Pin_header_1x7_P2.54mm
+pcb HB2,RSHH,1,0R signal-cord shield to GND at the handle,HB2,Resistor_SMD:R_0603_1608Metric
+pcb HB2,"RD0,RD3",2,10k,HB2,Resistor_SMD:R_0603_1608Metric
+pcb HB2,RH1,1,1k,HB2,Resistor_SMD:R_0603_1608Metric
+pcb HB2,RD4,1,33k,HB2,Resistor_SMD:R_0603_1608Metric
+pcb HB2,RD2,1,3k3,HB2,Resistor_SMD:R_0603_1608Metric
+pcb LB1,"CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11",11,100n X7R 10V,LB1,Capacitor_SMD:C_0603_1608Metric
+pcb LB1,CB,1,10u 16V X7R,LB1,Capacitor_SMD:C_1210_3225Metric
+pcb LB1,"LD1,LD2,LD3,LD4,LD5,LD6,LD7,LD8,LD9,LD10,LD11,LD12,LD13,LD14,LD15,LD16,LD17,LD18,LD19,LD20,LD21,LD22,LD23,LD24,LD25,LD26,LD27,LD28,LD29,LD30,LD31,LD32,LD33,LD34,LD35,LD36,LD37,LD38,LD39,LD40,LD41,LD42,LD43,LD44,LD45,LD46,LD47,LD48,LD49,LD50,LD51,LD52,LD53,LD54,LD55,LD56,LD57,LD58,LD59,LD60,LD61,LD62,LD63,LD64,LD65,LD66",66,SK6812 MINI-E RGB Worldsemi SK6812MINI-E class (verify),LB1,LED_SMD:LED_SK6812MINI-E_3.2x2.8mm
+pcb LB1,RS,1,33R series damping,LB1,Resistor_SMD:R_0603_1608Metric
+pcb LB1,U1,1,74AHCT1G125 TI SN74AHCT1G125DBV (level shift 3V3 -> 5V data),LB1,Package_TO_SOT_SMD:SOT-23-5
+pcb LB1,JLB,1,"to CB1D: +5V, LED_IN, GND, GND 4 wire pads, no header (a header is 9 m",LB1,Connector:Wire_pads_1x4_P2.54mm
+pcb PB1R,"CE1,C12B",2,100n X7R,PB1R,Capacitor_SMD:C_0603_1608Metric
+pcb PB1R,CK1,1,100p C0G,PB1R,Capacitor_SMD:C_0603_1608Metric
+pcb PB1R,"CU3,CD7",2,1u 25V X7R,PB1R,Capacitor_SMD:C_0805_2012Metric
+pcb PB1R,"CL1A,CL1B",2,100n 630V C0G/X7R HV,PB1R,Capacitor_SMD:C_1210_3225Metric
+pcb PB1R,"CM1,CM2,CM3,CM4",4,10u 50V X7R,PB1R,Capacitor_SMD:C_1210_3225Metric
+pcb PB1R,C12A,1,22u 25V X7R,PB1R,Capacitor_SMD:C_1210_3225Metric
+pcb PB1R,"CB1,CB2,CB3,CB4,CB5,CB6,CB7,CB8,CB9",9,"100u 50V hybrid Panasonic EEHZC1H101P (ZC, 10x10.2, 28 mohm, 1.6 A rms",PB1R,Capacitor_SMD:CP_Elec_10x10
+pcb PB1R,"Q1A,Q1B",2,650V SJ 95mR IPB65R095C7 class (VERIFY),PB1R,Package_TO_SOT_SMD:TO-263-3_TabPin2
+pcb PB1R,DC1,1,"ES3J 600V 3A ultrafast clamp diode (Good-Ark ES3J: 600 V, trr 35 ns); ",PB1R,Diode_SMD:D_SMC
+pcb PB1R,DOC1,1,BAS16,PB1R,Diode_SMD:D_SOD-123
+pcb PB1R,JC,1,Umbilical from the head: SHLD GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC G,PB1R,Connector:Pin_header_2x4_P2.54mm
+pcb PB1R,U3,1,LM393 TI LM393DR,PB1R,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
+pcb PB1R,M12,1,"12 V 1.0 A switching module Murata OKI-78SR-12/1.0-W36-C, Vin 15-36 V ",PB1R,Converter_DCDC:Converter_DCDC_Murata_OKI
+pcb PB1R,"RGQ1A,RGQ1B",2,10,PB1R,Resistor_SMD:R_0603_1608Metric
+pcb PB1R,"RIN1,RK1",2,100,PB1R,Resistor_SMD:R_0603_1608Metric
+pcb PB1R,"RGP1,RPU1",2,10k,PB1R,Resistor_SMD:R_0603_1608Metric
+pcb PB1R,RNTC,1,10k NTC NTC on the FET spreader,PB1R,Resistor_SMD:R_0603_1608Metric
+pcb PB1R,RUS,1,1M,PB1R,Resistor_SMD:R_0603_1608Metric
+pcb PB1R,RF1,1,1k,PB1R,Resistor_SMD:R_0603_1608Metric
+pcb PB1R,RS1S,1,10m 1W Vishay WSL2512 10 mohm 1 % (1.0 W at 70 C; ordering code not ch,PB1R,Resistor_SMD:R_2512_6332Metric
+pcb PB1R,U1,1,TC4420 Microchip TC4420,PB1R,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
+pcb PB1R,JL1,1,"Coil outer band: DRAIN, VBUS 5.08 mm terminal block",PB1R,Connector:Terminal_block_1x2_P5.08mm
+pcb PB1R,JP,1,Power in: VBUS VBUS GND GND 5.08 mm terminal block 10 A,PB1R,Connector:Terminal_block_1x4_P5.08mm
+pcb PB1R,RCL1,1,external 5k 10W (lid bank) resistor bank bonded under the lid,PB1R,Connector:SolderPad_2x_P5.08mm
+pcb PM2,CSH,1,1n 100V C0G,PM2,Capacitor_SMD:C_0603_1608Metric
+pcb PM2,C1,1,"220n 50V X7R, Miller soft-start",PM2,Capacitor_SMD:C_0805_2012Metric
+pcb PM2,CM1,1,10u 50V X7R,PM2,Capacitor_SMD:C_1210_3225Metric
+pcb PM2,CB1,1,"100u 50V hybrid Panasonic EEHZC1H101P (ZC, 10x10.2, 28 mohm, 1.6 A rms",PM2,Capacitor_SMD:CP_Elec_10x10
+pcb PM2,DTVS,1,"SMCJ30A TVS 30 V stand-off, VC 48.4 V at 31 A, uni-directional (Vishay",PM2,Diode_SMD:D_SMC
+pcb PM2,DZ1,1,"15V zener BZT52C15 class, Vgs clamp",PM2,Diode_SMD:D_SOD-123
+pcb PM2,F1,1,"5A slow 32V Bourns SF-1206S500-2 (5.00 A slow blow, 32 VDC, 50 A inter",PM2,Fuse:Fuse_1206_3216Metric
+pcb PM2,Q1,1,"Si4401FDY -40V Vishay Si4401FDY: SO-8, 1-3 S / 4 G / 5-8 D, -40 V, VGS",PM2,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
+pcb PM2,RSH,1,1M,PM2,Resistor_SMD:R_0603_1608Metric
+pcb PM2,R3,1,1k soft-start damping,PM2,Resistor_SMD:R_0603_1608Metric
+pcb PM2,R1,1,47k gate to source,PM2,Resistor_SMD:R_0603_1608Metric
+pcb PM2,R2,1,68k gate pull-down through the switch and the interlock,PM2,Resistor_SMD:R_0603_1608Metric
+pcb PM2,RBL,1,100k bleeder,PM2,Resistor_SMD:R_1206_3216Metric
+pcb PM2,J3,1,Power switch pair (top housing) AWG28 pair,PM2,Connector:Wire_pads_1x2_P2.54mm
+pcb PM2,JS,1,"Shields: power-cord braid, septum Cu mesh single-point drain at PM2",PM2,Connector:Wire_pads_1x2_P2.54mm
+pcb PM2,J1,1,"MT60-M leads: BAT+ BAT- ILK AWG16 x 2 + AWG24, 80 mm, potted at the pe",PM2,Connector:Wire_pads_1x3_P5.08mm
+pcb PM2,JP,1,Power cord: VBUS VBUS GND GND coiled cord 2 x AWG20 shielded (one cond,PM2,Connector:Wire_pads_1x4_P5.08mm
+pcb TXJ1,"A1,A12,A2,A3,A4,A5,A6,B1,B12,B2,B3,B4,B5,B6,TAPA,TAPB",16,bare pad / hole on the board (no part; leads soldered by hand),TXJ1,TXJ1:PTH
+pcb TXJ1,TXJ1,1,bare board TXJ1 (Gerbers: data/gerber/TXJ1*),TXJ1,-
+pcb SB1R-QA,"RD1,RD2",2,"680R 0.1% thin film 0805, non-magnetic terminations preferred (unverif",SB1R-QA,Resistor_SMD:R_0805_2012Metric
+pcb SB1R-QA,"P1,P2",2,bare pad / hole on the board (no part; leads soldered by hand),SB1R-QA,SB1R:LEAD_PAD
+pcb SB1R-QA,"H1,H2,H3",3,bare pad / hole on the board (no part; leads soldered by hand),SB1R-QA,SB1R:MH_M3
+pcb SB1R-QA,"T1,T2",2,bare pad / hole on the board (no part; leads soldered by hand),SB1R-QA,SB1R:TRANSFER_PAD
+pcb SB1R-QA,SB1R-QA,1,bare board SB1R-QA (Gerbers: data/gerber/SB1R_QA*),SB1R-QA,-
+pcb SB1R-QB,"P1,P2",2,bare pad / hole on the board (no part; leads soldered by hand),SB1R-QB,SB1R:LEAD_PAD
+pcb SB1R-QB,"H1,H2,H3",3,bare pad / hole on the board (no part; leads soldered by hand),SB1R-QB,SB1R:MH_M3
+pcb SB1R-QB,SB1R-QB,1,bare board SB1R-QB (Gerbers: data/gerber/SB1R_QB*),SB1R-QB,-

@@ -1,19 +1,19 @@
 category,item,path,status,bytes,sha256,note
-board,CB1D Gerber,data/gerber/CB1D_B3,PRESENT,102490,,9 .gbr + 1 drill files
-board,CB1D KiCad board,data/kicad/PF233-CB1D_routed.kicad_pcb,PRESENT,217506,cb5e95f65f49efbb180dc7346d5d0e8f372654b47b66aa6555b367659e4674b1,
-board,CB1D BOM,data/results/PF233-CB1D_BOM.csv,PRESENT,3775,6649f61f4395c02cc8eac3e5c7376588ef0c6a57a0d3bf52d4c80c13a7455b49,
-board,CB1D pick-and-place,data/results/PF233-CB1D_pickplace.csv,PRESENT,3162,d29708274fcb63a7c0d062a7842ce5938e3e71bbd311f35d83f8ee43c650211b,
-board,CB1D schematic,data/kicad/sch/PF233-CB1D.kicad_sch,PRESENT,141748,0ddda54447f5dc183fde0c32c8f44c392264396e891cc686cab3686e238161f4,
+board,CB1D Gerber,data/gerber/CB1D_B3,PRESENT,103078,,9 .gbr + 1 drill files
+board,CB1D KiCad board,data/kicad/PF233-CB1D_routed.kicad_pcb,PRESENT,219225,19ff94d361c4bae5c3f6fedc45656e87f3b1d01eea3d17372d2533096b90dab8,
+board,CB1D BOM,data/results/PF233-CB1D_BOM.csv,PRESENT,3893,bd438a13737dd3b1434728334a16b433e302139350bcc9936d96f321389e4b58,
+board,CB1D pick-and-place,data/results/PF233-CB1D_pickplace.csv,PRESENT,3206,9d0a7083c6e364a8a5c0b7f31f58f0b2fccb653f3fc34f896be00e677aeb8350,
+board,CB1D schematic,data/kicad/sch/PF233-CB1D.kicad_sch,PRESENT,143551,aec469bcb881476d450dcf6b6d49bcf4ea73739faecb2976c79abe15b1b3f36d,
 board,LB1 Gerber,data/gerber/LB1_v5,PRESENT,89721,,7 .gbr + 1 drill files
 board,LB1 KiCad board,data/kicad/PF233-LB1_routed.kicad_pcb,PRESENT,220667,6ba6aad0d7cfc8795bc841679ea4acd0e0c070a1f21067541f26df9b57cb0ede,
 board,LB1 BOM,data/results/PF233-LB1_BOM.csv,PRESENT,938,f79e2663b6aed75e4fa7bdaa09fc4e32ef502fd2b1bff4d32c430a6df73f9943,
 board,LB1 pick-and-place,data/results/PF233-LB1_pickplace.csv,PRESENT,5404,0aaa69e949e9b6c182e96843d4ef4d18a9531c8b70cd39997bbda7c8a63f422d,
 board,LB1 schematic,data/kicad/sch/PF233-LB1.kicad_sch,PRESENT,200530,4a07aca7cb790c611a74bbb47166e9cd35d5b155800b4e2b23e00833cb2744f1,
 board,PB1R Gerber,data/gerber/PB1R_v3,PRESENT,1366329,,9 .gbr + 2 drill files
-board,PB1R KiCad board,data/kicad/PF233-PB1R_routed.kicad_pcb,PRESENT,84421,b962c323f260e9cdcda70ad0bb7df8bd81b506250d3fcbfc7a55982d58504e09,
-board,PB1R BOM,data/results/PF233-PB1R_BOM.csv,PRESENT,2251,23413f867d5a5578055db05c33a97154538047766b33ff6f7fd7fa01f2030665,
-board,PB1R pick-and-place,data/results/PF233-PB1R_pickplace.csv,PRESENT,2231,58f3fe4975990eca6c35bd8f9915b1e9845425fceca4ddf6942cb62373f6beb0,
-board,PB1R schematic,data/kicad/sch/PF233-PB1R.kicad_sch,PRESENT,85881,f984b3593f438d26b3226c26c200abfa52efb816490fa319b3ee6a0fa5ad9dba,
+board,PB1R KiCad board,data/kicad/PF233-PB1R_routed.kicad_pcb,PRESENT,84421,fc85eceaee6cd4474c7136a1d774bf924f4f4d0fa17c5881da53c789f47c38fe,
+board,PB1R BOM,data/results/PF233-PB1R_BOM.csv,PRESENT,2267,4e01218a077ed8b841a315899b4fcff2e16291b029776a921f3656e15c4af90a,
+board,PB1R pick-and-place,data/results/PF233-PB1R_pickplace.csv,PRESENT,2231,c8f2ccbd888e0bf50594072bd258c6039fe8414ca3ee7ec0a1b1f34440139d18,
+board,PB1R schematic,data/kicad/sch/PF233-PB1R.kicad_sch,PRESENT,85881,adf1145023be933fb147b88004403efad5b4b4b16efb89cc04dabebe73344dca,
 board,PM2 Gerber,data/gerber/PM2,PRESENT,424070,,9 .gbr + 2 drill files
 board,PM2 KiCad board,data/kicad/PF233-PM2_routed.kicad_pcb,PRESENT,26761,5a402ece2324661d286f391388ba43b80f05caeb4ac97da62349e8e59fe635b9,
 board,PM2 BOM,data/results/PF233-PM2_BOM.csv,PRESENT,1636,d1660d2685c3f4b2de2f293df3f07d31a1445e50f2537f7aa171189fa682d458,
@@ -26,48 +26,48 @@ board,HB2 pick-and-place,data/results/PF233-HB2_pickplace.csv,PRESENT,582,945857
 board,HB2 schematic,data/kicad/sch/PF233-HB2.kicad_sch,PRESENT,21985,f930c22bac26f4e6d5470f3374ce91ef1be6847f6e6c95219a6b3d8ad60be264,
 board,TXJ1 Gerber,data/gerber/TXJ1_v2,PRESENT,2560,,5 .gbr + 1 drill files
 board,TXJ1 KiCad board,data/kicad/TXJ1.kicad_pcb,PRESENT,4962,87e80c11722f69581dfcb8eb56131674bc507f38adbc95bf1f3143892d09b842,
-board,TXJ1 BOM,-,MISSING,0,,
-board,TXJ1 pick-and-place,-,MISSING,0,,
+board,TXJ1 BOM,docs/delivery/boards/TXJ1_BOM.csv,PRESENT,236,8ccd688c992615b69e78cd1f6b5de096b3fdc2cb8ab2a35e5aa47923a5e6ba86,
+board,TXJ1 pick-and-place,docs/delivery/boards/TXJ1_pickplace.csv,PRESENT,42,4075e919416eb4da8572cb97d0a16b40c201ed5e0dbfb7938ceb6522424748ad,
 board,TXJ1 schematic,-,MISSING,0,,
 board,SB1R-QA Gerber,data/gerber/SB1R_QA_v2,PRESENT,189836,,8 .gbr + 2 drill files
 board,SB1R-QA KiCad board,data/kicad/SB1R-QA.kicad_pcb,PRESENT,736985,54c5a759960e0123c25c440762fab704fa9fd7aa0c7150d3eede5e0335ab7e89,
-board,SB1R-QA BOM,-,MISSING,0,,
-board,SB1R-QA pick-and-place,-,MISSING,0,,
+board,SB1R-QA BOM,docs/delivery/boards/SB1R-QA_BOM.csv,PRESENT,512,3dab4d152e8c4291dfb6c585fd01cd97d9b004fd6e1c2028406a1fecb33ef126,
+board,SB1R-QA pick-and-place,docs/delivery/boards/SB1R-QA_pickplace.csv,PRESENT,312,1d0ad20672aca26547c3a9df972732466d128eabf0f9ec5de07f5ac83ed1cce8,
 board,SB1R-QA schematic,-,MISSING,0,,
 board,SB1R-QB Gerber,data/gerber/SB1R_QB_v2,PRESENT,185539,,7 .gbr + 2 drill files
 board,SB1R-QB KiCad board,data/kicad/SB1R-QB.kicad_pcb,PRESENT,737070,94d6e12ebf3e2df10b8a0fa26375ab927512fd8f4ce3e98e7c935d8a9013eb46,
-board,SB1R-QB BOM,-,MISSING,0,,
-board,SB1R-QB pick-and-place,-,MISSING,0,,
+board,SB1R-QB BOM,docs/delivery/boards/SB1R-QB_BOM.csv,PRESENT,292,36633290fddb4f5bd6e4cb9732f9a06230b9dc5fa913ddf258c63e629006f0bc,
+board,SB1R-QB pick-and-place,docs/delivery/boards/SB1R-QB_pickplace.csv,PRESENT,42,4075e919416eb4da8572cb97d0a16b40c201ed5e0dbfb7938ceb6522424748ad,
 board,SB1R-QB schematic,-,MISSING,0,,
 board,HTA Gerber,data/gerber/HTA_v2,PRESENT,94469,,7 .gbr + 2 drill files
 board,HTA KiCad board,data/kicad/PF233-HTA.kicad_pcb,PRESENT,100277,71e7e908f80652f16737b651f9ab5af9a2830570d18a4a521cb265f51091f3a4,
 board,HTA BOM,data/gerber/HTA_v2/PF233-HTA-v2_BOM.csv,PRESENT,241,0aa72940a03e5b39399db482b06302c4cdd85139fda939f93c34a578c6e6b868,
 board,HTA pick-and-place,-,MISSING,0,,
 board,HTA schematic,-,MISSING,0,,
-board,AB1A Gerber,data/gerber/AB1A_v1,PRESENT,655336,,13 .gbr + 2 drill files
-board,AB1A KiCad board,data/kicad/PF233-AB1A.kicad_pcb,PRESENT,124191,e76f3e83627e40dc17929fa65f558771e2dbd5eee40b274d35052d28cb2b6a1c,
-board,AB1A BOM,data/results/PF233-AB1A_BOM.csv,PRESENT,1544,f6543368f3d8ea57e903b1837d58616ecd056aa234078dc29e0b2b54ca00167d,
-board,AB1A pick-and-place,data/results/PF233-AB1A_pickplace.csv,PRESENT,2125,39ac418b82d3eb3f47622dd62b96413067c3bbf212848f2f760acad594b1c4ab,
-board,AB1A schematic,data/results/PF233-AB1A_functional.pdf,PRESENT,385682,c20c27ddc73d3d6c5b3ba57f0a297a7d641cf27b27f4b938dfe17f5c56b68f21,
-board,AB1B Gerber,data/gerber/AB1B_v1,PRESENT,553695,,13 .gbr + 2 drill files
-board,AB1B KiCad board,data/kicad/PF233-AB1B.kicad_pcb,PRESENT,99117,fdbd562484b0c0d34dbb457c3c2f3a0c478dbdbc4ffdbacf2b475946a0fd3cc0,
-board,AB1B BOM,data/results/PF233-AB1B_BOM.csv,PRESENT,1431,406ecf3ad7a0aec603f2f496475a8a476512108651184b4c9adda199644a053b,
-board,AB1B pick-and-place,data/results/PF233-AB1B_pickplace.csv,PRESENT,1646,a6acbc445c2cbdd75bb6f515db5aedfbc1d29e8a5870e23ada68dff5dd4fcd84,
-board,AB1B schematic,data/results/PF233-AB1B_functional.pdf,PRESENT,324303,fa9d765ee2193e8a4afb4cd52d8dd0a22c3655df8194586db547afada899d6ac,
+board,AB1A Gerber,data/gerber/AB1A_v1,PRESENT,663873,,13 .gbr + 2 drill files
+board,AB1A KiCad board,data/kicad/PF233-AB1A.kicad_pcb,PRESENT,123989,64c6d7650485dc666c98c8d2cfaa755a1f686693d75afc82338ef887fb26e59a,
+board,AB1A BOM,data/results/PF233-AB1A_BOM.csv,PRESENT,1557,20e9372a993e605fdb43022ac061f1366117c6bfe849cd29350d4c25087a47a0,
+board,AB1A pick-and-place,data/results/PF233-AB1A_pickplace.csv,PRESENT,2138,cc0303ebc857ba57904123e4ed62e1ceb91eca8f8b06927776ad8eb7be7fa7cf,
+board,AB1A schematic,data/results/PF233-AB1A_functional.pdf,PRESENT,385695,eec31879a6c3d91a2bae13899f97fa19e51e104886a6d85d2698e29f4efdb7d1,
+board,AB1B Gerber,data/gerber/AB1B_v1,PRESENT,550804,,13 .gbr + 2 drill files
+board,AB1B KiCad board,data/kicad/PF233-AB1B.kicad_pcb,PRESENT,97943,fd646df9d59c79022898af8e9c3e39737f4a7b9cbea07db5d4660ec5e4bba8bf,
+board,AB1B BOM,data/results/PF233-AB1B_BOM.csv,PRESENT,1444,526ed52418d587924e468ac2fe78590815e28f142f7ab7c37a1c6a6a1ec24796,
+board,AB1B pick-and-place,data/results/PF233-AB1B_pickplace.csv,PRESENT,1659,9710968061d7de3de0c769621abf182493f7016e3f13853defbe82db61c42e62,
+board,AB1B schematic,data/results/PF233-AB1B_functional.pdf,PRESENT,324316,ad01beeba098dd814636983b39c50aee0afac160b7f2c1e6d3be268c0841a259,
 board,rigid-flex spine (OPEN_ITEMS 3),-,MISSING,0,,"not designed: stackup, bend radius, shield hatch, connector footprints"
-board,AB1A / AB1B fabrication,releases/RX_r1,BLOCKED,0,,exposed-pad land pattern is a placeholder (releases/RX_r1/BLOCKERS.md)
-stl head,ANALOG_TRAY_v5.stl,stl/head/ANALOG_TRAY_v5.stl,PRESENT,758884,41073c0c274ffa2a01c891b0782c7bcd4c49e0bef684b638b75bf8c9e26feb55,PRINT; closed=True; fits 250 mm cube=True
-stl head,BASE_PLATE_RX_CASSETTE_v3.stl,stl/head/BASE_PLATE_RX_CASSETTE_v3.stl,PRESENT,3588184,9d7e0a4e6f2ec1b4cffaa18130675f077762b0fcc7193b87ffa1db1faa56a79d,PRINT; closed=True; fits 250 mm cube=True
-stl head,CORE_CYLINDER_v5_integrated.stl,stl/head/CORE_CYLINDER_v5_integrated.stl,PRESENT,10845884,9840e37d381977a232af27582d5c95abea86a604bc6d869be01e4045a99f72d1,PRINT; closed=True; fits 250 mm cube=True
+board,AB1A / AB1B fabrication,releases/RX_r3,BLOCKED,0,,"exposed pad closed (B1), BLOCKERS 2 and 3 closed in RX_r3; still open: U-FAB-DRC / U-CAM-VIEW (fabricator DRC, CAM viewer) and bench data (releases/RX_r3/BLOCKERS.md)"
+stl head,ANALOG_TRAY_v5.stl,stl/head/ANALOG_TRAY_v5.stl,PRESENT,758884,d5b55d2c6b9f986a1356c7f6a25b1af98f20075965c747ed880693f72054d429,PRINT; closed=True; fits 250 mm cube=True
+stl head,BASE_PLATE_RX_CASSETTE_v3.stl,stl/head/BASE_PLATE_RX_CASSETTE_v3.stl,PRESENT,3594984,ff738b418285d3ee762724fdea8fb228317ee8d96800c9a136e6fab3c18ad7ec,PRINT; closed=True; fits 250 mm cube=True
+stl head,CORE_CYLINDER_v5_integrated.stl,stl/head/CORE_CYLINDER_v5_integrated.stl,PRESENT,10845884,0823589486f40516528b082cbba8e240a482ee29be7ebf4e9bac3a98c5f420be,PRINT; closed=True; fits 250 mm cube=True
 stl head,FERRITE_TILE_INNER_v3_reference.stl,stl/head/FERRITE_TILE_INNER_v3_reference.stl,PRESENT,684,111a62c57b1c57ca72b1885d9a404c88ecdfd2ef2de39403239aae0ed43b8bb6,REFERENCE; closed=None; fits 250 mm cube=None
 stl head,FERRITE_TILE_OUTER_v3_reference.stl,stl/head/FERRITE_TILE_OUTER_v3_reference.stl,PRESENT,684,ee81c4c5f29f2b17ae508db45592107dfd6576fdfc0d4dee5344dd929c38edbc,REFERENCE; closed=None; fits 250 mm cube=None
 stl head,HEAD_SKIRT.stl,stl/head/HEAD_SKIRT.stl,PRESENT,1297684,91a904dcd26b267796aaea7cedc9bfd75abb86ab1b758a29cb2377c997a14d0a,PRINT; closed=True; fits 250 mm cube=True
-stl head,HUB_CAP_HTA_v3_vault.stl,stl/head/HUB_CAP_HTA_v3_vault.stl,PRESENT,3444384,591eacf9c077b3ba497ce1ea8d93a314c5390dd9408782d1579a355e6f7a6fce,PRINT; closed=True; fits 250 mm cube=True
+stl head,HUB_CAP_HTA_v3_vault.stl,stl/head/HUB_CAP_HTA_v3_vault.stl,PRESENT,3458084,0eb6aa25103c628e75cd4a9bf09a5211b5d2bfcf283a5801e51a15396fb365e3,PRINT; closed=True; fits 250 mm cube=True
 stl head,LOTUS_HOOD_CARRIER_v3_butted.stl,stl/head/LOTUS_HOOD_CARRIER_v3_butted.stl,PRESENT,329684,26c75ec911b2b8f8b547af2581fd73e878824e03da74d3d222734e269d75fe7d,PRINT; closed=True; fits 250 mm cube=True
-stl head,ROOF_PLATE_v5.stl,stl/head/ROOF_PLATE_v5.stl,PRESENT,5174584,7ae4d463601e2df0dbd939928be88e95b1c5588a127c6b43514b7f1de1741329,PRINT; closed=True; fits 250 mm cube=True
+stl head,ROOF_PLATE_v5.stl,stl/head/ROOF_PLATE_v5.stl,PRESENT,5174584,fe27c52b3bce5d8bab399090f9633c981d794f23f3e7bc973564100a95341a06,PRINT; closed=True; fits 250 mm cube=True
 stl head,SEPTUM_FRAME_v5.stl,stl/head/SEPTUM_FRAME_v5.stl,PRESENT,422484,2d39e93d582c119cdc18644061fdbdab5fa85b452b0c0be8c31ebeb432aede97,PRINT; closed=True; fits 250 mm cube=True
 stl head,SPINE_COMB_v5.stl,stl/head/SPINE_COMB_v5.stl,PRESENT,2484,2d2ee019d5158412bb8e9bdb74680d8aace09f9d0b69aeda075c36ae02eac548,PRINT; closed=True; fits 250 mm cube=True
-stl head,TXJ1_CRADLE_v1.stl,stl/head/TXJ1_CRADLE_v1.stl,PRESENT,49584,48eaff3caf4fb4d04c59e4ac122d162710af19d27a13b803c67a21080380e1e0,PRINT; closed=True; fits 250 mm cube=True
+stl head,TXJ1_CRADLE_v1.stl,stl/head/TXJ1_CRADLE_v1.stl,PRESENT,49584,b14781723bdaf3929f89df93c2451816a3ad04b224e978c1c8fb67a47a5d5c96,PRINT; closed=True; fits 250 mm cube=True
 stl pins,PIN_interface1_n2_275.0deg.stl,stl/pins/PIN_interface1_n2_275.0deg.stl,PRESENT,38484,1b508db573d70d4f878bc8df3d571c78f3242d4a2aa557ce89545c42f47e7081,PRINT; closed=True; fits 250 mm cube=True
 stl pins,PIN_interface1_n3_52.5deg.stl,stl/pins/PIN_interface1_n3_52.5deg.stl,PRESENT,38484,e8782c5cb7a8562640c9d94633764766366435cefff2af9c8c0e1a1dd213bb8d,PRINT; closed=True; fits 250 mm cube=True
 stl pins,PIN_interface1_n4_190.0deg.stl,stl/pins/PIN_interface1_n4_190.0deg.stl,PRESENT,38484,d7f502fcc2ed27db88aea4739cb047a8c4dc90dde0cac5b598de1deab37edda0,PRINT; closed=True; fits 250 mm cube=True
@@ -95,30 +95,30 @@ stl shaft_handle,ELB_E3_trigger.stl,stl/shaft_handle/ELB_E3_trigger.stl,PRESENT,
 stl shaft_handle,ELB_E4_joystick_boss.stl,stl/shaft_handle/ELB_E4_joystick_boss.stl,PRESENT,38484,6b044f1982f15f7853306a8814d5ba82fb2035744774abd3ea8be5b7a72eb406,SUPERSEDED; closed=None; fits 250 mm cube=None
 stl shaft_handle,ELB_E5_forearm_cuff.stl,stl/shaft_handle/ELB_E5_forearm_cuff.stl,PRESENT,19884,20c1c1d06e475b76ad3906db254db007fe5fc14e2dc88e02944d235d83abfa3f,SUPERSEDED; closed=None; fits 250 mm cube=None
 stl shaft_handle,NPM_N1_body_with_tunnel.stl,stl/shaft_handle/NPM_N1_body_with_tunnel.stl,PRESENT,57684,31322ffc844a0f1fa2cd0a8bc30c598ed0a249982e88513a10772105c21edd5c,SUPERSEDED; closed=None; fits 250 mm cube=None
-stl shaft_handle,NPM_N1_body_with_tunnel_v2.stl,stl/shaft_handle/NPM_N1_body_with_tunnel_v2.stl,PRESENT,179884,95a63286e195fa6d8b4043670322ad91eb4518eed8b780d8d6713a0216795b5d,PRINT; closed=True; fits 250 mm cube=True
+stl shaft_handle,NPM_N1_body_with_tunnel_v2.stl,stl/shaft_handle/NPM_N1_body_with_tunnel_v2.stl,PRESENT,179884,c8ed4fd0d4ad9901a19f6cb526a22e0e6d978a8d83e18ed507b608aa35c7337e,PRINT; closed=True; fits 250 mm cube=True
 stl shaft_handle,NPM_N2_lid_with_fill_ports.stl,stl/shaft_handle/NPM_N2_lid_with_fill_ports.stl,PRESENT,77484,02df3440202d47bbe31fea4cbe97b7fa99fff601b3789effcb56762678fefb28,PRINT; closed=True; fits 250 mm cube=True
 stl shaft_handle,NPM_N3_hot_zone_dam.stl,stl/shaft_handle/NPM_N3_hot_zone_dam.stl,PRESENT,684,22219c7b97f5e4a084f8b4e4b3d075c5d2ccd53d528b052a54069992b77536d5,SUPERSEDED; closed=None; fits 250 mm cube=None
 stl shaft_handle,NPM_N3_hot_zone_dam_v2.stl,stl/shaft_handle/NPM_N3_hot_zone_dam_v2.stl,PRESENT,684,9d7997a1c3f8c05b91fbfb3bd9bfd0e588997c12583eb2ffd42bc67860f196a5,PRINT; closed=True; fits 250 mm cube=True
-stl upper,U1_TOP_HOUSING.stl,stl/upper/U1_TOP_HOUSING.stl,PRESENT,284084,13d9fab410c64d1264bc145b2af25f0e8159f75203ada9bc293b83dcc97a444a,PRINT; closed=True; fits 250 mm cube=True
+stl upper,U1_TOP_HOUSING.stl,stl/upper/U1_TOP_HOUSING.stl,PRESENT,284084,d44b6c6f2a299d2c992b94acc708d1a8e2343f5f0f93a68c21db1411f167ee70,PRINT; closed=True; fits 250 mm cube=True
 stl upper,U2_GRIP.stl,stl/upper/U2_GRIP.stl,PRESENT,29484,a73d5b44df3648866d258081596d72c34b6eb48038eed30cc936037eb30174d4,PRINT; closed=True; fits 250 mm cube=True
-stl upper,U3_BOTTOM_HOUSING.stl,stl/upper/U3_BOTTOM_HOUSING.stl,PRESENT,201484,a4382eb78cde58dfe4b0dbdc3b66d81157416120d2c3ffc5d432a13758949930,PRINT; closed=True; fits 250 mm cube=True
+stl upper,U3_BOTTOM_HOUSING.stl,stl/upper/U3_BOTTOM_HOUSING.stl,PRESENT,201484,c2d1e542613ec3595eacd27cdddc8f8e5016dca2cc088c3487c23c8cc32fd09e,PRINT; closed=True; fits 250 mm cube=True
 stl upper,U4_TRIGGER.stl,stl/upper/U4_TRIGGER.stl,PRESENT,15284,7dbdae8586ed8b8a0a56a6cddb528e7cd9d59908f63a637792311f288c642413,PRINT; closed=True; fits 250 mm cube=True
 stl upper,U5_ARMREST_CUP.stl,stl/upper/U5_ARMREST_CUP.stl,PRESENT,55284,13a219ceaa4f6cd769e5f4d18d59f84ea556d69ba6dddfafd13fd47320d3e13d,PRINT; closed=True; fits 250 mm cube=True
-stl upper,U6_BATTERY_DOCK.stl,stl/upper/U6_BATTERY_DOCK.stl,PRESENT,33684,c152863bc0504a379f01693dacc5904a81986900554a420c852f71f539340e07,PRINT; closed=True; fits 250 mm cube=True
-stl upper,U7_BATTERY_PACK_SHELL.stl,stl/upper/U7_BATTERY_PACK_SHELL.stl,PRESENT,40584,2ca4e677d44b48be85d26e872cc33648ca1ee0f63e575dd49c34df125f96b902,PRINT; closed=True; fits 250 mm cube=True
+stl upper,U6_BATTERY_DOCK.stl,stl/upper/U6_BATTERY_DOCK.stl,PRESENT,34084,092fa63cab9be5e2470f6e56de4e520d887f8a70c23a9a2c9ff3399314f9cede,PRINT; closed=True; fits 250 mm cube=True
+stl upper,U7_BATTERY_PACK_SHELL.stl,stl/upper/U7_BATTERY_PACK_SHELL.stl,PRESENT,40584,9c008b52970632b5cde42c0186d96f4c9dc29e8ebf2e7f887e13d598043ef379,PRINT; closed=True; fits 250 mm cube=True
 stl upper,U8_CORD_ANCHOR.stl,stl/upper/U8_CORD_ANCHOR.stl,PRESENT,68084,b1832f57315d15158c2383db97da4aa99aa0329700e1cd58e5851914af63b313,PRINT; closed=True; fits 250 mm cube=True
 stl upper,U8_SEPTUM_extended.stl,stl/upper/U8_SEPTUM_extended.stl,PRESENT,351084,2dd72e5907d6fe16605416fc730d5dbedb9ae470f9744a8e0ee681bfe30e6f50,REFERENCE; closed=None; fits 250 mm cube=None
-stl upper,U8_SEPTUM_extended_SEG_A.stl,stl/upper/U8_SEPTUM_extended_SEG_A.stl,PRESENT,234284,1ef698528f70da75992071262ab79ef32b0965ba795d3b9042f231cfd24f0123,PRINT; closed=True; fits 250 mm cube=True
-stl upper,U8_SEPTUM_extended_SEG_B.stl,stl/upper/U8_SEPTUM_extended_SEG_B.stl,PRESENT,117484,5b8bd4a3792a02735fc7d4a26eae8f9ad5846e1b8d9e1ad68e5fa0672e0069a8,PRINT; closed=True; fits 250 mm cube=True
-stl upper,U9_CAM_COLLAR.stl,stl/upper/U9_CAM_COLLAR.stl,PRESENT,115484,02e53a8ba11b1ac6c0420d4963d1eeb7d4417ef5ca28d0581f0ebad091a7f8af,PRINT; closed=True; fits 250 mm cube=True
-stl upper,UPPER_ASSEMBLY_collapsed.stl,stl/upper/UPPER_ASSEMBLY_collapsed.stl,PRESENT,821284,f34cfc5753b7d7d10f738fb436dca7eedae3829b204f7494be1ef92402642a38,REFERENCE; closed=None; fits 250 mm cube=None
-stl upper,UPPER_ASSEMBLY_extended.stl,stl/upper/UPPER_ASSEMBLY_extended.stl,PRESENT,821284,9c411550b5dc46a374a68d74b43566bffc18f9461f78494de784ea8094f95bcb,REFERENCE; closed=None; fits 250 mm cube=None
-stl yoke,BUSHING_IN_TUBE_A.stl,stl/yoke/BUSHING_IN_TUBE_A.stl,PRESENT,209084,ece6ed2b69d399b73d1122ad25d85d1823b83d807a63b8826b90e7233383dd8b,PRINT; closed=True; fits 250 mm cube=True
+stl upper,U8_SEPTUM_extended_SEG_A.stl,stl/upper/U8_SEPTUM_extended_SEG_A.stl,PRESENT,605284,6bb699536e25e193eee8f92fb59bcf1f4178e370ec3ab5b77c96e71c58f44980,PRINT; closed=True; fits 250 mm cube=True
+stl upper,U8_SEPTUM_extended_SEG_B.stl,stl/upper/U8_SEPTUM_extended_SEG_B.stl,PRESENT,308884,0c2b62c3dfbb90e6f58f5610f6ebafb14a37e2ebf46b3b565cd29256623bcdf4,PRINT; closed=True; fits 250 mm cube=True
+stl upper,U9_CAM_COLLAR.stl,stl/upper/U9_CAM_COLLAR.stl,PRESENT,115484,01582c384ab272bdce3aaf04d21f7d40b883fb41109afbb902ce12e40406f22a,PRINT; closed=True; fits 250 mm cube=True
+stl upper,UPPER_ASSEMBLY_collapsed.stl,stl/upper/UPPER_ASSEMBLY_collapsed.stl,PRESENT,1270984,48dfc2a54840315386deb234f05009a034ff4a6df1c07e5afec51fbebc963a09,REFERENCE; closed=None; fits 250 mm cube=None
+stl upper,UPPER_ASSEMBLY_extended.stl,stl/upper/UPPER_ASSEMBLY_extended.stl,PRESENT,1270984,e83924bcd60ef220ca46b32594b7701effc49fd14de310c5ff7ae8e79fe73e7e,REFERENCE; closed=None; fits 250 mm cube=None
+stl yoke,BUSHING_IN_TUBE_A.stl,stl/yoke/BUSHING_IN_TUBE_A.stl,PRESENT,209084,c5ce87f617df5270b603d83e8c7420891df5b009a342f99724a873ef1ab4a565,PRINT; closed=True; fits 250 mm cube=True
 stl yoke,BUSHING_ON_TUBE_B.stl,stl/yoke/BUSHING_ON_TUBE_B.stl,PRESENT,48084,abfb78d2cb68305bd038e58907bf3277836ec45c1e0e55219cf7cffb023ad88f,PRINT; closed=True; fits 250 mm cube=True
-stl yoke,HEEL_SADDLE_TOWER.stl,stl/yoke/HEEL_SADDLE_TOWER.stl,PRESENT,634284,5672d4b21ed4bebe6ca6fc95da15c6c8f68cefa3fc70571308970d91768893a5,PRINT; closed=True; fits 250 mm cube=True
+stl yoke,HEEL_SADDLE_TOWER.stl,stl/yoke/HEEL_SADDLE_TOWER.stl,PRESENT,634284,4fe2427d315715d6b3953b593ab0376bf721054144e0e62c2d9efc8c451e45bb,PRINT; closed=True; fits 250 mm cube=True
 stl yoke,HINGE_ARM.stl,stl/yoke/HINGE_ARM.stl,PRESENT,121284,e89cca3aa2ccd5aea5a88412fa8e95fa99405c69aea5caebd3136ede47439c2b,PRINT; closed=True; fits 250 mm cube=True
 stl yoke,TELESCOPE_LOCK_COLLAR.stl,stl/yoke/TELESCOPE_LOCK_COLLAR.stl,PRESENT,141084,fd613d3a086366c1c39c856b66d0f572e0504d25d993b58d94b4abb9faff1982,PRINT; closed=True; fits 250 mm cube=True
-stl yoke,UMBILICAL_BRIDGE.stl,stl/yoke/UMBILICAL_BRIDGE.stl,PRESENT,9684,a688d8dc37f7aa7571a78d86a0846dda534689ef97239d711b51757da09b9773,PRINT; closed=True; fits 250 mm cube=True
+stl yoke,UMBILICAL_BRIDGE.stl,stl/yoke/UMBILICAL_BRIDGE.stl,PRESENT,9684,6b4fde7defd572169279b6f9ebf690014d3066fd3f9368f9554fd30511a92c1a,PRINT; closed=True; fits 250 mm cube=True
 stl yoke,UMBILICAL_BRIDGE_LID.stl,stl/yoke/UMBILICAL_BRIDGE_LID.stl,PRESENT,684,5c012741ed4905e3c386f9627d42e3219e45fe2b3dce7bada0a04b4f587dbcd6,PRINT; closed=True; fits 250 mm cube=True
 former,FORMER_L1,work/kit_v15/PRINT/FORMER_L1_petal_coil_former.stl,PRESENT,68480084,,"generated, not stored (about 70 MB each): make formers-print"
 former,FORMER_L2,work/kit_v15/PRINT/FORMER_L2_petal_coil_former.stl,PRESENT,66000084,,"generated, not stored (about 70 MB each): make formers-print"
@@ -126,9 +126,16 @@ former,FORMER_L3,work/kit_v15/PRINT/FORMER_L3_petal_coil_former.stl,PRESENT,6812
 former,FORMER_L4,work/kit_v15/PRINT/FORMER_L4_petal_coil_former.stl,PRESENT,70120084,,"generated, not stored (about 70 MB each): make formers-print"
 former,FORMER_L5,work/kit_v15/PRINT/FORMER_L5_petal_coil_former.stl,PRESENT,72000084,,"generated, not stored (about 70 MB each): make formers-print"
 former,FORMER_L6,work/kit_v15/PRINT/FORMER_L6_petal_coil_former.stl,PRESENT,66280084,,"generated, not stored (about 70 MB each): make formers-print"
-purchased,purchased parts and printed-part list (BOM_MASTER.csv with the AB1 rows replaced by the AD7389-4 BOMs),docs/delivery/PURCHASED_PARTS.csv,PRESENT,15196,7e5f22ae0e239ab925fe6af1eb1b22bab856d224d5a9d7f0bdaef785b9740ca0,170 rows; the AB1 rows of data/results/BOM_MASTER.csv list the superseded ADS8860 / REF5041 build
+purchased,purchased parts and printed-part list (BOM_MASTER.csv with every routed board's rows replaced by the BOM generated from that board),docs/delivery/PURCHASED_PARTS.csv,PRESENT,16496,e675745560e6cf1491c1aa6d43fad988f5d831d6b4da334e03b177b326fc9370,"176 rows; the board rows of data/results/BOM_MASTER.csv list older builds (ADS8860 AB1, OKI 12/1.5 M12, HB1, PM1)"
 purchased,shaft / yoke / upper-assembly bill of materials,data/results/BOM_SHAFT_YOKE.csv,PRESENT,4487,323f70a9b7caf03f226c8b09e50b0e931b8b951588e72f5f8979a0f99537c591,
-document,assembly order,docs/delivery/ASSEMBLY_ORDER.md,PRESENT,3987,83052c02508349ae0a5b2f1f3c9bb7e98765545d29bb8667e865a618ad341bd9,
+document,assembly order,docs/delivery/ASSEMBLY_ORDER.md,PRESENT,4523,c68975ce83458675a43d728b77c7250f5a6ba9d8a8dff3cec1051c124ba395f8,
+document,"potting sequence (B8: order, keep-outs; resins NOT SPECIFIED)",docs/delivery/POTTING_SEQUENCE.md,PRESENT,3810,23ec893116f92529bb981fcb5aac92a04e629dba8c63520c90bd26beafc86401,
+board,TXJ1 BOM,docs/delivery/boards/TXJ1_BOM.csv,PRESENT,236,8ccd688c992615b69e78cd1f6b5de096b3fdc2cb8ab2a35e5aa47923a5e6ba86,
+board,TXJ1 pick-and-place (y-up),docs/delivery/boards/TXJ1_pickplace.csv,PRESENT,42,4075e919416eb4da8572cb97d0a16b40c201ed5e0dbfb7938ceb6522424748ad,
+board,SB1R-QA BOM,docs/delivery/boards/SB1R-QA_BOM.csv,PRESENT,512,3dab4d152e8c4291dfb6c585fd01cd97d9b004fd6e1c2028406a1fecb33ef126,
+board,SB1R-QA pick-and-place (y-up),docs/delivery/boards/SB1R-QA_pickplace.csv,PRESENT,312,1d0ad20672aca26547c3a9df972732466d128eabf0f9ec5de07f5ac83ed1cce8,
+board,SB1R-QB BOM,docs/delivery/boards/SB1R-QB_BOM.csv,PRESENT,292,36633290fddb4f5bd6e4cb9732f9a06230b9dc5fa913ddf258c63e629006f0bc,
+board,SB1R-QB pick-and-place (y-up),docs/delivery/boards/SB1R-QB_pickplace.csv,PRESENT,42,4075e919416eb4da8572cb97d0a16b40c201ed5e0dbfb7938ceb6522424748ad,
 document,bench procedure (transmit region),docs/design/BENCH_FIRST_ARTICLE_TX.md,PRESENT,0,,
 document,fabricator DRC evidence (U-FAB-DRC),data/results/fab_drc/,MISSING,0,,
 document,CAM viewer evidence (U-CAM-VIEW),data/results/cam_view/,MISSING,0,,

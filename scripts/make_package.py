@@ -35,8 +35,11 @@ GERB = {"CB1D": "data/gerber/CB1D_B3", "LB1": "data/gerber/LB1_v5", "PB1R": "dat
         "SB1R-QA": "data/gerber/SB1R_QA_v2", "SB1R-QB": "data/gerber/SB1R_QB_v2", "HTA": "data/gerber/HTA_v2", "AB1A": "data/gerber/AB1A_v1", "AB1B": "data/gerber/AB1B_v1"}
 # ---------------------------------------------------------------- STL classification
 man = {r["file"]: r for r in csv.DictReader(open("stl/MANIFEST.csv"))}
+SUPER = {m.group(1): m.group(2) for f in glob.glob("stl/*/SUPERSEDED.txt") for m in re.finditer(r"^- (\S+\.stl) -> (\S+\.stl)", open(f).read(), re.M)}   # the folder's own superseded list
 def classify(p):
     n = os.path.basename(p)
+    if not n.endswith(".stl"): return "NOTE", "text note kept next to the STLs (copied with them); not a print file"
+    if n in SUPER: return "SUPERSEDED", f"replaced by {SUPER[n]} ({os.path.dirname(p)}/SUPERSEDED.txt); do not print"
     if n.startswith(("ELB_E", "BAT_B")): return "SUPERSEDED", "replaced by the upper assembly v1 (U1-U9); do not print"
     if "reference" in n: return "REFERENCE", "purchased part (MnZn ferrite tile) shown for fit; not printed"
     if n in ("U8_SEPTUM_extended.stl", "U8_SEPTUM_collapsed.stl"): return "REFERENCE", "full-length septum (446 mm) for fit and interference; print U8_SEPTUM_extended_SEG_A / _B instead"
@@ -54,7 +57,7 @@ with open(f"{R}/STL_CLASSIFICATION.csv", "w", newline="") as f:
 if not os.path.exists(f"{R}/renders/boards/CB1D_top.png"): print("board renders missing: run the kicad-cli render loop in the index first")
 os.makedirs(f"{R}/blueprint", exist_ok=True)
 for _f in glob.glob("deliverables/receive_cutaway/*"): shutil.copy(_f, f"{R}/blueprint/{os.path.basename(_f)}")             # receive-stage cut-away (AD7389-4 build)
-r = run(sys.executable, "src/render/blueprint_r3.py", f"{R}/blueprint") if not os.environ.get("SKIP_BLUEPRINT") else None; print("blueprint:", (r.stdout.strip(), r.stderr[-300:]) if r else "skipped (SKIP_BLUEPRINT)")
+r = run(sys.executable, "src/render/blueprint_r3.py", f"{R}/blueprint", env=dict(os.environ, BLUEPRINT_RECORD=f"{R}/blueprint/cutaway_faces.json")) if not os.environ.get("SKIP_BLUEPRINT") else None; print("blueprint:", (r.stdout.strip(), r.stderr[-300:]) if r else "skipped (SKIP_BLUEPRINT)")
 # ---------------------------------------------------------------- manufacturing set per board (copies, not pointers): Gerber + drill zip, BOM, pick-and-place, netlist, layer PDF, bare-board STEP
 import zipfile
 BOMS = {b: (f"data/results/PF233-{b}_BOM.csv", f"data/results/PF233-{b}_pickplace.csv") for b in ("AB1A", "AB1B", "CB1D", "HB2", "LB1", "PB1R", "PM2")}
@@ -80,7 +83,7 @@ for b, f, desc, st in BOARDS:
 # ---------------------------------------------------------------- STL files themselves: PRINT and REFERENCE copied (SUPERSEDED listed only); the six print formers if generated (not in git)
 for p_, c, note, *_ in rows:
     if p_.startswith("work/"): continue
-    if c == "PRINT": dst = f"{R}/stl_print/{p_[4:]}"
+    if c in ("PRINT", "NOTE"): dst = f"{R}/stl_print/{p_[4:]}"
     elif c == "REFERENCE": dst = f"{R}/stl_reference/{p_[4:]}"
     else: continue
     os.makedirs(os.path.dirname(dst), exist_ok=True); shutil.copy(p_, dst)
@@ -106,7 +109,8 @@ L = [f"# PHI-FOLD 233 prototype review package r5 (generated {datetime.date.toda
  "| `schematics/` | functional schematics | `.kicad_sch` + PDF |",
  "| `manufacturing/<board>/` | Gerber + drill zip (KiCad-written), BOM, pick-and-place (y-up), netlist where one exists, layer PDFs, bare-board STEP | Gerber RS-274X / Excellon, CSV, PDF, STEP |",
  "| `models3d/`, `renders/boards/` | each board with parts (GLB) and KiCad 3-D renders | glTF binary, PNG |",
- "| `blueprint/` | layered cut-away of the whole system | PDF, PNG |", "",
+ "| `blueprint/` | layered cut-away of the whole system; `cutaway_faces.json` = its cut faces by part | PDF, PNG, JSON |",
+ "| `viewer.html` | clickable cut-away: click a part (or pick it in the index) for its STL, KiCad, Gerber, BOM, pick-and-place, STEP, GLB and release files | HTML (open in a browser) |", "",
  "Not available: STEP / native CAD of the PRINTED parts. The generators build meshes (Python -> STL), there is no solid-modelling kernel in the repo, so STL is the master format for printing; a STEP would be a mesh wrapped in STEP, not a feature model. Board STEP files contain the bare board (the component models are VRML).", "",
  "## 2. Boards", "", "| Board | Manufacturing files present | Status |", "|---|---|---|"]
 for b, desc, got in mfg:
@@ -120,4 +124,5 @@ L += [f"- **{i}** (UNVERIFIED): {d.strip()}" for i, d in UNV]
 L += [f"- **{b['id']}**: {b['what']}" for b in BL]
 L += ["", "## 6. How this was made", "", "`make signoff-cold` then `python3 scripts/make_package.py` (needs KiCad 9, `make formers-low`; `make formers-print` for the six print formers).", ""]
 open(f"{R}/00_INDEX.md", "w").write("\n".join(L))
+r = run(sys.executable, "src/render/viewer_r1.py", R); print(r.stdout.strip() or r.stderr[-500:])            # clickable cut-away (viewer.html): every part -> its files; reads the index and the recorded cut faces
 print("package:", R, "|", len(rows), "STL rows |", sum(len(g) for _, _, g in mfg), "manufacturing items |", len(os.listdir(f"{R}/schematics")), "schematic files")

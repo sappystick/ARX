@@ -134,15 +134,8 @@ from shapely.ops import unary_union, polygonize
 def _tris(p):
     b = open(p, "rb").read(); k = struct.unpack("<I", b[80:84])[0]
     return np.frombuffer(b, dtype=np.dtype([("n", "<3f4"), ("v", "<9f4"), ("a", "<u2")]), count=k, offset=84)["v"].reshape(-1, 3, 3).astype(float)
-def _xsec(T, zv):
-    d = T[:, :, 2] - (zv + 1.234e-4); m = (d.min(1) < 0) & (d.max(1) > 0); segs = []
-    for tri, dd in zip(T[m], d[m]):
-        q = [tri[i] + dd[i] / (dd[i] - dd[j]) * (tri[j] - tri[i]) for i, j in ((0, 1), (1, 2), (2, 0)) if (dd[i] < 0) != (dd[j] < 0)]
-        if len(q) == 2 and np.linalg.norm(q[0] - q[1]) > 1e-9: segs.append(LineString([tuple(q[0][:2]), tuple(q[1][:2])]))
-    if not segs: return None
-    faces = list(polygonize(unary_union(segs))); g = faces[0] if faces else None
-    for f in faces[1:]: g = g.symmetric_difference(f)
-    return g
+def _xsec(T, zv):                                                      # src/mech/mesh_section.py (symmetric edge interpolation: the per-copy version lost faces)
+    import mesh_section as _ms; return _ms.section(T, 2, zv)
 try:
     PBT = True; NP = {n: _tris(f"kit_v19/SPINE/{n}.stl") for n in ("NPM_N1_body_with_tunnel_v2", "NPM_N2_lid_with_fill_ports", "NPM_N3_hot_zone_dam_v2")}
 except Exception as e: PBT = None; print("NPM fit skipped:", e)

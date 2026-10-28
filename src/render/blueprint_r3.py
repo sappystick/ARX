@@ -7,6 +7,7 @@ Panels: 1 whole detector at the 47 deg use pose (mid-plane cut), 2 head half-sec
 usage (repo root, after make setup + formers-low): python3 src/render/blueprint_r3.py OUT_DIR"""
 import sys, os, struct, math, json, glob
 import numpy as np
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "mech")); import mesh_section as _ms
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon as MPoly, Rectangle
 from matplotlib.collections import PolyCollection
@@ -18,25 +19,19 @@ def tris(p):
     b = open(p, "rb").read(); k = struct.unpack("<I", b[80:84])[0]
     return np.frombuffer(b, dtype=np.dtype([("n", "<3f4"), ("v", "<9f4"), ("a", "<u2")]), count=k, offset=84)["v"].reshape(-1, 3, 3).astype(float)
 def section(T, axis, val):
-    """mesh/plane intersection -> filled polygons in the two remaining axes (even-odd): returns a shapely geometry"""
-    keep = [i for i in range(3) if i != axis]; d = T[:, :, axis] - (val + 1.234e-4); m = (d.min(1) < 0) & (d.max(1) > 0); segs = []
-    for tri, dd in zip(T[m], d[m]):
-        q = [tri[i] + dd[i] / (dd[i] - dd[j]) * (tri[j] - tri[i]) for i, j in ((0, 1), (1, 2), (2, 0)) if (dd[i] < 0) != (dd[j] < 0)]
-        if len(q) == 2 and np.linalg.norm(q[0] - q[1]) > 1e-9: segs.append(LineString([tuple(q[0][keep]), tuple(q[1][keep])]))
-    if not segs: return None
-    faces = list(polygonize(unary_union(segs)))
-    if not faces: return None
-    g = faces[0]
-    for f in faces[1:]: g = g.symmetric_difference(f)
-    return g
+    """mesh/plane intersection -> filled polygons in the two remaining axes (even-odd): src/mech/mesh_section.py (symmetric edge interpolation)"""
+    return _ms.section(T, axis, val)
 MIR = [False]
 flipx = lambda a: np.asarray(a) * np.array([-1.0, 1.0]) if MIR[0] else np.asarray(a)
-def draw(ax, g, fc, ec="#222", lw=0.4, alpha=1.0, z=2):
+REC = {} if os.environ.get("BLUEPRINT_RECORD") else None              # viewer_r1.py: cut faces by part tag, per axes (the drawing is unchanged)
+def _rec(ax, tag, rings, fc):
+    if REC is not None and tag: REC.setdefault(id(ax), []).append(dict(tag=tag, fc=fc, rings=[np.round(np.asarray(r, float), 2).tolist() for r in rings]))
+def draw(ax, g, fc, ec="#222", lw=0.4, alpha=1.0, z=2, tag=None):
     if g is None or g.is_empty: return
     for p in (g.geoms if hasattr(g, "geoms") else [g]):
         if p.geom_type != "Polygon": continue
         path = [MPoly(np.asarray(p.exterior.coords), closed=True)]
-        ax.add_patch(MPoly(flipx(p.exterior.coords), closed=True, fc=fc, ec=ec, lw=lw, alpha=alpha, zorder=z))
+        ax.add_patch(MPoly(flipx(p.exterior.coords), closed=True, fc=fc, ec=ec, lw=lw, alpha=alpha, zorder=z)); _rec(ax, tag, [flipx(p.exterior.coords)] + [flipx(h.coords) for h in p.interiors], fc)
         for h in p.interiors: ax.add_patch(MPoly(flipx(h.coords), closed=True, fc="white", ec=ec, lw=lw, zorder=z + 0.1))
 def rotz(T, deg):
     c, s = math.cos(math.radians(deg)), math.sin(math.radians(deg)); R = np.array([[c, -s, 0], [s, c, 0], [0, 0, 1]]); return T @ R.T
@@ -83,18 +78,19 @@ def stem2shaft(T):                                                   # upper-ass
     V = T.reshape(-1, 3); return np.c_[-V[:, 2], -V[:, 1], D_HINGE - V[:, 0]].reshape(T.shape)
 # ------------------------------------------------------------------ 2 head half-section (y = 0)
 ax2 = panel(gs[0, 3:8], "2  Head half-section (y = 0): every layer, cut faces from the generated meshes", "formers = low-resolution print meshes at their assembly z; boards in the vault = slabs at the DESIGN_STATE z ranges")
-MIR[0] = True; draw(ax2, section(HEEL(head["BASE_PLATE_RX_CASSETTE_v3"]), 1, 0.0), COL["base"])
+MIR[0] = True; draw(ax2, section(HEEL(head["BASE_PLATE_RX_CASSETTE_v3"]), 1, 0.0), COL["base"], tag="BASE_PLATE_RX_CASSETTE_v3")
 for k in range(1, 7):
-    T = formers[k].copy(); T[:, :, 2] += off(k); draw(ax2, section(HEEL(T), 1, 0.0), COL["former"][k - 1], lw=0.25)
+    T = formers[k].copy(); T[:, :, 2] += off(k); draw(ax2, section(HEEL(T), 1, 0.0), COL["former"][k - 1], lw=0.25, tag=f"FORMER_L{k}")
 for n, c in (("CORE_CYLINDER_v5_integrated", COL["hub"]), ("ROOF_PLATE_v5", COL["cap"]), ("HUB_CAP_HTA_v3_vault", COL["cap"]), ("LOTUS_HOOD_CARRIER_v3_butted", COL["hood"]), ("HEAD_SKIRT", COL["skirt"]),
-             ("SEPTUM_FRAME_v5", COL["septum"]), ("ANALOG_TRAY_v5", COL["abs"]), ("SPINE_COMB_v5", COL["abs"])): draw(ax2, section(HEEL(head[n]), 1, 0.0), c, lw=0.3)
-for n in ("TXJ1_CRADLE_v1",): draw(ax2, section(HEEL(S("stl/head/TXJ1_CRADLE_v1.stl")), 1, 0.0), COL["brdge"])
-for n in ("HEEL_SADDLE_TOWER", "UMBILICAL_BRIDGE", "UMBILICAL_BRIDGE_LID"): draw(ax2, section(HEEL(yoke[n]), 1, 0.0), COL["yoke"] if n.startswith("HEEL") else COL["brdge"])
+             ("SEPTUM_FRAME_v5", COL["septum"]), ("ANALOG_TRAY_v5", COL["abs"]), ("SPINE_COMB_v5", COL["abs"])): draw(ax2, section(HEEL(head[n]), 1, 0.0), c, lw=0.3, tag=n)
+for n in ("TXJ1_CRADLE_v1",): draw(ax2, section(HEEL(S("stl/head/TXJ1_CRADLE_v1.stl")), 1, 0.0), COL["brdge"], tag=n)
+for n in ("HEEL_SADDLE_TOWER", "UMBILICAL_BRIDGE", "UMBILICAL_BRIDGE_LID"): draw(ax2, section(HEEL(yoke[n]), 1, 0.0), COL["yoke"] if n.startswith("HEEL") else COL["brdge"], tag=n)
 MIR[0] = False
-def slab(ax, x0, x1, z0, z1, c, a=1.0, ec="#0a3d24"): ax.add_patch(Rectangle((x0, z0), x1 - x0, z1 - z0, fc=c, ec=ec, lw=0.4, alpha=a, zorder=4))
-slab(ax2, -114, 114, 0.8, 3.2, COL["board"]);                                                      # SB1R-QA/QB (2 x 4-layer, D228) in the base-plate recess
-slab(ax2, -40.3, -0.3, 10.1, 11.7, COL["board"]); slab(ax2, 0.3, 40.3, 10.1, 11.7, COL["board"])  # AB1A / AB1B (D40, x -/+ 20.3)
-slab(ax2, -39, 39, 27.0, 28.6, COL["board"]); slab(ax2, -39, 39, 39.2, 40.0, COL["board"]); slab(ax2, -46, 46, 44.5, 46.1, COL["board"])   # CB1D, LB1, HTA board in the cap
+def slab(ax, x0, x1, z0, z1, c, a=1.0, ec="#0a3d24", tag=None):
+    ax.add_patch(Rectangle((x0, z0), x1 - x0, z1 - z0, fc=c, ec=ec, lw=0.4, alpha=a, zorder=4)); _rec(ax, tag, [[(x0, z0), (x1, z0), (x1, z1), (x0, z1)]], c)
+slab(ax2, -114, 114, 0.8, 3.2, COL["board"], tag="SB1R-QA");                                       # SB1R-QA/QB (2 x 4-layer, D228) in the base-plate recess
+slab(ax2, -40.3, -0.3, 10.1, 11.7, COL["board"], tag="AB1A"); slab(ax2, 0.3, 40.3, 10.1, 11.7, COL["board"], tag="AB1B")  # AB1A / AB1B (D40, x -/+ 20.3)
+slab(ax2, -39, 39, 27.0, 28.6, COL["board"], tag="CB1D"); slab(ax2, -39, 39, 39.2, 40.0, COL["board"], tag="LB1"); slab(ax2, -46, 46, 44.5, 46.1, COL["board"], tag="HTA")   # CB1D, LB1, HTA board in the cap
 ax2.set_xlim(-205, 125); ax2.set_ylim(-6, 70)
 for t, xy, xt in (("SB1R-QA/QB (2 x 4-layer D228)", (-95, 2), (-203, -3)), ("L6 former + litz", (-108, 5.3), (-203, 6)), ("L1 former + litz", (-108, 27.5), (-203, 15)), ("hood carrier + MnZn tiles", (-110, 31.4), (-203, 24)),
                   ("skirt", (-118, 14), (-203, 33)), ("hub = vault wall", (-48, 25), (-203, 42)), ("L2 AB1A | AB1B", (-20, 11), (-60, -3)), ("L3 septum + Cu mesh", (-30, 21), (-20, 62)),
@@ -139,24 +135,24 @@ sys_pts0 = lambda T: arm2heel(T, 47.0) * np.array([-1.0, 1.0, 1.0])
 def draw_system(ax1, ALPHA=47.0):
     MIR[0] = True
     def sys_pts(T): return arm2heel(T, ALPHA)
-    def shaft_section(T_local, c, lw=0.3):
-        T = sys_pts(T_local); draw(ax1, section(T, 1, 0.0), c, lw=lw)
+    def shaft_section(T_local, c, lw=0.3, tag=None):
+        T = sys_pts(T_local); draw(ax1, section(T, 1, 0.0), c, lw=lw, tag=tag)
     def envelope(ro, z0, z1, c, a=0.30):                     # the tube is a 1.5 mm wall: at this scale draw its outer envelope as a light band and the wall on top
         q = sys_pts(np.array([[-ro, 0, z0], [ro, 0, z0], [ro, 0, z1], [-ro, 0, z1]], float))[:, [0, 2]]
         ax1.add_patch(MPoly(flipx(q), closed=True, fc=c, ec=c, lw=0.8, alpha=a, zorder=1.5))
     for n, c in (("BASE_PLATE_RX_CASSETTE_v3", COL["base"]), ("CORE_CYLINDER_v5_integrated", COL["hub"]), ("ROOF_PLATE_v5", COL["cap"]), ("HUB_CAP_HTA_v3_vault", COL["cap"]), ("LOTUS_HOOD_CARRIER_v3_butted", COL["hood"]), ("HEAD_SKIRT", COL["skirt"])):
-        draw(ax1, section(HEEL(head[n]), 1, 0.0), c, lw=0.2)
+        draw(ax1, section(HEEL(head[n]), 1, 0.0), c, lw=0.2, tag=n)
     for k in range(1, 7):
-        T = formers[k].copy(); T[:, :, 2] += off(k); draw(ax1, section(HEEL(T), 1, 0.0), COL["former"][k - 1], lw=0.15)
-    for n in ("HEEL_SADDLE_TOWER", "UMBILICAL_BRIDGE", "UMBILICAL_BRIDGE_LID"): draw(ax1, section(HEEL(yoke[n]), 1, 0.0), COL["yoke"] if n.startswith("HEEL") else COL["brdge"], lw=0.2)
-    shaft_section(yoke["HINGE_ARM"], COL["yoke"]); envelope(16.0, 14.0, 400.0, COL["tubeG"]); shaft_section(tube(16.0, 14.5, 14.0, 400.0), COL["tubeG"], 0.8)
+        T = formers[k].copy(); T[:, :, 2] += off(k); draw(ax1, section(HEEL(T), 1, 0.0), COL["former"][k - 1], lw=0.15, tag=f"FORMER_L{k}")
+    for n in ("HEEL_SADDLE_TOWER", "UMBILICAL_BRIDGE", "UMBILICAL_BRIDGE_LID"): draw(ax1, section(HEEL(yoke[n]), 1, 0.0), COL["yoke"] if n.startswith("HEEL") else COL["brdge"], lw=0.2, tag=n)
+    shaft_section(yoke["HINGE_ARM"], COL["yoke"], tag="HINGE_ARM"); envelope(16.0, 14.0, 400.0, COL["tubeG"]); shaft_section(tube(16.0, 14.5, 14.0, 400.0), COL["tubeG"], 0.8, tag="TUBE_LOWER_GFRP")
     for n, c in (("NPM_N1_body_with_tunnel_v2", COL["npm"]), ("NPM_N3_hot_zone_dam_v2", "#e08a2b")):
-        T = npm[n].copy(); T[:, :, 2] += 400.0; shaft_section(T, c)
-    Tpb = np.stack([pb[:, :, 0], 34.6 - (pb[:, :, 2] + 1.6), pb[:, :, 1] + 42.0 + 400.0], axis=2); shaft_section(Tpb, COL["pb"], 0.15)
+        T = npm[n].copy(); T[:, :, 2] += 400.0; shaft_section(T, c, tag=n)
+    Tpb = np.stack([pb[:, :, 0], 34.6 - (pb[:, :, 2] + 1.6), pb[:, :, 1] + 42.0 + 400.0], axis=2); shaft_section(Tpb, COL["pb"], 0.15, tag="PB1R")
     zB0, zB1, zA0, zA1 = D_HINGE - TB[1], D_HINGE - TB[0], D_HINGE - TA[1], D_HINGE - TA[0]
-    envelope(14.25, zB0, zB1, "#555"); shaft_section(tube(14.25, 13.0, zB0, zB1), "#333", 0.8); envelope(16.5, zA0, zA1, COL["tubeC"], 0.22); shaft_section(tube(16.5, 15.0, zA0, zA1), COL["tubeC"], 0.8)
-    shaft_section(yoke["TELESCOPE_LOCK_COLLAR"].copy() + np.array([0, 0, zA0 + 1]), "#e0822f")
-    for n, T in UP.items(): shaft_section(stem2shaft(T), cm[n], 0.25)
+    envelope(14.25, zB0, zB1, "#555"); shaft_section(tube(14.25, 13.0, zB0, zB1), "#333", 0.8, tag="TUBE_B_CFRP"); envelope(16.5, zA0, zA1, COL["tubeC"], 0.22); shaft_section(tube(16.5, 15.0, zA0, zA1), COL["tubeC"], 0.8, tag="TUBE_A_CFRP")
+    shaft_section(yoke["TELESCOPE_LOCK_COLLAR"].copy() + np.array([0, 0, zA0 + 1]), "#e0822f", tag="TELESCOPE_LOCK_COLLAR")
+    for n, T in UP.items(): shaft_section(stem2shaft(T), cm[n], 0.25, tag=n)
     MIR[0] = False
 draw_system(ax1)
 ax1.set_xlim(-1700, 330); ax1.set_ylim(-80, 1450)
@@ -199,3 +195,6 @@ fig.suptitle("PHI-FOLD 233  -  full structure and layered cut-away blueprint (r3
 fig.text(0.015, 0.006, "MODELED design drawing: sections computed from the generated STLs; board slabs at the DESIGN_STATE z ranges; nothing here is built or measured. Not a fabrication drawing: see 00_INDEX.md for the status of every file.", fontsize=9, color="#55607a")
 for ext, kw in (("png", dict(dpi=FIGDPI)), ("pdf", {})): fig.savefig(os.path.join(OUT, f"PHIFOLD233_FULL_SYSTEM_LAYERED_CUTAWAY_r3.{ext}"), **kw)
 print("blueprint written to", OUT)
+if REC is not None:                                                    # viewer_r1.py input: the tagged cut faces of panel 1 (whole detector) and panel 2 (head half-section), drawing coordinates in mm
+    json.dump(dict(system=dict(faces=REC.get(id(ax1), []), xlim=list(ax1.get_xlim()), ylim=list(ax1.get_ylim())), head=dict(faces=REC.get(id(ax2), []), xlim=list(ax2.get_xlim()), ylim=list(ax2.get_ylim()))),
+              open(os.environ["BLUEPRINT_RECORD"], "w"))
