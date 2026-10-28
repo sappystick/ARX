@@ -30,8 +30,13 @@ elif board=="AU1":
     # up to 6 rounds, keep the best (opt-in for AU1)
     mk=lambda: Router("kit_v6/AU1/pads.json",["F.Cu","In2.Cu","B.Cu"],{"GND":"In1.Cu","+5V_AU":"In3.Cu","+3V3_AU":"In4.Cu"},wid,clr=0.2)      # 6 layers (pw_export)
     front=["BSL_INV","US_INN"]; stubs=set(); best=None                       # learned (2026-10-28 exact fine-zone keep-out): these two lost their only escape to later nets
-    for rnd in range(6):
-        R=mk(); R.fine_order="span"; R.priority=list(front); R.stub_first=set(stubs); st=R.run(budget=1e9,state=None)
+    import random
+    for rnd in range(12):
+        R=mk(); R.fine_order="span"; R.stub_first=set(stubs)
+        if rnd<6: R.priority=list(front)
+        else:                                                    # rounds 6-11: the failed nets first, the rest in a seeded shuffle (deterministic) to break order lock-in
+            rest=sorted({p["net"] for p in R.pads if p["net"] and p["net"] not in R.planes and p["net"] not in front}); random.Random(rnd).shuffle(rest); R.priority=list(front)+rest
+        st=R.run(budget=1e9,state=None)
         nf=len(st["failures"]); print("AU1 round",rnd,"routed",st["nets_routed"],"of",st["nets_to_route"],"failures",nf,flush=True)
         if best is None or nf<best[0]: best=(nf,R,st)
         if nf==0: break
