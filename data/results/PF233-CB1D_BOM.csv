@@ -18,7 +18,7 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,F1,FUSE1206B,5A slow 32V,"Bourns SF-1206S500-2 (5.00 A slow blow, 32 VDC, 50 A interrupting at 32 VDC)",Fuse:Fuse_1206_3216Metric
 1,UM,HC4051,74HC4051,Nexperia/TI 74HC4051D,Package_SO:SOIC-16_3.9x9.9mm_P1.27mm
 1,JDBG,HDR1x2,"RUN / GND (reset, SWD pads on Pico underside)",2.54 mm header,Connector:Pin_header_1x2_P2.54mm
-1,JLB,HDR1x4,"to LB1: +5V, LED_IN, GND, GND",4 wires to the display board,Connector:Pin_header_1x4_P2.54mm
+1,JLB,HDR1x4,"to LB1: +5V, LED_IN, LED_CLK, GND",4 wires to the display board,Connector:Pin_header_1x4_P2.54mm
 1,JTR,HDR1x7,Handle: +3V3 GND TRIG DIAL JOYX JOYY SHLD,shielded 6-core + drain (the only signal cable leaving the head),Connector:Pin_header_1x7_P2.54mm
 1,JPB,HDR2x4,to PB1R: 12V GND TX1_IN REF_I1 FAULT1_N ISENSE1 NTC GND,2.54 mm header,Connector:Pin_header_2x4_P2.54mm
 1,JA,HDR2x6S,to AB1A J2,1.27 mm 2x6 header,Connector:Pin_header_1.27_2x6_P1.27mm

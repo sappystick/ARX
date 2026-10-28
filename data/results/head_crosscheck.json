@@ -195,7 +195,7 @@
   {
    "section": "B radial",
    "check": "LB1: every component body clear of the 8 ribs, 8 insert posts and the 2 spine walls (exact polygon test)",
-   "value": "81 bodies, 0 conflicts",
+   "value": "17 bodies, 0 conflicts",
    "limit": "0",
    "result": "PASS",
    "note": ""
@@ -211,7 +211,7 @@
   {
    "section": "D electrical",
    "check": "every inter-board pin and harness conductor matches the netlists",
-   "value": "53 pins / 50 conductors",
+   "value": "53 pins / 51 conductors",
    "limit": "0 errors",
    "result": "PASS",
    "note": ""
@@ -382,11 +382,6 @@
    "CAP",
    "HTA",
    3061.12
-  ],
-  [
-   "LB1",
-   "PIPES",
-   57.5
   ]
  ],
  "pairs": [
@@ -442,12 +437,6 @@
    "a": "CAP",
    "b": "HTA",
    "overlap_mm3": 3061.12,
-   "core_mm3": 0.0
-  },
-  {
-   "a": "LB1",
-   "b": "PIPES",
-   "overlap_mm3": 57.5,
    "core_mm3": 0.0
   }
  ],

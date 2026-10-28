@@ -15,11 +15,11 @@
    "one_track_between": false,
    "ok": false
   },
-  "SK9822 5050, as placed (rot 0)": {
+  "SK9822 5050, as placed": {
    "min_pad_gap_mm": 0.0,
    "pair": [
-    "LD10",
-    "LD11"
+    "LD15",
+    "LD34"
    ],
    "min_body_gap_mm": 0.0,
    "body_pair": [
@@ -43,7 +43,7 @@
    "one_track_between": true,
    "ok": true
   },
-  "SK9822-EC20, as placed (rot 0)": {
+  "SK9822-EC20, as placed": {
    "min_pad_gap_mm": 3.601,
    "pair": [
     "LD1",

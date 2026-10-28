@@ -19,9 +19,9 @@ PB1R bulk capacitors 9 x 100 uF -20 %,"voltage droop per 20 A pulse at 19.6 V (c
 PB1R bulk capacitors CB1-CB9 (50 V),voltage at the 7S full charge,29.4,50.0,V,41.2,30,PASS,"Panasonic EEHZC1H101P 50 V 100 uF (ZC technical data, DATASHEET_LOG); each part must supply >= 87 uF at 19.6 V (-20 %)"
 PB1R 12 V module M12,input voltage maximum,29.4,36,V,18.3,15,PASS,"Murata OKI-78SR-12/1.0-W36-C: 36 V continuous absolute maximum, Vin 15-36 V (MDC_OKI-78SR-W36.C05, DATASHEET_LOG)"
 PB1R 12 V module M12,pack voltage at the BMS cut-off vs the module minimum input (15 V),19.6,15.0,V,30.7,15,PASS,"datasheet minimum input (UNVERIFIED, ASSUMPTIONS 29)"
-Power cord AWG20 pair (upper v1),"average current in boost (8.64 W battery side at the 19.6 V BMS cut-off, system_live.py)",0.441,5.0,A,91.2,50,PASS,coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon
+Power cord AWG20 pair (upper v1),"average current in boost (9.03 W battery side at the 19.6 V BMS cut-off, system_live.py)",0.461,5.0,A,90.8,50,PASS,coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon
 PM2 fuse F1 5 A slow,"battery-side peak through F1 at the BMS cut-off (time-domain chain, power_dock_check.py)",3.094,5.0,A,38.1,20,PASS,slow-blow: carries the rated current continuously; peaks last about a millisecond
-Battery pack 7S1P Molicel P30B,average current in boost,0.441,30.0,A,98.5,50,PASS,"30 A continuous, 80 C cut-off (Molicel INR-18650-P30B PDS v1.0, DATASHEET_LOG)"
+Battery pack 7S1P Molicel P30B,average current in boost,0.461,30.0,A,98.5,50,PASS,"30 A continuous, 80 C cut-off (Molicel INR-18650-P30B PDS v1.0, DATASHEET_LOG)"
 LED rail (OKI-78SR 1.5 A),66 LEDs at full white 60 mA each,3.96,1.5,A,-164.0,0,FAIL,FAILS unless the firmware caps the LED current: REQUIREMENT firmware limit 0.35 A total (about 1.75 W)
 LED rail with the firmware cap,capped LED current + Pico + ADC (0.35 + 0.15),0.5,1.5,A,66.7,30,PASS,requires the firmware cap
 AMS1117-3.3 (CB1D UL),+3V3D output current: 2 x AD7389-4 operational max + RML bleed,0.066,0.8,A,91.7,50,PASS,0.8 A is the dropout specification point (DS1117 Note 4); 1 A rated
@@ -33,7 +33,7 @@ AD7389-4 VCC (+3V3D),AMS1117-3.3 output high limit 3.399 V vs VCC max 3.6 V,3.39
 AD7389-4 VCC (+3V3D),AMS1117-3.3 output low limit 3.201 V vs VCC min 3.0 V,3.201,3.0,V,6.7,3,PASS,
 RML 270 ohm 0603 (CB1D),power 3.3^2 / 270,0.04,0.1,W,59.7,50,PASS,CRCW0603 e3 P70 0.10 W (Vishay 20035)
 "+5VA (AB1A + AB1B analog, via CB1D FB2)",6 OPA2211 channels x 4.5 mA max + 4 OPA2365 amplifiers x 5 mA max (25 C),0.047,1.0,A,95.3,50,PASS,FB2 bead 1 A; over temperature 56 mA (OPA2211 6 mA per channel)
-"+5V rail (CB1D M5, 1.5 A)",LED firmware cap 0.35 A + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature),0.633,1.5,A,57.8,30,PASS,M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)
+"+5V rail (CB1D M5, 1.5 A)",LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature),0.699,1.5,A,53.4,30,PASS,M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)
 TX lead channel,litz fill ratio,0.58,0.7,ratio,17.1,15,PASS,wall-top groove + roof channel
 TX layers,DC current sharing deviation,0.014,0.05,fraction,71.2,50,PASS,lead length differences
 TC4420 gate driver (2 FETs),"gate charge per turn-off (2 x 45 nC, Infineon Rev. 2.0) at 12 V: peak current with 2.2 ohm gate resistors (TC4420 6 A peak, DS21419D)",3.75,6.0,A,37.5,30,PASS,"turn-off in about 20 ns, negligible against the 3.8 us flyback; datasheet Qg and RG values must be confirmed"

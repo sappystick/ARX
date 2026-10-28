@@ -2,7 +2,7 @@
  "board": "CB1D",
  "parts": 62,
  "errors": [],
- "nets_compared": 46,
+ "nets_compared": 47,
  "erc": {
   "warning:footprint_link_issues": 62,
   "warning:lib_symbol_issues": 62

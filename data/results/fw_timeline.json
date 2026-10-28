@@ -1,5 +1,6 @@
 {
  "status": "MODELED; SCLK, LED class timing and housekeeping ASSUMED",
+ "led_policy": "dark_during_sweep",
  "inputs": {
   "t_zero_us": 3.7606267711285213,
   "t_quiet_us": 5.5609268211368565,
@@ -62,6 +63,18 @@
    "spare_pct": 61.4,
    "fits": true,
    "led": {
+    "strategy": "SK9822 clocked: whole refresh in the free time after the receive window, every period",
+    "stream_us": 272.0,
+    "prf_cost_pct": 0.0,
+    "refresh_hz": 800.0
+   },
+   "led_policy": {
+    "policy": "dark_during_sweep",
+    "in_sweep": "LEDs dark: one all-off frame (272 us) in the idle slot of the first sweep period, then no LED clock, data or PWM current",
+    "between_sweeps": "LEDs lit, full refresh in the idle slot after the last gate",
+    "prf_cost_pct": 0.0
+   },
+   "led_one_wire": {
     "strategy": "drop 2 pulse(s) every 27 periods; the LED stream runs in the gap",
     "prf_cost_pct": 7.41,
     "refresh_hz": 29.6,
@@ -159,6 +172,18 @@
    "spare_pct": 70.0,
    "fits": true,
    "led": {
+    "strategy": "SK9822 clocked: whole refresh in the free time after the receive window, every period",
+    "stream_us": 272.0,
+    "prf_cost_pct": 0.0,
+    "refresh_hz": 600.0
+   },
+   "led_policy": {
+    "policy": "dark_during_sweep",
+    "in_sweep": "LEDs dark: one all-off frame (272 us) in the idle slot of the first sweep period, then no LED clock, data or PWM current",
+    "between_sweeps": "LEDs lit, full refresh in the idle slot after the last gate",
+    "prf_cost_pct": 0.0
+   },
+   "led_one_wire": {
     "strategy": "drop 1 pulse(s) every 20 periods; the LED stream runs in the gap",
     "prf_cost_pct": 5.0,
     "refresh_hz": 30.0,
@@ -256,6 +281,18 @@
    "spare_pct": 79.2,
    "fits": true,
    "led": {
+    "strategy": "SK9822 clocked: whole refresh in the free time after the receive window, every period",
+    "stream_us": 272.0,
+    "prf_cost_pct": 0.0,
+    "refresh_hz": 400.0
+   },
+   "led_policy": {
+    "policy": "dark_during_sweep",
+    "in_sweep": "LEDs dark: one all-off frame (272 us) in the idle slot of the first sweep period, then no LED clock, data or PWM current",
+    "between_sweeps": "LEDs lit, full refresh in the idle slot after the last gate",
+    "prf_cost_pct": 0.0
+   },
+   "led_one_wire": {
     "strategy": "drop 1 pulse(s) every 13 periods; the LED stream runs in the gap",
     "prf_cost_pct": 7.69,
     "refresh_hz": 30.8,

@@ -222,11 +222,11 @@
   },
   {
    "part": "Power cord AWG20 pair (upper v1)",
-   "stress": "average current in boost (8.64 W battery side at the 19.6 V BMS cut-off, system_live.py)",
-   "value": 0.441,
+   "stress": "average current in boost (9.03 W battery side at the 19.6 V BMS cut-off, system_live.py)",
+   "value": 0.461,
    "rating": 5.0,
    "unit": "A",
-   "margin_pct": 91.2,
+   "margin_pct": 90.8,
    "required_margin_pct": 50,
    "status": "PASS",
    "note": "coiled cord in the shaft power cavity; 5 A continuous assumed for enclosed AWG20 silicone (ASSUMPTIONS 27); replaces the AWG28 x 3 ribbon"
@@ -245,7 +245,7 @@
   {
    "part": "Battery pack 7S1P Molicel P30B",
    "stress": "average current in boost",
-   "value": 0.441,
+   "value": 0.461,
    "rating": 30.0,
    "unit": "A",
    "margin_pct": 98.5,
@@ -376,11 +376,11 @@
   },
   {
    "part": "+5V rail (CB1D M5, 1.5 A)",
-   "stress": "LED firmware cap 0.35 A + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature)",
-   "value": 0.633,
+   "stress": "LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature)",
+   "value": 0.699,
    "rating": 1.5,
    "unit": "A",
-   "margin_pct": 57.8,
+   "margin_pct": 53.4,
    "required_margin_pct": 30,
    "status": "PASS",
    "note": "M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)"
@@ -434,18 +434,18 @@
  "watch": 2,
  "power": {
   "scan 8 A / 800 Hz": {
-   "W": 5.26,
-   "hours": 14.4,
+   "W": 5.65,
+   "hours": 13.4,
    "at_V": 25.2
   },
   "mid 14 A / 600 Hz": {
-   "W": 7.18,
-   "hours": 10.5,
+   "W": 7.57,
+   "hours": 10.0,
    "at_V": 25.2
   },
   "boost 20 A / 400 Hz": {
-   "W": 8.51,
-   "hours": 8.9,
+   "W": 8.89,
+   "hours": 8.5,
    "at_V": 25.2
   },
   "pack_Wh": 75.6,

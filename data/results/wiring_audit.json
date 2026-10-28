@@ -2,7 +2,7 @@
  "connectors_checked": 43,
  "links": 8,
  "link_pins": 53,
- "harness_conductors": 50,
+ "harness_conductors": 51,
  "harness_bad": 0,
  "open_by_design": [
   "CB1D.JTR.5 (JTR5_OPT) vs HB2.JH.5 (JH5_NC)",
@@ -118,6 +118,11 @@
   [
    "W037",
    "GND",
+   "OK"
+  ],
+  [
+   "W066",
+   "LED_CLK",
    "OK"
   ],
   [

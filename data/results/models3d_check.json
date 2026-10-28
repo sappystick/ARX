@@ -6,8 +6,8 @@
    "missing": []
   },
   "PF233-LB1_routed.kicad_pcb": {
-   "components": 80,
-   "with_model": 80,
+   "components": 16,
+   "with_model": 16,
    "missing": []
   },
   "PF233-PB1R_routed.kicad_pcb": {
@@ -203,12 +203,6 @@
    "envelope_h": 9.0,
    "height_ok": true
   },
-  "LED2020": {
-   "covers_pads": true,
-   "height": 0.8,
-   "envelope_h": 0.8,
-   "height_ok": true
-  },
   "LM393": {
    "covers_pads": true,
    "height": 1.72,
@@ -273,6 +267,12 @@
    "covers_pads": true,
    "height": 0.7,
    "envelope_h": 0.7,
+   "height_ok": true
+  },
+  "SK9822EC20": {
+   "covers_pads": true,
+   "height": 0.65,
+   "envelope_h": 0.65,
    "height_ok": true
   },
   "SOT223": {

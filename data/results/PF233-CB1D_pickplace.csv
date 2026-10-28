@@ -60,4 +60,4 @@ RHTA,10k,R_0603_1608Metric,30.0,18.0,0,top
 CHTA,1n,C_0603_1608Metric,31.0,16.5,0,top
 DHA1,BAS16,D_SOD-123,28.0,20.0,0,top
 DHA2,BAS16,D_SOD-123,20.0,28.0,0,top
-JLB,"to LB1: +5V, LED_IN, GND, GND",Pin_header_1x4_P2.54mm,-28.5,14.5,0,top
+JLB,"to LB1: +5V, LED_IN, LED_CLK, GND",Pin_header_1x4_P2.54mm,-28.5,14.5,0,top

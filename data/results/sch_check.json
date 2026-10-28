@@ -2,12 +2,12 @@
  "CB1D": {
   "board": "CB1D",
   "parts": 62,
-  "nets": 46,
-  "pins": 204,
+  "nets": 47,
+  "pins": 205,
   "paper": "A1",
   "check": {
-   "nets": 46,
-   "nodes": 204,
+   "nets": 47,
+   "nodes": 205,
    "mismatched_nets": [],
    "stray_labels": 0,
    "ok": true
@@ -15,13 +15,13 @@
  },
  "LB1": {
   "board": "LB1",
-  "parts": 81,
-  "nets": 71,
-  "pins": 299,
+  "parts": 83,
+  "nets": 140,
+  "pins": 438,
   "paper": "A1",
   "check": {
-   "nets": 71,
-   "nodes": 299,
+   "nets": 140,
+   "nodes": 438,
    "mismatched_nets": [],
    "stray_labels": 0,
    "ok": true

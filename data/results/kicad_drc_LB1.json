@@ -3,10 +3,111 @@
  "board_key": "LB1",
  "kicad": "9.0.9",
  "zones_filled": true,
- "violations": 81,
- "unconnected": 0,
- "errors": {},
- "warnings": {},
- "lib_footprint_warnings": 81,
- "examples": []
+ "violations": 235,
+ "unconnected": 2,
+ "errors": {
+  "clearance": 150
+ },
+ "warnings": {
+  "track_dangling": 2
+ },
+ "lib_footprint_warnings": 83,
+ "examples": [
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1561 mm)",
+   "items": [
+    "Track [+5V] on F.Cu, length 0.4500 mm",
+    "Pad 6 [LD_C4] of LD4 on F.Cu"
+   ],
+   "pos": {
+    "x": 96.6,
+    "y": 86.85
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1566 mm)",
+   "items": [
+    "Track [+5V] on F.Cu, length 0.4184 mm",
+    "Pad 4 [LD_C46] of LD47 on F.Cu"
+   ],
+   "pos": {
+    "x": 89.859,
+    "y": 125.163
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1539 mm)",
+   "items": [
+    "Track [GND] on F.Cu, length 0.4272 mm",
+    "Pad 3 [LD_D8] of LD9 on F.Cu"
+   ],
+   "pos": {
+    "x": 96.765,
+    "y": 111.394
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1569 mm)",
+   "items": [
+    "Pad 1 [LD_D34] of LD34 on F.Cu",
+    "Track [GND] on F.Cu, length 0.4799 mm"
+   ],
+   "pos": {
+    "x": 115.272,
+    "y": 79.656
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1375 mm)",
+   "items": [
+    "Pad 3 [LD_D9] of LD10 on F.Cu",
+    "Track [GND] on F.Cu, length 0.4500 mm"
+   ],
+   "pos": {
+    "x": 102.375,
+    "y": 111.394
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1573 mm)",
+   "items": [
+    "Track [+5V] on F.Cu, length 0.4500 mm",
+    "Pad 4 [LD_C46] of LD47 on F.Cu"
+   ],
+   "pos": {
+    "x": 89.7,
+    "y": 125.55
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1512 mm)",
+   "items": [
+    "Pad 1 [LD_D58] of LD58 on F.Cu",
+    "Track [GND] on F.Cu, length 0.4500 mm"
+   ],
+   "pos": {
+    "x": 94.702,
+    "y": 66.971
+   }
+  },
+  {
+   "type": "clearance",
+   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1551 mm)",
+   "items": [
+    "Track [GND] on F.Cu, length 0.4500 mm",
+    "Pad 3 [LD_D8] of LD9 on F.Cu"
+   ],
+   "pos": {
+    "x": 96.6,
+    "y": 111.0
+   }
+  }
+ ]
 }

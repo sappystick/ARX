@@ -8,7 +8,12 @@ static const uint32_t PF_GATE_START_NS[PF_N_GATES] = {5910, 9562, 15472, 25034, 
 static const uint32_t PF_GATE_END_NS[PF_N_GATES] = {9562, 15472, 25034, 40504, 65536, 106037, 171568, 277598, 449153};
 #define PF_SPI_SCLK_HZ 40000000u
 #define PF_HOUSEKEEPING_NS 10000u
-typedef struct { uint16_t i_peak_a; uint16_t prf_hz; uint32_t period_ns; uint8_t led_drop; uint16_t led_every; } pf_mode_t;
+#define PF_LED_CLK_HZ 8000000u
+#define PF_LED_N 66u
+#define PF_LED_FRAME_BITS 2176u  /* SK9822: 32-bit start (0), N x 32-bit LED (111 + 5-bit global + B G R), 32-bit end (1) */
+#define PF_LED_SLOT_START_NS 449153u  /* LED clock and data only after the last gate */
+#define PF_LED_DARK_DURING_SWEEP 1u  /* owner policy 2026-10-28: one all-off frame at sweep start, then no LED activity until the sweep ends */
+typedef struct { uint16_t i_peak_a; uint16_t prf_hz; uint32_t period_ns; uint8_t led_drop_one_wire; uint16_t led_every_one_wire; } pf_mode_t;  /* drop fields: only for the legacy SK6812 one-wire chain */
 static const pf_mode_t PF_MODES[] = {{ 8u, 800u, 1250000u, 2u, 27u }, { 14u, 600u, 1666700u, 1u, 20u }, { 20u, 400u, 2500000u, 1u, 13u }};
 /* on-time per pack voltage: TX_ONTIME_LUT.csv (tx_vbus_sweep.py loop model with bulk droop), 0.5 V steps */
 #define PF_LUT_N 21u

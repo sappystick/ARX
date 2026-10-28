@@ -21,11 +21,11 @@
   "note": "tightest vertical gap in the head"
  },
  {
-  "check": "LB1 LED tops (0.8 mm board + 0.8 mm LED) vs roof underside z41.3",
-  "gap_mm": 0.5,
+  "check": "LB1 LED tops (0.8 mm board + 0.65 mm SK9822-EC20, OPSCO Rev. A/0) vs roof underside z41.3",
+  "gap_mm": 0.65,
   "required_mm": 0.3,
   "result": "PASS",
-  "note": "LB1 must be a 0.8 mm board"
+  "note": "LB1 must be a 0.8 mm board; LB1-v6 (the v5 row used 0.8 mm for a 1.78 mm reverse-mount SK6812MINI-E, CORRECTIONS)"
  },
  {
   "check": "LB1 tallest part (C1210 10 uF, 2.0 mm, inside the roof D20 centre port) vs cap underside z44.5",
