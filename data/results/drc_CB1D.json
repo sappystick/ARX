@@ -1,58 +1,21 @@
 {
  "board": "CB1D",
- "clearance_violations": 6,
- "open_nets": 0,
+ "clearance_violations": 0,
+ "open_nets": 1,
  "edge_samples": 0,
  "notch_samples": 0,
  "min_gap_by_layer": {
-  "F.Cu": 0.052,
-  "In2.Cu": 0.205,
-  "In3.Cu": 0.205,
-  "B.Cu": 0.205
+  "F.Cu": 0.225,
+  "In2.Cu": 0.249,
+  "In3.Cu": 0.249,
+  "B.Cu": 0.249
  },
- "violations": [
+ "violations": [],
+ "opens": [
   [
-   "('GYR_SCL', 'GYR_SDA')",
-   "0.103",
-   "0.2",
-   "F.Cu",
-   "(np.float64(7.2), np.float64(-29.2))"
-  ],
-  [
-   "('GND', 'UG_VIO')",
-   "0.052",
-   "0.2",
-   "F.Cu",
-   "(np.float64(6.2), np.float64(-31.2))"
-  ],
-  [
-   "('GYR_SCL', 'UG_VIO')",
-   "0.098",
-   "0.2",
-   "F.Cu",
-   "(np.float64(6.7), np.float64(-30.0))"
-  ],
-  [
-   "('UG_INT2_NC', 'UG_VIO')",
-   "0.086",
-   "0.2",
-   "F.Cu",
-   "(np.float64(6.2), np.float64(-31.0))"
-  ],
-  [
-   "('UG_INT1_NC', 'UG_VIO')",
-   "0.135",
-   "0.2",
-   "F.Cu",
-   "(np.float64(7.7), np.float64(-31.0))"
-  ],
-  [
-   "('GYR_SDA', 'UG_VIO')",
-   "0.135",
-   "0.2",
-   "F.Cu",
-   "(np.float64(7.7), np.float64(-29.5))"
+   "GND",
+   "3",
+   "['UG.6']"
   ]
- ],
- "opens": []
+ ]
 }

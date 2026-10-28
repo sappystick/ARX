@@ -20,7 +20,6 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,CBO,C1210,22u 10V,X7R output,Capacitor_SMD:C_1210_3225Metric
 1,DLK1,DSOD,BAS16,clamp to 3V3,Diode_SMD:D_SOD-123
 1,DLK2,DSOD,BAS16,clamp to GND,Diode_SMD:D_SOD-123
-1,JSWD,HDR1x4,SWD: 3V3 SWDIO SWCLK GND,programming pads,Connector:Pin_header_1x4_P2.54mm
 1,US,HVSSOP8EP,TPA2005D1DGN,TI TPA2005D1 1.4 W class-D,PF233:HVSSOP-8-1EP_3x3mm_P0.65mm
 1,RLK,R0603,100R,link entry,Resistor_SMD:R_0603_1608Metric
 1,RBSL,R0603,100k,BSL invoke pull-down,Resistor_SMD:R_0603_1608Metric
@@ -39,6 +38,7 @@ Qty,Refs,Type,Value,MPN / note,Footprint
 1,LB,SRN4018,22uH,Bourns SRN4018-220M,PF233:L_Bourns_SRN4018
 1,UM,VSSOP28,MSPM0G3507SDGS28,"TI MSPM0G3507 Cortex-M0+ 80 MHz, 12-bit DAC",PF233:VSSOP-28_4.4x7.1mm_P0.5mm
 1,TPRST,WIRE1,NRST test pad,connect-under-reset probe,PF233:TestPad_1.5mm
+1,JSWD,WIRE1x4,SWD: 3V3 SWDIO SWCLK GND,"programming pads, no header fitted (clip-on probe)",Connector:Wire_pads_1x4_P2.54mm
 1,JLINK,WIRE2,"Link from HB2 JAU: AUD_LINK, GND",AWG28 pair,Connector:SolderPad_2x_P5.08mm
 1,JPWR,WIRE2,"Power from PM2 JAUP: VBUS_AU, GND",AWG24 pair,Connector:SolderPad_2x_P5.08mm
 1,JSPK,WIRE2,Speaker: SPK+ SPK- (8 ohm),speaker leads,Connector:SolderPad_2x_P5.08mm

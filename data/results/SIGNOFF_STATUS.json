@@ -1,31 +1,31 @@
 {
  "counts": {
-  "PASS": 69,
-  "FAIL": 5,
+  "PASS": 66,
+  "FAIL": 8,
   "SKIP": 0,
   "UNVERIFIED": 4
  },
  "boards": {
   "CB1D": {
    "route": {
-    "state": "PASS",
+    "state": "FAIL",
     "detail": "49/49 nets"
    },
    "indep": {
     "state": "FAIL",
-    "detail": "6 violations, 0 opens"
+    "detail": "0 violations, 1 opens"
    },
    "kicad": {
     "state": "FAIL",
-    "detail": "errors {'clearance': 12}, unconnected 0, HV control live"
+    "detail": "errors {}, unconnected 2, HV control live"
    },
    "gerber": {
     "state": "PASS",
     "detail": "10 files, edge read-back OK"
    },
    "plane": {
-    "state": "PASS",
-    "detail": "8 HV pad/via x plane checks"
+    "state": "FAIL",
+    "detail": "6 HV pad/via x plane checks"
    },
    "cross": {
     "state": "PASS",
@@ -216,16 +216,16 @@
   },
   "AU1": {
    "route": {
-    "state": "PASS",
-    "detail": "35/35 nets"
+    "state": "FAIL",
+    "detail": "33/35 nets"
    },
    "indep": {
     "state": "FAIL",
-    "detail": "27 violations, 0 opens"
+    "detail": "2 violations, 2 opens"
    },
    "kicad": {
     "state": "FAIL",
-    "detail": "errors {'solder_mask_bridge': 2, 'clearance': 8}, unconnected 0"
+    "detail": "errors {'clearance': 1}, unconnected 2"
    },
    "gerber": {
     "state": "PASS",

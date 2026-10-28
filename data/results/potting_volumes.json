@@ -2,19 +2,19 @@
  "status": "MODELED: exact mesh booleans; component volumes are bounding boxes (free volume = lower bound); densities ASSUMED",
  "npm": {
   "hot_zone": {
-   "free_cm3_lower": 50.27,
+   "free_cm3_lower": 52.26,
    "free_cm3_upper_no_parts": 57.15,
-   "component_box_cm3": 6.87
+   "component_box_cm3": 4.89
   },
   "main_zone": {
-   "free_cm3_lower": 61.97,
+   "free_cm3_lower": 62.66,
    "free_cm3_upper_no_parts": 70.59,
-   "component_box_cm3": 8.62
+   "component_box_cm3": 7.93
   },
   "envelope_cm3": 139.93,
   "printed_parts_in_envelope_cm3": 3.88,
   "board_cm3": 7.84,
-  "component_boxes": 41,
+  "component_boxes": 38,
   "edge_passage_mm2": 1182.4,
   "fill_vent": {
    "hot_zone": {
@@ -39,11 +39,11 @@
  },
  "mass_g": {
   "npm_hot_alumina": [
-   96.0,
+   99.0,
    109.0
   ],
   "npm_main_syntactic": [
-   46.0,
+   47.0,
    53.0
   ],
   "l4_absorber": 101.0

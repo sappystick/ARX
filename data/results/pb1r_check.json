@@ -97,7 +97,7 @@
      600
     ],
     "JL1": [
-     "Coil outer band: DRAIN, VBUS",
+     "Coil pair: DRAIN1, VBUS (AWG12 soldered)",
      null
     ],
     "Q1A": [
@@ -189,7 +189,7 @@
    "result": "PASS",
    "value": "0 intersections",
    "limit": "0",
-   "note": "41 bodies tested against 3 meshes at 0.5 mm height steps; tallest part 10.5 mm; nearest body to the tunnel ring: see ASSUMPTIONS 33"
+   "note": "38 bodies tested against 3 meshes at 0.5 mm height steps; tallest part 10.5 mm; nearest body to the tunnel ring: see ASSUMPTIONS 33"
   },
   {
    "check": "bulk-capacitor cans (9 x aluminium): return less than 1e-3 of the nugget (as the hatched planes do); WARN = listed exception, owner decision (OPEN_ITEMS 34)",

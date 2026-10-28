@@ -187,7 +187,7 @@
   {
    "section": "B radial",
    "check": "CB1D: every component body clear of the 8 ribs, 8 insert posts and the 2 spine walls (exact polygon test)",
-   "value": "68 bodies, 0 conflicts",
+   "value": "63 bodies, 0 conflicts",
    "limit": "0",
    "result": "PASS",
    "note": ""

@@ -1,9 +1,15 @@
 {
  "boards": {
   "PF233-CB1D_routed.kicad_pcb": {
-   "components": 68,
-   "with_model": 68,
-   "missing": []
+   "components": 67,
+   "with_model": 62,
+   "missing": [
+    "JDBG",
+    "JPW",
+    "JTR",
+    "JPB",
+    "JCL"
+   ]
   },
   "PF233-LB1_routed.kicad_pcb": {
    "components": 16,
@@ -12,8 +18,12 @@
   },
   "PF233-PB1R_routed.kicad_pcb": {
    "components": 41,
-   "with_model": 41,
-   "missing": []
+   "with_model": 38,
+   "missing": [
+    "JP",
+    "JC",
+    "JL1"
+   ]
   },
   "PF233-PM2_routed.kicad_pcb": {
    "components": 14,
@@ -22,12 +32,15 @@
   },
   "PF233-HB2_routed.kicad_pcb": {
    "components": 10,
-   "with_model": 10,
-   "missing": []
+   "with_model": 8,
+   "missing": [
+    "JH",
+    "JDIAL"
+   ]
   },
   "PF233-AU1_routed.kicad_pcb": {
-   "components": 41,
-   "with_model": 39,
+   "components": 40,
+   "with_model": 38,
    "missing": [
     "UB",
     "UL"
@@ -164,12 +177,6 @@
    "height_ok": true
   },
   "HDR1x3": {
-   "covers_pads": true,
-   "height": 9.0,
-   "envelope_h": 9.0,
-   "height_ok": true
-  },
-  "HDR1x4": {
    "covers_pads": true,
    "height": 9.0,
    "envelope_h": 9.0,

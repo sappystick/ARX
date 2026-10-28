@@ -3,111 +3,12 @@
  "board_key": "CB1D",
  "kicad": "9.0.9",
  "zones_filled": true,
- "violations": 82,
- "unconnected": 0,
- "errors": {
-  "clearance": 12
- },
+ "violations": 70,
+ "unconnected": 2,
+ "errors": {},
  "warnings": {},
  "lib_footprint_warnings": 70,
  "control_hv50mm_clearance_violations": ">100",
  "rules_loaded": true,
- "examples": [
-  {
-   "type": "clearance",
-   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1434 mm)",
-   "items": [
-    "Track [UG_VIO] on F.Cu, length 0.7273 mm",
-    "Pad 13 [GYR_SCL] of UG on F.Cu"
-   ],
-   "pos": {
-    "x": 106.5,
-    "y": 70.4125
-   }
-  },
-  {
-   "type": "clearance",
-   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.0767 mm)",
-   "items": [
-    "Pad 7 [GND] of UG on F.Cu",
-    "Track [UG_VIO] on F.Cu, length 0.1500 mm"
-   ],
-   "pos": {
-    "x": 106.5,
-    "y": 68.588
-   }
-  },
-  {
-   "type": "clearance",
-   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.0763 mm)",
-   "items": [
-    "Pad 7 [GND] of UG on F.Cu",
-    "Track [UG_VIO] on F.Cu, length 0.1500 mm"
-   ],
-   "pos": {
-    "x": 106.5,
-    "y": 68.588
-   }
-  },
-  {
-   "type": "clearance",
-   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.0763 mm)",
-   "items": [
-    "Pad 7 [GND] of UG on F.Cu",
-    "Track [UG_VIO] on F.Cu, length 0.1500 mm"
-   ],
-   "pos": {
-    "x": 106.5,
-    "y": 68.588
-   }
-  },
-  {
-   "type": "clearance",
-   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.0771 mm)",
-   "items": [
-    "Pad 9 [UG_INT2_NC] of UG on F.Cu",
-    "Track [UG_VIO] on F.Cu, length 0.1500 mm"
-   ],
-   "pos": {
-    "x": 105.837,
-    "y": 69.25
-   }
-  },
-  {
-   "type": "clearance",
-   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.1478 mm)",
-   "items": [
-    "Pad 4 [UG_INT1_NC] of UG on F.Cu",
-    "Track [UG_VIO] on F.Cu, length 0.6364 mm"
-   ],
-   "pos": {
-    "x": 108.163,
-    "y": 68.75
-   }
-  },
-  {
-   "type": "clearance",
-   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.0767 mm)",
-   "items": [
-    "Pad 7 [GND] of UG on F.Cu",
-    "Track [UG_VIO] on F.Cu, length 0.1500 mm"
-   ],
-   "pos": {
-    "x": 106.5,
-    "y": 68.588
-   }
-  },
-  {
-   "type": "clearance",
-   "desc": "Clearance violation (rule 'general 0.16 mm / 0.15 mm' clearance 0.1600 mm; actual 0.0771 mm)",
-   "items": [
-    "Pad 9 [UG_INT2_NC] of UG on F.Cu",
-    "Track [UG_VIO] on F.Cu, length 0.1500 mm"
-   ],
-   "pos": {
-    "x": 105.837,
-    "y": 69.25
-   }
-  }
- ]
+ "examples": []
 }

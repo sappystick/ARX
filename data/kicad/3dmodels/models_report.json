@@ -512,25 +512,6 @@
    9.0
   ]
  },
- "HDR1x4": {
-  "model": "PF233_HDR1x4.wrl",
-  "fp": "Connector:Pin_header_1x4_P2.54mm",
-  "bbox_lo": [
-   -2.02,
-   -5.83,
-   0.0
-  ],
-  "bbox_hi": [
-   2.02,
-   5.83,
-   9.0
-  ],
-  "envelope": [
-   4.04,
-   11.66,
-   9.0
-  ]
- },
  "HDR1x5": {
   "model": "PF233_HDR1x5.wrl",
   "fp": "Connector:Pin_header_1x5_P2.54mm",
@@ -854,7 +835,19 @@
    9.0
   ]
  },
+ "WIRE1x2": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
  "WIRE1x4": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
+ "WIRE1x5": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
+ "WIRE1x7": {
   "model": null,
   "note": "bare solder pads, no body"
  },
@@ -866,11 +859,27 @@
   "model": null,
   "note": "bare solder pads, no body"
  },
+ "WIRE2_AWG12": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
+ "WIRE2_AWG22": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
+ "WIRE2x4": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
  "WIRE3": {
   "model": null,
   "note": "bare solder pads, no body"
  },
  "WIRE4": {
+  "model": null,
+  "note": "bare solder pads, no body"
+ },
+ "WIRE4T": {
   "model": null,
   "note": "bare solder pads, no body"
  }

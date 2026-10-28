@@ -29,11 +29,11 @@ RGQ1A,10,R_0603_1608Metric,-1.5,18.0,0,top
 Q1B,650V SJ 95mR,TO-263-3_TabPin2,-14.0,6.0,180,top
 RGQ1B,10,R_0603_1608Metric,-1.5,8.0,0,top
 RS1S,10m 1W,R_2512_6332Metric,1.5,-2.5,0,top
-DC1,ES3J 600V 3A,D_SMC,-29.0,10.5,0,top
+DC1,ES3J 600V 3A,D_SMC,-29.0,11.0,0,top
 CL1A,100n 630V,C_1210_3225Metric,-30.0,3.0,0,top
 CL1B,100n 630V,C_1210_3225Metric,-30.0,-5.0,0,top
 RCL1,external 5k 10W (lid bank),SolderPad_2x_P5.08mm,-29.0,-9.5,0,top
-JL1,"Coil outer band: DRAIN, VBUS",Terminal_block_1x2_P5.08mm,-30.0,20.0,0,top
+JL1,"Coil pair: DRAIN1, VBUS (AWG12 soldered)",Solder_holes_AWG12_1x2_P5.08mm,-30.0,20.0,0,top
 RK1,100,R_0603_1608Metric,-1.5,-6.8,0,top
 CK1,100p,C_0603_1608Metric,-1.5,-9.8,0,top
 RPU1,10k,R_0603_1608Metric,29.0,-5.5,0,top
