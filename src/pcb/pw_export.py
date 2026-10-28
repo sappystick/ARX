@@ -118,7 +118,10 @@ elif PW == "U":
         for k_ in d_:
             dy = -6.0 if k_ in UP else (6.0 if k_ in DOWN else 0.0)
             if dy: d_[k_] = (d_[k_][0], d_[k_][1] + dy) + tuple(d_[k_][2:])
-    fixed["UG"] = (-8.5, -5.0, 0)
+    fixed["UG"] = (-8.5, -5.0, 180)
+    # rot 180 (2026-10-28): the I2C pins face the MCU with SCL left / SDA right, so the two lines run down and across in parallel (at 0 deg they faced away
+    # and had to cross: GYR_SCL stayed unrouted); RSD (speaker-amp SHUTDOWN pull-down) beside US pin 1 instead of the right edge (SPK_SD stayed unrouted)
+    anchors["RSD"] = (5.5, -3.8)
     anchors.update({"CG1": (-11.0, -4.5), "CG2": (-11.0, -6.5), "RGF": (-11.0, -8.5), "RGA": (-6.0, -7.5), "RGL": (-4.0, -7.5)})
     PL = autoplace(fixed, anchors)
 elif PW == "G":

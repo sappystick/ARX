@@ -74,7 +74,7 @@ class Router:
             else: b|=ndi.binary_dilation(hvm,structure=disk(rh))
             b|=(s.edged<s.edge+hw)
             blk.append(b)
-            rv=int(math.ceil((s.clr+s.via_pad/2)/GR)); vb=ndi.binary_dilation(others&~s.finez,structure=disk(rv)) if not ishv else ndi.binary_dilation(others,structure=disk(int(math.ceil((s.hv_clr+s.via_pad/2)/GR))))
+            rv=int(math.ceil((s.clr+s.via_pad/2)/GR+0.5)); vb=ndi.binary_dilation(others&~s.finez,structure=disk(rv)) if not ishv else ndi.binary_dilation(others,structure=disk(int(math.ceil((s.hv_clr+s.via_pad/2)/GR))))
             if not ishv and s.finez.any():
                 # vias against tracks in the zone: thin tracks are centre cells only (mark()), so the keep-out is clearance + via radius + the 0.075 neck half width
                 # from the centre line, plus half a cell for the wide tracks' disc raster (2026-10-28: 0.5 mm via-to-track centres gave 0.14 mm gaps)
