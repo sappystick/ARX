@@ -30,15 +30,17 @@ elif board=="AU1":
     # up to 6 rounds, keep the best (opt-in for AU1)
     mk=lambda: Router("kit_v6/AU1/pads.json",["F.Cu","In2.Cu","B.Cu"],{"GND":"In1.Cu","+5V_AU":"In3.Cu","+3V3_AU":"In4.Cu"},wid,clr=0.2)      # 6 layers (pw_export)
     front=["BSL_INV","US_INN"]; stubs=set(); best=None                       # learned (2026-10-28 exact fine-zone keep-out): these two lost their only escape to later nets
-    import random
+    import random; t0=time.time()
+    def _save(b_): json.dump(dict(stats=b_[2],tracks=b_[1].tracks,vias=b_[1].vias,layers=b_[1].layers,planes=b_[1].planes,R=b_[1].R),open(f"kit_v20/route_{board}.json","w"))
     for rnd in range(12):
+        if rnd and time.time()-t0>600: print("AU1 time budget: no new round after 600 s (step cap 900 s)",flush=True); break
         R=mk(); R.fine_order="span"; R.stub_first=set(stubs)
         if rnd<6: R.priority=list(front)
         else:                                                    # rounds 6-11: the failed nets first, the rest in a seeded shuffle (deterministic) to break order lock-in
             rest=sorted({p["net"] for p in R.pads if p["net"] and p["net"] not in R.planes and p["net"] not in front}); random.Random(rnd).shuffle(rest); R.priority=list(front)+rest
         st=R.run(budget=1e9,state=None)
         nf=len(st["failures"]); print("AU1 round",rnd,"routed",st["nets_routed"],"of",st["nets_to_route"],"failures",nf,flush=True)
-        if best is None or nf<best[0]: best=(nf,R,st)
+        if best is None or nf<best[0]: best=(nf,R,st); _save(best)       # checkpoint: the best layout so far is on disk after every round
         if nf==0: break
         front=[f[0] for f in st["failures"] if f[1]=="net" and f[0] not in front]+front; stubs|={f[2] for f in st["failures"] if f[1]=="stub"}
     R,st=best[1],best[2]; print(board,st,"length_mm",round(R.length()))
