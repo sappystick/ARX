@@ -345,6 +345,11 @@ if d: _c=d["checks"]; chk("sweep track: axis turns continuously, centre null, mo
           d["ok"] and _c["mirror_scene_identical_without_direction"] and _c["side_resolved_with_sweep_direction"] and _c["centre_null"],
           f"boost x{_c['boost_signal_ratio']} ({_c['boost_gain_dB']} dB); noisy p95 {max(v['p95_mm'] for v in d['pinpoint_noise'].values())} mm")
 else: skip("sweep tracking model")
+# TX steering study (src/sim/tx_steer_study.py): single offset coils leak volts into RX-Q; push-pull pairs are nulled by symmetry and make a horizontal field
+d=rd("kit_v23/tx_steer_study.json")
+if d: _c=d["checks"]; chk("TX steering study: full coil nulled, single offset coil steers but leaks >= 10 V, push-pull pairs null to both quads with a horizontal field below the centre",
+          d["ok"] and _c["single_coil_leak_V_min"]>=10, f"single leak {_c['single_coil_leak_V_min']} V; pair field / full at 100-300 mm {_c['pair_field_rel_full']}")
+else: skip("TX steering study")
 # KiCad pad geometry = placement model, pad by pad (src/pcb/pad_orient_check.py): the KiCad pad angle is absolute; a missing angle left rotated pads unrotated
 d=rd("kit_v22/pad_orient_check.json")
 if d: _b=d["boards"]; chk("KiCad pads = placement model on LB1, CB1D, PB1R, PM2, HB2 (centre and size within 0.005 mm)",len(_b)==5 and all(v["ok"] for v in _b.values()),"; ".join(f"{k} {v.get('pads_compared')} pads {v.get('mismatches')} off" for k,v in _b.items()))

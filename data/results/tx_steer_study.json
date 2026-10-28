@@ -1,0 +1,228 @@
+{
+ "status": "MODELED: Biot-Savart loops, quasi-static, no ferrite hood, no eddy currents; a study, not a design",
+ "didt_A_per_us": 5.32,
+ "single": {
+  "0 deg": {
+   "M_quadA_nH": 0.0,
+   "M_quadB_nH": -4763.3,
+   "leak_V": 25.34,
+   "per_depth": {
+    "100": {
+     "tilt_deg": 39.8,
+     "azimuth_deg": 0.0,
+     "rel_full": 0.231
+    },
+    "200": {
+     "tilt_deg": 22.4,
+     "azimuth_deg": 360.0,
+     "rel_full": 0.191
+    },
+    "300": {
+     "tilt_deg": 15.4,
+     "azimuth_deg": 0.0,
+     "rel_full": 0.181
+    }
+   }
+  },
+  "60 deg": {
+   "M_quadA_nH": 4204.8,
+   "M_quadB_nH": 2519.2,
+   "leak_V": 22.37,
+   "per_depth": {
+    "100": {
+     "tilt_deg": 39.8,
+     "azimuth_deg": 60.0,
+     "rel_full": 0.231
+    },
+    "200": {
+     "tilt_deg": 22.4,
+     "azimuth_deg": 60.0,
+     "rel_full": 0.191
+    },
+    "300": {
+     "tilt_deg": 15.4,
+     "azimuth_deg": 60.0,
+     "rel_full": 0.181
+    }
+   }
+  },
+  "120 deg": {
+   "M_quadA_nH": -4204.8,
+   "M_quadB_nH": 2519.2,
+   "leak_V": 22.37,
+   "per_depth": {
+    "100": {
+     "tilt_deg": 39.8,
+     "azimuth_deg": 120.0,
+     "rel_full": 0.231
+    },
+    "200": {
+     "tilt_deg": 22.4,
+     "azimuth_deg": 120.0,
+     "rel_full": 0.191
+    },
+    "300": {
+     "tilt_deg": 15.4,
+     "azimuth_deg": 120.0,
+     "rel_full": 0.181
+    }
+   }
+  },
+  "180 deg": {
+   "M_quadA_nH": -0.0,
+   "M_quadB_nH": -4763.3,
+   "leak_V": 25.34,
+   "per_depth": {
+    "100": {
+     "tilt_deg": 39.8,
+     "azimuth_deg": 180.0,
+     "rel_full": 0.231
+    },
+    "200": {
+     "tilt_deg": 22.4,
+     "azimuth_deg": 180.0,
+     "rel_full": 0.191
+    },
+    "300": {
+     "tilt_deg": 15.4,
+     "azimuth_deg": 180.0,
+     "rel_full": 0.181
+    }
+   }
+  },
+  "240 deg": {
+   "M_quadA_nH": 4204.8,
+   "M_quadB_nH": 2519.2,
+   "leak_V": 22.37,
+   "per_depth": {
+    "100": {
+     "tilt_deg": 39.8,
+     "azimuth_deg": 240.0,
+     "rel_full": 0.231
+    },
+    "200": {
+     "tilt_deg": 22.4,
+     "azimuth_deg": 240.0,
+     "rel_full": 0.191
+    },
+    "300": {
+     "tilt_deg": 15.4,
+     "azimuth_deg": 240.0,
+     "rel_full": 0.181
+    }
+   }
+  },
+  "300 deg": {
+   "M_quadA_nH": -4204.8,
+   "M_quadB_nH": 2519.2,
+   "leak_V": 22.37,
+   "per_depth": {
+    "100": {
+     "tilt_deg": 39.8,
+     "azimuth_deg": 300.0,
+     "rel_full": 0.231
+    },
+    "200": {
+     "tilt_deg": 22.4,
+     "azimuth_deg": 300.0,
+     "rel_full": 0.191
+    },
+    "300": {
+     "tilt_deg": 15.4,
+     "azimuth_deg": 300.0,
+     "rel_full": 0.181
+    }
+   }
+  }
+ },
+ "pairs": {
+  "axis 0 deg": {
+   "M_quadA_nH": 0.0,
+   "M_quadB_nH": 0.0,
+   "cancel_vs_single": 847032947.2543,
+   "per_depth": {
+    "100": {
+     "tilt_deg": 90.0,
+     "azimuth_deg": 0.0,
+     "rel_full": 0.296
+    },
+    "200": {
+     "tilt_deg": 90.0,
+     "azimuth_deg": 360.0,
+     "rel_full": 0.145
+    },
+    "300": {
+     "tilt_deg": 90.0,
+     "azimuth_deg": 0.0,
+     "rel_full": 0.096
+    }
+   }
+  },
+  "axis 60 deg": {
+   "M_quadA_nH": -0.0,
+   "M_quadB_nH": 0.0,
+   "cancel_vs_single": 0.0,
+   "per_depth": {
+    "100": {
+     "tilt_deg": 90.0,
+     "azimuth_deg": 60.0,
+     "rel_full": 0.296
+    },
+    "200": {
+     "tilt_deg": 90.0,
+     "azimuth_deg": 60.0,
+     "rel_full": 0.145
+    },
+    "300": {
+     "tilt_deg": 90.0,
+     "azimuth_deg": 60.0,
+     "rel_full": 0.096
+    }
+   }
+  },
+  "axis 120 deg": {
+   "M_quadA_nH": -0.0,
+   "M_quadB_nH": -0.0,
+   "cancel_vs_single": 0.0,
+   "per_depth": {
+    "100": {
+     "tilt_deg": 90.0,
+     "azimuth_deg": 120.0,
+     "rel_full": 0.296
+    },
+    "200": {
+     "tilt_deg": 90.0,
+     "azimuth_deg": 120.0,
+     "rel_full": 0.145
+    },
+    "300": {
+     "tilt_deg": 90.0,
+     "azimuth_deg": 120.0,
+     "rel_full": 0.096
+    }
+   }
+  }
+ },
+ "checks": {
+  "full_coil_nulled": true,
+  "single_coil_steers": true,
+  "single_coil_leak_V_min": 22.37,
+  "pairs_null_to_quads": true,
+  "pairs_horizontal_below_centre": true,
+  "pair_field_rel_full": [
+   0.296,
+   0.145,
+   0.096
+  ],
+  "single_field_rel_full": [
+   0.231,
+   0.191,
+   0.181
+  ]
+ },
+ "full_coil_M_nH": [
+  -0.0,
+  0.0
+ ],
+ "ok": true
+}

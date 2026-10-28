@@ -3276,6 +3276,20 @@
 "work/kit_v22/tx_system.json"
 ]
 },
+"tx-steer": {
+"L": [
+"scripts/tracehook"
+],
+"R": [
+"work/kit_v15/LOW/paths.pkl",
+"work/sim_head1.py",
+"work/sim_quadbearing.py",
+"work/tx_steer_study.py"
+],
+"W": [
+"work/kit_v23/tx_steer_study.json"
+]
+},
 "tx-vbus": {
 "L": [
 "scripts/tracehook"
