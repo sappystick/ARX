@@ -63,6 +63,7 @@ LIB = {
 "SOT23-5LDO": dict(desc="LDO TI TLV75533PDBV SOT-23-5 (SBVS320D DBV: 1 IN, 2 GND, 3 EN, 4 NC, 5 OUT; same land as SOT23-5)", fp="Package_TO_SOT_SMD:SOT-23-5",
                 pins=[("1", "IN", "power_in"), ("2", "GND", "power_in"), ("3", "EN", "input"), ("4", "NC", "passive"), ("5", "OUT", "power_out")],
                 pads=[("1", -1.1, -0.95, 1.0, 0.6, "roundrect"), ("2", -1.1, 0, 1.0, 0.6, "roundrect"), ("3", -1.1, 0.95, 1.0, 0.6, "roundrect"), ("4", 1.1, 0.95, 1.0, 0.6, "roundrect"), ("5", 1.1, -0.95, 1.0, 0.6, "roundrect")], body=(2.9, 1.6, 1.45)),
+"WIRE1": dict(desc="single SMD test pad 1.5 x 1.5 mm (probe / reset access)", fp="PF233:TestPad_1.5mm", pins=[("1", "TP", "passive")], pads=[("1", 0.0, 0.0, 1.5, 1.5, "rect")], body=(1.5, 1.5, 0.05)),
 "SRN4018": dict(desc="inductor Bourns SRN4018-220M 22 uH 0.348 ohm 0.9 A rms 0.95 A sat (datasheet REV. 10/26: 4.0 x 4.0 x 1.8 max, layout 2 x 1.5 x 3.6, 4.55 overall)", fp="PF233:L_Bourns_SRN4018",
                 pins=[("1", "1", "passive"), ("2", "2", "passive")], pads=[("1", -1.525, 0.0, 1.5, 3.6, "rect"), ("2", 1.525, 0.0, 1.5, 3.6, "rect")], body=(4.0, 4.0, 1.8)),
 "SOT23-5": dict(desc="74AHCT1G125 buffer SOT-23-5: 1 OE#, 2 A, 3 GND, 4 Y, 5 VCC (TI SCLS378P Table 4-1, verified 2026-10-28)", fp="Package_TO_SOT_SMD:SOT-23-5", pins=[("1", "OE", "input"), ("2", "A", "input"), ("3", "GND", "power_in"), ("4", "Y", "output"), ("5", "VCC", "power_in")], pads=[("1", -1.1, -0.95, 1.0, 0.6, "roundrect"), ("2", -1.1, 0, 1.0, 0.6, "roundrect"), ("3", -1.1, 0.95, 1.0, 0.6, "roundrect"), ("4", 1.1, 0.95, 1.0, 0.6, "roundrect"), ("5", 1.1, -0.95, 1.0, 0.6, "roundrect")], body=(3.0, 1.7, 1.1)), "HDR2x6": tht(6, 2.54, 2, 1.8, 1.0, "Pin header"),
@@ -358,7 +359,9 @@ if PW == "U":
     add("UM", "VSSOP28", "MSPM0G3507SDGS28", "TI MSPM0G3507 Cortex-M0+ 80 MHz, 12-bit DAC")
     add("CVC", "C0603", "470n", "X7R VCORE"); add("CVD", "C0805", "10u", "X7R VDD"); add("CVD2", "C0603", "100n", "X7R VDD HF"); add("RNR", "R0603", "47k", "NRST pull-up"); add("CNR", "C0603", "10n", "NRST")
     net("+3V3_AU", ("UM", 7), ("CVD", 1), ("CVD2", 1), ("RNR", 1)); net("GND", ("UM", 8), ("CVC", 2), ("CVD", 2), ("CVD2", 2), ("CNR", 2)); net("VCORE_AU", ("UM", 3), ("CVC", 1)); net("NRST_AU", ("UM", 6), ("RNR", 2), ("CNR", 1))
-    add("JSWD", "HDR1x5", "SWD: 3V3 SWDIO SWCLK GND NRST", "programming pads"); net("+3V3_AU", ("JSWD", 1)); net("SWDIO_AU", ("JSWD", 2), ("UM", 22)); net("SWCLK_AU", ("JSWD", 3), ("UM", 23)); net("GND", ("JSWD", 4)); net("NRST_AU", ("JSWD", 5))
+    # SWD header without NRST (MSPM0 SWD works without it); reset reaches a probe on the TPRST test pad beside the pin (the long NRST run to the header did not route)
+    add("JSWD", "HDR1x4", "SWD: 3V3 SWDIO SWCLK GND", "programming pads"); net("+3V3_AU", ("JSWD", 1)); net("SWDIO_AU", ("JSWD", 2), ("UM", 22)); net("SWCLK_AU", ("JSWD", 3), ("UM", 23)); net("GND", ("JSWD", 4))
+    add("TPRST", "WIRE1", "NRST test pad", "connect-under-reset probe"); net("NRST_AU", ("TPRST", 1))
     add("RLK", "R0603", "100R", "link entry"); add("RTX", "R0603", "1k", "TX into the shared line"); add("DLK1", "DSOD", "BAS16", "clamp to 3V3"); add("DLK2", "DSOD", "BAS16", "clamp to GND")
     net("AUD_LINK", ("RLK", 1), ("DLK1", 2), ("DLK2", 1)); net("LINK_N", ("RLK", 2), ("UM", 16), ("RTX", 2)); net("LINK_TX", ("RTX", 1), ("UM", 15)); net("+3V3_AU", ("DLK1", 1)); net("GND", ("DLK2", 2))
     add("JSEL", "WIRE4", "Output selector: COM P1 P2 P3", "3-position rotary, battery side"); add("RS1", "R0603", "10k", ""); add("RS2", "R0603", "10k", ""); add("RS3", "R0603", "10k", "")
@@ -376,13 +379,13 @@ if PW == "U":
     net("HP_INL", ("CHL", 2), ("UH", 1)); net("HP_INR", ("CHR", 2), ("UH", 4)); net("GND", ("UH", 2), ("UH", 3), ("UH", 7), ("UH", 10), ("UH", 15), ("UH", 17), ("CHV", 2), ("CHP", 2), ("CHS", 2), ("RHE", 2))
     net("+3V3_AU", ("UH", 14), ("UH", 6), ("CHV", 1)); net("HPVDD_AU", ("UH", 12), ("CHP", 1)); net("CPP_AU", ("UH", 11), ("CHF", 1)); net("CPN_AU", ("UH", 9), ("CHF", 2)); net("HPVSS_AU", ("UH", 8), ("CHS", 1))
     net("HP_EN", ("UH", 13), ("RHE", 1), ("UM", 20))
-    add("JHP", "WIRE4", "Headphone jack: TIP(L) RING(R) SLEEVE DET", "panel 3.5 mm jack with plug-detect switch"); add("RDT", "R0603", "10k", "jack detect pull-up")
-    net("HP_L", ("UH", 16), ("JHP", 1)); net("HP_R", ("UH", 5), ("JHP", 2)); net("GND", ("JHP", 3)); net("HP_DET", ("JHP", 4), ("RDT", 2), ("UM", 24)); net("+3V3_AU", ("RDT", 1))
+    add("JHP", "WIRE4", "Headphone jack: TIP(L) RING(R) SLEEVE DET", "panel 3.5 mm jack with tip (plug-detect) switch: Same Sky SJ-3524-SMT"); add("RDT", "R0603", "10k", "jack detect pull-up")
+    net("HP_L", ("UH", 16), ("JHP", 1)); net("HP_R", ("UH", 5), ("JHP", 2)); net("GND", ("JHP", 3)); net("HP_DET", ("JHP", 4), ("RDT", 2), ("UM", 28)); net("+3V3_AU", ("RDT", 1))
     # PA18 (pin 21) is the boot-loader invoke pin (SLASEX6C pin table: BSL_Invoke): held low by RBSL so a reset never enters the BSL
     add("RBSL", "R0603", "100k", "BSL invoke pull-down"); net("BSL_INV", ("UM", 21), ("RBSL", 1)); net("GND", ("RBSL", 2))
     # pin plan (2026-10-28, matched to the AU1 layout): selector PA2-PA4 (9-11, left column, facing JSEL); speaker SHUTDOWN PA16 (19), headphone EN PA17 (20),
-    # headphone detect PA21 (24), right column facing the amplifiers; link PA10 / PA11 (15 / 16, UART0), PWM PA14 (17, TIMG12_C0), DAC PA15 (18), SWD 22 / 23
-    for _pn in (1, 2, 4, 5, 12, 13, 14, 25, 26, 27, 28): net(f"UM_P{_pn}_NC", ("UM", _pn))
+    # headphone detect PA25 (28, the end of the right column: one neighbour, a clear path along the top edge to JHP); link PA10 / PA11 (15 / 16, UART0), PWM PA14 (17, TIMG12_C0), DAC PA15 (18), SWD 22 / 23
+    for _pn in (1, 2, 4, 5, 12, 13, 14, 24, 25, 26, 27): net(f"UM_P{_pn}_NC", ("UM", _pn))
 if PW == "C" and os.environ.get("DISC"):
     # ---- CB1D additions: hub-top antenna (HTA) monitor input on spare mux channel Y4 (select line S2 from the spare Pico pin GP1)
     NETS["GND"] = [p for p in NETS["GND"] if p not in (("UM", "1"), ("UM", "9"))]

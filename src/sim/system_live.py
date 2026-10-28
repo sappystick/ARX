@@ -5,7 +5,8 @@ the model inputs the page needs and a grid of GOLDEN cases that tests/regress.py
 Sources (no new physics here):
   TX turn-off and on-time: tx_vbus_sweep.py pulse() / ton_loop() (same topology and values as sim_head1.py; ASSUMPTIONS 28)
   supply energy per pulse = V x Q drawn from the bulk bank during the ramp (dissipative clamp: none of it comes back)
-  rails: system_budget.py rows (+5V: LED firmware cap, logic estimate, AMS1117 input, +5VA analog from the TI OPA2211 / OPA2365 IQ maxima)
+  rails: system_budget.py rows (+5V: LED firmware cap, logic estimate, AMS1117 input, +5VA analog from the TI OPA2211 / OPA2365 IQ maxima, BMI270 gyro)
+  AU1 audio board: its own buck from the pack (PM2-B F2): datasheet quiescent currents + an ASSUMED 0.10 W average speaker power (see AU1 below)
   converter efficiency 0.85 for both modules: the factor system_budget.py already uses for the cord current (ASSUMED, ASSUMPTIONS 38)
   M12 load other than the gate drive: not budgeted (ASSUMPTIONS 29), an input here, default 0.10 W (ASSUMED)
   pack: 7S1P Molicel P30B, 7 x 3.6 V x 3.0 Ah = 75.6 Wh (system_budget.py), used to the BMS cut-off
@@ -23,7 +24,14 @@ MODES = {"scan": dict(I=8.0, f=800.0), "mid": dict(I=14.0, f=600.0), "boost": di
 CAPS = {"design": dict(CL=100e-9, derate=False, label="1 x 100 nF C0G/film (design)"), "asbuilt": dict(CL=200e-9, derate=True, label="2 x 100 nF X7R, DC-bias derated (as built)")}
 PACK = dict(Wh=7 * 3.6 * 3.0, V_min=19.6, V_max=29.4)
 ETA = 0.85
-I5 = dict(led_cap=0.35, led_static=66 * 0.001, logic=0.15, ams_in=2 * (0.023 + 0.0041) + 3.3 / 270.0 + 0.011, analog_5va=6 * 0.006 + 4 * 0.005)  # system_budget.py terms (A)
+I5 = dict(led_cap=0.35, led_static=66 * 0.001, logic=0.15, ams_in=2 * (0.023 + 0.0041) + 3.3 / 270.0 + 0.011, analog_5va=6 * 0.006 + 4 * 0.005,
+          gyro=0.000685)                                                                   # system_budget.py terms (A); gyro: BMI270 685 uA typ, full ODR (Bosch BST-BMI270-DS000-08), on CB1D-C2
+# AU1 audio board, battery side through PM2-B F2 (its own buck, so not on the +5V rail): amplifier and MCU quiescent currents at 5 V (the MCU's LDO passes its current through)
+# plus the average speaker power / class-D efficiency, all through the AU1 buck. TPA2005D1 IQ 3.4 mA typ at 5.5 V (SLOS369G), TPA6132A2 2.1 mA typ (SLOS597B),
+# MSPM0G3507 RUN 101 uA/MHz at 80 MHz (SLASEX6C, CoreMark); average speaker power 0.10 W and class-D efficiency 0.85 ASSUMED (ASSUMPTIONS 41); worst case: the 1.4 W rating
+AU1 = dict(iq_A=0.0034 + 0.0021 + 80 * 101e-6, p_audio_avg_W=0.10, p_audio_max_W=1.4, eta_amp=0.85)
+AU1["W"] = (5.0 * AU1["iq_A"] + AU1["p_audio_avg_W"] / AU1["eta_amp"]) / ETA
+AU1["W_max"] = (5.0 * AU1["iq_A"] + AU1["p_audio_max_W"] / AU1["eta_amp"]) / ETA
 QG, VG = 90e-9, 12.0                                                                       # 2 x 45 nC at 12 V (system_budget TC4420 row)
 LIMITS = dict(Vds=650.0, clamp_rule=630.0, diode_VRRM=600.0, RCL_W=10.0, droop_pct=5.0, rail5_A=1.5, vault_C=80.0, cord_A=5.0)
 RHO = 1.72e-8
@@ -44,9 +52,9 @@ def tx_point(V, mode, cap, L_scale=1.0, R_scale=1.0):
                 i_rms=m["I"] * math.sqrt(ton * m["f"] / 3))
 
 def power(V, mode, tx, led_A=I5["led_cap"], m12_W=0.10):
-    f = MODES[mode]["f"]; i5 = led_A + I5["led_static"] + I5["logic"] + I5["ams_in"] + I5["analog_5va"]
-    P5 = 5.0 * i5 / ETA; P12 = (QG * VG * f + m12_W) / ETA; P = tx["P_tx_W"] + P5 + P12
-    return dict(I5_A=i5, P5_W=P5, P12_W=P12, P_total_W=P, I_batt_A=P / V, hours=PACK["Wh"] / P)
+    f = MODES[mode]["f"]; i5 = led_A + I5["led_static"] + I5["logic"] + I5["ams_in"] + I5["analog_5va"] + I5["gyro"]
+    P5 = 5.0 * i5 / ETA; P12 = (QG * VG * f + m12_W) / ETA; P = tx["P_tx_W"] + P5 + P12 + AU1["W"]
+    return dict(I5_A=i5, P5_W=P5, P12_W=P12, P_AU1_W=AU1["W"], P_total_W=P, I_batt_A=P / V, hours=PACK["Wh"] / P)
 
 def thermal_fit():
     T = json.load(open("kit_v22/sim_thermal.json")) if os.path.exists("kit_v22/sim_thermal.json") else json.load(open("../data/results/sim_thermal.json"))
@@ -114,7 +122,7 @@ def main(outp):
     links = [dict(a="CB1D", b="AB1A", id="FFC-A", signal="+5VA / +3V3D / SPI (FFC, B5)", I_A=round(2 * 2 * 0.0045 + 2 * 0.005 + (0.023 + 0.0041), 4), note="2 x OPA2211 + OPA2365 max IQ + one AD7389-4 operational max"),
              dict(a="CB1D", b="AB1B", id="FFC-B", signal="+5VA / +3V3D / SPI (FFC, B5)", I_A=round(1 * 2 * 0.0045 + 2 * 0.005 + (0.023 + 0.0041), 4), note="OPA2211 + OPA2365 max IQ + one AD7389-4 operational max")]
     out = dict(model="system_live r1", links=links, status="MODELED", tx=TX, modes=MODES, caps={k: dict(CL=v["CL"], derate=v["derate"], label=v["label"]) for k, v in CAPS.items()}, pack=PACK, eta=ETA,
-               i5=I5, gate=dict(Qg=QG, Vg=VG), limits=LIMITS, thermal=th, wires=wires, golden=golden, check_vs_sweep=chk,
+               i5=I5, au1=AU1, gate=dict(Qg=QG, Vg=VG), limits=LIMITS, thermal=th, wires=wires, golden=golden, check_vs_sweep=chk,
                sources=["tx_vbus_sweep.py pulse()/ton_loop()", "system_budget.py rail terms", "TI SBOS377L / SBOS365G IQ", "sim_thermal.json (linear fit)", "HARNESS_MASTER_v5.csv", "tx_system.json"])
     json.dump(out, open(outp, "w"), indent=1, default=float)
     b = [g for g in golden if g["mode"] == "boost" and g["cap"] == "design" and g["V"] == 24.5][0]; s = [g for g in golden if g["mode"] == "scan" and g["cap"] == "design" and g["V"] == 24.5][0]

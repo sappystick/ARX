@@ -97,13 +97,16 @@ elif PW == "P":
 elif PW == "U":
     # AU1 36 x 44 (pin plan in pw_design): power and buck along the top, MCU left of centre, speaker amp right of it (inputs facing the DAC), headphone amp
     # below it (inputs facing the MCU, outputs facing JHP on the right edge), selector pads on the left edge facing PA2-PA4, link pads bottom left
-    fixed = {"JPWR": (-11.0, -19.5, 0), "JSWD": (8.0, -19.5, 90), "JLINK": (-11.0, 19.5, 0), "JSPK": (11.0, 19.5, 0), "JSEL": (-15.5, 4.0, 0), "JHP": (15.5, 5.0, 0),
-             "UM": (-4.0, 1.0, 0), "US": (7.0, -1.0, 0), "UH": (7.0, 9.5, 0), "UB": (-4.0, -15.0, 0), "LB": (3.0, -15.0, 0), "UL": (-4.0, -9.0, 0)}
+    fixed = {"JPWR": (-11.0, -19.5, 0), "JSWD": (15.5, -13.0, 0), "JLINK": (-11.0, 19.5, 0), "JSPK": (11.0, 19.5, 0), "JSEL": (-15.5, 4.0, 0), "JHP": (15.5, 5.0, 0),
+             "UM": (-4.0, 1.0, 0), "US": (7.0, -1.0, 0), "UH": (7.0, 9.5, 0), "UB": (-4.0, -15.0, 0), "LB": (3.0, -15.0, 0), "UL": (-4.0, -9.0, 0),
+             # NRST cluster in one column left of the VCORE / VDD caps, fed from pin 6 through the gap between them; TPA6132A2 charge-pump caps on their pins
+             # (CHF beside CPP 11 / CPN 9, CHS under HPVSS 8): the scattered anchors left NRST_AU and HPVSS_AU unroutable (2026-10-28)
+             "RNR": (-12.0, -0.55, 0), "CNR": (-12.0, 1.3, 180), "TPRST": (-12.0, -2.9, 0), "CHF": (10.2, 9.9, 270), "CHS": (8.05, 12.7, 270)}
     anchors = {"CBI": (-10, -14), "CBI2": (-10, -11), "CBB": (-4, -11.5), "CBO": (9, -14), "RFT": (0, -11), "RFB": (3, -11), "CLI": (-8, -8), "CLO": (0, -8),
-               "CVC": (-9, -2), "CVD": (-9, 1), "CVD2": (-9, 4), "RNR": (-9, 7), "CNR": (-9, 10), "RBSL": (0, 5),
+               "CVC": (-9, -2), "CVD": (-9, 1), "CVD2": (-9, 4), "RBSL": (0, 5),
                "RLK": (-6, 14), "RTX": (-2, 14), "DLK1": (-6, 17), "DLK2": (-2, 17), "RS1": (-11, 1), "RS2": (-11, 4), "RS3": (-11, 7),
                "CSV": (11, -4), "CSV2": (12, -8), "CI1": (2, 1), "CI2": (2, 4), "RI1": (3, -2), "RI2": (3, 7), "RSD": (11, 3),
-               "CHL": (2, 10), "CHR": (2, 13), "CHV": (11, 6), "CHP": (11, 13), "CHF": (7, 14), "CHS": (10, 16), "RHE": (4, 16), "RPW": (0, 16), "CPW": (0, 19), "RDT": (12, 12)}
+               "CHL": (2, 10), "CHR": (2, 13), "CHV": (11, 6), "CHP": (11, 13), "RHE": (4, 16), "RPW": (0, 16), "CPW": (0, 19), "RDT": (2.5, -3.5)}
     PL = autoplace(fixed, anchors)
 elif PW == "G":
     fixed = {"JH": (-7.0, -6.0, 0), "JDIAL": (6.0, -10.0, 0), "HS1": (0.0, 15.0, 0)}     # HS1 at the board end under the trigger magnet

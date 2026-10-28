@@ -450,7 +450,7 @@ function renderSim() {
     + kpi("vault hot spot (" + fmt(last.vaultW, 2) + " W in the vault)", fmt(ck.T_vault, 1), "°C", ck.T_vault > M.limits.vault_C ? "bad" : "");
   $("ck").innerHTML = `<thead><tr><th>Check</th><th>Value</th><th>Limit</th><th>Margin</th><th>State</th><th>Basis</th></tr></thead><tbody>` + ck.rows.map(r =>
     `<tr><td>${esc(r.what)}</td><td class="num">${fmt(r.value, r.unit === "A" ? 3 : 1)} ${r.unit}</td><td class="num">${r.limit} ${r.unit}</td><td class="num">${fmt(r.margin_pct, 0)} %</td><td><span class="pill ${r.need ? "ok" : "bad"}">${r.need ? "pass" : "fail"}</span></td><td>${esc(r.note)}</td></tr>`).join("") + `</tbody>`;
-  const parts = [["TX pulses (V Q f)", tx.P_tx_W], ["+5V rail / 0.85", pw.P5_W], ["+12V gate + M12 load / 0.85", pw.P12_W]], mx = Math.max(...parts.map(p => p[1]));
+  const parts = [["TX pulses (V Q f)", tx.P_tx_W], ["+5V rail / 0.85", pw.P5_W], ["+12V gate + M12 load / 0.85", pw.P12_W], ["AU1 audio (avg, ASSUMED 0.1 W out)", pw.P_AU1_W || 0]], mx = Math.max(...parts.map(p => p[1]));
   $("bars").innerHTML = parts.map(([n, v]) => `<div class="bar"><span>${esc(n)}</span><i style="width:${v / mx * 100}%"></i><span class="num">${fmt(v, 2)} W</span></div>`).join("")
     + `<p class="note">${fmt(pw.I_batt_A, 3)} A from the pack at ${fmt(s.V, 1)} V; +5V rail ${fmt(pw.I5_A, 3)} A of 1.5 A.</p>`;
   plotPulse(); plotDischarge();

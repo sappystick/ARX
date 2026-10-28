@@ -84,10 +84,14 @@ hall_z = wall_out + 2.5 + 1.0 + 0.8; piv = np.array(PRM["pivot"]); pc = np.array
 mag_drop = phi * (mg["centre"][0] - piv[0])
 chk("magnet to Hall sensor at rest (mm, wall 2.5 + 1 mm air + half the 1.6 mm board)", hall_z - mg["centre"][2], 4.0, 8.0)
 chk("magnet travel away from the Hall sensor for the full pad stroke (mm)", mag_drop, 2.0, None, "Hall switch operate/release points and magnet grade to be set on the first article (ASSUMPTIONS 22)")
-for bd, part, zc in (("HB2_board", "U1_TOP_HOUSING", "ZT"), ("PM2_board", "U3_BOTTOM_HOUSING", "ZB")):
+for bd, part, zc in (("HB2_board", "U1_TOP_HOUSING", "ZT"), ("PM2_board", "U3_BOTTOM_HOUSING", "ZB")) + ((("AU1_board", "U3_BOTTOM_HOUSING", "ZB"),) if "AU1_board" in ENV else ()):
     e = ENV[bd]; ztop = e["z_board"][1] + e["parts_height"]
     chk(f"{bd.split('_')[0]} board and parts inside its housing (min clearance over the board length, mm)",
         min(rect_clear(section(T[part], 0, x), e["y"][0], e["y"][1], e["z_board"][0], ztop) for x in np.linspace(e["x"][0] + 0.5, e["x"][1] - 0.5, 9)), 0.2, None)
+if "AU1_board" in ENV:                                                     # AU1 stacked over PM2: inside the PM2 x span, wire room between PM2 parts and the AU1 underside
+    ea, ep = ENV["AU1_board"], ENV["PM2_board"]
+    chk("AU1 over PM2: gap from the PM2 part tops to the AU1 underside (mm, wire and standoff room)", ea["z_board"][0] - (ep["z_board"][1] + ep["parts_height"]), 4.0, None)
+    chk("AU1 inside the PM2 bay length (mm of margin at the tighter end)", min(ea["x"][0] - ep["x"][0], ep["x"][1] - ea["x"][1]), 0.0, None)
 e = ENV["HB2_board"]; chk("Hall sensor on HB2 directly above the trigger magnet (x offset, mm)", abs(e["hall_x"] - mg["centre"][0]), 0.0, 1.0)
 chk("HB2 clear of the tube A socket sleeve (mm)", PRM["tube_A"]["x"][0] - e["x"][1], 0.5, None)
 chk("trigger tail clear of the top housing at rest (mm)", wall_out - float(T["U4_TRIGGER"][:, :, 2].max()), 0.3, None)

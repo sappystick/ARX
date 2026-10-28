@@ -105,9 +105,9 @@
   }
   function power(M, V, mode, P_tx_W, ledA, m12W) {
     ledA = ledA ?? M.i5.led_cap; m12W = m12W ?? 0.10;
-    const f = M.modes[mode].f, i5 = ledA + (M.i5.led_static || 0) + M.i5.logic + M.i5.ams_in + M.i5.analog_5va;
-    const P5 = 5.0 * i5 / M.eta, P12 = (M.gate.Qg * M.gate.Vg * f + m12W) / M.eta, P = P_tx_W + P5 + P12;
-    return { I5_A: i5, P5_W: P5, P12_W: P12, P_total_W: P, I_batt_A: P / V, hours: M.pack.Wh / P };
+    const f = M.modes[mode].f, i5 = ledA + (M.i5.led_static || 0) + M.i5.logic + M.i5.ams_in + M.i5.analog_5va + (M.i5.gyro || 0);
+    const Pau = M.au1 ? M.au1.W : 0, P5 = 5.0 * i5 / M.eta, P12 = (M.gate.Qg * M.gate.Vg * f + m12W) / M.eta, P = P_tx_W + P5 + P12 + Pau;
+    return { I5_A: i5, P5_W: P5, P12_W: P12, P_AU1_W: Pau, P_total_W: P, I_batt_A: P / V, hours: M.pack.Wh / P };
   }
   // ---- wiring runs: current per conductor in the chosen operating point; drop and loss on the modeled resistance (two-way for a supply pair is the sum of both rows)
   function wiring(M, tx, pw, mode) {
@@ -117,7 +117,7 @@
       if (w.load === "battery") { I = pw.I_batt_A; kind = "average"; }
       else if (w.load === "coil") { I = tx.i_rms; kind = "rms"; }
       else if (w.load === "layer") { I = tx.i_rms / 6; kind = "rms"; }
-      else if (w.load === "led5") { I = pw.I5_A - M.i5.logic - M.i5.ams_in - M.i5.analog_5va; kind = "average"; }       // LED current incl. the 66 mA static
+      else if (w.load === "led5") { I = pw.I5_A - M.i5.logic - M.i5.ams_in - M.i5.analog_5va - (M.i5.gyro || 0); kind = "average"; }       // LED current incl. the 66 mA static
       const R = w.R_ohm;
       return Object.assign({}, w, { I_A: I, kind, drop_mV: R == null ? null : I * R * 1e3, loss_mW: R == null ? null : I * I * R * 1e3,
                                     I_peak_A: w.load === "coil" ? md.I : w.load === "layer" ? md.I / 6 : I });

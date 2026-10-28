@@ -51,11 +51,15 @@ R("RML 270 ohm 0603 (CB1D)", "power 3.3^2 / 270", 3.3 ** 2 / 270.0, 0.10, "W", 5
 N_OPA2211_CH, N_OPA2365_CH = 2 * (2 + 1), 2 * (1 + 1); I5A_MAX = N_OPA2211_CH * 0.0045 + N_OPA2365_CH * 0.005; I5A_HOT = N_OPA2211_CH * 0.006 + N_OPA2365_CH * 0.005
 R("+5VA (AB1A + AB1B analog, via CB1D FB2)", "6 OPA2211 channels x 4.5 mA max + 4 OPA2365 amplifiers x 5 mA max (25 C)", I5A_MAX, 1.0, "A", 50, f"FB2 bead 1 A; over temperature {I5A_HOT * 1e3:.0f} mA (OPA2211 6 mA per channel)")
 I_LED_STATIC = 66 * 0.001                                                 # LB1-v6: 66 x SK9822-EC20 IDD 1 mA static (OPSCO Rev. A/0)
-R("+5V rail (CB1D M5, 1.5 A)", "LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature)", 0.35 + I_LED_STATIC + 0.15 + I3_ADC_MAX + I_RML + IQ_AMS + I5A_HOT, 1.5, "A", 30, "M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)")
+I_GYRO = 0.000685                                                         # CB1D-C2 UG BMI270: 685 uA typ, full ODR (Bosch BST-BMI270-DS000-08), from the Pico 3V3 through RGF
+R("+5V rail (CB1D M5, 1.5 A)", "LED firmware cap 0.35 A + 66 x 1 mA SK9822 static + Pico / CB1D logic 0.15 A (estimate) + AMS1117 input (+3V3D load + 11 mA Iq) + +5VA analog (over temperature) + BMI270 gyro", 0.35 + I_LED_STATIC + 0.15 + I3_ADC_MAX + I_RML + IQ_AMS + I5A_HOT + I_GYRO, 1.5, "A", 30, "M5 OKI-78SR-5/1.5-W36-C 1.5 A (Murata C05); the 0.15 A logic share is an estimate; the +5VA term was missing before 2026-10-28 (CORRECTIONS)")
 R("TX lead channel", "litz fill ratio", tx["bundle_area_mm2"] / tx["channel_area_mm2"], 0.7, "ratio", 15, "wall-top groove + roof channel")
 R("TX layers", "DC current sharing deviation", max(abs(v - 1) for v in tx["current_share"].values()), 0.05, "fraction", 50, "lead length differences")
 R("TC4420 gate driver (2 FETs)", "gate charge per turn-off (2 x 45 nC, Infineon Rev. 2.0) at 12 V: peak current with 2.2 ohm gate resistors (TC4420 6 A peak, DS21419D)", 12 / (2.2 + 1.0), 6.0, "A", 30, "turn-off in about 20 ns, negligible against the 3.8 us flyback; datasheet Qg and RG values must be confirmed")
 R("TC4420 gate driver", "average drive power 90 nC x 12 V x 400 Hz", 90e-9 * 12 * 400 * 1e3, 200, "mW", 50, "")
+# AU1 audio board (own buck from the pack through PM2-B F2; au1_check.py holds the per-part checks): worst battery-side input at the 1.4 W speaker rating, low pack
+import system_live as _SL0
+R("PM2-B F2 SF-1206S050-2 (AU1 feed)", "AU1 worst input current at 19.6 V: speaker at its 1.4 W rating (SLOS369G) + quiescent, / 0.85 buck", _SL0.AU1["W_max"] / 19.6, 0.50, "A", 50, "0.5 A rated slow-blow chip fuse (Bourns SF-1206S); class-D and buck efficiency 0.85 ASSUMED")
 fails = [r for r in rows if r["status"] == "FAIL"]; watch = [r for r in rows if r["status"] == "WATCH"]
 with open("kit_v22/SYSTEM_STRESS_MARGINS.csv", "w", newline="") as f: w = csv.DictWriter(f, fieldnames=list(rows[0].keys())); w.writeheader(); w.writerows(rows)
 PACK_WH = 7 * 3.6 * 3.0                                                  # upper assembly v1: one 7S1P Molicel P30B pack (75.6 Wh; v20 assumed 90.7 Wh)
