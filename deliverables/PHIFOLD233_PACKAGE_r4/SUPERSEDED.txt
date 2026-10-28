@@ -1,0 +1,2 @@
+SUPERSEDED by deliverables/PHIFOLD233_PACKAGE_r5 (2026-10-28).
+Reason: r4 only listed the STLs and pointed at Gerber folders, and its index called AB1A/AB1B "not in the verified flow"; r5 carries every PRINT / REFERENCE STL, the six print formers (container only), and per-board Gerber zips, BOM, pick-and-place, netlists, all-copper layer PDFs and STEP, with an index generated from the current sign-off.

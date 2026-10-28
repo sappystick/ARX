@@ -281,5 +281,7 @@ for _b in ("TXJ1","SB1R-QA","SB1R-QB"):
     _r=_sp.run(["/usr/bin/python3","src/pcb/kicad_bom_pnp.py",f"data/kicad/{_b}.kicad_pcb",_b,_td],capture_output=True,text=True)
     _ok.append(_r.returncode==0 and all(os.path.exists(f"docs/delivery/boards/{_b}_{k}.csv") and _fc.cmp(f"{_td}/{_b}_{k}.csv",f"docs/delivery/boards/{_b}_{k}.csv",shallow=False) for k in ("BOM","pickplace")))
 chk("B8 BOM + pick-and-place for TXJ1, SB1R-QA, SB1R-QB regenerate identically from data/kicad (y-up, board-centre origin)",all(_ok),str(_ok))
+_fp=rd("../data/results/formers_print_check.json") or (json.load(open("data/results/formers_print_check.json")) if os.path.exists("data/results/formers_print_check.json") else None)
+chk("six print-resolution formers (make formers-print, not in git): closed, oriented, inside a 250 mm build volume (data/results/formers_print_check.json)",bool(_fp) and len(_fp["formers"])==6 and _fp["all_ok"],str([f["bbox_mm"][0] for f in _fp["formers"]]) if _fp else "missing")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

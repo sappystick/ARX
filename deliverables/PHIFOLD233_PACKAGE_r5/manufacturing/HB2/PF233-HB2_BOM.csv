@@ -1,0 +1,10 @@
+Qty,Refs,Type,Value,MPN / note,Footprint
+1,CH1,C0603,100n,,Capacitor_SMD:C_0603_1608Metric
+1,HS1,HALL_SW,DRV5023BIQLPG,"TI DRV5023BI TO-92: 1 VCC / 2 GND / 3 OUT open-drain, 2.5-38 V, BOP 6-24 mT, BRP 3-9 mT; magnet near at rest -> TRIG low, pressed -> TRIG high",Package_TO_SOT_THT:TO-92_Inline
+1,JDIAL,HDR1x5,"Dial: COM P1 P2 P3 P4 (4-pos rotary, top housing)",4-position rotary switch,Connector:Pin_header_1x5_P2.54mm
+1,JH,HDR1x7,Signal cord to the head: +3V3 GND TRIG DIAL - - SHLD,coiled cord 5-core AWG28 shielded,Connector:Pin_header_1x7_P2.54mm
+1,RSHH,R0603,0R,signal-cord shield to GND at the handle,Resistor_SMD:R_0603_1608Metric
+2,"RD0,RD3",R0603,10k,,Resistor_SMD:R_0603_1608Metric
+1,RH1,R0603,1k,,Resistor_SMD:R_0603_1608Metric
+1,RD4,R0603,33k,,Resistor_SMD:R_0603_1608Metric
+1,RD2,R0603,3k3,,Resistor_SMD:R_0603_1608Metric

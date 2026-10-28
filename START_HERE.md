@@ -25,7 +25,7 @@
 
 # D. THE FULL HANDOFF (docs/HANDOFF_NEXT_THREAD.md, verbatim)
 
-# Handoff for the next thread (rewritten 2026-10-27, after the AD7389-4 receive integration)
+# Handoff for the next thread (updated 2026-10-28: B1, B3-B9 closed, TX_r4 / RX_r3, package r5)
 
 Everything in this repo is **MODELED or tool-checked; nothing is built or measured**. Never write "proven", "ready for fabrication" or "will detect". Old handoff (step log, default-decision table, contingency matrix): `docs/HANDOFF_ARCHIVE_step7.md` sections 9-11; open it only when a situation there applies.
 
@@ -34,7 +34,7 @@ Everything in this repo is **MODELED or tool-checked; nothing is built or measur
 cd /home/user/ARX && scripts/bootstrap.sh | tail -1     # "environment OK" (also the SessionStart hook)
 make state                                              # git, sign-off counts, FAILs, open blockers (data/handoff/blockers.json)
 ```
-Expect: branch `claude/hopeful-bell-wms3xo`, clean tree, sign-off 67 PASS / 0 FAIL / 8 UNVERIFIED. If it differs, report the difference before doing anything. `make state-deep` (30 s) adds stale steps and the publish check; strict `python3 tests/regress.py` is run once at the END of a change, not at the start.
+Expect: branch `claude/hopeful-bell-wms3xo`, clean tree, sign-off 71 PASS / 0 FAIL / 4 UNVERIFIED. If it differs, report the difference before doing anything. `make state-deep` (30 s) adds stale steps and the publish check; strict `python3 tests/regress.py` is run once at the END of a change, not at the start.
 Wrong branch / dirty tree / push rejected: archive section 10.
 
 ## 2. Standing rules (do not ask again)
@@ -43,21 +43,21 @@ Wrong branch / dirty tree / push rejected: archive section 10.
 - **Never loosen a design rule, clearance, via size or tolerance to make a check pass.** Stop at the first failed gate.
 - Efficiency (docs/PROCESS.md): cheap test first; save the failing input; fix once; one background job at a time with a log; no sleep loops; status <= 5 lines, final report <= 15 lines; images/packages last.
 - Safety: no `rm -rf`/glob deletes (delete only inside work/); no `pkill -f` (killed the shell: use `pgrep -x`/PID); `git commit` hook dirty-tree: one-line WIP commit.
-- Do not start without the owner: system simulation, firmware beyond a Python model, audio, LED tuning, epoxy chambers, rip-up router, differential drive + 33 ohm (B9).
+- Do not start without the owner: system simulation, firmware beyond a Python model, audio, LED tuning, epoxy chambers, any printed-geometry change (the approved one is task "solid_union after release", section 4).
 
-## 3. State (2026-10-27)
+## 3. State (2026-10-28)
 | Area | State |
 |---|---|
-| Sign-off (`docs/STATUS.md`, generated) | 67 PASS, 0 FAIL, 8 UNVERIFIED; strict regress 0 FAIL; `publish_data --check` 0 stale |
-| Transmit region (CB1D, LB1, PB1R, PM2, HB2, TXJ1, HTA) | routed, KiCad 9 DRC 0 errors, independent DRC, Gerber read-back; `releases/TX_r3` |
-| Receive (AB1A, AB1B, AD7389-4, `BOARD_CFG7`) | both routed (0 unrouted, twice), +3V3D hatched island on In4; KiCad 0 errors / 0 unconnected; `releases/RX_r1` **with BLOCKER 1** (exposed-pad placeholder) |
-| SB1R-QA/QB | KiCad DRC + Gerbers only (no router step) |
-| Cylinder v5 | 47 geometry checks; head cross-check 42 checks / 1 warning; 49/49 print STLs closed and fit (`solid_union.py`, margin 0.005 mm); septum split 235 + 211 mm |
-| Wiring | point-to-point headers + harness (53 link pins, 50 conductors). There is NO central bus/rod: the 90 deg "spine channel" + comb are printed geometry for a rigid-flex that is not designed (B5) |
-| Deliverables | `deliverables/PHIFOLD233_PACKAGE_r4`, `receive_cutaway`, `options_model` (docs/design/RECEIVE_OPTIONS_MODEL.md), `docs/delivery/` (ASSEMBLY_ORDER, PURCHASED_PARTS, SYSTEM_MANIFEST) |
+| Sign-off (`docs/STATUS.md`, generated) | 71 PASS, 0 FAIL, 4 UNVERIFIED (U-DS-HVTERM, U-FAB-DRC, U-CAM-VIEW, U-BENCH); `make signoff-cold` 60/60 steps in 1196 s; strict regress 0 FAIL; `publish_data --check` 0 stale; pipeline graph 60 steps |
+| Transmit region | `releases/TX_r4` (CB1D with RML 270 ohm bleed, PB1R M12 = OKI-78SR-12/1.0); TX_r3 SUPERSEDED. TX releases carry no CB1D BOM / pick-and-place (gap since TX_r1): package r5 has them |
+| Receive (AB1A, AB1B) | land = Ultra Librarian CP-24-25_ADI (EP 0.6096 SQ); CRF nudge; router enforces hole-to-hole 0.41; `releases/RX_r3` (no blockers left; U-FAB-DRC / U-CAM-VIEW open); RX_r1, RX_r2 SUPERSEDED |
+| Router | single-pass default; rip-up `src/pcb/afe_ripup.py` wins 12 / 23 vs 9 / 23 perturbed cases (data/results/studies/router_study_b9.json); chip orientations fail for both (B11) |
+| Printed parts | 65 curated STLs (`stl/`), cold rebuild byte-identical (canonical face order in solid_union); print check 49/49; upper_check 64/64 (MT60 from the Amass drawing, septum half-lap); six print formers 66-72 MB, closed, 233 mm (data/results/formers_print_check.json, not in git); pins regenerate identical (15/15, pins_tray_v15.py is not a step) |
+| Cache | `work/.pipeline/solid_union_cache`: whole-union + snap results, proven byte-identical (docs/PERFORMANCE.md); v5 cold 778 s -> warm 114 s |
+| Deliverables | `deliverables/PHIFOLD233_PACKAGE_r5` (every PRINT / REFERENCE STL, formers in the container only, KiCad + Gerber zip + BOM + PnP + netlist + layer PDFs + STEP per board, regenerated index); r4 SUPERSEDED |
 
 ## 4. What is left (data/handoff/blockers.json is the live list; `make state` prints it)
-Owner input needed: **B1** ADI CP-24-25 land pattern (blocks ordering AB1A/AB1B), **B2** fabricator DRC + CAM viewer, **B10** bench. Can be done without the owner, in this order: **B4** RS 100 ohm vs 1 k (decide, CORRECTIONS row, re-export AB1: `make rx-board`) -> **B3** AMS1117 rating + `system_budget.py` +3V3D/+5V rows + SDI Table 17 into DATASHEET_LOG/ASSUMPTIONS -> **B7** retry the refused datasheets via WebSearch for the real PDF -> **B6** AD7389 readout model in Python -> **B5** link-path 3D check JA/JB to J2 and the spine decision -> **B8** BOMs/pick-and-place, potting. Close a blocker by editing the JSON in the same commit that closes it.
+Owner: **B2** fabricator DRC + CAM viewer, **B10** bench. Without the owner: **B7** U-DS-HVTERM (630 V-class JL1, RCL1 part), **B12** move J2 / JA / JB to the duct edges as FFC connectors (changes AB1A, AB1B, CB1D), **B11** placement that rotates the decoupling group with the chip. Approved for after the release (task list): solid_union profile, batch union, save-and-rebuild path so the per-body cache becomes byte-identical (changes printed geometry once: measure surface distance, re-run every geometry check).
 
 ## 5. Where things are
 | Need | Go to |
@@ -73,6 +73,7 @@ Owner input needed: **B1** ADI CP-24-25 land pattern (blocks ordering AB1A/AB1B)
 `make touch-check` (what is stale) -> smallest test (`make rx-board` for AB1, `make step S=<name>` for one step) -> `make signoff` (only stale steps) -> strict regress once -> `publish_data --check` -> commit. Whole-pipeline reruns (`make signoff-cold`, 11 min) only before a release. Measured this session: rx-board 61 s, incremental signoff after an AB1 change 140 s, no change ~1 s.
 
 ## 7. Traps already paid for (new ones first)
+0. (2026-10-28) **Generators that are not pipeline steps** leave a fresh work/ with seed copies: mech_v20 (NPM, now `mech-npm`) and cap_v18 (cap, now `cap-v18`) were found this way; pins_tray_v15 is still not a step (output identical). **manifold3d's union returns a run-dependent triangle order**: solid_union now writes a canonical order. **A Manifold rebuilt from a cached Mesh64 does not union like the original** (per-body dilation cache OFF). **Concatenated reference STLs** (U8_SEPTUM_extended) double-count overlaps in signed volume and confuse ray-parity voxels: compare in single-solid windows. `pgrep -f NAME` matches its own wait loop; `/usr/bin/time` is not installed.
 1. **Studies overwrite production files**: `AFE_*` sweeps and `scripts/afe_search/` rewrite `work/out_board/*_layout.json`; finish with `make rx-board` or the cache and published data disagree (`publish --check` shows AB1x_layout.json stale).
 2. **Import tracing**: fixed in `scripts/tracehook` (pyc reads map to the source). If a dependent step still looks cached after editing a shared module, `make step S=<name>` once and report it.
 3. **Sign-off controls chicken-and-egg**: after a control count changes run `python3 scripts/signoff_status.py --no-regress --ignore-controls` once.
@@ -94,3 +95,10 @@ Resume Arx / PHI-FOLD 233. Run `make state` and read docs/HANDOFF_NEXT_THREAD.md
 | 2026-10-25/26 | Steps 4-7: PM2/HB2/HTA routed, datasheets, releases TX_r2/r3, 3-D models, schematics | see archive sec. 11 | 67 | 55/0/0/8 | older rows: archive |
 | 2026-10-27 | AD7389-4 integration, +3V3D island, RX_r1, print STLs, package r4, options model | 801b9f5 | 0 fail | 67/0/0/8 | AB1A and AB1B closed |
 | 2026-10-27 | Process streamlining: tracer fix, `make state/step/rx-board/touch-check`, blockers.json, handoff rewrite | (this commit) | see state | 67/0/0/8 | PROCESS.md recipes |
+| 2026-10-28 | B1 land (Ultra Librarian CP-24-25_ADI), RX_r2 | a024c8a | 0 fail | 67/0/0/8 | EP 0.6096 SQ; CRF nudge; hole-to-hole in router |
+| 2026-10-28 | B4 RS per channel | effbdce | 0 fail | 67/0/0/8 | no value changed |
+| 2026-10-28 | solid_union cache (byte-identical), canonical face order | e0722d4 | 0 fail | - | v5 778 -> 114 s warm |
+| 2026-10-28 | B9 rip-up router + RS 33 / differential model | e0a052b | 0 fail | - | default unchanged; B11 opened |
+| 2026-10-28 | B3, B5, B6, B7 (narrowed), B8; cap-v18, mech-npm steps | f2f0d5c | 0 fail | 71/0/0/4 | datasheets on disk; M12 and MT60 corrected |
+| 2026-10-28 | signoff-cold, formers-print, TX_r4, RX_r3, package r5 | (this commit) | 0 fail | 71/0/0/4 | final delivery of this thread |
+

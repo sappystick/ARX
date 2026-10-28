@@ -71,7 +71,10 @@ for b, f, desc, st in BOARDS:
     for src in BOMS.get(b, ()) + ((NETS[b],) if b in NETS else ()):
         if os.path.exists(src): shutil.copy(src, f"{d}/{os.path.basename(src)}"); got.append(os.path.basename(src).split(".")[-1] if src.endswith(".net") else os.path.basename(src).rsplit("_", 1)[-1])
     if os.path.exists(pcb):
-        r_ = run("kicad-cli", "pcb", "export", "pdf", "--layers", "F.Cu,B.Cu,F.Silkscreen,B.Silkscreen,F.Mask,B.Mask,Edge.Cuts", "--mode-separate", "-o", f"{d}/", pcb); got.append("layer PDFs" if r_.returncode == 0 else "layer PDF FAILED")
+        import re as _re
+        ncu = len(set(_re.findall(r'\(\d+ "(In\d+\.Cu)" (?:signal|power|mixed|jumper)', open(pcb).read())))                         # inner copper layers declared by the board
+        lay = ",".join(["F.Cu"] + [f"In{k}.Cu" for k in range(1, ncu + 1)] + ["B.Cu", "F.Silkscreen", "B.Silkscreen", "F.Mask", "B.Mask", "Edge.Cuts"])
+        r_ = run("kicad-cli", "pcb", "export", "pdf", "--layers", lay, "--mode-separate", "-o", f"{d}/", pcb); got.append(f"layer PDFs ({2 + ncu} copper)" if r_.returncode == 0 else "layer PDF FAILED")
         r_ = run("kicad-cli", "pcb", "export", "step", "--subst-models", "--force", "-o", f"{d}/{b}_board.step", pcb); got.append("STEP (board)" if r_.returncode == 0 and os.path.exists(f"{d}/{b}_board.step") else "STEP FAILED")
     mfg.append((b, desc, got))
 # ---------------------------------------------------------------- STL files themselves: PRINT and REFERENCE copied (SUPERSEDED listed only); the six print formers if generated (not in git)

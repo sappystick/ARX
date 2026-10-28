@@ -1,0 +1,102 @@
+{
+ "note": "make formers-print (107 s on the 4-core container, 2026-10-28); STLs are generated, not stored in git (about 410 MB); hashes identify the files in deliverables/PHIFOLD233_PACKAGE_r5/stl_print/formers",
+ "formers": [
+  {
+   "file": "FORMER_L1_petal_coil_former.stl",
+   "bytes": 68480084,
+   "sha256": "0d2349b4760f97fde965924aef9a2e274f374c3ed24b298cfeca087748f953b0",
+   "triangles": 1369600,
+   "closed": true,
+   "oriented": true,
+   "bad_edges": 0,
+   "volume_cm3": 104.119,
+   "bbox_mm": [
+    232.96,
+    233.0,
+    3.9
+   ],
+   "fits_250mm": true
+  },
+  {
+   "file": "FORMER_L2_petal_coil_former.stl",
+   "bytes": 66000084,
+   "sha256": "a88c816734442bcfe3a44f275e64666d3d92306c96ff75eb152d72be85e17426",
+   "triangles": 1320000,
+   "closed": true,
+   "oriented": true,
+   "bad_edges": 0,
+   "volume_cm3": 103.515,
+   "bbox_mm": [
+    228.92,
+    228.92,
+    3.9
+   ],
+   "fits_250mm": true
+  },
+  {
+   "file": "FORMER_L3_petal_coil_former.stl",
+   "bytes": 68120084,
+   "sha256": "a8791928b0f48b872ad97e0263f94484d14f6125eacd885526b3673d86a589ce",
+   "triangles": 1362400,
+   "closed": true,
+   "oriented": true,
+   "bad_edges": 0,
+   "volume_cm3": 103.498,
+   "bbox_mm": [
+    232.33,
+    232.33,
+    3.9
+   ],
+   "fits_250mm": true
+  },
+  {
+   "file": "FORMER_L4_petal_coil_former.stl",
+   "bytes": 70120084,
+   "sha256": "b1823aab0d92e8fcf7a5e3c6b87dc07e98537ddca3089c1fbe8a2dcea45dbb71",
+   "triangles": 1402400,
+   "closed": true,
+   "oriented": true,
+   "bad_edges": 0,
+   "volume_cm3": 103.482,
+   "bbox_mm": [
+    231.52,
+    231.52,
+    3.9
+   ],
+   "fits_250mm": true
+  },
+  {
+   "file": "FORMER_L5_petal_coil_former.stl",
+   "bytes": 72000084,
+   "sha256": "9071a91649fb7ec252a3e043757ffd096b33eee9bba10e0fbe66e7ebce437a43",
+   "triangles": 1440000,
+   "closed": true,
+   "oriented": true,
+   "bad_edges": 0,
+   "volume_cm3": 103.466,
+   "bbox_mm": [
+    230.35,
+    230.35,
+    3.9
+   ],
+   "fits_250mm": true
+  },
+  {
+   "file": "FORMER_L6_petal_coil_former.stl",
+   "bytes": 66280084,
+   "sha256": "0e911af8f1c0c6dfe0da3274754b811274b31f2f6227725165daff9509d72e72",
+   "triangles": 1325600,
+   "closed": true,
+   "oriented": true,
+   "bad_edges": 0,
+   "volume_cm3": 103.587,
+   "bbox_mm": [
+    232.84,
+    232.84,
+    3.9
+   ],
+   "fits_250mm": true
+  }
+ ],
+ "all_ok": true
+}
