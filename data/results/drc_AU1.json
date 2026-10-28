@@ -7,9 +7,9 @@
  "min_gap_by_layer": {
   "F.Cu": 0.2,
   "In2.Cu": 0.298,
-  "In5.Cu": 0.351,
-  "In6.Cu": 0.329,
-  "B.Cu": 0.408
+  "In5.Cu": 0.204,
+  "In6.Cu": 0.298,
+  "B.Cu": 0.299
  },
  "violations": [],
  "opens": []
