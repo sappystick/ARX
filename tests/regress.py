@@ -337,5 +337,13 @@ if _ht:
     chk("hood tolerance: baseline = hood v3 upper-bound gain (12.9-14.2 % at 200 mm) and a field slope / placement tolerance for each of 5 placement errors",12.9<=float(_g["200"])<=14.2 and len(_sw)==5 and all(v["tolerance_mm_for_0p5pct_at_200"] for v in _sw.values()),
         "; ".join(f"{v['param']} {v['slope_pct_per_mm_at_200']} %/mm -> +-{v['tolerance_mm_for_0p5pct_at_200']} mm" for v in _sw.values()))
 else: skip("hood tolerance study (make step S=hood-tol)")
+# P5 firmware timing model (src/sim/fw_timeline.py): every mode fits its period, no LED stream inside a receive window, >= 3 ADC frames in the first gate, header in step
+_ft=rd("kit_v23/fw_timeline.json")
+if _ft:
+    _hdr=open("work/kit_v23/pf233_timing.h").read() if os.path.exists("work/kit_v23/pf233_timing.h") else open("data/results/pf233_timing.h").read()
+    _okh=f"#define PF_N_GATES {len(_ft['inputs']['gates_us'])}u" in _hdr and f"#define PF_FIRST_GATE_NS {round(_ft['inputs']['first_gate_us']*1000)}u" in _hdr
+    chk("firmware timeline: 3 modes fit their period with >= 10 % spare, LED stream only in a quiet slot, >= 3 ADC frames in the first gate, generated header matches the model",_ft["ok"] and _okh and _ft["inputs"]["sclk_min_hz_for_3_frames"]<_ft["inputs"]["adc_sclk_max_hz"],
+        "; ".join(f"{k} spare {v['spare_pct']} %, LED cost {v['led']['prf_cost_pct']} %" for k,v in _ft["modes"].items())+f"; SCLK >= {_ft['inputs']['sclk_min_hz_for_3_frames']/1e6:.1f} MHz")
+else: skip("firmware timeline (make step S=fw-timeline)")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

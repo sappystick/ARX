@@ -87,6 +87,7 @@ STEPS = [
     ("sch-func", W + "mkdir -p kit_v22/SCHF && PW=R python3 sch_func.py PB1R kit_v22/SCHF && PW=P python3 sch_func.py PM2 kit_v22/SCHF && PW=G python3 sch_func.py HB2 kit_v22/SCHF && PW=C DISC=1 python3 sch_func.py CB1D kit_v22/SCHF && PW=L python3 sch_func.py LB1 kit_v22/SCHF && BOARD=A python3 sch_func.py AB1A kit_v22/SCHF && BOARD=B python3 sch_func.py AB1B kit_v22/SCHF", "kicad"),
     ("cap-v18", W + "python3 cap_v18.py > /dev/null", ""),                        # HUB_CAP_HTA_v3_vault through the closing union (kit_v18/PARTS): was not a step, so a fresh work/ carried the open seed copy (108 bad edges) into head_crosscheck and curate
     ("mech-npm", W + "python3 mech_v20.py > /dev/null", ""),                       # neck module / elbow / battery drawer meshes (kit_v19/SPINE): pb1r_check NPM fit reads them; was not a step, so a fresh work/ skipped that check
+    ("fw-timeline", W + "mkdir -p kit_v23 && python3 fw_timeline.py > /dev/null", ""),     # P5 firmware timing model + generated C header (kit_v23/pf233_timing.h)
     ("hood-tol", W + "mkdir -p kit_v23 && python3 hood_tolerance.py > /dev/null", ""),      # P3 hood placement tolerance (axisymmetric, hood_axi.py): kit_v23/hood_tolerance.json
     ("potting", "python3 src/mech/potting_volumes.py > /dev/null", ""),                 # P2 exact potting volumes (NPM zones, L4 absorber) from the meshes: data/results/potting_volumes.json
     ("check-pb1r", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py > /dev/null && python3 pb1r_check.py", ""),

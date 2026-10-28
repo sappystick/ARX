@@ -80,3 +80,34 @@ Where the margin is thin, against our floor / against the vendor's published min
 | CB1D | HV COIL_B to VBUS_SENSE (In3) | 1.075 mm | 0.075 | n/a (rule 6) | fine; keep under watch on any CB1D re-route |
 | PM2 | copper gap F.Cu BAT_F to Q1_G | 0.220 mm | 0.060 | 0.068 | fine |
 No board was changed in this step: every action above is a generator change to be made with its own re-route, DRC and release revision.
+
+### P2 result (src/mech/potting_volumes.py -> data/results/potting_volumes.json, pipeline step potting, regress row)
+NPM hot zone 50.3-57.2 cm3 (was 28 estimated), main zone 62.0-70.6 cm3 (was 58), L4 absorber 28.9 cm3 (inside the 31 cm3 bound); both NPM zones have a fill
+port and a vent, the vents sit on the lid underside (the top when poured lid-up) at the far end; 1182 mm2 of free passage around the PB1R edge lets resin reach
+the component side. CORRECTIONS row; POTTING_SEQUENCE.md quotes the new volumes. Finding: the 0.55 kg neck-module mass in upper_check.py has no build-up.
+
+### P3 result (src/sim/hood_tolerance.py -> data/results/hood_tolerance.json, pipeline step hood-tol, regress row)
+Baseline reproduces the hood v3 gain (+17.1 / +13.1 / +10.4 % at 100 / 200 / 300 mm, upper bound). Field change at 200 mm per mm of uniform placement error,
+and the tolerance that keeps the field within 0.5 %:
+
+| Error (all tiles) | Slope | Tolerance for 0.5 % | Consequence for the build |
+|---|---|---|---|
+| butt gap inner / outer tile | -4.25 % per mm | 0.2 +- 0.12 mm | the critical one: lap or grind the butt faces flat and square, clamp the outer tile against the inner one in the jig, gauge the joint (0.1 / 0.3 mm feelers) |
+| layer height | -0.56 % per mm | +-0.9 mm | carrier pocket floor and adhesive layer: a 0.2 mm adhesive film is fine |
+| tile thickness | +0.40 % per mm | +-1.25 mm | stock plate tolerance is not a concern (sub-grid thin-layer scaling; see the script) |
+| radial position | +0.14 % per mm | +-3.5 mm | pocket clearance can stay generous |
+| tile width | +0.03 % per mm | +-16 mm | not a concern |
+Not covered: a single misplaced tile breaks the 13-fold symmetry the receive null relies on (3-D model or bench, U-BENCH). Next: the placement jig (generator +
+fit check) built around the butt-joint datum, and the bench field measurement with and without tiles (ASSUMPTIONS 8).
+
+### P5 first result (src/sim/fw_timeline.py -> data/results/fw_timeline.json + generated header data/results/pf233_timing.h, pipeline step fw-timeline, regress row)
+Per pulse: housekeeping 10 us (ASSUMED), ramp up to 60 us (LUT at the lowest pack voltage), flyback to current zero 3.76 us, blank release 5 us, quiet 5.56 us,
+first clean gate 5.91 us (sbq_damping2: RD 680, Cself 100 pF, release 5 us), 9 golden-ratio gates to 449 us. Busy 482 / 500 / 519 us of 1250 / 1667 / 2500 us:
+61-79 % of every period is free. Findings:
+1. ADC clock: the first gate (5.9-9.6 us) needs SCLK >= 27.2 MHz for 3 conversions; 40 MHz is set as the firmware requirement (AD7389-4 allows 80 MHz);
+   the RP2350 PIO / SPI at 40 MHz with the CB1D -> AB1 link is UNVERIFIED (datasheet + scope on the first article).
+2. LED refresh: the 66 SK6812-class LEDs need one 2.06 ms unbroken stream (24 bit x 1.25 us each + latch, ASSUMED class timing). It never fits after the
+   receive window in any mode, so the firmware drops one or two pulses every 13-27 periods for a 30 Hz display: 5.0-7.7 % fewer pulses. Options: a clocked
+   LED type (APA102 class, can pause between chunks, so it fits in the free 61-79 % with no dropped pulse) or a lower display rate (10 Hz: 1.7-2.6 %).
+   Owner decision; nothing changed on LB1.
+3. The free 61-79 % is room for more late gates (ground balance needs long-tau samples) or a higher PRF in scan: a DSP decision for P6.

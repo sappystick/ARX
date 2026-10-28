@@ -17,7 +17,12 @@ def v3(dz=0.0, dr=0.0, gap=0.2, th=TH, dw=0.0):
     w2 = H.spoke_width(N, 84.0 + gap, 112.5)
     return [(57.0 + dr, 84.0 + dr, 26.2 + dw), (84.0 + dr, 112.5 + dr, w2 + dw)], ZC + dz, th, gap
 def field(rg, segs, zc, th, gap):
-    mr, mz = H.hood_cells(N, segs, zc, th, "upper", gap); return H.Bz_axis(H.solve(mr, mz, rg), DEP)
+    """thickness below the 0.5 mm grid: the layer keeps the design cells and its radial permeability is scaled by th / TH (the same thin-layer homogenisation
+    as the azimuthal fill: parallel flux paths); the vertical (harmonic) component is left as designed. Without this a +-0.2 mm change selects the same cells."""
+    mr, mz = H.hood_cells(N, segs, zc, TH, "upper", gap)
+    if abs(th - TH) > 1e-9:
+        lay = mr > 1.5; mr = mr.copy(); mr[lay] = (th / TH) * mr[lay] + (1 - th / TH)
+    return H.Bz_axis(H.solve(mr, mz, rg), DEP)
 if __name__ == "__main__":
     t0 = time.time(); rg = H.rings(); one = np.ones((len(H.R) - 1, len(H.Z) - 1)); B0 = H.Bz_axis(H.solve(one, one, rg), DEP)
     base = field(rg, *v3()); gain = {int(d * 1e3): round(100 * (b / b0 - 1), 3) for d, b, b0 in zip(DEP, base, B0)}
