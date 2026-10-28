@@ -105,7 +105,8 @@ STEPS = [
     ("fw-test", "make -s -C fw test GEN=../work/kit_v23 OUT=../work/kit_v23/fw_build > work/kit_v23/fw_test.log 2>&1; " + W + "python3 fw_test_summary.py > /dev/null", ""),   # firmware host build + tests
     ("tx-steer", W + "mkdir -p kit_v23 && python3 tx_steer_study.py > /dev/null", ""),     # TX steering study (offset coils / push-pull pairs vs RX-Q): kit_v23/tx_steer_study.json
     ("hood-tol", W + "mkdir -p kit_v23 && python3 hood_tolerance.py > /dev/null", ""),      # P3 hood placement tolerance (axisymmetric, hood_axi.py): kit_v23/hood_tolerance.json
-    ("potting", "python3 src/mech/potting_volumes.py > /dev/null", ""),                 # P2 exact potting volumes (NPM zones, L4 absorber) from the meshes: data/results/potting_volumes.json
+    ("potting", "python3 src/mech/potting_volumes.py > /dev/null", ""),
+    ("potting-map", "python3 src/mech/potting_map.py > /dev/null", ""),   # zoned potting map: fill per zone (exact volumes), compound classes, coil-fill quiet-time check, bench tests: data/results/potting_map.json + .png                 # P2 exact potting volumes (NPM zones, L4 absorber) from the meshes: data/results/potting_volumes.json
     ("check-pb1r", W + "mkdir -p kit_v23 && python3 tx_vbus_sweep.py > /dev/null && python3 pb1r_check.py", ""),
     ("formers-low", "test -f work/kit_v15/LOW/FORMER_L1_petal_coil_former.stl || (" + W + "python3 phifold_v15.py low)", ""),
     ("head-audit", W + "mkdir -p kit_v21 && python3 head_crosscheck.py && python3 fine_check.py && python3 head_drawings.py", ""),

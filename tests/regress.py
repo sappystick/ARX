@@ -369,10 +369,12 @@ _pg = dict(exact_drc="shapely" in _src("src/pcb/drc.py") and "STRtree" in _src("
            local_repair=os.path.exists("src/pcb/route_repair.py") and "route_repair.repair(board, mk, front, budget=200)" in _src("src/pcb/route_run.py"),
            round_checkpoint_and_budget="_save(best)" in _src("src/pcb/route_run.py") and "time.time()-t0>600" in _src("src/pcb/route_run.py"),
            reset_keeps_layout="os.replace(_f" in _src("src/pcb/route_run.py") and "os.remove(_f)" not in _src("src/pcb/route_run.py"),
+           incremental_and_parallel="def incremental(" in _src("src/pcb/route_repair.py") and "def parallel_rounds(" in _src("src/pcb/route_repair.py") and "route_repair.incremental(" in _src("src/pcb/route_run.py"),
+           potting_map_step='"potting-map"' in _src("scripts/pipeline.py"),
            interface_step='"interface-check"' in _src("scripts/pipeline.py"),
            au1_models='"CRPGLHMTU"' in _src("src/pcb/models3d.py"),
            pad_orient_traced=any(f.endswith("PF233-AU1_routed.kicad_pcb") for f in json.load(open("data/pipeline/graph.json"))["steps"].get("pad-orient", {}).get("R", [])) if os.path.exists("data/pipeline/graph.json") else False)
-chk("process guards: exact DRC, fine-pitch router, neck-down / escapes, local repair, round checkpoints, non-destructive reset, interface step, AU1 models, pad check traced", all(_pg.values()), ("missing: " + ", ".join(k for k, v in _pg.items() if not v)) if not all(_pg.values()) else "all 9 in place")
+chk("process guards: exact DRC, fine-pitch router, neck-down / escapes, local repair, incremental + parallel routing, round checkpoints, non-destructive reset, interface and potting-map steps, AU1 models, pad check traced", all(_pg.values()), ("missing: " + ", ".join(k for k, v in _pg.items() if not v)) if not all(_pg.values()) else f"all {len(_pg)} in place")
 # receive DSP reference (src/sim/dsp_ref.py): tau estimator at the Cramer-Rao bound, class / bearing at SNR 10, ground rejection with the held-ground ridge fit
 d=rd("kit_v23/dsp_ref.json")
 if d: _a=d["accuracy_vs_snr"]; chk("DSP reference: tau error within 1.5 x Cramer-Rao at SNR 30, class >= 80 % and bearing <= 5 deg at SNR 10, 0 false detections over varying ground, small gold over ground found",
@@ -392,6 +394,15 @@ try:
     _lu=json.load(open("data/results/led_upgrade_check.json")); _f=_lu["fit"]["SK9822-EC20, as placed"]
     chk("LB1-v6 LEDs: SK9822-EC20 fits as placed (pad gap >= 0.16, body gap >= 0.2, roof gap >= 0.3 mm)",_lu["chosen_ok"] and _f["ok"] and _lu["height"]["SK9822-EC20"]["gap_mm"]>=0.3,f"pad gap {_f['min_pad_gap_mm']} body gap {_f['min_body_gap_mm']} roof {_lu['height']['SK9822-EC20']['gap_mm']}")
 except (FileNotFoundError, KeyError): chk("LB1-v6 LED fit evidence (data/results/led_upgrade_check.json)",False,"missing")
+# potting map (src/mech/potting_map.py, 2026-10-28): every fill zone has a positive exact volume, every filler is an electrical insulator (eddy rule), the coil windings
+# get a pour only if the transmit model keeps the quiet time >= 0.10 us before the first gate for the whole assumed range, and the bench tests are listed
+try:
+    _pm=json.load(open("data/results/potting_map.json")); _z=_pm["zones"]; _w=_pm["windings"]
+    _wok=all(r["ok"] for r in _w["results"] if r["fill"].startswith(_w["compound"])) if _w["compound"]!="none" else not any(r["ok"] for r in _w["results"] if r["fill"]!="air (no fill)")
+    chk("potting map: 7 fill zones with exact positive volumes, all fillers insulating, winding fill decided by the quiet-time margin, bench tests listed",
+        len(_z)>=7 and all(z["cm3"][0]>0 for z in _z) and _pm["checks"]["eddy_rule_all_insulating"] and _wok and len(_pm["bench_tests"])>=8 and _pm["checks"]["vault_temperature_bound_C"]<80,
+        f"head {_pm['totals']['head_cm3']} / neck {_pm['totals']['neck_cm3']} / upper {_pm['totals']['upper_cm3']} cm3; windings: {_w['compound']}; air margin {_w['results'][0]['margin_us']} us")
+except FileNotFoundError: chk("potting map evidence (data/results/potting_map.json)",False,"missing")
 # P2 exact potting volumes (src/mech/potting_volumes.py): positive, inside their envelopes, lower <= upper bound, every zone with a fill port and a vent
 try:
     _pv=json.load(open("data/results/potting_volumes.json")); _n=_pv["npm"]; _a=_pv["l4_absorber"]

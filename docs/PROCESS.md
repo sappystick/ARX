@@ -47,6 +47,14 @@ The sign-off pipeline traces every step, so unchanged work is skipped. The rule 
 - **Local repair, not full re-runs**: when a few nets stay open, `REPAIR=1 python3 route_run.py <B>` (in work/) freezes the saved layout, rips up only the signal nets
   with copper within 1.5 mm of the open nets' pads (shrinks the disc until <= 8 nets) and re-routes them in several orders (seconds, cap 240 s); it writes only when more
   nets route, keeps `route_<B>_prerepair.json`, and the exact DRC decides. AU1's route step runs 4 deterministic rounds and then this repair automatically.
+- **Incremental re-routing (default)**: every finished layout is saved with a base (`kit_v20/route_<B>_base.json`: the pad file it was routed against and a
+  fingerprint of what decides the copper: router.py, the board's router factory `mk()` in route_run.py, the grid). `route_run.py <B>` then: pads unchanged -> nothing to
+  route (0.5 s); a few pads changed (<= 35 %) -> re-routes only the nets touching changed pads plus any frozen copper that now collides with them, re-stubs changed plane
+  pads, checks the result with exact clearances and falls back to local repair, then to a full route (seconds instead of minutes: AU1 one resistor moved 7.9 s,
+  CB1D 11.4 s, both still exact DRC 0 / 0). A changed fingerprint or outline means a full route. `FULL=1` forces a full route; `python3 route_run.py <B> --fingerprint`
+  prints the fingerprint (use it, never recompute it elsewhere, when writing a base by hand).
+- **Parallel full routes**: AU1's full route runs its rounds in 4 processes at once (route_repair.parallel_rounds, fixed orders, best kept) and then local repair
+  (nets and failed plane stubs): 197 s instead of about 650 s. Learned settings (net order, stub-first pads such as UM.7) live in the board's factory.
 - **Board-to-harness interface**: pipeline step `interface-check` (src/pcb/interface_check.py): every harness wire end vs its pad / terminal (fit, gauge range,
   current density <= 10 A/mm2, pitch) and every screw terminal vs its net voltage. Terminals and connectors are read from each board's BOM type.
 - **Hardwired joints**: plug-on headers / terminal blocks are not used inside the enclosed system: use the `WIRE*` part types (footprints `Connector:Wire_pads*`,

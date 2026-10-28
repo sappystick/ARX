@@ -40,6 +40,7 @@ mm / deg; z up from the underside of the base plate; azimuth CCW from +x; heel (
 - Paths: absolute /mnt/... paths were rewritten to legacy/; keep new scripts relative.
 - audit_v20.py and cups_v20.py describe the superseded vault cups; the v5 checks are check_v22.py.
 - Fine-pitch boards: exact keep-out, 0.15 mm neck-down, 0.125 mm grid (AU1); when a route leaves 1-3 nets open use local repair (`REPAIR=1 python3 route_run.py B` in work/), not more full re-runs. drc.py is exact (shapely). Details: docs/PROCESS.md "Routing and checking tools".
+- Routing is incremental by default (only nets touching changed pads are re-routed; base files kit_v20/route_<B>_base.json); `FULL=1` forces a full route; AU1 full routes run in parallel. Never delete a route or base file by hand.
 - No plug-on joints inside the enclosed system (owner 2026-10-28): wire-hole parts `WIRE*` with `Connector:Wire_pads*` footprints; MT60 battery connector and AB1 links excepted. The interface-check step tests every harness wire end.
 - Router quantises to 0.15 mm: track ends stop short of pads. ALWAYS run route_fix.py (stubs) before any Gerber/KiCad export, then drc.py (independent geometric DRC). drc.py is not KiCad's DRC: do not call a board fabrication-ready until KiCad or a CAM viewer agrees.
 - Transmit leads must run in the wall-top channel to the 178 deg window and TXJ1 (never inside the vault past the posts). LB1 is 0.8 mm with flat wire pads. Run `make audit-system` after any change to boards, harness, cylinder or bridge.
