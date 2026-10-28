@@ -122,14 +122,6 @@ def mark_core(pd):
     for L in layers_of(pd): core[L, y0:y1 + 1, x0:x1 + 1] = net; blk[L, y0:y1 + 1, x0:x1 + 1] = net
 for pd in PADS: stamp_pad(pd)
 for pd in PADS: mark_core(pd)
-BODY_KEEP = 2.65 / 2 + CLEAR + TRACK / 2                                                    # B1: AD7389-4 body interior is GND-only on its mounting layer: the Fig. 43 EP is 0.50 SQ (land 0.60), but Table 6 theta-JC reads like a larger paddle, so no foreign copper may sit where a 2.65 mm paddle (the generic LFCSP-24 4x4 EP) would touch it
-def body_keepout():
-    for pd in PADS:
-        if pd["ref"] == "UA1" and pd["num"] == "25":
-            L = LIDX[pd["layer"]]; g = NETID[pd["net"]]
-            x0, y0 = cell(pd["x"] - BODY_KEEP, pd["y"] - BODY_KEEP); x1, y1 = cell(pd["x"] + BODY_KEEP, pd["y"] + BODY_KEEP)
-            sub = blk[L, y0:y1 + 1, x0:x1 + 1]; sub[sub == -1] = g                         # free cells become GND-only; the perimeter pads keep their own clearance cells
-body_keepout()
 def passable(L, net):
     return (~edge) & ((core[L] == -1) | (core[L] == net)) & ((blk[L] == -1) | (blk[L] == net))
 STUB = {}
