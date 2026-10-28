@@ -53,8 +53,9 @@ v5 build (`hub_v22.py` + `parts_v22.py`, serial, 4-core container, scratch copie
 | cache cold (empty cache; fills it) | 794.1 s (+2 %) | 0 of 58 |
 | cache warm (nothing changed) | 113.6 s (6.9x faster) | 0 of 58 |
 | EXPERIMENTAL per-body dilation cache only (every union recomputed from cached dilations) | 132.3 s | **5 of 58 differ**: a Manifold rebuilt from a cached Mesh64 (all fields, IDs, `set_tolerance`) unions and simplifies differently (ROOF_PLATE 104 536 vs 134 436 triangles in a direct test, CORE 216 916 vs 398 556): NOT byte-identical, so this cache is OFF (`SOLID_UNION_DILATE_CACHE=1` only for experiments) |
-| one body set changed: the CORE union recomputed, every other union and every snap index from the cache (final code) | PARTIAL_S | PARTIAL_DIFF |
+| one body set changed: the CORE union recomputed, every other union and every snap index from the cache (final code) | 616.3 s (-21 %) | 0 of 58 |
 
 Cache size after one v5 build: 69.4 MB.
 What the cache does NOT do: re-use the dilation of an unchanged body inside a changed body set (no byte-identical way was found with manifold3d's public API). A change to one body
-re-runs the union of the part it belongs to (for the CORE cylinder that is most of the 13 min); every other part comes from the cache.
+re-runs the union of the part it belongs to (CORE: 616 s of the 779 s build); every other part comes from the cache (the v5 build has 3 unions: CORE, ROOF, TRAY classes).
+The 49 print STLs are re-checked (closed, fit) by print-check in the final cold sign-off.
