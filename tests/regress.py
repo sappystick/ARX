@@ -303,7 +303,7 @@ for _f,_ax,_v in (("stl/head/CORE_CYLINDER_v5_integrated.stl",1,0.0),("stl/head/
     _sec.append((os.path.basename(_f),round(_a[0],2),_a[0]>1.0 and max(_a)-min(_a)<1e-6*max(_a)))
 chk("mesh sections non-empty and identical under vertex rotation / reversal (CORRECTIONS: empty or partial sections before mesh_section.py)",all(x[2] for x in _sec),str([x[:2] for x in _sec]))
 # package: no STL that its folder's SUPERSEDED.txt lists is shipped as a print file; the clickable viewer links only files that exist
-_PK="deliverables/PHIFOLD233_PACKAGE_r6"
+_PK="deliverables/PHIFOLD233_PACKAGE_r5"
 _sup=sorted({m for f in glob.glob("stl/*/SUPERSEDED.txt") for m in re.findall(r"^- (\S+\.stl) ->",open(f).read(),re.M)})
 _bad=[m for m in _sup if glob.glob(f"{_PK}/stl_print/*/{m}")]
 chk("package stl_print holds no STL listed in a SUPERSEDED.txt",bool(_sup) and not _bad,f"{len(_sup)} superseded, shipped: {_bad}")

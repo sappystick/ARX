@@ -151,7 +151,7 @@ gerber-pb1r: kicad-pb1r
 package:
 	python3 scripts/make_package.py
 
-# clickable cut-away (deliverables/PHIFOLD233_PACKAGE_r6/viewer.html), from the package's recorded cut faces
+# clickable cut-away (deliverables/PHIFOLD233_PACKAGE_r5/viewer.html), from the package's recorded cut faces
 viewer:
 	python3 src/render/viewer_r2.py
 
