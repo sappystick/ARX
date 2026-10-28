@@ -82,7 +82,7 @@ STEPS = [
     ("route-au1", route("AU1"), ""),
     ("drc-au1", W + "python3 drc.py AU1 kit_v20/route_AU1.json 0", ""),
     ("kicad-au1", "mkdir -p work/kit_v22/KICAD && " + W + "python3 rect_inject.py AU1 kit_v20/route_AU1.json kit_v6/AU1/PF233-AU1.kicad_pcb kit_v22/KICAD/PF233-AU1_routed.kicad_pcb", ""),
-    ("gerber-au1", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-AU1_routed.kicad_pcb AU1 work/kit_v22/GERBER_AU1 PF233-AU1 && " + W + "python3 gerber_edge_check.py kit_v22/gerber_edge_AU1.json kit_v22/GERBER_AU1 PF233-AU1", "kicad"),
+    ("gerber-au1", "python3 src/pcb/kicad_gerber.py work/kit_v22/KICAD/PF233-AU1_routed.kicad_pcb AU1 work/kit_v22/GERBER_AU1 PF233-AU1 F.Cu,In1.Cu,In2.Cu,In3.Cu,In4.Cu,B.Cu,F.Mask,B.Mask,F.Paste,B.Paste,F.Silkscreen,B.Silkscreen,Edge.Cuts && " + W + "python3 gerber_edge_check.py kit_v22/gerber_edge_AU1.json kit_v22/GERBER_AU1 PF233-AU1", "kicad"),
     ("sbq-fast", W + "python3 sbq_gen2.py && python3 sbq_export.py && python3 sbq_sim.py && python3 sbq_damp2.py", ""),
     ("pcb-hta", W + "python3 hta_gerber.py > /dev/null && python3 hta_kicad.py && python3 gerber_edge_check.py kit_v22/gerber_edge_HTA.json kit_v18/HTA PF233-HTA", ""),
     ("kicad-drc", "; ".join([f"python3 src/pcb/kicad_drc.py work/kit_v22/KICAD/PF233-{b}_routed.kicad_pcb work/kit_v22/kicad_drc_{b}.json {b} | head -1" for b in ("CB1D", "LB1", "PB1R", "PM2", "HB2", "AU1")]
@@ -100,6 +100,8 @@ STEPS = [
     ("fw-timeline", W + "mkdir -p kit_v23 && python3 fw_timeline.py > /dev/null", ""),     # P5 firmware timing model + generated C header (kit_v23/pf233_timing.h)
     ("output-modes", W + "mkdir -p kit_v23 && python3 output_modes.py > /dev/null", ""),   # output modes step 1: audio / LED renderers, idle-slot, latency, rail cap: kit_v23/output_modes.json, pf233_output.h
     ("sweep-track", W + "mkdir -p kit_v23 && python3 sweep_track.py > /dev/null", ""),     # sweep tracking / pinpoint over a target (quad model): kit_v23/sweep_track.json
+    ("dsp-ref", W + "mkdir -p kit_v23 && python3 dsp_ref.py > /dev/null && python3 fw_tables.py > /dev/null", ""),   # receive DSP reference (Cramer-Rao, ground) + firmware tables / vectors
+    ("fw-test", "make -s -C fw test GEN=../work/kit_v23 OUT=../work/kit_v23/fw_build > work/kit_v23/fw_test.log 2>&1; " + W + "python3 fw_test_summary.py > /dev/null", ""),   # firmware host build + tests
     ("tx-steer", W + "mkdir -p kit_v23 && python3 tx_steer_study.py > /dev/null", ""),     # TX steering study (offset coils / push-pull pairs vs RX-Q): kit_v23/tx_steer_study.json
     ("hood-tol", W + "mkdir -p kit_v23 && python3 hood_tolerance.py > /dev/null", ""),      # P3 hood placement tolerance (axisymmetric, hood_axi.py): kit_v23/hood_tolerance.json
     ("potting", "python3 src/mech/potting_volumes.py > /dev/null", ""),                 # P2 exact potting volumes (NPM zones, L4 absorber) from the meshes: data/results/potting_volumes.json

@@ -20,9 +20,22 @@ elif board=="PM2":
     wid={"BAT_P":1.5,"BAT_F":1.5,"VBUS":1.0,"GND":1.0}
     R=Router("kit_v6/PM2/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu","VBUS":"In2.Cu"},wid,clr=0.2)
 elif board=="AU1":
-    # 36 x 44 audio board (battery side): F/B signal layers, hatched GND (In1) and +3V3_AU (In2); 0.5 mm on the pack input, the 5 V rail and the speaker outputs, 0.6 mm on the buck switch node
-    wid={"VBUS_AU":0.5,"+5V_AU":0.5,"SW_AU":0.6,"SPK_P":0.5,"SPK_N":0.5,"GND":0.4,"+3V3_AU":0.3}
-    R=Router("kit_v6/AU1/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu","+3V3_AU":"In2.Cu"},wid,clr=0.2)
+    # 36 x 44 audio board (battery side), 6 layers: F / In2 / B signal, hatched planes GND (In1), +5V_AU (In3), +3V3_AU (In4); 0.5 mm on the pack input, the buck
+    # switch node and the speaker outputs; plane stubs 0.2 mm: the 0.5 mm-pitch MCU and the 0.65 mm-pitch amplifier pads only escape at 0.2 mm on the 0.15 mm grid
+    # (a 0.5 mm +5V_AU track could not reach the amplifier VDD pin: CB1D-style plane instead, 2026-10-28)
+    wid={"VBUS_AU":0.5,"SW_AU":0.6,"SPK_P":0.5,"SPK_N":0.5,"GND":0.2,"+5V_AU":0.2,"+3V3_AU":0.2}
+    # reorder-and-retry (deterministic): route from scratch with the nets that failed moved to the front and the pads whose plane stub failed stubbed first,
+    # up to 6 rounds, keep the best (opt-in for AU1)
+    mk=lambda: Router("kit_v6/AU1/pads.json",["F.Cu","In2.Cu","B.Cu"],{"GND":"In1.Cu","+5V_AU":"In3.Cu","+3V3_AU":"In4.Cu"},wid,clr=0.2)      # 6 layers (pw_export)
+    front=[]; stubs=set(); best=None
+    for rnd in range(6):
+        R=mk(); R.fine_order="span"; R.priority=list(front); R.stub_first=set(stubs); st=R.run(budget=1e9,state=None)
+        nf=len(st["failures"]); print("AU1 round",rnd,"routed",st["nets_routed"],"of",st["nets_to_route"],"failures",nf,flush=True)
+        if best is None or nf<best[0]: best=(nf,R,st)
+        if nf==0: break
+        front=[f[0] for f in st["failures"] if f[1]=="net" and f[0] not in front]+front; stubs|={f[2] for f in st["failures"] if f[1]=="stub"}
+    R,st=best[1],best[2]; print(board,st,"length_mm",round(R.length()))
+    json.dump(dict(stats=st,tracks=R.tracks,vias=R.vias,layers=R.layers,planes=R.planes,R=R.R),open(f"kit_v20/route_{board}.json","w")); sys.exit(0)
 elif board=="HB2":
     # 24 x 38 grip board: F/B signal layers, hatched GND (In1); trigger and dial signals only
     R=Router("kit_v6/HB2/pads.json",["F.Cu","B.Cu"],{"GND":"In1.Cu"},{"P3V3":0.3},clr=0.2)

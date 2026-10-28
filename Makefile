@@ -200,7 +200,7 @@ kicad-au1: route-au1
 	mkdir -p $(W)/kit_v22/KICAD && cd $(W) && $(PY) rect_inject.py AU1 kit_v20/route_AU1.json kit_v6/AU1/PF233-AU1.kicad_pcb kit_v22/KICAD/PF233-AU1_routed.kicad_pcb
 
 gerber-au1: kicad-au1
-	$(PY) src/pcb/kicad_gerber.py $(W)/kit_v22/KICAD/PF233-AU1_routed.kicad_pcb AU1 $(W)/kit_v22/GERBER_AU1 PF233-AU1
+	$(PY) src/pcb/kicad_gerber.py $(W)/kit_v22/KICAD/PF233-AU1_routed.kicad_pcb AU1 $(W)/kit_v22/GERBER_AU1 PF233-AU1 F.Cu,In1.Cu,In2.Cu,In3.Cu,In4.Cu,B.Cu,F.Mask,B.Mask,F.Paste,B.Paste,F.Silkscreen,B.Silkscreen,Edge.Cuts
 	cd $(W) && $(PY) gerber_edge_check.py kit_v22/gerber_edge_AU1.json kit_v22/GERBER_AU1 PF233-AU1
 
 # PB1R cross-check against the transmit stage (pulse path R/L, return vias, Kelvin, flyback-net parts, connectors, eddy estimate)

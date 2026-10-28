@@ -362,12 +362,12 @@ if PW == "U":
     add("RLK", "R0603", "100R", "link entry"); add("RTX", "R0603", "1k", "TX into the shared line"); add("DLK1", "DSOD", "BAS16", "clamp to 3V3"); add("DLK2", "DSOD", "BAS16", "clamp to GND")
     net("AUD_LINK", ("RLK", 1), ("DLK1", 2), ("DLK2", 1)); net("LINK_N", ("RLK", 2), ("UM", 16), ("RTX", 2)); net("LINK_TX", ("RTX", 1), ("UM", 15)); net("+3V3_AU", ("DLK1", 1)); net("GND", ("DLK2", 2))
     add("JSEL", "WIRE4", "Output selector: COM P1 P2 P3", "3-position rotary, battery side"); add("RS1", "R0603", "10k", ""); add("RS2", "R0603", "10k", ""); add("RS3", "R0603", "10k", "")
-    net("GND", ("JSEL", 1)); net("SEL1", ("JSEL", 2), ("RS1", 2), ("UM", 24)); net("SEL2", ("JSEL", 3), ("RS2", 2), ("UM", 25)); net("SEL3", ("JSEL", 4), ("RS3", 2), ("UM", 27)); net("+3V3_AU", ("RS1", 1), ("RS2", 1), ("RS3", 1))
+    net("GND", ("JSEL", 1)); net("SEL1", ("JSEL", 2), ("RS1", 2), ("UM", 9)); net("SEL2", ("JSEL", 3), ("RS2", 2), ("UM", 10)); net("SEL3", ("JSEL", 4), ("RS3", 2), ("UM", 11)); net("+3V3_AU", ("RS1", 1), ("RS2", 1), ("RS3", 1))
     add("US", "HVSSOP8EP", "TPA2005D1DGN", "TI TPA2005D1 1.4 W class-D"); add("CSV", "C0603", "1u", "X7R VDD"); add("CSV2", "C1210", "10u 10V", "X7R VDD bulk")
     add("CI1", "C0603", "1u", "input"); add("CI2", "C0603", "1u", "input"); add("RI1", "R0603", "150k", "RI"); add("RI2", "R0603", "150k", "RI"); add("RSD", "R0603", "100k", "SHUTDOWN pull-down")
     net("+5V_AU", ("US", 6), ("CSV", 1), ("CSV2", 1)); net("GND", ("US", 7), ("US", 9), ("CSV", 2), ("CSV2", 2), ("CI2", 1), ("RSD", 2)); net("US_NC", ("US", 2))
     net("DAC_AU", ("UM", 18), ("CI1", 1), ("CHL", 1)); net("SPK_INP", ("CI1", 2), ("RI1", 1)); net("US_INP", ("RI1", 2), ("US", 3)); net("SPK_INN", ("CI2", 2), ("RI2", 1)); net("US_INN", ("RI2", 2), ("US", 4))
-    net("SPK_SD", ("US", 1), ("RSD", 1), ("UM", 28))
+    net("SPK_SD", ("US", 1), ("RSD", 1), ("UM", 19))
     add("JSPK", "WIRE2", "Speaker: SPK+ SPK- (8 ohm)", "speaker leads"); net("SPK_P", ("US", 5), ("JSPK", 1)); net("SPK_N", ("US", 8), ("JSPK", 2))
     add("UH", "WQFN16EP", "TPA6132A2RTE", "TI TPA6132A2 DirectPath headphone amp"); add("CHL", "C0603", "1u", "input L"); add("CHR", "C0603", "1u", "input R")
     add("CHV", "C0603", "2.2u", "VDD"); add("CHP", "C0603", "2.2u", "HPVDD"); add("CHF", "C0603", "1u", "flying"); add("CHS", "C0603", "1u", "HPVSS"); add("RHE", "R0603", "100k", "EN pull-down")
@@ -375,10 +375,14 @@ if PW == "U":
     net("PWM_AU", ("UM", 17), ("RPW", 1)); net("PWM_F", ("RPW", 2), ("CPW", 1), ("CHR", 1)); net("GND", ("CPW", 2))
     net("HP_INL", ("CHL", 2), ("UH", 1)); net("HP_INR", ("CHR", 2), ("UH", 4)); net("GND", ("UH", 2), ("UH", 3), ("UH", 7), ("UH", 10), ("UH", 15), ("UH", 17), ("CHV", 2), ("CHP", 2), ("CHS", 2), ("RHE", 2))
     net("+3V3_AU", ("UH", 14), ("UH", 6), ("CHV", 1)); net("HPVDD_AU", ("UH", 12), ("CHP", 1)); net("CPP_AU", ("UH", 11), ("CHF", 1)); net("CPN_AU", ("UH", 9), ("CHF", 2)); net("HPVSS_AU", ("UH", 8), ("CHS", 1))
-    net("HP_EN", ("UH", 13), ("RHE", 1), ("UM", 26))
+    net("HP_EN", ("UH", 13), ("RHE", 1), ("UM", 20))
     add("JHP", "WIRE4", "Headphone jack: TIP(L) RING(R) SLEEVE DET", "panel 3.5 mm jack with plug-detect switch"); add("RDT", "R0603", "10k", "jack detect pull-up")
-    net("HP_L", ("UH", 16), ("JHP", 1)); net("HP_R", ("UH", 5), ("JHP", 2)); net("GND", ("JHP", 3)); net("HP_DET", ("JHP", 4), ("RDT", 2), ("UM", 1)); net("+3V3_AU", ("RDT", 1))
-    for _pn in (2, 4, 5, 9, 10, 11, 12, 13, 14, 19, 20, 21): net(f"UM_P{_pn}_NC", ("UM", _pn))
+    net("HP_L", ("UH", 16), ("JHP", 1)); net("HP_R", ("UH", 5), ("JHP", 2)); net("GND", ("JHP", 3)); net("HP_DET", ("JHP", 4), ("RDT", 2), ("UM", 24)); net("+3V3_AU", ("RDT", 1))
+    # PA18 (pin 21) is the boot-loader invoke pin (SLASEX6C pin table: BSL_Invoke): held low by RBSL so a reset never enters the BSL
+    add("RBSL", "R0603", "100k", "BSL invoke pull-down"); net("BSL_INV", ("UM", 21), ("RBSL", 1)); net("GND", ("RBSL", 2))
+    # pin plan (2026-10-28, matched to the AU1 layout): selector PA2-PA4 (9-11, left column, facing JSEL); speaker SHUTDOWN PA16 (19), headphone EN PA17 (20),
+    # headphone detect PA21 (24), right column facing the amplifiers; link PA10 / PA11 (15 / 16, UART0), PWM PA14 (17, TIMG12_C0), DAC PA15 (18), SWD 22 / 23
+    for _pn in (1, 2, 4, 5, 12, 13, 14, 25, 26, 27, 28): net(f"UM_P{_pn}_NC", ("UM", _pn))
 if PW == "C" and os.environ.get("DISC"):
     # ---- CB1D additions: hub-top antenna (HTA) monitor input on spare mux channel Y4 (select line S2 from the spare Pico pin GP1)
     NETS["GND"] = [p for p in NETS["GND"] if p not in (("UM", "1"), ("UM", "9"))]

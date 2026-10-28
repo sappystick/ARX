@@ -95,13 +95,15 @@ elif PW == "P":
     anchors = {"F1": (6, -27), "Q1": (5, -16), "R1": (-4, -14), "DZ1": (-4, -9), "R2": (-4, -4), "R3": (-9, -4), "C1": (-9, 1), "DTVS": (5, -8), "CM1": (-5, 18), "RBL": (5, 14), "RSH": (-4, 24), "CSH": (-9, 24), "F2": (-5, 9), "JAUP": (-8, 18)}
     PL = autoplace(fixed, anchors)
 elif PW == "U":
-    # AU1 36 x 44: power pads and SWD header along the top edge (y -), link and speaker pads along the bottom, selector pads on the left edge, headphone pads on the right
-    fixed = {"JPWR": (-11.0, -19.5, 0), "JSWD": (6.0, -19.5, 90), "JLINK": (-11.0, 19.5, 0), "JSPK": (11.0, 19.5, 0), "JSEL": (-15.5, 3.0, 0), "JHP": (15.5, 3.0, 0)}
-    anchors = {"UB": (-2, -14), "LB": (5, -14), "CBI": (-6, -10), "CBI2": (-2, -10), "CBB": (2, -10), "CBO": (11, -12), "RFT": (6, -9), "RFB": (9, -9),
-               "UL": (2, -6), "CLI": (-1, -5), "CLO": (5, -5), "UM": (-3, 2), "CVC": (-8, -2), "CVD": (-8, 1), "CVD2": (-8, 4), "RNR": (2, 9), "CNR": (5, 9),
-               "RLK": (-8, 12), "RTX": (-4, 12), "DLK1": (-8, 15), "DLK2": (-4, 15), "RS1": (-7, 6), "RS2": (-7, 8), "RS3": (-7, 10),
-               "US": (8, 0), "CSV": (12, -3), "CSV2": (13, 2), "CI1": (4, 3), "CI2": (4, 6), "RI1": (6, 4), "RI2": (6, 7), "RSD": (11, -5),
-               "UH": (9, 10), "CHL": (4, 10), "CHR": (4, 13), "CHV": (13, 6), "CHP": (13, 12), "CHF": (7, 13), "CHS": (10, 14), "RHE": (6, 12), "RPW": (0, 12), "CPW": (0, 14), "RDT": (8, 6)}
+    # AU1 36 x 44 (pin plan in pw_design): power and buck along the top, MCU left of centre, speaker amp right of it (inputs facing the DAC), headphone amp
+    # below it (inputs facing the MCU, outputs facing JHP on the right edge), selector pads on the left edge facing PA2-PA4, link pads bottom left
+    fixed = {"JPWR": (-11.0, -19.5, 0), "JSWD": (8.0, -19.5, 90), "JLINK": (-11.0, 19.5, 0), "JSPK": (11.0, 19.5, 0), "JSEL": (-15.5, 4.0, 0), "JHP": (15.5, 5.0, 0),
+             "UM": (-4.0, 1.0, 0), "US": (7.0, -1.0, 0), "UH": (7.0, 9.5, 0), "UB": (-4.0, -15.0, 0), "LB": (3.0, -15.0, 0), "UL": (-4.0, -9.0, 0)}
+    anchors = {"CBI": (-10, -14), "CBI2": (-10, -11), "CBB": (-4, -11.5), "CBO": (9, -14), "RFT": (0, -11), "RFB": (3, -11), "CLI": (-8, -8), "CLO": (0, -8),
+               "CVC": (-9, -2), "CVD": (-9, 1), "CVD2": (-9, 4), "RNR": (-9, 7), "CNR": (-9, 10), "RBSL": (0, 5),
+               "RLK": (-6, 14), "RTX": (-2, 14), "DLK1": (-6, 17), "DLK2": (-2, 17), "RS1": (-11, 1), "RS2": (-11, 4), "RS3": (-11, 7),
+               "CSV": (11, -4), "CSV2": (12, -8), "CI1": (2, 1), "CI2": (2, 4), "RI1": (3, -2), "RI2": (3, 7), "RSD": (11, 3),
+               "CHL": (2, 10), "CHR": (2, 13), "CHV": (11, 6), "CHP": (11, 13), "CHF": (7, 14), "CHS": (10, 16), "RHE": (4, 16), "RPW": (0, 16), "CPW": (0, 19), "RDT": (12, 12)}
     PL = autoplace(fixed, anchors)
 elif PW == "G":
     fixed = {"JH": (-7.0, -6.0, 0), "JDIAL": (6.0, -10.0, 0), "HS1": (0.0, 15.0, 0)}     # HS1 at the board end under the trigger magnet
@@ -139,11 +141,19 @@ if errs or missing: sys.exit(1)
 NETID = {n: i for i, n in enumerate(sorted(D.NETS), 1)}
 def K(x, y): return f"{CX + x:.4f} {CY + y:.4f}"
 W, H = SIZE
-L = ["(kicad_pcb (version 20221018) (generator \"pf233_power_export\")", f"  (general (thickness 1.6) (legacy_teardrops no))", '  (paper "A4")', "  (layers",
-     '    (0 "F.Cu" signal) (1 "In1.Cu" signal) (2 "In2.Cu" signal) (31 "B.Cu" signal) (34 "B.Paste" user) (35 "F.Paste" user) (36 "B.SilkS" user "B.Silkscreen") (37 "F.SilkS" user "F.Silkscreen")',
-     '    (38 "B.Mask" user) (39 "F.Mask" user) (40 "Dwgs.User" user "User.Drawings") (41 "Cmts.User" user "User.Comments") (44 "Edge.Cuts" user) (47 "F.CrtYd" user "F.Courtyard") (49 "F.Fab" user))',
-     '  (setup (pad_to_mask_clearance 0.05) (stackup (layer "F.Cu" (type "copper") (thickness 0.07)) (layer "dielectric 1" (type "prepreg") (thickness 0.2)) (layer "In1.Cu" (type "copper") (thickness 0.035)) '
-     '(layer "dielectric 2" (type "core") (thickness 1.0)) (layer "In2.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 3" (type "prepreg") (thickness 0.2)) (layer "B.Cu" (type "copper") (thickness 0.07)) (copper_finish "HASL lead-free")))', '  (net 0 "")']
+if PW == "U":     # AU1: 6 layers (F, In1 GND, In2 signal, In3 +5V_AU, In4 +3V3_AU, B; route_run.py): the fine-pitch MCU / amplifiers escape on F / In2 / B with plane stubs
+    L = ["(kicad_pcb (version 20221018) (generator \"pf233_power_export\")", "  (general (thickness 1.6) (legacy_teardrops no))", '  (paper "A4")', "  (layers",
+         '    (0 "F.Cu" signal) (1 "In1.Cu" signal) (2 "In2.Cu" signal) (3 "In3.Cu" signal) (4 "In4.Cu" signal) (31 "B.Cu" signal) (34 "B.Paste" user) (35 "F.Paste" user) (36 "B.SilkS" user "B.Silkscreen") (37 "F.SilkS" user "F.Silkscreen")',
+         '    (38 "B.Mask" user) (39 "F.Mask" user) (40 "Dwgs.User" user "User.Drawings") (41 "Cmts.User" user "User.Comments") (44 "Edge.Cuts" user) (47 "F.CrtYd" user "F.Courtyard") (49 "F.Fab" user))',
+         '  (setup (pad_to_mask_clearance 0.05) (stackup (layer "F.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 1" (type "prepreg") (thickness 0.2)) (layer "In1.Cu" (type "copper") (thickness 0.035)) '
+         '(layer "dielectric 2" (type "core") (thickness 0.4)) (layer "In2.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 3" (type "prepreg") (thickness 0.2)) (layer "In3.Cu" (type "copper") (thickness 0.035)) '
+         '(layer "dielectric 4" (type "core") (thickness 0.4)) (layer "In4.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 5" (type "prepreg") (thickness 0.2)) (layer "B.Cu" (type "copper") (thickness 0.035)) (copper_finish "HASL lead-free")))', '  (net 0 "")']
+else:
+    L = ["(kicad_pcb (version 20221018) (generator \"pf233_power_export\")", f"  (general (thickness 1.6) (legacy_teardrops no))", '  (paper "A4")', "  (layers",
+         '    (0 "F.Cu" signal) (1 "In1.Cu" signal) (2 "In2.Cu" signal) (31 "B.Cu" signal) (34 "B.Paste" user) (35 "F.Paste" user) (36 "B.SilkS" user "B.Silkscreen") (37 "F.SilkS" user "F.Silkscreen")',
+         '    (38 "B.Mask" user) (39 "F.Mask" user) (40 "Dwgs.User" user "User.Drawings") (41 "Cmts.User" user "User.Comments") (44 "Edge.Cuts" user) (47 "F.CrtYd" user "F.Courtyard") (49 "F.Fab" user))',
+         '  (setup (pad_to_mask_clearance 0.05) (stackup (layer "F.Cu" (type "copper") (thickness 0.07)) (layer "dielectric 1" (type "prepreg") (thickness 0.2)) (layer "In1.Cu" (type "copper") (thickness 0.035)) '
+         '(layer "dielectric 2" (type "core") (thickness 1.0)) (layer "In2.Cu" (type "copper") (thickness 0.035)) (layer "dielectric 3" (type "prepreg") (thickness 0.2)) (layer "B.Cu" (type "copper") (thickness 0.07)) (copper_finish "HASL lead-free")))', '  (net 0 "")']
 for n, i in NETID.items(): L.append(f'  (net {i} "{n}")')
 own = {}
 for k, v in D.NETS.items():
@@ -161,7 +171,7 @@ for p in D.PARTS:
         else: L.append(f'    (pad "{n}" smd {"rect" if shp == "rect" else "roundrect"} (at {px:.3f} {py:.3f}{" " + str(rot) if rot else ""}) (size {w:.3f} {h:.3f}) (layers "F.Cu" "F.Paste" "F.Mask") (net {nid} "{net or ""}"))')
     L.append("  )")
 L.append(f'  (gr_rect (start {CX - W / 2:.3f} {CY - H / 2:.3f}) (end {CX + W / 2:.3f} {CY + H / 2:.3f}) (stroke (width 0.1) (type default)) (fill none) (layer "Edge.Cuts"))')
-for nm, lyr in (("GND", "In1.Cu"), ("VBUS", "In2.Cu")):
+for nm, lyr in ((("GND", "In1.Cu"), ("+5V_AU", "In3.Cu"), ("+3V3_AU", "In4.Cu")) if PW == "U" else (("GND", "In1.Cu"), ("VBUS", "In2.Cu"))):     # plane zones = the router's plane nets
     if nm in NETID:
         poly = f"(xy {CX - W / 2 + 0.5:.2f} {CY - H / 2 + 0.5:.2f}) (xy {CX + W / 2 - 0.5:.2f} {CY - H / 2 + 0.5:.2f}) (xy {CX + W / 2 - 0.5:.2f} {CY + H / 2 - 0.5:.2f}) (xy {CX - W / 2 + 0.5:.2f} {CY + H / 2 - 0.5:.2f})"
         L.append(f'  (zone (net {NETID[nm]}) (net_name "{nm}") (layer "{lyr}") (hatch edge 0.5) (connect_pads (clearance 0.3)) (min_thickness 0.25) (fill yes (mode hatch) (hatch_thickness 0.3) (hatch_gap 1.5) (hatch_orientation 0) (hatch_smoothing_level 0) (hatch_smoothing_value 0.1) (hatch_border_algorithm hatch_thickness) (hatch_min_hole_area 0.3) (thermal_gap 0.3) (thermal_bridge_width 0.5)) (polygon (pts {poly})))')

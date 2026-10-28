@@ -355,6 +355,16 @@ d=rd("kit_v23/au1_check.json")
 if d: chk("AU1 audio board: every electrical cross-check passes (buck 5 V, inductor peak, LDO dropout, amp swing, fuse, harness ends)",all(c["result"]=="PASS" for c in d["checks"]) and len(d["checks"])>=20,
           f"{len(d['checks'])} checks; buck {d['operating']['buck_V']} V, L peak {d['operating']['ipk_A']} A, input {d['operating']['iin_A']} A")
 else: skip("AU1 cross-check")
+# receive DSP reference (src/sim/dsp_ref.py): tau estimator at the Cramer-Rao bound, class / bearing at SNR 10, ground rejection with the held-ground ridge fit
+d=rd("kit_v23/dsp_ref.json")
+if d: _a=d["accuracy_vs_snr"]; chk("DSP reference: tau error within 1.5 x Cramer-Rao at SNR 30, class >= 80 % and bearing <= 5 deg at SNR 10, 0 false detections over varying ground, small gold over ground found",
+          d["ok"], f"tau/CRB {_a['30']['tau_err_rms_over_crb']}, class {_a['10']['class_correct_pct']} %, bearing {_a['10']['bearing_err_median_deg']} deg, ground false {d['ground_rejection']['false_rate_pct']} %")
+else: skip("DSP reference")
+# firmware host tests (fw/, make -C fw test): C core = Python reference, AU1 voice, end-to-end head <-> link <-> AU1
+d=rd("kit_v23/fw_test.json")
+if d: chk("firmware host tests: C DSP = Python reference, AU1 voice, end-to-end (silent over ground, class, side, one centre event, mode rules), all with -Werror",d["ok"] and d["total_checks"]>=60,
+          "; ".join(f"{k.split()[0]} {v['checks']}/{v['fails']} fail" for k,v in d["tests"].items()))
+else: skip("firmware host tests")
 # KiCad pad geometry = placement model, pad by pad (src/pcb/pad_orient_check.py): the KiCad pad angle is absolute; a missing angle left rotated pads unrotated
 d=rd("kit_v22/pad_orient_check.json")
 if d: _b=d["boards"]; chk("KiCad pads = placement model on LB1, CB1D, PB1R, PM2, HB2, AU1 (centre and size within 0.005 mm)",len(_b)==6 and all(v["ok"] for v in _b.values()),"; ".join(f"{k} {v.get('pads_compared')} pads {v.get('mismatches')} off" for k,v in _b.items()))

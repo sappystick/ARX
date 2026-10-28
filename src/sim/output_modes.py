@@ -34,12 +34,12 @@ I2C_HZ = 400e3; GYRO_BITS = 9 * 5 + 2; GYRO_US = GYRO_BITS / I2C_HZ * 1e6       
 WINDOW_MS = 30.0                                                                         # averaging window per mode (ASSUMPTIONS 39): trade against depth gain (ENHANCEMENT_REVIEW s.2)
 SYNTH_MS = 2.0                                                                           # handle synth buffer (64 samples at 32 kHz), ASSUMED
 THRESH = 4.0; SNR_FULL = 1000.0; FWD = 358.0; FS = 22050
-CLASSES = {  # id, LED colour (R, G, B on/off), voice timbre, fixed pitch (None = from tau)
-    "iron":                        (0, (1, 0, 0), "iron",  110.0),
-    "foil / tiny":                 (1, (1, 0, 1), "chirp", None),
-    "small gold or pull-tab zone": (2, (1, 1, 0), "gold",  None),
-    "medium gold":                 (3, (0, 1, 0), "gold",  None),
-    "large gold / coin":           (4, (0, 1, 1), "bell",  None)}
+CLASSES = {  # id (= the DSP class id of dsp_ref.CLASSES and the firmware), LED colour (R, G, B on/off), voice timbre, fixed pitch (None = from tau)
+    "foil / tiny":                 (0, (1, 0, 1), "chirp", None),
+    "small gold or pull-tab zone": (1, (1, 1, 0), "gold",  None),
+    "medium gold":                 (2, (0, 1, 0), "gold",  None),
+    "large gold / coin":           (3, (0, 1, 1), "bell",  None),
+    "iron":                        (4, (1, 0, 0), "iron",  110.0)}
 MODES = ("AUDIO_ONLY", "LED_ONLY", "COMBINED")
 def pitch(tau_us): return 1200.0 * 2 ** (-0.8 * math.log10(max(tau_us, 1.0)))
 def snr_code(snr): return 0 if snr < THRESH else max(1, min(31, round(1 + 30 * math.log10(snr / THRESH) / math.log10(SNR_FULL / THRESH))))

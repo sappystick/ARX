@@ -153,9 +153,20 @@ class Router:
             if p["net"]: bynet.setdefault(p["net"],[]).append(k)
         def save():
             if state: pickle.dump(dict(own=s.own,tracks=s.tracks,vias=s.vias,fail=s.fail,done=s.done,stub_done=s.stub_done),open(state,"wb"))
+        # learned stub-first pads (opt-in, AU1 reorder rounds): plane stubs of pads whose stub failed in an earlier round go before everything else
+        for k in range(len(s.pads)):
+            p_ = s.pads[k]
+            if p_["net"] in s.planes and (p_["ref"] + "." + p_["num"]) in getattr(s, "stub_first", set()) and k not in s.stub_done:
+                if not s.plane_stub(p_["net"], k): s.fail.append((p_["net"], "stub", p_["ref"] + "." + p_["num"]))
+                s.stub_done.add(k)
         # nets on fine-pitch pads go before the plane stubs: a stub from the neighbouring pad otherwise takes the only escape of a 0.5 mm-pitch middle pad
         # (boards without fine pads: no such net, order unchanged)
-        for net in sorted({s.pads[k]["net"] for k in range(len(s.pads)) if s.pads[k].get("fine") and s.pads[k]["net"] and s.pads[k]["net"] not in s.planes and not s.pads[k]["net"].endswith("_NC")}):
+        _fine = {s.pads[k]["net"] for k in range(len(s.pads)) if s.pads[k].get("fine") and s.pads[k]["net"] and s.pads[k]["net"] not in s.planes and not s.pads[k]["net"].endswith("_NC")}
+        if getattr(s, "fine_order", "alpha") == "span":     # opt-in (AU1): priority nets first, then the shortest; default alphabetical keeps CB1D's route unchanged
+            _sp = lambda n: (lambda ks: (max(s.pads[k]["x"] for k in ks) - min(s.pads[k]["x"] for k in ks)) + (max(s.pads[k]["y"] for k in ks) - min(s.pads[k]["y"] for k in ks)))(bynet[n])
+            _fine = sorted(_fine, key=lambda n: (0 if n in getattr(s, "priority", []) else 1, _sp(n)))
+        else: _fine = sorted(_fine)
+        for net in _fine:
             if net in s.done or len(bynet[net]) < 2: continue
             ok=s.route_net(net,bynet[net]); s.done.add(net)
             if not ok: s.fail.append((net,"net",len(bynet[net])))
