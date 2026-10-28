@@ -1502,6 +1502,26 @@
 "work/kit_v22/models3d_check.json"
 ]
 },
+"output-modes": {
+"L": [],
+"R": [
+"work/kit_v18/SET/02_CORE_PCB_CYLINDER/PIXEL_MAP_66.csv",
+"work/kit_v23/fw_timeline.json",
+"work/output_modes.py"
+],
+"W": [
+"work/kit_v23/OUT_AUDIO/below_threshold.wav",
+"work/kit_v23/OUT_AUDIO/coin_shallow.wav",
+"work/kit_v23/OUT_AUDIO/foil_shallow.wav",
+"work/kit_v23/OUT_AUDIO/gold_30g_mid.wav",
+"work/kit_v23/OUT_AUDIO/gold_3g_deep.wav",
+"work/kit_v23/OUT_AUDIO/iron_nail.wav",
+"work/kit_v23/OUT_AUDIO/nugget_1kg_deep.wav",
+"work/kit_v23/output_modes.json",
+"work/kit_v23/output_modes.png",
+"work/kit_v23/pf233_output.h"
+]
+},
 "pad-orient": {
 "L": [],
 "R": [

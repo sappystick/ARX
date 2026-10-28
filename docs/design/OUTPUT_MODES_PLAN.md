@@ -1,4 +1,4 @@
-# Output modes: audio only / LED only / combined (PLAN, 2026-10-28, not started; owner approval pending)
+# Output modes: audio only / LED only / combined (PLAN 2026-10-28; step 1 APPROVED and done: src/sim/output_modes.py, kit_v23/pf233_output.h)
 
 Owner request: a 3-position selector (audio only, LED only, combined), silent search with a coded audio signature only over a target (tone, depth,
 length, volume by metal class), the same signature mirrored on the 66 LEDs (colour, direction, brightness), a small loud speaker on the handle, and
@@ -29,7 +29,9 @@ optionally Bluetooth / bone-conduction headphones. Goal: the least change to the
 2. Selector: a 3-position rotary switch on the grip next to the existing 4-position dial, wired into the SAME DIAL ladder (4 x 3 = 12 ADC levels, values
    chosen so every level is separated with resistor tolerance and P3V3 drift; extend trigger_check.py). No new conductor, no cord change.
    (On the battery side instead: one extra wire in the 0.2 m grip rear channel.)
-3. Audio path, wired (lowest latency): Pico PWM (one or two free GPIOs) -> RC filter on CB1D -> JTR.5 -> spare cord core 5 (new harness W067) -> HB2 JH.5
+3. Audio path, wired (lowest latency). REVISED in step 1: the head sends NO audio waveform (a PWM carrier on CB1D would switch next to the coils during every
+   gate); it sends the 10-byte target descriptor as a 1 Mbaud UART burst in the idle slot (100 us, after the LED frame), and a small MCU on the handle audio
+   board synthesises the voice. Path: Pico UART TX (free GPIO) -> 33 R series on CB1D -> JTR.5 -> spare cord core 5 (new harness W067) -> HB2 JH.5
    -> 0.2 m lead in the grip rear channel -> small audio board in the battery-side housing: class-D amplifier powered from the pack (not from the AWG28
    P3V3 core: amplifier current on that core would shift the dial reading), small sealed speaker, 3.5 mm jack whose plug mutes the speaker (wired or
    wired bone-conduction headphones). PM2 change limited to a fused, switched 2-pin power tap. Parts and ratings to be taken from datasheets (rule 7).
@@ -49,3 +51,11 @@ optionally Bluetooth / bone-conduction headphones. Goal: the least change to the
 | Housing | speaker grille, jack, selector holes (generators) | upper assembly rev |
 
 Releases: TX_r6 after CB1D / HB2 / PM2 change; the whole-system package stays held until the owner says the open work is done.
+
+## Step 1 result (2026-10-28, MODELED; src/sim/output_modes.py, regress row)
+- All three modes keep every LED frame (272 us) and link burst (100 us) inside the idle slot: scan margin 271 us (LED_ONLY / COMBINED), 543 us (AUDIO_ONLY).
+- Latency with a 30 ms averaging window: 33.3 / 33.7 / 34.5 ms (scan / mid / boost) against the 50 ms target; Bluetooth not included (UNVERIFIED).
+- LED rail: 12 full-strength targets would need 0.777 A; the renderer's current cap holds every frame <= 0.35 A (worst 0.317 A).
+- Silent below 4 sigma (no sound, no lit LED); five classes with distinct colours and voices (iron 110 Hz, foil chirp, small gold about 600 Hz,
+  medium gold about 400 Hz, large gold / coin bell 230-310 Hz). Pitch falls with tau per ENHANCEMENT_REVIEW s.7 (the archived audio_dsp.py rose with tau).
+- WAV previews: work/kit_v23/OUT_AUDIO/*.wav (generated, not published).

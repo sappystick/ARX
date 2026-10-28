@@ -1,0 +1,357 @@
+{
+ "status": "MODELED: firmware renderers in Python; grayscale-255 edge-free drive UNVERIFIED; latency excludes Bluetooth (UNVERIFIED)",
+ "constants": {
+  "led_frame_us": 272.0,
+  "uart_baud": 1000000,
+  "link_bytes": 10,
+  "uart_us": 100.0,
+  "window_ms": 30.0,
+  "synth_ms": 2.0,
+  "i_code31_mA": 18.0,
+  "i_cap_A": 0.35,
+  "threshold_sigma": 4.0,
+  "worst_uncapped_A": 0.777
+ },
+ "modes": {
+  "AUDIO_ONLY": {
+   "led": "one all-off frame on entry, then no LED clock, data or current",
+   "audio": "live voice from every descriptor",
+   "receive_noise": "lowest: no LED current"
+  },
+  "LED_ONLY": {
+   "led": "lit during sweeps, refreshed every period in the idle slot; channels 0 / 255, brightness by the 5-bit current field",
+   "audio": "muted (descriptor still sent, voice off)"
+  },
+  "COMBINED": {
+   "led": "dark during sweeps (one all-off frame), lit and refreshed between sweeps",
+   "audio": "live voice from every descriptor"
+  }
+ },
+ "prf": {
+  "scan": {
+   "period_us": 1250.0,
+   "rx_end_us": 449.2,
+   "idle_slot_end_us": 1092.3,
+   "n_avg": 24,
+   "latency_ms": 33.25,
+   "schedule": {
+    "AUDIO_ONLY": [
+     {
+      "what": "descriptor UART",
+      "t0_us": 449.2,
+      "t1_us": 549.2
+     }
+    ],
+    "LED_ONLY": [
+     {
+      "what": "led frame",
+      "t0_us": 449.2,
+      "t1_us": 721.2
+     },
+     {
+      "what": "descriptor UART",
+      "t0_us": 721.2,
+      "t1_us": 821.2
+     }
+    ],
+    "COMBINED": [
+     {
+      "what": "descriptor UART",
+      "t0_us": 449.2,
+      "t1_us": 549.2
+     },
+     {
+      "what": "led frame (between sweeps only)",
+      "t0_us": 549.2,
+      "t1_us": 821.2
+     }
+    ]
+   },
+   "slot_margin_us": {
+    "AUDIO_ONLY": 543.1,
+    "LED_ONLY": 271.1,
+    "COMBINED": 271.1
+   },
+   "ok": true
+  },
+  "mid": {
+   "period_us": 1666.7,
+   "rx_end_us": 449.2,
+   "idle_slot_end_us": 1449.3,
+   "n_avg": 18,
+   "latency_ms": 33.67,
+   "schedule": {
+    "AUDIO_ONLY": [
+     {
+      "what": "descriptor UART",
+      "t0_us": 449.2,
+      "t1_us": 549.2
+     }
+    ],
+    "LED_ONLY": [
+     {
+      "what": "led frame",
+      "t0_us": 449.2,
+      "t1_us": 721.2
+     },
+     {
+      "what": "descriptor UART",
+      "t0_us": 721.2,
+      "t1_us": 821.2
+     }
+    ],
+    "COMBINED": [
+     {
+      "what": "descriptor UART",
+      "t0_us": 449.2,
+      "t1_us": 549.2
+     },
+     {
+      "what": "led frame (between sweeps only)",
+      "t0_us": 549.2,
+      "t1_us": 821.2
+     }
+    ]
+   },
+   "slot_margin_us": {
+    "AUDIO_ONLY": 900.1,
+    "LED_ONLY": 628.1,
+    "COMBINED": 628.1
+   },
+   "ok": true
+  },
+  "boost": {
+   "period_us": 2500.0,
+   "rx_end_us": 449.2,
+   "idle_slot_end_us": 2180.2,
+   "n_avg": 12,
+   "latency_ms": 34.5,
+   "schedule": {
+    "AUDIO_ONLY": [
+     {
+      "what": "descriptor UART",
+      "t0_us": 449.2,
+      "t1_us": 549.2
+     }
+    ],
+    "LED_ONLY": [
+     {
+      "what": "led frame",
+      "t0_us": 449.2,
+      "t1_us": 721.2
+     },
+     {
+      "what": "descriptor UART",
+      "t0_us": 721.2,
+      "t1_us": 821.2
+     }
+    ],
+    "COMBINED": [
+     {
+      "what": "descriptor UART",
+      "t0_us": 449.2,
+      "t1_us": 549.2
+     },
+     {
+      "what": "led frame (between sweeps only)",
+      "t0_us": 549.2,
+      "t1_us": 821.2
+     }
+    ]
+   },
+   "slot_margin_us": {
+    "AUDIO_ONLY": 1631.0,
+    "LED_ONLY": 1359.0,
+    "COMBINED": 1359.0
+   },
+   "ok": true
+  }
+ },
+ "targets": [
+  {
+   "name": "gold_3g_deep",
+   "cls": "small gold or pull-tab zone",
+   "tau_us": 18,
+   "snr": 9,
+   "depth": 1,
+   "bearing": 20,
+   "voice": {
+    "kind": "gold",
+    "f_hz": 598.2,
+    "amp": 0.272,
+    "attack_ms": 85,
+    "length_ms": 210.0,
+    "pan": -0.375
+   },
+   "led_lit": [
+    0,
+    1,
+    11
+   ],
+   "led_codes": [
+    5,
+    1,
+    1
+   ],
+   "led_current_A": 0.0741
+  },
+  {
+   "name": "gold_30g_mid",
+   "cls": "medium gold",
+   "tau_us": 95,
+   "snr": 60,
+   "depth": 2,
+   "bearing": 300,
+   "voice": {
+    "kind": "gold",
+    "f_hz": 400.8,
+    "amp": 0.42,
+    "attack_ms": 60,
+    "length_ms": 352.0,
+    "pan": 0.848
+   },
+   "led_lit": [
+    25,
+    26,
+    27
+   ],
+   "led_codes": [
+    5,
+    16,
+    5
+   ],
+   "led_current_A": 0.0811
+  },
+  {
+   "name": "nugget_1kg_deep",
+   "cls": "large gold / coin",
+   "tau_us": 900,
+   "snr": 40,
+   "depth": 1,
+   "bearing": 90,
+   "voice": {
+    "kind": "bell",
+    "f_hz": 233.2,
+    "amp": 0.388,
+    "attack_ms": 85,
+    "length_ms": 310.0,
+    "pan": -0.999
+   },
+   "led_lit": [
+    1,
+    2,
+    3
+   ],
+   "led_codes": [
+    4,
+    14,
+    4
+   ],
+   "led_current_A": 0.0915
+  },
+  {
+   "name": "coin_shallow",
+   "cls": "large gold / coin",
+   "tau_us": 260,
+   "snr": 800,
+   "depth": 4,
+   "bearing": 200,
+   "voice": {
+    "kind": "bell",
+    "f_hz": 314.5,
+    "amp": 0.623,
+    "attack_ms": 10,
+    "length_ms": 600.0,
+    "pan": 0.375
+   },
+   "led_lit": [
+    59,
+    60,
+    61
+   ],
+   "led_codes": [
+    10,
+    30,
+    10
+   ],
+   "led_current_A": 0.1241
+  },
+  {
+   "name": "foil_shallow",
+   "cls": "foil / tiny",
+   "tau_us": 6,
+   "snr": 150,
+   "depth": 4,
+   "bearing": 10,
+   "voice": {
+    "kind": "chirp",
+    "f_hz": 779.4,
+    "amp": 0.492,
+    "attack_ms": 10,
+    "length_ms": 487.0,
+    "pan": -0.208
+   },
+   "led_lit": [
+    54,
+    55,
+    65
+   ],
+   "led_codes": [
+    21,
+    7,
+    7
+   ],
+   "led_current_A": 0.1066
+  },
+  {
+   "name": "iron_nail",
+   "cls": "iron",
+   "tau_us": 400,
+   "snr": 300,
+   "depth": 3,
+   "bearing": 140,
+   "voice": {
+    "kind": "iron",
+    "f_hz": 110.0,
+    "amp": 0.546,
+    "attack_ms": 35,
+    "length_ms": 600.0,
+    "pan": -0.616
+   },
+   "led_lit": [
+    38,
+    39,
+    40
+   ],
+   "led_codes": [
+    8,
+    24,
+    8
+   ],
+   "led_current_A": 0.0892
+  },
+  {
+   "name": "below_threshold",
+   "cls": "medium gold",
+   "tau_us": 95,
+   "snr": 3.2,
+   "depth": 2,
+   "bearing": 45,
+   "voice": null,
+   "led_lit": [],
+   "led_codes": [],
+   "led_current_A": 0.066
+  }
+ ],
+ "checks": {
+  "idle_slot_all_modes": true,
+  "latency_le_50ms": true,
+  "led_rail_le_cap": true,
+  "worst_led_A": 0.317,
+  "silent_search": true,
+  "distinct_led_colours": true,
+  "distinct_voices": true,
+  "gray_only_0_255": true
+ },
+ "ok": true
+}

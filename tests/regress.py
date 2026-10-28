@@ -333,6 +333,12 @@ try:
     chk("fab margin audit: all 11 released boards at or above every floor (copper gap, HV 1.0 mm, edge, drill-drill, drill-copper, via / PTH ring, track)",len(_fm)==11 and all(b["pass"] for b in _fm.values()),
         "; ".join(f"{k} {b['min_margin_mm']} ({b['min_margin_of']})" for k,b in _fm.items()))
 except FileNotFoundError: chk("fab margin audit evidence (data/results/fab_margin_audit.json)",False,"missing")
+# output modes step 1 (src/sim/output_modes.py): audio / LED renderers from one descriptor; idle slot, latency, LED rail cap, silent search, distinct voices and colours
+d=rd("kit_v23/output_modes.json")
+if d: chk("output modes (AUDIO_ONLY / LED_ONLY / COMBINED): LED and link bursts only in the idle slot, latency <= 50 ms, LED rail <= 0.35 A, silent below threshold, distinct voices / colours, grayscale 0 / 255",
+          d["ok"] and set(d["prf"])=={"scan","mid","boost"} and all(len(p["schedule"])==3 for p in d["prf"].values()),
+          f"worst LED {d['checks']['worst_led_A']} A (uncapped {d['constants']['worst_uncapped_A']}), latency {[p['latency_ms'] for p in d['prf'].values()]} ms")
+else: skip("output modes model")
 # KiCad pad geometry = placement model, pad by pad (src/pcb/pad_orient_check.py): the KiCad pad angle is absolute; a missing angle left rotated pads unrotated
 d=rd("kit_v22/pad_orient_check.json")
 if d: _b=d["boards"]; chk("KiCad pads = placement model on LB1, CB1D, PB1R, PM2, HB2 (centre and size within 0.005 mm)",len(_b)==5 and all(v["ok"] for v in _b.values()),"; ".join(f"{k} {v.get('pads_compared')} pads {v.get('mismatches')} off" for k,v in _b.items()))
