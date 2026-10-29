@@ -151,7 +151,9 @@ if __name__ == "__main__":
                     brg = None; wc = np.array([w for w in wcal if w[0] >= 0.16]); how = "mono sweep width"
                     d_est = float(np.interp(width, wc[:, 1], wc[:, 0])) if width > wc[0, 1] else 0.16; how += "" if width > wc[0, 1] else " (width at the coil-size floor: depth <= 160 mm)"
                 out.update(tau_us=round(tau * 1e6, 1), cls=klass(tau), quad_snr=round(ro["quad_snr"], 1), bearing_axis_deg=round(brg, 1) if brg is not None else "beyond quadrupole range",
-                           depth_method=how, depth_est_mm=round(d_est * 1e3), mono_width_mm=round(width * 1e3), mass_est_g=round(est_mass(mpk, d_est), 2), output=output_map(T, tau, brg if brg is not None else 90.0))
+                           depth_method=how, depth_est_mm=round(d_est * 1e3), mono_width_mm=round(width * 1e3), output=output_map(T, tau, brg if brg is not None else 90.0))
+                if "floor" in how: out.update(depth_est_mm="<= 160", mass_upper_bound_g=round(est_mass(mpk, d_est), 2))   # shallower than 160 mm means a smaller target for the same signal
+                else: out.update(mass_est_g=round(est_mass(mpk, d_est), 2))
             if tgt: out["true_tau_us"] = round(mu0 * 4.1e7 * ((3 * tgt["g"] * 1e-3 / (4 * np.pi * 19300)) ** (1 / 3)) ** 2 / np.pi ** 2 * 1e6, 1)
             res["runs"].append(out); print(json.dumps(out), flush=True)
     res["seconds"] = round(time.time() - t0, 1)

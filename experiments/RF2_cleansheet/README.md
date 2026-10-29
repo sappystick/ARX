@@ -75,3 +75,55 @@ Owner: targets of 1 g and up only. Same physics and equal energy per pulse (10.8
   (as the SDC has); the QUAD and figure-8 cancel uniform ground only while the head stays level and at constant height. Hot rocks, layering and
   sweep tilt are not modeled. Also not modeled: the mono's damping-resistor noise and preamp overload recovery (the 1.7 nV/rtHz is generous to both
   monos), self-capacitance, eddy currents in the compute bay.
+
+## Step 3: mineralised ground and how to cancel it (`rf2_ground.py`, `results/rf2_ground.{json,png}`)
+Ground model (Born approximation, uniform magnetically viscous half-space, ASSUMED parameters swept): emf = I chi_v / mu0 x G(h, tilt) x [t^-a - (t+T)^-a];
+G = integral of Bt . Br over the ground. Varies while sweeping: height 15-45 mm, tilt about 3 deg, exponent a = 1 +- 0.03, patchy amplitude x lognormal(0, 0.3).
+chi_v 2e-6 / 2e-5 / 2e-4 (mild / moderate / severe) is an ASSUMED order of magnitude, not a measured soil. Optimal linear detectors (SINR = s' R^-1 s).
+
+| 1 g depth (mm) | none | mild | moderate | severe |
+|---|---|---|---|---|
+| D1 mono, no ground balance | 362 | 0 | 0 | 0 |
+| D2 mono, time-domain balance | 366 | 244 | 221 | 204 |
+| **D3 mono, multi-period (PWM flat-top) balance** | 367 | **249** | **228** | **221** |
+| D4 quadrupole pair only, no balance | 137 | 128 | 88 | 0 |
+| D5 / D6 mono + QA + QB space-time (with / without multi-period) | = D2 / D3 | | | |
+| D7 + dual transmit (inner coil, alternate pulses) | 350 | 239 | 220 | 212 |
+| SDC 2300-class 8 in mono, multi-period (equal electronics) | 342 | 235 | 216 | 209 |
+
+- The quadrupole sees uniform ground only through tilt, at second order (level ground: 1e-29 vs the mono's 4e-11; 3 deg tilt about 1e-3 of the mono).
+- In uniform ground the time signature does the work: multi-period (two PWM on-times) is the best method; the quadrupole array and dual transmit add nothing
+  (dual transmit splits the pulses and loses a little).
+- What costs depth is the spread of the ground's decay exponent: tracking it (severe ground, 1 g) 0.03 -> 0.01 -> 0.003 -> 0: 221 -> 227 -> 249 -> 274 mm.
+  Even a perfectly known exponent leaves about 25 % loss against no ground: the unknown 1/t amplitude overlaps the target's decay.
+
+## Step 4: a firmware-style ground-tracking detector on simulated sweeps (`rf2_ground_dsp.py`, `results/rf2_ground_dsp.json`)
+Frames of 36 numbers (mono at both PWM periods, QA / QB with both periods averaged: every pulse is received by every coil); ground learned as a low-rank
+subspace per receiver (eigen-directions above the electronic noise, EWMA, an 80-frame "ground pump" at switch-on, a guard window so a target's flanks are
+not learned, an anti-lock rule); GLRT over a bank of 12 decay constants, silent below the chi-square threshold (false-alarm rate 1e-5 per frame).
+- **0 false-alarm frames** on target-free sweeps over severe and moderate ground.
+- 1 g detected at 100, 150, 200 mm (severe and moderate); decay constant 27.3 us against 27.9 us true -> "small gold". 5 g at 250-280 mm and 20 g at
+  300 mm were NOT detected in one pass (peak statistic 20-24 vs threshold 25.9): the adaptive detector with a strict false-alarm rate reaches less than
+  the oracle study above.
+- Readouts, honestly: the quadrupole's single-pass range for 1 g is about 80-100 mm (noise-only check: SNR 29 / 4 / 0.5 at 60 / 100 / 150 mm), so bearing
+  and ratio depth only work close in; the mono response width resolves depth only beyond about 160 mm (the 230 mm coil sets a floor); between, depth
+  is "<= 160 mm" and size an upper bound. Next: a trigger-held pinpoint (boost + averaging) for bearing / depth / size, and the 100-160 mm gap.
+- Mistakes found and fixed on the way: rank 3 ground subspace (the ground needs about 7 directions: 79 of 81 frames falsely triggered); a quadrupole
+  "signal" that was the best of 81 noise frames (gate raised to SNR 5); a tracker that learned the target's flanks (guard window); quadrupole fed only
+  half the pulses.
+
+## Step 5: is every coil fully off when the receivers listen? (`rf2_timing.py`, `results/rf2_timing.json`)
+Two coupled coils with node capacitance, damping, clamp diode / capacitor and the switch's body diode; nonlinear part by ODE, linear tail exact (matrix
+exponential, resolved to 100 nV); preamp recovery 2 us and coil capacitance 500 pF ASSUMED.
+
+| Case (first clean gate, us) | mono | QUAD | current induced in idle coil B |
+|---|---|---|---|
+| rim coil alone, critical damping | **16.3** | 9.2 | - |
+| rim coil alone, baseline damping ratio (underdamped) | 24.8 | 13.5 | - |
+| + idle B wound the same sense | 21.7 | 11.6 | 0.34 A (through its damping only) |
+| + idle B wound the opposite sense | **36.7** | 24.0 | **1.5 A** (its switch's body diode conducts) |
+| + idle B, clamp not yet charged (first pulses) | 27.2 | 17.1 | 1.6 A |
+
+- The assumed 15 us mono gate holds for a critically damped mono (16.3 us): 1 g depth 363 vs 367 mm, severe ground 221 either way. Use critical damping.
+- Dual transmit needs: both coils wound the same sense, clamps pre-charged before the first pulse, and about 5 us more delay from the idle coil's damping.
+- Nothing is left at the 2.5 ms period (residual about 0).
