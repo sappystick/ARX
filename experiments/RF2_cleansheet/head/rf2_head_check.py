@@ -83,8 +83,11 @@ def main():
          "coil channel epoxy (fill around the litz, 1.15 g/cm3 ASSUMED)": max(0.0, (H.ring(S["channel"]["inner_wall_r"][1], S["shell"]["wall_r"][0], S["coil"]["floor_z"][1], S["coil"]["row0_z"] + 9 * S["coil"]["pitch"]).volume() - vol("LITZ") * 1000) / 1000 * 1.15),
          "hardware, cable gland, yoke lug (ASSUMED)": 40.0}
     base = sum(m.values()); pot_full = sum(pv[k] * dens[k] for k in pv); pot_isl = 0.5 * sum(vol(k) for k in isl) * 0.9
+    lp = os.path.join(OUT, "rf2_ledger.json")
+    if os.path.exists(lp):                                                 # the ledger's stated fill levels replace the islands-only estimate (coil epoxy is counted there too)
+        led = json.load(open(lp)); pot_isl = led["potting_g"] - next(r["fill_g"] for r in led["regions"] if r["region"] == "coil channel"); m.pop("coil channel epoxy (fill around the litz, 1.15 g/cm3 ASSUMED)", None); base = sum(m.values()) + next(r["fill_g"] for r in led["regions"] if r["region"] == "coil channel")
     res["checks"]["mass_g"] = dict(items={k: round(v, 1) for k, v in m.items()}, without_bay_potting=round(base), bay_full_fill_potting=round(pot_full), islands_only_potting=round(pot_isl),
-                                   total_islands_only=round(base + pot_isl), total_full_fill=round(base + pot_full), earlier_estimate=529,
+                                   potting_source="rf2_ledger.json stated fill levels" if os.path.exists(lp) else "islands-only estimate", total_islands_only=round(base + pot_isl), total_full_fill=round(base + pot_full), earlier_estimate=529,
                                    note="100 % infill PETG is an upper bound for the printed parts; the earlier 529 g estimate assumed a single 0.4 mm receive board, not the two 0.8 mm SB1R boards")
     res["ok"] = all(c.get("ok", True) for c in res["checks"].values() if isinstance(c, dict))
     res["vertical_budget_mm"] = dict(total=S["envelope"]["H"], bay=S["bay"]["z"], bay_height=round(S["bay"]["z"][1] - S["bay"]["z"][0], 1),

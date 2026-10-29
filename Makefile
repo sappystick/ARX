@@ -3,7 +3,7 @@
 PY ?= python3
 W  := work
 
-.PHONY: freeroute-fetch freeroute-selftest pipeline-ps signoff-bg pcb-au1 route-au1 drc-au1 kicad-au1 gerber-au1 viewer su-proof state state-deep step touch-check rx-board package route-pm2 drc-pm2 kicad-pm2 gerber-pm2 route-hb2 drc-hb2 kicad-hb2 gerber-hb2 signoff-serial signoff-cold pipeline-plan pipeline-graph sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
+.PHONY: rf2-signoff freeroute-fetch freeroute-selftest pipeline-ps signoff-bg pcb-au1 route-au1 drc-au1 kicad-au1 gerber-au1 viewer su-proof state state-deep step touch-check rx-board package route-pm2 drc-pm2 kicad-pm2 gerber-pm2 route-hb2 drc-hb2 kicad-hb2 gerber-hb2 signoff-serial signoff-cold pipeline-plan pipeline-graph sim-head1 sim-head2 pcb-hta publish signoff release-tx manifest-stl check-pb1r route-pb1r drc-pb1r kicad-pb1r gerber-pb1r kicad-drc upper pcb-pb1r tx-vbus pcb-hb1 pcb-hb2 pcb-pm2 sch yoke-check head-audit tx audit-system baseplate sbq-geom sbq sbq-fast drc-lb1 drc-cb1d kicad-lb1 kicad-cb1d gerber-cb1d pcb-release help setup clean formers-low formers-print v5 check hood yoke sims pcb-lb1 pcb-cb1d route-lb1 route-cb1d gerber-lb1 verify-quick verify-full
 
 help:
 	@echo "make setup           copy scripts, seed data and legacy board data into ./work"
@@ -103,6 +103,9 @@ freeroute-fetch:
 	scripts/fetch_freerouting.sh
 freeroute-selftest: freeroute-fetch
 	python3 tests/freeroute_selftest.py
+# RF2 clean-sheet head (side experiment): every RF2 step and check, STATUS_RF2.md (experiments/RF2_cleansheet/head/rf2_signoff.py; --cold re-routes all)
+rf2-signoff: freeroute-fetch
+	python3 experiments/RF2_cleansheet/head/rf2_signoff.py
 
 route-lb1: pcb-lb1
 	cd $(W) && for i in 1 2 3 4 5 6; do $(PY) route_run.py LB1; [ -f kit_v20/route_LB1.json ] && break; done; test -f kit_v20/route_LB1.json && $(PY) route_fix.py LB1 kit_v20/route_LB1.json

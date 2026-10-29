@@ -34,7 +34,7 @@ SPEC = dict(
     sectors=dict(hv=(156.0, 198.0), analog=(89.0, 156.0)),
     boards_inner=dict(   # board centre, size, board z, parts below / above (edge keep-outs 1.2 below, 0.4 above)
         AB1A=dict(kind="disc", c=pol(82.0, 106.0), r=20.0, z=(5.6, 7.2), below=1.0, above=3.0, hinge_deg=106.0 + 180.0,
-                  what="RF1 AB1A analog section (D40, 6-layer rigid with the 2-layer flex core), routed in RF1: 0 open, KiCad DRC clean"),
+                  what="RF1 AB1A analog section (D40, 6-layer rigid with the 2-layer flex core), routed in RF1: 0 open, KiCad DRC clean; mounted COMPONENT SIDE UP (its parts are on one side, 2.15 mm tall, measured on the RF1 mesh: they would hit the bay floor facing down)"),
         AB1B=dict(kind="disc", c=pol(82.0, 137.0), r=20.0, z=(5.6, 7.2), below=1.0, above=3.0, hinge_deg=137.0 + 180.0, what="RF1 AB1B analog section, routed in RF1"),
         CB1D=dict(kind="disc", c=(0.0, 0.0), r=39.0, z=(13.5, 15.1), below=2.0, above=4.4, what="RF1 CB1D section: RP2354A, LMR36015 buck, TLV755P (placed in RF1; route next)"),
         MP1=dict(kind="box", c=(-76.0, 14.0), size=(26.0, 18.0), z=(5.6, 7.2), below=1.0, above=3.4, what="NEW mono preamp: HV-tolerant input (630 V parts, >= 1.0 mm), output to AB1A"),
@@ -45,9 +45,13 @@ SPEC = dict(
     lid_windows=dict(d=3.0),
     gland=dict(c=pol(92.0, HEEL), d=8.0, boss_d=12.0, boss_z=(21.6, 23.9), what="shaft cable enters DOWN through the lid at the heel into the HV sector"),
     potting=dict(analog="low-permittivity gel", hv="high-dielectric-strength epoxy", digital="syntactic silicone", display="conformal coat only", coil="epoxy in the channel"),
-    ref_coil=dict(place="on the shaft, 0.6 m from the head", former="3 orthogonal rings, 80 mm, on a PETG frame", turns_per_axis=620, wire="0.15 mm enamelled (ASSUMED)",
-                  requirement="area-turns >= 3 x the mono per axis (rf2_emi.py)", note="REF noise with this winding not yet checked"),
+    ref_coil=dict(place="on the shaft, 0.6 m from the head", former="3 orthogonal windings, 100 mm, on a PETG frame", turns_per_axis=390, wire="0.20 mm enamelled copper",
+                  requirement="area-turns = 3 x the mono per axis (rf2_emi.py)", noise="2.0 nV/rtHz, depth cost 1.4 %, copper 104 g (rf2_ref3.py; the earlier 620 x 0.15 mm on 80 mm gave 2.32 nV/rtHz and 1.8 %)"),
 )
+# boards defined in the system netlist (rf2_netlist.py) take their size and place from it: one source of truth
+import rf2_netlist as _NL
+for _k in ("MP1", "TXJ"):
+    _b = _NL.BOARDS[_k]; SPEC["boards_inner"][_k]["c"] = tuple(_b["head"]["c"]); SPEC["boards_inner"][_k]["size"] = (_b["w"], _b["h"])
 # ------------------------------------------------------------------------------------------------ primitives
 def cyl(r, z0, z1, seg=SEG): return m3.Manifold.cylinder(z1 - z0, r, r, seg).translate([0, 0, z0])
 def ring(r0, r1, z0, z1): return cyl(r1, z0, z1) - cyl(r0, z0 - 0.1, z1 + 0.1)
@@ -132,7 +136,7 @@ def parts():
     P["LITZ"] = litz
     f = None
     for rot in ([0, 0, 0], [90, 0, 0], [0, 90, 0]):
-        x = ring(36, 40, -4, 4).rotate(rot); f = x if f is None else f + x
+        x = ring(46, 50, -4, 4).rotate(rot); f = x if f is None else f + x          # 100 mm windings (rf2_ref3.py)
     P["REF3_FORMER"] = f.translate([0, 0, 600])                        # 0.6 m up the shaft line (schematic position)
     return P
 def write_stl(man, path):

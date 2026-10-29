@@ -1,0 +1,124 @@
+(pcb "/home/user/ARX/experiments/RF2_cleansheet/head/out/TXJ/PF233-RF2-TXJ_fr/board.dsn"
+  (parser
+    (string_quote ")
+    (space_in_quoted_tokens on)
+    (host_cad "KiCad's Pcbnew")
+    (host_version "9.0.9-9.0.9~ubuntu24.04.1")
+  )
+  (resolution um 10)
+  (unit um)
+  (structure
+    (layer F.Cu
+      (type signal)
+      (property
+        (index 0)
+      )
+    )
+    (layer B.Cu
+      (type signal)
+      (property
+        (index 1)
+      )
+    )
+    (boundary
+      (path pcb 0  156000 -158000  144000 -158000  144000 -142000  156000 -142000
+            156000 -158000)
+    )
+    (keepout "" (polygon F.Cu 0  144000 -142000  156000 -142000  156000 -150000  155500 -150000
+            155500 -142500  144500 -142500  144500 -150000  144000 -150000
+            144000 -142000))
+    (keepout "" (polygon B.Cu 0  144000 -142000  156000 -142000  156000 -150000  155500 -150000
+            155500 -142500  144500 -142500  144500 -150000  144000 -150000
+            144000 -142000))
+    (keepout "" (polygon F.Cu 0  144000 -150000  144500 -150000  144500 -157500  155500 -157500
+            155500 -150000  156000 -150000  156000 -158000  144000 -158000
+            144000 -150000))
+    (keepout "" (polygon B.Cu 0  144000 -150000  144500 -150000  144500 -157500  155500 -157500
+            155500 -150000  156000 -150000  156000 -158000  144000 -158000
+            144000 -150000))
+    (via "Via[0-1]_600:300_um" "Via[0-1]_2000:1000_um")
+    (rule
+      (width 200)
+      (clearance 200)
+      (clearance 50 (type smd_smd))
+    )
+  )
+  (placement
+    (component RF2:WIRE_AWG18
+      (place JKA 146800.000000 -150600.000000 front 0.000000 (PN "cable A"))
+      (place JKB 153200.000000 -150600.000000 front 0.000000 (PN "cable B"))
+    )
+    (component RF2:WIRE_SENSE
+      (place JSB 153200.000000 -155000.000000 front 0.000000 (PN "sense B"))
+      (place JSA 146800.000000 -155000.000000 front 0.000000 (PN "sense A"))
+    )
+    (component RF2:WIRE_LITZ
+      (place JCA 146800.000000 -145000.000000 front 0.000000 (PN "coil A"))
+      (place JCB 153200.000000 -145000.000000 front 0.000000 (PN "coil B"))
+    )
+  )
+  (library
+    (image RF2:WIRE_AWG18
+      (pin Round[A]Pad_2800.000000_um 1 0 0)
+    )
+    (image RF2:WIRE_SENSE
+      (pin Round[A]Pad_1900.000000_um 1 0 0)
+    )
+    (image RF2:WIRE_LITZ
+      (pin Round[A]Pad_3000.000000_um 1 0 0)
+    )
+    (padstack Round[A]Pad_1900.000000_um
+      (shape (circle F.Cu 1900))
+      (shape (circle B.Cu 1900))
+      (attach off)
+    )
+    (padstack Round[A]Pad_2800.000000_um
+      (shape (circle F.Cu 2800))
+      (shape (circle B.Cu 2800))
+      (attach off)
+    )
+    (padstack Round[A]Pad_3000.000000_um
+      (shape (circle F.Cu 3000))
+      (shape (circle B.Cu 3000))
+      (attach off)
+    )
+    (padstack "Via[0-1]_600:300_um"
+      (shape (circle F.Cu 600))
+      (shape (circle B.Cu 600))
+      (attach off)
+    )
+    (padstack "Via[0-1]_2000:1000_um"
+      (shape (circle F.Cu 2000))
+      (shape (circle B.Cu 2000))
+      (attach off)
+    )
+  )
+  (network
+    (net TX_A
+      (pins JKA-1 JSA-1 JCA-1)
+    )
+    (net TX_B
+      (pins JKB-1 JSB-1 JCB-1)
+    )
+    (class kicad_default
+      (circuit
+        (use_via "Via[0-1]_600:300_um")
+      )
+      (rule
+        (width 200)
+        (clearance 200)
+      )
+    )
+    (class PULSE TX_A TX_B
+      (circuit
+        (use_via "Via[0-1]_2000:1000_um")
+      )
+      (rule
+        (width 2500)
+        (clearance 1000)
+      )
+    )
+  )
+  (wiring
+  )
+)

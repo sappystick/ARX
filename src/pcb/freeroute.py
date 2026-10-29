@@ -27,10 +27,17 @@ def java():
         except OSError: pass
     sys.exit("freeroute: Java 25+ not found (apt-get install openjdk-25-jre-headless, or set JAVA)")
 
-def set_rules(b, rules, hv, hv_clear):
+def set_rules(b, rules, hv, hv_clear, classes=()):
     import pcbnew
     tw, cl, vd, vdr = rules; ns = b.GetDesignSettings().m_NetSettings; d = ns.GetDefaultNetclass()
     d.SetTrackWidth(pcbnew.FromMM(tw)); d.SetClearance(pcbnew.FromMM(cl)); d.SetViaDiameter(pcbnew.FromMM(vd)); d.SetViaDrill(pcbnew.FromMM(vdr))
+    for name, cw, cc, nets in classes:                                   # --class NAME:track:clearance:NET,NET (e.g. wide pulse-current nets); an HV net keeps >= hv_clear
+        if any(n in hv for n in nets) and cc < hv_clear: sys.exit(f"freeroute: class {name} holds HV nets: clearance must be >= {hv_clear} mm")
+        c = pcbnew.NETCLASS(name); c.SetTrackWidth(pcbnew.FromMM(cw)); c.SetClearance(pcbnew.FromMM(cc)); c.SetViaDiameter(pcbnew.FromMM(max(vd, cw * 0.8)))
+        c.SetViaDrill(pcbnew.FromMM(max(vdr, cw * 0.4))); ns.SetNetclass(name, c)
+        for n in nets: ns.SetNetclassPatternAssignment(n, name)
+    hv = [n for n in hv if not any(n in cn for _, _, _, cn in classes)]
+    if classes and not hv: b.SynchronizeNetsAndNetClasses(True)
     if hv:
         c = pcbnew.NETCLASS("HV"); c.SetTrackWidth(pcbnew.FromMM(max(tw, 0.25))); c.SetClearance(pcbnew.FromMM(hv_clear))
         c.SetViaDiameter(pcbnew.FromMM(vd)); c.SetViaDrill(pcbnew.FromMM(vdr)); ns.SetNetclass("HV", c)
@@ -51,6 +58,8 @@ def main():
     ap.add_argument("--passes", type=int, default=100); ap.add_argument("--threads", type=int, default=1); ap.add_argument("--strip", action="store_true")
     ap.add_argument("--rip", default="", help="nets whose existing tracks and vias are removed first, so Freerouting reroutes them")
     ap.add_argument("--dsn-only", action="store_true", help="write the DSN (rules and classes as Freerouting will see them) and stop; for checks")
+    ap.add_argument("--no-neckdown", action="store_true", help="forbid Freerouting's automatic neck-down at pins (tracks keep their class width)")
+    ap.add_argument("--class", dest="classes", action="append", default=[], help="NAME:track_mm:clearance_mm:NET,NET (repeatable)")
     ap.add_argument("--report", default=""); ap.add_argument("--timeout", type=int, default=1800)
     a = ap.parse_args()
     if not os.path.exists(JAR): sys.exit(f"freeroute: {JAR} missing: run scripts/fetch_freerouting.sh")
@@ -58,7 +67,8 @@ def main():
     rules = [float(x) for x in a.rules.split(",")]; hv = [n for n in a.hv.split(",") if n]
     if hv and a.hv_clear < 1.0: sys.exit("freeroute: rule 6 needs --hv-clear >= 1.0 mm")
     b = pcbnew.LoadBoard(a.inp)
-    set_rules(b, rules, hv, a.hv_clear)
+    classes = [(c.split(":")[0], float(c.split(":")[1]), float(c.split(":")[2]), c.split(":")[3].split(",")) for c in a.classes]
+    set_rules(b, rules, hv, a.hv_clear, classes)
     rip = {x for x in a.rip.split(",") if x}
     if a.strip or rip:
         for t in [t for t in b.GetTracks() if a.strip or t.GetNetname() in rip]: b.Delete(t)      # Delete, not Remove: a removed track freed by Python's GC crashed pcbnew later
@@ -67,7 +77,7 @@ def main():
     dsn, ses, log = (os.path.join(work, "board." + e) for e in ("dsn", "ses", "log"))
     if not pcbnew.ExportSpecctraDSN(b, dsn): sys.exit("freeroute: DSN export failed")
     if a.dsn_only: print(dsn); return
-    cmd = [java(), "-jar", JAR, "-de", dsn, "-do", ses, "-mp", str(a.passes), "-mt", str(a.threads)] + FR_FLAGS
+    cmd = [java(), "-jar", JAR, "-de", dsn, "-do", ses, "-mp", str(a.passes), "-mt", str(a.threads)] + FR_FLAGS + (["--router.automatic_neckdown=false"] if a.no_neckdown else [])
     t0 = time.time()
     with open(log, "w") as lf:
         r = subprocess.run(cmd, stdout=lf, stderr=subprocess.STDOUT, timeout=a.timeout, cwd=work)
@@ -78,7 +88,7 @@ def main():
     pcbnew.SaveBoard(a.out, b)
     rep = dict(tool="freerouting", version=VERSION, jar_sha256=jar_sha(), input=os.path.relpath(a.inp, ROOT) if a.inp.startswith(ROOT) else a.inp,
                output=os.path.relpath(os.path.abspath(a.out), ROOT), rules_mm=dict(track=rules[0], clearance=rules[1], via=rules[2], drill=rules[3]),
-               hv_nets=hv, hv_clear_mm=a.hv_clear if hv else None, passes=a.passes, threads=a.threads, stripped=a.strip, ripped=sorted(rip),
+               hv_nets=hv, hv_clear_mm=a.hv_clear if hv else None, passes=a.passes, threads=a.threads, classes=a.classes, neckdown=not a.no_neckdown, stripped=a.strip, ripped=sorted(rip),
                unconnected_before=open_in, unconnected_after=open_out, seconds=round(time.time() - t0, 1),
                tracks=sum(1 for t in b.GetTracks() if t.GetClass() == "PCB_TRACK"), vias=sum(1 for t in b.GetTracks() if t.GetClass() == "PCB_VIA"))
     if a.report: json.dump(rep, open(a.report, "w"), indent=1)

@@ -1,0 +1,26 @@
+{
+ "tool": "freerouting",
+ "version": "2.4.1",
+ "jar_sha256": "fb2e91df901fa50cd23a09ab42793af0ece4f3b1f3857d6724dd6f9c0c00be98",
+ "input": "experiments/RF2_cleansheet/head/out/LR1/PF233-RF2-LR1_placed.kicad_pcb",
+ "output": "experiments/RF2_cleansheet/head/out/LR1/PF233-RF2-LR1.kicad_pcb",
+ "rules_mm": {
+  "track": 0.2,
+  "clearance": 0.2,
+  "via": 0.6,
+  "drill": 0.3
+ },
+ "hv_nets": [],
+ "hv_clear_mm": null,
+ "passes": 60,
+ "threads": 1,
+ "classes": [],
+ "neckdown": false,
+ "stripped": true,
+ "ripped": [],
+ "unconnected_before": 252,
+ "unconnected_after": 1,
+ "seconds": 453.2,
+ "tracks": 1557,
+ "vias": 151
+}
