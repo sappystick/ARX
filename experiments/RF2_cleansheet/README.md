@@ -140,3 +140,17 @@ rating, a few seconds) and k = 4 or 16 x more pulses per 10 mm frame. Same track
   130 mm -> 108, 5 g at 200 mm -> 276). Fixed on the way: both passes must be fitted at the same decay constant. Unresolved error sources (tilt per frame,
   10 mm sampling, the tracker re-learning between passes) are open. A deep depth readout needs a known height (ground-referenced height from the
   ground signal itself, a height sensor, or a rest-on-the-ground pinpoint with a fixed lift spacer) and this error budget resolved.
+
+## Step 7: golden-angle petals in a thin ring around the rim (owner idea; `rf2_petal_ring.py`, `results/rf2_petal_ring.json`)
+Same chain and equal energy per pulse; the petal set is transmitter and receiver (mono style); first gate 16.3 us; noise-limited, no ground.
+| Formation (1 / 5 / 20 g, mm) | 1 g | 5 g | 20 g | net moment, A m2 |
+|---|---|---|---|---|
+| Reference: rim mono, 26 turns | 342 | 437 | >= 500 | 8.23 vertical |
+| Best petal ring: 8 flat petals, radius 40 mm, 1 layer | 242 | 312 | 379 | 4.90 vertical |
+| 6 flat petals r 25 mm / 13 flat petals r 15 mm | 132 / 84 | 185 / 121 | 237 / 165 | 1.92 / 1.38 |
+| Best standing (radial) petals: 8 x r 40 mm, 6 layers | 187 | 230 | 267 | about 0.1 horizontal |
+| Tangential petals | 0-118 | 0-136 | 0-151 | about 0.1 horizontal |
+Reading: depth follows the magnetic moment (turns x current x enclosed area) the coil can make with the pulse energy. One loop around the full rim
+encloses the most area; splitting the same wire into small petals encloses far less (moment 4.9 vs 8.2 A m2 at best), and standing petals point their
+moments in different directions around the ring, which nearly cancel (net about 0.1 A m2): their field falls off faster and the depth drops. The golden
+angle changes the near-field pattern, not the far field that reaches depth. Layering petals vertically does not recover it.
