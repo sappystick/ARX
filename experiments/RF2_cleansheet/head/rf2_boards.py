@@ -119,7 +119,7 @@ def build(name):
             for piece in (list(half.geoms) if half.geom_type == "MultiPolygon" else [half]):
                 if piece.area > 1e-3: keepout(list(piece.exterior.coords)[:-1])
     raw = os.path.join(od, f"PF233-RF2-{name}_placed.kicad_pcb"); pcbnew.SaveBoard(raw, b); return raw, od
-def widen_floor(pcb):
+def widen_floor(pcb, FLOOR=FLOOR):
     """Freerouting may neck a track below the fab floor at a fine pin: set such segments to the floor; KiCad DRC then decides whether clearances still hold"""
     import pcbnew
     b = pcbnew.LoadBoard(pcb); n = 0
@@ -129,7 +129,8 @@ def widen_floor(pcb):
     return n
 def dru(B):
     # fab floor from the repo (FAB_RULES / dru_gen GEN: 0.15 mm track); RF2 routes at 0.2 / 0.2 and Freerouting may neck to 0.15 at fine pins
-    hv = B.get("hv_nets", []); r = ['(version 1)', '(rule "generic" (constraint clearance (min 0.2mm)))', '(rule "track" (constraint track_width (min 0.15mm)))',
+    tw, cl = (float(x) for x in B.get("rules", RULES).split(",")[:2]); fl = B.get("floor", FLOOR)
+    hv = B.get("hv_nets", []); r = ['(version 1)', f'(rule "generic" (constraint clearance (min {cl}mm)))', f'(rule "track" (constraint track_width (min {fl}mm)))',
                                     '(rule "edge" (constraint edge_clearance (min 0.5mm)))']
     if hv:
         cond = " || ".join(f"A.NetName == '{n}' || B.NetName == '{n}'" for n in hv); r.append(f'(rule "HV rule 6" (constraint clearance (min 1.0mm)) (condition "{cond}"))')
@@ -190,7 +191,8 @@ def copper_check(pcb, B):
                 if d < min_all: min_all, worst_all = d, (L, a, b2)
                 if a in hv or b2 in hv:
                     if d < min_hv: min_hv, worst = d, (L, a, b2)
-    return dict(loops_around_axis=sorted(set(loops)), min_clearance_mm=round(min_all, 3), worst_pair=worst_all, min_hv_clearance_mm=round(min_hv, 3) if hv else None, worst_hv_pair=worst, ok=min_all >= 0.2 - 1e-3 and (not hv or min_hv >= 1.0 - 1e-3) and not loops)
+    clr = float(B.get("rules", RULES).split(",")[1])
+    return dict(loops_around_axis=sorted(set(loops)), min_clearance_mm=round(min_all, 3), worst_pair=worst_all, min_hv_clearance_mm=round(min_hv, 3) if hv else None, worst_hv_pair=worst, ok=min_all >= clr - 1e-3 and (not hv or min_hv >= 1.0 - 1e-3) and not loops)
 def parity(pcb, B):
     import pcbnew
     bd = pcbnew.LoadBoard(pcb); got = {}
@@ -205,13 +207,13 @@ def run(name):
     bad = placement_check(B); res["placement"] = dict(overlaps_or_outside=bad, ok=not bad)
     if bad: return res
     raw, od = build(name); pcb = os.path.join(od, f"PF233-RF2-{name}.kicad_pcb")
-    cmd = [sys.executable, os.path.join(ROOT, "src/pcb/freeroute.py"), raw, pcb] + ([] if B.get("preroute") else ["--strip"]) + ["--no-neckdown", "--rules", RULES, "--passes", "150", "--report", os.path.join(od, "freeroute.json")]
+    cmd = [sys.executable, os.path.join(ROOT, "src/pcb/freeroute.py"), raw, pcb] + ([] if B.get("preroute") else ["--strip"]) + ["--no-neckdown", "--rules", B.get("rules", RULES), "--passes", "150", "--report", os.path.join(od, "freeroute.json")]
     hv = [n for n in B.get("hv_nets", []) if n not in B.get("wide", {})]
     if hv: cmd += ["--hv", ",".join(hv)]
     if B.get("wide"): cmd += ["--class", "PULSE:2.5:1.0:" + ",".join(B["wide"])]
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
     if not os.path.exists(pcb): res["route"] = dict(ok=False, err=r.stdout[-300:] + r.stderr[-300:]); return res
-    widened = widen_floor(pcb)
+    widened = widen_floor(pcb, B.get("floor", FLOOR))
     fr = json.load(open(os.path.join(od, "freeroute.json"))); res["route"] = dict(unconnected_after=fr["unconnected_after"], tracks=fr["tracks"], vias=fr["vias"], widened_to_floor=widened, ok=fr["unconnected_after"] == 0)
     res["kicad_drc"] = kicad_drc(pcb, B); res["kicad_drc"]["ok"] = res["kicad_drc"]["errors"] == 0 and res["kicad_drc"]["unconnected"] == 0 and (res["kicad_drc"]["hv_rule_control_violations"] in (None,) or res["kicad_drc"]["hv_rule_control_violations"] > 0)
     res["copper"] = copper_check(pcb, B); res["parity"] = parity(pcb, B)

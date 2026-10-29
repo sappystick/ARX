@@ -67,8 +67,12 @@ for col, nm, x in (("A", "TX_A", -3.2), ("B", "TX_B", 3.2)):
     net("TXJ", nm, (f"JC{col}", "1"), (f"JK{col}", "1"), (f"JS{col}", "1"))
 # ---- LR1: LED ring (annulus r 15-75, 0.8 mm, 2 layers): 36 SK9822-EC20 at r 62.5 + 6 at r 22, one 100 nF 0402 each, data and clock daisy-chained,
 #      no copper planes (rule 5); 6 mounting holes for the lid bosses (r 45); hinge lands at the inner edge.
-board("LR1", r_in=15.0, r_out=75.0, layers=2, thickness=0.8, kind="annulus", hv_nets=[], holes=[(45.0, 30.0 + 60 * k, 2.0) for k in range(6)],
-      head=dict(c=(0.0, 0.0), z_bottom=22.3), note="LEDs face the lid windows; dark during receive windows (firmware)")
+# LR1 is a FLEX section of the rigid-flex panel (owner 2026-10-29): 2-layer polyimide flex core (0.2 mm with coverlay) on a 0.2 mm FR4 stiffener (rule F5),
+# vendor rules 0.10 / 0.10 mm (Rigiflex capability pages, RF1 README): a trace now passes between the SK9822-EC20 pads (0.4 mm gap), which 0.2 / 0.2 could not.
+# The hinge to CB1D is the panel's own flex (the JH lands stay as the panel interface until the panel is drawn in Phase C).
+board("LR1", r_in=15.0, r_out=75.0, layers=2, thickness=0.4, kind="annulus", hv_nets=[], holes=[(45.0, 30.0 + 60 * k, 2.0) for k in range(6)],
+      rules="0.1,0.1,0.45,0.2", floor=0.1, tech="flex 2L polyimide 0.2 mm + FR4 stiffener 0.2 mm (vendor 0.10 / 0.10 mm; via 0.45 / 0.2 ASSUMED)",
+      head=dict(c=(0.0, 0.0), z_bottom=22.85), note="LEDs face the lid windows; dark during receive windows (firmware)")
 LEDS = [(62.5, 360.0 * k / 36) for k in range(36)] + [(22.0, 360.0 * k / 6 + 30) for k in range(6)]
 for i, (r, a) in enumerate(LEDS):
     x, y = r * math.cos(math.radians(a)), r * math.sin(math.radians(a))
@@ -78,7 +82,7 @@ for i, (r, a) in enumerate(LEDS):
 BOARDS["LR1"]["preroute"] = dict(
     arcs=[("GND", 66.0, 195.0, 545.0), ("+5V_LED", 68.0, 185.0, 535.0), ("GND", 25.5, 195.0, 545.0), ("+5V_LED", 27.5, 185.0, 535.0)],   # net, r, start, end (deg, CCW)
     links=[("+5V_LED", 185.0, 17.0, 68.0, (27.5, 68.0)), ("GND", 195.0, 17.0, 66.0, (25.5, 66.0))],                                     # net, angle, r0, r1, via radii
-    width=0.6)
+    width=0.4)
 for j, nm in enumerate(("+5V_LED", "GND", "LED_DATA", "LED_CLK")):
     a = 185.0 + 10.0 * j; part("LR1", f"JH{j+1}", "FLEX_PAD", nm, 17.0 * math.cos(math.radians(a)), 17.0 * math.sin(math.radians(a)), a)
 net("LR1", "+5V_LED", ("JH1", "1"), *[(f"LD{i+1}", "5") for i in range(42)], *[(f"CD{i+1}", "1") for i in range(42)])

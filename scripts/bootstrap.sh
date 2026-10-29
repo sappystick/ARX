@@ -36,6 +36,12 @@ if ! ls /usr/lib/jvm/java-2[5-9]-openjdk*/bin/java >/dev/null 2>&1; then
 fi
 scripts/fetch_freerouting.sh >/dev/null 2>&1 || say "WARNING: Freerouting jar not fetched: Freerouting step unavailable"
 
+# 2c. RF2 tooling (opt-in: RF2_TOOLS=1): KiCad libraries + 3D models (3.3 GB), ngspice, ARM toolchain, gmsh, off-screen GL, Python tools (requirements-rf2.txt)
+if [ "${RF2_TOOLS:-0}" = "1" ]; then
+  $SUDO apt-get install -y -qq --no-install-recommends kicad-footprints kicad-symbols kicad-packages3d ngspice gcc-arm-none-eabi libnewlib-arm-none-eabi gmsh libosmesa6 libegl1 libgl1 >/dev/null 2>&1 || say "WARNING: RF2 system tools not fully installed"
+  pipi -r requirements-rf2.txt || say "WARNING: RF2 Python tools not fully installed"
+fi
+
 # 3. repository work folder
 make setup >/dev/null
 

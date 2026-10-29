@@ -1,8 +1,9 @@
 Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=38765 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|172.31.*|192.168.*|100.64.0.0/10|*.svc.cluster.local|*.svc.cluster.local -Djdk.http.auth.tunneling.disabledSchemes= -Djdk.http.auth.proxying.disabledSchemes=
-2026-10-29 23:46:04.979 INFO   Freerouting v2.4.1 (build-date: 2026-09-03)
-2026-10-29 23:46:05.093 WARN   Unknown settings property: update_check.enabled
-2026-10-29 23:46:05.097 INFO   Configured network proxy: 127.0.0.1:38765
-2026-10-29 23:46:06.968 INFO   [06D949\3621CF] Loading board file 'board.dsn'...
-2026-10-29 23:46:07.563 INFO   [06D949\3621CF] Job '06D949\3621CF' started at 2026-10-29T23:46:07.563297510Z.
-2026-10-29 23:46:07.858 INFO   [06D949\3621CF] Fanout stage started on board '1f2648128b6006588bbec21bf986a8d8' with 338 of 340 SMD pins needing fanout (2 already connected, 0 netless).
-2026-10-29 23:46:39.348 INFO   [06D949\3621CF] Fanout pass #1 on board '4cfd8f4edc312e939e22a55ddb105b3b' completed in 31.35 seconds with 331 SMD pins fanouted, 2 not routed, 0 insert errors, +170 extra vias (0 SMD pins still to check in pass, ripup costs=100).
+2026-10-29 23:58:23.318 INFO   Freerouting v2.4.1 (build-date: 2026-09-03)
+2026-10-29 23:58:23.407 WARN   Unknown settings property: update_check.enabled
+2026-10-29 23:58:23.410 INFO   Configured network proxy: 127.0.0.1:38765
+2026-10-29 23:58:25.293 INFO   [57DD70\E50BDB] Loading board file 'board.dsn'...
+2026-10-29 23:58:25.835 INFO   [57DD70\E50BDB] Job '57DD70\E50BDB' started at 2026-10-29T23:58:25.835258692Z.
+2026-10-29 23:58:26.193 INFO   [57DD70\E50BDB] Fanout stage started on board 'a97a38096868dd10b65add3e58a73193' with 338 of 340 SMD pins needing fanout (2 already connected, 0 netless).
+2026-10-29 23:58:55.425 INFO   [57DD70\E50BDB] Fanout pass #1 on board '04f0d3cb90a0b4b5f9706a4a53d7f854' completed in 29.13 seconds with 336 SMD pins fanouted, 0 not routed, 0 insert errors, +131 extra vias (0 SMD pins still to check in pass, ripup costs=100).
+2026-10-29 23:59:15.620 INFO   [57DD70\E50BDB] Fanout pass #2 on board '79e32b3306655326b69d61376d319515' completed in 20.14 seconds with 185 SMD pins fanouted, 0 not routed, 0 insert errors, +47 extra vias (0 SMD pins still to check in pass, ripup costs=200).
