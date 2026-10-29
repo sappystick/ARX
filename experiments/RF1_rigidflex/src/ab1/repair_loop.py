@@ -23,17 +23,21 @@ for it in range(IT):
     if not best_open: break
     RADIUS, MG = SCHED[it % len(SCHED)]
     # pads of the stuck connections and the parts near them
-    q = subprocess.run([sys.executable, "-c", "import afe_layout as A, json; print(json.dumps([dict(ref=p['ref'], num=p['num'], x=p['x'], y=p['y']) for p in A.PADS]))"], cwd=best_dir, env=env(best_late), capture_output=True, text=True)
+    q = subprocess.run([sys.executable, "-c", "import afe_layout as A, json; print(json.dumps([dict(ref=p['ref'], num=p['num'], x=p['x'], y=p['y'], net=A.owner.get((p['ref'], p['num']))) for p in A.PADS]))"], cwd=best_dir, env=env(best_late), capture_output=True, text=True)
     pads = json.loads(q.stdout.strip().splitlines()[-1])
     stuck = []
     for o in best_open:
         ref_pad = o.split(": ")[-1] if ": " in o else o
         r_, n_ = ref_pad.split(".")[0], ref_pad.split(".")[1]; stuck += [p for p in pads if p["ref"] == r_ and p["num"] == n_]
-    near = sorted({p["ref"] for s in stuck for p in pads if math.hypot(p["x"] - s["x"], p["y"] - s["y"]) <= RADIUS and not p["ref"].startswith(("UA", "J", "U1", "U2"))})
+    BIG = ("UA", "J", "U1", "U2")
+    near = {p["ref"] for s in stuck for p in pads if math.hypot(p["x"] - s["x"], p["y"] - s["y"]) <= RADIUS and not p["ref"].startswith(BIG)}
+    nets = {s["net"] for s in stuck if s["net"] and s["net"] not in ("GND", "+5VA")}
+    near |= {p["ref"] for p in pads if p["net"] in nets and not p["ref"].startswith(BIG)}            # the small parts on the stuck net are the route's other ends
+    near = sorted(near)
     extra = ",".join(near)
     if (extra, MG) in tried: print("skip repeated move set", extra, MG, flush=True); continue
     tried.add((extra, MG))
-    d = f"rep_{B}_{it}"; os.makedirs(os.path.join(d, "out_board"), exist_ok=True)
+    d = f"rep_{B}_{os.path.basename(START.rstrip('/'))}_{it}"; os.makedirs(os.path.join(d, "out_board"), exist_ok=True)
     a = subprocess.run([sys.executable, os.path.join(HERE, "autoplace_rf1.py"), MG], cwd=d, env=env(best_late, extra), capture_output=True, text=True)
     try: new = json.loads(a.stdout.strip().splitlines()[-1])["late"]
     except Exception: print("placer failed", a.stderr[-300:], flush=True); continue

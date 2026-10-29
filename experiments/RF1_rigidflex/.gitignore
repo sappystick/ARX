@@ -31,3 +31,5 @@ build_ab1/rep_*/
 build_ab1/nl_*/
 !build_ab1/final_*/
 !build_ab1/final_*/**
+build_ab1/best_*/
+build_ab1/seed_*/

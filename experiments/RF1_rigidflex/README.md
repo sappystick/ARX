@@ -90,7 +90,12 @@ With hinges instead of headers and three part swaps on CB1D (OKI-78SR module -> 
 
 Front-end check (`rf1_frontend_check.py`, against TI SBOS377L and the AD7389-4 Rev. 0): baseline **FAIL** (OPA2211 input 1.25 V, range 2.0-3.6 V); RF1 **PASS** (input 2.5 V, ADC common mode 1.25 V inside 0.2-2.3, offset 0 by construction, 38 % of the ADC differential range used vs 42 % baseline, divider noise 0.1 nV/rtHz vs 1.1 for the amplifier, closed-loop bandwidth 0.96 MHz vs the 318 kHz filter).
 
-Routing (the repo's AB1 router, unchanged rules: track 0.15, clearance 0.16, via 0.508 / 0.254): see "Routing status" below.
+Routing (the repo's AB1 router, unchanged rules: track 0.15, clearance 0.16, via 0.508 / 0.254):
+
+- **Routing status: AB1B routed: 0 open; KiCad 9 DRC 0 errors / 0 unconnected (20 dangling-track warnings, the baseline has 19); independent DRC 0 fails, minimum clearance 0.204 mm** (`build_ab1/final_B/`, `results/rf1_ab1_route.json`).
+- AB1A: best 2 open (the reference buffer's input and its isolation resistor), see the repair-loop record in `results/rf1_ab1_route.json` when it closes.
+- How: the hinge exit (J2 lands) sits where the baseline header was (east edge, next to the ADC) and the hinge folds up there; the north exit toward the duct left 3-15 nets open. Placement of the RF1 parts (and, on AB1B, D2 / RF1 / CF1 nudged in a 2 mm window) is automatic: `src/ab1/autoplace_rf1.py` (pads and bodies checked, 0.5 mm corridor margin, caps anchored to their pins) and `src/ab1/repair_loop.py` (re-places only the parts within 2.5-5.5 mm of a stuck pin, keeps a result only if fewer nets are open).
+- Tried and dropped (recorded in the generator as options, off): matched AIN- dividers (more parts, 8-15 open), swapped buffer halves (the LDO then blocks the +3V3D island), no local LDO on AB1A (5-8 open), the north hinge exit (3-15 open).
 
 ## Baseline defect found here (recorded in docs/CORRECTIONS.md, 2026-10-29)
 
