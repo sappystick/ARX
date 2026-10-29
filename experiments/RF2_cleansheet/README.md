@@ -154,3 +154,19 @@ Reading: depth follows the magnetic moment (turns x current x enclosed area) the
 encloses the most area; splitting the same wire into small petals encloses far less (moment 4.9 vs 8.2 A m2 at best), and standing petals point their
 moments in different directions around the ring, which nearly cancel (net about 0.1 A m2): their field falls off faster and the depth drops. The golden
 angle changes the near-field pattern, not the far field that reaches depth. Layering petals vertically does not recover it.
+
+## Step 8: separate jobs: rim coil transmits, a disc coil in the centre receives (owner idea; `rf2_disk_rx.py`, `results/rf2_disk_rx.json`)
+Unnulled receive coil on the base board (2 oz traces, 150 pF and 2 us preamp recovery ASSUMED, critically damped); first gates from the coupled turn-off;
+noise includes the coil resistance and its damping resistor; the rim coil's own mono channel is kept as a second channel (SNR combined in quadrature).
+| Receive pattern, turns | first gate, us | 1 g: disc / mono / both | 5 g: disc / mono / both | flyback on the receive coil |
+|---|---|---|---|---|
+| inner r 15-60, 48 | 16.7 | 272 / 340 / 343 | 346 / 436 / 439 | 67 V |
+| disc r 15-100, 48 | 20.2 | 310 / 336 / 348 | 398 / 434 / 447 | 199 V |
+| sunflower (equal area per turn) r 15-100, 48 | 21.8 | 323 / 334 / 351 | 416 / 433 / 453 | 265 V |
+| **outer ring r 85-100, 48** | 26.7 | **344 / 327 / 359** | **448 / 429 / 467** | **484 V** |
+- The best separate receiver matches the rim coil as its own receiver (344 vs 327-341 mm at 1 g); both channels together add about 5 % (359 mm).
+- Why not more: the rim coil as a receiver already encloses the largest area possible in this footprint; a disc inside it encloses less, and more
+  turns raise its signal but slow its recovery (gate 16.7 -> 26.7 us) and its coupling to the transmitter (k up to 0.51).
+- Ground pickup is the same order as the mono (0.8-0.97 of it): the disc receiver needs ground balance too.
+- High voltage: unnulled, the receive coil sees up to 484 V at turn-off, so its board falls under rule 6 (>= 1.0 mm clearance, 630 V input
+  protection) unless a bucking winding nulls it (step 2: the nulled concentric receiver reached 231 mm).
