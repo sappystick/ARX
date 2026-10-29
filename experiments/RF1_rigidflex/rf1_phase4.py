@@ -60,14 +60,15 @@ def panel():
 def keepout_ab1():
     out = {}
     for B in ("A", "B"):
-        p = os.path.join(HERE, "build_ab1", "out_board", f"AB1{B}_layout.json")
+        p = os.path.join(HERE, "build_ab1", f"final_{B}", "out_board", f"AB1{B}_layout.json")
+        if not os.path.exists(p): p = os.path.join(HERE, "build_ab1", "out_board", f"AB1{B}_layout.json")
         if not os.path.exists(p): out[B] = dict(state="not routed yet"); continue
         L = json.load(open(p)); jx, jy = L["PLACE"]["J2"][0], L["PLACE"]["J2"][1]
         # transition line: the board edge beyond the J2 land row (the hinge leaves the disc there); zone = 1.0 mm band inside the edge over the hinge width
         bad = []
         for v in L["VIAS"]:
             x, y = v[0], v[1]; r = math.hypot(x, y)
-            if abs(x - jx) <= 3.5 + 1.0 and y < jy and r > 20.0 - 1.0 - 0.3: bad.append((round(x, 2), round(y, 2)))
+            if abs(y - jy) <= 3.5 + 1.0 and x > jx and r > 20.0 - 1.0 - 0.3: bad.append((round(x, 2), round(y, 2)))      # east-edge exit (lands rot 90 at x 15.6)
         rep = L.get("rep", {})
         out[B] = dict(state="routed", vias=len(L["VIAS"]), vias_in_F1_zone=bad, F1_ok=not bad, unrouted=rep.get("unrouted", rep.get("failed")))
     return out

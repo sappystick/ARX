@@ -90,9 +90,9 @@ for _n in (6, 8, 10, 12, 16): LIB[f"FFC{_n}"] = ffc(_n)
 import os
 BOARD = os.environ.get("BOARD", "A")
 CFG = {"A": dict(ch=["GX", "GY", "X8"], opamp={"GX": ("U1", "A"), "GY": ("U1", "B"), "X8": ("U2", "A")}, opamps=["U1", "U2"], spare=("U2", "B"),
-                 j1=["GX+", "GY+", "X8+", "GX-", "GY-", "X8-", "SHLD", "SHLD"], j2=["+5VA", "GND", "GND", "GND", "SCLK", "CS", "SDO1", "SDO2", "SDO3", "BLANK", "GND", "GND"]),
+                 j1=["GX+", "GY+", "X8+", "GX-", "GY-", "X8-", "SHLD", "SHLD"], j2=["+5VA", "GND", ("GND" if os.environ.get("RF1_LDO", "1") == "1" else "+3V3D"), "GND", "SCLK", "CS", "SDO1", "SDO2", "SDO3", "BLANK", "GND", "GND"]),
        "B": dict(ch=["Y8", "MONO"], opamp={"Y8": ("U1", "A"), "MONO": ("U1", "B")}, opamps=["U1"], spare=None,
-                 j1=["Y8+", "Y8-", "SHLD", "SHLD", "SHLD", "SHLD"], j2=["+5VA", "GND", "GND", "GND", "SCLK", "CS", "SDO1", "SDO2", "BLANK", "MONO_IN", "VCM_OUT", "GND"])}[BOARD]
+                 j1=["Y8+", "Y8-", "SHLD", "SHLD", "SHLD", "SHLD"], j2=["+5VA", "GND", ("GND" if os.environ.get("RF1_LDO", "1") == "1" else "+3V3D"), "GND", "SCLK", "CS", "SDO1", "SDO2", "BLANK", "MONO_IN", "VCM_OUT", "GND"])}[BOARD]
 ADC7 = os.environ.get("AFE_ADC", "AD7389") == "AD7389"                    # DEFAULT: one AD7389-4 replaces the three ADS8860s and the REF5041 chain (AFE_ADC=ADS8860 selects the old build)
 PARTS = []; NETS = {}
 def add(ref, typ, value, mpn="", **kw): PARTS.append(dict(ref=ref, type=typ, value=value, mpn=mpn, **kw))
@@ -146,8 +146,9 @@ for n, ref in enumerate(CFG["opamps"], 1):
 if CFG["spare"]:
     ref = CFG["spare"][0]; net("VBIAS", (ref, 5)); net(f"SPARE_OUT_{ref}", (ref, 6), (ref, 7))
 add("CB1", "C0805", "10u", "X7R/X5R 10V"); net("+5VA", ("CB1", 1)); net("GND", ("CB1", 2))
-add("ULD", "LDO5", "TLV755P33", "TI TLV75533PDBVR (RF1: local +3V3D)"); add("CLI", "C0402", "1u", "X5R 10V"); add("CLO", "C0402", "1u", "X5R 10V")
-net("+5VA", ("ULD", 1), ("ULD", 3), ("CLI", 1)); net("GND", ("ULD", 2), ("CLI", 2), ("CLO", 2)); net("+3V3D", ("ULD", 5), ("CLO", 1))
+if os.environ.get("RF1_LDO", "1") == "1":                                         # RF1_LDO=0: +3V3D through the hinge (baseline), no local LDO
+    add("ULD", "LDO5", "TLV755P33", "TI TLV75533PDBVR (RF1: local +3V3D)"); add("CLI", "C0402", "1u", "X5R 10V"); add("CLO", "C0402", "1u", "X5R 10V")
+    net("+5VA", ("ULD", 1), ("ULD", 3), ("CLI", 1)); net("GND", ("ULD", 2), ("CLI", 2), ("CLO", 2)); net("+3V3D", ("ULD", 5), ("CLO", 1))
 if ADC7:
     add("UA1", "AD7389", "AD7389-4", "ADI AD7389-4BCPZ"); n_ch = len(CH)
     for ref, val, nm_ in (("CVC", "1u", "VCC33"), ("CVL", "1u", "VLOGIC"), ("CRG", "1u", "REGCAP"), ("CRF", "1u", "REFOUT"), ("CRC", "100n", "REFCAP")): add(ref, "C0402", val, "X7R 10V")

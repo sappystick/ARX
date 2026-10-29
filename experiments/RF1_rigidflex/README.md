@@ -77,6 +77,21 @@ With hinges instead of headers and three part swaps on CB1D (OKI-78SR module -> 
 - **S (full shrink):** 14.5 mm (head 32.6 mm), but AB1, the septum and the carbonyl-iron absorber move 3.6-7.8 mm toward the receive coils: changes the receive null; not before sbq_sim / check_v22 / head_crosscheck say so.
 - Potting: L1 gallery and L2 gel (fixed flex, no connector voids), L4 CI unchanged, L5 SYN (new), every hinge bend outside the pours, LB1 / HTA coat only.
 
+## Phase 4: the head rigid-flex definition (`rf1_phase4.py`, MODELED)
+
+- **Stackup:** 6-layer rigid sections (F, In1 hatched GND, In2, In3, In4 plane / +3V3D island, B) with the 2-layer flex core as In2 / In3: hinge signals leave on In2 over a hatched In3 ground. Rigid 1.602 mm, flex 0.186 mm (vendor: 1.6 / 0.2). LB1 goes 4 -> 6 layers; HTA stays a separate 4-layer board with a hot-bar flex tail (the roof stays removable).
+- **Flattened panel:** CB1D at the centre, LB1 across its 15.2 mm S-fold, AB1A / AB1B at the ends of L-shaped 7 mm hinges that leave the CB1D duct edge either side of the LB1 hinge: 332 x 171 mm, fits the 457 x 610 mm panel; copper is 24.5 % of the box (expect a high panel price: get quotes).
+- **Fold and transition rules F1-F8:** no via / pad within 1.0 mm of a transition; traces cross folds at 90 deg, no corners or width changes in a bend zone; cross-hatched flex ground; fold radius >= 2.0 mm, static only; FR4 / polyimide stiffeners only (rule 5); no 460 V net on any flex (rule 6); no rigid pour across a fold; ground guards on both sides of every analog hinge line. ASSUMED until the vendor and IPC-2223 confirm.
+- **CB1D section:** Pico 2 W module and OKI-78SR leave; RP2354A (QFN-60) + 12 MHz crystal + core inductor + TLV755P 3.3 V and LMR36015 + SRN4018-6R8M come in, placed in the freed areas with 0.3 mm to every kept part (`results/rf1_cb1d_section.png`). The radio leaves with the Pico W (OPEN_ITEMS 42 settled by removal). CB1D is not re-routed in RF1 yet.
+
+## Phase 3: clean-sheet AB1 (`src/ab1/`, MODELED)
+
+`make_rf1_ab1.py` builds the RF1 generator as checked patches of the baseline `afe_design.py` / `afe_layout.py` / `afe_ripup.py`. Changes: hinge-exit lands (J2) and flex-jumper lands (J1) instead of headers; OPA2211 reference VBIAS = 2.5 V (REFOUT through OPA2365 half A, 10 ohm isolation, 1 uF); 1:2 divider into each ADC input (AIN+ 1.25 V DC = VCM); RF 820 ohm (total gain 41.5); 10 ohm isolation on the VCM buffer (OPEN_ITEMS 30); local TLV755P +3V3D next to the ADC island (the hinge no longer carries +3V3D; pin 3 is a ground).
+
+Front-end check (`rf1_frontend_check.py`, against TI SBOS377L and the AD7389-4 Rev. 0): baseline **FAIL** (OPA2211 input 1.25 V, range 2.0-3.6 V); RF1 **PASS** (input 2.5 V, ADC common mode 1.25 V inside 0.2-2.3, offset 0 by construction, 38 % of the ADC differential range used vs 42 % baseline, divider noise 0.1 nV/rtHz vs 1.1 for the amplifier, closed-loop bandwidth 0.96 MHz vs the 318 kHz filter).
+
+Routing (the repo's AB1 router, unchanged rules: track 0.15, clearance 0.16, via 0.508 / 0.254): see "Routing status" below.
+
 ## Baseline defect found here (recorded in docs/CORRECTIONS.md, 2026-10-29)
 
 The committed AD7389-4 AB1 biases the OPA2211 inputs at VCM = 1.25 V, below their 2.0 V minimum on a single 5 V supply (TI SBOS377L). RF1 fixes it (phase 3).

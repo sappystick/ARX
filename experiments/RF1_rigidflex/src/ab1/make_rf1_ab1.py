@@ -59,15 +59,16 @@ d = patch(d, 'if "VCM_OUT" in J2PIN: net("VCM", ("J2", J2PIN["VCM_OUT"]))', 'if 
 #    ADC island; the hinge no longer carries +3V3D (J2 pin 3 becomes a ground between the supplies and SCLK: crosstalk guard, phase 2)
 # 7. hinge pin order follows the ADC's digital pin order (CS 18, SDO1 19, SDO2 20, SCLK 22) so the escapes do not cross; a ground between SCLK and BLANK
 ORDER_ADC = os.environ.get("RF1_ORDER") == "adc"
-d = patch(d, 'j2=["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS", "SDO1", "SDO2", "SDO3", "BLANK", "GND", "GND"]', ('j2=["+5VA", "GND", "GND", "GND", "CS", "SDO1", "SDO2", "SCLK", "GND", "BLANK", "GND", "SDO3"]' if ORDER_ADC else 'j2=["+5VA", "GND", "GND", "GND", "SCLK", "CS", "SDO1", "SDO2", "SDO3", "BLANK", "GND", "GND"]'), "J2 A order")
-d = patch(d, 'j2=["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS", "SDO1", "SDO2", "BLANK", "MONO_IN", "VCM_OUT", "GND"]', ('j2=["+5VA", "GND", "GND", "GND", "CS", "SDO1", "SDO2", "SCLK", "GND", "BLANK", "MONO_IN", "VCM_OUT"]' if ORDER_ADC else 'j2=["+5VA", "GND", "GND", "GND", "SCLK", "CS", "SDO1", "SDO2", "BLANK", "MONO_IN", "VCM_OUT", "GND"]'), "J2 B order")
+d = patch(d, 'j2=["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS", "SDO1", "SDO2", "SDO3", "BLANK", "GND", "GND"]', ('j2=["+5VA", "GND", "GND", "GND", "CS", "SDO1", "SDO2", "SCLK", "GND", "BLANK", "GND", "SDO3"]' if ORDER_ADC else 'j2=["+5VA", "GND", ("GND" if os.environ.get("RF1_LDO", "1") == "1" else "+3V3D"), "GND", "SCLK", "CS", "SDO1", "SDO2", "SDO3", "BLANK", "GND", "GND"]'), "J2 A order")
+d = patch(d, 'j2=["+5VA", "GND", "+3V3D", "GND", "SCLK", "CS", "SDO1", "SDO2", "BLANK", "MONO_IN", "VCM_OUT", "GND"]', ('j2=["+5VA", "GND", "GND", "GND", "CS", "SDO1", "SDO2", "SCLK", "GND", "BLANK", "MONO_IN", "VCM_OUT"]' if ORDER_ADC else 'j2=["+5VA", "GND", ("GND" if os.environ.get("RF1_LDO", "1") == "1" else "+3V3D"), "GND", "SCLK", "CS", "SDO1", "SDO2", "BLANK", "MONO_IN", "VCM_OUT", "GND"]'), "J2 B order")
 d = patch(d, 'LIB["FPC12"] = fpc(12); LIB["FPC8"] = fpc(8); LIB["FPC6"] = fpc(6)',
           'LIB["FPC12"] = fpc(12); LIB["FPC8"] = fpc(8); LIB["FPC6"] = fpc(6)\n'
           'LIB["LDO5"] = dict(LIB["SW1G66"], desc="TI TLV755P 3.3 V 500 mA LDO, SOT-23-5 DBV (SBVS320D Table 4-1)", pins=[("1", "IN", "power_in"), ("2", "GND", "power_in"), ("3", "EN", "input"), ("4", "NC", "no_connect"), ("5", "OUT", "power_out")])', "LDO lib")
 d = patch(d, 'add("CB1", "C0805", "10u", "X7R/X5R 10V"); net("+5VA", ("CB1", 1)); net("GND", ("CB1", 2))',
           'add("CB1", "C0805", "10u", "X7R/X5R 10V"); net("+5VA", ("CB1", 1)); net("GND", ("CB1", 2))\n'
-          'add("ULD", "LDO5", "TLV755P33", "TI TLV75533PDBVR (RF1: local +3V3D)"); add("CLI", "C0402", "1u", "X5R 10V"); add("CLO", "C0402", "1u", "X5R 10V")\n'
-          'net("+5VA", ("ULD", 1), ("ULD", 3), ("CLI", 1)); net("GND", ("ULD", 2), ("CLI", 2), ("CLO", 2)); net("+3V3D", ("ULD", 5), ("CLO", 1))', "LDO parts")
+          'if os.environ.get("RF1_LDO", "1") == "1":                                         # RF1_LDO=0: +3V3D through the hinge (baseline), no local LDO\n'
+          '    add("ULD", "LDO5", "TLV755P33", "TI TLV75533PDBVR (RF1: local +3V3D)"); add("CLI", "C0402", "1u", "X5R 10V"); add("CLO", "C0402", "1u", "X5R 10V")\n'
+          '    net("+5VA", ("ULD", 1), ("ULD", 3), ("CLI", 1)); net("GND", ("ULD", 2), ("CLI", 2), ("CLO", 2)); net("+3V3D", ("ULD", 5), ("CLO", 1))', "LDO parts")
 if os.environ.get("RF1_DIFF") == "matched":                                          # option (2026-10-29): routes worse on the D40 discs (12 / 8 open), kept for the record
     # 8. matched differential ADC drive (RF1): AINx- gets the same 1 k / 1 k divider and 1 nF from VBIAS as AINx+ gets from the amplifier output, so the ADC
     #    sees (OUT - VBIAS) / 2 through matched RC networks; the separate VCM reference (RD1 / RD2 / CDF / CVM, OPA2365 half B, RISB) is removed: one analog
@@ -81,6 +82,20 @@ if os.environ.get("RF1_DIFF") == "matched":                                     
     a = d.index('_RDV = "100k" if ADC7 else "10k"'); b_ = d.index('net("VCM", ("RISB", 2), ("CVM", 1))') + len('net("VCM", ("RISB", 2), ("CVM", 1))')
     assert d.count('_RDV = "100k" if ADC7 else "10k"') == 1
     d = d[:a] + 'net("UBB_OUT", ("UB", 6), ("UB", 7)); net("GND", ("UB", 5))                       # RF1: OPA2365 half B unused (follower at GND); the VCM reference is gone' + d[b_:]
+# 9. buffer halves swapped (2026-10-29): half B (pins 5-7, the baseline's VCM source and routing) drives the large VBIAS net straight from REFOUT; half A
+#    (pins 1-3) drives the small VCM net (REFOUT / 2, AINx- only). Isolation: RISB on VBIAS (CVB), RISA on VCM (CVM).
+if os.environ.get("RF1_SWAP") == "1" and os.environ.get("RF1_DIFF") != "matched":   # option, off: routed worse (the LDO then blocks the +3V3D island escapes)
+    a = d.index('net("VREF_RAW", ("UB", 3)); net("VBIAS_O", ("UB", 2), ("UB", 1))')
+    b_ = d.index('net("VCM", ("RISB", 2), ("CVM", 1))') + len('net("VCM", ("RISB", 2), ("CVM", 1))')
+    d = d[:a] + '\n'.join([
+        'net("VCM_DIV", ("UB", 3)); net("VCM_O", ("UB", 2), ("UB", 1))                       # RF1: half A = VCM (REFOUT / 2) for the AINx- pins',
+        'add("RISA", "R0402", "10", "OPA2365 isolation (SBOS365G 8.3.3), RF1"); net("VCM_O", ("RISA", 1)); net("VCM", ("RISA", 2), ("CVM", 1))',
+        '_RDV = "100k"                                                                        # divider on REFOUT (ASSUMPTIONS row 35)',
+        'add("RD1", "R0402", _RDV, "thin-film 0.1%"); add("RD2", "R0402", _RDV, "thin-film 0.1%"); add("CDF", "C0402", "100n", "X7R 10V"); add("CVM", "C0603", "1u", "X7R 10V")',
+        'net("VREF_RAW", ("RD1", 1)); net("VCM_DIV", ("RD1", 2), ("RD2", 1), ("CDF", 1)); net("GND", ("RD2", 2), ("CDF", 2), ("CVM", 2))',
+        'net("VREF_RAW", ("UB", 5)); net("VBIAS_O", ("UB", 6), ("UB", 7))                     # RF1: half B = VBIAS (REFOUT, 2.5 V), the amplifier reference',
+        'add("RISB", "R0402", "10", "OPA2365 isolation (SBOS365G 8.3.3), RF1"); add("CVB", "C0603", "1u", "X7R 10V, VBIAS reservoir (RF1)")',
+        'net("VBIAS_O", ("RISB", 1)); net("VBIAS", ("RISB", 2), ("CVB", 1)); net("GND", ("CVB", 2))']) + d[b_:]
 open(os.path.join(HERE, "afe_design.py"), "w").write(d)
 
 L = open(os.path.join(ROOT, "src/pcb/afe_layout.py")).read()
@@ -106,4 +121,7 @@ R = patch(R, '"""B9: rip-up and reroute', '"""RF1 COPY (generated by make_rf1_ab
 R = patch(R, 'p = subprocess.run([sys.executable, "afe_layout.py", "--route"], env=e, capture_output=True, text=True)',
           'p = subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "afe_layout.py"), "--route"], env=e, capture_output=True, text=True)', "ripup path")
 open(os.path.join(HERE, "afe_ripup.py"), "w").write(R)
-print("RF1 AB1 generator written: afe_design.py, afe_layout.py, afe_ripup.py (patched copies)")
+E = open(os.path.join(ROOT, "src/pcb/afe_export.py")).read()
+E = patch(E, '"""PF233-AB1{A,B} exporter:', '"""RF1 COPY (generated by make_rf1_ab1.py; imports the RF1 afe_design / afe_layout next to it). PF233-AB1{A,B} exporter:', "export header")
+open(os.path.join(HERE, "afe_export.py"), "w").write(E)
+print("RF1 AB1 generator written: afe_design.py, afe_layout.py, afe_ripup.py, afe_export.py (patched copies)")
