@@ -170,3 +170,25 @@ noise includes the coil resistance and its damping resistor; the rim coil's own 
 - Ground pickup is the same order as the mono (0.8-0.97 of it): the disc receiver needs ground balance too.
 - High voltage: unnulled, the receive coil sees up to 484 V at turn-off, so its board falls under rule 6 (>= 1.0 mm clearance, 630 V input
   protection) unless a bucking winding nulls it (step 2: the nulled concentric receiver reached 231 mm).
+
+## Step 9: external interference and cancelling it (`rf2_emi.py`, `results/rf2_emi.json`)
+Interference amplitudes and spectra ASSUMED (swept), uniform over the head; 1 g depth, mono / quadrupole (0.1 % lobe imbalance ASSUMED), mm.
+| Source | matched, fixed rate | matched, jittered | learned, fixed | learned, jittered | learned + jitter + 3-axis REF on the shaft |
+|---|---|---|---|---|---|
+| none | 360 / 138 | 360 / 138 | 364 / 139 | 364 / 139 | 360 / 139 |
+| power line, rural 0.05 uT | 164 | 193 | 273 | 288 | **349** |
+| power line, under a line 1 uT | 51 | 74 | 222 | 230 | **295** |
+| VLF 1 nT at exactly 20.000 kHz (in step with 400 Hz) | 130 | 225 | 354 | 354 | 360 |
+| VLF 10 nT at 19.8 kHz | 360 | 130 | 364 | 353 | 359 |
+| electric fence 50 nT at 20 m (1 pulse/s) | 173 | 176 | 327 | 205 | **360** (fence pulses blanked) |
+The quadrupole stays at 138-139 mm in every case: it rejects uniform interference by symmetry (net area 0; the imbalance leaks about 1e-5 of the mono).
+- **Learning the interference** (listen-only frames, whitening) is the largest single step: steady interference makes a fixed pattern across the gates
+  that the detector can cancel. **Jitter is not always better**: it helps a simple matched detector against an in-step tone (130 -> 225), but it
+  turns a learnable pattern into noise for the learning detector, and for a tone near (not at) a pulse-rate multiple the fixed rate already cancels it
+  (19.8 kHz: fixed 360, jittered 130). The firmware should choose the rate per site (like an automatic frequency offset), not jitter blindly.
+- **The 3-axis reference coil** (0.6 m up the shaft, adaptive weights) recovers most of the power-line loss (230 -> 295 under a line; 288 -> 349 rural)
+  and, with blanking, all of the fence loss; its own noise costs about 1 % depth. Residual: the field difference between the shaft and the head (3 %
+  for a line source at 20 m). Fence results vary from run to run (few hits per run).
+- **Split-ring (MWO-style) shield**: a split 3 mm trace's own eddy decay is about 0.8 us (1 mm trace 0.26 us), down by e^-21 at the 16.3 us first gate;
+  the same trace closed into a ring decays with 6 us, inside the receive window. Split rings are eddy-safe as an electrostatic shield; closed rings are not.
+  (An earlier statement in the session that the split trace decays in about a nanosecond was wrong by a factor of 1000; corrected here.)
