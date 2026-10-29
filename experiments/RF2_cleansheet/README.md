@@ -127,3 +127,16 @@ exponential, resolved to 100 nV); preamp recovery 2 us and coil capacitance 500 
 - The assumed 15 us mono gate holds for a critically damped mono (16.3 us): 1 g depth 363 vs 367 mm, severe ground 221 either way. Use critical damping.
 - Dual transmit needs: both coils wound the same sense, clamps pre-charged before the first pulse, and about 5 us more delay from the idle coil's damping.
 - Nothing is left at the 2.5 ms period (residual about 0).
+
+## Step 6: trigger-held pinpoint (`rf2_pinpoint.py`, `results/rf2_pinpoint.json`)
+After a detection: hold the trigger and make one slow pass back over the spot (+-250 mm), BOOST 2.5 x energy per pulse (about 13 A, inside the 20 A switch
+rating, a few seconds) and k = 4 or 16 x more pulses per 10 mm frame. Same tracker and detector as step 4.
+- **Bearing works close in:** 1 g at 100 mm: quadrupole SNR 5-9 (scan pass 2.6-2.9), bearing axis within about 1-11 deg of the truth (e.g. 166.9 vs 167.5,
+  168.1 vs 168.7, 139.8 vs 128.7); depth from the quadrupole / mono ratio 80-88 mm (biased low, true 100); size 0.6-0.8 g (true 1 g).
+- **It does not close the 100-160 mm gap:** from 130 mm the quadrupole stays at SNR 2-4 even 16 x slower with boost, while the mono statistic grows
+  10-30 x. The quadrupole there is limited by ground reaching it through head tilt and by its own steep fall-off, not by noise; averaging cannot fix it.
+- **Lift test (second pass 50 mm higher; ratio of the two mono peaks, size-independent): NOT working yet.** With the scan height wobble (sd 8 mm) the
+  ratio is dominated by the unknown height (about 25 % per 8 mm at 150 mm range); with the height known exactly the errors are still 20-50 % (1 g at
+  130 mm -> 108, 5 g at 200 mm -> 276). Fixed on the way: both passes must be fitted at the same decay constant. Unresolved error sources (tilt per frame,
+  10 mm sampling, the tracker re-learning between passes) are open. A deep depth readout needs a known height (ground-referenced height from the
+  ground signal itself, a height sensor, or a rest-on-the-ground pinpoint with a fixed lift spacer) and this error budget resolved.

@@ -76,10 +76,11 @@ def output_map(T, tau, bearing_deg):
     cls = klass(tau); col = {"foil / tiny": "white", "small gold": "yellow", "medium gold": "orange", "large gold / coin": "red", "iron / very large": "blue"}[cls]
     lvl = min(1.0, math.log10(T / THR + 1)); return dict(led=dict(pixel_deg=round(bearing_deg) % 180, colour=col, brightness=round(lvl, 2)), audio=dict(tone=cls, volume=round(lvl, 2)))
 res_k = []
-def sweep(tab, chi, tgt, seed, tracker=None, pump=True, adapt=True):
-    rng = np.random.default_rng(seed); xs = np.arange(-0.4, 0.4001, 0.01); n = len(xs)
-    h = 0.025 + 0.008 * smooth(rng, n); th = np.radians(2) * np.abs(smooth(rng, n)); ph = np.pi * smooth(rng, n, 30); ae = 1 + 0.03 * smooth(rng, n, 30); sc = np.exp(0.3 * smooth(rng, n, 20))
-    h = np.clip(h, 0.012, 0.05)
+XS_SWEEP = np.arange(-0.4, 0.4001, 0.01)                              # head positions of one pass (rf2_pinpoint.py sets a shorter, slower pass)
+def sweep(tab, chi, tgt, seed, tracker=None, pump=True, adapt=True, h0=0.025, h_sd=0.008):
+    rng = np.random.default_rng(seed); xs = XS_SWEEP; n = len(xs)
+    h = h0 + h_sd * smooth(rng, n); th = np.radians(2) * np.abs(smooth(rng, n)); ph = np.pi * smooth(rng, n, 30); ae = 1 + 0.03 * smooth(rng, n, 30); sc = np.exp(0.3 * smooth(rng, n, 20))
+    h = np.clip(h, h0 - 0.013, h0 + 0.025)
     trk = tracker or Tracker()
     if pump:                                                         # 80 target-free frames: coil bobbed 12-50 mm and rocked +-4 deg over the ground
         for k in range(80):
