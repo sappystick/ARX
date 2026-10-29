@@ -1,0 +1,549 @@
+{
+ "width_calibration": [
+  {
+   "depth_mm": 50,
+   "width_mm": 210
+  },
+  {
+   "depth_mm": 80,
+   "width_mm": 210
+  },
+  {
+   "depth_mm": 100,
+   "width_mm": 210
+  },
+  {
+   "depth_mm": 130,
+   "width_mm": 230
+  },
+  {
+   "depth_mm": 160,
+   "width_mm": 230
+  },
+  {
+   "depth_mm": 200,
+   "width_mm": 270
+  },
+  {
+   "depth_mm": 250,
+   "width_mm": 310
+  },
+  {
+   "depth_mm": 300,
+   "width_mm": 330
+  },
+  {
+   "depth_mm": 350,
+   "width_mm": 370
+  },
+  {
+   "depth_mm": 400,
+   "width_mm": 430
+  },
+  {
+   "depth_mm": 500,
+   "width_mm": 510
+  }
+ ],
+ "status": "MODELED (RF2 step 4: firmware-style ground tracking on simulated sweeps; ASSUMED ground)",
+ "threshold": 25.9,
+ "depth_calibration": [
+  {
+   "depth_mm": 50,
+   "quad_over_mono": 0.0175
+  },
+  {
+   "depth_mm": 80,
+   "quad_over_mono": 0.0075
+  },
+  {
+   "depth_mm": 100,
+   "quad_over_mono": 0.0045
+  },
+  {
+   "depth_mm": 130,
+   "quad_over_mono": 0.0023
+  },
+  {
+   "depth_mm": 160,
+   "quad_over_mono": 0.0013
+  },
+  {
+   "depth_mm": 200,
+   "quad_over_mono": 0.0006
+  },
+  {
+   "depth_mm": 250,
+   "quad_over_mono": 0.0003
+  },
+  {
+   "depth_mm": 300,
+   "quad_over_mono": 0.0002
+  },
+  {
+   "depth_mm": 350,
+   "quad_over_mono": 0.0001
+  },
+  {
+   "depth_mm": 400,
+   "quad_over_mono": 0.0001
+  }
+ ],
+ "runs": [
+  {
+   "ground": "severe 2e-4",
+   "target": null,
+   "detector": "tracking",
+   "ground_dirs_tracked": 6,
+   "detected": false,
+   "false_alarm_frames": 0,
+   "peak_T": 18.5,
+   "peak_x_mm": 340
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": null,
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 6,
+   "detected": false,
+   "false_alarm_frames": 0,
+   "peak_T": 18.2,
+   "peak_x_mm": 340
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 1.0,
+    "depth": 0.1
+   },
+   "detector": "tracking",
+   "ground_dirs_tracked": 7,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 682.6,
+   "peak_x_mm": -10,
+   "tau_us": 27.3,
+   "cls": "small gold",
+   "quad_snr": 2.9,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width (width at the coil-size floor: depth <= 160 mm)",
+   "depth_est_mm": 160,
+   "mono_width_mm": 210,
+   "mass_est_g": 3.7,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "yellow",
+     "brightness": 1.0
+    },
+    "audio": {
+     "tone": "small gold",
+     "volume": 1.0
+    }
+   },
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 1.0,
+    "depth": 0.1
+   },
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 6,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 682.6,
+   "peak_x_mm": -10,
+   "tau_us": 27.3,
+   "cls": "small gold",
+   "quad_snr": 2.9,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width (width at the coil-size floor: depth <= 160 mm)",
+   "depth_est_mm": 160,
+   "mono_width_mm": 220,
+   "mass_est_g": 3.7,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "yellow",
+     "brightness": 1.0
+    },
+    "audio": {
+     "tone": "small gold",
+     "volume": 1.0
+    }
+   },
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 1.0,
+    "depth": 0.15
+   },
+   "detector": "tracking",
+   "ground_dirs_tracked": 6,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 73.3,
+   "peak_x_mm": -10,
+   "tau_us": 104.6,
+   "cls": "medium gold",
+   "quad_snr": 3.6,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width",
+   "depth_est_mm": 180,
+   "mono_width_mm": 250,
+   "mass_est_g": 2.18,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "orange",
+     "brightness": 0.58
+    },
+    "audio": {
+     "tone": "medium gold",
+     "volume": 0.58
+    }
+   },
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 1.0,
+    "depth": 0.15
+   },
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 6,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 73.3,
+   "peak_x_mm": -10,
+   "tau_us": 104.6,
+   "cls": "medium gold",
+   "quad_snr": 3.6,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width",
+   "depth_est_mm": 180,
+   "mono_width_mm": 250,
+   "mass_est_g": 2.18,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "orange",
+     "brightness": 0.58
+    },
+    "audio": {
+     "tone": "medium gold",
+     "volume": 0.58
+    }
+   },
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 1.0,
+    "depth": 0.2
+   },
+   "detector": "tracking",
+   "ground_dirs_tracked": 6,
+   "detected": false,
+   "false_alarm_frames": null,
+   "peak_T": 18.5,
+   "peak_x_mm": 90,
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 1.0,
+    "depth": 0.2
+   },
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 6,
+   "detected": false,
+   "false_alarm_frames": null,
+   "peak_T": 18.5,
+   "peak_x_mm": 90,
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 5.0,
+    "depth": 0.25
+   },
+   "detector": "tracking",
+   "ground_dirs_tracked": 6,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 27.4,
+   "peak_x_mm": -80,
+   "tau_us": 14.0,
+   "cls": "small gold",
+   "quad_snr": 3.6,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width",
+   "depth_est_mm": 180,
+   "mono_width_mm": 250,
+   "mass_est_g": 1.0,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "yellow",
+     "brightness": 0.31
+    },
+    "audio": {
+     "tone": "small gold",
+     "volume": 0.31
+    }
+   },
+   "true_tau_us": 81.6
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 5.0,
+    "depth": 0.25
+   },
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 6,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 27.4,
+   "peak_x_mm": -80,
+   "tau_us": 14.0,
+   "cls": "small gold",
+   "quad_snr": 3.6,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width",
+   "depth_est_mm": 180,
+   "mono_width_mm": 250,
+   "mass_est_g": 1.0,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "yellow",
+     "brightness": 0.31
+    },
+    "audio": {
+     "tone": "small gold",
+     "volume": 0.31
+    }
+   },
+   "true_tau_us": 81.6
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 20.0,
+    "depth": 0.3
+   },
+   "detector": "tracking",
+   "ground_dirs_tracked": 6,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 29.0,
+   "peak_x_mm": 10,
+   "tau_us": 204.5,
+   "cls": "large gold / coin",
+   "quad_snr": 3.2,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width",
+   "depth_est_mm": 250,
+   "mono_width_mm": 310,
+   "mass_est_g": 9.76,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "red",
+     "brightness": 0.33
+    },
+    "audio": {
+     "tone": "large gold / coin",
+     "volume": 0.33
+    }
+   },
+   "true_tau_us": 205.7
+  },
+  {
+   "ground": "severe 2e-4",
+   "target": {
+    "g": 20.0,
+    "depth": 0.3
+   },
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 6,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 29.0,
+   "peak_x_mm": 10,
+   "tau_us": 204.5,
+   "cls": "large gold / coin",
+   "quad_snr": 3.2,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width",
+   "depth_est_mm": 250,
+   "mono_width_mm": 310,
+   "mass_est_g": 9.76,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "red",
+     "brightness": 0.33
+    },
+    "audio": {
+     "tone": "large gold / coin",
+     "volume": 0.33
+    }
+   },
+   "true_tau_us": 205.7
+  },
+  {
+   "ground": "moderate 2e-5",
+   "target": null,
+   "detector": "tracking",
+   "ground_dirs_tracked": 5,
+   "detected": false,
+   "false_alarm_frames": 0,
+   "peak_T": 16.2,
+   "peak_x_mm": -390
+  },
+  {
+   "ground": "moderate 2e-5",
+   "target": null,
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 5,
+   "detected": false,
+   "false_alarm_frames": 0,
+   "peak_T": 16.2,
+   "peak_x_mm": -390
+  },
+  {
+   "ground": "moderate 2e-5",
+   "target": {
+    "g": 1.0,
+    "depth": 0.1
+   },
+   "detector": "tracking",
+   "ground_dirs_tracked": 5,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 693.6,
+   "peak_x_mm": -10,
+   "tau_us": 27.3,
+   "cls": "small gold",
+   "quad_snr": 3.0,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width (width at the coil-size floor: depth <= 160 mm)",
+   "depth_est_mm": 160,
+   "mono_width_mm": 210,
+   "mass_est_g": 3.73,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "yellow",
+     "brightness": 1.0
+    },
+    "audio": {
+     "tone": "small gold",
+     "volume": 1.0
+    }
+   },
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "moderate 2e-5",
+   "target": {
+    "g": 1.0,
+    "depth": 0.1
+   },
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 5,
+   "detected": true,
+   "false_alarm_frames": null,
+   "peak_T": 693.6,
+   "peak_x_mm": -10,
+   "tau_us": 27.3,
+   "cls": "small gold",
+   "quad_snr": 3.0,
+   "bearing_axis_deg": "beyond quadrupole range",
+   "depth_method": "mono sweep width (width at the coil-size floor: depth <= 160 mm)",
+   "depth_est_mm": 160,
+   "mono_width_mm": 220,
+   "mass_est_g": 3.73,
+   "output": {
+    "led": {
+     "pixel_deg": 90,
+     "colour": "yellow",
+     "brightness": 1.0
+    },
+    "audio": {
+     "tone": "small gold",
+     "volume": 1.0
+    }
+   },
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "moderate 2e-5",
+   "target": {
+    "g": 1.0,
+    "depth": 0.2
+   },
+   "detector": "tracking",
+   "ground_dirs_tracked": 5,
+   "detected": false,
+   "false_alarm_frames": null,
+   "peak_T": 16.8,
+   "peak_x_mm": -130,
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "moderate 2e-5",
+   "target": {
+    "g": 1.0,
+    "depth": 0.2
+   },
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 5,
+   "detected": false,
+   "false_alarm_frames": null,
+   "peak_T": 16.8,
+   "peak_x_mm": -130,
+   "true_tau_us": 27.9
+  },
+  {
+   "ground": "moderate 2e-5",
+   "target": {
+    "g": 5.0,
+    "depth": 0.28
+   },
+   "detector": "tracking",
+   "ground_dirs_tracked": 5,
+   "detected": false,
+   "false_alarm_frames": null,
+   "peak_T": 20.2,
+   "peak_x_mm": -80,
+   "true_tau_us": 81.6
+  },
+  {
+   "ground": "moderate 2e-5",
+   "target": {
+    "g": 5.0,
+    "depth": 0.28
+   },
+   "detector": "fixed balance",
+   "ground_dirs_tracked": 5,
+   "detected": false,
+   "false_alarm_frames": null,
+   "peak_T": 20.2,
+   "peak_x_mm": -80,
+   "true_tau_us": 81.6
+  }
+ ],
+ "seconds": 92.0
+}
