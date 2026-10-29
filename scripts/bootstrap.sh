@@ -30,6 +30,12 @@ pipi() { pip install -q "$@" 2>/dev/null || pip install -q --break-system-packag
 pipi --ignore-installed blinker
 pipi -r requirements.txt
 
+# 2b. Freerouting (src/pcb/freeroute.py): Java 25+ and the pinned jar. Optional: a failure here only disables the Freerouting step, so it warns and goes on.
+if ! ls /usr/lib/jvm/java-2[5-9]-openjdk*/bin/java >/dev/null 2>&1; then
+  $SUDO apt-get install -y -qq --no-install-recommends openjdk-25-jre-headless >/dev/null 2>&1 || say "WARNING: openjdk-25 not installed: Freerouting step unavailable"
+fi
+scripts/fetch_freerouting.sh >/dev/null 2>&1 || say "WARNING: Freerouting jar not fetched: Freerouting step unavailable"
+
 # 3. repository work folder
 make setup >/dev/null
 
@@ -44,5 +50,6 @@ say "python      $(python3 --version 2>&1)"
 say "numpy       $(python3 -c 'import numpy;print(numpy.__version__)') scipy $(python3 -c 'import scipy;print(scipy.__version__)') matplotlib $(python3 -c 'import matplotlib;print(matplotlib.__version__)')"
 say "gerbonara   $(python3 -c 'import importlib.metadata as m;print(m.version("gerbonara"))' 2>/dev/null || echo ?) shapely $(python3 -c 'import shapely;print(shapely.__version__)')"
 say "kicad-cli   $(kicad-cli version 2>&1 | head -1) | pcbnew $(/usr/bin/python3 -c 'import pcbnew;print(pcbnew.Version())' 2>&1 | tail -1)"
+say "freerouting $(python3 -c 'import sys; sys.path.insert(0,"src/pcb"); import freeroute as F, os; print(F.VERSION, "jar ok" if os.path.exists(F.JAR) else "jar MISSING")' 2>/dev/null)"
 say "work/       $(ls work | wc -l) files"
 [ "$fail" -eq 0 ] && say "environment OK" || { say "environment INCOMPLETE"; exit 1; }

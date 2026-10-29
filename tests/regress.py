@@ -464,5 +464,19 @@ if _ft:
     chk("firmware timeline: 3 modes fit their period with >= 10 % spare, LED stream only in a quiet slot, LEDs dark during sweeps, >= 3 ADC frames in the first gate, generated header matches the model",_ft["ok"] and _okh and _ft["inputs"]["sclk_min_hz_for_3_frames"]<_ft["inputs"]["adc_sclk_max_hz"],
         "; ".join(f"{k} spare {v['spare_pct']} %, LED cost {v['led']['prf_cost_pct']} %" for k,v in _ft["modes"].items())+f"; SCLK >= {_ft['inputs']['sclk_min_hz_for_3_frames']/1e6:.1f} MHz")
 else: skip("firmware timeline (make step S=fw-timeline)")
+# Freerouting step (src/pcb/freeroute.py, tests/freeroute_selftest.py): pinned jar and Java answer, the DSN carries the repo rules and an HV class >= 1.0 mm (rule 6)
+try:
+    _fs=json.load(open("data/results/freeroute_selftest.json"))
+    chk("Freerouting step: pinned jar (SHA-256), Java 25+, DSN default class 0.15 / 0.16 mm + 0.508 / 0.254 via, HV class >= 1.0 mm, HV < 1.0 mm refused",_fs["ok"],
+        f"{_fs['version']} {_fs['java']}; default {_fs['default_class']}; HV {_fs['hv_class']}")
+except FileNotFoundError: skip("Freerouting self-test (python3 tests/freeroute_selftest.py; jar: scripts/fetch_freerouting.sh)")
+# RF1 side experiment AB1A / AB1B (experiments/RF1_rigidflex): final boards closed and clean in KiCad DRC, the independent DRC and the Gerber edge check; F1 fold keep-out clear
+try:
+    _ra=json.load(open("experiments/RF1_rigidflex/results/rf1_ab1_route.json"))["boards"]; _p4=json.load(open("experiments/RF1_rigidflex/results/rf1_phase4.json"))["ab1_F1_check"]
+    chk("RF1 AB1A + AB1B (side experiment): 0 open, KiCad DRC 0 errors / 0 unconnected, independent DRC 0 fails, Gerber edge OK, F1 keep-out clear on the final boards",
+        all(_ra[b]["open"]==0 and _ra[b]["kicad_errors"]=={} and _ra[b]["kicad_unconnected"]==0 and _ra[b]["indep"]=={} and (_ra[b]["gerber_edge"] or {}).get("ok") is True
+            and _p4[b]["F1_ok"] and _p4[b]["source"]=="final kicad_pcb" for b in ("A","B")),
+        "; ".join(f"AB1{b}: open {_ra[b]['open']} (router {_ra[b]['router_open']}), freerouting {'ripped '+','.join(_ra[b]['freerouting']['ripped']) if _ra[b]['freerouting'] else 'not used'}, {_p4[b]['vias']} vias" for b in ("A","B")))
+except (FileNotFoundError, KeyError) as e: chk("RF1 AB1 route evidence (experiments/RF1_rigidflex/results)",False,f"missing {e}")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

@@ -10,4 +10,4 @@
 OPENS: []
 kicad_pcb paren balance: 0
 In4 carries the +3V3D island: the Gerber for this layer comes from kicad_gerber.py (hatched fill), not from this exporter
-exported kit_v3/PCB_AB1B 854 items
+exported kit_v3/PCB_AB1B 922 items

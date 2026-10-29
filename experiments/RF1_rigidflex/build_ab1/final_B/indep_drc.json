@@ -3,7 +3,7 @@
  "file": "/home/user/ARX/experiments/RF1_rigidflex/build_ab1/final_B/kit_v3/PCB_AB1B/PF233-AB1B.kicad_pcb",
  "checks": {
   "width_track": {
-   "n": 655,
+   "n": 723,
    "bad": 0,
    "min": 0.15
   },
@@ -37,7 +37,7 @@
   "connectivity": {
    "nets": 26,
    "split_nets": {},
-   "connections": 1543
+   "connections": 1769
   }
  },
  "errors": [],

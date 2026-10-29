@@ -33,3 +33,7 @@ build_ab1/nl_*/
 !build_ab1/final_*/**
 build_ab1/best_*/
 build_ab1/seed_*/
+
+# Freerouting scratch: the routed board is copied into kit_v3 by finalize_rf1_ab1.sh (the DSN, SES and log stay as provenance)
+build_ab1/fr_A_base/
+build_ab1/final_*/fr/*.kicad_pcb

@@ -1,0 +1,22 @@
+{
+ "version": "2.4.1",
+ "pinned_sha256": "fb2e91df901fa50cd23a09ab42793af0ece4f3b1f3857d6724dd6f9c0c00be98",
+ "jar_present": true,
+ "jar_sha_ok": true,
+ "java": "openjdk version \"25.0.4.1\" 2026-08-18",
+ "default_class": {
+  "width_um": 150,
+  "clearance_um": 160,
+  "via": true
+ },
+ "hv_class": {
+  "nets": [
+   "IN_GX",
+   "OUT_GY"
+  ],
+  "width_um": 250,
+  "clearance_um": 1000
+ },
+ "hv_low_refused": true,
+ "ok": true
+}

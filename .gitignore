@@ -6,3 +6,8 @@ CLAUDE.local.md
 *.pkl
 !data/seed/**/*.pkl
 stl/formers/
+
+# Freerouting jar (64 MB): fetched with a pinned SHA-256 by scripts/fetch_freerouting.sh, not stored
+tools/freerouting/*.jar
+tools/freerouting/*.part
+tools/freerouting/*.bad

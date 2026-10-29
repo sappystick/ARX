@@ -64,13 +64,24 @@ def keepout_ab1():
         if not os.path.exists(p): p = os.path.join(HERE, "build_ab1", "out_board", f"AB1{B}_layout.json")
         if not os.path.exists(p): out[B] = dict(state="not routed yet"); continue
         L = json.load(open(p)); jx, jy = L["PLACE"]["J2"][0], L["PLACE"]["J2"][1]
+        # the holes are read from the FINAL board (after Freerouting when it ran): KiCad frame = layout frame + (100, 100) mm, same axis directions (checked on AB1B: 53 of 53 vias match)
+        pcb = os.path.join(HERE, "build_ab1", f"final_{B}", "kit_v3", f"PCB_AB1{B}", f"PF233-AB1{B}.kicad_pcb"); src = "layout"
+        holes = [(v[0], v[1], "via") for v in L["VIAS"]]
+        if os.path.exists(pcb):
+            import pcbnew
+            bd = pcbnew.LoadBoard(pcb); M = pcbnew.ToMM; src = "final kicad_pcb"
+            holes = [(M(t.GetPosition().x) - 100, M(t.GetPosition().y) - 100, "via") for t in bd.GetTracks() if t.GetClass() == "PCB_VIA"]
+            holes += [(M(q.GetPosition().x) - 100, M(q.GetPosition().y) - 100, "pth " + q.GetParentFootprint().GetReference()) for q in bd.GetPads()
+                      if q.GetAttribute() == pcbnew.PAD_ATTRIB_PTH and q.GetParentFootprint().GetReference() != "J2"]      # the J2 hinge lands sit on the transition by design
         # transition line: the board edge beyond the J2 land row (the hinge leaves the disc there); zone = 1.0 mm band inside the edge over the hinge width
         bad = []
-        for v in L["VIAS"]:
-            x, y = v[0], v[1]; r = math.hypot(x, y)
-            if abs(y - jy) <= 3.5 + 1.0 and x > jx and r > 20.0 - 1.0 - 0.3: bad.append((round(x, 2), round(y, 2)))      # east-edge exit (lands rot 90 at x 15.6)
-        rep = L.get("rep", {})
-        out[B] = dict(state="routed", vias=len(L["VIAS"]), vias_in_F1_zone=bad, F1_ok=not bad, unrouted=rep.get("unrouted", rep.get("failed")))
+        for x, y, kind in holes:
+            r = math.hypot(x, y)
+            if abs(y - jy) <= 3.5 + 1.0 and x > jx and r > 20.0 - 1.0 - 0.3: bad.append((round(x, 2), round(y, 2), kind))      # east-edge exit (lands rot 90 at x 15.6)
+        rep = L.get("rep", {}); rr = os.path.join(HERE, "results", "rf1_ab1_route.json")
+        fin = json.load(open(rr))["boards"].get(B, {}) if os.path.exists(rr) else {}
+        out[B] = dict(state="routed", source=src, vias=sum(1 for h in holes if h[2] == "via"), plated_holes=sum(1 for h in holes if h[2] != "via"), vias_in_F1_zone=bad, F1_ok=not bad,
+                      open_final=fin.get("open"), router_unrouted=rep.get("unrouted", rep.get("failed")))
     return out
 
 def cb1d_changes():

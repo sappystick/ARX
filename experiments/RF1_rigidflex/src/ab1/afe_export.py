@@ -27,7 +27,7 @@ def snap_stubs(TR):
                 if (NETID.get(pd["net"], 0) if pd["net"] else 0) != n: continue
                 if not (pd["tht"] or pd["layer"] == l): continue
                 gp = _pad_gap(pd, e[0], e[1])
-                if 1e-4 < gp < (0.30 if pd["tht"] else 0.12) and (l, e, pd["ref"], pd["num"]) not in seen:
+                if (1e-4 < gp if pd["tht"] else (-0.25 * min(pd["w"], pd["h"]) < gp and (abs(e[0] - pd["x"]) > 1e-6 or abs(e[1] - pd["y"]) > 1e-6))) and gp < (0.30 if pd["tht"] else 0.12) and (l, e, pd["ref"], pd["num"]) not in seen:
                     seen.add((l, e, pd["ref"], pd["num"])); add.append((l, tuple(e), (pd["x"], pd["y"]), w, n))
     return add
 TR += snap_stubs(TR)

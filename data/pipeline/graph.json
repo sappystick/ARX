@@ -1038,6 +1038,22 @@
 "R": [],
 "W": []
 },
+"freeroute-selftest": {
+"L": [
+"src/pcb",
+"tests"
+],
+"R": [
+"experiments/RF1_rigidflex/build_ab1/final_A/kit_v3/PCB_AB1A/PF233-AB1A.kicad_pcb",
+"scripts/fetch_freerouting.sh",
+"src/pcb/freeroute.py",
+"tests/freeroute_selftest.py",
+"tools/freerouting/freerouting-2.4.1.jar"
+],
+"W": [
+"data/results/freeroute_selftest.json"
+]
+},
 "fw-test": {
 "L": [],
 "R": [

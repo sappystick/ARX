@@ -55,6 +55,13 @@ The sign-off pipeline traces every step, so unchanged work is skipped. The rule 
   prints the fingerprint (use it, never recompute it elsewhere, when writing a base by hand).
 - **Parallel full routes**: AU1's full route runs its rounds in 4 processes at once (route_repair.parallel_rounds, fixed orders, best kept) and then local repair
   (nets and failed plane stubs): 197 s instead of about 650 s. Learned settings (net order, stub-first pads such as UM.7) live in the board's factory.
+- **Freerouting step (2026-10-29)**: `src/pcb/freeroute.py IN.kicad_pcb OUT.kicad_pcb [--rip NETS | --strip] [--hv NETS]`: writes the repo rules into the board's
+  net classes (default 0.15 track / 0.16 clearance / 0.508-0.254 via; `--hv` nets get an HV class at >= 1.0 mm, rule 6, and lower is refused), exports Specctra DSN,
+  runs Freerouting 2.4.1 headless (jar from Maven Central with a pinned SHA-256: `make freeroute-fetch`; Java 25+), imports the SES, refills zones and writes a report.
+  It is a scripted generator step: the output is reproduced from the input board and the arguments, and it is checked exactly like the repo router's output
+  (kicad_drc.py, indep_drc.py, KiCad Gerbers, gerber_edge_check.py). Use it to close the last nets after the repo router (`--rip` the stuck net: its old dead-end stub
+  is what blocks it); a full `--strip` route of a dense fine-pitch board is not better (AB1A: worse). Ripping a plane net (GND) let Freerouting neck tracks below
+  0.15 mm: never rip plane nets. Self-test: pipeline step `freeroute-selftest` (data/results/freeroute_selftest.json). First use: RF1 AB1A (1 open -> 0).
 - **Board-to-harness interface**: pipeline step `interface-check` (src/pcb/interface_check.py): every harness wire end vs its pad / terminal (fit, gauge range,
   current density <= 10 A/mm2, pitch) and every screw terminal vs its net voltage. Terminals and connectors are read from each board's BOM type.
 - **Hardwired joints**: plug-on headers / terminal blocks are not used inside the enclosed system: use the `WIRE*` part types (footprints `Connector:Wire_pads*`,
