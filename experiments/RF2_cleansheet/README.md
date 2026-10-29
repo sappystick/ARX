@@ -192,3 +192,8 @@ The quadrupole stays at 138-139 mm in every case: it rejects uniform interferenc
 - **Split-ring (MWO-style) shield**: a split 3 mm trace's own eddy decay is about 0.8 us (1 mm trace 0.26 us), down by e^-21 at the 16.3 us first gate;
   the same trace closed into a ring decays with 6 us, inside the receive window. Split rings are eddy-safe as an electrostatic shield; closed rings are not.
   (An earlier statement in the session that the split trace decays in about a nanosecond was wrong by a factor of 1000; corrected here.)
+
+## Step 10: head v1 layout, seats, shield board, wiring, power and timing (`head/`, `HANDOFF_RF2.md`)
+The design implementation set: `head/rf2_head.py` (spec + every printed part, seat and envelope), `head/rf2_shield_pcb.py` (SH1: KiCad DRC 0 / 0, Gerbers +
+drill, loop-free), `head/rf2_head_check.py` (measured checks, all pass; mass about 702 g), `head/rf2_wiring.py` (C01-C12, ADC map, power, timing; slot
+probes), figures `head/out/rf2_head_layout.png` and `head/out/rf2_wiring.png`. Every part, function and open step: `HANDOFF_RF2.md`.

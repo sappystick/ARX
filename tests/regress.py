@@ -478,5 +478,12 @@ try:
             and _p4[b]["F1_ok"] and _p4[b]["source"]=="final kicad_pcb" for b in ("A","B")),
         "; ".join(f"AB1{b}: open {_ra[b]['open']} (router {_ra[b]['router_open']}), freerouting {'ripped '+','.join(_ra[b]['freerouting']['ripped']) if _ra[b]['freerouting'] else 'not used'}, {_p4[b]['vias']} vias" for b in ("A","B")))
 except (FileNotFoundError, KeyError) as e: chk("RF1 AB1 route evidence (experiments/RF1_rigidflex/results)",False,f"missing {e}")
+# RF2 clean-sheet head v1 (side experiment): measured head checks, the SH1 shield board (KiCad DRC + loop-free copper) and the wiring plan
+try:
+    _hc=json.load(open("experiments/RF2_cleansheet/head/out/rf2_head_check.json")); _sh=json.load(open("experiments/RF2_cleansheet/head/out/SH1/sh1_check.json")); _wi=json.load(open("experiments/RF2_cleansheet/head/out/rf2_wiring.json"))
+    chk("RF2 head v1 (side experiment): closed meshes, inside D233 x 25.4, no interference, seats, clearances, LED windows; SH1 DRC 0 / 0 and loop-free; wiring endpoints, HV routing, open slots, ADC, power",
+        _hc["ok"] and _sh["kicad_drc_errors"]==0 and _sh["kicad_unconnected"]==0 and _sh["topology"]["loop_free"] and _wi["checks"]["ok"],
+        f"mass {_hc['checks']['mass_g']['total_islands_only']} g (islands-only potting); SH1 {_sh['rings']} rings; shaft cable {_wi['checks']['shaft_cable']['total']} conductors")
+except (FileNotFoundError, KeyError) as e: chk("RF2 head v1 evidence (experiments/RF2_cleansheet/head/out)",False,f"missing {e}")
 for r in res: print(*r)
 f=sum(1 for r in res if r[0]=="FAIL"); print("FAILS",f,"SKIPS",sum(1 for r in res if r[0]=="SKIP"),"UNVERIFIED",sum(1 for r in res if r[0]=="UNVERIFIED")); sys.exit(1 if f else 0)

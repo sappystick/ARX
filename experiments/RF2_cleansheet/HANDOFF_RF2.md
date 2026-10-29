@@ -1,0 +1,160 @@
+# RF2 clean-sheet head: handoff (2026-10-29)
+
+RF2 is a side experiment. The baseline design (src/, work/, docs/) is untouched. Everything here is **MODELED or tool-checked**: nothing has been ordered, built or measured. "Checked" below means measured on the generated solids / boards by the scripts named, not proven in hardware. Numbers come from the result files; none is typed by hand.
+
+## 0. How to regenerate (repo root, about 2 minutes)
+```
+python3 experiments/RF2_cleansheet/head/rf2_head.py          # spec + every printed part, seat and envelope (STL, about 1 s)
+python3 experiments/RF2_cleansheet/head/rf2_shield_pcb.py    # SH1 shield board: KiCad file, KiCad DRC, Gerbers + drill, loop check
+python3 experiments/RF2_cleansheet/head/rf2_head_check.py    # measured checks: closed meshes, envelope, interference, seats, clearances, mass, potting
+python3 experiments/RF2_cleansheet/head/rf2_wiring.py        # wiring C01-C12, ADC map, power tree, timing / PWM, physical slot probes
+python3 experiments/RF2_cleansheet/head/rf2_head_figure.py   # out/rf2_head_layout.png (plan + section); rf2_wiring.py also writes out/rf2_wiring.png
+```
+The physics studies behind every choice: `rf2_coil_search.py`, `rf2_receiver_combo.py`, `rf2_ground.py`, `rf2_ground_dsp.py`, `rf2_timing.py`, `rf2_pinpoint.py`, `rf2_petal_ring.py`, `rf2_disk_rx.py`, `rf2_emi.py` (README steps 1-9). Generated meshes are git-ignored (the litz mesh alone is 16 MB); the JSON results are committed.
+
+## 1. What the design is
+A 233 mm, 25.4 mm (1 inch) pulse-induction head (today's head: 47.1 mm), with:
+- **Transmit + depth receive:** one rim mono coil (26 turns of 1.2 mm litz, 333 uH, 8.06 A scan / 12.7 A pinpoint boost) that transmits and receives. Every alternative modeled (petal rings, dense stacks, concentric, disc and quadrupole receivers, dual transmit) was shallower at the same pulse energy.
+- **Direction channel:** the two baseline quadrupole boards (SB1R-QA / QB): bearing axis, peak-null-peak pinpoint, a ground- and interference-quiet second channel.
+- **Interference reference:** a 3-axis coil on the shaft, 0.6 m up, feeding an adaptive canceller.
+- **Electrostatic shield:** SH1, a split-ring board under the receive boards (no closed loops).
+- **Electronics in the head on rigid-flex:** analog sections AB1A / AB1B (routed in RF1), the CB1D digital/power section, the MP1 mono preamp, the TXJ coil-lead terminal board and an LED ring under the lid. The transmit driver stays in the neck module at the shaft base (baseline PB1R topology).
+- **Firmware:** multi-period (PWM) ground balance with an adaptive ground tracker, a decay-time detector that stays silent until a signature, type from the decay time, bearing from the quadrupoles, interference learned from listen-only frames, and a trigger-held pinpoint mode.
+
+## 2. Part-by-part status
+| Part | Function | Status | Source |
+|---|---|---|---|
+| SHELL_LOWER | skid 1.2 mm + wall r 114.5-116.5, z 0-23.9; 2 stack pins | generated, checked | head/rf2_head.py |
+| LID | 1.5 mm; 42 LED windows Ø3.0; 6 LED bosses with pins; cable gland (Ø8 in a Ø12 boss) at the heel, r 92 | generated, checked | rf2_head.py |
+| COIL_CHANNEL | inner wall r 108.4-109.4, z 3.2-18.8; floor z 3.2-3.8; lead slot 6 mm at 178 deg | generated, checked | rf2_head.py |
+| LITZ (26 turns) | 3 columns r 113.4 / 111.8 / 110.2, 9 rows from z 4.4 at 1.6 mm pitch, epoxy-potted | geometry checked; electrical L 333 uH modeled | rf2_receiver_combo.py |
+| BAY_WALLS | radial walls at 89 / 156 / 198 deg, r 42-108, z 3.8-20.8, 1.2 mm; LV slot in the 156 deg wall | generated, checked | rf2_head.py |
+| CRADLE_AB1A / B | ledge under the 1.2 mm edge keep-out, wall, snap lip; hinge slot facing the centre | generated, checked | rf2_head.py |
+| CB1D_TOWER | ledge, wall r 39.3-40.5, snap lip; slots at 106 / 137 / 170 / 186 deg | generated, checked | rf2_head.py |
+| TRAY_MP1 / TXJ | ledge + rim; HV slot towards the coil, LV slot opposite | generated, checked | rf2_head.py |
+| SH1 shield board | 37 split rings, one spine, plated ground pad at the 22.5 deg stack hole | **KiCad DRC 0 errors / 0 unconnected, Gerbers + drill**, loop-free | head/rf2_shield_pcb.py |
+| QA / QB boards | baseline SB1R copper; **outline variant without the r 116 tab needed** (the tab does not fit a 2 mm wall) | copper existing; outline change TO DO | src/pcb/sbq_*.py |
+| AB1A / AB1B | analog sections, 6-layer rigid + 2-layer flex core | routed in RF1 (0 open, KiCad DRC clean); **channel gains TO RE-DO for the RF2 map** | experiments/RF1_rigidflex |
+| CB1D section | RP2354A, LMR36015 5 V buck, TLV755P 3.3 V | placed in RF1 (no collision); **routing TO DO** | RF1 rf1_phase4.py |
+| MP1 | mono preamp, HV-tolerant input | **TO DESIGN** (envelope 26 x 18 mm reserved) | - |
+| TXJ | coil-lead terminal board (wire-hole pads, no plug-on joints) | **TO DESIGN** (envelope 9 x 15 mm reserved) | - |
+| LED ring | 36 LEDs at r 62.5 (bearing) + 6 at r 22 (class colour), clocked | **TO DESIGN** (annulus r 15-75 reserved) | - |
+| REF3 coil | 3 orthogonal 80 mm windings on the shaft, 620 turns/axis (ASSUMED wire) | former generated; **noise not checked** | rf2_head.py, rf2_emi.py |
+| Neck TX driver | single switch, clamp about 460 V, flat-top PWM current loop | baseline PB1R topology; **RF2 values to re-design** | src/pcb (baseline) |
+
+## 3. Envelope and vertical budget (rf2_head_check.json, all within 25.4 mm)
+| Level | z (mm) |
+|---|---|
+| skid | 0-1.2 |
+| SH1 shield (0.4 mm) | 1.2-1.6 |
+| QA, QB (0.8 mm each) | 1.6-2.4, 2.4-3.2 |
+| coil floor / litz rows | 3.2-3.8 / 3.8-17.8 |
+| bay (all electronics) | 3.8-21.6 (17.8 mm) |
+| AB1A/B, MP1 (with parts) | 4.6-10.2 / 4.6-10.6 |
+| TXJ (with parts) | 4.6-12.0 |
+| CB1D (with parts) | 11.5-19.5 |
+| LED ring (with LEDs) | 21.6-23.9 |
+| lid | 23.9-25.4 |
+Component height rule (from the envelopes): AB1 parts <= 1.0 mm below / 3.0 mm above the board; CB1D <= 2.0 / 4.4 mm; MP1 <= 1.0 / 3.4; LEDs <= 0.8 mm. Edge keep-outs where ledges and lips grip: 1.2 mm on the bottom side, 0.4 mm on the top side.
+
+## 4. Sectors and potting
+| Sector | Azimuth | Contents | Potting (full-fill volume) |
+|---|---|---|---|
+| HV (heel) | 156-198 deg | coil lead slot, TXJ, MP1 input side, gland | high-dielectric-strength epoxy (65.9 cm3) |
+| Analog | 89-156 deg | AB1A (r 82, 106 deg), AB1B (r 82, 137 deg); next to the QA / QB lead pads (83-142 deg) and MP1's output | low-permittivity gel (97.0 cm3) |
+| Digital / power | the rest | CB1D on the tower at the centre, LED hinge, LV cores | syntactic silicone (422.3 cm3) |
+| Coil channel | rim | litz | epoxy (about 38 g) |
+| Display | under the lid | LED ring | conformal coat only |
+The 89 deg wall (analog | digital) is PETG loaded with carbonyl iron. Full potting of the bay adds about 445 g, so the design pots the islands only (about 24 g); see the mass section.
+
+## 5. Seats (how every board is held; all measured, rf2_head_check.json "seats")
+- **Board stack (SH1, QA, QB):** sits on the skid; 2 PETG pins Ø3.2 at r 28 (157.5 / 247.5 deg) through the SB1R NPTH holes Ø3.4; the third hole (22.5 deg) carries the shield ground wire.
+- **AB1A / AB1B:** cradle ledge to z 5.6 (board underside), wall r +0.3..+1.5, snap lip at z 7.4-8.0; a 10 mm slot faces the centre for the hinge and the receive tails.
+- **CB1D:** tower ledge to z 13.5, snap lip at z 15.3-16.0; slots at 106 / 137 deg (hinges to AB1A / AB1B, receive tails), 170 deg (MP1 side) and 186 deg (LV cores from the gland).
+- **MP1 / TXJ:** tray ledge to z 5.6, rim to z 8.0; HV slot towards the coil (180 deg), LV slot opposite (0 deg).
+- **LED ring:** hangs from 6 lid bosses (Ø4.0 to z 23.1, pins Ø1.8 through Ø2.0 board holes); LEDs sit under the Ø3.0 windows.
+- Every seat touches its board only at the ledge (gap 0 by design). Measured gaps: seats to bay walls 1.5-10 mm; envelopes to walls 3.0-10 mm; HV envelopes to the nearest other island 13.1 mm (MP1 to AB1B); litz to the shell wall 0.5 mm and to the channel wall 0.2 mm.
+
+## 6. Wiring (rf2_wiring.json; lengths are straight-line estimates + 15 mm)
+| ID | From -> to | Medium | Class | Conductors | Path |
+|---|---|---|---|---|---|
+| C01 | coil -> TXJ | litz ends | HV | TX_A, TX_B | lead slot 178 deg, HV sector |
+| C02 | TXJ -> gland -> neck | shaft cable, HV pair in its own jacket (630 V) | HV | TX_A, TX_B | HV sector, lid gland |
+| C03 | TXJ -> MP1 | 2 short wires in the tray HV slots | HV | COIL_SENSE, COIL_RET | HV sector |
+| C04 | MP1 -> AB1B | 2-layer flex jumper, hatched ground | analog | MONO_OUT, +5VA, AGND | wall 156 LV slot |
+| C05 | QA pads -> AB1A | flex tail soldered to the SB1R pads | analog | QA_P, QA_N | under the tower, slot 106 |
+| C06 | QB pads -> AB1B | flex tail | analog | QB_P, QB_N | under the tower, slot 137 |
+| C07 | SH1 pad -> AB1A AGND | 0.5 mm wire up the 22.5 deg stack hole | analog | SHIELD | single-point ground |
+| C08 / C09 | CB1D -> AB1A / AB1B | rigid-flex hinges | digital | SCLK, CS, SDO1, SDO2, +5V, GND | tower slots 106 / 137 |
+| C10 | CB1D -> LED ring | rigid-flex hinge (up) | digital | +5V_LED, GND, LED_DATA, LED_CLK | digital sector |
+| C11 | gland -> CB1D | shaft cable LV cores, own sleeve, >= 10 mm from the HV pair | power/digital | VIN, GND, TXCMD±, TXSTAT±, DATA± | along the 198 deg wall, tower slot 186 |
+| C12 | gland -> AB1A | 3 shielded twisted pairs | analog | REFX±, REFY±, REFZ± | wall 156 slot, over AB1B at z 11-13 |
+Checks: every endpoint exists; HV never on flex and only in the HV sector; **every slot a path uses is probed in the solids and open**; the shaft cable has 16 conductors (2 HV, 8 LV, 6 REF). No plug-on joints inside the head (repo rule): wire-hole pads and hinges only.
+
+**ADC map** (AD7389-4 on each AB1, 4 channels): AB1A = QA, REFX, REFY, REFZ; AB1B = QB, MONO, 2 spare.
+
+## 7. Power (rf2_wiring.json; loads ASSUMED where marked)
+VIN about 24 V (7S pack, switched and fused by PM2 in the handle) -> CB1D LMR36015 -> +5 V (load 0.54 A of 1.5 A: LED ring 0.35 A firmware cap, AB1A/B 0.04 A each, MP1 0.02 A, 3.3 V LDO 0.09 A) -> TLV755P +3.3 V (0.08 A of 0.5 A); each AB1 has its local TLV755P +3V3D (RF1). The transmit current never enters the head electronics: the neck driver runs from VIN with its own bulk bank.
+
+## 8. Transmit and receive timing (PWM)
+| Item | Value |
+|---|---|
+| Pulse rate | 400 Hz nominal, chosen per site in 380-420 Hz to sit off VLF stations (fixed rate beats blind jitter for the learning detector); 1 frame in 16 is listen-only (no pulses) |
+| Scan pulses | 8.06 A; T1 = 103.2 us (natural ramp) and T2 = 403.2 us (+300 us flat-top), alternating pulse by pulse (multi-period ground balance) |
+| Flat-top PWM | in the neck driver's current loop, 200 kHz (ASSUMED), duty about 0.20 (I x (R_coil + R_cable) / VBUS) |
+| Pinpoint boost | trigger held: 2.5 x energy, 12.74 A, T1 = 163.2 us, a few seconds (switch rated 20 A) |
+| Turn-off | clamp about 460 V; critical damping Rd = 408 ohm (coil capacitance 500 pF ASSUMED); first clean gate 16.3 us (rf2_timing) |
+| Receive gates | 16.3, 26.4, 42.7, 69.0, 111.7, 180.8, 292.5, 473.2, 765.6 us |
+| LEDs | updated only in the quiet slot after the last gate, dark during receive windows |
+| ADC | SCLK >= 27.2 MHz (3 frames in the first gate) |
+
+## 9. Firmware functions (reference code in Python; port to C like fw/)
+1. **Ground learning at switch-on** (`rf2_ground_dsp.py`): an 80-frame "ground pump" (bob the coil), then a low-rank ground subspace per receiver (eigen-directions above the electronic noise), learned with a guard window so a target's flanks are not learned as ground.
+2. **Silent until a signature:** GLRT over 12 decay constants (10-400 us); silent below the chi-square threshold (false-alarm rate 1e-5 per frame). Modeled: 0 false-alarm frames over severe and moderate ground.
+3. **Type:** decay constant -> class (edges 10 / 40 / 200 / 700 us). Modeled 1 g: 27.3 us vs 27.9 true, "small gold".
+4. **Direction:** quadrupole axis 0.5 atan2(QB, QA) + 45 deg (calibrated); side from the gyro and the sweep direction. Single-pass range about 80-100 mm for 1 g.
+5. **Pinpoint (trigger):** boost + slow pass: bearing within about 1-11 deg and depth about 15 % low at 100 mm for 1 g. Deeper readouts are **not solved** (README step 6).
+6. **Interference:** learned from listen-only frames; the 3-axis reference canceller; fence pulses blanked; pulse rate chosen per site.
+7. **Output:** LED pixel at the bearing, colour by class, brightness by statistic; audio tone by class (AU1 in the handle).
+
+## 10. Modeled performance (gold spheres; see each README step for the assumptions)
+| Condition | 1 g | Source |
+|---|---|---|
+| no ground, noise-limited (mono channel) | 342-367 mm | steps 2, 3, 7 |
+| SDC 2300-class 8 in mono, equal electronics | 330-342 mm | steps 2, 3 |
+| mild / moderate / severe viscous ground, multi-period balance | 249 / 228 / 221 mm | step 3 (ASSUMED ground) |
+| severe ground, ground exponent tracked perfectly | 274 mm | step 3 |
+| under a power line, learned + reference canceller | 295 mm | step 9 (ASSUMED interference) |
+| bearing / depth / size readouts | to about 100 mm for 1 g | steps 4, 6 |
+These are **model results, not bench data**; ground, interference and several circuit values are assumptions.
+
+## 11. Mass (rf2_head_check.json)
+About **702 g** with islands-only potting (full-fill potting: 1123 g). Breakdown: printed parts 220 g (100 % infill, an upper bound), QA + QB 129 g, SH1 37 g, litz 110 g, electronics 103 g (ASSUMED), coil epoxy 38 g, hardware 40 g, island potting 24 g. **Correction:** the earlier 529 g estimate assumed one 0.4 mm receive board; reusing the two 0.8 mm SB1R boards adds about 170 g. Options: a single combined 4-layer QA+QB board, lower infill.
+
+## 12. Measured checks (all pass)
+- **Meshes:** every mesh closed and edge-manifold.
+- **Envelope:** every part inside r 116.5 and z 0-25.4.
+- **Interference:** no interference between any pair of head parts.
+- **Seats:** every seat touches its board only at the ledge.
+- **Clearances:** all clearances above their limits.
+- **LEDs:** every LED is under a window and its top sits at the lid underside.
+- **SH1 board:** KiCad DRC 0 errors / 0 unconnected; copper is one piece with no closed loop (the only closed copper path is the 5.4 mm plated pad annulus, eddy time constant about 0.45 us); 2.05 mm from the pin holes; in-trace eddy time constant 0.39 us.
+- **Wiring:** endpoints, HV routing, slot probes, ADC channels, power margins all pass.
+- The regression suite has a row for this (tests/regress.py).
+
+## 13. Known deviations and corrections
+- **Coil height:** the coil rows sit at z 4.4-17.2 (a 0.6 mm printed floor on QB), 1.2 mm higher than in the RF2 studies (3.2-16.0). Re-run rf2_receiver_combo with the built heights before quoting depth for this layout.
+- **Shield ring count:** SH1 has 37 rings, not 40. Three positions are lost to the stack-hole band and the edge clearance.
+- **Split-trace decay time:** an earlier session statement (split trace decays "in about a nanosecond") was wrong by 1000x; it is about 0.4-0.8 us (README step 9).
+- **SB1R tab:** the r 116 locating tab cannot be used inside a 2 mm wall at this diameter; RF2 needs the tab-less outline variant.
+
+## 14. Next steps, in order
+1. **SB1R outline variant** without the tab (outline only, copper unchanged): regenerate with sbq_export, re-run its checks.
+2. **MP1 mono preamp:** schematic (input protection for about 460 V flyback, 630 V parts, >= 1.0 mm), layout in the 26 x 18 mm envelope, route (repo router + Freerouting step), KiCad DRC, rule-6 check.
+3. **TXJ:** wire-hole pads for the coil leads and the shaft HV pair, rule 6.
+4. **AB1A / AB1B channel gains** for the RF2 map (mono and REF levels differ from the baseline channels); regenerate through make_rf1_ab1.py.
+5. **CB1D section routing** (RF1 placement), plus the LED-ring board and its hinge.
+6. **Neck driver values:** 333 uH / 8.06 A / 12.7 A boost, flat-top PWM loop, clamp and critical damping; include the cable between neck and head in rf2_timing (the 16.3 us gate assumes damping at the coil).
+7. **REF3 coil:** check its noise (wire resistance) against the 1.9 nV/rtHz assumed in rf2_emi; consider ferrite rods.
+8. **Re-run the depth model** with the built coil heights and the cable; then bench: wind the rim coil, measure L, R, turn-off and the first clean gate, then targets in air, then ground.
+9. **Patent and literature search** on the quadrupole + mono combination before any novelty claim.

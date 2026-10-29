@@ -1,0 +1,616 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-29T22:35:19+0000",
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "9.0.9",
+    "schematic_parity": [],
+    "source": "PF233-RF2-SH1.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of H1",
+                    "pos": {
+                        "x": 175.294601,
+                        "y": 137.899044
+                    },
+                    "uuid": "5ebc882c-c8bc-4abe-869a-38b86eb24663"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of H3",
+                    "pos": {
+                        "x": 139.284863,
+                        "y": 175.868626
+                    },
+                    "uuid": "a0b534b7-9247-471e-9d0d-b276dd05d875"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of H2",
+                    "pos": {
+                        "x": 124.131373,
+                        "y": 139.284863
+                    },
+                    "uuid": "bb3721ec-6285-4cb9-a329-f269f8a22c92"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 101.3517 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "018d922c-0784-4aff-81d5-cb90d1cc4062"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 50.3006 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "07582126-c90a-4788-849f-317be3e8a64b"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 113.1327 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "0a58ab7c-fa4e-4ce8-bd1f-adc971bd4717"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 58.1547 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "1aca5364-6800-4fcd-b928-695e0d34516c"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 148.4756 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "2b515293-648e-4a91-b09e-a19369702ce2"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 73.8627 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "321c2ab1-00b2-4aa7-8c83-86b75be4fde3"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 54.2276 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "32ff4bcd-643a-4c16-805d-6fe9183e63a4"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 164.1836 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "34faca7a-c170-4848-9804-384d59d38e66"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 136.6946 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "35b4d124-11a5-4edd-9d03-f222760a4f39"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 160.2566 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "37c33609-ad2b-435a-a5f4-f09840dab49e"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 26.7380 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "3d7a38e4-1cc9-4cfd-bf9a-8270eab5e328"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 18.8831 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "40e87384-32e2-4778-a85c-b5a84bb91567"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 128.8407 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "5b65aa04-e3bf-4c09-8a36-a12deec50676"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 22.8107 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "5f29bc9a-983c-4127-8242-767d712753a5"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 168.1106 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "6b90ee9d-cac5-4ebd-8e7f-27e4e0c1abcd"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 144.5486 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "6e79b345-8d03-4ffe-9747-762341689e6b"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 77.7897 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "7bc60da0-f786-4fb3-92db-721c53b2cc6f"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 109.2057 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "7c390836-6d5d-4b85-8128-4905b373806b"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 105.2787 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "809ca185-75cf-44c4-ae4f-3b4e5b4f132f"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 156.3296 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "899aff63-6d61-4f6a-8545-3af5d1920f25"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 30.6652 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "9417c571-68b3-4c29-9cfa-466fa50e5eea"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 117.0597 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "a5c0174d-4a7b-47e4-8af6-8e8ad7de2cdf"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 124.9137 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "a5c3fe46-cb35-4756-8056-3f9a2c98e63e"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 152.4026 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "ae0cd30e-3b81-4dd4-9b47-da4bfef6ac4a"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 62.0817 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "b3332cf1-0789-440a-85b6-8daf285066a8"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 34.5924 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "b50de335-9e2b-448c-a206-9b699f0904dc"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 93.4977 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "b551a894-09d4-4876-be21-ceba1c2c7fd1"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 120.9867 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "caef3c93-5f1d-4e26-b578-4887930cd6ed"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 140.6216 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "cb069aca-cff3-423f-8529-0d5414021e31"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 69.9357 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "d1b69c72-55aa-4569-bdb9-3b456813688f"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 97.4247 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "d2881751-cd31-4b77-b418-ee6aa424acf1"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 132.7676 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "db8aa683-3a4f-4a3a-b4b1-7e340027b4af"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 89.5707 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "e37cc9c3-3126-463f-8718-e9a72b5b8c81"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 85.6437 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "e7df2c6a-8eb9-41bd-9b0c-df7848f9ad0c"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 66.0087 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "ebef6b66-7acd-4df9-b0ff-2958739c1335"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 81.7167 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "f658d186-fe6a-4c5c-943d-ecb40359766a"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track (arc) [SHIELD] on B.Cu, length 172.0376 mm",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 150.0
+                    },
+                    "uuid": "f722551b-8ed4-44e4-9d3f-91131a09879c"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        }
+    ]
+}
