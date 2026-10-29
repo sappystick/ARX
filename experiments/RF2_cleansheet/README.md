@@ -45,3 +45,33 @@ First-gate sensitivity (4-switch rim coil): 6 / 4 / 3 / 2 us -> 0.05 g 79 / 85 /
 Ground (mineralisation: the early gates that help small gold also see more ground), coil self-capacitance, litz AC resistance, eddy currents in the head
 and the compute bay, the real (finite) ferrite sheet, thermal. Next if pursued: figure-8 / DD / concentric receive options in the same chain with the
 rim coil, a matched X / Y pair winding with its turn-off and leak, a finite ferrite sheet, and ground.
+
+## Step 2: receiver architecture, light coil, mass, and an SDC 2300-class comparison (`rf2_receiver_combo.py`, `results/rf2_receiver_combo.{json,png}`)
+Owner: targets of 1 g and up only. Same physics and equal energy per pulse (10.8 mJ); every receive channel read with the same preamp noise (1.7 nV/rtHz).
+
+| Architecture (1-inch head, rim transmit coil) | 1 g | 5 g | 20 g | Uniform-ground coupling (rel. CN) |
+|---|---|---|---|---|
+| QUAD only (built receiver) | 137 | 165 | 190 | 0 by symmetry |
+| Figure-8 only (check: sim_head1 at the same noise gives 179 mm at 1 g) | 181 | 223 | 262 | 0 by symmetry |
+| Concentric nulled (12 turns r 80-95, 26 bucking turns r 65) | 231 | 284 | 337 | 1.0 |
+| **Proposed: rim mono (26 turns, 321 uH, 8.2 A) + QUAD board, mono channel, 15 us gate** | **345** | **439** | **>= 500** | 1.44 |
+| same, QUAD channel (bearing, pinpoint, depth ratio) | 131 | 162 | 189 | 0 by symmetry |
+| SDC 2300-class 8 in mono at EQUAL electronics, 10 us gate (internals ASSUMED) | 330 | 413 | 494 | 1.40 |
+
+- **Light transmit winding:** 24 turns (16.9 m of litz) give the same depth as the 99-turn dense window (66.6 m): at fixed energy only B / sqrt(L) counts.
+- **Depth readout:** the QUAD / mono peak-signal ratio falls monotonically with depth (0.118 / 0.026 / 0.0094 / 0.0043 / 0.0019 at 50 / 100 / 150 / 200 / 300 mm),
+  independent of target size for a sphere: depth from the ratio, then size from the amplitude at that depth, type from the decay time constant.
+- **Head mass estimate: about 0.53 kg** (component estimates, not weighed; baseline head estimate 2.22 kg). The SDC 2300 is 2.3-2.4 kg as a whole
+  detector without batteries; its coil mass is not published, so no head-to-head mass comparison is made.
+- **SDC 2300 published facts used:** 8 in round mono, hardwired; Multi Period Fast PI; 2.3-2.4 kg without batteries; 4 x C cells, about 7 h; no
+  discrimination, depth readout or pinpoint mode; LED indicator + audio; waterproof 3 m. Not published: turns, inductance, current, timing, noise, depth.
+  The SDC row is therefore an 8 in mono with OUR electronics, not the real detector.
+- **Reading:** the mono channel is the deepest receive option for >= 1 g (the full transmit coil is the receiver: the largest area); the proposed
+  head's mono is about 4-5 % deeper than an 8 in mono at equal electronics, from the larger diameter only. What the proposed head adds is the QUAD
+  channel (bearing, peak-null-peak pinpoint, a ground-symmetric second channel) and the ratio depth readout.
+- **The bucking-turn cap:** an unconstrained concentric search chose 1239 turns at r 12 mm (cannot be laid out; capacitance and resistance noise not
+  modeled); the search caps the bucking winding at 30 board-trace turns (0.3 mm pitch, 4 layers, a 6 mm band holds about 80).
+- **Not modeled, and decisive in the field:** real ground. The mono and CN channels see a uniform viscous ground strongly and need ground balance
+  (as the SDC has); the QUAD and figure-8 cancel uniform ground only while the head stays level and at constant height. Hot rocks, layering and
+  sweep tilt are not modeled. Also not modeled: the mono's damping-resistor noise and preamp overload recovery (the 1.7 nV/rtHz is generous to both
+  monos), self-capacitance, eddy currents in the compute bay.
