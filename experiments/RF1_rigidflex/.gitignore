@@ -1,0 +1,15 @@
+build_ab1/search/
+build_ab1/var_*/
+build_ab1/ripup_*/
+build_ab1/an_*/
+build_ab1/m_*/
+build_ab1/east_*/
+build_ab1/ord_*/
+build_ab1/*.log
+__pycache__/
+src/ab1/__pycache__/
+build_ab1/ap_*/
+build_ab1/s_*/
+build_ab1/sw_*/
+build_ab1/sw2_*/
+build_ab1/out_board/

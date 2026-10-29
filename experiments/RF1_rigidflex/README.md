@@ -41,6 +41,48 @@ What this does **not** show yet: any change in leak, noise or detection. The loo
 4. Rigid-flex board definition: one outline with rigid and flex regions, stackup drawing (6L rigid, 2L flex core, coverlay, FR4 stiffeners), hinge routing with hatched GND, fold-line keep-outs (no vias or pads within 1 mm of a fold); DRC with drc.py per region; KiCad 9 has no per-region stackup, so the fab drawing carries it.
 5. Compare A / B / C on the same table (fit, leak, noise, joints, test, cost from real quotes) and decide; only then does anything move into the main design (B12).
 
+## Phase 2 results (`rf1_phase2.py`, on a copy of the receive simulation; MODELED)
+
+Receive-lead pickup, 300 units per case, peak mV at turn-off (the same scale as the board leak in `kit_v22/sbq_sim.json`; lead path ASSUMED):
+
+| QA board | mean | sigma | 95 % of units below |
+|---|---|---|---|
+| AWG36 untwisted (dress varies) | -1.6 | 26.8 | 49.3 |
+| AWG36 twisted (5-15 mm pitch) | -0.03 | 0.69 | 1.27 |
+| flex broadside pair at the design orientation | 0.09 | 0.15 | 0.31 |
+| flex at the worst orientation (routed carelessly) | 3.0 | - | - |
+| board leak for comparison: aligned / 0.1 mm / 0.5 mm offset | 0.008 / 0.015 / 0.13 | | |
+
+The lead pair is part of the receive null: untwisted wire alone is 100-1000 x the aligned board leak. Flex cuts the unit-to-unit spread 4-5 x against a good twisted pair, and its mean is a fixed offset (calibratable). The flex must be routed at the design orientation (loop plane along the field): rule for phase 4. QB: 15.6 / 0.63 / 0.08 mV sigma.
+
+Clock crosstalk into the analog lines of the AB1 <-> CB1D link (2D finite-difference C and L, upper bounds on a 100 pF node, 3.3 V edge in 2 ns):
+
+| victim | ribbon (today) | RF1 hinge (guard traces + ground layer) |
+|---|---|---|
+| MONO_IN, worst aggressor | 437 mV | 7.1 mV |
+| MONO_IN from SCLK | 62 mV | 0.22 mV |
+| VCM_OUT, worst aggressor | 215 mV | 1.4 mV |
+
+## Cavity and potting (`rf1_cavity.py`, MODELED, envelope volumes)
+
+With hinges instead of headers and three part swaps on CB1D (OKI-78SR module -> TI LMR36015 + Bourns SRN4018-6R8M; Pico 2 W on pins -> chip-down RP2354A without the radio; headers -> hinges), the tallest CB1D part is 2.5 mm (was 10.2) and the tallest AB1 part 1.6 mm (was the 4 mm header + 5 mm socket).
+
+| layer | baseline | needs | saving |
+|---|---|---|---|
+| L1 gallery | 5.8 | 2.2 | 3.6 |
+| L2 analog cell | 10.2 | 6.05 | 4.15 |
+| L5 controller | 11.8 | 5.1 | 6.7 |
+
+- **K-top (recommended):** L0-L4 keep their z (nothing near the receive coils moves); L5 shrinks 6.7 mm: head 47.1 -> 40.4 mm. L5 becomes a potted zone (syntactic silicone, 22.8 cm3, 13.7-18.3 g) instead of coat-only: the tube saves 13.7 g, so the head mass is about unchanged (0 to +4.6 g); the gain is protection (moisture, microphonics, better heat path than still air). To re-run: head_crosscheck, the HTA coupling (it moves 6.7 mm toward the formers), head thermal with the pour.
+- **S (full shrink):** 14.5 mm (head 32.6 mm), but AB1, the septum and the carbonyl-iron absorber move 3.6-7.8 mm toward the receive coils: changes the receive null; not before sbq_sim / check_v22 / head_crosscheck say so.
+- Potting: L1 gallery and L2 gel (fixed flex, no connector voids), L4 CI unchanged, L5 SYN (new), every hinge bend outside the pours, LB1 / HTA coat only.
+
+## Baseline defect found here (recorded in docs/CORRECTIONS.md, 2026-10-29)
+
+The committed AD7389-4 AB1 biases the OPA2211 inputs at VCM = 1.25 V, below their 2.0 V minimum on a single 5 V supply (TI SBOS377L). RF1 fixes it (phase 3).
+
 ## Files
 
-- `rf1_study.py` phase 1 study; `rf1_figure.py` the figure; `results/` outputs; `ds/` the Rigiflex pages (owner-supplied, 2026-10-29).
+- `rf1_study.py` phase 1 study; `rf1_figure.py` the figure; `rf1_phase2.py` lead pickup and crosstalk; `rf1_cavity.py` condensation and potting;
+  `src/ab1/make_rf1_ab1.py` the clean-sheet AB1 as checked patches of the baseline generator (writes the RF1 copies `afe_design.py`, `afe_layout.py`, `afe_ripup.py`);
+  `rf1_phase4.py` stackup, flattened panel, fold rules, CB1D section; `results/` outputs; `ds/` the Rigiflex pages (owner-supplied, 2026-10-29); `src/sbq_sim_baseline_copy.py` the receive simulation copy.
