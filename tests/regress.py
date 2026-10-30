@@ -481,7 +481,7 @@ except (FileNotFoundError, KeyError) as e: chk("RF1 AB1 route evidence (experime
 # RF2 clean-sheet head v1 (side experiment): measured head checks, the SH1 shield board (KiCad DRC + loop-free copper) and the wiring plan
 try:
     _hc=json.load(open("experiments/RF2_cleansheet/head/out/rf2_head_check.json")); _sh=json.load(open("experiments/RF2_cleansheet/head/out/SH1/sh1_check.json")); _wi=json.load(open("experiments/RF2_cleansheet/head/out/rf2_wiring.json"))
-    chk("RF2 head v1 (side experiment): closed meshes, inside D233 x 25.4, no interference, seats, clearances, LED windows; SH1 DRC 0 / 0 and loop-free; wiring endpoints, HV routing, open slots, ADC, power",
+    chk("RF2 head v1 (side experiment): closed meshes, inside D233 x 25.4, no interference, seats, clearances, LED display (522 LEDs under the clear lid); SH1 DRC 0 / 0 and loop-free; wiring endpoints, HV routing, open slots, ADC, power",
         _hc["ok"] and _sh["kicad_drc_errors"]==0 and _sh["kicad_unconnected"]==0 and _sh["topology"]["loop_free"] and _wi["checks"]["ok"],
         f"mass {_hc['checks']['mass_g']['total_islands_only']} g (islands-only potting); SH1 {_sh['rings']} rings; shaft cable {_wi['checks']['shaft_cable']['total']} conductors")
 except (FileNotFoundError, KeyError) as e: chk("RF2 head v1 evidence (experiments/RF2_cleansheet/head/out)",False,f"missing {e}")

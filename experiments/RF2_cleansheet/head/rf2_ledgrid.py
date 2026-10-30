@@ -222,5 +222,21 @@ def summary():
     L = layout(); per = {R: len(ring_leds(R)) for R in RINGS}
     ch = [len(s) for s in L["chains"]]
     return dict(leds=len(L["leds"]), per_ring=per, chain_lengths=ch, holes=HOLES)
+def figure(path):
+    """plan view of the display flex: outline, F.Cu (red), B.Cu (blue), vias, LED sites; one figure for the layout decision"""
+    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+    T, V, _ = copper(); o = outline(); sm = summary()
+    fig, ax = plt.subplots(figsize=(12, 12))
+    for ring in [o.exterior] + list(o.interiors): x, y = ring.xy; ax.plot(x, y, "k", lw=0.5)
+    for r, a, d in HOLES: ax.add_patch(plt.Circle((r * math.cos(math.radians(a)), r * math.sin(math.radians(a))), d / 2, fill=False, lw=0.5))
+    for net, lay, pts, w in T:
+        xs, ys = zip(*pts); ax.plot(xs, ys, color="#c0392b" if lay == "F" else "#2471a3", lw=max(0.25, w * 1.1), alpha=0.85 if lay == "F" else 0.45, solid_capstyle="round")
+    L = layout()
+    ax.scatter([e["x"] for e in L["leds"]], [e["y"] for e in L["leds"]], s=6, marker="s", c="#f4d03f", edgecolors="k", linewidths=0.2, zorder=3)
+    ax.set_aspect("equal"); ax.axis("off")
+    ax.set_title(f"RF2 LR1 display flex (MODELED, template-routed): {sm['leds']} SK9822-EC20 in {len(RINGS)} rings, chains {sm['chain_lengths']}; "
+                 "F.Cu red, B.Cu blue (open buses + spokes)", loc="left", fontsize=9)
+    fig.savefig(path, dpi=130, bbox_inches="tight"); plt.close(fig)
 if __name__ == "__main__":
-    import json; print(json.dumps(summary(), indent=1))
+    import json, os; print(json.dumps(summary(), indent=1))
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out"); os.makedirs(out, exist_ok=True); figure(os.path.join(out, "rf2_display.png"))

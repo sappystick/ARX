@@ -122,3 +122,14 @@ Already done with the new tools:
 2. **Check:** add a check step to `head/rf2_signoff.py`.
 3. **Record:** put new assumptions in `docs/ASSUMPTIONS.md` and datasheet values in `docs/design/DATASHEET_LOG.md`.
 4. **Handoff:** one figure per decision, and a paragraph in HANDOFF_RF2.md saying what changed and what is still unproven.
+
+## 10. Display (added 2026-10-30, 522-LED flex)
+
+- **Centre-offset accuracy:**
+  - Model the pinpoint centre-offset error (quadrupole null plus the mono peak, against SNR and depth) in `rf2_pinpoint.py`.
+  - Accept: the ring spacing (8 mm) is at or below the modeled 1-sigma offset error at the depths that matter, or the spacing changes.
+- **LED-to-receiver coupling:**
+  - Study 7 now covers about 0.5 m of buses and 522 clocked parts.
+  - Compute the induced volts at the mono and quadrupole channels from the bus and lane loops of the routed board, with the stream confined to the quiet slot.
+  - Accept: below noise at the first gate.
+- **Lid transmission:** measure the clear PETG lid's transmission and diffusion on a printed coupon; set the brightness cap from it.

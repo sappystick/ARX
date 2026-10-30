@@ -19,17 +19,25 @@
    "C10b",
    "C10c",
    "C10d",
+   "C10e",
+   "C10f",
+   "C10g",
+   "C10h",
+   "C10i",
+   "C10j",
+   "C10k",
+   "C10l",
    "C07"
   ],
   "parts": {
    "MP1": 24,
    "TXJ": 6,
-   "LR1": 88
+   "LR1": 1056
   },
   "nets": {
    "MP1": 16,
    "TXJ": 2,
-   "LR1": 88
+   "LR1": 1054
   }
  },
  "boards": {
@@ -46,7 +54,7 @@
    "ok": true
   },
   "LR1": {
-   "pads": 340,
+   "pads": 4188,
    "mismatches": [],
    "unconnected": 0,
    "ok": true
@@ -142,15 +150,15 @@
    },
    {
     "id": "C10a",
-    "a": "CB1D.+5V_LED",
+    "a": "CB1D.LED1",
     "z": "LR1.JH1.1",
     "built_end_net": [
-     "+5V_LED"
+     "GND"
     ]
    },
    {
     "id": "C10b",
-    "a": "CB1D.GND",
+    "a": "CB1D.LED2",
     "z": "LR1.JH2.1",
     "built_end_net": [
      "GND"
@@ -158,18 +166,82 @@
    },
    {
     "id": "C10c",
-    "a": "CB1D.LED_DATA",
-    "z": "LR1.JH4.1",
+    "a": "CB1D.LED3",
+    "z": "LR1.JH3.1",
     "built_end_net": [
-     "LED_D0"
+     "+5V_LED"
     ]
    },
    {
     "id": "C10d",
-    "a": "CB1D.LED_CLK",
-    "z": "LR1.JH3.1",
+    "a": "CB1D.LED4",
+    "z": "LR1.JH4.1",
     "built_end_net": [
-     "LED_C0"
+     "+5V_LED"
+    ]
+   },
+   {
+    "id": "C10e",
+    "a": "CB1D.LED5",
+    "z": "LR1.JH5.1",
+    "built_end_net": [
+     "C1_K0"
+    ]
+   },
+   {
+    "id": "C10f",
+    "a": "CB1D.LED6",
+    "z": "LR1.JH6.1",
+    "built_end_net": [
+     "C1_D0"
+    ]
+   },
+   {
+    "id": "C10g",
+    "a": "CB1D.LED7",
+    "z": "LR1.JH7.1",
+    "built_end_net": [
+     "C3_D0"
+    ]
+   },
+   {
+    "id": "C10h",
+    "a": "CB1D.LED8",
+    "z": "LR1.JH8.1",
+    "built_end_net": [
+     "C3_K0"
+    ]
+   },
+   {
+    "id": "C10i",
+    "a": "CB1D.LED9",
+    "z": "LR1.JH9.1",
+    "built_end_net": [
+     "C2_K0"
+    ]
+   },
+   {
+    "id": "C10j",
+    "a": "CB1D.LED10",
+    "z": "LR1.JH10.1",
+    "built_end_net": [
+     "C2_D0"
+    ]
+   },
+   {
+    "id": "C10k",
+    "a": "CB1D.LED11",
+    "z": "LR1.JH11.1",
+    "built_end_net": [
+     "C4_K0"
+    ]
+   },
+   {
+    "id": "C10l",
+    "a": "CB1D.LED12",
+    "z": "LR1.JH12.1",
+    "built_end_net": [
+     "C4_D0"
     ]
    },
    {

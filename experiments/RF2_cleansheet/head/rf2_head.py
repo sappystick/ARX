@@ -7,7 +7,7 @@ Sectors: HV 156-198 deg (coil leads, TXJ, mono preamp MP1), ANALOG 89-156 deg (A
 output), DIGITAL the rest (CB1D tower at the centre). The shaft cable comes DOWN through the lid at the heel (r 92), never across the coil.
 Seats: 3 PETG pins (Ø3.2, r 28 at 22.5 / 157.5 / 247.5 deg) through the board stack (the SB1R holes, Ø3.4); AB1 cradles (ledge + wall + snap lip, hinge
 slot facing the centre); a CB1D tower (ledge, wall, snap lip, hinge slots); MP1 / TXJ trays (ledge + rim, HV slot and LV slot on opposite sides); the
-LED ring hangs on 6 lid bosses (pins Ø1.8 through Ø2.0 board holes); lid windows Ø3.0 over every LED; a cable gland boss in the lid at the heel.
+LED display flex hangs on 6 lid bosses at r 110.8 (pins Ø1.8 through Ø2.0 board holes); clear PETG lid over the display (no windows); a cable gland boss in the lid at the heel.
 Envelopes are board + parts-below + parts-above with edge keep-outs where ledges and lips grip (1.2 mm below, 0.4 mm above; component rule for layout).
 Outputs (out/): RF2_<PART>.stl, rf2_head_spec.json.  usage: python3 experiments/RF2_cleansheet/head/rf2_head.py"""
 import os, json, math, struct
@@ -39,10 +39,10 @@ SPEC = dict(
         CB1D=dict(kind="disc", c=(0.0, 0.0), r=39.0, z=(13.5, 15.1), below=2.0, above=4.4, what="RF1 CB1D section: RP2354A, LMR36015 buck, TLV755P (placed in RF1; route next)"),
         MP1=dict(kind="box", c=(-76.0, 14.0), size=(26.0, 18.0), z=(5.6, 7.2), below=1.0, above=3.4, what="NEW mono preamp: HV-tolerant input (630 V parts, >= 1.0 mm), output to AB1A"),
         TXJ=dict(kind="box", c=(-99.5, 3.4), size=(9.0, 15.0), z=(5.6, 7.2), below=1.0, above=4.8, what="NEW coil-lead terminal board: wire-hole pads (Wire_pads) for the coil leads and the shaft TX pair"),
-        LED=dict(kind="annulus", r=(15.0, 75.0), z=(22.85, 23.25), below=0.0, above=0.65, n_ring=36, r_ring=62.5, n_ctr=6, r_ctr=22.0,
-                 what="LED ring: FLEX section of the rigid-flex panel (0.2 mm polyimide on a 0.2 mm FR4 stiffener), 36 SK9822-EC20 at r 62.5 (bearing) + 6 at r 22 (class colour), clocked, dark during receive windows")),
-    led_bosses=dict(n=6, r=45.0, deg0=30.0, boss_d=4.0, pin_d=1.8, hole_d=2.0),
-    lid_windows=dict(d=3.0),
+        LED=dict(kind="flex", z=(22.85, 23.25), below=0.0, above=0.65,
+                 what="LED display: FLEX section of the rigid-flex panel (0.2 mm polyimide on a 0.2 mm FR4 stiffener), 522 SK9822-EC20 in 13 rings from r 104 to the centre (rf2_ledgrid.py), clocked, dark during receive windows and power-gated when silent")),
+    led_bosses=dict(n=6, r=110.8, deg0=30.0, boss_d=4.0, pin_d=1.8, hole_d=2.0),
+    lid_light=dict(material="clear / natural PETG, printed solid (diffuser; transmission ASSUMED)", note="no holes over the LEDs: 522 windows would weaken the lid and the seal"),
     gland=dict(c=pol(92.0, HEEL), d=8.0, boss_d=12.0, boss_z=(21.6, 23.9), what="shaft cable enters DOWN through the lid at the heel into the HV sector"),
     potting=dict(analog="low-permittivity gel", hv="high-dielectric-strength epoxy", digital="syntactic silicone", display="conformal coat only", coil="epoxy in the channel"),
     ref_coil=dict(place="on the shaft, 0.6 m from the head", former="3 orthogonal windings, 100 mm, on a PETG frame", turns_per_axis=390, wire="0.20 mm enamelled copper",
@@ -62,8 +62,14 @@ def slot_towards(c, deg, w, z0, z1, L=12.0):
     """a slot of width w cut from the point c outward along direction deg (for hinge / lead exits)"""
     return m3.Manifold.cube([L, w, z1 - z0], True).translate([L / 2, 0, (z0 + z1) / 2]).rotate([0, 0, deg]).translate([c[0], c[1], 0])
 def led_positions():
-    L = SPEC["boards_inner"]["LED"]
-    return [pol(L["r_ring"], 360 * k / L["n_ring"]) for k in range(L["n_ring"])] + [pol(L["r_ctr"], 360 * k / L["n_ctr"] + 30) for k in range(L["n_ctr"])]
+    import rf2_ledgrid as LG
+    return [(e["x"], e["y"]) for e in LG.layout()["leds"]]
+def led_sites():
+    """(x, y, rot, size_x, size_y) of every part on the display flex: LEDs 2 x 2, capacitors 1.0 x 0.5 (courtyard-sized boxes: 2.2 x 2.2, 1.2 x 0.7)"""
+    import rf2_ledgrid as LG
+    out = []
+    for e in LG.layout()["leds"]: out += [(e["x"], e["y"], e["rot"], 2.2, 2.2), (e["cx"], e["cy"], e["crot"], 1.2, 0.7)]
+    return out
 def boss_positions():
     b = SPEC["led_bosses"]; return [pol(b["r"], b["deg0"] + 360 * k / b["n"]) for k in range(b["n"])]
 # ------------------------------------------------------------------------------------------------ envelopes (what the boards occupy)
@@ -74,13 +80,11 @@ def envelope(k):
     elif v["kind"] == "box":
         sx, sy = v["size"]; cx, cy = v["c"]
         e = box(cx, cy, sx, sy, z0, z1) + box(cx, cy, sx - 2 * KB, sy - 2 * KB, z0 - v["below"], z0) + box(cx, cy, sx - 2 * KA, sy - 2 * KA, z1, z1 + v["above"])
-    else:                                                                                       # LED ring: board + bottom parts annulus + LEDs only at their sites
-        r0, r1 = v["r"]; e = ring(r0, r1, z0, z1)
-        if v["below"] > 0: e = e + ring(r0 + KB, r1 - KB, z0 - v["below"], z0)          # a zero-height solid is invalid in manifold3d and empties the union
-        for p in led_positions():                                                           # LED sites, and the 0402 capacitor 2.8 mm inside each (rf2_netlist LR1)
-            e = e + box(p[0], p[1], 2.2, 2.2, z1, z1 + v["above"])
-            r = math.hypot(*p); u = (r - 2.8) / r; t = math.degrees(math.atan2(p[1], p[0]))
-            e = e + box(p[0] * u, p[1] * u, 1.2, 1.4, z1, z1 + v["above"]).translate([-p[0] * u, -p[1] * u, 0]).rotate([0, 0, t]).translate([p[0] * u, p[1] * u, 0])
+    else:                                                                                       # LED display flex: its real outline (rf2_ledgrid) + part sites on top
+        import rf2_ledgrid as LG
+        o = LG.outline(); cs = m3.CrossSection([list(o.exterior.coords)[:-1]] + [list(r.coords)[:-1] for r in o.interiors], m3.FillRule.EvenOdd)
+        e = m3.Manifold.extrude(cs, z1 - z0).translate([0, 0, z0])
+        for x, y, rot, sx, sy in led_sites(): e = e + m3.Manifold.cube([sx, sy, v["above"]], True).rotate([0, 0, rot]).translate([x, y, z1 + v["above"] / 2])
         for p in boss_positions(): e = e - at(cyl(SPEC["led_bosses"]["hole_d"] / 2, z0 - 1, z1 + 1, 32), p)
     return e
 # ------------------------------------------------------------------------------------------------ printed parts
@@ -91,9 +95,8 @@ def parts():
     sp = S["stack_pins"]
     for d in sp["deg"]: lower = lower + at(cyl(sp["d"] / 2, sp["z"][0] - 0.01, sp["z"][1], 32), pol(sp["r"], d))
     P["SHELL_LOWER"] = lower
-    # lid: windows over every LED, LED bosses + pins, cable gland boss and hole
+    # lid: clear PETG (the display shines through; no windows), display bosses + pins at the rim holes, cable gland boss and hole
     lid = cyl(R, *sh["lid_z"]); lb = S["led_bosses"]; L = bi["LED"]
-    for p in led_positions(): lid = lid - at(cyl(S["lid_windows"]["d"] / 2, sh["lid_z"][0] - 1, sh["lid_z"][1] + 1, 32), p)
     for p in boss_positions():
         lid = lid + at(cyl(lb["boss_d"] / 2, L["z"][1], sh["lid_z"][0] + 0.01, 32), p) + at(cyl(lb["pin_d"] / 2, L["z"][0], L["z"][1] + 0.01, 32), p)
     g = S["gland"]; lid = lid + at(cyl(g["boss_d"] / 2, g["boss_z"][0], sh["lid_z"][0] + 0.01, 64), g["c"]) - at(cyl(g["d"] / 2, g["boss_z"][0] - 1, sh["lid_z"][1] + 1, 64), g["c"])

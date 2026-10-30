@@ -112,7 +112,8 @@ def check():
         nets = {}
         for p in B["parts"]:
             for pin, n in p["pins"].items(): nets.setdefault(n, []).append(f"{p['ref']}.{pin}")
-        single = [n for n, v in nets.items() if len(v) < 2 and n not in ("LED_DEND", "LED_CEND")]
+        chain_ends = {f"C{c}_{k}{len(seq)}" for c, seq in enumerate(LG.layout()["chains"], 1) for k in ("D", "K")} if b == "LR1" else set()
+        single = [n for n, v in nets.items() if len(v) < 2 and n not in chain_ends]          # the last LED's SDO / CKO of each chain are open by design
         if single: errs.append(f"{b}: single-pin nets {single}")
     checked, pending = [], []
     for cid, a, z, nm, _ in HARNESS:

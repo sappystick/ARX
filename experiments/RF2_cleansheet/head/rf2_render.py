@@ -23,6 +23,11 @@ def box(cx, cy, sx, sy, z0, z1, rot=0.0): return m3.Manifold.cube([sx, sy, z1 - 
 def board_slab(name):
     B = NL.BOARDS[name]; hd = B["head"]; z0 = hd["z_bottom"]; t = B["thickness"]
     if B["kind"] == "rect": s = box(hd["c"][0], hd["c"][1], B["w"], B["h"], z0, z0 + t)
+    elif B["kind"] == "poly":                                               # the display flex: its real outline (notch, hinge slit)
+        import rf2_ledgrid as LG, manifold3d as m3
+        o = LG.outline(); cs = m3.CrossSection([list(o.exterior.coords)[:-1]] + [list(r.coords)[:-1] for r in o.interiors], m3.FillRule.EvenOdd)
+        s = m3.Manifold.extrude(cs, t).translate([0, 0, z0])
+        for r, a, d in B.get("holes", []): s = s - H.at(H.cyl(d / 2, z0 - 1, z0 + t + 1, 24), H.pol(r, a))
     else:
         s = H.cyl(B["r_out"], z0, z0 + t) - H.cyl(B["r_in"], z0 - 1, z0 + t + 1)
         for r, a, d in B.get("holes", []): s = s - H.at(H.cyl(d / 2, z0 - 1, z0 + t + 1, 24), H.pol(r, a))
@@ -68,7 +73,7 @@ def scene(explode=False):
         if man.is_empty(): return
         V, F = mesh(man); V = V + [0, 0, dz(key or name)]; items.append((name, V[F], col, label))
     add("SHELL_LOWER", P["SHELL_LOWER"], COL["shell"], cutB, "shell: skid + wall (PETG)")
-    add("LID", P["LID"], COL["lid"], cutA, "lid: 42 LED windows, gland")
+    add("LID", P["LID"], COL["lid"], cutA, "clear PETG lid over the display, gland")
     add("COIL_CHANNEL", P["COIL_CHANNEL"], COL["print"], cutB)
     co = S["coil"]; lz = None
     for j in range(co["turns"]):
@@ -82,7 +87,7 @@ def scene(explode=False):
     add("ENV_CB1D", P["ENV_CB1D"], COL["env"], None, "CB1D section (envelope; routing: Phase C)")
     for nm in ("MP1", "TXJ", "LR1"):
         cut = cutA if nm == "LR1" else None; key = "LED" if nm == "LR1" else nm
-        add(nm + "_board", board_slab(nm), COL["fr4"], cut, {"MP1": "MP1 mono preamp (routed)", "TXJ": "TXJ coil-lead board (routed)", "LR1": "LR1 LED ring (routed)"}[nm], key)
+        add(nm + "_board", board_slab(nm), COL["fr4"], cut, {"MP1": "MP1 mono preamp (routed)", "TXJ": "TXJ coil-lead board (routed)", "LR1": "LR1 display flex: 522 LEDs, 13 rings (routed)"}[nm], key)
         add(nm + "_cu", tracks(nm), COL["copper"], cut, None, key)
         for kind, man in bodies(nm).items(): add(f"{nm}_{kind}", man, COL[kind], cut, None, key)
     for k in ("AB1A", "AB1B"):

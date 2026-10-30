@@ -5,7 +5,7 @@
   3. no interference: pairwise intersection volume < 0.01 mm3 for every pair of head parts
   4. clearances (manifold min_gap): litz to shell wall and channel wall >= 0.2 mm; islands to bay walls and to each other >= 0.5 mm; HV envelopes
      (TXJ, MP1) to every non-HV island >= 3.0 mm (envelope margin; copper-level HV clearance is the boards' own rule 6 check)
-  5. LED windows over the LED ring; LED envelope top at the lid underside
+  5. LED display: every LED / capacitor inside the flex outline, LED tops at the clear lid's underside, flex clear of the gland boss
   6. mass from the solids (PETG 1.27, FR4 1.85 g/cm3) + litz (6 g/m) + board copper + island estimates + potting (full fill and islands-only)
   7. potting volume per sector (analog / HV / digital) = sector prism minus islands and walls
 usage: python3 experiments/RF2_cleansheet/head/rf2_head_check.py"""
@@ -53,11 +53,16 @@ def main():
     res["checks"]["seats"] = dict(ok=seat_ok, seat_to_its_board_mm=seats, seats_to_walls_mm=g_seat_walls)
     res["checks"]["clearances_mm"] = dict(ok=min(g_litz.values()) >= 0.2 and min(g_walls.values()) >= 0.5 and min(g_isl.values()) >= 0.5 and min(g_hv.values()) >= 3.0 and min(g_seat_walls.values()) >= 0.5,
                                          litz=g_litz, litz_seat=litz_seat, islands_to_walls=g_walls, islands=g_isl, hv_to_others=g_hv)
-    # 5 LED windows: every LED under a window; LEDs end at the lid underside; the board hangs on the bosses (pins through the board holes)
-    led = S["boards_inner"]["LED"]; pos = H.led_positions(); wr = S["lid_windows"]["d"] / 2
-    top = led["z"][1] + led["above"]
-    res["checks"]["led_windows"] = dict(ok=abs(top - S["shell"]["lid_z"][0]) < 1e-9 and all(led["r"][0] + 1.2 < math.hypot(*p) < led["r"][1] - 1.2 for p in pos) and wr >= 1.1,
-                                        leds=len(pos), led_top_z=top, lid_underside_z=S["shell"]["lid_z"][0], led_seat_gap_to_lid=round(gap("ENV_LED", "LID"), 3))
+    # 5 LED display: every LED / capacitor site inside the flex outline (1.0 mm from its edges, incl. the gland notch and the hinge slit); LEDs end at
+    #   the clear lid's underside; the flex clears the gland boss; the flex hangs on the bosses (pins through the board holes)
+    import rf2_ledgrid as LG
+    from shapely.geometry import Point
+    led = S["boards_inner"]["LED"]; pos = H.led_positions(); o = LG.outline().buffer(-1.0); top = led["z"][1] + led["above"]
+    inside = all(o.contains(Point(x, y)) for x, y, *_ in H.led_sites())
+    gb = S["gland"]; gland_gap = LG.outline().distance(Point(*gb["c"]).buffer(gb["boss_d"] / 2, 64))
+    res["checks"]["led_display"] = dict(ok=abs(top - S["shell"]["lid_z"][0]) < 1e-9 and inside and gland_gap >= 0.5, leds=len(pos), sites_inside_outline=inside,
+                                        led_top_z=top, lid_underside_z=S["shell"]["lid_z"][0], flex_to_gland_boss_mm=round(gland_gap, 3),
+                                        led_seat_gap_to_lid=round(gap("ENV_LED", "LID"), 3), lid=S["lid_light"]["material"])
     # 7 potting per sector
     bz = S["bay"]["z"]; bay = H.cyl(S["bay"]["r_max"], *bz)                                   # the whole bay disc
     def sector(d0, d1):
@@ -79,7 +84,7 @@ def main():
          "receive boards QA + QB (FR4) + copper (16.9 m x 0.8 mm x 35 um each)": (vol("BOARD_QA") + vol("BOARD_QB")) * FR4 + 2 * 16.9e3 * 0.8 * 0.035 / 1000 * 8.96,
          "shield SH1 (FR4) + its copper (area from sh1_check.json) x 35 um": vol("BOARD_SH1") * FR4 + SH1_CU * 0.0035 * 8.96,
          "transmit litz (26 turns, 6 g/m)": 26 * 2 * math.pi * np.mean(S["coil"]["columns_r"]) / 1000 * 6.0,
-         "electronics islands (ASSUMED: AB1A/B 10 g each, CB1D 40 g, MP1 8 g, TXJ 10 g, LED ring 25 g)": 10 + 10 + 40 + 8 + 10 + 25,
+         "electronics islands (ASSUMED: AB1A/B 10 g each, CB1D 40 g, MP1 8 g, TXJ 10 g; LED display flex 40 g ASSUMED: 0.4 mm flex+stiffener D226 about 30 g + 522 LEDs / caps)": 10 + 10 + 40 + 8 + 10 + 40,
          "coil channel epoxy (fill around the litz, 1.15 g/cm3 ASSUMED)": max(0.0, (H.ring(S["channel"]["inner_wall_r"][1], S["shell"]["wall_r"][0], S["coil"]["floor_z"][1], S["coil"]["row0_z"] + 9 * S["coil"]["pitch"]).volume() - vol("LITZ") * 1000) / 1000 * 1.15),
          "hardware, cable gland, yoke lug (ASSUMED)": 40.0}
     base = sum(m.values()); pot_full = sum(pv[k] * dens[k] for k in pv); pot_isl = 0.5 * sum(vol(k) for k in isl) * 0.9

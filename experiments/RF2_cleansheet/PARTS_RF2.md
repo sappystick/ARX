@@ -49,7 +49,7 @@ Reading: v2 removes almost all of the protection noise. With an op-amp of about 
 
 The choice is **Nexperia BAV199** (VERIFIED, DATASHEET_LOG U-DS-BAV199): 5 nA maximum leakage, 2 pF, IFRM 500 mA. It is kept on merit, as the lowest-leakage verified option, until a better verified part appears.
 
-## LED ring (LR1, now a flex section)
+## LED display (LR1, flex; 522 LEDs since 2026-10-30)
 **Criteria:**
 - 2 x 2 mm or smaller;
 - a clocked interface, so the firmware can hold the LEDs dark through every receive window without timing-critical one-wire frames;
@@ -78,3 +78,7 @@ Supply (or let me fetch once the sites answer) these manufacturer PDFs:
 - or a depletion-mode HV MOSFET from a vendor that serves PDFs (for example IXYS / Littelfuse IXTP08N100D2), in place of DN2470.
 
 Each will get a DATASHEET_LOG entry with the exact values, and MP1 v2 will then be drawn, routed and checked like v1.
+
+## Display power (new function, 2026-10-30)
+- **TI LMR36520** (own +5V_LED buck, 4.2-65 V in, 70 V transient, 2 A): **VERIFIED**, DATASHEET_LOG RF2-DS-DISPLAY. Chosen over a second LMR36015 (1.5 A), which would leave only 9 % margin at the 1.372 A display load.
+- **TI TPS22918** load switch (1-5.5 V, 2 A, 52 mohm): **VERIFIED**. It powers the display down while silent; the 522 x 1 mA static current would otherwise flow all the time.

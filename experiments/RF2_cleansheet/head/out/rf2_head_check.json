@@ -11,9 +11,9 @@
      "ok": true
     },
     "LID": {
-     "triangles": 8616,
+     "triangles": 3072,
      "edges_not_2": 0,
-     "volume_cm3": 63.633,
+     "volume_cm3": 64.075,
      "ok": true
     },
     "COIL_CHANNEL": {
@@ -107,9 +107,9 @@
      "ok": true
     },
     "ENV_LED": {
-     "triangles": 4188,
+     "triangles": 25934,
      "edges_not_2": 0,
-     "volume_cm3": 6.956,
+     "volume_cm3": 17.799,
      "ok": true
     },
     "LITZ": {
@@ -249,7 +249,7 @@
      ]
     },
     "ENV_LED": {
-     "r_max": 75.0,
+     "r_max": 113.0,
      "z": [
       22.85,
       23.9
@@ -326,12 +326,15 @@
     "ENV_MP1 - ENV_CB1D": 20.0
    }
   },
-  "led_windows": {
+  "led_display": {
    "ok": true,
-   "leds": 42,
+   "leds": 522,
+   "sites_inside_outline": true,
    "led_top_z": 23.9,
    "lid_underside_z": 23.9,
-   "led_seat_gap_to_lid": 0.0
+   "flex_to_gland_boss_mm": 1.0,
+   "led_seat_gap_to_lid": 0.0,
+   "lid": "clear / natural PETG, printed solid (diffuser; transmission ASSUMED)"
   },
   "potting_cm3_full_fill": {
    "analog": 97.0,
@@ -340,19 +343,19 @@
   },
   "mass_g": {
    "items": {
-    "printed parts (shell, lid, channel, walls, seats; PETG 100 % infill)": 220.5,
+    "printed parts (shell, lid, channel, walls, seats; PETG 100 % infill)": 221.1,
     "receive boards QA + QB (FR4) + copper (16.9 m x 0.8 mm x 35 um each)": 129.2,
     "shield SH1 (FR4) + its copper (area from sh1_check.json) x 35 um": 37.2,
     "transmit litz (26 turns, 6 g/m)": 109.6,
-    "electronics islands (ASSUMED: AB1A/B 10 g each, CB1D 40 g, MP1 8 g, TXJ 10 g, LED ring 25 g)": 103,
+    "electronics islands (ASSUMED: AB1A/B 10 g each, CB1D 40 g, MP1 8 g, TXJ 10 g; LED display flex 40 g ASSUMED: 0.4 mm flex+stiffener D226 about 30 g + 522 LEDs / caps)": 118,
     "hardware, cable gland, yoke lug (ASSUMED)": 40.0
    },
-   "without_bay_potting": 678,
+   "without_bay_potting": 694,
    "bay_full_fill_potting": 441,
    "islands_only_potting": 67,
    "potting_source": "rf2_ledger.json stated fill levels",
-   "total_islands_only": 745,
-   "total_full_fill": 1119,
+   "total_islands_only": 761,
+   "total_full_fill": 1135,
    "earlier_estimate": 529,
    "note": "100 % infill PETG is an upper bound for the printed parts; the earlier 529 g estimate assumed a single 0.4 mm receive board, not the two 0.8 mm SB1R boards"
   }

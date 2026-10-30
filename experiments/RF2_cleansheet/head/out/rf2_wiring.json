@@ -166,18 +166,26 @@
    "id": "C10",
    "frm": "CB1D",
    "to": "LED",
-   "medium": "rigid-flex hinge (up)",
+   "medium": "rigid-flex hinge flap (up)",
    "net_class": "digital",
    "conductors": [
     "+5V_LED",
+    "+5V_LED",
     "GND",
-    "LED_DATA",
-    "LED_CLK"
+    "GND",
+    "C1_D0",
+    "C1_K0",
+    "C2_D0",
+    "C2_K0",
+    "C3_D0",
+    "C3_K0",
+    "C4_D0",
+    "C4_K0"
    ],
    "path": [
     "digital"
    ],
-   "note": "SK9822-class clocked chain; dark during receive windows"
+   "note": "LR1 display: 4 parallel SK9822-EC20 chains (rf2_ledgrid), one RP2354A PIO state machine each; dark during receive windows, power-gated when silent"
   },
   {
    "id": "C11",
@@ -270,11 +278,19 @@
     "regulator": "LMR36015 on CB1D (TI SNVSB49D: 4.2-60 V in, 1.5 A)",
     "rating_A": 1.5,
     "loads_A": {
-     "LED ring (firmware cap, OPEN_ITEMS 0)": 0.35,
      "AB1A analog (ASSUMED)": 0.04,
      "AB1B analog (ASSUMED)": 0.04,
      "MP1 (ASSUMED)": 0.02,
      "+3V3 LDO input": 0.09
+    }
+   },
+   {
+    "rail": "+5V_LED (display, own buck, power-gated)",
+    "regulator": "LMR36520 on CB1D (TI Rev. C: 4.2-65 V in, 70 V transient, 2 A) + TPS22918 load switch (TI Rev. C: 1-5.5 V, 2 A continuous, 52 mohm); off whenever the display is dark (silent until a detection)",
+    "rating_A": 2.0,
+    "loads_A": {
+     "522 x SK9822-EC20 static current (OPSCO Rev. A/0: IDD 1 mA typ)": 0.522,
+     "lit LEDs, firmware brightness cap": 0.85
     }
    },
    {
@@ -333,7 +349,7 @@
    473.2,
    765.6
   ],
-  "led": "LED stream only after the last gate and before the next pulse (> 0.8 ms quiet slot), dark during sweeps' receive windows",
+  "led": "LED stream only after the last gate and before the next pulse, dark during receive windows; 4 chains clocked in parallel at 8 MHz (SK9822-EC20 max 15 MHz)",
   "adc": "AD7389-4 on each AB1, SCLK >= 27.2 MHz (3 frames in the first gate, baseline fw timing)"
  },
  "checks": {
@@ -353,9 +369,15 @@
   "power": [
    {
     "rail": "+5V",
-    "load_A": 0.54,
+    "load_A": 0.19,
     "rating_A": 1.5,
-    "margin": 0.64
+    "margin": 0.87
+   },
+   {
+    "rail": "+5V_LED (display, own buck, power-gated)",
+    "load_A": 1.372,
+    "rating_A": 2.0,
+    "margin": 0.31
    },
    {
     "rail": "+3V3",
@@ -371,6 +393,13 @@
    }
   ],
   "power_margin_ge_30pct": true,
+  "led_stream": {
+   "longest_chain": 215,
+   "clock_MHz": 8,
+   "frame_us": 877.5,
+   "quiet_slot_us": 1162.2,
+   "fits": true
+  },
   "shaft_cable": {
    "hv": 2,
    "lv": 8,

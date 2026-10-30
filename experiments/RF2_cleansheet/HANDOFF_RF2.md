@@ -131,7 +131,7 @@ VIN about 24 V (7S pack, switched and fused by PM2 in the handle) -> CB1D LMR360
 These are **model results, not bench data**; ground, interference and several circuit values are assumptions.
 
 ## 11. Mass (rf2_head_check.json)
-About **745 g** (corrected 2026-10-30 from 702 g, docs/CORRECTIONS.md): 678 g of parts plus 67 g of potting at the volume ledger's fill levels (full-fill potting: 1119 g). Breakdown: printed parts 220 g (100 % infill, an upper bound), QA + QB 129 g, SH1 37 g, litz 110 g, electronics 103 g (ASSUMED), coil epoxy 38 g, hardware 40 g, potting 67 g (analog-sector gel 32.4 g, HV-sector epoxy 34.7 g; rf2_ledger.json). **Correction:** the earlier 529 g estimate assumed one 0.4 mm receive board; reusing the two 0.8 mm SB1R boards adds about 170 g. Options: a single combined 4-layer QA+QB board, lower infill.
+About **761 g** (745 g corrected 2026-10-30 from 702 g, docs/CORRECTIONS.md; +15 g for the 522-LED display flex, section 16): parts plus 67 g of potting at the volume ledger's fill levels. Breakdown: printed parts 220 g (100 % infill, an upper bound), QA + QB 129 g, SH1 37 g, litz 110 g, electronics 103 g (ASSUMED), coil epoxy 38 g, hardware 40 g, potting 67 g (analog-sector gel 32.4 g, HV-sector epoxy 34.7 g; rf2_ledger.json). **Correction:** the earlier 529 g estimate assumed one 0.4 mm receive board; reusing the two 0.8 mm SB1R boards adds about 170 g. Options: a single combined 4-layer QA+QB board, lower infill.
 
 ## 12. Measured checks (all pass)
 - **Meshes:** every mesh closed and edge-manifold.
@@ -178,3 +178,32 @@ About **745 g** (corrected 2026-10-30 from 702 g, docs/CORRECTIONS.md): 678 g of
   - Not yet verified: the MOSFET (PDF needed). The LMH6629 input limits (+-10 mA, -0.5 V) require a series resistor after the clamps, still to be sized.
 - **Field code cross-check:** the loop field behind every RF2 depth number agrees with magpylib to 1.3e-10 (`head/rf2_field_xcheck.py`).
 - **Tools:** pinned in requirements-rf2.txt and installed by `RF2_TOOLS=1 scripts/bootstrap.sh` (= `make rf2-tools`), with a self-test.
+
+## 16. Dense LED display (2026-10-30, owner: rings from the rim to the centre, 400+ LEDs)
+- **What it is:** LR1 is now a full-disc display flex with **522 SK9822-EC20** in 13 rings: r 104, 96, ..., 16 on an 8 mm grid, plus a 4-LED centre ring at r 8. Ring sizes from the rim inward: 78 / 72 / 65 / 59 / 53 / 46 / 40 / 34 / 27 / 21 / 15 / 8 / 4.
+- **Pinpoint display:** the firmware lights the LED in the target's direction, on the ring that matches its distance from the head centre. As the head centres over the target, the light moves inward to the centre ring. The ring spacing should later be checked against a modeled centre-offset error (ENHANCEMENT_PLAN, new item).
+- **Single source:** everything comes from `head/rf2_ledgrid.py`: outline, parts, nets, copper (`out/rf2_display.png`).
+  - **Cells:** alternate rings run CCW / CW (each cell turned 180°), so neighbouring rings share an open B.Cu power bus. GND and +5V_LED alternate between rings.
+  - **Power tree:** two B.Cu spokes along the heel strip feed the buses; each bus joins its spoke at one end only. No loop around the axis (rule 5).
+  - **Chains:** 4 serpentine chains (48 / 101 / 158 / 215 LEDs), with polar U-turn jumps between rings.
+  - **Hinge:** a flap above CB1D (x' 20-34) carries 12 lands (4 power, 8 data / clock).
+  - **Gland:** the flex has a notch around the gland boss (1.0 mm clear).
+  - **Mounting:** 6 rim holes at r 110.8 for the lid bosses.
+- **Routed with no autorouter:**
+  - KiCad DRC 0 errors, 0 unconnected; minimum clearance 0.15 mm (rule 0.10); no loop around the axis; parity; Gerbers + drill.
+  - The board step takes about 3.5 min, mostly DRC on about 25,000 segments.
+- **Housing:**
+  - The clear PETG lid has no windows; the LEDs shine through it, and their transmission is ASSUMED.
+  - The housing checks pass: all sites inside the outline, LED tops at the lid underside, no interference.
+- **Power** (datasheet-verified, DATASHEET_LOG RF2-DS-DISPLAY): the display has its own rail, an LMR36520 buck (4.2-65 V, 2 A) plus a TPS22918 load switch (2 A).
+  - Load: 0.522 A static (522 x 1 mA) plus a 0.85 A firmware brightness cap = 1.372 A against 2 A (31 % margin).
+  - The rail is switched off whenever the detector is silent.
+  - The main +5 V rail drops to 0.19 A.
+- **Data:**
+  - The longest chain at 8 MHz takes 878 us, against a quiet slot of 1162 us at 420 Hz. The SK9822-EC20 maximum clock is 15 MHz.
+  - Each chain gets one RP2354A PIO state machine (CB1D, Phase C).
+- **Moved number:** the head mass is 761 g (was 745 g). The display flex estimate rose from 25 to 40 g (ASSUMED).
+- **Still open:**
+  - The CB1D side of the 12 hinge lands, plus the LED buck and load switch on CB1D (Phase C).
+  - The LED-to-receiver coupling check (ENHANCEMENT_PLAN study 7, now more important with about 0.5 m of buses).
+  - Measured lid transmission.

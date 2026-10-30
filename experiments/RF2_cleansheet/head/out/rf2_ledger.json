@@ -21,8 +21,8 @@
   {
    "region": "channel top",
    "total_cm3": 29.184,
-   "solid_cm3": 7.401,
-   "free_cm3": 21.783,
+   "solid_cm3": 8.704,
+   "free_cm3": 20.48,
    "fill": "air",
    "fill_g": 0.0
   },
@@ -37,8 +37,8 @@
   {
    "region": "analog sector, above",
    "total_cm3": 88.619,
-   "solid_cm3": 9.273,
-   "free_cm3": 79.346,
+   "solid_cm3": 11.087,
+   "free_cm3": 77.532,
    "fill": "air",
    "fill_g": 0.0
   },
@@ -53,31 +53,31 @@
   {
    "region": "HV sector, above",
    "total_cm3": 46.939,
-   "solid_cm3": 5.169,
-   "free_cm3": 41.771,
+   "solid_cm3": 6.046,
+   "free_cm3": 40.894,
    "fill": "air",
    "fill_g": 0.0
   },
   {
    "region": "digital sector + centre",
    "total_cm3": 517.288,
-   "solid_cm3": 37.268,
-   "free_cm3": 480.02,
+   "solid_cm3": 44.117,
+   "free_cm3": 473.171,
    "fill": "air",
    "fill_g": 0.0
   },
   {
    "region": "lid zone",
    "total_cm3": 63.951,
-   "solid_cm3": 63.434,
-   "free_cm3": 0.518,
+   "solid_cm3": 63.876,
+   "free_cm3": 0.075,
    "fill": "air",
    "fill_g": 0.0
   }
  ],
  "sum_regions_cm3": 1082.909,
- "solids_cm3": 339.856,
- "free_cm3": 743.053,
+ "solids_cm3": 351.142,
+ "free_cm3": 731.767,
  "regions_overlap_mm3": 0.0,
  "solids_outside_envelope_mm3": 0.0,
  "potting_g": 105.6,

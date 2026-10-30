@@ -5,14 +5,14 @@
   {
    "step": "netlist consistency",
    "rc": 0,
-   "seconds": 0.0,
+   "seconds": 0.2,
    "ok": true,
    "tail": ""
   },
   {
    "step": "housing + seats (STL, spec)",
    "rc": 0,
-   "seconds": 13.2,
+   "seconds": 15.6,
    "ok": true,
    "tail": ""
   },
@@ -54,35 +54,35 @@
   {
    "step": "field code cross-check (magpylib vs loop_B)",
    "rc": 0,
-   "seconds": 0.6,
+   "seconds": 0.7,
    "ok": true,
    "tail": ""
   },
   {
    "step": "MP1 protection study (ngspice)",
    "rc": 0,
-   "seconds": 1.0,
+   "seconds": 1.1,
    "ok": true,
    "tail": ""
   },
   {
    "step": "REF3 sizing",
    "rc": 0,
-   "seconds": 0.5,
+   "seconds": 0.6,
    "ok": true,
    "tail": ""
   },
   {
    "step": "volume ledger",
    "rc": 0,
-   "seconds": 2.3,
+   "seconds": 3.1,
    "ok": true,
    "tail": ""
   },
   {
    "step": "housing checks (meshes, envelope, interference, seats, clearances)",
    "rc": 0,
-   "seconds": 12.8,
+   "seconds": 13.7,
    "ok": true,
    "tail": ""
   },
@@ -96,7 +96,7 @@
   {
    "step": "parity: built boards + harness vs netlist",
    "rc": 0,
-   "seconds": 0.7,
+   "seconds": 1.5,
    "ok": true,
    "tail": ""
   }
@@ -113,6 +113,14 @@
   "C10b",
   "C10c",
   "C10d",
+  "C10e",
+  "C10f",
+  "C10g",
+  "C10h",
+  "C10i",
+  "C10j",
+  "C10k",
+  "C10l",
   "C07"
  ]
 }

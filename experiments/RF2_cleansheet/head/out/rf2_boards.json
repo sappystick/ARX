@@ -25,7 +25,7 @@
    "examples": [],
    "unconnected": 0,
    "warnings": 12,
-   "hv_rule_control_violations": 14,
+   "hv_rule_control_violations": 13,
    "ok": true
   },
   "copper": {
@@ -536,8 +536,13 @@
    "tracks": 24045,
    "vias": 2092,
    "widened_to_floor": 0,
-   "mode": "template (no autorouter)",
-   "resume": "outline or pad set changed",
+   "mode": "resume, complete: no autorouter",
+   "resume": {
+    "copied_items": 0,
+    "changed_pads": 0,
+    "changed_nets": [],
+    "deleted_drc_items": 0
+   },
    "ok": true
   },
   "kicad_drc": {

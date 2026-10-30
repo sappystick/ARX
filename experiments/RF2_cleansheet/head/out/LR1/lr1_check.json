@@ -9,8 +9,13 @@
   "tracks": 24045,
   "vias": 2092,
   "widened_to_floor": 0,
-  "mode": "template (no autorouter)",
-  "resume": "outline or pad set changed",
+  "mode": "resume, complete: no autorouter",
+  "resume": {
+   "copied_items": 0,
+   "changed_pads": 0,
+   "changed_nets": [],
+   "deleted_drc_items": 0
+  },
   "ok": true
  },
  "kicad_drc": {
@@ -13783,5 +13788,6 @@
    ]
   }
  ],
- "ok": true
+ "ok": true,
+ "netlist_hash": "652ca55038e2aa1f"
 }

@@ -216,34 +216,27 @@
    "what": "NEW coil-lead terminal board: wire-hole pads (Wire_pads) for the coil leads and the shaft TX pair"
   },
   "LED": {
-   "kind": "annulus",
-   "r": [
-    15.0,
-    75.0
-   ],
+   "kind": "flex",
    "z": [
     22.85,
     23.25
    ],
    "below": 0.0,
    "above": 0.65,
-   "n_ring": 36,
-   "r_ring": 62.5,
-   "n_ctr": 6,
-   "r_ctr": 22.0,
-   "what": "LED ring: FLEX section of the rigid-flex panel (0.2 mm polyimide on a 0.2 mm FR4 stiffener), 36 SK9822-EC20 at r 62.5 (bearing) + 6 at r 22 (class colour), clocked, dark during receive windows"
+   "what": "LED display: FLEX section of the rigid-flex panel (0.2 mm polyimide on a 0.2 mm FR4 stiffener), 522 SK9822-EC20 in 13 rings from r 104 to the centre (rf2_ledgrid.py), clocked, dark during receive windows and power-gated when silent"
   }
  },
  "led_bosses": {
   "n": 6,
-  "r": 45.0,
+  "r": 110.8,
   "deg0": 30.0,
   "boss_d": 4.0,
   "pin_d": 1.8,
   "hole_d": 2.0
  },
- "lid_windows": {
-  "d": 3.0
+ "lid_light": {
+  "material": "clear / natural PETG, printed solid (diffuser; transmission ASSUMED)",
+  "note": "no holes over the LEDs: 522 windows would weaken the lid and the seal"
  },
  "gland": {
   "c": [

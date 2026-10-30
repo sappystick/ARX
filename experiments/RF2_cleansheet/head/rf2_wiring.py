@@ -25,7 +25,8 @@ CONN = [
     ("C07", "SH1_GND", "AB1A", "0.5 mm wire up the 22.5 deg stack hole", "analog", ["SHIELD"], ["stack hole 22.5", "under tower", "tower slot 106", "analog"], "single-point shield ground to AB1A AGND"),
     ("C08", "CB1D", "AB1A", "rigid-flex hinge (RF1 concept C)", "digital", ["SCLK", "CS", "SDO1", "SDO2", "+5V", "GND"], ["tower slot 106", "analog"], "ADC data, power in"),
     ("C09", "CB1D", "AB1B", "rigid-flex hinge", "digital", ["SCLK", "CS", "SDO1", "SDO2", "+5V", "GND"], ["tower slot 137", "analog"], ""),
-    ("C10", "CB1D", "LED", "rigid-flex hinge (up)", "digital", ["+5V_LED", "GND", "LED_DATA", "LED_CLK"], ["digital"], "SK9822-class clocked chain; dark during receive windows"),
+    ("C10", "CB1D", "LED", "rigid-flex hinge flap (up)", "digital", ["+5V_LED", "+5V_LED", "GND", "GND"] + [f"C{c}_{k}0" for c in range(1, 5) for k in ("D", "K")], ["digital"],
+     "LR1 display: 4 parallel SK9822-EC20 chains (rf2_ledgrid), one RP2354A PIO state machine each; dark during receive windows, power-gated when silent"),
     ("C11", "GLAND", "CB1D", "shaft cable, LV cores (separate sleeve, >= 10 mm from the HV pair)", "power/digital",
      ["VIN", "GND", "TXCMD_P", "TXCMD_N", "TXSTAT_P", "TXSTAT_N", "DATA_P", "DATA_N"], ["hv (sleeved, along the 198 wall)", "tower slot 186", "digital"], "power in, TX timing out, link to the handle"),
     ("C12", "GLAND", "AB1A", "shaft cable, 3 shielded twisted pairs", "analog", ["REFX_P", "REFX_N", "REFY_P", "REFY_N", "REFZ_P", "REFZ_N"], ["hv (sleeved)", "wall 156 LV slot", "analog (over AB1B, z 11-13)"], "from REF3 on the shaft"),
@@ -35,7 +36,10 @@ SHAFT = dict(hv_pair=["TX_A", "TX_B"], lv=[c for c in CONN if c[0] == "C11"][0][
 POWER = dict(
     source="VIN about 24 V (7S pack 25.2 V nominal, switched and fused by PM2 in the handle) down the shaft",
     rails=[dict(rail="+5V", regulator="LMR36015 on CB1D (TI SNVSB49D: 4.2-60 V in, 1.5 A)", rating_A=1.5,
-                loads_A={"LED ring (firmware cap, OPEN_ITEMS 0)": 0.35, "AB1A analog (ASSUMED)": 0.04, "AB1B analog (ASSUMED)": 0.04, "MP1 (ASSUMED)": 0.02, "+3V3 LDO input": 0.09}),
+                loads_A={"AB1A analog (ASSUMED)": 0.04, "AB1B analog (ASSUMED)": 0.04, "MP1 (ASSUMED)": 0.02, "+3V3 LDO input": 0.09}),
+           dict(rail="+5V_LED (display, own buck, power-gated)", regulator="LMR36520 on CB1D (TI Rev. C: 4.2-65 V in, 70 V transient, 2 A) + TPS22918 load switch "
+                "(TI Rev. C: 1-5.5 V, 2 A continuous, 52 mohm); off whenever the display is dark (silent until a detection)", rating_A=2.0,
+                loads_A={"522 x SK9822-EC20 static current (OPSCO Rev. A/0: IDD 1 mA typ)": 0.522, "lit LEDs, firmware brightness cap": 0.85}),
            dict(rail="+3V3", regulator="TLV755P on CB1D (500 mA)", rating_A=0.5, loads_A={"RP2354A + flash + misc (ASSUMED)": 0.08}),
            dict(rail="+3V3D (each AB1)", regulator="local TLV755P (RF1)", rating_A=0.5, loads_A={"AD7389-4 digital + logic (ASSUMED)": 0.01})],
     tx="the TX current never enters the head's electronics: NECK driver runs from VIN with its own bulk bank (baseline PB1R topology)")
@@ -47,7 +51,7 @@ TIMING = dict(
     boost=dict(trigger="pinpoint (rf2_pinpoint)", energy_x=2.5, I_A=round(I * math.sqrt(2.5), 2), T1_us=round(L * I * math.sqrt(2.5) / VB * 1e6, 1), limit="a few seconds; FET 20 A rating"),
     turn_off=dict(clamp_V=460, damping="critical, Rd = 0.5 sqrt(L / C) = %.0f ohm (C 500 pF ASSUMED)" % (0.5 * math.sqrt(L / 500e-12)), first_gate_us=16.3),
     gates_us=[round(16.3 * 1.618 ** k, 1) for k in range(9)],
-    led="LED stream only after the last gate and before the next pulse (> 0.8 ms quiet slot), dark during sweeps' receive windows",
+    led="LED stream only after the last gate and before the next pulse, dark during receive windows; 4 chains clocked in parallel at 8 MHz (SK9822-EC20 max 15 MHz)",
     adc="AD7389-4 on each AB1, SCLK >= 27.2 MHz (3 frames in the first gate, baseline fw timing)")
 def checks():
     known = set(BI) | set(S["boards"]) | {"QA_PADS", "QB_PADS", "SH1_GND", "COIL_LEADS", "GLAND"} | set(EXTERNAL)
@@ -67,10 +71,15 @@ def checks():
     adc_ok = all(len(v) <= 4 for v in ADC.values())
     pw = [dict(rail=r["rail"], load_A=round(sum(r["loads_A"].values()), 3), rating_A=r["rating_A"], margin=round(1 - sum(r["loads_A"].values()) / r["rating_A"], 2)) for r in POWER["rails"]]
     pw_ok = all(p["margin"] >= 0.3 for p in pw)
+    # LED stream: the longest chain's frame (32-bit start, 32 bits per LED, N/2 end clocks) at 8 MHz must fit the quiet slot of the fastest pulse rate
+    import rf2_ledgrid as LG
+    n_max = max(LG.summary()["chain_lengths"]); f_clk = 8e6; t_led_us = (32 + 32 * n_max + math.ceil(n_max / 2)) / f_clk * 1e6
+    quiet_us = 1e6 / 420 - TIMING["scan"]["T2_us"] - TIMING["gates_us"][-1] - 50.0
+    led_ok = t_led_us < quiet_us
     lengths = {c[0]: round(dist(c[1], c[2]) * (1.3 if "flex" in c[3] or "hinge" in c[3] else 1.15) + 15, 0) for c in CONN if c[1] in POS and c[2] in POS}
     return dict(endpoints_exist=ends_ok, hv_not_on_flex_and_only_in_hv_sector=hv_ok, every_slot_open_in_the_solids=slot_ok, slot_probe_overlap_mm3=probes, adc_channels_within_4=adc_ok,
-                power=pw, power_margin_ge_30pct=pw_ok, shaft_cable=dict(hv=2, lv=len(SHAFT["lv"]), ref=len(SHAFT["ref"]), total=2 + len(SHAFT["lv"]) + len(SHAFT["ref"])),
-                lengths_mm_estimate=lengths, ok=ends_ok and hv_ok and slot_ok and adc_ok and pw_ok)
+                power=pw, power_margin_ge_30pct=pw_ok, led_stream=dict(longest_chain=n_max, clock_MHz=8, frame_us=round(t_led_us, 1), quiet_slot_us=round(quiet_us, 1), fits=led_ok), shaft_cable=dict(hv=2, lv=len(SHAFT["lv"]), ref=len(SHAFT["ref"]), total=2 + len(SHAFT["lv"]) + len(SHAFT["ref"])),
+                lengths_mm_estimate=lengths, ok=ends_ok and hv_ok and slot_ok and adc_ok and pw_ok and led_ok)
 def figure(path):
     import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
     from matplotlib.patches import Circle, Rectangle, Wedge
