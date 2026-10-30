@@ -35,7 +35,9 @@ def courtyard(p, m=0.25):
 def outline_poly(B):
     from shapely.geometry import box as sbox, Point
     if B["kind"] == "rect": return sbox(-B["w"] / 2, -B["h"] / 2, B["w"] / 2, B["h"] / 2)
-    o = Point(0, 0).buffer(B["r_out"], 256).difference(Point(0, 0).buffer(B["r_in"], 256))
+    if B["kind"] == "poly":
+        import rf2_ledgrid as LG; o = LG.outline()
+    else: o = Point(0, 0).buffer(B["r_out"], 256).difference(Point(0, 0).buffer(B["r_in"], 256))
     for r, a, d in B.get("holes", []): o = o.difference(Point(r * math.cos(math.radians(a)), r * math.sin(math.radians(a))).buffer(d / 2 + 0.3, 32))
     return o
 def placement_check(B):
@@ -59,6 +61,12 @@ def build(name):
         w, h = B["w"] / 2, B["h"] / 2; pts = [(-w, -h), (w, -h), (w, h), (-w, h)]
         for i in range(4):
             e = edge(None); e.SetShape(pcbnew.SHAPE_T_SEGMENT); e.SetStart(P(*pts[i])); e.SetEnd(P(*pts[(i + 1) % 4]))
+    elif B["kind"] == "poly":                                              # polygon outline (rf2_ledgrid.outline): exterior + interior rings as segments
+        import rf2_ledgrid as LG; o = LG.outline()
+        for ring in [o.exterior] + list(o.interiors):
+            c = list(ring.coords)
+            for a, z in zip(c[:-1], c[1:]):
+                e = edge(None); e.SetShape(pcbnew.SHAPE_T_SEGMENT); e.SetStart(P(*a)); e.SetEnd(P(*z))
     else:
         for r in (B["r_out"], B["r_in"]):
             e = edge(None); e.SetShape(pcbnew.SHAPE_T_CIRCLE); e.SetCenter(P(0, 0)); e.SetEnd(P(r, 0))
@@ -104,10 +112,13 @@ def build(name):
             c, s_ = math.cos(math.radians(a)), math.sin(math.radians(a)); trk(net, (r0 * c, r0 * s_), (r1 * c, r1 * s_), pcbnew.F_Cu)
             for rv in vr:
                 v = pcbnew.PCB_VIA(b); v.SetPosition(P(rv * c, rv * s_)); v.SetWidth(pcbnew.FromMM(0.6)); v.SetDrill(pcbnew.FromMM(0.3)); v.SetNet(nets[net]); v.SetLocked(True); b.Add(v)
-    if B.get("template") == "led_ring":                                   # deterministic cell routing (rf2_ring_template.py), locked like the pre-routes
-        import rf2_ring_template as RT
-        leds = sorted(((int(p["ref"][2:]), round(math.hypot(p["x"], p["y"]), 3), math.degrees(math.atan2(p["y"], p["x"])) % 360) for p in B["parts"] if p["ref"].startswith("LD")))
-        T, Vs, _ = RT.route(leds); T2, V2, _ = RT.feeds(); T += T2; Vs += V2
+    if B.get("template") in ("led_ring", "led_grid"):                    # deterministic routing, locked like the pre-routes
+        if B["template"] == "led_grid":
+            import rf2_ledgrid as LG; T, Vs, _ = LG.copper(); RT = LG
+        else:
+            import rf2_ring_template as RT
+            leds = sorted(((int(p["ref"][2:]), round(math.hypot(p["x"], p["y"]), 3), math.degrees(math.atan2(p["y"], p["x"])) % 360) for p in B["parts"] if p["ref"].startswith("LD")))
+            T, Vs, _ = RT.route(leds); T2, V2, _ = RT.feeds(); T += T2; Vs += V2
         for net, lay, pts, w in T:
             for a, z in zip(pts[:-1], pts[1:]):
                 if math.hypot(z[0] - a[0], z[1] - a[1]) < 1e-6: continue
@@ -249,6 +260,8 @@ def resume_input(name, raw, pcb, B, od):
         M = pcbnew.ToMM; pts = [t.GetPosition()] if t.GetClass() == "PCB_VIA" else [t.GetStart(), t.GetEnd()]
         return any(t.GetNetname() == n and math.hypot(M(q.x) - x, M(q.y) - y) < 2.0 for n, x, y in ch for q in pts)
     covered = set()
+    if B.get("template") == "led_grid":
+        import rf2_ledgrid as LG; covered = LG.copper()[2]
     if B.get("template") == "led_ring":
         import rf2_ring_template as RT
         leds = sorted(((int(p["ref"][2:]), round(math.hypot(p["x"], p["y"]), 3), math.degrees(math.atan2(p["y"], p["x"])) % 360) for p in B["parts"] if p["ref"].startswith("LD")))

@@ -27,6 +27,7 @@ LIB = {
     "WIRE_LITZ": dict(pads=wire(1.5, 3.0), body=(3.0, 3.0, 0.05), src="wire-hole pad for the 1.2 mm litz end (repo rule: no plug-on joints); drill ASSUMED"),
     "WIRE_AWG18": dict(pads=wire(1.4, 2.8), body=(2.8, 2.8, 0.05), src="wire-hole pad for the shaft HV pair (AWG18 630 V wire, ASSUMED)"),
     "WIRE_SENSE": dict(pads=wire(0.9, 1.9), body=(1.9, 1.9, 0.05), src="wire-hole pad for a 0.5 mm sense wire"),
+    "FLEX_LAND": dict(pads=[("1", 0.0, 0.0, 1.2, 0.5, "rect")], body=(1.2, 0.5, 0.05), src="hinge-flap solder land 1.2 x 0.5 mm (LR1 flap, hot-bar)"),
     "FLEX_PAD": dict(pads=[("1", 0.0, 0.0, 1.0, 2.0, "rect")], body=(1.0, 2.0, 0.05), src="flex-jumper solder land 1.0 x 2.0 mm (hot-bar / hand solder)"),
 }
 # ------------------------------------------------------------------------------------------------ boards
@@ -65,41 +66,31 @@ board("TXJ", w=12.0, h=16.0, layers=2, thickness=1.6, kind="rect", hv_nets=["TX_
 for col, nm, x in (("A", "TX_A", -3.2), ("B", "TX_B", 3.2)):
     part("TXJ", f"JC{col}", "WIRE_LITZ", f"coil {col}", x, 5.0); part("TXJ", f"JK{col}", "WIRE_AWG18", f"cable {col}", x, -0.6); part("TXJ", f"JS{col}", "WIRE_SENSE", f"sense {col}", x, -5.0)          # -5.0: the 2.5 mm track's end cap keeps 1.0 mm to the 0.5 mm edge keep-out
     net("TXJ", nm, (f"JC{col}", "1"), (f"JK{col}", "1"), (f"JS{col}", "1"))
-# ---- LR1: LED ring (annulus r 15-75, 0.8 mm, 2 layers): 36 SK9822-EC20 at r 62.5 + 6 at r 22, one 100 nF 0402 each, data and clock daisy-chained,
-#      no copper planes (rule 5); 6 mounting holes for the lid bosses (r 45); hinge lands at the inner edge.
-# LR1 is a FLEX section of the rigid-flex panel (owner 2026-10-29): 2-layer polyimide flex core (0.2 mm with coverlay) on a 0.2 mm FR4 stiffener (rule F5),
-# vendor rules 0.10 / 0.10 mm (Rigiflex capability pages, RF1 README): a trace now passes between the SK9822-EC20 pads (0.4 mm gap), which 0.2 / 0.2 could not.
-# The hinge to CB1D is the panel's own flex (the JH lands stay as the panel interface until the panel is drawn in Phase C).
-board("LR1", r_in=15.0, r_out=75.0, layers=2, thickness=0.4, kind="annulus", hv_nets=[], holes=[(45.0, 30.0 + 60 * k, 2.0) for k in range(6)],
-      rules="0.1,0.1,0.45,0.2", floor=0.1, tech="flex 2L polyimide 0.2 mm + FR4 stiffener 0.2 mm (vendor 0.10 / 0.10 mm; via 0.45 / 0.2 ASSUMED)",
-      head=dict(c=(0.0, 0.0), z_bottom=22.85), note="LEDs face the lid windows; dark during receive windows (firmware)")
-LEDS = [(62.5, 360.0 * k / 36) for k in range(36)] + [(22.0, 360.0 * k / 6 + 30) for k in range(6)]
-for i, (r, a) in enumerate(LEDS):
-    x, y = r * math.cos(math.radians(a)), r * math.sin(math.radians(a))
-    part("LR1", f"LD{i+1}", "SK9822EC20", "SK9822-EC20", x, y, a + 90)
-    xc, yc = (r - 2.8) * math.cos(math.radians(a)), (r - 2.8) * math.sin(math.radians(a)); part("LR1", f"CD{i+1}", "C0402", "100n", xc, yc, a + 270)   # +5V pin on the LED VDD side (template cell, rf2_ring_template)
-# power as OPEN C-shaped buses on B.Cu (rule 5: no closed loop around the head axis), gap at the hinge; one radial F.Cu link per net through vias
-BOARDS["LR1"]["preroute"] = dict(
-    arcs=[("GND", 66.0, 195.0, 545.0), ("+5V_LED", 68.0, 185.0, 535.0), ("GND", 25.5, 195.0, 545.0), ("+5V_LED", 27.5, 185.0, 535.0)],   # net, r, start, end (deg, CCW)
-    links=[("+5V_LED", 185.0, 17.0, 68.0, (27.5, 68.0)), ("GND", 195.0, 17.0, 66.0, (25.5, 66.0))],                                     # net, angle, r0, r1, via radii
-    width=0.4)
-BOARDS["LR1"]["template"] = "led_ring"          # regular copper drawn by rf2_ring_template.py (Freerouting routes only the rest)
-for j, nm in enumerate(("+5V_LED", "GND", "LED_CLK", "LED_DATA")):   # clock before data (2026-10-30): the template feeds then reach LD1 without a crossing
-    a = 185.0 + 10.0 * j; part("LR1", f"JH{j+1}", "FLEX_PAD", nm, 17.0 * math.cos(math.radians(a)), 17.0 * math.sin(math.radians(a)), a)
-net("LR1", "+5V_LED", ("JH1", "1"), *[(f"LD{i+1}", "5") for i in range(42)], *[(f"CD{i+1}", "1") for i in range(42)])
-net("LR1", "GND", ("JH2", "1"), *[(f"LD{i+1}", "2") for i in range(42)], *[(f"CD{i+1}", "2") for i in range(42)])
-net("LR1", "LED_D0", ("JH4", "1"), ("LD1", "3")); net("LR1", "LED_C0", ("JH3", "1"), ("LD1", "4"))
-for i in range(41):
-    net("LR1", f"LED_D{i+1}", (f"LD{i+1}", "1"), (f"LD{i+2}", "3")); net("LR1", f"LED_C{i+1}", (f"LD{i+1}", "6"), (f"LD{i+2}", "4"))
-net("LR1", "LED_DEND", ("LD42", "1")); net("LR1", "LED_CEND", ("LD42", "6"))                 # chain ends left open by design (single-pin nets)
+# ---- LR1: dense LED display flex (owner 2026-10-30: rings from the rim to the centre + a centre cluster, about 540 LEDs on an 8 mm grid; built: see
+#      rf2_ledgrid.py, the single source of its layout, nets and copper). 2-layer polyimide flex (0.2 mm with coverlay) on a 0.2 mm FR4 stiffener, vendor
+#      rules 0.10 / 0.10 mm; SK9822-EC20 + 100 nF 0402 per LED; 4 serial chains; open B.Cu buses and spokes (rule 5); hinge flap above CB1D (12 lands);
+#      notch around the lid's gland boss; 6 rim holes for the lid bosses. Routed by rf2_ledgrid.copper() (deterministic template, no autorouter).
+import rf2_ledgrid as LG
+board("LR1", kind="poly", r_out=LG.R_OUT, layers=2, thickness=0.4, hv_nets=[], holes=LG.HOLES, rules="0.1,0.1,0.45,0.2", floor=0.1,
+      tech="flex 2L polyimide 0.2 mm + FR4 stiffener 0.2 mm (vendor 0.10 / 0.10 mm; via 0.45 / 0.2 ASSUMED)",
+      head=dict(c=(0.0, 0.0), z_bottom=22.85), note="LEDs under a clear PETG lid (diffuser); dark during receive windows and when silent (power-gated)")
+BOARDS["LR1"]["template"] = "led_grid"
+_LG = LG.layout(); _PINS, _LANDS = LG.nets_and_lands()
+for e in _LG["leds"]:
+    part("LR1", e["ref"], "SK9822EC20", "SK9822-EC20", e["x"], e["y"], e["rot"]); part("LR1", e["cap"], "C0402", "100n", e["cx"], e["cy"], e["crot"])
+for ref, nm, xl, yl in _LANDS:
+    x, y = LG.to_g(xl, yl); part("LR1", ref, "FLEX_LAND", nm, x, y, LG.HEEL)
+_byn = {}
+for (ref, pin), nm in _PINS.items(): _byn.setdefault(nm, []).append((ref, pin))
+for ref, nm, _, _ in _LANDS: _byn.setdefault(nm, []).append((ref, "1"))
+for nm, pins in _byn.items(): net("LR1", nm, *pins)
 # ------------------------------------------------------------------------------------------------ harness: conductors between board pads (board.ref.pin), net names must agree
 HARNESS = [
     ("C01a", "COIL.A", "TXJ.JCA.1", "TX_A", "litz end"), ("C01b", "COIL.B", "TXJ.JCB.1", "TX_B", "litz end"),
     ("C02a", "TXJ.JKA.1", "NECK.TX_A", "TX_A", "shaft HV pair"), ("C02b", "TXJ.JKB.1", "NECK.TX_B", "TX_B", "shaft HV pair"),
     ("C03a", "TXJ.JSA.1", "MP1.J1.1", "TX_A|COIL_A", "sense wire"), ("C03b", "TXJ.JSB.1", "MP1.J2.1", "TX_B|COIL_B", "sense wire"),
     ("C04a", "MP1.J3.1", "AB1B.MONO_IN", "MONO_OUT|MONO_IN", "flex jumper"), ("C04b", "MP1.J4.1", "AB1B.+5VA", "+5VA", "flex jumper"), ("C04c", "MP1.J5.1", "AB1B.AGND", "AGND", "flex jumper"),
-    ("C10a", "CB1D.+5V_LED", "LR1.JH1.1", "+5V_LED", "hinge"), ("C10b", "CB1D.GND", "LR1.JH2.1", "GND", "hinge"), ("C10c", "CB1D.LED_DATA", "LR1.JH4.1", "LED_DATA|LED_D0", "hinge"),
-    ("C10d", "CB1D.LED_CLK", "LR1.JH3.1", "LED_CLK|LED_C0", "hinge"),
+    *[(f"C10{chr(97 + k)}", f"CB1D.LED{k + 1}", f"LR1.{ref}.1", nm, "hinge flap") for k, (ref, nm, _, _) in enumerate(LG.nets_and_lands()[1])],
     ("C07", "SH1.H1.1", "AB1A.AGND", "SHIELD|AGND", "0.5 mm wire, single-point shield ground"),
 ]
 PENDING = {"AB1A", "AB1B", "CB1D", "NECK", "COIL"}                       # boards not yet in this netlist (Phase C) or not boards (COIL, NECK)
