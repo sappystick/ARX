@@ -1,4 +1,6 @@
-# RF2 clean-sheet head: handoff (2026-10-29)
+# RF2 clean-sheet head: handoff (2026-10-29, updated 2026-10-30)
+
+A new session starts at `START_HERE_RF2.md` (install, rebuild, where we stopped). Upgrade studies are in `ENHANCEMENT_PLAN_RF2.md`. The full regeneration is now one command: `make rf2-signoff`, which writes STATUS_RF2.md.
 
 RF2 is a side experiment. The baseline design (src/, work/, docs/) is untouched. Everything here is **MODELED or tool-checked**: nothing has been ordered, built or measured. "Checked" below means measured on the generated solids / boards by the scripts named, not proven in hardware. Numbers come from the result files; none is typed by hand.
 
@@ -149,12 +151,25 @@ About **702 g** with islands-only potting (full-fill potting: 1123 g). Breakdown
 - **SB1R tab:** the r 116 locating tab cannot be used inside a 2 mm wall at this diameter; RF2 needs the tab-less outline variant.
 
 ## 14. Next steps, in order
-1. **SB1R outline variant** without the tab (outline only, copper unchanged): regenerate with sbq_export, re-run its checks.
+1. ~~SB1R outline variant~~ done 2026-10-30 (rf2_sb1r_variant.py).
 2. **MP1 mono preamp:** schematic (input protection for about 460 V flyback, 630 V parts, >= 1.0 mm), layout in the 26 x 18 mm envelope, route (repo router + Freerouting step), KiCad DRC, rule-6 check.
-3. **TXJ:** wire-hole pads for the coil leads and the shaft HV pair, rule 6.
+3. ~~TXJ~~ done 2026-10-30 (routed, HV 3.4 mm). MP1 v1 is routed too; MP1 v2 (section 15) is next.
 4. **AB1A / AB1B channel gains** for the RF2 map (mono and REF levels differ from the baseline channels); regenerate through make_rf1_ab1.py.
 5. **CB1D section routing** (RF1 placement), plus the LED-ring board and its hinge.
 6. **Neck driver values:** 333 uH / 8.06 A / 12.7 A boost, flat-top PWM loop, clamp and critical damping; include the cable between neck and head in rf2_timing (the 16.3 us gate assumes damping at the coil).
 7. **REF3 coil:** check its noise (wire resistance) against the 1.9 nV/rtHz assumed in rf2_emi; consider ferrite rods.
 8. **Re-run the depth model** with the built coil heights and the cable; then bench: wind the rim coil, measure L, R, turn-off and the first clean gate, then targets in air, then ground.
 9. **Patent and literature search** on the quadrupole + mono combination before any novelty claim.
+
+## 15. Update 2026-10-30 (Phase A / B)
+- **System netlist** (`head/rf2_netlist.py`): the single source for every RF2 board, part, pin and harness wire. `rf2_parity.py` checks the built boards and the harness against it. Wires with an end on a board not yet built (AB1A, AB1B, CB1D, the neck, the coil) are listed as pending.
+- **Boards routed and checked by `rf2_boards.py`.** Each board is built in pcbnew from the netlist, routed with Freerouting, then checked by KiCad DRC (board rules plus an HV 1.0 mm rule with a 50 mm control run), the independent shapely copper check (with no net forming a loop around the axis), pad parity, and Gerbers + drill.
+  - TXJ (12 x 16 mm, HV 3.4 mm) and MP1 v1 (26 x 36 mm, HV 1.2 mm): DRC 0.
+  - SH1 (37 split rings) and the tab-less SB1R variant (outline r 114.0, copper identical): clean.
+- **LR1 LED ring is now a flex section** (2-layer polyimide plus an FR4 stiffener, vendor 0.10 / 0.10 mm rules) with open C-shaped GND / +5 V buses. At the rigid 0.2 / 0.2 mm rules a trace could not pass between the SK9822-EC20 pads. Its route state is in STATUS_RF2.md.
+- **Incremental routing** (owner rule): a board is re-routed only when its netlist entry changes. A re-route resumes from the last routed copper and routes only the open connections, with fan-out off (`resume_input`, `freeroute.py --no-fanout`).
+- **MP1 v2 front end** (ngspice, `head/rf2_mp1_spice.py`, generic models): a depletion-mode HV MOSFET limiter + 22 ohm gives 64 ohm in the signal path (1.03 nV/rtHz), against 1410 ohm (4.83 nV/rtHz) for the v1 resistors. Energy per pulse is 79 against 786 uJ, and recovery is the same 12.9 us. That is about +28 % modeled mono depth with a 1 nV/rtHz op-amp.
+  - Datasheet-verified: LMH6629 (0.69 nV/rtHz), TPS7A94 (0.46 uVrms).
+  - Not yet verified: the MOSFET (PDF needed). The LMH6629 input limits (+-10 mA, -0.5 V) require a series resistor after the clamps, still to be sized.
+- **Field code cross-check:** the loop field behind every RF2 depth number agrees with magpylib to 1.3e-10 (`head/rf2_field_xcheck.py`).
+- **Tools:** pinned in requirements-rf2.txt and installed by `RF2_TOOLS=1 scripts/bootstrap.sh` (= `make rf2-tools`), with a self-test.

@@ -256,7 +256,7 @@ def run(name):
     if bad: return res
     raw, od = build(name); pcb = os.path.join(od, f"PF233-RF2-{name}.kicad_pcb")
     inp, why = resume_input(name, raw, pcb, B, od); mode = "resume" if inp else "full"
-    cmd = [sys.executable, os.path.join(ROOT, "src/pcb/freeroute.py"), inp or raw, pcb] + ([] if (inp or B.get("preroute")) else ["--strip"]) + ["--no-neckdown", "--rules", B.get("rules", RULES), "--passes", "150", "--report", os.path.join(od, "freeroute.json")]
+    cmd = [sys.executable, os.path.join(ROOT, "src/pcb/freeroute.py"), inp or raw, pcb] + ([] if (inp or B.get("preroute")) else ["--strip"]) + (["--no-fanout"] if inp else []) + ["--no-neckdown", "--rules", B.get("rules", RULES), "--passes", "150", "--report", os.path.join(od, "freeroute.json")]
     hv = [n for n in B.get("hv_nets", []) if n not in B.get("wide", {})]
     if hv: cmd += ["--hv", ",".join(hv)]
     if B.get("wide"): cmd += ["--class", "PULSE:2.5:1.0:" + ",".join(B["wide"])]

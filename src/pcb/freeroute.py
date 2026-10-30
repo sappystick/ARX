@@ -59,6 +59,7 @@ def main():
     ap.add_argument("--rip", default="", help="nets whose existing tracks and vias are removed first, so Freerouting reroutes them")
     ap.add_argument("--dsn-only", action="store_true", help="write the DSN (rules and classes as Freerouting will see them) and stop; for checks")
     ap.add_argument("--no-neckdown", action="store_true", help="forbid Freerouting's automatic neck-down at pins (tracks keep their class width)")
+    ap.add_argument("--no-fanout", action="store_true", help="skip Freerouting's fan-out stage (for a resume on a mostly routed board: only the open connections are routed)")
     ap.add_argument("--class", dest="classes", action="append", default=[], help="NAME:track_mm:clearance_mm:NET,NET (repeatable)")
     ap.add_argument("--report", default=""); ap.add_argument("--timeout", type=int, default=1800)
     a = ap.parse_args()
@@ -77,7 +78,7 @@ def main():
     dsn, ses, log = (os.path.join(work, "board." + e) for e in ("dsn", "ses", "log"))
     if not pcbnew.ExportSpecctraDSN(b, dsn): sys.exit("freeroute: DSN export failed")
     if a.dsn_only: print(dsn); return
-    cmd = [java(), "-jar", JAR, "-de", dsn, "-do", ses, "-mp", str(a.passes), "-mt", str(a.threads)] + FR_FLAGS + (["--router.automatic_neckdown=false"] if a.no_neckdown else [])
+    cmd = [java(), "-jar", JAR, "-de", dsn, "-do", ses, "-mp", str(a.passes), "-mt", str(a.threads)] + FR_FLAGS + (["--router.automatic_neckdown=false"] if a.no_neckdown else []) + (["--router.fanout.enabled=false"] if a.no_fanout else [])
     t0 = time.time()
     with open(log, "w") as lf:
         r = subprocess.run(cmd, stdout=lf, stderr=subprocess.STDOUT, timeout=a.timeout, cwd=work)
@@ -88,7 +89,7 @@ def main():
     pcbnew.SaveBoard(a.out, b)
     rep = dict(tool="freerouting", version=VERSION, jar_sha256=jar_sha(), input=os.path.relpath(a.inp, ROOT) if a.inp.startswith(ROOT) else a.inp,
                output=os.path.relpath(os.path.abspath(a.out), ROOT), rules_mm=dict(track=rules[0], clearance=rules[1], via=rules[2], drill=rules[3]),
-               hv_nets=hv, hv_clear_mm=a.hv_clear if hv else None, passes=a.passes, threads=a.threads, classes=a.classes, neckdown=not a.no_neckdown, stripped=a.strip, ripped=sorted(rip),
+               hv_nets=hv, hv_clear_mm=a.hv_clear if hv else None, passes=a.passes, threads=a.threads, classes=a.classes, neckdown=not a.no_neckdown, fanout=not a.no_fanout, stripped=a.strip, ripped=sorted(rip),
                unconnected_before=open_in, unconnected_after=open_out, seconds=round(time.time() - t0, 1),
                tracks=sum(1 for t in b.GetTracks() if t.GetClass() == "PCB_TRACK"), vias=sum(1 for t in b.GetTracks() if t.GetClass() == "PCB_VIA"))
     if a.report: json.dump(rep, open(a.report, "w"), indent=1)
