@@ -28,8 +28,8 @@ def draw(items, path, az, el, dist, target, size, title):
     pl.add_text(title, position="lower_left", font_size=9, color="#1d2733")
     pl.screenshot(path); pl.close()
 if __name__ == "__main__":
-    draw(R.scene(False), os.path.join(R.OUT, "rf2_cutaway.png"), az=232, el=34, dist=520, target=(0, 0, 9), size=(2600, 1750),
-         title="RF2 head v1, D233 x 25.4 mm: cut-away of the generated geometry (MODELED; CB1D shown as its envelope, routing pending)")
+    draw(R.scene(False), os.path.join(R.OUT, "rf2_cutaway.png"), az=232, el=34, dist=330, target=(-10, 10, 9), size=(2600, 1750),
+         title="RF2 head v1, D233 x 25.4 mm: cut-away of the generated geometry: routed TXJ, MP1, LR1 copper, SH1, SB1R (MODELED; CB1D and AB1 shown as envelopes / RF1 meshes)")
     draw(R.scene(True), os.path.join(R.OUT, "rf2_exploded.png"), az=232, el=22, dist=760, target=(0, 0, 80), size=(2200, 2400),
          title="RF2 head v1: exploded stack (z offsets for clarity), same geometry")
     print("rendered")
