@@ -195,5 +195,5 @@ The quadrupole stays at 138-139 mm in every case: it rejects uniform interferenc
 
 ## Step 10: head v1 layout, seats, shield board, wiring, power and timing (`head/`, `HANDOFF_RF2.md`)
 The design implementation set: `head/rf2_head.py` (spec + every printed part, seat and envelope), `head/rf2_shield_pcb.py` (SH1: KiCad DRC 0 / 0, Gerbers +
-drill, loop-free), `head/rf2_head_check.py` (measured checks, all pass; mass about 702 g), `head/rf2_wiring.py` (C01-C12, ADC map, power, timing; slot
+drill, loop-free), `head/rf2_head_check.py` (measured checks, all pass; mass about 745 g, corrected 2026-10-30), `head/rf2_wiring.py` (C01-C12, ADC map, power, timing; slot
 probes), figures `head/out/rf2_head_layout.png` and `head/out/rf2_wiring.png`. Every part, function and open step: `HANDOFF_RF2.md`.

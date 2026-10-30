@@ -71,6 +71,8 @@ The sign-off runs these, in order:
 - When it is re-routed, `rf2_boards.resume_input` copies the copper of the last routed board onto the new build, except copper within 2 mm of a pad that moved.
 - It then deletes only the items KiCad DRC flags, and Freerouting routes only the open connections.
 - `RF2_FULL=1` forces a full route; `--cold` on rf2_signoff forces every board.
+- If the pre-routes / template leave nothing open, no autorouter runs at all (`route.mode` = template).
+- LR1 (LED ring) is routed by `head/rf2_ring_template.py`, not Freerouting: one cell per LED, the chain links, the power stubs and the 4 irregular links (hinge feeds, outer-to-inner jump). It routes in about 14 s and is deterministic. Freerouting stalled on this board (no pass completed in 5 min for 4 connections).
 - Never delete a routed `PF233-RF2-*.kicad_pcb` by hand: it is the resume point.
 
 Render the head (cut-away and exploded view from the generated geometry):
@@ -107,7 +109,7 @@ python3 experiments/RF2_cleansheet/head/rf2_render_pv.py      # out/rf2_cutaway.
 
 | Item | Result |
 |---|---|
-| Phase A/B boards | TXJ and MP1 v1 routed, DRC 0. LR1 moved to a 2-layer flex section with the vendor 0.10 / 0.10 mm rules; its route state is in STATUS_RF2.md. SH1 and the SB1R variant are clean. |
+| Phase A/B boards | TXJ and MP1 v1 routed, DRC 0. LR1 is a 2-layer flex section (vendor 0.10 / 0.10 mm rules), template-routed: DRC 0, 0 unconnected, min clearance 0.19 mm, no loop around the axis, parity OK, Gerbers. SH1 and the SB1R variant are clean. |
 | Tools | installed and pinned (section 2); bootstrap self-test passes |
 | MP1 v2 front end | ngspice study: a depletion-MOSFET limiter + 22 ohm gives 64 ohm in the signal path (1.03 nV/rtHz) against 1410 ohm (4.83 nV/rtHz) for v1 (generic models). Op-amp LMH6629 (0.69 nV/rtHz) and LDO TPS7A94 are now datasheet-VERIFIED. The depletion MOSFET (DN2470 class) is still UNVERIFIED because no vendor PDF could be fetched. |
 

@@ -1,28 +1,6 @@
 {
- "tool": "freerouting",
- "version": "2.4.1",
- "jar_sha256": "fb2e91df901fa50cd23a09ab42793af0ece4f3b1f3857d6724dd6f9c0c00be98",
- "input": "experiments/RF2_cleansheet/head/out/TXJ/PF233-RF2-TXJ_placed.kicad_pcb",
- "output": "experiments/RF2_cleansheet/head/out/TXJ/PF233-RF2-TXJ.kicad_pcb",
- "rules_mm": {
-  "track": 0.2,
-  "clearance": 0.2,
-  "via": 0.6,
-  "drill": 0.3
- },
- "hv_nets": [],
- "hv_clear_mm": null,
- "passes": 150,
- "threads": 1,
- "classes": [
-  "PULSE:2.5:1.0:TX_A,TX_B"
- ],
- "neckdown": false,
- "stripped": true,
- "ripped": [],
- "unconnected_before": 4,
  "unconnected_after": 0,
- "seconds": 3.6,
  "tracks": 4,
- "vias": 0
+ "vias": 0,
+ "skipped": "nothing open: template / pre-routes complete"
 }

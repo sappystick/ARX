@@ -67,7 +67,7 @@ Component height rule (from the envelopes): AB1 parts <= 1.0 mm below / 3.0 mm a
 | Digital / power | the rest | CB1D on the tower at the centre, LED hinge, LV cores | syntactic silicone (422.3 cm3) |
 | Coil channel | rim | litz | epoxy (about 38 g) |
 | Display | under the lid | LED ring | conformal coat only |
-The 89 deg wall (analog | digital) is PETG loaded with carbonyl iron. Full potting of the bay adds about 445 g, so the design pots the islands only (about 24 g); see the mass section.
+The 89 deg wall (analog | digital) is PETG loaded with carbonyl iron. Full potting of the bay adds about 445 g, so the design pots the analog and HV sectors only (67 g by the volume ledger); see the mass section.
 
 ## 5. Seats (how every board is held; all measured, rf2_head_check.json "seats")
 - **Board stack (SH1, QA, QB):** sits on the skid; 2 PETG pins Ø3.2 at r 28 (157.5 / 247.5 deg) through the SB1R NPTH holes Ø3.4; the third hole (22.5 deg) carries the shield ground wire.
@@ -131,7 +131,7 @@ VIN about 24 V (7S pack, switched and fused by PM2 in the handle) -> CB1D LMR360
 These are **model results, not bench data**; ground, interference and several circuit values are assumptions.
 
 ## 11. Mass (rf2_head_check.json)
-About **702 g** with islands-only potting (full-fill potting: 1123 g). Breakdown: printed parts 220 g (100 % infill, an upper bound), QA + QB 129 g, SH1 37 g, litz 110 g, electronics 103 g (ASSUMED), coil epoxy 38 g, hardware 40 g, island potting 24 g. **Correction:** the earlier 529 g estimate assumed one 0.4 mm receive board; reusing the two 0.8 mm SB1R boards adds about 170 g. Options: a single combined 4-layer QA+QB board, lower infill.
+About **745 g** (corrected 2026-10-30 from 702 g, docs/CORRECTIONS.md): 678 g of parts plus 67 g of potting at the volume ledger's fill levels (full-fill potting: 1119 g). Breakdown: printed parts 220 g (100 % infill, an upper bound), QA + QB 129 g, SH1 37 g, litz 110 g, electronics 103 g (ASSUMED), coil epoxy 38 g, hardware 40 g, potting 67 g (analog-sector gel 32.4 g, HV-sector epoxy 34.7 g; rf2_ledger.json). **Correction:** the earlier 529 g estimate assumed one 0.4 mm receive board; reusing the two 0.8 mm SB1R boards adds about 170 g. Options: a single combined 4-layer QA+QB board, lower infill.
 
 ## 12. Measured checks (all pass)
 - **Meshes:** every mesh closed and edge-manifold.
@@ -166,7 +166,12 @@ About **702 g** with islands-only potting (full-fill potting: 1123 g). Breakdown
 - **Boards routed and checked by `rf2_boards.py`.** Each board is built in pcbnew from the netlist, routed with Freerouting, then checked by KiCad DRC (board rules plus an HV 1.0 mm rule with a 50 mm control run), the independent shapely copper check (with no net forming a loop around the axis), pad parity, and Gerbers + drill.
   - TXJ (12 x 16 mm, HV 3.4 mm) and MP1 v1 (26 x 36 mm, HV 1.2 mm): DRC 0.
   - SH1 (37 split rings) and the tab-less SB1R variant (outline r 114.0, copper identical): clean.
-- **LR1 LED ring is now a flex section** (2-layer polyimide plus an FR4 stiffener, vendor 0.10 / 0.10 mm rules) with open C-shaped GND / +5 V buses. At the rigid 0.2 / 0.2 mm rules a trace could not pass between the SK9822-EC20 pads. Its route state is in STATUS_RF2.md.
+- **LR1 LED ring is now a flex section** (2-layer polyimide plus an FR4 stiffener, vendor 0.10 / 0.10 mm rules) with open C-shaped GND / +5 V buses. At the rigid 0.2 / 0.2 mm rules a trace could not pass between the SK9822-EC20 pads. It is routed by the deterministic template `head/rf2_ring_template.py` (Freerouting stalled):
+  - DRC 0, 0 unconnected, min clearance 0.19 mm (rule 0.10), no loop around the axis, parity OK, Gerbers.
+  - Data runs in the outer lane and clock in the inner lane, parallel and never crossing on a layer.
+  - Each LED and capacitor drops to the open B.Cu buses; +5 V jumps over the GND bus on F.Cu.
+  - Links that cross the radial hinge feeds (185 / 195 deg) run on B.Cu.
+  - The hinge lands are now JH3 = clock, JH4 = data, so the feeds reach LD1 without a crossing.
 - **Incremental routing** (owner rule): a board is re-routed only when its netlist entry changes. A re-route resumes from the last routed copper and routes only the open connections, with fan-out off (`resume_input`, `freeroute.py --no-fanout`).
 - **MP1 v2 front end** (ngspice, `head/rf2_mp1_spice.py`, generic models): a depletion-mode HV MOSFET limiter + 22 ohm gives 64 ohm in the signal path (1.03 nV/rtHz), against 1410 ohm (4.83 nV/rtHz) for the v1 resistors. Energy per pulse is 79 against 786 uJ, and recovery is the same 12.9 us. That is about +28 % modeled mono depth with a 1 nV/rtHz op-amp.
   - Datasheet-verified: LMH6629 (0.69 nV/rtHz), TPS7A94 (0.46 uVrms).

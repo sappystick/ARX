@@ -36,9 +36,10 @@ def main():
     step("field code cross-check (magpylib vs loop_B)", [H + "rf2_field_xcheck.py"], os.path.join(OUT, "rf2_field_xcheck.json"))
     if os.path.exists(os.path.join(ROOT, H, "rf2_mp1_spice.py")): step("MP1 protection study (ngspice)", [H + "rf2_mp1_spice.py"])
     step("REF3 sizing", [H + "rf2_ref3.py"], os.path.join(OUT, "rf2_ref3.json"), lambda d: d["chosen"] is not None)
+    # the ledger runs before the housing checks: their mass takes the potting from rf2_ledger.json (order fixed 2026-10-30)
+    step("volume ledger", [H + "rf2_ledger.py"], os.path.join(OUT, "rf2_ledger.json"))
     step("housing checks (meshes, envelope, interference, seats, clearances)", [H + "rf2_head_check.py"], os.path.join(OUT, "rf2_head_check.json"))
     step("wiring / power / timing (slot probes)", [H + "rf2_wiring.py"], os.path.join(OUT, "rf2_wiring.json"), lambda d: d["checks"]["ok"])
-    step("volume ledger", [H + "rf2_ledger.py"], os.path.join(OUT, "rf2_ledger.json"))
     step("parity: built boards + harness vs netlist", [H + "rf2_parity.py"], os.path.join(OUT, "rf2_parity.json"))
     par = json.load(open(os.path.join(OUT, "rf2_parity.json"))) if os.path.exists(os.path.join(OUT, "rf2_parity.json")) else {}
     res = dict(status="RF2 sign-off: MODELED / tool-checked (no fabricator DRC, CAM review or bench)", ok=all(s["ok"] for s in steps), steps=steps,

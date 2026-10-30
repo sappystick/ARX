@@ -77,17 +77,18 @@ LEDS = [(62.5, 360.0 * k / 36) for k in range(36)] + [(22.0, 360.0 * k / 6 + 30)
 for i, (r, a) in enumerate(LEDS):
     x, y = r * math.cos(math.radians(a)), r * math.sin(math.radians(a))
     part("LR1", f"LD{i+1}", "SK9822EC20", "SK9822-EC20", x, y, a + 90)
-    xc, yc = (r - 2.8) * math.cos(math.radians(a)), (r - 2.8) * math.sin(math.radians(a)); part("LR1", f"CD{i+1}", "C0402", "100n", xc, yc, a + 90)
+    xc, yc = (r - 2.8) * math.cos(math.radians(a)), (r - 2.8) * math.sin(math.radians(a)); part("LR1", f"CD{i+1}", "C0402", "100n", xc, yc, a + 270)   # +5V pin on the LED VDD side (template cell, rf2_ring_template)
 # power as OPEN C-shaped buses on B.Cu (rule 5: no closed loop around the head axis), gap at the hinge; one radial F.Cu link per net through vias
 BOARDS["LR1"]["preroute"] = dict(
     arcs=[("GND", 66.0, 195.0, 545.0), ("+5V_LED", 68.0, 185.0, 535.0), ("GND", 25.5, 195.0, 545.0), ("+5V_LED", 27.5, 185.0, 535.0)],   # net, r, start, end (deg, CCW)
     links=[("+5V_LED", 185.0, 17.0, 68.0, (27.5, 68.0)), ("GND", 195.0, 17.0, 66.0, (25.5, 66.0))],                                     # net, angle, r0, r1, via radii
     width=0.4)
-for j, nm in enumerate(("+5V_LED", "GND", "LED_DATA", "LED_CLK")):
+BOARDS["LR1"]["template"] = "led_ring"          # regular copper drawn by rf2_ring_template.py (Freerouting routes only the rest)
+for j, nm in enumerate(("+5V_LED", "GND", "LED_CLK", "LED_DATA")):   # clock before data (2026-10-30): the template feeds then reach LD1 without a crossing
     a = 185.0 + 10.0 * j; part("LR1", f"JH{j+1}", "FLEX_PAD", nm, 17.0 * math.cos(math.radians(a)), 17.0 * math.sin(math.radians(a)), a)
 net("LR1", "+5V_LED", ("JH1", "1"), *[(f"LD{i+1}", "5") for i in range(42)], *[(f"CD{i+1}", "1") for i in range(42)])
 net("LR1", "GND", ("JH2", "1"), *[(f"LD{i+1}", "2") for i in range(42)], *[(f"CD{i+1}", "2") for i in range(42)])
-net("LR1", "LED_D0", ("JH3", "1"), ("LD1", "3")); net("LR1", "LED_C0", ("JH4", "1"), ("LD1", "4"))
+net("LR1", "LED_D0", ("JH4", "1"), ("LD1", "3")); net("LR1", "LED_C0", ("JH3", "1"), ("LD1", "4"))
 for i in range(41):
     net("LR1", f"LED_D{i+1}", (f"LD{i+1}", "1"), (f"LD{i+2}", "3")); net("LR1", f"LED_C{i+1}", (f"LD{i+1}", "6"), (f"LD{i+2}", "4"))
 net("LR1", "LED_DEND", ("LD42", "1")); net("LR1", "LED_CEND", ("LD42", "6"))                 # chain ends left open by design (single-pin nets)
@@ -97,8 +98,8 @@ HARNESS = [
     ("C02a", "TXJ.JKA.1", "NECK.TX_A", "TX_A", "shaft HV pair"), ("C02b", "TXJ.JKB.1", "NECK.TX_B", "TX_B", "shaft HV pair"),
     ("C03a", "TXJ.JSA.1", "MP1.J1.1", "TX_A|COIL_A", "sense wire"), ("C03b", "TXJ.JSB.1", "MP1.J2.1", "TX_B|COIL_B", "sense wire"),
     ("C04a", "MP1.J3.1", "AB1B.MONO_IN", "MONO_OUT|MONO_IN", "flex jumper"), ("C04b", "MP1.J4.1", "AB1B.+5VA", "+5VA", "flex jumper"), ("C04c", "MP1.J5.1", "AB1B.AGND", "AGND", "flex jumper"),
-    ("C10a", "CB1D.+5V_LED", "LR1.JH1.1", "+5V_LED", "hinge"), ("C10b", "CB1D.GND", "LR1.JH2.1", "GND", "hinge"), ("C10c", "CB1D.LED_DATA", "LR1.JH3.1", "LED_DATA|LED_D0", "hinge"),
-    ("C10d", "CB1D.LED_CLK", "LR1.JH4.1", "LED_CLK|LED_C0", "hinge"),
+    ("C10a", "CB1D.+5V_LED", "LR1.JH1.1", "+5V_LED", "hinge"), ("C10b", "CB1D.GND", "LR1.JH2.1", "GND", "hinge"), ("C10c", "CB1D.LED_DATA", "LR1.JH4.1", "LED_DATA|LED_D0", "hinge"),
+    ("C10d", "CB1D.LED_CLK", "LR1.JH3.1", "LED_CLK|LED_C0", "hinge"),
     ("C07", "SH1.H1.1", "AB1A.AGND", "SHIELD|AGND", "0.5 mm wire, single-point shield ground"),
 ]
 PENDING = {"AB1A", "AB1B", "CB1D", "NECK", "COIL"}                       # boards not yet in this netlist (Phase C) or not boards (COIL, NECK)

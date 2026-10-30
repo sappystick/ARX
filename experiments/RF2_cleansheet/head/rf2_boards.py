@@ -50,6 +50,8 @@ def build(name):
     import pcbnew
     B = NL.BOARDS[name]; od = os.path.join(OUTB, name); os.makedirs(od, exist_ok=True)
     b = pcbnew.BOARD(); b.SetCopperLayerCount(B["layers"]); b.GetDesignSettings().SetBoardThickness(pcbnew.FromMM(B["thickness"]))
+    vd, vh = (float(x) for x in B.get("rules", RULES).split(",")[2:4]); ds = b.GetDesignSettings()   # board setup minima = the board's own via rule (flex 0.45 / 0.2)
+    ds.m_ViasMinSize = min(ds.m_ViasMinSize, pcbnew.FromMM(vd)); ds.m_MinThroughDrill = min(ds.m_MinThroughDrill, pcbnew.FromMM(vh)); ds.m_ViasMinAnnularWidth = min(ds.m_ViasMinAnnularWidth, pcbnew.FromMM((vd - vh) / 2))
     P = lambda x, y: pcbnew.VECTOR2I(pcbnew.FromMM(CX + x), pcbnew.FromMM(CY - y))
     def edge(shape):
         e = pcbnew.PCB_SHAPE(b); e.SetLayer(pcbnew.Edge_Cuts); e.SetWidth(pcbnew.FromMM(0.1)); b.Add(e); return e
@@ -102,6 +104,17 @@ def build(name):
             c, s_ = math.cos(math.radians(a)), math.sin(math.radians(a)); trk(net, (r0 * c, r0 * s_), (r1 * c, r1 * s_), pcbnew.F_Cu)
             for rv in vr:
                 v = pcbnew.PCB_VIA(b); v.SetPosition(P(rv * c, rv * s_)); v.SetWidth(pcbnew.FromMM(0.6)); v.SetDrill(pcbnew.FromMM(0.3)); v.SetNet(nets[net]); v.SetLocked(True); b.Add(v)
+    if B.get("template") == "led_ring":                                   # deterministic cell routing (rf2_ring_template.py), locked like the pre-routes
+        import rf2_ring_template as RT
+        leds = sorted(((int(p["ref"][2:]), round(math.hypot(p["x"], p["y"]), 3), math.degrees(math.atan2(p["y"], p["x"])) % 360) for p in B["parts"] if p["ref"].startswith("LD")))
+        T, Vs, _ = RT.route(leds); T2, V2, _ = RT.feeds(); T += T2; Vs += V2
+        for net, lay, pts, w in T:
+            for a, z in zip(pts[:-1], pts[1:]):
+                if math.hypot(z[0] - a[0], z[1] - a[1]) < 1e-6: continue
+                t = pcbnew.PCB_TRACK(b); t.SetStart(P(*a)); t.SetEnd(P(*z)); t.SetWidth(pcbnew.FromMM(w)); t.SetLayer(pcbnew.F_Cu if lay == "F" else pcbnew.B_Cu)
+                t.SetNet(nets[net]); t.SetLocked(True); b.Add(t)
+        for net, (x, y) in Vs:
+            v = pcbnew.PCB_VIA(b); v.SetPosition(P(x, y)); v.SetWidth(pcbnew.FromMM(RT.VIA_D)); v.SetDrill(pcbnew.FromMM(RT.VIA_DR)); v.SetNet(nets[net]); v.SetLocked(True); b.Add(v)
     # keep-out bands along every edge (EDGE mm): the router sees them, so no track or via comes closer to the edge than the Gerber edge floor
     def keepout(poly_xy):
         z = pcbnew.ZONE(b); z.SetIsRuleArea(True); z.SetDoNotAllowTracks(True); z.SetDoNotAllowVias(True); z.SetDoNotAllowPads(False); z.SetDoNotAllowZoneFills(True) if hasattr(z, "SetDoNotAllowZoneFills") else z.SetDoNotAllowCopperPour(True)
@@ -132,6 +145,7 @@ def dru(B):
     tw, cl = (float(x) for x in B.get("rules", RULES).split(",")[:2]); fl = B.get("floor", FLOOR)
     hv = B.get("hv_nets", []); r = ['(version 1)', f'(rule "generic" (constraint clearance (min {cl}mm)))', f'(rule "track" (constraint track_width (min {fl}mm)))',
                                     '(rule "edge" (constraint edge_clearance (min 0.5mm)))']
+    vd, vh = (float(x) for x in B.get("rules", RULES).split(",")[2:4]); r += [f'(rule "via" (constraint via_diameter (min {vd}mm)) (condition "A.Type == \'Via\'"))', f'(rule "via drill" (constraint hole_size (min {vh}mm)) (condition "A.Type == \'Via\'"))']
     if hv:
         cond = " || ".join(f"A.NetName == '{n}' || B.NetName == '{n}'" for n in hv); r.append(f'(rule "HV rule 6" (constraint clearance (min 1.0mm)) (condition "{cond}"))')
     for n, w in B.get("wide", {}).items(): r.append(f'(rule "wide {n}" (constraint track_width (min {w - 0.5:.1f}mm)) (condition "A.NetName == \'{n}\'"))')
@@ -234,9 +248,14 @@ def resume_input(name, raw, pcb, B, od):
     def near_moved(t):                                       # copper of a changed pad's net within 2 mm of that pad's old position
         M = pcbnew.ToMM; pts = [t.GetPosition()] if t.GetClass() == "PCB_VIA" else [t.GetStart(), t.GetEnd()]
         return any(t.GetNetname() == n and math.hypot(M(q.x) - x, M(q.y) - y) < 2.0 for n, x, y in ch for q in pts)
+    covered = set()
+    if B.get("template") == "led_ring":
+        import rf2_ring_template as RT
+        leds = sorted(((int(p["ref"][2:]), round(math.hypot(p["x"], p["y"]), 3), math.degrees(math.atan2(p["y"], p["x"])) % 360) for p in B["parts"] if p["ref"].startswith("LD")))
+        covered = RT.route(leds)[2] | RT.feeds()[2]
     old = pcbnew.LoadBoard(pcb); new = pcbnew.LoadBoard(raw); copied = 0
     for t in old.GetTracks():
-        if t.IsLocked() or near_moved(t): continue
+        if t.IsLocked() or near_moved(t) or t.GetNetname() in covered: continue
         net = new.FindNet(t.GetNetname())
         if t.GetClass() == "PCB_VIA":
             v = pcbnew.PCB_VIA(new); v.SetPosition(t.GetPosition()); v.SetDrill(t.GetDrill()); v.SetWidth(t.GetWidth(pcbnew.F_Cu)); v.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu); n = v
@@ -255,13 +274,22 @@ def run(name):
     bad = placement_check(B); res["placement"] = dict(overlaps_or_outside=bad, ok=not bad)
     if bad: return res
     raw, od = build(name); pcb = os.path.join(od, f"PF233-RF2-{name}.kicad_pcb")
+    open(os.path.join(od, f"PF233-RF2-{name}.kicad_dru"), "w").write(dru(B))          # the same rules for KiCad's GUI / CAM review as for the DRC here
     inp, why = resume_input(name, raw, pcb, B, od); mode = "resume" if inp else "full"
     cmd = [sys.executable, os.path.join(ROOT, "src/pcb/freeroute.py"), inp or raw, pcb] + ([] if (inp or B.get("preroute")) else ["--strip"]) + (["--no-fanout"] if inp else []) + ["--no-neckdown", "--rules", B.get("rules", RULES), "--passes", "150", "--report", os.path.join(od, "freeroute.json")]
     hv = [n for n in B.get("hv_nets", []) if n not in B.get("wide", {})]
     if hv: cmd += ["--hv", ",".join(hv)]
     if B.get("wide"): cmd += ["--class", "PULSE:2.5:1.0:" + ",".join(B["wide"])]
-    r = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
-    if not os.path.exists(pcb): res["route"] = dict(ok=False, err=r.stdout[-300:] + r.stderr[-300:]); return res
+    pre = kicad_drc(inp or raw, B)                                         # nothing open after the pre-routes / template / resumed copper: no autorouter run at all
+    if pre["unconnected"] == 0 and pre["errors"] == 0:
+        import pcbnew
+        shutil.copy(inp or raw, pcb); bd = pcbnew.LoadBoard(pcb); tr = list(bd.GetTracks())
+        json.dump(dict(unconnected_after=0, tracks=sum(t.GetClass() == "PCB_TRACK" for t in tr), vias=sum(t.GetClass() == "PCB_VIA" for t in tr), skipped="nothing open: template / pre-routes complete"),
+                  open(os.path.join(od, "freeroute.json"), "w"), indent=1); mode = (mode + ", complete: no autorouter") if inp else "template (no autorouter)"
+        if inp: os.remove(inp); inp = None
+        r = None
+    else: r = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
+    if not os.path.exists(pcb): res["route"] = dict(ok=False, err=(r.stdout[-300:] + r.stderr[-300:]) if r else "no board"); return res
     widened = widen_floor(pcb, B.get("floor", FLOOR))
     fr = json.load(open(os.path.join(od, "freeroute.json"))); res["route"] = dict(unconnected_after=fr["unconnected_after"], tracks=fr["tracks"], vias=fr["vias"], widened_to_floor=widened, mode=mode, resume=why, ok=fr["unconnected_after"] == 0)
     res["kicad_drc"] = kicad_drc(pcb, B); res["kicad_drc"]["ok"] = res["kicad_drc"]["errors"] == 0 and res["kicad_drc"]["unconnected"] == 0 and (res["kicad_drc"]["hv_rule_control_violations"] in (None,) or res["kicad_drc"]["hv_rule_control_violations"] > 0)

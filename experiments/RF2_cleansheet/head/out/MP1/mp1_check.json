@@ -6,9 +6,16 @@
  },
  "route": {
   "unconnected_after": 0,
-  "tracks": 117,
+  "tracks": 121,
   "vias": 9,
   "widened_to_floor": 0,
+  "mode": "resume, complete: no autorouter",
+  "resume": {
+   "copied_items": 130,
+   "changed_pads": 0,
+   "changed_nets": [],
+   "deleted_drc_items": 0
+  },
   "ok": true
  },
  "kicad_drc": {
@@ -21,6 +28,7 @@
   "ok": true
  },
  "copper": {
+  "loops_around_axis": [],
   "min_clearance_mm": 0.203,
   "worst_pair": [
    "F",
@@ -368,5 +376,6 @@
    ]
   }
  ],
- "ok": true
+ "ok": true,
+ "netlist_hash": "7dd61914d8994a87"
 }

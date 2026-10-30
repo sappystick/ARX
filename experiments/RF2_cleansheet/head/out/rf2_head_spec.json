@@ -146,7 +146,7 @@
    "below": 1.0,
    "above": 3.0,
    "hinge_deg": 286.0,
-   "what": "RF1 AB1A analog section (D40, 6-layer rigid with the 2-layer flex core), routed in RF1: 0 open, KiCad DRC clean"
+   "what": "RF1 AB1A analog section (D40, 6-layer rigid with the 2-layer flex core), routed in RF1: 0 open, KiCad DRC clean; mounted COMPONENT SIDE UP (its parts are on one side, 2.15 mm tall, measured on the RF1 mesh: they would hit the bay floor facing down)"
   },
   "AB1B": {
    "kind": "disc",
@@ -222,16 +222,16 @@
     75.0
    ],
    "z": [
-    22.3,
-    23.1
+    22.85,
+    23.25
    ],
-   "below": 0.7,
-   "above": 0.8,
+   "below": 0.0,
+   "above": 0.65,
    "n_ring": 36,
    "r_ring": 62.5,
    "n_ctr": 6,
    "r_ctr": 22.0,
-   "what": "LED ring board 0.8 mm: 36 SK9822-class LEDs at r 62.5 (bearing), 6 at r 22 (class colour), clocked, dark during receive windows"
+   "what": "LED ring: FLEX section of the rigid-flex panel (0.2 mm polyimide on a 0.2 mm FR4 stiffener), 36 SK9822-EC20 at r 62.5 (bearing) + 6 at r 22 (class colour), clocked, dark during receive windows"
   }
  },
  "led_bosses": {
@@ -267,10 +267,10 @@
  },
  "ref_coil": {
   "place": "on the shaft, 0.6 m from the head",
-  "former": "3 orthogonal rings, 80 mm, on a PETG frame",
-  "turns_per_axis": 620,
-  "wire": "0.15 mm enamelled (ASSUMED)",
-  "requirement": "area-turns >= 3 x the mono per axis (rf2_emi.py)",
-  "note": "REF noise with this winding not yet checked"
+  "former": "3 orthogonal windings, 100 mm, on a PETG frame",
+  "turns_per_axis": 390,
+  "wire": "0.20 mm enamelled copper",
+  "requirement": "area-turns = 3 x the mono per axis (rf2_emi.py)",
+  "noise": "2.0 nV/rtHz, depth cost 1.4 %, copper 104 g (rf2_ref3.py; the earlier 620 x 0.15 mm on 80 mm gave 2.32 nV/rtHz and 1.8 %)"
  }
 }

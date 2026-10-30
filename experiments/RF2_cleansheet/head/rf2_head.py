@@ -75,8 +75,12 @@ def envelope(k):
         sx, sy = v["size"]; cx, cy = v["c"]
         e = box(cx, cy, sx, sy, z0, z1) + box(cx, cy, sx - 2 * KB, sy - 2 * KB, z0 - v["below"], z0) + box(cx, cy, sx - 2 * KA, sy - 2 * KA, z1, z1 + v["above"])
     else:                                                                                       # LED ring: board + bottom parts annulus + LEDs only at their sites
-        r0, r1 = v["r"]; e = ring(r0, r1, z0, z1) + ring(r0 + KB, r1 - KB, z0 - v["below"], z0)
-        for p in led_positions(): e = e + box(p[0], p[1], 2.2, 2.2, z1, z1 + v["above"])
+        r0, r1 = v["r"]; e = ring(r0, r1, z0, z1)
+        if v["below"] > 0: e = e + ring(r0 + KB, r1 - KB, z0 - v["below"], z0)          # a zero-height solid is invalid in manifold3d and empties the union
+        for p in led_positions():                                                           # LED sites, and the 0402 capacitor 2.8 mm inside each (rf2_netlist LR1)
+            e = e + box(p[0], p[1], 2.2, 2.2, z1, z1 + v["above"])
+            r = math.hypot(*p); u = (r - 2.8) / r; t = math.degrees(math.atan2(p[1], p[0]))
+            e = e + box(p[0] * u, p[1] * u, 1.2, 1.4, z1, z1 + v["above"]).translate([-p[0] * u, -p[1] * u, 0]).rotate([0, 0, t]).translate([p[0] * u, p[1] * u, 0])
         for p in boss_positions(): e = e - at(cyl(SPEC["led_bosses"]["hole_d"] / 2, z0 - 1, z1 + 1, 32), p)
     return e
 # ------------------------------------------------------------------------------------------------ printed parts
