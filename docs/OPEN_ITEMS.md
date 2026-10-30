@@ -21,3 +21,8 @@
 19. **Upper assembly first article**: print U1-U9 (PETG/ASA; pack shell PC), source the two coiled cords (OD <= 10.4 mm, stroke 356 mm) and a 7S 10-15 A BMS that fits 60 x 41 x 5.4 mm, build one pack; tune the Hall trigger (magnet grade, operate/release), check rail slide and latch, socket bond and drop test; weigh it and measure the torque about the grip.
 20. **CB1D revision for the joystick removal**: JTR.5/.6 (JOY_X/JOY_Y) have no conductor; tie or depopulate RJX/RJY, CJX/CJY and free the pins, re-route and re-run DRC (with the head work).
 21. **Tool fixes**: interference_audit.py voxeliser line (see CORRECTIONS: clamp both slice ends); sch_export.py truncates part values at 60 characters and can split parentheses (keep values short until fixed).
+22. **Full-face LED map** (docs/design/LED_MAP_FULL_FACE_PLAN.md): 280-600 pixels from the centre to the rim over the hood, dense central pinpoint zone, trigger intensify. Accept: plan steps B-I done, eddy model of the LED board, LB2 flex DRC 0 in KiCad.
+23. **Import the lowered-height / rigid-flex redesign.** It is not in origin/main (OPEN_ITEMS 3 is still only prompt P03). Accept: the files are in the repo and the regression runs on them.
+24. **LED power switch and data architecture**: switched 5 V LED rail, multi-chain or clocked-LED data path, firmware frame rule (no write in a receive window). Merge with items 0 and 20.
+25. **LED part datasheets**: SK6812-MINI-E / 2020 / SK9822 pinout, height, idle current, PWM frequency, finish (ferromagnetic nickel?) (ASSUMPTIONS 28-31).
+26. **Flora NeoPixel v3 bench prototype** of the display grammar (same SK6812 protocol) before the flex is designed.
