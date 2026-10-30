@@ -12,3 +12,4 @@ tools/freerouting/*.jar
 tools/freerouting/*.part
 tools/freerouting/*.bad
 experiments/RF2_cleansheet/head/out/*/*_resume.kicad_*
+experiments/RF2_cleansheet/head/out/*/*_fr/
