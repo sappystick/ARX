@@ -58,4 +58,12 @@ say "gerbonara   $(python3 -c 'import importlib.metadata as m;print(m.version("g
 say "kicad-cli   $(kicad-cli version 2>&1 | head -1) | pcbnew $(/usr/bin/python3 -c 'import pcbnew;print(pcbnew.Version())' 2>&1 | tail -1)"
 say "freerouting $(python3 -c 'import sys; sys.path.insert(0,"src/pcb"); import freeroute as F, os; print(F.VERSION, "jar ok" if os.path.exists(F.JAR) else "jar MISSING")' 2>/dev/null)"
 say "work/       $(ls work | wc -l) files"
+if [ "${RF2_TOOLS:-0}" = "1" ]; then                          # RF2 tools must answer too when they were asked for
+  chk ngspice --version
+  chk arm-none-eabi-gcc --version
+  chk gmsh --version
+  chk python3 -c "import kiutils, magpylib, trimesh, pyvista, cadquery, spicelib, meshio, skfem, optuna"
+  chk test -d /usr/share/kicad/3dmodels
+  say "rf2 tools   ngspice $(ngspice --version 2>/dev/null | grep -o 'ngspice-[0-9]*' | head -1) | $(arm-none-eabi-gcc --version 2>/dev/null | head -1 | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | head -1) arm-gcc | gmsh $(gmsh --version 2>&1 | tail -1) | magpylib $(python3 -c 'import magpylib;print(magpylib.__version__)' 2>/dev/null) pyvista $(python3 -c 'import pyvista;print(pyvista.__version__)' 2>/dev/null) cadquery $(python3 -c 'import cadquery;print(cadquery.__version__)' 2>/dev/null)"
+fi
 [ "$fail" -eq 0 ] && say "environment OK" || { say "environment INCOMPLETE"; exit 1; }

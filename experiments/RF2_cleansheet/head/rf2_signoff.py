@@ -33,6 +33,8 @@ def main():
             d = json.load(open(cj)); d["netlist_hash"] = bhash(b) if d.get("ok") else None; json.dump(d, open(cj, "w"), indent=1)
             steps.append(dict(step=f"board {b}: placement, route, KiCad DRC, copper, parity, Gerbers", ok=bool(d.get("ok")), rc=0, seconds=0,
                               tail="" if d.get("ok") else json.dumps({k: v.get("ok") for k, v in d.items() if isinstance(v, dict)})))
+    step("field code cross-check (magpylib vs loop_B)", [H + "rf2_field_xcheck.py"], os.path.join(OUT, "rf2_field_xcheck.json"))
+    if os.path.exists(os.path.join(ROOT, H, "rf2_mp1_spice.py")): step("MP1 protection study (ngspice)", [H + "rf2_mp1_spice.py"])
     step("REF3 sizing", [H + "rf2_ref3.py"], os.path.join(OUT, "rf2_ref3.json"), lambda d: d["chosen"] is not None)
     step("housing checks (meshes, envelope, interference, seats, clearances)", [H + "rf2_head_check.py"], os.path.join(OUT, "rf2_head_check.json"))
     step("wiring / power / timing (slot probes)", [H + "rf2_wiring.py"], os.path.join(OUT, "rf2_wiring.json"), lambda d: d["checks"]["ok"])

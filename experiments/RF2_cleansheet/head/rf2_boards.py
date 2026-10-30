@@ -8,7 +8,7 @@
   5. independent copper check (shapely, from the routed board): minimum clearance overall and from every HV net to every other net
   6. Gerbers + Excellon drill (kicad-cli); 7. pad-by-pad netlist parity; 8. part placement + body boxes in head coordinates for the render
 Outputs: out/<B>/PF233-RF2-<B>.kicad_pcb, gerber/, <b>_check.json; out/rf2_boards.json.  usage (repo root): python3 experiments/RF2_cleansheet/head/rf2_boards.py [MP1 TXJ LR1]"""
-import os, sys, json, math, subprocess, shutil, tempfile
+import os, sys, json, math, subprocess, shutil, tempfile, hashlib
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, HERE); import rf2_netlist as NL
@@ -202,19 +202,68 @@ def parity(pcb, B):
     want = {(p["ref"], n): net for p in B["parts"] for n, net in p["pins"].items()}
     diff = [f"{k}: board {got.get(k)} netlist {v}" for k, v in want.items() if got.get(k) != v] + [f"{k}: on the board, not in the netlist" for k in got if k not in want]
     return dict(pads_checked=len(want), mismatches=diff[:10], ok=not diff)
+def pad_signature(pcb):
+    """placement fingerprint: every pad (ref, number, net, position) and the board outline box"""
+    import pcbnew
+    bd = pcbnew.LoadBoard(pcb); M = pcbnew.ToMM; bb = bd.GetBoardEdgesBoundingBox()
+    pads = {(fp.GetReference(), p.GetNumber()): (p.GetNetname(), M(p.GetPosition().x), M(p.GetPosition().y)) for fp in bd.GetFootprints() for p in fp.Pads()}
+    return pads, [M(v) for v in (bb.GetX(), bb.GetY(), bb.GetWidth(), bb.GetHeight())]
+def changed_pads(old, new, tol=0.005):
+    """pads whose net or position differ (>= 5 um; pcbnew save / load of rotated pads moves them by up to 1 um), as (net, old x, old y);
+    None = outline or pad set changed"""
+    (pa, ba), (pb, bb) = pad_signature(old), pad_signature(new)
+    if pa.keys() != pb.keys() or any(abs(x - y) >= tol for x, y in zip(ba, bb)): return None
+    return [pa[k] for k in pa if pa[k][0] != pb[k][0] or abs(pa[k][1] - pb[k][1]) >= tol or abs(pa[k][2] - pb[k][2]) >= tol] + \
+           [pb[k] for k in pa if pa[k][0] != pb[k][0]]
+def drc_bad_uuids(pcb, B):
+    """uuids of the items KiCad DRC flags as errors (same rules as kicad_drc)"""
+    tmp = tempfile.mkdtemp(); dst = os.path.join(tmp, "b.kicad_pcb"); shutil.copy(pcb, dst)
+    open(os.path.join(tmp, "b.kicad_dru"), "w").write(dru(B)); open(os.path.join(tmp, "b.kicad_pro"), "w").write("{}")
+    rep = os.path.join(tmp, "drc.json"); subprocess.run(["kicad-cli", "pcb", "drc", "--severity-all", "--format", "json", "--units", "mm", "-o", rep, dst], capture_output=True, text=True)
+    return {it["uuid"] for v in json.load(open(rep)).get("violations", []) if v["severity"] == "error" for it in v.get("items", []) if "uuid" in it}
+def resume_input(name, raw, pcb, B, od):
+    """incremental route (owner 2026-10-30: route only what is still open, never re-run a whole board for a few open nets): the unlocked tracks and vias
+    of the last routed board are copied onto the new build; KiCad DRC then runs on that board and the unlocked
+    items it flags are deleted; Freerouting gets it without --strip, so it routes only the open connections. RF2_FULL=1 forces a full route.
+    Of a net whose pads moved, only the copper within 2 mm of a moved pad is dropped. Returns (input board, report) or (None, reason)."""
+    import pcbnew
+    if os.environ.get("RF2_FULL") == "1": return None, "RF2_FULL=1"
+    if not os.path.exists(pcb): return None, "no earlier route"
+    ch = changed_pads(pcb, raw)
+    if ch is None: return None, "outline or pad set changed"
+    def near_moved(t):                                       # copper of a changed pad's net within 2 mm of that pad's old position
+        M = pcbnew.ToMM; pts = [t.GetPosition()] if t.GetClass() == "PCB_VIA" else [t.GetStart(), t.GetEnd()]
+        return any(t.GetNetname() == n and math.hypot(M(q.x) - x, M(q.y) - y) < 2.0 for n, x, y in ch for q in pts)
+    old = pcbnew.LoadBoard(pcb); new = pcbnew.LoadBoard(raw); copied = 0
+    for t in old.GetTracks():
+        if t.IsLocked() or near_moved(t): continue
+        net = new.FindNet(t.GetNetname())
+        if t.GetClass() == "PCB_VIA":
+            v = pcbnew.PCB_VIA(new); v.SetPosition(t.GetPosition()); v.SetDrill(t.GetDrill()); v.SetWidth(t.GetWidth(pcbnew.F_Cu)); v.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu); n = v
+        else:
+            n = pcbnew.PCB_TRACK(new); n.SetStart(t.GetStart()); n.SetEnd(t.GetEnd()); n.SetWidth(t.GetWidth()); n.SetLayer(t.GetLayer())
+        n.SetNet(net); new.Add(n); copied += 1
+    inp = os.path.join(od, f"PF233-RF2-{name}_resume.kicad_pcb"); new.Save(inp)
+    widen_floor(inp, B.get("floor", FLOOR)); bad = drc_bad_uuids(inp, B)
+    bd = pcbnew.LoadBoard(inp); deleted = 0
+    for t in list(bd.GetTracks()):
+        if t.m_Uuid.AsString() in bad and not t.IsLocked(): bd.Delete(t); deleted += 1
+    bd.Save(inp)
+    return inp, dict(copied_items=copied, changed_pads=len(ch), changed_nets=sorted({c[0] for c in ch}), deleted_drc_items=deleted)
 def run(name):
     B = NL.BOARDS[name]; res = dict(board=name)
     bad = placement_check(B); res["placement"] = dict(overlaps_or_outside=bad, ok=not bad)
     if bad: return res
     raw, od = build(name); pcb = os.path.join(od, f"PF233-RF2-{name}.kicad_pcb")
-    cmd = [sys.executable, os.path.join(ROOT, "src/pcb/freeroute.py"), raw, pcb] + ([] if B.get("preroute") else ["--strip"]) + ["--no-neckdown", "--rules", B.get("rules", RULES), "--passes", "150", "--report", os.path.join(od, "freeroute.json")]
+    inp, why = resume_input(name, raw, pcb, B, od); mode = "resume" if inp else "full"
+    cmd = [sys.executable, os.path.join(ROOT, "src/pcb/freeroute.py"), inp or raw, pcb] + ([] if (inp or B.get("preroute")) else ["--strip"]) + ["--no-neckdown", "--rules", B.get("rules", RULES), "--passes", "150", "--report", os.path.join(od, "freeroute.json")]
     hv = [n for n in B.get("hv_nets", []) if n not in B.get("wide", {})]
     if hv: cmd += ["--hv", ",".join(hv)]
     if B.get("wide"): cmd += ["--class", "PULSE:2.5:1.0:" + ",".join(B["wide"])]
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
     if not os.path.exists(pcb): res["route"] = dict(ok=False, err=r.stdout[-300:] + r.stderr[-300:]); return res
     widened = widen_floor(pcb, B.get("floor", FLOOR))
-    fr = json.load(open(os.path.join(od, "freeroute.json"))); res["route"] = dict(unconnected_after=fr["unconnected_after"], tracks=fr["tracks"], vias=fr["vias"], widened_to_floor=widened, ok=fr["unconnected_after"] == 0)
+    fr = json.load(open(os.path.join(od, "freeroute.json"))); res["route"] = dict(unconnected_after=fr["unconnected_after"], tracks=fr["tracks"], vias=fr["vias"], widened_to_floor=widened, mode=mode, resume=why, ok=fr["unconnected_after"] == 0)
     res["kicad_drc"] = kicad_drc(pcb, B); res["kicad_drc"]["ok"] = res["kicad_drc"]["errors"] == 0 and res["kicad_drc"]["unconnected"] == 0 and (res["kicad_drc"]["hv_rule_control_violations"] in (None,) or res["kicad_drc"]["hv_rule_control_violations"] > 0)
     res["copper"] = copper_check(pcb, B); res["parity"] = parity(pcb, B)
     g = os.path.join(od, "gerber"); os.makedirs(g, exist_ok=True)
@@ -226,12 +275,14 @@ def run(name):
     res["placement_in_head"] = [dict(ref=p["ref"], type=p["type"], x=round(hd["c"][0] + p["x"], 3), y=round(hd["c"][1] + p["y"], 3), rot=p["rot"],
                                      z=round(hd["z_bottom"] + t, 3), body=NL.LIB[p["type"]]["body"]) for p in B["parts"]]
     res["ok"] = all(res[k]["ok"] for k in ("placement", "route", "kicad_drc", "copper", "parity", "gerbers"))
-    os.remove(raw); json.dump(res, open(os.path.join(od, f"{name.lower()}_check.json"), "w"), indent=1); return res
+    os.remove(raw)
+    if inp: os.remove(inp)
+    json.dump(res, open(os.path.join(od, f"{name.lower()}_check.json"), "w"), indent=1); return res
 if __name__ == "__main__":
     names = sys.argv[1:] or ["TXJ", "MP1", "LR1"]; allres = {}
     p = os.path.join(OUTB, "rf2_boards.json")
     if os.path.exists(p): allres = json.load(open(p))
     for n in names:
         r = run(n); allres[n] = r
-        print(n, json.dumps({k: (v if not isinstance(v, dict) else {kk: vv for kk, vv in v.items() if kk in ("ok", "errors", "unconnected", "unconnected_after", "min_clearance_mm", "min_hv_clearance_mm", "overlaps_or_outside", "mismatches", "error_types", "hv_rule_control_violations", "examples", "err")}) for k, v in r.items() if k != "placement_in_head"})[:1500], flush=True)
+        print(n, json.dumps({k: (v if not isinstance(v, dict) else {kk: vv for kk, vv in v.items() if kk in ("ok", "mode", "resume", "errors", "unconnected", "unconnected_after", "min_clearance_mm", "min_hv_clearance_mm", "overlaps_or_outside", "mismatches", "error_types", "hv_rule_control_violations", "examples", "err")}) for k, v in r.items() if k != "placement_in_head"})[:1500], flush=True)
     json.dump(allres, open(p, "w"), indent=1)

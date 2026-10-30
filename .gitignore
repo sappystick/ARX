@@ -11,3 +11,4 @@ stl/formers/
 tools/freerouting/*.jar
 tools/freerouting/*.part
 tools/freerouting/*.bad
+experiments/RF2_cleansheet/head/out/*/*_resume.kicad_*

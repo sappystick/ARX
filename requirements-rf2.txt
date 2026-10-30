@@ -11,3 +11,5 @@ magpylib==6.0.1         # analytic magnetic fields of coils / magnets (independe
 spicelib==1.6.4         # drive ngspice from Python (front-end and driver simulation)
 meshio==5.3.5           # mesh format conversion (gmsh <-> STL / VTK)
 InteractiveHtmlBom==2.12.0   # assembly BOM / placement pages from KiCad boards
+scikit-fem==12.0.2      # finite elements (with gmsh meshes): axisymmetric eddy-current, winding-capacitance and shield-decay studies (ENHANCEMENT_PLAN_RF2.md)
+optuna==5.0.0           # parameter search for coil / receiver geometry at fixed energy per pulse
